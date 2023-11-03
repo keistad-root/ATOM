@@ -1,0 +1,2 @@
+### Purpose of this project.
+The project title "ATOM" is abbreviation of APTS Task Organisation Machine. This project is based on [MLR1 DAQ Software](https://gitlab.cern.ch/alice-its3-wp3/apts-dpts-ce65-daq-software) made by CERN ALICE group. The existing code, however, was written by Python code. So the code was re-made by C++ and ROOT programing language for shorter runtime and efficient memory management.
