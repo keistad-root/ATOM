@@ -1,4 +1,5 @@
 #include <iostream>
+<<<<<<< HEAD
 
 #include "TROOT.h"
 #include "TTree.h"
@@ -10,11 +11,17 @@
 #include "TColor.h"
 #include "TLegend.h"
 #include "TStyle.h"
+=======
+#include <filesystem>
+
+#include "TROOT.h"
+>>>>>>> 1b4da75fa6695e54d814bc665eea7cd5357e777a
 
 #include "myjson.h"
 #include "gain_decoder.h"
 #include "pitch_clock.h"
 
+<<<<<<< HEAD
 int main() {
     TClock* clock = new TClock();
 
@@ -22,6 +29,105 @@ int main() {
     TString path = "data/";
     inputJSON* json = new inputJSON(std::string(path.Data())+"gain/apts_gain_20230130_172940.json");
     GainDecoder* dec = new GainDecoder(path+"gain/apts_gain_20230130_172940.raw", path+"apts_gain");
+=======
+TString SetInputName(char* executable, char* str) {
+    std::filesystem::path path;
+    std::filesystem::path current(executable);
+    if (str == NULL) {
+        path = std::filesystem::canonical(current.parent_path()).string() + "/data/";
+    } else {
+        path = str;
+    }
+    if (std::filesystem::is_regular_file(path)) {
+        if (path.extension() == ".raw") {
+            return path.string();
+        } else {
+            return path.replace_filename(path.stem()).string() + ".raw";
+        }
+    } else if (path.parent_path().filename().string() == "gain") {
+        std::filesystem::directory_iterator itr(path / "");
+        while (itr != std::filesystem::end(itr)) {
+            const std::filesystem::directory_entry& entry = *itr;
+            if (entry.path().filename().extension().string() == ".raw") {
+                return entry.path().string();
+                break;
+            }
+            itr++;
+        }
+    } else {
+        std::filesystem::directory_iterator itr(path / "gain");
+        while (itr != std::filesystem::end(itr)) {
+            const std::filesystem::directory_entry& entry = *itr;
+            if (entry.path().filename().extension().string() == ".raw") {
+                return entry.path().string();
+                break;
+            }
+            itr++;
+        }
+    } 
+}
+
+TString SetOutputName(char* executable, char* str) {
+    std::filesystem::path path;
+    std::filesystem::path current(executable);
+    if (str == NULL) {
+        path = std::filesystem::canonical(current.parent_path()).string() + "/data/";
+    } else {
+        path = str;
+    }
+
+    if (std::filesystem::is_regular_file(path)) {
+        return path.filename().stem().string();
+    } else {
+        return path.string() + "apts_gain";
+    }
+}
+
+std::string SetJsonName(char* executable, char* str) {
+    std::filesystem::path path;
+    std::filesystem::path current(executable);
+    if (str == NULL) {
+        path = std::filesystem::canonical(current.parent_path()).string() + "/data/";
+    } else {
+        path = str;
+    }
+    if (std::filesystem::is_regular_file(path)) {
+        if (path.extension() == ".json") {
+            return path.string();
+        } else {
+            return path.replace_filename(path.stem()).string() + ".json";
+        }
+    } else if (path.parent_path().filename().string() == "gain") {
+        std::filesystem::directory_iterator itr(path / "");
+        while (itr != std::filesystem::end(itr)) {
+            const std::filesystem::directory_entry& entry = *itr;
+            if (entry.path().filename().extension().string() == ".json") {
+                return entry.path().string();
+                break;
+            }
+            itr++;
+        }
+    } else {
+        std::filesystem::directory_iterator itr(path / "gain");
+        while (itr != std::filesystem::end(itr)) {
+            const std::filesystem::directory_entry& entry = *itr;
+            if (entry.path().filename().extension().string() == ".json") {
+                return entry.path().string();
+                break;
+            }
+            itr++;
+        }
+    } 
+}
+
+int main(int argc, char** argv) {
+    TClock* clock = new TClock();
+
+    std::cout << "Gain decoding..." << std::endl;
+    
+    inputJSON* json = new inputJSON(SetJsonName(argv[0],argv[2]));
+    GainDecoder* dec = new GainDecoder(SetInputName(argv[0],argv[1]), SetOutputName(argv[0],argv[3]));
+>>>>>>> 1b4da75fa6695e54d814bc665eea7cd5357e777a
 
     std::cout << "Decoded file generated..." << std::endl;
     dec->MakeDecodedFile();

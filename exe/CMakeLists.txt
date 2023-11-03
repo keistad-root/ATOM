@@ -3,6 +3,10 @@
 set(TEST_EXE
     gain_decoder
     source_decoder
+<<<<<<< HEAD
+=======
+    test
+>>>>>>> 1b4da75fa6695e54d814bc665eea7cd5357e777a
 )
 
 # for now put the executables in the build root
