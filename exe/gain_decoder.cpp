@@ -1,35 +1,12 @@
 #include <iostream>
-<<<<<<< HEAD
-
-#include "TROOT.h"
-#include "TTree.h"
-#include "TCanvas.h"
-#include "TPad.h"
-#include "TGraph.h"
-#include "TMultiGraph.h"
-#include "TAxis.h"
-#include "TColor.h"
-#include "TLegend.h"
-#include "TStyle.h"
-=======
 #include <filesystem>
 
 #include "TROOT.h"
->>>>>>> 1b4da75fa6695e54d814bc665eea7cd5357e777a
 
 #include "myjson.h"
 #include "gain_decoder.h"
 #include "pitch_clock.h"
 
-<<<<<<< HEAD
-int main() {
-    TClock* clock = new TClock();
-
-    std::cout << "Gain decoding..." << std::endl;
-    TString path = "data/";
-    inputJSON* json = new inputJSON(std::string(path.Data())+"gain/apts_gain_20230130_172940.json");
-    GainDecoder* dec = new GainDecoder(path+"gain/apts_gain_20230130_172940.raw", path+"apts_gain");
-=======
 TString SetInputName(char* executable, char* str) {
     std::filesystem::path path;
     std::filesystem::path current(executable);
@@ -127,7 +104,6 @@ int main(int argc, char** argv) {
     
     inputJSON* json = new inputJSON(SetJsonName(argv[0],argv[2]));
     GainDecoder* dec = new GainDecoder(SetInputName(argv[0],argv[1]), SetOutputName(argv[0],argv[3]));
->>>>>>> 1b4da75fa6695e54d814bc665eea7cd5357e777a
 
     std::cout << "Decoded file generated..." << std::endl;
     dec->MakeDecodedFile();
