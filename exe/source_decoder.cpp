@@ -56,6 +56,7 @@ TString SetInputName(char* executable, char* str) {
             itr++;
         }
     } 
+    return nullptr;
 }
 
 TString SetOutputName(char* executable, char* str) {

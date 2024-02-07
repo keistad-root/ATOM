@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2)
-project(myProject)
+project(ATOM)
 
 # by default build optimized code with debug symbols
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
@@ -24,6 +24,13 @@ endif()
 find_package(ROOT)
 find_package(ROOT REQUIRED COMPONENTS Core Tree TreePlayer Gpad Hist Physics)
 find_package(ROOT REQUIRED COMPONENTS RIO Net Hist Graf Graf3d Gpad Tree Rint Postscript Matrix Physics MathCore Thread)
+
+option(WITH_GEANT4_UIVIS "Build with Geant4 UI and Vis drivers" ON)
+if(WITH_GEANT4_UIVIS)
+  find_package(Geant4 REQUIRED ui_all vis_all)
+else()
+  find_package(Geant4 REQUIRED)
+endif()
 
 # set C++ standard ensuring compatibility with ROOT
 set(CMAKE_CXX_STANDARD 17)
