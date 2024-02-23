@@ -5,7 +5,7 @@
 
 #include "TFile.h"
 
-#include "decoder.h"
+#include "apts_decoder.h"
 #include "myjson.h"
 #include "pitch_clock.h"
 

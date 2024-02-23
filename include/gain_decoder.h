@@ -9,7 +9,7 @@
 #include "TLegend.h"
 #include "TAxis.h"
 
-#include "decoder.h"
+#include "apts_decoder.h"
 #include "myjson.h"
 
 const Int_t colorList[16] = {kRed, 

@@ -1,9 +1,10 @@
 # in exe directory
 
 set(TEST_EXE
-    gain_decoder
-    source_decoder
-    simulation
+    apts_gain_decoder
+    apts_source_decoder
+    alpide_hitmap
+    alpide_dac
 )
 
 # for now put the executables in the build root

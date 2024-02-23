@@ -1,5 +1,5 @@
-#ifndef __DECODER_H__
-#define __DECODER_H__
+#ifndef __APTS_DECODER_H__
+#define __APTS_DECODER_H__
 
 #include <iostream>
 #include <fstream>
