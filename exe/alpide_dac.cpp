@@ -2,6 +2,7 @@
 #include <fstream>
 #include <filesystem>
 
+#include "TFile.h"
 #include "TCanvas.h"
 #include "TGraph.h"
 #include "TLegend.h"
@@ -43,25 +44,26 @@ public:
     }
 };
 
-
-int main(int argc, char** argv) {
+ArgumentParser add_parser(int argc, char** argv) {
     ArgumentParser parser = ArgumentParser(argc,argv).setDescription("Show DAC scan results");
     parser.add_argument("filename").help("Name of the file to analysis").add_finish();
     parser.add_argument("--path").help("Output plots path").set_default(".").add_finish();
     parser.add_argument("--no-fit").help("Do fit?").set_default("true").add_finish();
     parser.parse_args();
+    return parser;
+}
 
+void file_open(std::ifstream& inputfile, ArgumentParser parser) {
     std::filesystem::path inputfilepath(parser.get_value<std::string>("filename"));
-
     if (!std::filesystem::exists(inputfilepath)) {
         std::cerr << "File not found: " << inputfilepath << std::endl;
     }
+    inputfile = std::ifstream(inputfilepath, std::ios::binary);
+}
 
-    std::ifstream inputfile(inputfilepath, std::ios::binary);
-
+void input_data(std::vector<DACtoADC>& data, std::ifstream& inputfile) {
     std::string line;
 
-    std::vector<DACtoADC> dactoadc;
     std::vector<int> dacs;
     std::vector<int> adcs;
     std::string old = "";
@@ -73,13 +75,11 @@ int main(int argc, char** argv) {
         std::istringstream iss(line);
         std::getline(iss, kind, '\t');
         if (old != kind) {
-            DACtoADC* temp = new DACtoADC(old);
-            temp->setDAC(dacs);
-            temp->setADC(adcs);
-            dactoadc.push_back(*temp);
+            DACtoADC temp(old);
+            temp.setDAC(dacs);
+            temp.setADC(adcs);
+            data.push_back(temp);
             old = kind;
-            delete temp;
-            temp = nullptr;
             dacs.clear();
             adcs.clear();
         }
@@ -88,51 +88,84 @@ int main(int argc, char** argv) {
         std::getline(iss, adc, '\t');
         adcs.push_back(stoi(adc));
     }
-    dactoadc.erase(dactoadc.begin());
-    inputfile.close();
-    int num_of_kind = dactoadc.size();
-    TMultiGraph* mg = new TMultiGraph();
-    TLegend* legend = new TLegend(0.12,0.65,0.45,0.9);
-    legend->SetHeader("DAC scan value","C");
-    for (int i = 0; i < num_of_kind; i++) {
-        TString canvasName = Form("can%d",i);
-        TCanvas* can = new TCanvas(canvasName,canvasName,1200,1000);
-        TGraph* graph = new TGraph((dactoadc[i].getADC()).size(),dactoadc[i].getDAC().data(),dactoadc[i].getADC().data());
-        TMarker* mark = new TMarker();
-        graph->SetTitle("Scan of " + (TString) dactoadc[i].getKind() + " DAC; DAC Setting; ADC");
-        
-        if (i < 9) {
-            graph->SetMarkerStyle(20);
-            graph->SetMarkerSize(.5);   
-            graph->SetMarkerColor(i+1);
-            mark->SetMarkerStyle(20);
-            mark->SetMarkerColor(i+1);
-        } else {
-            graph->SetMarkerStyle(22);
-            graph->SetMarkerSize(.5);
-            graph->SetMarkerColor(i-7);
-            mark->SetMarkerStyle(22);
-            mark->SetMarkerColor(i-7);
-        }
-        mark->SetMarkerSize(2);
-        graph->Draw("AP");
-        mg->Add(graph);
-        legend->AddEntry(mark,(TString) dactoadc[i].getKind(),"p");
-        TString output = Form("data/dac_result_%d.pdf",i);
-        can->SetLeftMargin(0.12);
-        can->SaveAs(output);
-        delete can;
-        can=nullptr;
+    data.erase(data.begin());
+}
+
+void get_graph(std::vector<TGraph>& graphs, const std::vector<DACtoADC>& datas) {
+    for (DACtoADC data : datas) {
+        graphs.push_back(TGraph((data.getADC()).size(),data.getDAC().data(),data.getADC().data()));
+        graphs.back().SetName((TString) data.getKind());
+        graphs.back().SetTitle("Scan of " + (TString) data.getKind() + " DAC; DAC Setting; ADC");
     }
+    int i = 0;
+    for (TGraph& graph : graphs) {
+        if (i < 9) {
+            graph.SetMarkerStyle(20);
+            graph.SetMarkerSize(.5);   
+            graph.SetMarkerColor(i+1);
+        } else {
+            graph.SetMarkerStyle(22);
+            graph.SetMarkerSize(.5);
+            graph.SetMarkerColor(i-7);
+        }
+        i++;
+    }
+}
 
-    TCanvas* mcan = new TCanvas("mcan","Merge Canvas", 1200,1000);
-    mg->SetTitle("Summary plot; DAC Setting; ADC");
-    mg->Draw("AP");
-    legend->SetNColumns(2);
-    legend->Draw();
-    mcan->SetLeftMargin(0.12);
+void get_multi_graph(TMultiGraph& mg, std::vector<TGraph>& graphs) {
+    for (TGraph& graph : graphs) {
+        mg.Add(&graph);
+    }
+}
 
+void set_legend(TLegend& legend, std::vector<TGraph>& graphs){
+    legend.SetNColumns(2);
+
+    TMarker mark;
+    for (TGraph graph : graphs) {
+        graph.SetMarkerSize(1.5);
+        legend.AddEntry(graph.Clone(),graph.GetName(),"p");
+    }
+}
+
+void make_root_file(TMultiGraph& mg, std::vector<TGraph>& graphs, TLegend& legend) {
+    TFile rootFile("data/value.root","RECREATE");
+    rootFile.mkdir("DAC");
+    rootFile.cd("DAC");
+    mg.SetName("Total");
+    mg.SetTitle("Summary plot; DAC Setting; ADC");
+    TCanvas mcan("Total","Merge Canvas", 1200,1000);
+    mg.Draw("AP");
+    legend.Draw();
+    mcan.SetLeftMargin(0.12);
+    mcan.Write();
+    mg.Write();
+    for (TGraph& graph : graphs) {
+        graph.Write();
+    }
+    rootFile.Close();
+}
+
+int main(int argc, char** argv) {
+    ArgumentParser parser = add_parser(argc,argv);
+
+    std::ifstream inputfile;
+    file_open(inputfile, parser);
+
+    std::vector<DACtoADC> data;
+    input_data(data, inputfile);
+
+    std::vector<TGraph> graphs;
+    get_graph(graphs,data);
+
+    inputfile.close();
+
+    TLegend legend(0.12,0.65,0.45,0.9);
+    set_legend(legend,graphs);
     
-    mcan->SaveAs("data/dac_total.pdf");
+    TMultiGraph mg;
+    get_multi_graph(mg,graphs);
+
+    make_root_file(mg, graphs, legend);
     return 0;
 }
