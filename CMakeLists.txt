@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.2)
+cmake_minimum_required(VERSION 3.5)
 project(ATOM)
 
 # by default build optimized code with debug symbols
@@ -63,21 +63,27 @@ endif()
 
 message(STATUS "In Project Directory: ${PROJECT_SOURCE_DIR}")
 message(STATUS "ROOT Include Directory: ${ROOT_INCLUDE_DIRS}")
+message(STATUS "Geant4 Include Directory: ${GEANT4_INCLUDE_DIRS}")
 
-file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.h)
-file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cpp)
+file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.h ${PROJECT_SOURCE_DIR}/include/decoder/*.h ${PROJECT_SOURCE_DIR}/include/format/*.h ${PROJECT_SOURCE_DIR}/include/simulation/*.h)
+file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cpp ${PROJECT_SOURCE_DIR}/src/decoder/*.cpp ${PROJECT_SOURCE_DIR}/src/format/*.cpp ${PROJECT_SOURCE_DIR}/src/simulation/*.cpp)
 
 file(COPY ${PROJECT_SOURCE_DIR}/include DESTINATION ${CMAKE_BINARY_DIR} )
 
 message(STATUS "found inc ${headers}")
 message(STATUS "found src ${sources}")
 
-add_library(myProject SHARED ${sources})
+add_library(myProject SHARED ${headers} ${sources})
 
 # target_link_libraries(myProject PUBLIC ROOT::Core ROOT::Gpad ROOT::Hist ROOT::TreePlayer ROOT::Tree)
 
 include_directories(include)
+include_directories(include/decoder)
+include_directories(include/format)
+include_directories(include/simulation)
 add_subdirectory(exe)
+
+include_directories(${Geant4_INCLUDE_DIRS})
 include_directories(${ROOT_INCLUDE_DIRS})
 
 file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/data)

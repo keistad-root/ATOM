@@ -1,5 +1,9 @@
 #include "TAPTS.h"
 
+TAPTS::TAPTS() {}
+
+TAPTS::TAPTS(Configurable iniConfig) : TChip(iniConfig) {}
+
 void TAPTS::setEvent(int event) {
     iEvent = event;
 }

@@ -5,7 +5,9 @@ set(TEST_EXE
     # apts_source_decoder
     # alpide_hitmap
     # alpide_dac
+    manager
     test_new_decoder
+    simulation
 )
 
 # for now put the executables in the build root
@@ -15,7 +17,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 foreach(exe ${TEST_EXE})
   add_executable(${exe} ${exe}.cpp ${sources} ${headers})
   target_include_directories(${exe} PRIVATE ${ROOT_INCLUDE_DIRS})
-  target_link_libraries(${exe} myProject ROOT::Core ROOT::Gpad ROOT::Hist ROOT::Tree)
+  target_link_libraries(${exe} ${Geant4_LIBRARIES} myProject ROOT::Core ROOT::Gpad ROOT::Hist ROOT::Tree)
 endforeach()
 
 #include_directories(include)

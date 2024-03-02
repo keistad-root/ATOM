@@ -1,5 +1,9 @@
 #include "TALPIDE.h"
 
+TALPIDE::TALPIDE() {}
+
+TALPIDE::TALPIDE(Configurable iniConfig) : TChip(iniConfig) {}
+
 void TALPIDE::setEvent(int event) {
     iEvent = event;
 }
