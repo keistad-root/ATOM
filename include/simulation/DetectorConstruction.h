@@ -17,8 +17,8 @@
 
 #include "G4PVPlacement.hh"
 
-
 #include "G4Box.hh"
+#include "G4Tubs.hh"
 
 class DetectorConstruction : public G4VUserDetectorConstruction {
 private:
@@ -37,7 +37,9 @@ private:
     G4Element* elH = new G4Element("Hydrogen", "H", 1, 1.008 * g/mole);
     G4Element* elBr = new G4Element("Bromine", "Br", 35, 79.904 * g/mole);
 
-    G4LogicalVolume* StandLogical;
+    G4LogicalVolume* Stand1Logical;
+    G4LogicalVolume* Stand2Logical;
+    G4LogicalVolume* ShieldLogical;
     G4LogicalVolume* ALPIDECircuitLogical;
     G4LogicalVolume* ALPIDEEpitaxialLogical;
     G4AssemblyVolume* ALPIDEAssembly;
@@ -50,15 +52,17 @@ public:
     virtual G4VPhysicalVolume* Construct();
 
     // Setter
-    void SetStand();
+    void SetStand1();
+    void SetStand2();
+    void SetShield();
     void SetALPIDE();
     void SetCarrierBoard();
     
     // Getter
-    G4LogicalVolume* GetScoringStand();
-    G4LogicalVolume* GetScoringALPIDECircuit();
-    G4LogicalVolume* GetScoringALPIDEEpitaxial();
-    G4LogicalVolume* GetScoringCarrierBoard();
+    G4LogicalVolume* GetScoringStand2() const;
+    G4LogicalVolume* GetScoringALPIDECircuit() const;
+    G4LogicalVolume* GetScoringALPIDEEpitaxial() const;
+    G4LogicalVolume* GetScoringCarrierBoard() const;
 
     void SetVacuum(G4double vac);
     void SetAlpha(G4double energy);

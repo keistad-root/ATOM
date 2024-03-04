@@ -12,8 +12,6 @@ DetectorConstruction::~DetectorConstruction() {
 G4VPhysicalVolume* DetectorConstruction::Construct() {
     G4bool checkOverlaps = true;
 
-    // G4NistManager* nist = G4NistManager::Instance();
-
     G4double world_sizeXY = 300.0 * mm;
     G4double world_sizeZ = 150.0 * mm;
     G4double air_density = 1.2929e-03 * g / cm3;
@@ -38,8 +36,15 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
     return physWorld;
 }
 
-void DetectorConstruction::SetStand() {
+void DetectorConstruction::SetStand2() {
+    G4Material* PLA = new G4Material("PLA", 0.3 * 1.210 * g/cm3, 3);
+    PLA->AddElement(elC, 3);
+    PLA->AddElement(elH, 4);
+    PLA->AddElement(elO, 2);
 
+    G4Box* StandBodySolid = new G4Box("StandBodySolid", 70. * cm * 0.5, 10. * cm * 0.5, 70. * cm * 0.5);
+    G4Tubs* StandCenterHall1Solid = new G4Tubs("StandCenterHall1Solid", 0., 10. * cm, 9. * cm, 0., 360.0 * deg);
+    G4Tubs* StandCenterHall2Solid = new G4Tubs("StandCenterHall2Solid", 0., 9.9 * cm, 10. * cm, 0., 360.0 * deg);
 }
 
 void DetectorConstruction::SetALPIDE() {
@@ -129,19 +134,19 @@ void DetectorConstruction::SetCarrierBoard() {
 }
 
 
-G4LogicalVolume* DetectorConstruction::GetScoringStand() {
-    return StandLogical;
+G4LogicalVolume* DetectorConstruction::GetScoringStand2() const {
+    return Stand2Logical;
 }
 
-G4LogicalVolume* DetectorConstruction::GetScoringALPIDECircuit() {
+G4LogicalVolume* DetectorConstruction::GetScoringALPIDECircuit() const {
     return ALPIDECircuitLogical;
 }
 
-G4LogicalVolume* DetectorConstruction::GetScoringALPIDEEpitaxial() {
+G4LogicalVolume* DetectorConstruction::GetScoringALPIDEEpitaxial() const {
     return ALPIDEEpitaxialLogical;
 }
 
-G4LogicalVolume* DetectorConstruction::GetScoringCarrierBoard() {
+G4LogicalVolume* DetectorConstruction::GetScoringCarrierBoard() const {
     return CarrierBoardLogical;
 }
 

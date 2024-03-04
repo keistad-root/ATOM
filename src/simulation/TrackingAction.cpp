@@ -5,10 +5,10 @@ TrackingAction::~TrackingAction() {}
 
 void TrackingAction::PreUserTrackingAction(const G4Track* track) {
     AnalysisManager* analysisManager = AnalysisManager::Instance();
-    // analysismanager->FillSource(track);
+    analysisManager->FillSource(track);
 }
 
 void TrackingAction::PostUserTrackingAction(const G4Track* track) {
     AnalysisManager* analysisManager = AnalysisManager::Instance();
-    // analysisManager->EndOfTrack(track);
+    analysisManager->EndOfTrack(track);
 }
