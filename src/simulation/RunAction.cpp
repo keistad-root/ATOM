@@ -7,7 +7,7 @@ RunAction::RunAction() : G4UserRunAction() {
 RunAction::~RunAction() {}
 
 void RunAction::BeginOfRunAction(const G4Run*) {
-    fAnalysisManager->Book();
+    // fAnalysisManager->Book();
     G4RunManager::GetRunManager()->SetRandomNumberStore(false);
 }
 
@@ -26,7 +26,7 @@ void RunAction::EndOfRunAction(const G4Run* run) {
         runCondition += G4BestUnit(particleEnergy, "Energy");
     }
 
-    fAnalysisManager->Write();
+    // fAnalysisManager->Write();
     if (IsMaster()) {
         G4cout << G4endl << "--------------------End of Global Run-----------------------";
     } else {

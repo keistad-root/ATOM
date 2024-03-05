@@ -9,6 +9,6 @@ void SteppingAction::UserSteppingAction(const G4Step* step) {
     if (!(step->GetPreStepPoint()->GetPhysicalVolume())) return;
     if (!(step->GetPostStepPoint()->GetPhysicalVolume())) return;
 
-    analysisManager->FillStepper(step);
-    analysisManager->FillTrack(step);
+    // analysisManager->FillStepper(step);
+    // analysisManager->FillTrack(step);
 }

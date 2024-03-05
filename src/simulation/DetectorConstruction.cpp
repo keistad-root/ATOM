@@ -10,7 +10,21 @@ DetectorConstruction::~DetectorConstruction() {}
 G4VPhysicalVolume* DetectorConstruction::Construct() {
     checkOverlaps = true;
 
-    SetWorld();
+    // G4NistManager* nist = G4NistManager::Instance();
+
+    G4double world_sizeXY = 300.0 * mm;
+    G4double world_sizeZ = 150.0 * mm;
+    G4double air_density = 1.2929e-03 * g / cm3;
+    G4double vacuum = 1.0;
+    G4double density = air_density * vacuum; 
+    G4int nel;
+    G4Material* world_mat = new G4Material("world_mat", density, nel = 2);
+    world_mat->AddElement(elN, .7);
+    world_mat->AddElement(elO, .3);
+
+    G4Box* solidWorld = new G4Box("World", 0.5 * world_sizeXY, 0.5 * world_sizeXY, 0.5 * world_sizeZ);
+    G4LogicalVolume* logicWorld = new G4LogicalVolume(solidWorld, world_mat, "World");   
+    G4VPhysicalVolume* physWorld = new G4PVPlacement(0, G4ThreeVector(), logicWorld, "World", 0, false, 0, checkOverlaps);
 
     SetALPIDE();
     G4Transform3D t3d = G4Transform3D();
@@ -21,60 +35,8 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
     return physWorld;
 }
 
-void DetectorConstruction::SetWorld() {
-    G4double world_sizeXY = 300.0 * mm;
-    G4double world_sizeZ = 400.0 * mm;
-    G4Box* solidWorld = new G4Box("World", 0.5 * world_sizeXY, 0.5 * world_sizeXY, 0.5 * world_sizeZ);
-    logicWorld = new G4LogicalVolume(solidWorld, ele.world_mat, "World");   
-    physWorld = new G4PVPlacement(0, G4ThreeVector(), logicWorld, "World", 0, false, 0, checkOverlaps);
-}
+void DetectorConstruction::SetStand() {
 
-void DetectorConstruction::SetAlphaStand() {
-    G4Box * UpperStandBoxSolid = new G4Box("UpperStandBoxAlpha_Solid",
-                        180.0*mm*0.5, 8.00*mm*0.5, 28.50*mm*0.5);
-    G4Tubs * UpperStandHoleFirstSolid = new G4Tubs("UpperStandHoleAlphaFirst_Solid",0., 6.5*mm, 3.0*mm, 0., 360.0*deg);
-    G4Tubs * UpperStandHoleSecondSolid = new G4Tubs("UpperStandHoleAlphaSecond_Solid",0., 3.0*mm, 8.0*mm, 0., 360.0*deg);
-
-    G4RotationMatrix * Ra = new G4RotationMatrix(0.0*deg, 90.0*deg, 90.*deg);
-    G4ThreeVector Ta1 = G4ThreeVector(0.0 *mm, 4.0 *mm, 0.0 *m);
-    G4SubtractionSolid * UpperStandHoleSubFirstSolid = new G4SubtractionSolid("UpperStandHoleAlphaSubFirst_Solid", UpperStandBoxSolid, UpperStandHoleFirstSolid, Ra, Ta1);
-    G4SubtractionSolid * UpperStandHoleSubSecondSolid = new G4SubtractionSolid("UpperStandHoleAlphaSubSecond_Solid", UpperStandHoleSubFirstSolid, UpperStandHoleSecondSolid, Ra, Ta1);
-
-    StandLogical = new G4LogicalVolume(UpperStandHoleSubSecondSolid, ele.PLA, "StandLogical");
-    StandLogical->SetVisAttributes(col.stand_colour);
-
-    new G4PVPlacement(0,G4ThreeVector(0. * mm, (SAdistance - 1) * mm, 0. * mm), StandLogical, "StandLogical", logicWorld, false, 0, checkOverlaps);
-}
-
-void DetectorConstruction::SetBetaStand() {
-    G4Box* StandBodySolid = new G4Box("StandBodySolid", 70. * mm * 0.5, 7.0 * mm * 0.5, 70. * mm * 0.5);
-    G4Tubs* StandCenterHall1Solid = new G4Tubs("StandCenterHall1Solid", 0., 15. * mm * 0.5, 6. * mm * 0.5, 0., 360.0 * deg);
-    G4Tubs* StandCenterHall2Solid = new G4Tubs("StandCenterHall2Solid", 0., 13. * mm * 0.5, 7. * mm * 0.5, 0., 360.0 * deg);
-    G4Tubs* StandBody2Solid = new G4Tubs("StandBody2Solid", 2. * mm * 0.5, 30. * mm * 0.5, 59. * mm * 0.5, 0., 360.0 * deg);
-    G4Tubs* StandCenterHall3Solid = new G4Tubs("StandCenterHall3Solid", 0., 14. * mm * 0.5, 10. * mm * 0.5, 0., 360.0 * deg);
-
-    G4RotationMatrix* SubRa = new G4RotationMatrix(0. * deg, 90. * deg, 0. * deg);
-    G4SubtractionSolid* StandPreSolid = new G4SubtractionSolid("StandPreSolid", StandBodySolid, StandCenterHall1Solid, SubRa,G4ThreeVector(0., .5 * mm, 0.));
-    G4SubtractionSolid* Stand1Solid = new G4SubtractionSolid("Stand1Solid", StandPreSolid, StandCenterHall2Solid, SubRa,G4ThreeVector(0., 0. * mm, 0.));
-    G4RotationMatrix* UniRa = new G4RotationMatrix(0. * deg, 90. * deg, 0. * deg);
-    G4UnionSolid* Stand2Solid = new G4UnionSolid("Stand2Solid", Stand1Solid, StandBody2Solid, UniRa, G4ThreeVector(0.,33. * mm,0.));
-    G4SubtractionSolid* StandSolid = new G4SubtractionSolid("StandSolid",Stand2Solid,StandCenterHall3Solid, SubRa, G4ThreeVector(0., 58. * mm, 0.));
-    StandLogical = new G4LogicalVolume(StandSolid, ele.PLA, "StandLogical");
-    StandLogical->SetVisAttributes(col.stand_colour);
-
-    new G4PVPlacement(0,G4ThreeVector(0. * mm, (SAdistance - 53.) * mm, 0. * mm), StandLogical, "Stand2Logical", logicWorld, false, 0, checkOverlaps);
-}
-
-void DetectorConstruction::SetShield() {
-    G4Box* ScreenBoxOuterSolid = new G4Box("ScreenBoxOuterSolid", 15. * mm * 0.5, (8.00+1.00) * mm * 0.5, (28.5 + 1.00) * mm * 0.5);
-    G4Box* ScreenBoxInnerSolid = new G4Box("ScreenBoxInnerSolid", 15. * mm * 0.5, 8.00 * mm * 0.5, 28.5 * mm * 0.5);
-
-    G4SubtractionSolid* ScreenSolid = new G4SubtractionSolid("ScreenSolid", ScreenBoxOuterSolid, ScreenBoxInnerSolid);
-
-    ShieldLogical = new G4LogicalVolume(ScreenSolid, ele.Screen, "ShieldLogical");
-    ShieldLogical->SetVisAttributes(col.screen_colour);
-
-    new G4PVPlacement(0,G4ThreeVector(0. * mm, (SAdistance - 1) * mm, 0. * mm), ShieldLogical, "ShieldLogical", logicWorld, false, 0, checkOverlaps);
 }
 
 void DetectorConstruction::SetALPIDE() {
@@ -108,13 +70,28 @@ void DetectorConstruction::SetCarrierBoard() {
 
 G4LogicalVolume* DetectorConstruction::GetScoringStand() const { return StandLogical; }
 
-G4LogicalVolume* DetectorConstruction::GetShieldStand() const { return ShieldLogical; }
+G4LogicalVolume* DetectorConstruction::GetScoringStand() {
+    return StandLogical;
+}
 
-G4LogicalVolume* DetectorConstruction::GetScoringALPIDECircuit() const { return ALPIDECircuitLogical; }
+G4LogicalVolume* DetectorConstruction::GetScoringALPIDECircuit() {
+    return ALPIDECircuitLogical;
+}
 
-G4LogicalVolume* DetectorConstruction::GetScoringALPIDEEpitaxial() const { return ALPIDEEpitaxialLogical; }
+G4LogicalVolume* DetectorConstruction::GetScoringALPIDEEpitaxial() {
+    return ALPIDEEpitaxialLogical;
+}
 
-G4LogicalVolume* DetectorConstruction::GetScoringCarrierBoard() const { return CarrierBoardLogical; }
+G4LogicalVolume* DetectorConstruction::GetScoringCarrierBoard() {
+    return CarrierBoardLogical;
+}
+
+
+
+void DetectorConstruction::SetVacuum(G4double vac) {
+    
+    vacuum=vac;
+}
 
 void DetectorConstruction::SetAlpha(G4double energy) {
     G4UImanager* UImanager = G4UImanager::GetUIpointer();
