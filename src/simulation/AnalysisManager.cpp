@@ -29,6 +29,8 @@ void AnalysisManager::Write(){
 }
 
 void AnalysisManager::Book() {
+    std::cout << "Hello" << std::endl;
+    
     if (fBooked) return;
 
     fFile = new TFile(fFileName.Data(), "RECREATE");

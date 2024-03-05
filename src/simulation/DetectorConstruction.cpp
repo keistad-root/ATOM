@@ -8,21 +8,9 @@ DetectorConstruction::DetectorConstruction() : G4VUserDetectorConstruction() {
 DetectorConstruction::~DetectorConstruction() {}
 
 G4VPhysicalVolume* DetectorConstruction::Construct() {
-    G4bool checkOverlaps = true;
+    checkOverlaps = true;
 
-    G4double world_sizeXY = 300.0 * mm;
-    G4double world_sizeZ = 400.0 * mm;
-    G4double air_density = 1.2929e-03 * g / cm3;
-    G4double vacuum = 1.0;
-    G4double density = air_density * vacuum; 
-    G4int nel;
-    G4Material* world_mat = new G4Material("world_mat", density, nel = 2);
-    world_mat->AddElement(elN, .7);
-    world_mat->AddElement(elO, .3);
-
-    G4Box* solidWorld = new G4Box("World", 0.5 * world_sizeXY, 0.5 * world_sizeXY, 0.5 * world_sizeZ);
-    G4LogicalVolume* logicWorld = new G4LogicalVolume(solidWorld, world_mat, "World");   
-    G4VPhysicalVolume* physWorld = new G4PVPlacement(0, G4ThreeVector(), logicWorld, "World", 0, false, 0, checkOverlaps);
+    SetWorld();
 
     SetALPIDE();
     G4Transform3D t3d = G4Transform3D();
@@ -30,23 +18,35 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
 
     SetCarrierBoard();
     new G4PVPlacement(0, G4ThreeVector(0. * mm, -1.0 * mm * 0.5 + -100 * um * 0.5, -2.8 * mm), CarrierBoardLogical, "CarrierBoard", logicWorld, false, 0, checkOverlaps);
-
-    SetStand2();
-    new G4PVPlacement(0,G4ThreeVector(0. * mm, 13.5 * mm, 0. * mm), Stand2Logical, "Stand2Logical", logicWorld, false, 0, checkOverlaps);
-
     return physWorld;
 }
 
-void DetectorConstruction::SetStand2() {
-    G4Material* PLA = new G4Material("PLA", 0.3 * 1.210 * g/cm3, 3);
-    PLA->AddElement(elC, 3);
-    PLA->AddElement(elH, 4);
-    PLA->AddElement(elO, 2);
+void DetectorConstruction::SetWorld() {
+    G4double world_sizeXY = 300.0 * mm;
+    G4double world_sizeZ = 400.0 * mm;
+    G4Box* solidWorld = new G4Box("World", 0.5 * world_sizeXY, 0.5 * world_sizeXY, 0.5 * world_sizeZ);
+    logicWorld = new G4LogicalVolume(solidWorld, ele.world_mat, "World");   
+    physWorld = new G4PVPlacement(0, G4ThreeVector(), logicWorld, "World", 0, false, 0, checkOverlaps);
+}
 
-    G4VisAttributes* stand_colour = new G4VisAttributes(G4Colour(1.,1.,1.));
-    stand_colour->SetVisibility(true);
-    stand_colour->SetForceSolid(true);
+void DetectorConstruction::SetAlphaStand() {
+    G4Box * UpperStandBoxSolid = new G4Box("UpperStandBoxAlpha_Solid",
+                        180.0*mm*0.5, 8.00*mm*0.5, 28.50*mm*0.5);
+    G4Tubs * UpperStandHoleFirstSolid = new G4Tubs("UpperStandHoleAlphaFirst_Solid",0., 6.5*mm, 3.0*mm, 0., 360.0*deg);
+    G4Tubs * UpperStandHoleSecondSolid = new G4Tubs("UpperStandHoleAlphaSecond_Solid",0., 3.0*mm, 8.0*mm, 0., 360.0*deg);
 
+    G4RotationMatrix * Ra = new G4RotationMatrix(0.0*deg, 90.0*deg, 90.*deg);
+    G4ThreeVector Ta1 = G4ThreeVector(0.0 *mm, 4.0 *mm, 0.0 *m);
+    G4SubtractionSolid * UpperStandHoleSubFirstSolid = new G4SubtractionSolid("UpperStandHoleAlphaSubFirst_Solid", UpperStandBoxSolid, UpperStandHoleFirstSolid, Ra, Ta1);
+    G4SubtractionSolid * UpperStandHoleSubSecondSolid = new G4SubtractionSolid("UpperStandHoleAlphaSubSecond_Solid", UpperStandHoleSubFirstSolid, UpperStandHoleSecondSolid, Ra, Ta1);
+
+    StandLogical = new G4LogicalVolume(UpperStandHoleSubSecondSolid, ele.PLA, "StandLogical");
+    StandLogical->SetVisAttributes(col.stand_colour);
+
+    new G4PVPlacement(0,G4ThreeVector(0. * mm, (SAdistance - 1) * mm, 0. * mm), StandLogical, "StandLogical", logicWorld, false, 0, checkOverlaps);
+}
+
+void DetectorConstruction::SetBetaStand() {
     G4Box* StandBodySolid = new G4Box("StandBodySolid", 70. * mm * 0.5, 7.0 * mm * 0.5, 70. * mm * 0.5);
     G4Tubs* StandCenterHall1Solid = new G4Tubs("StandCenterHall1Solid", 0., 15. * mm * 0.5, 6. * mm * 0.5, 0., 360.0 * deg);
     G4Tubs* StandCenterHall2Solid = new G4Tubs("StandCenterHall2Solid", 0., 13. * mm * 0.5, 7. * mm * 0.5, 0., 360.0 * deg);
@@ -59,26 +59,35 @@ void DetectorConstruction::SetStand2() {
     G4RotationMatrix* UniRa = new G4RotationMatrix(0. * deg, 90. * deg, 0. * deg);
     G4UnionSolid* Stand2Solid = new G4UnionSolid("Stand2Solid", Stand1Solid, StandBody2Solid, UniRa, G4ThreeVector(0.,33. * mm,0.));
     G4SubtractionSolid* StandSolid = new G4SubtractionSolid("StandSolid",Stand2Solid,StandCenterHall3Solid, SubRa, G4ThreeVector(0., 58. * mm, 0.));
-    Stand2Logical = new G4LogicalVolume(StandSolid, PLA, "StandLogical");
-    Stand2Logical->SetVisAttributes(stand_colour);
+    StandLogical = new G4LogicalVolume(StandSolid, ele.PLA, "StandLogical");
+    StandLogical->SetVisAttributes(col.stand_colour);
 
+    new G4PVPlacement(0,G4ThreeVector(0. * mm, (SAdistance - 53.) * mm, 0. * mm), StandLogical, "Stand2Logical", logicWorld, false, 0, checkOverlaps);
+}
+
+void DetectorConstruction::SetShield() {
+    G4Box* ScreenBoxOuterSolid = new G4Box("ScreenBoxOuterSolid", 15. * mm * 0.5, (8.00+1.00) * mm * 0.5, (28.5 + 1.00) * mm * 0.5);
+    G4Box* ScreenBoxInnerSolid = new G4Box("ScreenBoxInnerSolid", 15. * mm * 0.5, 8.00 * mm * 0.5, 28.5 * mm * 0.5);
+
+    G4SubtractionSolid* ScreenSolid = new G4SubtractionSolid("ScreenSolid", ScreenBoxOuterSolid, ScreenBoxInnerSolid);
+
+    ShieldLogical = new G4LogicalVolume(ScreenSolid, ele.Screen, "ShieldLogical");
+    ShieldLogical->SetVisAttributes(col.screen_colour);
+
+    new G4PVPlacement(0,G4ThreeVector(0. * mm, (SAdistance - 1) * mm, 0. * mm), ShieldLogical, "ShieldLogical", logicWorld, false, 0, checkOverlaps);
 }
 
 void DetectorConstruction::SetALPIDE() {
-    G4Material* ALPIDESi = new G4Material("Silicon", 14, 28.085 * g/mole, 2330 * kg/m3);
-    G4VisAttributes* alpide_colour = new G4VisAttributes(G4Colour(1.,1.,0.));
-    alpide_colour->SetVisibility(true);
-    alpide_colour->SetForceSolid(true);
     G4UserLimits* ALPIDEStepLimit = new G4UserLimits(1 * um, 1 * um);
 
     G4Box* ALPIDECircuitSolid = new G4Box("ALPIDECircuitSolid", 30.0 * mm * 0.5, 11.0 * um * 0.5, 15.0 * mm * 0.5);
     G4Box* ALPIDEEpitaxialSolid = new G4Box("ALPIDEEpitaxialSolid", 30.0 * mm * 0.5, (50.0 - 11.0) * um * 0.5, 15.0 * mm * 0.5);
     
-    ALPIDECircuitLogical = new G4LogicalVolume(ALPIDECircuitSolid, ALPIDESi, "ALPIDECircuitLogical");
-    ALPIDECircuitLogical->SetVisAttributes(alpide_colour);
+    ALPIDECircuitLogical = new G4LogicalVolume(ALPIDECircuitSolid, ele.ALPIDESi, "ALPIDECircuitLogical");
+    ALPIDECircuitLogical->SetVisAttributes(col.alpide_colour);
     ALPIDECircuitLogical->SetUserLimits(ALPIDEStepLimit);
-    ALPIDEEpitaxialLogical = new G4LogicalVolume(ALPIDEEpitaxialSolid, ALPIDESi, "ALPIDEEpitaxialLogical");
-    ALPIDEEpitaxialLogical->SetVisAttributes(alpide_colour);
+    ALPIDEEpitaxialLogical = new G4LogicalVolume(ALPIDEEpitaxialSolid, ele.ALPIDESi, "ALPIDEEpitaxialLogical");
+    ALPIDEEpitaxialLogical->SetVisAttributes(col.alpide_colour);
     ALPIDEEpitaxialLogical->SetUserLimits(ALPIDEStepLimit);
 
     ALPIDEAssembly = new G4AssemblyVolume();
@@ -90,94 +99,29 @@ void DetectorConstruction::SetALPIDE() {
 }
 
 void DetectorConstruction::SetCarrierBoard() {
-    G4Material* FibrousGlass = new G4Material("FibrousGlass", 2.74351 * g/cm3, 7);
-
-    G4Material* SiO2 = new G4Material("SiO2", 2.20 * g/cm3, 2);
-    SiO2->AddElement(elSi, 1);
-    SiO2->AddElement(elO, 2);
-
-    G4Material* Al2O3 = new G4Material("Al2O3", 3.97 * g/cm3, 2);
-    Al2O3->AddElement(elAl, 2);
-    Al2O3->AddElement(elO, 3);
-
-    G4Material* Fe2O3 = new G4Material("Fe2O3", 5.24 * g/cm3, 2);
-    Fe2O3->AddElement(elFe, 2);
-    Fe2O3->AddElement(elO, 3);
-    
-    G4Material* CaO = new G4Material("CaO", 3.35 * g/cm3, 2);
-    CaO->AddElement(elCa, 1);
-    CaO->AddElement(elO, 1);
-
-    G4Material* MgO = new G4Material("MgO", 3.58 * g/cm3, 2);
-    MgO->AddElement(elMg, 1);
-    MgO->AddElement(elO, 1);
-
-    G4Material* Na2O = new G4Material("Na2O", 2.27 * g/cm3, 2);
-    Na2O->AddElement(elNa, 2);
-    Na2O->AddElement(elO, 1);
-    
-    G4Material* TiO2 = new G4Material("TiO2", 4.24 * g/cm3, 2);
-    TiO2->AddElement(elTi, 1);
-    TiO2->AddElement(elO, 2);
-
-    FibrousGlass->AddMaterial(SiO2, 60.0 * perCent);
-    FibrousGlass->AddMaterial(Al2O3, 11.8 * perCent);
-    FibrousGlass->AddMaterial(Fe2O3, 0.1 * perCent);
-    FibrousGlass->AddMaterial(CaO, 22.4 * perCent);
-    FibrousGlass->AddMaterial(MgO, 3.4 * perCent);
-    FibrousGlass->AddMaterial(Na2O, 1.0 * perCent);
-    FibrousGlass->AddMaterial(TiO2, 1.3 * perCent);
-
-    G4Material* EpoxyResin = new G4Material("EpoxyResin", 1.1250 * g/cm3, 4);
-    EpoxyResin->AddElement(elC, 38);
-    EpoxyResin->AddElement(elH, 40);
-    EpoxyResin->AddElement(elO, 6);
-    EpoxyResin->AddElement(elBr, 4);
-
-    G4Material* PCB = new G4Material("Fr4", 1.98281 * mg/cm3, 2);
-    PCB->AddMaterial(FibrousGlass, 53 * perCent);
-    PCB->AddMaterial(EpoxyResin, 47 * perCent);
-
     G4Box* CarrierBoardBody = new G4Box("CarrierBoardBody", 70. * mm * 0.5, 1.0 * mm * 0.5, 70. * mm * 0.5);
     G4Box* CarrierBoardEmpty = new G4Box("CarrierBoardEmpty", 31. * mm * 0.5, 3 * mm, 12.8 * mm * 0.5);
     G4SubtractionSolid* CarrierBoardSolid = new G4SubtractionSolid("CarrierBoardSolid", CarrierBoardBody, CarrierBoardEmpty, G4Translate3D(0.,0.,2.7 * mm));
-    CarrierBoardLogical = new G4LogicalVolume(CarrierBoardSolid, PCB, "CarrierBoardLogical");
-    
-    G4VisAttributes* pcb_colour = new G4VisAttributes( G4Colour(0/255., 100/255., 0/255.) );
-    pcb_colour->SetVisibility(true);
-    pcb_colour->SetForceSolid(true);
-    
-    CarrierBoardLogical->SetVisAttributes(pcb_colour);
+    CarrierBoardLogical = new G4LogicalVolume(CarrierBoardSolid, ele.PCB, "CarrierBoardLogical");
+    CarrierBoardLogical->SetVisAttributes(col.pcb_colour);
 }
 
+G4LogicalVolume* DetectorConstruction::GetScoringStand() const { return StandLogical; }
 
-G4LogicalVolume* DetectorConstruction::GetScoringStand2() const {
-    return Stand2Logical;
-}
+G4LogicalVolume* DetectorConstruction::GetShieldStand() const { return ShieldLogical; }
 
-G4LogicalVolume* DetectorConstruction::GetScoringALPIDECircuit() const {
-    return ALPIDECircuitLogical;
-}
+G4LogicalVolume* DetectorConstruction::GetScoringALPIDECircuit() const { return ALPIDECircuitLogical; }
 
-G4LogicalVolume* DetectorConstruction::GetScoringALPIDEEpitaxial() const {
-    return ALPIDEEpitaxialLogical;
-}
+G4LogicalVolume* DetectorConstruction::GetScoringALPIDEEpitaxial() const { return ALPIDEEpitaxialLogical; }
 
-G4LogicalVolume* DetectorConstruction::GetScoringCarrierBoard() const {
-    return CarrierBoardLogical;
-}
-
-
-
-void DetectorConstruction::SetVacuum(G4double vac) {
-    
-    vacuum=vac;
-}
+G4LogicalVolume* DetectorConstruction::GetScoringCarrierBoard() const { return CarrierBoardLogical; }
 
 void DetectorConstruction::SetAlpha(G4double energy) {
     G4UImanager* UImanager = G4UImanager::GetUIpointer();
     std::ostringstream stringStream;
+    std::ostringstream positionStream;
     stringStream << "/gps/ene/mono " << energy/MeV << G4String(" MeV");
+    positionStream << "/gps/pos/centre 0. " << SAdistance/mm << " 0. "<< G4String("mm");
     std::vector<G4String> commands = {
         "/gps/particle alpha",
         "/gps/pos/type Plane",
@@ -192,12 +136,16 @@ void DetectorConstruction::SetAlpha(G4double energy) {
     for(G4String command : commands){
         UImanager->ApplyCommand(command);
     }
+    UImanager->ApplyCommand(G4String(positionStream.str()));
+
 }
 
 void DetectorConstruction::SetBeta(G4double energy) {
     G4UImanager* UImanager = G4UImanager::GetUIpointer();
     std::ostringstream stringStream;
+    std::ostringstream positionStream;
     stringStream << "/gps/ene/mono " << energy/MeV << G4String(" MeV");
+    positionStream << "/gps/pos/centre 0. " << SAdistance/mm << " 0. "<< G4String("mm");
     std::vector<G4String> commands = {
         "/gps/particle e-",
         "/gps/pos/type Plane",
@@ -207,7 +155,8 @@ void DetectorConstruction::SetBeta(G4double energy) {
         "/gps/pos/rot2 1. 0. 0.",
         "/gps/ang/type iso",
         "/gps/ene/type Mono",
-        G4String(stringStream.str())
+        G4String(stringStream.str()),
+        G4String(positionStream.str())
     };
     for(G4String command : commands){
         UImanager->ApplyCommand(command);
@@ -217,7 +166,9 @@ void DetectorConstruction::SetBeta(G4double energy) {
 void DetectorConstruction::SetGamma(G4double energy) {
     G4UImanager* UImanager = G4UImanager::GetUIpointer();
     std::ostringstream stringStream;
+    std::ostringstream positionStream;
     stringStream << "/gps/ene/mono " << energy/MeV << G4String(" MeV");
+    positionStream << "/gps/pos/centre 0. " << SAdistance/mm << " 0. "<< G4String("mm");
     std::vector<G4String> commands = {
         "/gps/particle gamma",
         "/gps/pos/type Plane",
@@ -227,20 +178,31 @@ void DetectorConstruction::SetGamma(G4double energy) {
         "/gps/pos/rot2 1. 0. 0.",
         "/gps/ang/type iso",
         "/gps/ene/type Mono",
-        G4String(stringStream.str())
+        G4String(stringStream.str()),
+        G4String(positionStream.str())
     };
     for(G4String command : commands){
         UImanager->ApplyCommand(command);
     }
 }
 
+void DetectorConstruction::SetStandType(G4String type) {
+    if (type == "alpha_no_screen") {
+        SetAlphaStand();
+    } else if (type == "alpha_screen") {
+        SetAlphaStand();
+        SetShield();
+    } else if (type == "beta") {
+        SetBetaStand();
+    }
+}
+
+void DetectorConstruction::SetDistance(G4double distance) {
+    SAdistance = distance;
+}
 
 void DetectorConstruction::DefineCommands() {
     fMessenger = new G4GenericMessenger(this, "/Set/Geometry/", "Geometry Control");
-
-    auto& SetVacuumCmd = fMessenger->DeclareMethod("SetVacuum",&DetectorConstruction::SetVacuum, "Set vacuum");
-    SetVacuumCmd.SetParameterName("vac", true);
-    SetVacuumCmd.SetDefaultValue("1.");
 
     auto& SetAlphaCmd = fMessenger->DeclareMethodWithUnit("SetAlpha", "MeV", &DetectorConstruction::SetAlpha, "Set alpha particle energy");
     SetAlphaCmd.SetParameterName("AE", true);
@@ -257,4 +219,12 @@ void DetectorConstruction::DefineCommands() {
     SetGammaCmd.SetRange("GE>=0. && GE<100.");
     SetGammaCmd.SetDefaultValue("5.9");
 
+    auto& SetStandType = fMessenger->DeclareMethod("SetStandType", &DetectorConstruction::SetStandType, "Set stand type");
+    SetStandType.SetParameterName("type", true);
+    SetStandType.SetDefaultValue("alpha");
+
+    auto& SetDistance = fMessenger->DeclareMethodWithUnit("SetDistance", "mm", &DetectorConstruction::SetDistance, "Set distance from source and ALPIDE");
+    SetDistance.SetParameterName("dist", true);
+    SetDistance.SetRange("dist>=0. && dist<100.");
+    SetDistance.SetDefaultValue("9.");
 }

@@ -14,6 +14,7 @@ public:
     virtual ~SteppingAction();
 
     virtual void UserSteppingAction(const G4Step*);
+    void MakeDictionaryScoringVolume();
 };
 
 #endif
