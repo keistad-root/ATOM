@@ -2,6 +2,7 @@
 #define __STEPPINGACTION__
 
 #include "G4UserSteppingAction.hh"
+
 #include "EventAction.h"
 #include "AnalysisManager.h"
 
@@ -13,8 +14,6 @@ public:
     virtual ~SteppingAction();
 
     virtual void UserSteppingAction(const G4Step*);
-
-    void MakeDictionaryScoringVolume();
 };
 
 #endif

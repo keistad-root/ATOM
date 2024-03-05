@@ -13,12 +13,15 @@
 #include "G4UImanager.hh"
 
 #include "G4AssemblyVolume.hh"
-#include "G4SubtractionSolid.hh"
 
 #include "G4PVPlacement.hh"
 
+#include "G4RotationMatrix.hh"
 #include "G4Box.hh"
 #include "G4Tubs.hh"
+#include "G4SubtractionSolid.hh"
+#include "G4UnionSolid.hh"
+
 
 class DetectorConstruction : public G4VUserDetectorConstruction {
 private:

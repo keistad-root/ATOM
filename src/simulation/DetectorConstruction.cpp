@@ -5,15 +5,13 @@ DetectorConstruction::DetectorConstruction() : G4VUserDetectorConstruction() {
     Construct();
 }
 
-DetectorConstruction::~DetectorConstruction() {
-
-}
+DetectorConstruction::~DetectorConstruction() {}
 
 G4VPhysicalVolume* DetectorConstruction::Construct() {
     G4bool checkOverlaps = true;
 
     G4double world_sizeXY = 300.0 * mm;
-    G4double world_sizeZ = 150.0 * mm;
+    G4double world_sizeZ = 400.0 * mm;
     G4double air_density = 1.2929e-03 * g / cm3;
     G4double vacuum = 1.0;
     G4double density = air_density * vacuum; 
@@ -31,7 +29,10 @@ G4VPhysicalVolume* DetectorConstruction::Construct() {
     ALPIDEAssembly->MakeImprint(logicWorld, t3d);
 
     SetCarrierBoard();
-    new G4PVPlacement(0, G4ThreeVector(0 * mm, -1.0 * mm * 0.5 + -100 * um * 0.5, -2.8 * mm), CarrierBoardLogical, "CarrierBoard", logicWorld, false, 0, checkOverlaps);
+    new G4PVPlacement(0, G4ThreeVector(0. * mm, -1.0 * mm * 0.5 + -100 * um * 0.5, -2.8 * mm), CarrierBoardLogical, "CarrierBoard", logicWorld, false, 0, checkOverlaps);
+
+    SetStand2();
+    new G4PVPlacement(0,G4ThreeVector(0. * mm, 13.5 * mm, 0. * mm), Stand2Logical, "Stand2Logical", logicWorld, false, 0, checkOverlaps);
 
     return physWorld;
 }
@@ -42,9 +43,25 @@ void DetectorConstruction::SetStand2() {
     PLA->AddElement(elH, 4);
     PLA->AddElement(elO, 2);
 
-    G4Box* StandBodySolid = new G4Box("StandBodySolid", 70. * cm * 0.5, 10. * cm * 0.5, 70. * cm * 0.5);
-    G4Tubs* StandCenterHall1Solid = new G4Tubs("StandCenterHall1Solid", 0., 10. * cm, 9. * cm, 0., 360.0 * deg);
-    G4Tubs* StandCenterHall2Solid = new G4Tubs("StandCenterHall2Solid", 0., 9.9 * cm, 10. * cm, 0., 360.0 * deg);
+    G4VisAttributes* stand_colour = new G4VisAttributes(G4Colour(1.,1.,1.));
+    stand_colour->SetVisibility(true);
+    stand_colour->SetForceSolid(true);
+
+    G4Box* StandBodySolid = new G4Box("StandBodySolid", 70. * mm * 0.5, 7.0 * mm * 0.5, 70. * mm * 0.5);
+    G4Tubs* StandCenterHall1Solid = new G4Tubs("StandCenterHall1Solid", 0., 15. * mm * 0.5, 6. * mm * 0.5, 0., 360.0 * deg);
+    G4Tubs* StandCenterHall2Solid = new G4Tubs("StandCenterHall2Solid", 0., 13. * mm * 0.5, 7. * mm * 0.5, 0., 360.0 * deg);
+    G4Tubs* StandBody2Solid = new G4Tubs("StandBody2Solid", 2. * mm * 0.5, 30. * mm * 0.5, 59. * mm * 0.5, 0., 360.0 * deg);
+    G4Tubs* StandCenterHall3Solid = new G4Tubs("StandCenterHall3Solid", 0., 14. * mm * 0.5, 10. * mm * 0.5, 0., 360.0 * deg);
+
+    G4RotationMatrix* SubRa = new G4RotationMatrix(0. * deg, 90. * deg, 0. * deg);
+    G4SubtractionSolid* StandPreSolid = new G4SubtractionSolid("StandPreSolid", StandBodySolid, StandCenterHall1Solid, SubRa,G4ThreeVector(0., .5 * mm, 0.));
+    G4SubtractionSolid* Stand1Solid = new G4SubtractionSolid("Stand1Solid", StandPreSolid, StandCenterHall2Solid, SubRa,G4ThreeVector(0., 0. * mm, 0.));
+    G4RotationMatrix* UniRa = new G4RotationMatrix(0. * deg, 90. * deg, 0. * deg);
+    G4UnionSolid* Stand2Solid = new G4UnionSolid("Stand2Solid", Stand1Solid, StandBody2Solid, UniRa, G4ThreeVector(0.,33. * mm,0.));
+    G4SubtractionSolid* StandSolid = new G4SubtractionSolid("StandSolid",Stand2Solid,StandCenterHall3Solid, SubRa, G4ThreeVector(0., 58. * mm, 0.));
+    Stand2Logical = new G4LogicalVolume(StandSolid, PLA, "StandLogical");
+    Stand2Logical->SetVisAttributes(stand_colour);
+
 }
 
 void DetectorConstruction::SetALPIDE() {
@@ -165,7 +182,7 @@ void DetectorConstruction::SetAlpha(G4double energy) {
         "/gps/particle alpha",
         "/gps/pos/type Plane",
         "/gps/pos/shape Circle",
-        "/gps/pos/radius 2.5 mm",
+        "/gps/pos/radius 10. mm",
         "/gps/pos/rot1 0. 0. 1.",
         "/gps/pos/rot2 1. 0. 0.",
         "/gps/ang/type iso",
@@ -182,7 +199,7 @@ void DetectorConstruction::SetBeta(G4double energy) {
     std::ostringstream stringStream;
     stringStream << "/gps/ene/mono " << energy/MeV << G4String(" MeV");
     std::vector<G4String> commands = {
-        "/gps/particle beta",
+        "/gps/particle e-",
         "/gps/pos/type Plane",
         "/gps/pos/shape Circle",
         "/gps/pos/radius 2.5 mm",

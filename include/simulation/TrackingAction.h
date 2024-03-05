@@ -2,6 +2,7 @@
 #define __TRACKINGACTION__
 
 #include "G4UserTrackingAction.hh"
+
 #include "AnalysisManager.h"
 
 class TrackingAction : public G4UserTrackingAction {

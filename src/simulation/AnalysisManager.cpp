@@ -12,14 +12,6 @@ AnalysisManager::~AnalysisManager() {
     Destroy();
 }
 
-void AnalysisManager::Destroy() {
-    G4cout << "AnalysisManager Closing file." << G4endl;
-    if (fFile) {
-        fFile->Delete("*");
-    }
-    G4cout << "AnalysisManager End of closing." << G4endl;
-}
-
 AnalysisManager* AnalysisManager::Instance() {
     if (fInstance == 0) {
         fInstance = new AnalysisManager();
@@ -108,6 +100,14 @@ void AnalysisManager::AutoSave() {
     fTreeSource->AutoSave();
     fTreeStepper->AutoSave();
     fTreeTrack->AutoSave();
+}
+
+void AnalysisManager::Destroy() {
+    G4cout << "AnalysisManager Closing file." << G4endl;
+    if (fFile) {
+        fFile->Delete("*");
+    }
+    G4cout << "AnalysisManager End of closing." << G4endl;
 }
 
 void AnalysisManager::FillStepper(const G4Step* step) {
@@ -212,14 +212,6 @@ void AnalysisManager::EndOfTrack(const G4Track* track) {
     }
 }
 
-void AnalysisManager::SetRecordPrimaryOnly(Bool_t primaryOnly) {
-    fRecordPrimaryOnly = primaryOnly;
-}
-
-Bool_t AnalysisManager::GetRecordPrimaryOnly() {
-    return fRecordPrimaryOnly;
-}
-
 void AnalysisManager::DefineCommand() {
     fMessenger = new G4GenericMessenger(this, "/Analysis/","Analysis control");
 
@@ -231,7 +223,7 @@ void AnalysisManager::DefineCommand() {
     SetRecordPrimaryCmd.SetParameterName("PrimaryOnly", true);
     SetRecordPrimaryCmd.SetDefaultValue("true");
 
-    auto& SetRecordSetCmd = fMessenger->DeclareMethod("SetRecordPreset", &AnalysisManager::SetRecordSet, "Option for RecordingSet, [Track, Stepper, Source]");
+    auto& SetRecordSetCmd = fMessenger->DeclareMethod("SetRecordSet", &AnalysisManager::SetRecordSet, "Option for RecordingSet, [Track, Stepper, Source]");
     SetRecordSetCmd.SetParameterName("RecordSet", true);
     SetRecordSetCmd.SetDefaultValue("111");
 }
@@ -262,4 +254,12 @@ void AnalysisManager::SetRecordSet(const Int_t number) {
     } else {
         bTreeTrack = false;
     }
+}
+
+void AnalysisManager::SetRecordPrimaryOnly(Bool_t primaryOnly) {
+    fRecordPrimaryOnly = primaryOnly;
+}
+
+Bool_t AnalysisManager::GetRecordPrimaryOnly() {
+    return fRecordPrimaryOnly;
 }

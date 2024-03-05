@@ -2,9 +2,10 @@
 #define __ANALYSISMANAGER__
 
 #include "G4PhysicalConstants.hh"
-#include "TROOT.h"
 
 #include "DetectorConstruction.h"
+
+#include "TROOT.h"
 #include "TFile.h"
 #include "TTree.h"
 
@@ -52,58 +53,54 @@ class AnalysisManager {
 private:
     static AnalysisManager* fInstance;
 
-    SourceEntry fSource;
-    StepperEntry fStepper;
-    TrackEntry fTrack;
-
-    Bool_t fBooked = kFALSE;
-    Bool_t fCmdDefined = kFALSE;
-    Bool_t fRecordPrimaryOnly = kFALSE;
-
-    Bool_t bTreeSource = kTRUE;
-    Bool_t bTreeStepper = kTRUE;
-    Bool_t bTreeTrack = kTRUE;
-
+    TFile* fFile;
     TString fFileName;
     TTree* fTreeSource;
     TTree* fTreeStepper;
     TTree* fTreeTrack;
 
-    TFile* fFile;
-
-    G4GenericMessenger* fMessenger;
+    SourceEntry fSource;
+    StepperEntry fStepper;
+    TrackEntry fTrack;
 
     std::map<G4LogicalVolume*, Int_t> fScoringVolumes;
     G4LogicalVolume* fScoringALPIDECircuit;
     G4LogicalVolume* fScoringALPIDEEpitaxial;
     G4LogicalVolume* fScoringCarrierBoardLogical;
-
+    
     std::map<Int_t, Float_t> WDeltaEnergy;
     std::map<Int_t, Bool_t>  WPassed;
+    
+    Bool_t bTreeSource = kTRUE;
+    Bool_t bTreeStepper = kTRUE;
+    Bool_t bTreeTrack = kTRUE;
+
+    G4GenericMessenger* fMessenger;
+    Bool_t fBooked = kFALSE;
+    Bool_t fCmdDefined = kFALSE;
+    Bool_t fRecordPrimaryOnly = kFALSE;
 
 public:
     AnalysisManager();
     ~AnalysisManager();
 
-    void DefineCommand();
-
     static AnalysisManager* Instance();
-    void Destroy();
 
     void Write();
     void Book();
     void AutoSave();
+    void Destroy();
 
     void FillStepper(const G4Step* step);
     void FillTrack(const G4Step* step);
     void FillSource(const G4Track* track);
     void EndOfTrack(const G4Track* track);
 
-    void SetRecordPrimaryOnly(Bool_t primaryOnly = kTRUE);
-    Bool_t GetRecordPrimaryOnly();
-
+    void DefineCommand();
     void SetFileName(TString fName);
     void SetRecordSet(const Int_t number);
+    void SetRecordPrimaryOnly(Bool_t primaryOnly = kTRUE);
+    Bool_t GetRecordPrimaryOnly();
 };
 
 #endif

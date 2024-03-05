@@ -2,6 +2,7 @@
 #define __ACTIONINITIALIZATION__
 
 #include "G4VUserActionInitialization.hh"
+
 #include "RunAction.h"
 #include "EventAction.h"
 #include "SteppingAction.h"
