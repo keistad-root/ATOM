@@ -3,14 +3,14 @@
 
 #include <vector>
 
-#include "TChip.h"
+#include "TEvent.h"
 
 class TAnalyser {
 private:
-    std::vector<TChip> chips;
+    std::vector<TEvent> chips;
 public:
     TAnalyser();
-    void addChip(const TChip& chip);
+    void addChip(const TEvent& chip);
 
 };
 

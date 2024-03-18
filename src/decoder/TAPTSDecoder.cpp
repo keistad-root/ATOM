@@ -13,10 +13,9 @@ void TAPTSDecoder::decode() {
     }
 }
 
-std::vector<TAPTS*> TAPTSDecoder::getData() {
+std::vector<TAPTSEvent*> TAPTSDecoder::getData() {
     return aptss;
 }
-
 
 void TAPTSDecoder::inputEvent() {
     preTest();
@@ -28,7 +27,7 @@ void TAPTSDecoder::inputEvent() {
     // Set number of frame.
 
     for (int iFrame = 0; iFrame < nFrame_; iFrame++) {
-        TAPTS* apts = new TAPTS();
+        TAPTSEvent* apts = new TAPTSEvent();
         apts->setEvent(iEvent_);
         for (int j = 0; j < 16; j++) {
             int share1 = eventData[iFrame * 40 + 2 * j];

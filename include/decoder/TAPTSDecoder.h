@@ -2,12 +2,12 @@
 #define __TAPTSDECODER__
 
 #include "TDecoder.h"
-#include "TAPTS.h"
+#include "TAPTSEvent.h"
 #include "constant.h"
 
 class TAPTSDecoder : public TDecoder {
 private:
-    std::vector<TAPTS*> aptss;
+    std::vector<TAPTSEvent*> aptss;
     bool mux_ = false;
     int iEvent_ = 0;
     std::array<int, 16> mapping;
@@ -22,7 +22,7 @@ public:
     TAPTSDecoder(const std::filesystem::path& binaryPath);
     TAPTSDecoder(const std::string& binaryPath);
     void decode();
-    std::vector<TAPTS*> getData();
+    std::vector<TAPTSEvent*> getData();
 private:
     void inputEvent();
     void preTest(); // do range, header, missing test and calculate data length of Event.

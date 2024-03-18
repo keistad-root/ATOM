@@ -2,19 +2,19 @@
 #define __TALPIDEDECODER__
 
 #include "TDecoder.h"
-#include "TALPIDE.h"
+#include "TALPIDEEvent.h"
 #include "constant.h"
 
 class TALPIDEDecoder : public TDecoder {
 private:
-    std::vector<TALPIDE*> alpides;
+    std::vector<std::unique_ptr<TALPIDEEvent>> alpides;
     int index_ = 0;
     
 public:
     TALPIDEDecoder(const std::filesystem::path& binaryPath);
     TALPIDEDecoder(const std::string& binaryPath);
     void decode();
-    std::vector<TALPIDE*> getData();
+    std::vector<std::unique_ptr<TALPIDEEvent>> getData();
 private:
     void inputEvent();
     bool isDone();

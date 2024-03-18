@@ -10,14 +10,14 @@ void TALPIDEDecoder::decode() {
     }
 }
 
-std::vector<TALPIDE*> TALPIDEDecoder::getData() {
-    return alpides;
+std::vector<std::unique_ptr<TALPIDEEvent>> TALPIDEDecoder::getData() {
+    return std::move(alpides);
 }
 
 void TALPIDEDecoder::inputEvent() {
     int numEvent = hex_to_dec(&*getBinaryData().begin()+index_+4,4);
     long int time = hex_to_dec(&*getBinaryData().begin()+index_+8,8);
-    TALPIDE* alpide = new TALPIDE();
+    std::unique_ptr<TALPIDEEvent> alpide(new TALPIDEEvent());
     alpide->setEvent(numEvent);
     alpide->setTime(time);
     index_ += 4*4;
@@ -77,7 +77,7 @@ void TALPIDEDecoder::inputEvent() {
         }
     }
     index_ += 4;
-    alpides.push_back(alpide);
+    alpides.push_back(std::move(alpide));
 }
 
 

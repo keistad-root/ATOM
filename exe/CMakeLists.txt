@@ -8,6 +8,7 @@ set(TEST_EXE
     manager
     test_new_decoder
     simulation
+    ThrAna
 )
 
 # for now put the executables in the build root

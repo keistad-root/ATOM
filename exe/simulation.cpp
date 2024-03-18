@@ -9,7 +9,7 @@
 #include "AnalysisManager.h"
 
 int main(int argc, char** argv) {
-    G4UIExecutive* ui = nullptr;
+    G4UIExecutive* ui;
     if (argc == 1) {
         ui = new G4UIExecutive(argc, argv);
     }
@@ -43,9 +43,11 @@ int main(int argc, char** argv) {
     } else { 
         // interactive mode
         UImanager->ApplyCommand("/control/execute init_vis.mac");
-        ui->SessionStart();
         delete ui;
     }
-    
+
+    delete visManager;
+    delete runManager;
+    delete RandomEngine;
     return 0;
 }

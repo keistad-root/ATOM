@@ -65,8 +65,8 @@ message(STATUS "In Project Directory: ${PROJECT_SOURCE_DIR}")
 message(STATUS "ROOT Include Directory: ${ROOT_INCLUDE_DIRS}")
 message(STATUS "Geant4 Include Directory: ${GEANT4_INCLUDE_DIRS}")
 
-file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.h ${PROJECT_SOURCE_DIR}/include/decoder/*.h ${PROJECT_SOURCE_DIR}/include/format/*.h ${PROJECT_SOURCE_DIR}/include/simulation/*.h)
-file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cpp ${PROJECT_SOURCE_DIR}/src/decoder/*.cpp ${PROJECT_SOURCE_DIR}/src/format/*.cpp ${PROJECT_SOURCE_DIR}/src/simulation/*.cpp)
+file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.h ${PROJECT_SOURCE_DIR}/include/decoder/*.h ${PROJECT_SOURCE_DIR}/include/event/*.h ${PROJECT_SOURCE_DIR}/include/simulation/*.h ${PROJECT_SOURCE_DIR}/include/clustering/*.h ${PROJECT_SOURCE_DIR}/include/format/*.h ${PROJECT_SOURCE_DIR}/include/threshold/*.h)
+file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cpp ${PROJECT_SOURCE_DIR}/src/decoder/*.cpp ${PROJECT_SOURCE_DIR}/src/event/*.cpp ${PROJECT_SOURCE_DIR}/src/simulation/*.cpp ${PROJECT_SOURCE_DIR}/src/clustering/*.cpp ${PROJECT_SOURCE_DIR}/src/format/*.cpp ${PROJECT_SOURCE_DIR}/src/threshold/*.cpp)
 
 file(COPY ${PROJECT_SOURCE_DIR}/include DESTINATION ${CMAKE_BINARY_DIR} )
 
@@ -79,8 +79,11 @@ add_library(myProject SHARED ${headers} ${sources})
 
 include_directories(include)
 include_directories(include/decoder)
-include_directories(include/format)
+include_directories(include/event)
 include_directories(include/simulation)
+include_directories(include/clustering)
+include_directories(include/format)
+include_directories(include/threshold)
 add_subdirectory(exe)
 
 include_directories(${Geant4_INCLUDE_DIRS})
