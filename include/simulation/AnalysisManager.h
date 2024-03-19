@@ -2,6 +2,10 @@
 #define __ANALYSISMANAGER__
 
 #include "G4PhysicalConstants.hh"
+#include "G4Step.hh"
+#include "G4RunManager.hh"
+#include "G4SystemOfUnits.hh"
+#include "G4GenericMessenger.hh"
 
 #include "DetectorConstruction.h"
 

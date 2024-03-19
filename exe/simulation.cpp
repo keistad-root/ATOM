@@ -10,9 +10,7 @@
 
 int main(int argc, char** argv) {
     G4UIExecutive* ui;
-    if (argc == 1) {
-        ui = new G4UIExecutive(argc, argv);
-    }
+    ui = new G4UIExecutive(argc, argv);
 
     // Set random engine
     CLHEP::RanecuEngine* RandomEngine = new CLHEP::RanecuEngine;
@@ -34,20 +32,18 @@ int main(int argc, char** argv) {
     visManager->Initialize();
 
     G4UImanager* UImanager = G4UImanager::GetUIpointer();
-    if (!ui) { 
+    if (argc != 1) { 
         // batch mode
         G4String command = "/control/execute ";
         G4String fileName = argv[1];
         UImanager->ApplyCommand(command + fileName);
+        // ui->SessionStart();
         delete ui;
     } else { 
         // interactive mode
         UImanager->ApplyCommand("/control/execute init_vis.mac");
+        ui->SessionStart();
         delete ui;
     }
-
-    delete visManager;
-    delete runManager;
-    delete RandomEngine;
     return 0;
 }

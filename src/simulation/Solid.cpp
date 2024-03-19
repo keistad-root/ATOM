@@ -21,13 +21,22 @@ void Solid::setBetaStandSolid() {
     G4VSolid* solidBody1Hall2 = new G4Tubs("solidBody1Hall2", 0., 13. * mm * 0.5, 7. * mm * 0.5, 0., 360.0 * deg);
 
     G4VSolid* solidBody2 = new G4Tubs("solidBody2", 2. * mm * 0.5, 30. * mm * 0.5, 59. * mm * 0.5, 0., 360.0 * deg);
-    G4VSolid* solidBody2Hall = new G4Tubs("solidBody2Hall", 0., 14. * mm * 0.5, 10. * mm * 0.5, 0., 360.0 * deg);
+    G4VSolid* solidBody2Hall = new G4Tubs("solidBody2Hall", 0., 14. * mm * 0.5, 10.2 * mm * 0.5, 0., 360.0 * deg);
 
     G4VSolid* subtraction = new G4SubtractionSolid("subtraction", solidBody1, solidBody1Hall1, new G4RotationMatrix(0. * deg, 90. * deg, 0. * deg), G4ThreeVector(0., .5 * mm, 0.));
     G4VSolid* solidStand1 = new G4SubtractionSolid("solidStand1", subtraction, solidBody1Hall2, new G4RotationMatrix(0. * deg, 90. * deg, 0. * deg), G4ThreeVector(0., 0. * mm, 0.));
-    G4VSolid* solidStand2 = new G4SubtractionSolid("solidStand2", solidBody2, solidBody2Hall, new G4RotationMatrix(0. * deg, 90. * deg, 0. * deg), G4ThreeVector(0.,33. * mm,0.));
+    G4VSolid* solidStand2 = new G4SubtractionSolid("solidStand2", solidBody2, solidBody2Hall, new G4RotationMatrix(0. * deg, 0. * deg, 0. * deg), G4ThreeVector(0., 0., -24.6 * mm));
     
-    betaStandSolid = new G4UnionSolid("betaStandSolid", solidStand1, solidStand2, new G4RotationMatrix(0. * deg, 90. * deg, 0. * deg), G4ThreeVector(0., 58. * mm, 0.));    
+    betaStandSolid = new G4UnionSolid("betaStandSolid", solidStand1, solidStand2, new G4RotationMatrix(0. * deg, 90. * deg, 0. * deg), G4ThreeVector(0., 33. * mm, 0.));    
+}
+
+void Solid::setNewStandSolid(G4double diameter) {
+    G4VSolid* solidBody = new G4Box("solidBody", 15. * mm * 0.5, 6. * mm * 0.5, 17.5 * mm * 0.5);
+    G4VSolid* solidCollimatedHall = new G4Tubs("solidCollimatedHall", 0., diameter * mm * 0.5, 1.1 * mm * 0.5, 0., 360.0 * deg);
+    G4VSolid* solidHolderHall = new G4Tubs("solidHolderHall", 0., 13 * mm * 0.5, 5.2 * mm * 0.5, 0., 360.0 * deg);
+
+    G4VSolid* subtraction = new G4SubtractionSolid("subtraction", solidBody, solidCollimatedHall, new G4RotationMatrix(0. * deg, 90. * deg, 0. * deg), G4ThreeVector(0., -2.5 * mm, 1.25 * mm));
+    newStandSolid = new G4SubtractionSolid("newStandSolid", subtraction, solidHolderHall, new G4RotationMatrix(0. * deg, 90. * deg, 0. * deg), G4ThreeVector(0., .59 * mm, 1.25 * mm));
 }
 
 void Solid::setScreenSolid() {
@@ -54,6 +63,10 @@ G4VSolid* Solid::getAlphaStandSolid() const {
 
 G4VSolid* Solid::getBetaStandSolid() const {
     return betaStandSolid;
+}
+
+G4VSolid* Solid::getNewStandSolid() const {
+    return newStandSolid;
 }
 
 G4VSolid* Solid::getScreenSolid() const {

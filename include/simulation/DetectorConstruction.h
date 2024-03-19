@@ -39,7 +39,8 @@ enum StandType {
     beta_no_screen,
     beta_screen,
     alpha_new_no_screen,
-    alpha_new_screen
+    alpha_new_screen,
+    none
 };
 
 class DetectorConstruction : public G4VUserDetectorConstruction {
@@ -51,8 +52,9 @@ private:
     Solid* solids;
 
     G4VPhysicalVolume* WorldPhysical;
-    G4VPhysicalVolume* StandPhysical;
-    G4VPhysicalVolume* ShieldPhysical;
+    G4VPhysicalVolume* StandPhysical = nullptr;
+    G4VPhysicalVolume* ShieldPhysical = nullptr;
+    G4VPhysicalVolume* CarrierBoardPhysical;
 
     G4LogicalVolume* WorldLogical;
     G4LogicalVolume* StandLogical;
@@ -63,9 +65,10 @@ private:
     G4LogicalVolume* CarrierBoardLogical;
 
     SourceType sourceType;
-    StandType standType;
+    StandType standType = StandType::none;
     G4double sEnergy = 5.4;
-    G4double sDistance = 0;
+    G4double sDistance = 10.;
+    G4double cDiameter = 1.;
 public:
     DetectorConstruction();
     virtual ~DetectorConstruction();
@@ -89,9 +92,6 @@ public:
 
     void SetEnergy(G4double energy);
     void SetSourceType(G4String type);
-    // void SetAlpha(G4double energy);
-    // void SetBeta(G4double energy);
-    // void SetGamma(G4double energy);
     void SetStandType(G4String type);
     void SetDistance(G4double distance);
     void SetVacuum(G4double vacuum);

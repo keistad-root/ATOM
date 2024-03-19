@@ -9,6 +9,7 @@ set(TEST_EXE
     test_new_decoder
     simulation
     ThrAna
+    SimulResult
 )
 
 # for now put the executables in the build root

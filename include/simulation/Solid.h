@@ -14,6 +14,7 @@ class Solid {
 private:
     G4VSolid* alphaStandSolid;
     G4VSolid* betaStandSolid;
+    G4VSolid* newStandSolid;
     G4VSolid* screenSolid;
     G4VSolid* alpideCircuitSolid;
     G4VSolid* alpideEpitaxialSolid;
@@ -23,6 +24,7 @@ public:
 
     void setAlphaStandSolid();
     void setBetaStandSolid();
+    void setNewStandSolid(G4double diameter);
     void setScreenSolid();
     void setAlpideCircuitSolid();
     void setAlpideEpitaxialSolid();
@@ -30,6 +32,7 @@ public:
 
     G4VSolid* getAlphaStandSolid() const;
     G4VSolid* getBetaStandSolid() const;
+    G4VSolid* getNewStandSolid() const;
     G4VSolid* getScreenSolid() const;
     G4VSolid* getAlpideCircuitSolid() const;
     G4VSolid* getAlpideEpitaxialSolid() const;

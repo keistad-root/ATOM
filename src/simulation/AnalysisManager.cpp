@@ -79,10 +79,10 @@ void AnalysisManager::Book() {
     if (!fScoringCarrierBoardLogical) {
         fScoringCarrierBoardLogical = detectorConstruction->GetScoringCarrierBoard();
     }
-    if (!fScoringStand) {
+    if (!fScoringStand && detectorConstruction->GetScoringStand()) {
         fScoringStand = detectorConstruction->GetScoringStand();
     }
-    if (!fScoringShield) {
+    if (!fScoringShield && detectorConstruction->GetScoringShield()) {
         fScoringShield = detectorConstruction->GetScoringShield();
     }
 
