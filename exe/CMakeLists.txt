@@ -1,10 +1,5 @@
-# in exe directory
-
+# Set the exe file set
 set(TEST_EXE
-    # apts_gain_decoder
-    # apts_source_decoder
-    # alpide_hitmap
-    # alpide_dac
     manager
     test_new_decoder
     simulation
@@ -12,15 +7,15 @@ set(TEST_EXE
     SimulResult
 )
 
-# for now put the executables in the build root
-# for compatibility with existing scripts
+# for now put the executables in the build root for compatibility with existing scripts
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
+# Line exe files to their include files
 foreach(exe ${TEST_EXE})
-  add_executable(${exe} ${exe}.cpp ${sources} ${headers})
-  target_include_directories(${exe} PRIVATE ${ROOT_INCLUDE_DIRS})
-  target_link_libraries(${exe} ${Geant4_LIBRARIES} myProject ROOT::Core ROOT::Gpad ROOT::Hist ROOT::Tree)
+    add_executable(${exe} ${exe}.cpp)
+    foreach(HEADER_PATH ${HEADERS})
+        get_filename_component(DIR ${HEADER_PATH} DIRECTORY)
+        target_include_directories(${exe} PRIVATE ${DIR})
+    endforeach()
+    target_link_libraries(${exe} ${Geant4_LIBRARIES} myProject ROOT::Core ROOT::Gpad ROOT::Hist ROOT::Tree)
 endforeach()
-
-#include_directories(include)
-message(STATUS "Target Executable: ${TEST_EXE}")

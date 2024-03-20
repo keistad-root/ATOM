@@ -62,11 +62,11 @@ void SimulDrawing::getDensity() {
     tTrack->SetBranchAddress("posY",&position[1]);
     tTrack->SetBranchAddress("posZ",&position[2]);
 
-    Double_t minX=1000, minZ=1000, maxX=-1000, maxZ=-1000;
+    Double_t minX=3., minZ=3., maxX=-3., maxZ=-3.;
     Int_t cntParticle;
     for (int entry = 0; entry < tTrack->GetEntries(); entry++) {
         tTrack->GetEntry(entry);
-        if (pass[3] || pass[4]) {
+        if ((pass[3] || pass[4])) {
             minX=TMath::Min(minX,position[0]);
             minZ=TMath::Min(minZ,position[2]);
             maxX=TMath::Max(maxX,position[0]);
@@ -74,10 +74,8 @@ void SimulDrawing::getDensity() {
             cntParticle++;
         }
     };
-    Double_t area = TMath::Pi() * pow(((maxX-minX) + (maxZ - minZ) )/4,2);
-    std::cout << "Area: " << area << "cm^2" << std::endl;
-    std::cout << "Density: " << cntParticle/area << " /cm^2 /s" << std::endl;
-    for (int i = 0; i < 100; i++) {
-        std::cout << 1-pow(0.99875,i) << std::endl;
-    }
+    Double_t area = TMath::Pi() * pow(((maxX - minX) + (maxZ - minZ) )/4,2);
+    std::cout << "Area: " << area << "mm^2" << std::endl;
+    std::cout << "Density: " << 4300*cntParticle/area/tTrack->GetEntries()*0.00025 << "/mm^2 per 1 strobe(250us)" << std::endl;
+    std::cout << "Ratio: " << 1 - pow(0.99875,4300*cntParticle/area/tTrack->GetEntries()*0.00025) << std::endl;
 }

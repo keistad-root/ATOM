@@ -1,10 +1,12 @@
+# Set cmake minimum required version
 cmake_minimum_required(VERSION 3.5)
+
+# Set project name
 project(ATOM)
 
-# by default build optimized code with debug symbols
+# Set default build type
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   set(CMAKE_BUILD_TYPE RELWITHDEBINFO)
-  # set(CMAKE_BUILD_TYPE ASAN)
 endif()
 message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 
@@ -21,10 +23,12 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
   set(CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS "${CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS} -undefined dynamic_lookup")
 endif()
 
+# Find ROOT package
 find_package(ROOT)
 find_package(ROOT REQUIRED COMPONENTS Core Tree TreePlayer Gpad Hist Physics)
 find_package(ROOT REQUIRED COMPONENTS RIO Net Hist Graf Graf3d Gpad Tree Rint Postscript Matrix Physics MathCore Thread)
 
+# Find GEANT4 visualizing driver
 option(WITH_GEANT4_UIVIS "Build with Geant4 UI and Vis drivers" ON)
 if(WITH_GEANT4_UIVIS)
   find_package(Geant4 REQUIRED ui_all vis_all)
@@ -46,6 +50,7 @@ elseif(ROOT_cxx11_FOUND)
 endif()
 message(STATUS "Using C++${CMAKE_CXX_STANDARD}")
 
+# Set compiler options
 add_compile_options("-Wall")
 add_compile_options("-Wpedantic")
 add_compile_options("-Wno-unused-variable")
@@ -55,40 +60,37 @@ add_compile_options("-Wno-uninitialized")
 add_compile_options("-O1")
 add_compile_options("-g")
 
-# check for build in the source tree
+# Check for build in the source directory
 if (CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
   message(STATUS "Building in source tree")
   set(BUILDINSOURCE true)
 endif()
 
+# Print the path of source directory
 message(STATUS "In Project Directory: ${PROJECT_SOURCE_DIR}")
+# Print path of include directories of external package
 message(STATUS "ROOT Include Directory: ${ROOT_INCLUDE_DIRS}")
 message(STATUS "Geant4 Include Directory: ${GEANT4_INCLUDE_DIRS}")
 
-file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.h ${PROJECT_SOURCE_DIR}/include/decoder/*.h ${PROJECT_SOURCE_DIR}/include/event/*.h ${PROJECT_SOURCE_DIR}/include/simulation/*.h ${PROJECT_SOURCE_DIR}/include/clustering/*.h ${PROJECT_SOURCE_DIR}/include/format/*.h ${PROJECT_SOURCE_DIR}/include/threshold/*.h)
-file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cpp ${PROJECT_SOURCE_DIR}/src/decoder/*.cpp ${PROJECT_SOURCE_DIR}/src/event/*.cpp ${PROJECT_SOURCE_DIR}/src/simulation/*.cpp ${PROJECT_SOURCE_DIR}/src/clustering/*.cpp ${PROJECT_SOURCE_DIR}/src/format/*.cpp ${PROJECT_SOURCE_DIR}/src/threshold/*.cpp)
+# Find header files and source files and store it as variable
+file(GLOB_RECURSE HEADERS "${PROJECT_SOURCE_DIR}/include/*.h")
+file(GLOB_RECURSE SOURCES "${PROJECT_SOURCE_DIR}/src/*.cpp")
 
-file(COPY ${PROJECT_SOURCE_DIR}/include DESTINATION ${CMAKE_BINARY_DIR} )
+# Add header and source files to library
+add_library(myProject SHARED ${SOURCES})
 
-message(STATUS "found inc ${headers}")
-message(STATUS "found src ${sources}")
+# Find include files and link to source files
+foreach(HEADER_PATH ${HEADERS})
+    get_filename_component(DIR ${HEADER_PATH} DIRECTORY)
+    target_include_directories(myProject PRIVATE ${DIR})
+endforeach()
 
-add_library(myProject SHARED ${headers} ${sources})
-
-# target_link_libraries(myProject PUBLIC ROOT::Core ROOT::Gpad ROOT::Hist ROOT::TreePlayer ROOT::Tree)
-
-include_directories(include)
-include_directories(include/decoder)
-include_directories(include/event)
-include_directories(include/simulation)
-include_directories(include/clustering)
-include_directories(include/format)
-include_directories(include/threshold)
-add_subdirectory(exe)
-
+# Add ROOT and Geant4 include files
 include_directories(${Geant4_INCLUDE_DIRS})
 include_directories(${ROOT_INCLUDE_DIRS})
 
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/data)
+# Add exe subdirectory for executable cpp files
+add_subdirectory(exe)
 
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/output)
+# Make data directory to deal with input and output data
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/data)
