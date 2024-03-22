@@ -1,10 +1,9 @@
 # Set the exe file set
 set(TEST_EXE
-    manager
-    test_new_decoder
+    ExperimentAnalysis
     simulation
     ThrAna
-    SimulResult
+    SimulationAnalysis
 )
 
 # for now put the executables in the build root for compatibility with existing scripts
