@@ -1,6 +1,6 @@
 #include <filesystem>
 
-#include "SimulDrawing.h"
+#include "TGeantAnalyser.h"
 #include "cppargs.h"
 
 ArgumentParser set_parse(int argc, char** argv) {
@@ -23,18 +23,17 @@ int main(int argc, char** argv) {
     }
 
     std::filesystem::path stem = input.stem();
-    std::unique_ptr<TFile> file(new TFile(static_cast<TString>((input.replace_extension(".root")).string())));
-    
+    TFile* file = new TFile(static_cast<TString>((input.replace_extension(".root")).string()),"READ");
     path.append(stem.string());
     std::filesystem::create_directory(path);
-    
-    SimulDrawing drawer(file);
-    drawer.refineData();
-    std::filesystem::path energyLossFile = "energy_loss_" + stem.string();
-    drawer.saveEnergyLossDistribution((path / energyLossFile.replace_extension(".png")).string());
-    std::filesystem::path clustermapFile = "clustermap_" + stem.string();
-    drawer.saveClustermap((path / clustermapFile.replace_extension(".png")).string());
-    std::filesystem::path doubleClusterFile = "Doubled_cluster_frequencymap_" + stem.string();
-    drawer.saveDoubleClusterFrequencymap((path / doubleClusterFile.replace_extension(".png")).string());
+    TGeantAnalyser drawer(std::move(file));
+    // drawer.refineData();
+    // std::filesystem::path energyLossFile = "energy_loss_" + stem.string();
+    // drawer.saveEnergyLossDistribution((path / energyLossFile.replace_extension(".png")).string());
+    // std::filesystem::path clustermapFile = "clustermap_" + stem.string();
+    // drawer.saveClustermap((path / clustermapFile.replace_extension(".png")).string());
+    // std::filesystem::path doubleClusterFile = "Doubled_cluster_frequencymap_" + stem.string();
+    // drawer.saveDoubleClusterFrequencymap((path / doubleClusterFile.replace_extension(".png")).string());
+
     return 0;
 }

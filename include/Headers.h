@@ -5,6 +5,10 @@
 #include <array>
 #include <unordered_map>
 #include <memory>
+#include <filesystem>
+#include <fstream>
+#include <sstream>
+#include <numeric>
 
 // ROOT Library
 #include "TString.h"
@@ -18,3 +22,5 @@
 #include "TGraph.h"
 #include "TMultiGraph.h"
 #include "TF1.h"
+
+#include "TMath.h"

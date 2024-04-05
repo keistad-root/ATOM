@@ -1,13 +1,7 @@
 #ifndef __TEVENT__
 #define __TEVENT__
 
-#include <iostream>
-#include <string>
-#include <array>
-#include <vector>
-#include <unordered_set>
-#include "cppconfig.h"
-
+#include "Headers.h"
 
 class TEvent {
 private:
@@ -26,15 +20,19 @@ private:
 public:
     TALPIDEEvent();
     TALPIDEEvent(const TALPIDEEvent& copy);
+    TALPIDEEvent& operator=(const TALPIDEEvent& copy);
+    TALPIDEEvent(TALPIDEEvent&& move);
+    TALPIDEEvent& operator=(TALPIDEEvent&& move);
 
     // Setter
     void setTime(const long int time);
-    void pushData(const std::array<int,2>& coordinate);
     
     // Getter
-    long int getTime();
-    std::vector<std::array<int,2>>& getData();
+    const long int getTime() const;
+    const std::vector<std::array<int,2>>& getData() const;
 
+    void removePixel(const std::array<int, 2>& coordinate);
+    void pushData(const std::array<int,2>& coordinate);
     void removeDuplication();
     void sortPixel();
 };

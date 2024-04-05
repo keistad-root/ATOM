@@ -7,6 +7,31 @@ TALPIDEEvent::TALPIDEEvent(const TALPIDEEvent& copy) : iTime(copy.iTime) {
     data.assign(copy.data.begin(),copy.data.end());
 }
 
+TALPIDEEvent& TALPIDEEvent::operator=(const TALPIDEEvent& copy) {
+    setEvent(copy.getEvent());
+    iTime = copy.iTime;
+    data.assign(copy.data.begin(), copy.data.end());
+    return *this;
+}
+
+TALPIDEEvent::TALPIDEEvent(TALPIDEEvent&& move) : iTime(move.iTime) {
+    setEvent(move.getEvent());
+    data.assign(move.data.begin(), move.data.end());
+    move.setEvent(0);
+    move.iTime = 0;
+    move.data.clear();
+}
+
+TALPIDEEvent& TALPIDEEvent::operator=(TALPIDEEvent&& move) {
+    setEvent(move.getEvent());
+    iTime = move.iTime;
+    data.assign(move.data.begin(), move.data.end());
+    move.setEvent(0);
+    move.iTime = 0;
+    move.data.clear();
+    return *this;
+}
+
 void TALPIDEEvent::setTime(const long int time) {
     iTime = time;
 }
@@ -15,12 +40,16 @@ void TALPIDEEvent::pushData(const std::array<int,2>& coordinate) {
     data.push_back(coordinate);
 }
 
-long int TALPIDEEvent::getTime() {
+const long int TALPIDEEvent::getTime() const {
     return iTime;
 }
 
-std::vector<std::array<int,2>>& TALPIDEEvent::getData() {
+const std::vector<std::array<int,2>>& TALPIDEEvent::getData() const {
     return data;
+}
+
+void TALPIDEEvent::removePixel(const std::array<int, 2>& coordinate) {
+    data.erase(std::find(data.begin(), data.end(), coordinate));
 }
 
 void TALPIDEEvent::removeDuplication() {

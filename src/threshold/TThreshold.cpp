@@ -1,121 +1,113 @@
 #include "TThreshold.h"
 
-TThreshold::TThreshold(std::ifstream& thrFile) {
-    std::iota(std::begin(defRegion), std::end(defRegion), 1);
-    fitFunc.reset(new TF1("fitFunc","[0]*TMath::Erf((x-[1])/[2])+[3]",0.,50.));
-    openThrFile(thrFile);
+TThreshold::TThreshold() {}
+
+TThreshold::TThreshold(int x, int y) : mX(x), mY(y) {}
+
+TThreshold::TThreshold(const std::array<int,2>& coordinate) : mX(coordinate[0]), mY(coordinate[1]) {}
+
+TThreshold::TThreshold(int x, int y, const std::array<Int_t, 50>& dacs) : mX(x), mY(y) {
+    std::copy(std::begin(dacs), std::end(dacs), std::begin(mDacs));
+    calculateThreshold();
 }
 
-void TThreshold::inputConfig(int vcasn, int ithr) {
-    this->vcasn = vcasn;
-    this->ithr = ithr;
+TThreshold::TThreshold(const std::array<int,2>& coordinate, const std::array<Int_t, 50>& dacs) : mX(coordinate[0]), mY(coordinate[1]) {
+    std::copy(std::begin(dacs), std::end(dacs), std::begin(mDacs));
 }
 
-void TThreshold::getThresholds() {
-    for (const std::unique_ptr<ThrFormat>& data : datas) {
-        calculateThr(data);
-    }
+TThreshold::TThreshold(int x, int y, std::array<Int_t, 50>&& dacs) : mX(x), mY(y) {
+    std::move(std::begin(dacs), std::end(dacs), std::begin(mDacs));
 }
 
-void TThreshold::openThrFile(std::ifstream& thrFile) {
-    std::string line;
-    std::string value;
-    std::unique_ptr<ThrFormat> data;
-
-    int iLine = 0;
-    while (thrFile) {
-        getline(thrFile, line);
-        std::stringstream values(line);
-
-        int iData = 0;
-        if (iLine%50 == 0) {
-            data.reset(new ThrFormat());
-        }
-        while (getline(values, value, ' ')) {
-            if (iData == 0) {
-                data->y = stoi(value);
-            } else if (iData == 1) {
-                data->x = stoi(value);
-            } else if (iData == 3) {
-                data->dac[iLine%50] = stoi(value);
-            }
-            iData++;
-        }
-        if (iLine%50 == 49) {
-            datas.push_back(std::move(data));
-            data.release();
-        }
-        iLine++;
-    }
+TThreshold::TThreshold(const std::array<int,2>& coordinate, std::array<Int_t, 50>&& dacs) : mX(coordinate[0]), mY(coordinate[1]) {
+    std::move(std::begin(dacs), std::end(dacs), std::begin(mDacs));
 }
 
-void TThreshold::drawPlot(std::string savePoint) {
-    std::unique_ptr<TCanvas> can(new TCanvas("can","threshold",1800,1800));
-    std::unique_ptr<TPad> pad1(new TPad("pad1","Threshold",0.,0.,.5,.5));
-    std::unique_ptr<TPad> pad2(new TPad("pad2","Error",.5,0.,1.,.5));
-    std::unique_ptr<TPad> pad3(new TPad("pad3","Map",0.,.5,1.,1.));
-    pad1->Draw();
-    pad2->Draw();
-    pad3->Draw();
-
-    ThrPlot plot;
-    plot.threshold.reset(new TH1D("h1","threshold",51,-0.5,50.5));
-    plot.error.reset(new TH1D("h2","error",51,-0.5,50.5));
-    plot.map.reset(new TH2D("h3","map",1024,-0.5,1023.5,512,-0.5,511.5));
-    for (const std::unique_ptr<ThrFormat>& data : datas) {
-        if (data->thr != 0 && data->thr != 50) {
-            plot.threshold->Fill(data->thr);
-            plot.error->Fill(data->err);
-            plot.map->Fill(data->x,data->y,data->thr);
-        }
-    }
-    pad1->cd();
-    plot.threshold->Draw();
-
-    pad2->cd();
-    plot.error->Draw();
-
-    pad3->cd();
-    plot.map->SetMinimum(0);
-    plot.map->SetMaximum(50);
-    plot.map->Draw("colz");
-
-    can->SaveAs((TString) savePoint);
+TThreshold::TThreshold(const TThreshold& copy) : mX(copy.mX), mY(copy.mY), mThr(copy.mThr), mErr(copy.mErr) {
+    std::copy(std::begin(copy.mDacs), std::end(copy.mDacs), std::begin(mDacs));
 }
 
-void TThreshold::setVcasn(const int vcasn) {
-    this->vcasn = vcasn;
+TThreshold& TThreshold::operator=(const TThreshold& copy) {
+    mX = copy.mX;
+    mY = copy.mY;
+    std::copy(std::begin(copy.mDacs), std::end(copy.mDacs), std::begin(mDacs));
+    mThr = copy.mThr;
+    mErr = copy.mErr;
+    return *this;
 }
 
-void TThreshold::setIthr(const int ithr) {
-    this->ithr = ithr;
+TThreshold::TThreshold(TThreshold&& move) : mX(move.mX), mY(move.mY), mThr(move.mThr), mErr(move.mErr) {
+    std::move(std::begin(move.mDacs), std::end(move.mDacs), std::begin(mDacs));
 }
 
-const int TThreshold::getVcasn() const {
-    return vcasn;
+TThreshold& TThreshold::operator=(TThreshold&& move) {
+    mX = move.mX;
+    mY = move.mY;
+    std::move(std::begin(move.mDacs), std::end(move.mDacs), std::begin(mDacs));
+    mThr = move.mThr;
+    mErr = move.mErr;
+    return *this;
 }
 
-const int TThreshold::getIthr() const {
-    return ithr;
-}
+TThreshold::~TThreshold() {}
 
-void TThreshold::calculateThr(const std::unique_ptr<ThrFormat>& data) {
-    if (data->dac[0] > 10) {
-        std::cerr << "No Threshold in " << data->x << ", " << data->y << std::endl;
-        data->thr = 0;
-        data->err = 0;
-    } else if (data->dac[49] < 45) {
-        std::cerr << "Max Threshold in " << data->x << ", " << data->y << std::endl;
-        data->thr = 50;
-        data->err = 50;
+void TThreshold::calculateThreshold() {
+    if (*std::begin(mDacs) > 25 || *(std::end(mDacs)-1) < 25 ) {
+        mThr = -1;
+        mErr = -1;
     } else {
-        graph.reset(new TGraph(50, defRegion, data->dac));
-        fitFunc->SetParLimits(0,20,30);
-        fitFunc->SetParLimits(1,5,40);
-        fitFunc->SetParLimits(2,2,20);
-        fitFunc->SetParLimits(3,20,30);
-        graph->Fit("fitFunc","q");
-        data->thr = fitFunc->GetParameter(1);
-        data->err = fitFunc->GetParameter(2);
+        std::array<Int_t,50> adcs;
+        std::iota(std::begin(adcs), std::end(adcs), 1);
+        thresholdGraph.reset(new TGraph(50, std::begin(adcs), std::begin(mDacs)));
+        fitFunction.reset(new TF1("fitFunction","[0]*TMath::Erf((x-[1])/[2])+[3]",0.,50.));
+        bool quality = false;
+        int count = 0;
+        while(!quality) {
+            fitFunction->SetParameters(20,10*count + 10,10,25);
+            thresholdGraph->Fit("fitFunction","q");
+            mThr = fitFunction->GetParameter(1);
+            mErr = fitFunction->GetParameter(2);
+            mQualityFactor = fitFunction->GetChisquare() / fitFunction->GetNDF();
+            if (mQualityFactor < 20.) {
+                quality = true;
+            }
+            if (count > 4) {
+                mThr = -1;
+                mErr = -1;
+                break;
+            }
+            count++;
+        }
+        if (!quality) {
+            std::cout << fitFunction->GetChisquare() / fitFunction->GetNDF() << std::endl;
+            savePlot();
+        }
     }
+}
+
+void TThreshold::savePlot() {
+    std::unique_ptr<TCanvas> can(new TCanvas("can","can",500,500));
+    thresholdGraph->SetTitle(static_cast<TString>("Threshold Graph at " + std::to_string(mX) + ", " + std::to_string(mY)+"; ADC[$500 \times e^-$]; DAC[# of Fire]"));
+    thresholdGraph->Draw();
+    can->SaveAs(static_cast<TString>("data/" + std::to_string(mX) + "_" + std::to_string(mY) + ".png"));
+}
+
+const double TThreshold::getX() const {
+    return mX;
+}
+
+const double TThreshold::getY() const {
+    return mY;
+}
+
+const double TThreshold::getThreshold() const { 
+    return mThr;
+}
+
+const double TThreshold::getError() const { 
+    return mErr;
+}
+
+const double TThreshold::getQualityFactor() const {
+    return mQualityFactor;
 }

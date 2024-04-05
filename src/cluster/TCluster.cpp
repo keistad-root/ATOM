@@ -37,9 +37,6 @@ TCluster::~TCluster() {}
 
 void TCluster::AddPixel(const std::array<int,2>& pixel) {
     mPixels.push_back(pixel);
-    mMinX = std::min(mMinX,pixel[0]);
-    mMinY = std::min(mMinY,pixel[1]);
-    mMaxX = std::max(mMaxX,pixel[0]);
     mMaxY = std::max(mMaxY,pixel[1]);
 }
 
@@ -47,9 +44,6 @@ void TCluster::AddCluster(const TCluster& cluster) {
     for (const std::array<int,2>& pixel : cluster.getPixels()) {
         mPixels.push_back(pixel);
     }
-    mMinX = std::min(mMinX,cluster.getMinX());
-    mMinY = std::min(mMinY,cluster.getMinY());
-    mMaxX = std::max(mMaxX,cluster.getMaxX());
     mMaxY = std::max(mMaxY,cluster.getMaxY());
 }
 
@@ -94,26 +88,53 @@ const int TCluster::getDistance(const std::array<int,2>& pixel1, const std::arra
     return abs(pixel1[0]-pixel2[0]) + abs(pixel1[1]-pixel2[1]);
 }
 
-const std::array<double,2> TCluster::getCenter() const {
+void TCluster::calMembers() {
+    calMinMax();
+    calCenter();
+    calSize();
+    calShape();
+}
+
+void TCluster::calMinMax() {
+    for (std::array<int, 2> pixel : mPixels) {
+        mMinX = std::min(pixel[0], mMinX);
+        mMinY = std::min(pixel[1], mMinY);
+        mMaxX = std::max(pixel[0], mMaxX);
+        mMaxY = std::max(pixel[1], mMaxY);
+    }
+}
+
+void TCluster::calCenter() {
     double x = 0., y = 0.;
-    for (std::array<int,2> pixel : mPixels) {
+    for (std::array<int, 2> pixel : mPixels) {
         x += pixel[0];
         y += pixel[1];
     }
     x = x / mPixels.size();
     y = y / mPixels.size();
-    return {x, y};
+    center = {x, y};
 }
 
-const int TCluster::getClusterSize() const { 
-    return mPixels.size(); 
+void TCluster::calSize() {
+    size = mPixels.size();
 }
 
-const std::unique_ptr<TH2I> TCluster::getShape() const {
-    std::unique_ptr<TH2I> shape(new TH2I("shape", "Cluster Shape; x; y", mMaxX-mMinX, -.5, mMaxX-mMinX -.5, mMaxY-mMinY, -.5, mMaxY-mMinY -.5));
-    for (const std::array<int,2>& mPixel : mPixels) {
-        shape->Fill(mPixel[0] - mMinX + 1, mPixel[1] - mMinY + 1);
+void TCluster::calShape() {
+    shape = TMatrix2D<int>(mMaxX - mMinX + 1, mMaxY - mMinY + 1);
+    for (std::array<int, 2> pixel : mPixels) {
+        shape.setElement(pixel[0] - mMinX, pixel[1] - mMinY, 1);
     }
+}
+
+const std::pair<double, double> TCluster::getCenter() const {
+    return center;
+}
+
+const int TCluster::getSize() const { 
+    return size; 
+}
+
+const TMatrix2D<int>& TCluster::getShape() const {
     return shape;
 }
 
@@ -133,3 +154,4 @@ const int TCluster::getMinX() const { return mMinX; }
 const int TCluster::getMinY() const { return mMinY; }
 const int TCluster::getMaxX() const { return mMaxX; }
 const int TCluster::getMaxY() const { return mMaxY; }
+

@@ -2,15 +2,20 @@
 #define __TCLUSTER__
 
 #include "Headers.h"
+#include "TMatrix2D.h"
 
 class TCluster {
 private:
     int mEvent;
     int mTime;
     std::vector<std::array<int,2>> mPixels;
+    
     int mMinX = 1024, mMinY = 512;
     int mMaxX = 0, mMaxY = 0;
-    
+    std::pair<double, double> center;
+    int size = 0;
+    TMatrix2D<int> shape;
+
 public:
     // Constructor
     TCluster();
@@ -35,12 +40,17 @@ public:
     bool isNeighbour(const TCluster& cluster) const;
     bool isContain(const std::array<int,2>& pixel)const;
     bool isContain(const TCluster& cluster) const;
-
-    // Getter
     const int getDistance(const std::array<int,2>& pixel1, const std::array<int,2>& pixel2) const;
-    const std::array<double,2> getCenter() const;
-    const int getClusterSize() const;
-    const std::unique_ptr<TH2I> getShape() const;
+
+    void calMembers();
+    void calMinMax();
+    void calCenter();
+    void calSize();
+    void calShape();
+    // Getter
+    const std::pair<double, double> getCenter() const;
+    const int getSize() const;
+    const TMatrix2D<int>& getShape() const;
 
     // Setter for member
     void setEvent(const int event);
@@ -58,7 +68,9 @@ public:
     const int getMinY() const;
     const int getMaxX() const;
     const int getMaxY() const;
-};
 
+    bool operator==(const TCluster& cluster) const;
+    bool operator!=(const TCluster& cluster) const;
+};
 
 #endif

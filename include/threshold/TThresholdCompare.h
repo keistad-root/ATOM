@@ -1,7 +1,7 @@
 #ifndef __TTHRESHOLDCOMPARE__
 #define __TTHRESHOLDCOMPARE__
 
-#include <vector>
+#include "Headers.h"
 #include "TThreshold.h"
 
 class TThresholdCompare {

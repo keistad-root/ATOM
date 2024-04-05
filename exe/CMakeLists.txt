@@ -1,9 +1,11 @@
 # Set the exe file set
 set(TEST_EXE
+    test_tqdm
     ExperimentAnalysis
     simulation
-    ThrAna
+    ThresholdAnalysis
     SimulationAnalysis
+    GarfieldSimulation
 )
 
 # for now put the executables in the build root for compatibility with existing scripts
@@ -16,5 +18,5 @@ foreach(exe ${TEST_EXE})
         get_filename_component(DIR ${HEADER_PATH} DIRECTORY)
         target_include_directories(${exe} PRIVATE ${DIR})
     endforeach()
-    target_link_libraries(${exe} ${Geant4_LIBRARIES} myProject ROOT::Core ROOT::Gpad ROOT::Hist ROOT::Tree)
+    target_link_libraries(${exe} ${Geant4_LIBRARIES} myProject ROOT::Core ROOT::Gpad ROOT::Hist ROOT::Tree Garfield::Garfield)
 endforeach()

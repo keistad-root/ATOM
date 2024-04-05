@@ -1,18 +1,24 @@
 #ifndef __TANALYSER__
 #define __TANALYSER__
 
-#include <vector>
-
-#include "TEvent.h"
+#include "Headers.h"
+#include "TKey.h"
 
 class TAnalyser {
 private:
-    std::vector<TEvent> chips;
+    TFile* mInputFile;
 public:
-    TAnalyser();
-    void addChip(const TEvent& chip);
+    TAnalyser() = delete;
+    TAnalyser(TString inputFileTitle);
+    TAnalyser(TFile& inputFile);
+    TAnalyser(TFile* inputFile);
+    ~TAnalyser();
 
+    void setInputFile(TString inputFileTitle);
+    void setInputFile(TFile* inputFile);
+    void setInputFile(TFile& inputFile);
+    
+    TTree* openTree(std::string treeName);
 };
-
 
 #endif

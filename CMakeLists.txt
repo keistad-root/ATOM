@@ -36,6 +36,10 @@ else()
   find_package(Geant4 REQUIRED)
 endif()
 
+if(NOT TARGET Garfield::Garfield)
+  find_package(Garfield REQUIRED)
+endif()
+
 # set C++ standard ensuring compatibility with ROOT
 set(CMAKE_CXX_STANDARD 17)
 if(ROOT_cxx17_FOUND)
@@ -70,7 +74,8 @@ endif()
 message(STATUS "In Project Directory: ${PROJECT_SOURCE_DIR}")
 # Print path of include directories of external package
 message(STATUS "ROOT Include Directory: ${ROOT_INCLUDE_DIRS}")
-message(STATUS "Geant4 Include Directory: ${GEANT4_INCLUDE_DIRS}")
+message(STATUS "Geant4 Include Directory: ${Geant4_INCLUDE_DIR}")
+message(STATUS "Garfield Include Directory: ${Garfield_INCLUDE_DIR}")
 
 # Find header files and source files and store it as variable
 file(GLOB_RECURSE HEADERS "${PROJECT_SOURCE_DIR}/include/*.h")
@@ -88,6 +93,7 @@ endforeach()
 # Add ROOT and Geant4 include files
 include_directories(${Geant4_INCLUDE_DIRS})
 include_directories(${ROOT_INCLUDE_DIRS})
+include_directories(${Garfield_INCLUDE_DIRS})
 
 # Add exe subdirectory for executable cpp files
 add_subdirectory(exe)

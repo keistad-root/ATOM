@@ -1,10 +1,7 @@
 #ifndef __TDECODER__
 #define __TDECODER__
 
-#include <iostream>
-#include <filesystem>
-#include <fstream>
-#include <vector>
+#include "Headers.h"
 
 class TDecoder {
 private:
