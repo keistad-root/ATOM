@@ -12,10 +12,15 @@
 
 // ROOT Library
 #include "TString.h"
+#include "TSystem.h"
 
 #include "TFile.h"
 #include "TTree.h"
 #include "TCanvas.h"
+#include "TLegend.h"
+#include "TImage.h"
+#include "TASImage.h"
+#include "TText.h"
 
 #include "TH1.h"
 #include "TH2.h"

@@ -1,3 +1,14 @@
+/**
+ * @file TClusterAnalyser.h
+ * @author Yongjun Choi (yochoi@cern.ch)
+ * @brief Control cluster analysis process and save plots.
+ * @version 0.1
+ * @date 2024-04-09
+ *
+ * @copyright Copyright (c) 2024
+ *
+ */
+
 #ifndef __TCLUSTERANALYSER__
 #define __TCLUSTERANALYSER__
 
@@ -5,90 +16,66 @@
 
 #include "TALPIDEEvent.h"
 #include "TAnalyser.h"
-#include "TCluster.h"
 #include "TClusterN.h"
+#include "TCluster.h"
 #include "TClusterization.h"
 #include "TFileFormat.h"
 #include "cppconfig.h"
 
+ /**
+  * @brief Communicating execute file for controlling cluster research.
+  * @details It takes ROOT file which is result of experiment.
+  * The analysis data about raw data, clusterized data and masked data are stored as data member.
+  * From these data, the plots for imformations about hitmap, clustermap, size and shapes are drawn.
+  * @warning
+  * @bug
+  * @todo Add Legend about experiment setting
+  * @todo Make more plots about cluster information
+  */
 class TClusterAnalyser : public TAnalyser {
 private:
-    TTree* mTree;
-    TInputRoot mInput;
-
-    std::vector<TALPIDEEvent*> mEvents;
-    std::vector<TALPIDEEvent*> mMaskedEvents;
-    std::vector<TCluster*> mClusters;
-    std::vector<TCluster*> mMaskedClusters;
-    std::vector<std::array<int,2>> mHotPixels;
-
-    TH2D* mHitmap = nullptr;
-    TH2D* mMaskedHitmap = nullptr;
-    TH2D* mClustermap = nullptr;
-    TH2D* mMaskedClustermap = nullptr;
-    TH1D* mClusterSize = nullptr;
-    TH1D* mMaskedClusterSize = nullptr;
-    
-    bool mIsMask = false;
-    int mMaskOver = 0;
+	TTree* mTree; /**<Storing TTree object named as `hits`. It contains `ChipID`, `TimeStamp`, X` and `Y` branches */
+	TInputRoot mInput; /**<Object for TInputRoot structure. The kinds of branches are stored in here */
+	std::vector<TALPIDEEvent*> mEvents; /**<The array for storing data from raw event */
+	std::vector<TALPIDEEvent*> mMaskedEvents; /**<The array for data excluding noises */
+	std::vector<TCluster*> mClusters; /**< The array for storing clusterized data from raw event */
+	std::vector<TCluster*> mMaskedClusters; /**< The array for storing clusterized data excluding noises */
+	std::vector<std::pair<int, int>> mHotPixels; /**< The noise pixel informations */
+	std::unordered_map<std::string, TObject*> mPlots; /**< The plot lists*/
+	std::vector<TClusterN*> mClusterN; /**< Stored data for cluster shape*/
+	std::vector<std::vector<TImage*>> mShapeImages; /**< The array storing cluster shape image*/
+	bool mIsMask = false; /**< bool variable whether doing mask or not */
+	int mMaskOver = 0; /**< Crieteria for masking */
+	TLegend* settingLegend; /**< The setting parameters legend for plots */
 
 public:
-    //Constructor
-    TClusterAnalyser() = delete;
-    TClusterAnalyser(TFile& file);
-    TClusterAnalyser(TFile* file);
-    TClusterAnalyser(const std::vector<TALPIDEEvent> events);
-    ~TClusterAnalyser();
+	//Constructor
+	TClusterAnalyser() = delete;
+	TClusterAnalyser(TFile* file);
+	TClusterAnalyser(Configuration* conf);
+	~TClusterAnalyser();
 
-    void refineData();
-    void setMask(int hot); // The cluster is made with noise-removed pixels, it this function called.
+	void openRootFile();
+	void storeRawEvents();
+	void refineData();
 
-    void genHitmap();
-    void genClustermap();
-    void genClusterSize();
-    void genMaskedHitmap();
-    void genMaskedClustermap();
-    void genMaskedClusterSize();
-
-    void getCluster(bool mask = false);
-    void drawHitmap();
-    void drawClustermap();
-    void drawClusterSize();
-
-    void saveMaskingFile(std::string title);
-    void saveHitmap(std::string_view title);
-    void saveClustermap(std::string_view title);
-    void saveClusterSize(std::string_view title);
-    void saveMaskedHitmap(std::string_view title);
-    void saveMaskedClustermap(std::string_view title);
-    void saveMaskedClusterSize(std::string_view title);
-
-    void writeHitmap(TFile* file, const Configurable& option);
-    void writeClustermap(TFile* file, const Configurable& option);
-    void writeClusterSize(TFile* file, const Configurable& option);
-    void writeMaskedHitmap(TFile* file, const Configurable& option);
-    void writeMaskedClustermap(TFile* file, const Configurable& option);
-    void writeMaskedClusterSize(TFile* file, const Configurable& option);
-    void writeShapes(TFile* file, const Configurable& option);
-    void writeMaskedShapes(TFile* file, const Configurable& option);
-    void writeShapeSpecification(TFile* file, const Configurable& option);
-
-    TH2D* getHitmap();
-    TH2D* getClustermap();
-    TH1D* getClusterSize();
-    TH2D* getMaskedHitmap();
-    TH2D* getMaskedClustermap();
-    TH1D* getMaskedClusterSize();
-
-    void getShapeOfCS(std::string_view path, int n = 0);
+	void savePlots();
 
 private:
-    // In exec function
-    void openRootFile();
-    void storeRawEvents();
-    void masking();
+	void setMask(int hot);
+	void masking();
+	bool isHot(const std::pair<int, int>& pixel);
 
-    bool isHot(const std::array<int,2>& pixel);
+	void setSettingLegend();
+	void saveMaskingFile(std::string title);
+	void saveHitmap(const std::filesystem::path& savePath, TFile* saveRootFile);
+	void saveClustermap(const std::filesystem::path& savePath, TFile* saveRootFile);
+	void saveClustersize(const std::filesystem::path& savePath, TFile* saveRootFile);
+	void saveMaskedHitmap(const std::filesystem::path& savePath, TFile* saveRootFile);
+	void saveMaskedClustermap(const std::filesystem::path& savePath, TFile* saveRootFile);
+	void saveMaskedClustersize(const std::filesystem::path& savePath, TFile* saveRootFile);
+	void saveShapes(const std::filesystem::path& savePath, TFile* saveRootFile);
+	void saveShapeInformation(const std::filesystem::path& savePath, TFile* saveRootFile);
 };
 
 #endif
