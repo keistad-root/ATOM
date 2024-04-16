@@ -9,7 +9,7 @@ const std::string& Configurable::getConfigName() const {
 	return mConfigName;
 }
 
-const std::unordered_map<std::string, std::string>& Configurable::getDictionary() const {
+std::unordered_map<std::string, std::string> Configurable::getDictionary() {
 	return mDictionary;
 }
 

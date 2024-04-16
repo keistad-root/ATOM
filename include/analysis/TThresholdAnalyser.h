@@ -1,3 +1,13 @@
+/**
+ * @file TThresholdAnalyser.h
+ * @author Yongjun Choi (yochoi@cern.ch)
+ * @brief The tools for threshold analysis
+ * @version 0.1
+ * @date 2024-04-13
+ *
+ * @copyright Copyright (c) 2024
+ *
+ */
 #ifndef __TTHRESHOLDANALYSER__
 #define __TTHRESHOLDANALYSER__
 
@@ -7,37 +17,32 @@
 
 class TThresholdAnalyser {
 private:
-    std::ifstream mFile;
-    int mVcasn, mIthr;
+	std::ifstream mFile; /** Dat file */
+	int mVcasn, mIthr; /**< vcasn and ithr value. They are key values for determine threshold */
 
-    std::vector<std::unique_ptr<TThreshold>> mThresholds;
+	std::vector<std::unique_ptr<TThreshold>> mThresholds; /**< The array in which the informations about threshold of ALPIDE are stored */
 
-    std::unique_ptr<TH1> mThresholdDistribution;
-    std::unique_ptr<TH1> mErrorDistribution;
-    std::unique_ptr<TH2> mThresholdmap;
-    std::unique_ptr<TH1> mChi2NdfDistribution;
+	std::unique_ptr<TH1> mThresholdDistribution; /**< Threshold value distribution plot*/
+	std::unique_ptr<TH1> mErrorDistribution; /**< Error value distribution plot*/
+	std::unique_ptr<TH2> mThresholdmap; /**< Thresholdmap*/
+	std::unique_ptr<TH1> mChi2NdfDistribution; /** Fitting quality distribution ( Chi2 / Ndof ) */
 public:
-    TThresholdAnalyser();
-    TThresholdAnalyser(std::ifstream& file);
-    //Copy Constructor
-    TThresholdAnalyser(const TThresholdAnalyser& copy);
-    //Copy Assignment
-    TThresholdAnalyser& operator=(const TThresholdAnalyser& copy);
-    //Move Constructor
-    TThresholdAnalyser(TThresholdAnalyser&& move);
-    //Move Assignment
-    TThresholdAnalyser& operator=(TThresholdAnalyser&& move);
-    //Destructor
-    ~TThresholdAnalyser();
+	TThresholdAnalyser();
+	TThresholdAnalyser(std::ifstream& file);
+	TThresholdAnalyser(const TThresholdAnalyser& copy);
+	TThresholdAnalyser& operator=(const TThresholdAnalyser& copy);
+	TThresholdAnalyser(TThresholdAnalyser&& move);
+	TThresholdAnalyser& operator=(TThresholdAnalyser&& move);
+	~TThresholdAnalyser();
 
-    void openFile(std::ifstream& file);
+	void openFile(std::ifstream& file);
 
-    void refineData();
+	void refineData();
 
-    void saveThresholdDistribution(std::string_view title) const;
-    void saveErrorDistribution(std::string_view title) const;
-    void saveThresholdmap(std::string_view title) const;
-    void saveQualityDistribution(std::string_view title) const;
+	void saveThresholdDistribution(std::string_view title) const;
+	void saveErrorDistribution(std::string_view title) const;
+	void saveThresholdmap(std::string_view title) const;
+	void saveQualityDistribution(std::string_view title) const;
 };
 
 #endif

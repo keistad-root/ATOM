@@ -21,6 +21,7 @@
 #include "TImage.h"
 #include "TASImage.h"
 #include "TText.h"
+#include "TPaveText.h"
 
 #include "TH1.h"
 #include "TH2.h"

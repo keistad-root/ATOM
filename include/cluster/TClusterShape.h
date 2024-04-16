@@ -1,0 +1,62 @@
+/**
+ * @file TClusterShape.h
+ * @author Yongjun Choi (yochoi@cern.ch)
+ * @brief Tools for extracting cluster shape image
+ * @version 0.1
+ * @date 16-04-2024
+ *
+ * @copyright Copyright (c) 2024
+ *
+ */
+
+#ifndef __TCLUSTERSHAPE__
+#define __TCLUSTERSHAPE__
+
+#include "Headers.h"
+#include "TCluster.h"
+
+ /**
+  * @struct TShapeInfo
+  * @brief The information set stucture for clusters that having homeomorphism shape.
+  * @details It stores on cluster for extracting basic cluster informations.
+  * And cluster image and the number of homeomorphism clusters are saved.
+  * @warning
+  * @bug
+  * @todo Add struct member if needed.
+  */
+struct TShapeInfo {
+	TCluster* mPresidentCluster;
+	TImage* mClusterImage;
+	int mEntry;
+};
+
+/**
+ * @class TClusterShape
+ * @brief Class for extracting cluster shape information with same cluster size
+ * @details It collects clusters having same cluster size.
+ * And specificate the clusters according to their shapes.
+ * The image and other informations can be extract by `TShapeInfo` struct.
+ * @warning
+ * @bug
+ * @todo It can be modified if needed.
+ */
+class TClusterShape {
+private:
+	int mClusterSize; /**< The cluster size of this shape*/
+	std::vector<TCluster*> mClusterWithN; /**< The set of clusters extracting from all clusters if their size is mClusterSize */
+	std::vector<TShapeInfo> mClusterShapeInfos; /**< The set of cluster shape informations */
+public:
+	TClusterShape() = default;
+	TClusterShape(const std::vector<TCluster*> clusters, const int clusterSize);
+
+	void identifyShapes();
+	void sortShapes(bool descend = true);
+	TImage* clusterImage(const TMatrix2D<int>& clusterMatrix);
+
+	const std::vector<TShapeInfo>& getClusterShapeInfos() const;
+
+	void setClusterSize(const int ClusterSize);
+	const int getClusterSize() const;
+};
+
+#endif

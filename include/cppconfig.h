@@ -18,7 +18,7 @@ public:
 	void addDictionary(std::string_view key, std::string_view value);
 	const std::string& getConfigName() const;
 	const std::string& find(std::string_view key) const;
-	const std::unordered_map<std::string, std::string>& getDictionary() const;
+	std::unordered_map<std::string, std::string> getDictionary();
 
 	friend std::ostream& operator<<(std::ostream& os, const Configurable& copy);
 

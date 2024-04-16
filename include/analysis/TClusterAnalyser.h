@@ -16,7 +16,7 @@
 
 #include "TALPIDEEvent.h"
 #include "TAnalyser.h"
-#include "TClusterN.h"
+#include "TClusterShape.h"
 #include "TCluster.h"
 #include "TClusterization.h"
 #include "TFileFormat.h"
@@ -34,48 +34,24 @@
   */
 class TClusterAnalyser : public TAnalyser {
 private:
-	TTree* mTree; /**<Storing TTree object named as `hits`. It contains `ChipID`, `TimeStamp`, X` and `Y` branches */
-	TInputRoot mInput; /**<Object for TInputRoot structure. The kinds of branches are stored in here */
-	std::vector<TALPIDEEvent*> mEvents; /**<The array for storing data from raw event */
-	std::vector<TALPIDEEvent*> mMaskedEvents; /**<The array for data excluding noises */
-	std::vector<TCluster*> mClusters; /**< The array for storing clusterized data from raw event */
-	std::vector<TCluster*> mMaskedClusters; /**< The array for storing clusterized data excluding noises */
-	std::vector<std::pair<int, int>> mHotPixels; /**< The noise pixel informations */
-	std::unordered_map<std::string, TObject*> mPlots; /**< The plot lists*/
-	std::vector<TClusterN*> mClusterN; /**< Stored data for cluster shape*/
-	std::vector<std::vector<TImage*>> mShapeImages; /**< The array storing cluster shape image*/
-	bool mIsMask = false; /**< bool variable whether doing mask or not */
-	int mMaskOver = 0; /**< Crieteria for masking */
-	TLegend* settingLegend; /**< The setting parameters legend for plots */
-
+	TH2D* mClustermap;
+	TH2D* mMaskedClustermap;
+protected:
+	TH1D* mClustersize;
+	TH1D* mMaskedClustersize;
 public:
 	//Constructor
-	TClusterAnalyser() = delete;
-	TClusterAnalyser(TFile* file);
-	TClusterAnalyser(Configuration* conf);
+	TClusterAnalyser() = default;
+	TClusterAnalyser(const TAnalyser& analyser);
 	~TClusterAnalyser();
 
-	void openRootFile();
-	void storeRawEvents();
 	void refineData();
 
 	void savePlots();
-
-private:
-	void setMask(int hot);
-	void masking();
-	bool isHot(const std::pair<int, int>& pixel);
-
-	void setSettingLegend();
-	void saveMaskingFile(std::string title);
-	void saveHitmap(const std::filesystem::path& savePath, TFile* saveRootFile);
-	void saveClustermap(const std::filesystem::path& savePath, TFile* saveRootFile);
-	void saveClustersize(const std::filesystem::path& savePath, TFile* saveRootFile);
-	void saveMaskedHitmap(const std::filesystem::path& savePath, TFile* saveRootFile);
-	void saveMaskedClustermap(const std::filesystem::path& savePath, TFile* saveRootFile);
-	void saveMaskedClustersize(const std::filesystem::path& savePath, TFile* saveRootFile);
-	void saveShapes(const std::filesystem::path& savePath, TFile* saveRootFile);
-	void saveShapeInformation(const std::filesystem::path& savePath, TFile* saveRootFile);
+	void saveClustermap();
+	void saveMaskedClustermap();
+	void saveClustersize();
+	void saveMaskedClustersize();
 };
 
 #endif

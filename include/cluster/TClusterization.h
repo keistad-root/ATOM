@@ -1,13 +1,14 @@
 /**
  * @file TClusterization.h
- * @author your name (you@domain.com)
- * @brief
+ * @author Yongjun Choi (yochoi@cern.ch)
+ * @brief Class for clusterizing events on a chip
  * @version 0.1
- * @date 2024-04-06
+ * @date 13-04-2024
  *
  * @copyright Copyright (c) 2024
  *
  */
+
 #ifndef __TCLUSTERIZATION__
 #define __TCLUSTERIZATION__
 
@@ -16,7 +17,11 @@
 #include "TALPIDEEvent.h"
 
 #include "cpptqdm.h"
-
+ /**
+  * @class TClusterization
+  * @brief Class of tools for clusterizing events for single event
+  * @details It takes a role to clusterize an event.
+  */
 class TClusterization {
 	std::vector<TALPIDEEvent*> mEvents;
 	std::vector<TCluster*> mClusters;

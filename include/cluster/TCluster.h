@@ -17,31 +17,25 @@
 
 class TCluster {
 private:
-	int mEvent;
-	int mTime;
-	std::vector <std::pair<int, int>> mPixels;
+	int mEvent; /**< Number of event to which this cluster belongs */
+	int mTime; /**< Time stamp of  event */
+	std::vector <std::pair<int, int>> mPixels; /**< The bundle of pixels which are composed to this cluster */
 
-	int mMinX = 1024, mMinY = 512;
-	int mMaxX = 0, mMaxY = 0;
-	std::pair<double, double> center;
-	std::pair<double, double> stdevInAxis;
-	double stdev;
-	int size = 0;
-	TMatrix2D<int> shape;
+	int mMinX = 1024, mMinY = 512; /**< Maximum pixel x and y value in cluster*/
+	int mMaxX = 0, mMaxY = 0; /**< Minimum pixel x and y value in cluster*/
+	std::pair<double, double> center; /**< cluster centre value. The average of x and y values.*/
+	std::pair<double, double> stdevInAxis; /**< standard deviation in x and y direction */
+	double stdev; /**< Root of mean of squared distance from cluster centre */
+	int size = 0; /**< The number of pixels in cluster */
+	TMatrix2D<int> shape; /**< The shape matrix for analyse cluster shape */
 
 public:
-	// Constructor
 	TCluster();
 	TCluster(int event, int time);
-	// Copy Constructor
 	TCluster(const TCluster& copy);
-	// Copy Assignment
 	TCluster& operator=(const TCluster& copy);
-	// Move Constructor
 	TCluster(TCluster&& move);
-	// Move Assignment
 	TCluster& operator=(TCluster&& move);
-	// Destructor
 	~TCluster();
 
 	// Add Function
