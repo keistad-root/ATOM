@@ -1,10 +1,10 @@
 #include "TCluster.h"
 
-TCluster::TCluster() { };
+TCluster::TCluster() : fBits(kNotDeleted) { };
 
-TCluster::TCluster(int event, int time) : mEvent(event), mTime(time) { }
+TCluster::TCluster(int event, int time) : mEvent(event), mTime(time), fBits(kNotDeleted) { }
 
-TCluster::TCluster(const TCluster& copy) : mEvent(copy.mEvent), mTime(copy.mTime), mMinX(copy.mMinX), mMinY(copy.mMinY), mMaxX(copy.mMaxX), mMaxY(copy.mMaxY) {
+TCluster::TCluster(const TCluster& copy) : mEvent(copy.mEvent), mTime(copy.mTime), mMinX(copy.mMinX), mMinY(copy.mMinY), mMaxX(copy.mMaxX), mMaxY(copy.mMaxY), fBits(kNotDeleted) {
 	mPixels.assign(copy.mPixels.begin(), copy.mPixels.end());
 }
 
@@ -92,9 +92,9 @@ void TCluster::calMembers() {
 	calMinMax();
 	calCenter();
 	calSize();
-	calShape();
-	calStdevInAxis();
-	calStdev();
+	// calShape();
+	// calStdevInAxis();
+	// calStdev();
 }
 
 void TCluster::calMinMax() {
@@ -117,54 +117,16 @@ void TCluster::calCenter() {
 	center = {x, y};
 }
 
-void TCluster::calStdevInAxis() {
-	double stdevX = 0., stdevY = 0.;
-	for ( std::pair<int, int>pixel : mPixels ) {
-		stdevX += pow(pixel.first - center.first, 2);
-		stdevY += pow(pixel.second - center.second, 2);
-	}
-	stdevX = (double) stdevX / mPixels.size();
-	stdevY = (double) stdevY / mPixels.size();
-	stdevInAxis = {stdevX, stdevY};
-}
-
-void TCluster::calStdev() {
-	stdev = 0.;
-	for ( std::pair<int, int> pixel : mPixels ) {
-		stdev += pow(pixel.first - center.first, 2) + pow(pixel.second - center.second, 2);
-	}
-	stdev = (double) stdev / mPixels.size();
-}
-
 void TCluster::calSize() {
 	size = mPixels.size();
-}
-
-void TCluster::calShape() {
-	shape = TMatrix2D<int>(mMaxX - mMinX + 1, mMaxY - mMinY + 1);
-	for ( std::pair<int, int> pixel : mPixels ) {
-		shape.setElement(pixel.first - mMinX, pixel.second - mMinY, 1);
-	}
 }
 
 const std::pair<double, double> TCluster::getCenter() const {
 	return center;
 }
 
-const std::pair<double, double> TCluster::getStdevInAxis() const {
-	return stdevInAxis;
-}
-
-const double TCluster::getStdev() const {
-	return stdev;
-}
-
 const int TCluster::getSize() const {
 	return size;
-}
-
-const TMatrix2D<int>& TCluster::getShape() const {
-	return shape;
 }
 
 // Setter for member

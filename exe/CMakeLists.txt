@@ -1,11 +1,11 @@
 # Set the exe file set
 set(TEST_EXE
-    test_tqdm
     ExperimentAnalysis
     simulation
     ThresholdAnalysis
     SimulationAnalysis
     GarfieldSimulation
+	Merge
 )
 
 # for now put the executables in the build root for compatibility with existing scripts

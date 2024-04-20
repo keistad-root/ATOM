@@ -26,8 +26,11 @@
   */
 struct TShapeInfo {
 	TCluster* mPresidentCluster;
-	TImage* mClusterImage;
+	TMatrix2D<int>* mClusterMatrix;
+	TH2I* mClusterMap;
 	int mEntry;
+	int mShortBinN;
+	int mLongBinN;
 };
 
 /**
@@ -48,10 +51,13 @@ private:
 public:
 	TClusterShape() = default;
 	TClusterShape(const std::vector<TCluster*> clusters, const int clusterSize);
+	~TClusterShape();
 
 	void identifyShapes();
 	void sortShapes(bool descend = true);
-	TImage* clusterImage(const TMatrix2D<int>& clusterMatrix);
+	void calClusterInfo(TShapeInfo& shapeInfo, TCluster* cluster);
+	TMatrix2D<int>* clusterMatrix(const TCluster* cluster);
+	TH2I* clusterMap(const TMatrix2D<int>* clusterMatrix);
 
 	const std::vector<TShapeInfo>& getClusterShapeInfos() const;
 

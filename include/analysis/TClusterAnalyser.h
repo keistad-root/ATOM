@@ -21,6 +21,7 @@
 #include "TClusterization.h"
 #include "TFileFormat.h"
 #include "cppconfig.h"
+#include "TExperimentData.h"
 
  /**
   * @brief Communicating execute file for controlling cluster research.
@@ -36,22 +37,38 @@ class TClusterAnalyser : public TAnalyser {
 private:
 	TH2D* mClustermap;
 	TH2D* mMaskedClustermap;
+	TH2D* mNoisePixelClustermap;
 protected:
 	TH1D* mClustersize;
 	TH1D* mMaskedClustersize;
+	TH1D* mNoisePixelClustersize;
 public:
 	//Constructor
 	TClusterAnalyser() = default;
 	TClusterAnalyser(const TAnalyser& analyser);
 	~TClusterAnalyser();
 
-	void refineData();
+	TH2D* getClusterPlot(const Configurable& config, const std::vector<TCluster*>& clusters);
+	TH1D* getClustersizePlot(const Configurable& config, const std::vector<TCluster*>& clusters);
 
-	void savePlots();
-	void saveClustermap();
-	void saveMaskedClustermap();
-	void saveClustersize();
-	void saveMaskedClustersize();
+	void saveClustermap(const Configurable& config);
+	void saveMaskedClustermap(const Configurable& config);
+	void saveNoisePixelClustermap(const Configurable& config);
+
+	void saveClustersize(const Configurable& config);
+	void saveMaskedClustersize(const Configurable& config);
+	void saveNoisePixelClustersize(const Configurable& config);
+
+	void saveHitmapByClustersize(const Configurable& config);
+
+private:
+	uint fBits;
+public:
+	enum {
+		kNotDeleted = 0x02000000
+	};
+	bool IsDestructed() const { return !TestBit(kNotDeleted); }
+	bool TestBit(uint f) const { return (bool) ((fBits & f) != 0); }
 };
 
 #endif

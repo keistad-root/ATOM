@@ -26,6 +26,15 @@ public:
 	void pushData(const std::pair<int, int>& coordinate);
 	void removeDuplication();
 	void sortPixel();
+
+private:
+	uint fBits;
+public:
+	enum {
+		kNotDeleted = 0x02000000
+	};
+	bool IsDestructed() const { return !TestBit(kNotDeleted); }
+	bool TestBit(uint f) const { return (bool) ((fBits & f) != 0); }
 };
 
 #endif

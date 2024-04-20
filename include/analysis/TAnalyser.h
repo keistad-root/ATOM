@@ -18,6 +18,7 @@
 #include "cppconfig.h"
 #include "TFileFormat.h"
 #include "TExperimentData.h"
+#include "cpptqdm.h"
 
  /**
   * @class TAnalyser
@@ -34,8 +35,12 @@ private:
 	TFile* mInputFile = nullptr; /**< Input file with ROOT extension. */
 	TTree* mTree;
 	TInputRoot mInput;
+
 	TH2D* mHitmap;
+	TH2D* mMaskedHitmap;
+	TH2D* mNoisePixelmap;
 protected:
+	std::string mPostfix;
 	TExperimentData* mExpData;
 	std::filesystem::path mSavePath;
 	TPaveText* mExpSettingLegend;
@@ -45,14 +50,27 @@ public:
 	TAnalyser(const TAnalyser& copy);
 	~TAnalyser();
 
-	void storeEvents();
-
 	TTree* openTree(std::string treeName);
+	void storeEvents();
+	void doMasking(int mMaskOver);
+
 	void setSavePath(const std::filesystem::path& savePath);
 	void setExpSettingLegend(Configurable settingConfig);
-	void saveHitmap();
-	void saveMaskedHitmap();
-	void doMasking(int mMaskOver);
+
+	TH2D* getHitPlot(const Configurable& config, const std::vector<TALPIDEEvent*>& events);
+
+	void saveHitmap(const Configurable& config);
+	void saveMaskedHitmap(const Configurable& config);
+	void saveNoisePixelmap(const Configurable& config);
+
+private:
+	uint fBits;
+public:
+	enum {
+		kNotDeleted = 0x02000000
+	};
+	bool IsDestructed() const { return !TestBit(kNotDeleted); }
+	bool TestBit(uint f) const { return (bool) ((fBits & f) != 0); }
 };
 
 #endif

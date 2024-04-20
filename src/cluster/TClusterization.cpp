@@ -94,6 +94,7 @@ void TClusterization::clusterize() {
 	}
 	delete pBar;
 	pBar = nullptr;
+	std::clog << "Total " << mClusters.size() << " clusters are extracted from " << mEvents.size() << " events." << std::endl << std::endl;
 	for ( TCluster* cluster : mClusters ) {
 		cluster->calMembers();
 	}

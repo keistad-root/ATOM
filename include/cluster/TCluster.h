@@ -24,10 +24,10 @@ private:
 	int mMinX = 1024, mMinY = 512; /**< Maximum pixel x and y value in cluster*/
 	int mMaxX = 0, mMaxY = 0; /**< Minimum pixel x and y value in cluster*/
 	std::pair<double, double> center; /**< cluster centre value. The average of x and y values.*/
-	std::pair<double, double> stdevInAxis; /**< standard deviation in x and y direction */
-	double stdev; /**< Root of mean of squared distance from cluster centre */
+	// std::pair<double, double> stdevInAxis; /**< standard deviation in x and y direction */
+	// double stdev; /**< Root of mean of squared distance from cluster centre */
 	int size = 0; /**< The number of pixels in cluster */
-	TMatrix2D<int> shape; /**< The shape matrix for analyse cluster shape */
+	// TMatrix2D<int> shape; /**< The shape matrix for analyse cluster shape */
 
 public:
 	TCluster();
@@ -52,17 +52,17 @@ public:
 	void calMembers();
 	void calMinMax();
 	void calCenter();
-	void calStdevInAxis();
-	void calStdev();
+	// void calStdevInAxis();
+	// void calStdev();
 	void calSize();
-	void calShape();
+	// void calShape();
 
 	// Getter
 	const std::pair<double, double> getCenter() const;
-	const std::pair<double, double> getStdevInAxis() const;
-	const double getStdev() const;
+	// const std::pair<double, double> getStdevInAxis() const;
+	// const double getStdev() const;
 	const int getSize() const;
-	const TMatrix2D<int>& getShape() const;
+	// const TMatrix2D<int>& getShape() const;
 
 	// Setter for member
 	void setEvent(const int event);
@@ -83,6 +83,15 @@ public:
 
 	bool operator==(const TCluster& cluster) const;
 	bool operator!=(const TCluster& cluster) const;
+
+private:
+	uint fBits;
+public:
+	enum {
+		kNotDeleted = 0x02000000
+	};
+	bool IsDestructed() const { return !TestBit(kNotDeleted); }
+	bool TestBit(uint f) const { return (bool) ((fBits & f) != 0); }
 };
 
 #endif

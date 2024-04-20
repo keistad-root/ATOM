@@ -18,6 +18,14 @@ TClusterShape::TClusterShape(const std::vector<TCluster*> clusters, const int cl
 	}
 }
 
+TClusterShape::~TClusterShape() {
+	for ( TShapeInfo shapeInfo : mClusterShapeInfos ) {
+		delete shapeInfo.mClusterMap;
+		delete shapeInfo.mClusterMatrix;
+
+	}
+}
+
 /**
  * @brief Specificate the clusters according to their shapes.
  * @details This function checks homeomorphism of cluster and store the shape informations.
@@ -35,16 +43,17 @@ void TClusterShape::identifyShapes() {
 			TShapeInfo shapeInfo;
 			shapeInfo.mPresidentCluster = cluster;
 			shapeInfo.mEntry = 1;
-			shapeInfo.mClusterImage = clusterImage(cluster->getShape());
+			calClusterInfo(shapeInfo, cluster);
+			shapeInfo.mClusterMap = clusterMap(shapeInfo.mClusterMatrix);
 			mClusterShapeInfos.push_back(shapeInfo);
 			isFirst = false;
 			continue;
 		}
-		TMatrix2D<int> checkingCluster = cluster->getShape();
+		TMatrix2D<int>* checkingCluster = clusterMatrix(cluster);
 		bool isHomoemorphismExist = false;
 		for ( TShapeInfo& shapeInfo : mClusterShapeInfos ) {
-			TMatrix2D<int> comparedCluster = shapeInfo.mPresidentCluster->getShape();
-			if ( comparedCluster.hasHomeomorphism(checkingCluster) ) {
+			TMatrix2D<int>* comparedCluster = shapeInfo.mClusterMatrix;
+			if ( comparedCluster->hasHomeomorphism(*checkingCluster) ) {
 				shapeInfo.mEntry++;
 				isHomoemorphismExist = true;
 				break;
@@ -55,7 +64,8 @@ void TClusterShape::identifyShapes() {
 			TShapeInfo shapeInfo;
 			shapeInfo.mPresidentCluster = cluster;
 			shapeInfo.mEntry = 1;
-			shapeInfo.mClusterImage = clusterImage(cluster->getShape());
+			calClusterInfo(shapeInfo, cluster);
+			shapeInfo.mClusterMap = clusterMap(shapeInfo.mClusterMatrix);
 			mClusterShapeInfos.push_back(shapeInfo);
 		}
 	}
@@ -75,7 +85,13 @@ void TClusterShape::identifyShapes() {
 void TClusterShape::sortShapes(bool descend) {
 	std::sort(mClusterShapeInfos.begin(), mClusterShapeInfos.end(),
 			  [ ](TShapeInfo& a, TShapeInfo& b) {
-				  return a.mEntry > b.mEntry;
+				  if ( a.mEntry != b.mEntry ) {
+					  return a.mEntry > b.mEntry;
+				  } else if ( a.mClusterMatrix->getNRow() != b.mClusterMatrix->getNRow() ) {
+					  return a.mClusterMatrix->getNRow() < b.mClusterMatrix->getNRow();
+				  } else {
+					  return a.mClusterMatrix->getNColumn() < b.mClusterMatrix->getNColumn();
+				  }
 			  }
 	);
 }
@@ -92,44 +108,65 @@ void TClusterShape::sortShapes(bool descend) {
  * @todo Avoiding same name problem.
  * @see
 */
-TImage* TClusterShape::clusterImage(const TMatrix2D<int>& clusterMatrix) {
-	static int numbering = 0;
-	// Creating new image.
-	TImage* image = TImage::Create();
 
-	// Getting row and column length.
-	int nRow = clusterMatrix.getNRow();
-	int nColumn = clusterMatrix.getNColumn();
 
-	// Defining new canvas for saving to image. The name and title is set ans "temp". The size of one pixel is set as 100. The margin is removed for compact image and grid is added for readability.
-	TCanvas* shapeCan = new TCanvas(Form("%d", numbering), "temp", 100 * (nRow + 2), 100 * (nColumn + 2));
-	shapeCan->SetMargin(0, 0, 0, 0);
-	shapeCan->SetGrid();
+TH2I* TClusterShape::clusterMap(const TMatrix2D<int>* clusterMatrix) {
+	static int numbering;
+	int nRow = clusterMatrix->getNRow();
+	int nColumn = clusterMatrix->getNColumn();
 
-	// Making histogram for saving matrix information. The extra pixels are added as a border.
-	TH2I* shapeMap = new TH2I(Form("%d", numbering), "", nRow + 2, 0, nRow + 2, nColumn + 2, 0, nColumn + 2);
-	// The pixel is filled if the element is 1.
+	TH2I* map = new TH2I(Form("_%d", numbering), "", nRow + 2, 0, nRow + 2, nColumn + 2, 0, nColumn + 2);
 	for ( int iRow = 0; iRow < nRow; iRow++ ) {
 		for ( int iColumn = 0; iColumn < nColumn; iColumn++ ) {
-			if ( clusterMatrix.getElement(iRow, iColumn) == 1 ) {
-				shapeMap->Fill(iRow + 1, iColumn + 1);
+			if ( clusterMatrix->getElement(iRow, iColumn) == 1 ) {
+				map->Fill(iRow + 1, iColumn + 1);
 			}
 		}
 	}
-	// Remove sub ticks. Sub ticks make the plot confusing.
-	shapeMap->GetXaxis()->SetNdivisions(nRow + 2, 0, 0, true);
-	shapeMap->GetYaxis()->SetNdivisions(nColumn + 2, 0, 0, true);
-	shapeMap->GetZaxis()->SetNdivisions(0, 0, 0, true);
-	// Remove legend. The legend information is useless in here.
-	shapeMap->SetStats(0);
-	// The histogram is drown with colz. By this, The fired pixels are represented as yellow box and others are white.
-	shapeMap->Draw("COLZ");
+	map->GetXaxis()->SetNdivisions(nRow + 2, 0, 0, true);
+	for ( int i = 1; i <= map->GetNbinsX(); ++i ) {
+		map->GetXaxis()->SetBinLabel(i, "");
+	}
+	for ( int i = 1; i <= map->GetNbinsY(); ++i ) {
+		map->GetYaxis()->SetBinLabel(i, "");
+	}
+	map->GetYaxis()->SetNdivisions(nColumn + 2, 0, 0, true);
+	map->GetZaxis()->SetNdivisions(0, 0, 0, true);
+	map->SetStats(0);
 
-	// The canvas is saved in image.
-	image->FromPad(shapeCan);
-	// return inner image.
 	numbering++;
-	return image;
+	return map;
+}
+
+
+void TClusterShape::calClusterInfo(TShapeInfo& shapeInfo, TCluster* cluster) {
+	int xBinN = cluster->getMaxX() - cluster->getMinX();
+	int yBinN = cluster->getMaxY() - cluster->getMinY();
+	bool longHeight = yBinN > xBinN ? true : false;
+	shapeInfo.mLongBinN = longHeight ? yBinN : xBinN;
+	shapeInfo.mShortBinN = longHeight ? xBinN : yBinN;
+
+	shapeInfo.mClusterMatrix = new TMatrix2D<int>(shapeInfo.mLongBinN + 1, shapeInfo.mShortBinN + 1);
+	if ( longHeight ) {
+		for ( const std::pair<int, int>& pixel : cluster->getPixels() ) {
+			shapeInfo.mClusterMatrix->setElement(pixel.second - cluster->getMinY(), pixel.first - cluster->getMinX(), 1);
+		}
+	} else {
+		for ( const std::pair<int, int>& pixel : cluster->getPixels() ) {
+			shapeInfo.mClusterMatrix->setElement(pixel.first - cluster->getMinX(), pixel.second - cluster->getMinY(), 1);
+		}
+	}
+
+}
+
+TMatrix2D<int>* TClusterShape::clusterMatrix(const TCluster* cluster) {
+	int xBinN = cluster->getMaxX() - cluster->getMinX();
+	int yBinN = cluster->getMaxY() - cluster->getMinY();
+	TMatrix2D<int>* matrix = new TMatrix2D<int>(xBinN + 1, yBinN + 1);
+	for ( const std::pair<int, int>& pixel : cluster->getPixels() ) {
+		matrix->setElement(pixel.first - cluster->getMinX(), pixel.second - cluster->getMinY(), 1);
+	}
+	return matrix;
 }
 
 /**

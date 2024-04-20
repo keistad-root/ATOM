@@ -1,5 +1,4 @@
 #include "cppconfig.h"
-#include <typeinfo>
 
 Configurable::Configurable(std::string_view configName) : mConfigName(configName) { }
 
@@ -18,12 +17,43 @@ void Configurable::addDictionary(std::string_view key, std::string_view value) {
 	mDictionary[std::string(key)] = std::string(value);
 }
 
-const std::string& Configurable::find(std::string_view key) const {
-	static const std::string emptyString;
+const bool Configurable::hasKey(std::string_view key) const {
 	if ( mDictionary.count(std::string(key)) ) {
-		return mDictionary.at(std::string(key));
+		return true;
 	} else {
-		return emptyString;
+		return false;
+	}
+}
+
+const std::string& Configurable::find(std::string_view key) const {
+	try {
+		if ( !mDictionary.count(std::string(key)) ) {
+			throw ConfigrableNoValue(key, mConfigName);
+		} else {
+			return mDictionary.at(std::string(key));
+		}
+	} catch ( ConfigrableNoValue& e ) {
+		std::cerr << e.what() << std::endl;
+		exit(1);
+	}
+}
+
+const std::vector<std::string> Configurable::findlist(std::string_view key) const {
+	try {
+		if ( !mDictionary.count(std::string(key)) ) {
+			throw ConfigrableNoValue(key, mConfigName);
+		} else {
+			std::vector<std::string> values;
+			std::string value;
+			std::istringstream valueStream(mDictionary.at(std::string(key)));
+			while ( std::getline(valueStream, value, '\n') ) {
+				values.push_back(value);
+			}
+			return values;
+		}
+	} catch ( ConfigrableNoValue& e ) {
+		std::cerr << e.what() << std::endl;
+		exit(1);
 	}
 }
 
@@ -41,32 +71,41 @@ void Configuration::addConfig(std::string_view configFile) {
 	std::string key;
 	std::string value;
 	while ( getline(conf, line) ) {
+		line.erase(remove(line.begin(), line.end(), '\t'), line.end());
+		line.erase(remove(line.begin(), line.end(), ' '), line.end());
 		if ( line[0] == '#' || line == "" ) {
 			continue;
 		} else if ( line[0] == '[' ) {
 			mConfigs.push_back(Configurable(line.substr(1, line.length() - 2)));
 		} else {
 			key = line.substr(0, line.find("="));
-			key.erase(remove(key.begin(), key.end(), '\t'), key.end());
-			key.erase(remove(key.begin(), key.end(), ' '), key.end());
+			// key.erase(remove(key.begin(), key.end(), '\t'), key.end());
+			// key.erase(remove(key.begin(), key.end(), ' '), key.end());
 
 			if ( line.find('{') == std::string::npos ) {
 				value = line.substr(line.find("=") + 1);
-				value.erase(remove(value.begin(), value.end(), '\t'), value.end());
-				value.erase(remove(value.begin(), value.end(), ' '), value.end());
+				// value.erase(remove(value.begin(), value.end(), '\t'), value.end());
+				// value.erase(remove(value.begin(), value.end(), ' '), value.end());
 
 				mConfigs.back().addDictionary(key, value);
 				key = "";
 				value = "";
 			} else {
 				while ( getline(conf, line) ) {
-					if ( line.find('}') != std::string::npos ) {
+					line.erase(remove(line.begin(), line.end(), '\t'), line.end());
+					line.erase(remove(line.begin(), line.end(), ' '), line.end());
+					if ( line[0] == '#' || line == "" ) {
+						continue;
+					} else if ( line.find('}') != std::string::npos ) {
 						mConfigs.back().addDictionary(key, value);
 						key = "";
 						value = "";
 						break;
+					} else {
+						line.erase(remove(line.begin(), line.end(), ','), line.end());
+						value += line + "\n";
 					}
-					value += line + "\n";
+
 				}
 			}
 		}

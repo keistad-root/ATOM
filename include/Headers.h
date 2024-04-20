@@ -1,6 +1,7 @@
 // Standard library
 #include <iostream>
 #include <string>
+#include <string_view>
 #include <vector>
 #include <array>
 #include <unordered_map>
@@ -25,6 +26,7 @@
 
 #include "TH1.h"
 #include "TH2.h"
+#include "TH3.h"
 #include "TGraph.h"
 #include "TMultiGraph.h"
 #include "TF1.h"
