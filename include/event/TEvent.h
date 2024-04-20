@@ -1,8 +1,6 @@
 #ifndef __TEVENT__
 #define __TEVENT__
 
-#include "Headers.h"
-
 class TEvent {
 private:
 	int iEvent;

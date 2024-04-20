@@ -9,6 +9,7 @@
 #include "TExperimentData.h"
 #include "cppargs.h"
 #include "TClusterDivideData.h"
+#include "TClusterization.h"
 
 #include "TCanvas.h"
 #include "TFile.h"

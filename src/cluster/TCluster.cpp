@@ -1,3 +1,4 @@
+#define __TCLUSTER_HEADER__
 #include "TCluster.h"
 
 TCluster::TCluster() : fBits(kNotDeleted) { };

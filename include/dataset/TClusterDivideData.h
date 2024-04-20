@@ -1,8 +1,13 @@
 #ifndef __TCLUSTERDIVIDEDATA__
 #define __TCLUSTERDIVIDEDATA__
 
-#include "Headers.h"
+#ifdef __TCLUSTERDIVIDEDATA_HEADER__
+#include <iostream>
 #include "TCluster.h"
+#endif
+
+#include<unordered_map>
+#include<vector>
 
 class TClusterDivideData {
 private:
@@ -11,8 +16,5 @@ public:
 	TClusterDivideData(const std::vector<TCluster*>& clusters);
 	const std::vector<TCluster*>& getClusterOfSize(const int clusterSize);
 };
-
-
-
 
 #endif

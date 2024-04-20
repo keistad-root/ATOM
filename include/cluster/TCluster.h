@@ -12,8 +12,10 @@
 #ifndef __TCLUSTER__
 #define __TCLUSTER__
 
-#include "Headers.h"
-#include "TMatrix2D.h"
+#ifdef __TCLUSTER_HEADER__
+#endif
+
+#include<vector>
 
 class TCluster {
 private:
@@ -85,13 +87,13 @@ public:
 	bool operator!=(const TCluster& cluster) const;
 
 private:
-	uint fBits;
+	unsigned int fBits;
 public:
 	enum {
 		kNotDeleted = 0x02000000
 	};
 	bool IsDestructed() const { return !TestBit(kNotDeleted); }
-	bool TestBit(uint f) const { return (bool) ((fBits & f) != 0); }
+	bool TestBit(unsigned int f) const { return (bool) ((fBits & f) != 0); }
 };
 
 #endif

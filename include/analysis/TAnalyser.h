@@ -12,24 +12,51 @@
 #ifndef __TANALYSER__
 #define __TANALYSER__
 
-#include "Headers.h"
-#include "TKey.h"
-#include "TObject.h"
-#include "cppconfig.h"
-#include "TFileFormat.h"
-#include "TExperimentData.h"
-#include "cpptqdm.h"
+#ifdef __TANALYSER_HEADERS__
+#include <iostream>
 
- /**
-  * @class TAnalyser
-  * @brief For ROOT and config file when analysis
-  * @details It sotre ROOT file and Config file.
-  * It provide open and access such kind files.
-  * It is made for being mother class of Analysis class.
-  * @warning
-  * @bug
-  * @todo Add template for plots. Map, distribution, etc.
-  */
+#include "TFile.h"
+#include "TTree.h"
+#include "TBranch.h"
+#include "TH2D.h"
+#include "TError.h"
+#include "TPaveText.h"
+#include "TCanvas.h"
+
+#include "cpptqdm.h"
+#include "cppconfig.h"
+
+#include "TExperimentData.h"
+#include "TMatrix2D.h"
+#include "TALPIDEEvent.h"
+#endif
+
+#include<string>
+#include<filesystem>
+#include "TFileFormat.h"
+
+class TFile;
+class TTree;
+class TH2D;
+class TPaveText;
+
+class Configurable;
+
+// struct TInputRoot;
+class TALPIDEEvent;
+class TExperimentData;
+typedef unsigned int UInt_t;
+
+/**
+ * @class TAnalyser
+ * @brief For ROOT and config file when analysis
+ * @details It sotre ROOT file and Config file.
+ * It provide open and access such kind files.
+ * It is made for being mother class of Analysis class.
+ * @warning
+ * @bug
+ * @todo Add template for plots. Map, distribution, etc.
+ */
 class TAnalyser {
 private:
 	TFile* mInputFile = nullptr; /**< Input file with ROOT extension. */
@@ -64,13 +91,13 @@ public:
 	void saveNoisePixelmap(const Configurable& config);
 
 private:
-	uint fBits;
+	UInt_t fBits;
 public:
 	enum {
 		kNotDeleted = 0x02000000
 	};
 	bool IsDestructed() const { return !TestBit(kNotDeleted); }
-	bool TestBit(uint f) const { return (bool) ((fBits & f) != 0); }
+	bool TestBit(UInt_t f) const { return (bool) ((fBits & f) != 0); }
 };
 
 #endif

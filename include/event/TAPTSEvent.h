@@ -3,6 +3,8 @@
 
 #include "TEvent.h"
 
+#include <array>
+
 class TAPTSEvent : public TEvent {
 private:
 	int iFrame;

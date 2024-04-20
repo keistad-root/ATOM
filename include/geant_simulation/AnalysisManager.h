@@ -1,109 +1,116 @@
 #ifndef __ANALYSISMANAGER__
 #define __ANALYSISMANAGER__
 
-#include "G4PhysicalConstants.hh"
+#ifdef __ANALYSISMANAGER_HEADER__
 #include "G4Run.hh"
+#include "G4Event.hh"
+#include "G4Track.hh"
 #include "G4Step.hh"
 #include "G4RunManager.hh"
-#include "G4SystemOfUnits.hh"
-#include "G4GenericMessenger.hh"
+#include"TFile.h"
+#include"TTree.h"
+#endif
 
-#include "DetectorConstruction.h"
+#include <string>
 
-#include "TROOT.h"
-#include "TFile.h"
-#include "TTree.h"
+class TFile;
+class TTree;
+
+class G4Run;
+class G4Event;
+class G4Track;
+class G4Step;
 
 struct RunTuple {
-    Int_t runID;
-    Int_t nEvents;
+	int runID;
+	int nEvents;
 };
 
 struct EventTuple {
-    Int_t runID;
-    Int_t eventGlobalID;
-    Int_t eventLocalID;
-    Int_t nTracks;
+	int runID;
+	int eventGlobalID;
+	int eventLocalID;
+	int nTracks;
 };
 
 struct TrackTuple {
-    Int_t eventGlobalID;
-    Int_t trackGlobalID;
-    Int_t trackLocalID;
-    Int_t trackParentLocalID;
-    TString particleName;
-    TString processName;
-    TString volumeName;
-    Double_t genTime;
-    Double_t genPosition[3];
-    Double_t genKineteicEnergy;
-    Double_t genMomentum[3];
-    Int_t nSteps;
+	int eventGlobalID;
+	int trackGlobalID;
+	int trackLocalID;
+	int trackParentLocalID;
+	std::string particleName;
+	std::string processName;
+	std::string volumeName;
+	double genTime;
+	double genPosition[3];
+	double genKineteicEnergy;
+	double genMomentum[3];
+	int nSteps;
 };
 
 struct StepTuple {
-    Int_t trackGlobalID;
-    Int_t stepGlobalID;
-    TString volumeName;
-    Double_t time;
-    Double_t position[3];
-    Double_t kineticEnergy;
-    Double_t momentum[3];
-    Double_t deltaEnergy;
-    Double_t totalDepositEnergy;
-    Double_t nonIonizingEnergyLoss;
+	int trackGlobalID;
+	int stepGlobalID;
+	std::string volumeName;
+	double time;
+	double position[3];
+	double kineticEnergy;
+	double momentum[3];
+	double deltaEnergy;
+	double totalDepositEnergy;
+	double nonIonizingEnergyLoss;
 };
 
 class AnalysisManager {
 private:
-    Int_t runID = 0;
-    Int_t eventID = 0;
-    Int_t trackID = 0;
-    Int_t stepID = 0;
+	int runID = 0;
+	int eventID = 0;
+	int trackID = 0;
+	int stepID = 0;
 
-    static AnalysisManager* fInstance;
+	static AnalysisManager* fInstance;
 
-    TFile* mOutputFile;
-    TTree* mRunTree;
-    TTree* mEventTree;
-    TTree* mTrackTree;
-    TTree* mStepTree;
+	TFile* mOutputFile;
+	TTree* mRunTree;
+	TTree* mEventTree;
+	TTree* mTrackTree;
+	TTree* mStepTree;
 
-    RunTuple runTuple;
-    EventTuple eventTuple;
-    TrackTuple trackTuple;
-    StepTuple stepTuple;
+	RunTuple runTuple;
+	EventTuple eventTuple;
+	TrackTuple trackTuple;
+	StepTuple stepTuple;
 public:
-    AnalysisManager();
-    AnalysisManager(std::string name);
-    ~AnalysisManager();
+	AnalysisManager();
+	AnalysisManager(std::string name);
+	~AnalysisManager();
 
-    static AnalysisManager* Instance();
+	static AnalysisManager* Instance();
 
-    void setEventID(const Int_t id) { eventID = id; }
-    void setTrackID(const Int_t id) { trackID = id; }
-    Int_t getEventID() const { return eventID; }
-    Int_t getTrackID() const { return trackID; }
+	void setEventID(const int id) { eventID = id; }
+	void setTrackID(const int id) { trackID = id; }
+	int getEventID() const { return eventID; }
+	int getTrackID() const { return trackID; }
 
-    void openBook(std::string name);
+	void openBook(std::string name);
 
-    void setRunTree();
-    void setEventTree();
-    void setTrackTree();
-    void setStepTree();
+	void setRunTree();
+	void setEventTree();
+	void setTrackTree();
+	void setStepTree();
 
-    void RecordingRun(const G4Run* run);
-    void RecordingEvent(const G4Event* event);
-    void RecordingTrackStart(const G4Track* track);
-    void RecordingTrackEnd(const G4Track* track);
-    void RecordingStep(const G4Step* step);
+	void RecordingRun(const G4Run* run);
+	void RecordingEvent(const G4Event* event);
+	void RecordingTrackStart(const G4Track* track);
+	void RecordingTrackEnd(const G4Track* track);
+	void RecordingStep(const G4Step* step);
 
-    void closeBook();
+	void closeBook();
 
-    RunTuple& getRunTuple() {return runTuple;}
-    EventTuple& getEventTuple() {return eventTuple;}
-    TrackTuple& getTrackTuple() {return trackTuple;}
-    StepTuple& getStepTuple() {return stepTuple;}
+	RunTuple& getRunTuple() { return runTuple; }
+	EventTuple& getEventTuple() { return eventTuple; }
+	TrackTuple& getTrackTuple() { return trackTuple; }
+	StepTuple& getStepTuple() { return stepTuple; }
 };
 
 #endif

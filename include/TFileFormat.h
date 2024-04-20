@@ -1,9 +1,9 @@
 #ifndef __TFILEFORMAT__
 #define __TFILEFORMAT__
 
-#include "TTree.h"
-#include "TH2.h"
-#include "TH1.h"
+typedef unsigned char UChar_t;
+typedef unsigned int UInt_t;
+typedef unsigned short UShort_t;
 
 struct TInputRoot {
 	UChar_t chipid;

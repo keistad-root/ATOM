@@ -1,3 +1,5 @@
+#define __TANALYSER_HEADERS__
+
 #include "TAnalyser.h"
 
 TAnalyser::TAnalyser(TFile* inputFile, TExperimentData* expData) : mInputFile(inputFile), mExpData(expData), fBits(kNotDeleted) {

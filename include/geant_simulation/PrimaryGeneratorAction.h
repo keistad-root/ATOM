@@ -1,26 +1,27 @@
 #ifndef __PRIMARYGENERATORACTION__
 #define __PRIMARYGENERATORACTION__
 
-#include "G4VUserPrimaryGeneratorAction.hh"
-#include "G4RunManager.hh"
-#include "G4ParticleGun.hh"
-#include "G4ParticleTable.hh"
-#include "G4SystemOfUnits.hh"
-#include "G4UnitsTable.hh"
+#ifdef __PRIMARYGENERATORACTION_HEADER__
+#include "G4ios.hh"
 #include "G4GeneralParticleSource.hh"
+#endif
+
+#include "G4VUserPrimaryGeneratorAction.hh"
+
+class G4GeneralParticleSource;
 
 class PrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction {
 private:
-    G4GeneralParticleSource* fParticleGun;
+	G4GeneralParticleSource* fParticleGun;
 public:
-    PrimaryGeneratorAction();
-    virtual ~PrimaryGeneratorAction();
+	PrimaryGeneratorAction();
+	virtual ~PrimaryGeneratorAction();
 
-    void setParticleGun();
+	void setParticleGun();
 
-    void GeneratePrimaries(G4Event* anEvent);
+	void GeneratePrimaries(G4Event* anEvent);
 
-    const G4GeneralParticleSource* GetParticleGun() const;
+	const G4GeneralParticleSource* GetParticleGun() const;
 };
 
 #endif

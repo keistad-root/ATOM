@@ -12,18 +12,28 @@
 #ifndef __TCLUSTERSHAPE__
 #define __TCLUSTERSHAPE__
 
-#include "Headers.h"
+#ifdef __TCLUSTERSHAPE_HEADER__
 #include "TCluster.h"
+#include "TH2I.h"
+#include "TMatrix2D.h"
+#endif
 
- /**
-  * @struct TShapeInfo
-  * @brief The information set stucture for clusters that having homeomorphism shape.
-  * @details It stores on cluster for extracting basic cluster informations.
-  * And cluster image and the number of homeomorphism clusters are saved.
-  * @warning
-  * @bug
-  * @todo Add struct member if needed.
-  */
+#include<vector>
+
+class TH2I;
+
+class TCluster;
+template<typename T> class TMatrix2D;
+
+/**
+ * @struct TShapeInfo
+ * @brief The information set stucture for clusters that having homeomorphism shape.
+ * @details It stores on cluster for extracting basic cluster informations.
+ * And cluster image and the number of homeomorphism clusters are saved.
+ * @warning
+ * @bug
+ * @todo Add struct member if needed.
+ */
 struct TShapeInfo {
 	TCluster* mPresidentCluster;
 	TMatrix2D<int>* mClusterMatrix;

@@ -12,9 +12,17 @@
 #ifndef __TMERGE__
 #define __TMERGE__
 
-#include "Headers.h"
-#include "TFileFormat.h"
+#ifdef __TMERGE_HEADER__
+#include "TFile.h"
+#include "TTree.h"
 #include "cpptqdm.h"
+#endif
+
+#include <string>
+
+#include "TFileFormat.h"
+
+class TFile;
 
 class MergeFileOpen : public std::exception {
 public:

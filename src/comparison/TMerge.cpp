@@ -1,3 +1,4 @@
+#define __TMERGE_HEADER__
 #include "TMerge.h"
 
 TMerge::TMerge(std::string_view outputFileName, const std::vector<std::string>& inputFileNames) : mOutputFileName(outputFileName) {

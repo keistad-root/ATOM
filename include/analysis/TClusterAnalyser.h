@@ -12,27 +12,41 @@
 #ifndef __TCLUSTERANALYSER__
 #define __TCLUSTERANALYSER__
 
-#include "Headers.h"
+#ifdef __TCLUSTERANALYSER_HEADERS__
+#include <iostream>
 
-#include "TALPIDEEvent.h"
-#include "TAnalyser.h"
-#include "TClusterShape.h"
-#include "TCluster.h"
-#include "TClusterization.h"
-#include "TFileFormat.h"
+#include "TCanvas.h"
+#include "TPaveText.h"
+#include "TH1D.h"
+#include "TH2D.h"
+
 #include "cppconfig.h"
-#include "TExperimentData.h"
+#include "cpptqdm.h"
 
- /**
-  * @brief Communicating execute file for controlling cluster research.
-  * @details It takes ROOT file which is result of experiment.
-  * The analysis data about raw data, clusterized data and masked data are stored as data member.
-  * From these data, the plots for imformations about hitmap, clustermap, size and shapes are drawn.
-  * @warning
-  * @bug
-  * @todo Add Legend about experiment setting
-  * @todo Make more plots about cluster information
-  */
+#include "TCluster.h"
+#include "TExperimentData.h"
+#endif
+
+#include <vector>
+
+#include "TAnalyser.h"
+
+class TH1D;
+class TH2D;
+
+class Configurable;
+class TCluster;
+
+/**
+ * @brief Communicating execute file for controlling cluster research.
+ * @details It takes ROOT file which is result of experiment.
+ * The analysis data about raw data, clusterized data and masked data are stored as data member.
+ * From these data, the plots for imformations about hitmap, clustermap, size and shapes are drawn.
+ * @warning
+ * @bug
+ * @todo Add Legend about experiment setting
+ * @todo Make more plots about cluster information
+ */
 class TClusterAnalyser : public TAnalyser {
 private:
 	TH2D* mClustermap;
@@ -62,13 +76,13 @@ public:
 	void saveHitmapByClustersize(const Configurable& config);
 
 private:
-	uint fBits;
+	unsigned int fBits;
 public:
 	enum {
 		kNotDeleted = 0x02000000
 	};
 	bool IsDestructed() const { return !TestBit(kNotDeleted); }
-	bool TestBit(uint f) const { return (bool) ((fBits & f) != 0); }
+	bool TestBit(unsigned int f) const { return (bool) ((fBits & f) != 0); }
 };
 
 #endif

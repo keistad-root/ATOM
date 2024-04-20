@@ -1,3 +1,5 @@
+#define __TCLUSTERANALYSER_HEADERS__
+
 #include "TClusterAnalyser.h"
 /**
  * @brief Construct a new TClusterAnalyser::TClusterAnalyser object

@@ -1,21 +1,28 @@
 #ifndef __RUNACTION__
 #define __RUNACTION__
 
-#include "G4UserRunAction.hh"
+#ifdef __RUNACTION_HEADER__
+#include "G4ios.hh"
 #include "G4Run.hh"
-
-#include "PrimaryGeneratorAction.h"
 #include "AnalysisManager.h"
+#endif
+
+#include "G4UserRunAction.hh"
+// #include "G4Run.hh"
+
+// #include "PrimaryGeneratorAction.h"
+// #include "AnalysisManager.h"
+class AnalysisManager;
 
 class RunAction : public G4UserRunAction {
 public:
-    RunAction();
-    virtual ~RunAction();
+	RunAction();
+	virtual ~RunAction();
 
-    virtual void BeginOfRunAction(const G4Run*);
-    virtual void EndOfRunAction(const G4Run*);
+	virtual void BeginOfRunAction(const G4Run*);
+	virtual void EndOfRunAction(const G4Run*);
 
-    AnalysisManager* fAnalysisManager;
+	AnalysisManager* fAnalysisManager;
 };
 
 #endif

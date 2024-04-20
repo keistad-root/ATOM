@@ -1,3 +1,4 @@
+#define __TALPIDEEVENT_HEADER__
 #include "TALPIDEEvent.h"
 
 TALPIDEEvent::TALPIDEEvent() : TEvent(), fBits(kNotDeleted) { }

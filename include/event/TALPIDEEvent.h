@@ -1,6 +1,13 @@
 #ifndef __TALPIDEEVENT__
 #define __TALPIDEEVENT__
 
+#ifdef __TALPIDEEVENT_HEADER__
+#include <unordered_set>
+#endif
+
+#include <utility>
+#include <vector>
+
 #include "TEvent.h"
 
 class TALPIDEEvent : public TEvent {
@@ -28,13 +35,13 @@ public:
 	void sortPixel();
 
 private:
-	uint fBits;
+	unsigned int fBits;
 public:
 	enum {
 		kNotDeleted = 0x02000000
 	};
 	bool IsDestructed() const { return !TestBit(kNotDeleted); }
-	bool TestBit(uint f) const { return (bool) ((fBits & f) != 0); }
+	bool TestBit(unsigned int f) const { return (bool) ((fBits & f) != 0); }
 };
 
 #endif

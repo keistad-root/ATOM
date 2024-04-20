@@ -1,7 +1,6 @@
 #ifndef __TGEANTANALYSER__
 #define __TGEANTANALYSER__
 
-#include "Headers.h"
 #include "TAnalyser.h"
 
 class TGeantAnalyser : public TAnalyser {

@@ -12,9 +12,15 @@
 #ifndef __TEXPERIMENTDATA__
 #define __TEXPERIMENTDATA__
 
-#include "Headers.h"
+#ifdef __TEXPERIMENTDATA_HEADER__
 #include "TALPIDEEvent.h"
 #include "TCluster.h"
+#endif
+
+#include<vector>
+
+class TALPIDEEvent;
+class TCluster;
 
 class TExperimentData {
 private:
@@ -43,13 +49,13 @@ public:
 	const std::vector<TCluster*> getNoiseClusters() const;
 
 private:
-	uint fBits;
+	unsigned int fBits;
 public:
 	enum {
 		kNotDeleted = 0x02000000
 	};
 	bool IsDestructed() const { return !TestBit(kNotDeleted); }
-	bool TestBit(uint f) const { return (bool) ((fBits & f) != 0); }
+	bool TestBit(unsigned int f) const { return (bool) ((fBits & f) != 0); }
 };
 
 #endif

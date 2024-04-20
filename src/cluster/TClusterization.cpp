@@ -1,3 +1,4 @@
+#define __TCLUSTERIZATION_HEADER__
 #include "TClusterization.h"
 
 TClusterization::TClusterization(const std::vector<TALPIDEEvent*>& events) {

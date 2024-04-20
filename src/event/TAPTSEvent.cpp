@@ -1,15 +1,15 @@
 #include "TAPTSEvent.h"
 
-TAPTSEvent::TAPTSEvent() : TEvent() {}
+TAPTSEvent::TAPTSEvent() : TEvent() { }
 
 void TAPTSEvent::setFrame(int frame) {
-    iFrame = frame;
+	iFrame = frame;
 }
 
 int TAPTSEvent::getFrame() {
-    return iFrame;
+	return iFrame;
 }
 
-std::array<int,16>& TAPTSEvent::getData() {
-    return data;
+std::array<int, 16>& TAPTSEvent::getData() {
+	return data;
 }

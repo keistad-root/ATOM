@@ -12,16 +12,23 @@
 #ifndef __TCLUSTERIZATION__
 #define __TCLUSTERIZATION__
 
-#include "Headers.h"
-#include "TCluster.h"
-#include "TALPIDEEvent.h"
-
+#ifdef __TCLUSTERIZATION_HEADER__
 #include "cpptqdm.h"
- /**
-  * @class TClusterization
-  * @brief Class of tools for clusterizing events for single event
-  * @details It takes a role to clusterize an event.
-  */
+
+#include "TALPIDEEvent.h"
+#include "TCluster.h"
+#endif
+
+#include <vector>
+
+class TALPIDEEvent;
+class TCluster;
+
+/**
+ * @class TClusterization
+ * @brief Class of tools for clusterizing events for single event
+ * @details It takes a role to clusterize an event.
+ */
 class TClusterization {
 	std::vector<TALPIDEEvent*> mEvents;
 	std::vector<TCluster*> mClusters;

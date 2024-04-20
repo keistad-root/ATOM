@@ -1,4 +1,7 @@
+#define __TCLUSTERSHAPE_HEADER__
 #include "TClusterShape.h"
+
+
 /**
  * @brief Construct a new TClusterShape::TClusterShape object
  * @details It takes cluster set and cluster size for analysing here.

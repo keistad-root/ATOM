@@ -1,3 +1,4 @@
+#define __TEXPERIMENTDATA_HEADER__
 #include "TExperimentData.h"
 
 TExperimentData::TExperimentData() : fBits(kNotDeleted) { }

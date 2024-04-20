@@ -1,5 +1,6 @@
+#define __TCLUSTERSHAPEANALYSER_HEADER__
+
 #include "TClusterShapeAnalyser.h"
-#include "TStyle.h"
 
 TClusterShapeAnalyser::TClusterShapeAnalyser(const TClusterAnalyser& analyser) : TClusterAnalyser(analyser) {
 	std::cout << "TClusterShapeAnalyser object is armed." << std::endl;

@@ -1,3 +1,4 @@
+#define __TCLUSTERDIVIDEDATA_HEADER__
 #include "TClusterDivideData.h"
 
 TClusterDivideData::TClusterDivideData(const std::vector<TCluster*>& clusters) {

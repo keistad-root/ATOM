@@ -12,20 +12,20 @@ ArgumentParser set_parse(int argc, char** argv) {
 }
 
 int main(int argc, char** argv) {
-	ArgumentParser parser = set_parse(argc, argv);
-	std::filesystem::path input(parser.get_value<std::string>("simulFile"));
-	std::filesystem::path path;
+	// ArgumentParser parser = set_parse(argc, argv);
+	// std::filesystem::path input(parser.get_value<std::string>("simulFile"));
+	// std::filesystem::path path;
 
-	if ( parser.get_value<std::string>("output") == "default" ) {
-		path = std::filesystem::absolute(input.parent_path());
-	} else {
-		path = parser.get_value<std::string>("output");
-	}
+	// if ( parser.get_value<std::string>("output") == "default" ) {
+	// 	path = std::filesystem::absolute(input.parent_path());
+	// } else {
+	// 	path = parser.get_value<std::string>("output");
+	// }
 
-	std::filesystem::path stem = input.stem();
-	TFile* file = new TFile(static_cast<TString>((input.replace_extension(".root")).string()), "READ");
-	path.append(stem.string());
-	std::filesystem::create_directory(path);
+	// std::filesystem::path stem = input.stem();
+	// TFile* file = new TFile(static_cast<TString>((input.replace_extension(".root")).string()), "READ");
+	// path.append(stem.string());
+	// std::filesystem::create_directory(path);
 	// TGeantAnalyser drawer(std::move(file));
 	// drawer.refineData();
 	// std::filesystem::path energyLossFile = "energy_loss_" + stem.string();

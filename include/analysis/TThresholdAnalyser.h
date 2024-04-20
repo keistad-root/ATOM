@@ -11,9 +11,26 @@
 #ifndef __TTHRESHOLDANALYSER__
 #define __TTHRESHOLDANALYSER__
 
-#include "Headers.h"
-#include "TThreshold.h"
+#ifdef __TTHRESHOLDANALYSER_HEADER__
+#include <iostream>
+#include <sstream>
+
+#include "RtypesCore.h"
+#include "TH1D.h"
+#include "TH2D.h"
+#include "TCanvas.h"
+
 #include "cpptqdm.h"
+
+#include "TThreshold.h"
+#endif
+
+#include <fstream>
+ // #include "TThreshold.h"
+ // #include "cpptqdm.h"
+class TThreshold;
+class TH1;
+class TH2;
 
 class TThresholdAnalyser {
 private:

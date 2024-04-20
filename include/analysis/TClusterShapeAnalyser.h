@@ -11,11 +11,29 @@
 #ifndef __TCLUSTERSHAPEANALYSER__
 #define __TCLUSTERSHAPEANALYSER__
 
-#include "TAnalyser.h"
-#include "TClusterAnalyser.h"
-#include "TClusterShape.h"
-#include "TColor.h"
+#ifdef __TCLUSTERSHAPEANALYSER_HEADER__ 
+#include <iostream>
+
+#include "TCanvas.h"
+#include "TH2I.h"
+#include "TText.h"
 #include "TLine.h"
+#include "TPaveText.h"
+
+#include "cpptqdm.h"
+
+#include "TClusterShape.h"
+#include "TExperimentData.h"
+#include "TMatrix2D.h"
+#endif
+
+#include <vector>
+
+#include "TClusterAnalyser.h"
+
+class TClusterShape;
+
+
 
 class TClusterShapeAnalyser : protected TClusterAnalyser {
 private:
