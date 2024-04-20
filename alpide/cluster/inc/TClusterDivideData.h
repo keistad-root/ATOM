@@ -9,6 +9,8 @@
 #include<unordered_map>
 #include<vector>
 
+class TCluster;
+
 class TClusterDivideData {
 private:
 	std::unordered_map<int, std::vector<TCluster*>> mClusterData;

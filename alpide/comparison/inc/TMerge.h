@@ -18,6 +18,7 @@
 #include "cpptqdm.h"
 #endif
 
+#include <vector>
 #include <string>
 
 #include "TFileFormat.h"

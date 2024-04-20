@@ -23,6 +23,10 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
   set(CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS "${CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS} -undefined dynamic_lookup")
 endif()
 
+set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
+
+include(AtomBuildOptions)
+
 # Find ROOT package
 find_package(ROOT)
 find_package(ROOT REQUIRED COMPONENTS Core Tree TreePlayer Gpad Hist Physics)
@@ -100,8 +104,12 @@ message(STATUS "Geant4 Include Directory: ${Geant4_INCLUDE_DIR}")
 message(STATUS "Garfield Include Directory: ${Garfield_INCLUDE_DIR}")
 
 # Find header files and source files and store it as variable
-file(GLOB_RECURSE HEADERS "${PROJECT_SOURCE_DIR}/include/*.h")
-file(GLOB_RECURSE SOURCES "${PROJECT_SOURCE_DIR}/src/*.cpp")
+file(GLOB_RECURSE HEADERS RELATIVE ${PROJECT_SOURCE_DIR} alpide/*/inc/* apts/inc/* chip/inc/* geant4/*/inc/* pycpp/inc/*)
+file(GLOB_RECURSE SOURCES RELATIVE ${PROJECT_SOURCE_DIR} alpide/*/src/* apts/src/* chip/src/* geant4/*/src/* pycpp/src/*)
+
+message(${HEADERS})
+# file(GLOB_RECURSE HEADERS "${PROJECT_SOURCE_DIR}/include/*.h")
+# file(GLOB_RECURSE SOURCES "${PROJECT_SOURCE_DIR}/src/*.cpp")
 
 # Add header and source files to library
 add_library(myProject SHARED ${SOURCES})
