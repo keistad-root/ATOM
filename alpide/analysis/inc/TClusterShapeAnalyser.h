@@ -21,8 +21,10 @@
 #include "TPaveText.h"
 
 #include "cpptqdm.h"
+#include "cppconfig.h"
 
 #include "TClusterShape.h"
+#include "TClusterDivideData.h"
 #include "TExperimentData.h"
 #include "TMatrix2D.h"
 #endif
@@ -33,31 +35,30 @@
 
 class TClusterShape;
 
-
-
 class TClusterShapeAnalyser : protected TClusterAnalyser {
 private:
-	std::vector<TClusterShape*> mClusterShapes;
-	std::vector<TClusterShape*> mMaskedClusterShapes;
-	std::vector<TClusterShape*> mNoisePixelClusterShapes;
-
-	int mNClusterShapes, mNMaskedClusterShapes, mNNoisePixelClusterShapes;
-	int mClusterMode, mMaskedClusterMode, mNoisePixelClusterMode;
-	int mNTotalShapes;
-	int mMode;
-	std::string mDataSetName;
+	std::unordered_map<std::string, std::vector<TClusterShape*>> mClusterShapeSet;
+	std::unordered_map<std::string, int> mNTotalShapeSet;
+	std::unordered_map<std::string, int> mMaxModeSet;
 public:
 	TClusterShapeAnalyser(const TClusterAnalyser& analyser);
 	~TClusterShapeAnalyser();
-	void doShaping(int lower, int upper);
-	void doShaping(const std::vector<int>& clusterSizeSet);
+	void doShaping(std::string_view typeName, const std::vector<int>& clusterSizeRange);
+	void saveIndividualShapes(std::string_view typeName, const Configurable* config);
+	void saveSameSizeShapes(std::string_view typeName, const Configurable* config);
+	void saveTotalShapes(std::string_view typeName, const Configurable* config);
 
-	void saveIndividualShapes();
-	void saveSameSizeShapes();
-	void saveTotalShapes();
-	void saveDetailedInformationOfShapes();
-	void saveSameSizeShapeEntry();
-	void saveTotalShapeEntry();
+	void saveSameSizeShapeEntry(std::string_view typeName, const Configurable* config);
+	void saveTotalShapeEntry(std::string_view typeName, const Configurable* config);
+
+private:
+	unsigned int fBits;
+public:
+	enum {
+		kNotDeleted = 0x02000000
+	};
+	bool IsDestructed() const { return !TestBit(kNotDeleted); }
+	bool TestBit(unsigned int f) const { return (bool) ((fBits & f) != 0); }
 };
 
 #endif

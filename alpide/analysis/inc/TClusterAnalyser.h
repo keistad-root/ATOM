@@ -15,6 +15,8 @@
 #ifdef __TCLUSTERANALYSER_HEADERS__
 #include <iostream>
 
+#include "TFile.h"
+#include "TDirectory.h"
 #include "TCanvas.h"
 #include "TPaveText.h"
 #include "TH1D.h"
@@ -48,31 +50,23 @@ class TCluster;
  * @todo Make more plots about cluster information
  */
 class TClusterAnalyser : public TAnalyser {
-private:
-	TH2D* mClustermap;
-	TH2D* mMaskedClustermap;
-	TH2D* mNoisePixelClustermap;
 protected:
-	TH1D* mClustersize;
-	TH1D* mMaskedClustersize;
-	TH1D* mNoisePixelClustersize;
+	std::unordered_map<std::string, TH2D*> mClustermaps;
+	std::unordered_map<std::string, TH1D*> mClustersizes;
+	std::unordered_map<std::string, std::unordered_map<int, std::vector<TCluster*>>> mClusterDataWithShape;
 public:
 	//Constructor
 	TClusterAnalyser() = default;
 	TClusterAnalyser(const TAnalyser& analyser);
+	TClusterAnalyser(const TClusterAnalyser& copy);
 	~TClusterAnalyser();
 
 	TH2D* getClusterPlot(const Configurable& config, const std::vector<TCluster*>& clusters);
 	TH1D* getClustersizePlot(const Configurable& config, const std::vector<TCluster*>& clusters);
+	void setClusterDataWithShape(const std::vector<int>& clusterSizeRange);
 
-	void saveClustermap(const Configurable& config);
-	void saveMaskedClustermap(const Configurable& config);
-	void saveNoisePixelClustermap(const Configurable& config);
-
-	void saveClustersize(const Configurable& config);
-	void saveMaskedClustersize(const Configurable& config);
-	void saveNoisePixelClustersize(const Configurable& config);
-
+	void saveClustermap(std::string typeName, const Configurable& config);
+	void saveClustersize(std::string typeName, const Configurable& config);
 	void saveHitmapByClustersize(const Configurable& config);
 
 private:

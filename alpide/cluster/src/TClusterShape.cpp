@@ -13,12 +13,23 @@
  * @todo
  * @see TCluster::getSize()
  */
-TClusterShape::TClusterShape(const std::vector<TCluster*> clusters, const int clusterSize) : mClusterSize(clusterSize) {
-	for ( TCluster* cluster : clusters ) {
-		if ( cluster->getSize() == clusterSize ) {
-			mClusterWithN.push_back(cluster);
-		}
-	}
+
+TClusterShape::TClusterShape() : fBits(kNotDeleted) { }
+
+TClusterShape::TClusterShape(const int clusterSize, const std::vector<TCluster*>& clusters) : mClusterSize(clusterSize), fBits(kNotDeleted) {
+	mClusterOriginSet.assign(clusters.begin(), clusters.end());
+}
+
+// TClusterShape::TClusterShape(const std::vector<TCluster*> clusters, const int clusterSize) : mClusterSize(clusterSize) {
+// 	// 	for ( TCluster* cluster : clusters ) {
+// 	// 		if ( cluster->getSize() == clusterSize ) {
+// 	// 			mClusterWithN.push_back(cluster);
+// 	// 		}
+// 	// 	}
+// }
+
+TClusterShape::TClusterShape(const std::vector<TCluster*> clusters) {
+	// mClusterWithN.assign(clusters.begin(), clusters.end());
 }
 
 TClusterShape::~TClusterShape() {
@@ -41,14 +52,19 @@ TClusterShape::~TClusterShape() {
 */
 void TClusterShape::identifyShapes() {
 	bool isFirst = true;
-	for ( TCluster* cluster : mClusterWithN ) {
+	int iShape = 0;
+	for ( TCluster* cluster : mClusterOriginSet ) {
 		if ( isFirst ) {
 			TShapeInfo shapeInfo;
 			shapeInfo.mPresidentCluster = cluster;
 			shapeInfo.mEntry = 1;
+			shapeInfo.iShape = iShape;
+			iShape++;
 			calClusterInfo(shapeInfo, cluster);
 			shapeInfo.mClusterMap = clusterMap(shapeInfo.mClusterMatrix);
 			mClusterShapeInfos.push_back(shapeInfo);
+			std::vector<TCluster*> newClusterSet;
+			mClusterSameSizeSet.insert_or_assign(iShape, newClusterSet);
 			isFirst = false;
 			continue;
 		}
@@ -59,6 +75,7 @@ void TClusterShape::identifyShapes() {
 			if ( comparedCluster->hasHomeomorphism(*checkingCluster) ) {
 				shapeInfo.mEntry++;
 				isHomoemorphismExist = true;
+				// mClusterSameSizeSet.find(shapeInfo.iShape)->second.push_back(cluster);
 				break;
 			}
 		}
@@ -67,9 +84,13 @@ void TClusterShape::identifyShapes() {
 			TShapeInfo shapeInfo;
 			shapeInfo.mPresidentCluster = cluster;
 			shapeInfo.mEntry = 1;
+			shapeInfo.iShape = iShape;
+			iShape++;
 			calClusterInfo(shapeInfo, cluster);
 			shapeInfo.mClusterMap = clusterMap(shapeInfo.mClusterMatrix);
 			mClusterShapeInfos.push_back(shapeInfo);
+			std::vector<TCluster*> newClusterSet;
+			mClusterSameSizeSet.insert_or_assign(iShape, newClusterSet);
 		}
 	}
 }
@@ -112,7 +133,6 @@ void TClusterShape::sortShapes(bool descend) {
  * @see
 */
 
-
 TH2I* TClusterShape::clusterMap(const TMatrix2D<int>* clusterMatrix) {
 	static int numbering;
 	int nRow = clusterMatrix->getNRow();
@@ -126,6 +146,7 @@ TH2I* TClusterShape::clusterMap(const TMatrix2D<int>* clusterMatrix) {
 			}
 		}
 	}
+
 	map->GetXaxis()->SetNdivisions(nRow + 2, 0, 0, true);
 	for ( int i = 1; i <= map->GetNbinsX(); ++i ) {
 		map->GetXaxis()->SetBinLabel(i, "");
@@ -193,4 +214,8 @@ const std::vector<TShapeInfo>& TClusterShape::getClusterShapeInfos() const {
 */
 const int TClusterShape::getClusterSize() const {
 	return mClusterSize;
+}
+
+const std::unordered_map<int, std::vector<TCluster*>>& TClusterShape::getClusterSameSizeSet() const {
+	return mClusterSameSizeSet;
 }

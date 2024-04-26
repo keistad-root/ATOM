@@ -16,6 +16,7 @@ private:
 	std::unordered_map<int, std::vector<TCluster*>> mClusterData;
 public:
 	TClusterDivideData(const std::vector<TCluster*>& clusters);
+	TClusterDivideData(const TClusterDivideData& copy);
 	const std::vector<TCluster*>& getClusterOfSize(const int clusterSize);
 };
 

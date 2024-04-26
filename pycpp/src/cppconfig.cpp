@@ -2,6 +2,11 @@
 
 Configurable::Configurable(std::string_view configName) : mConfigName(configName) { }
 
+Configurable::Configurable(const Configurable& copy) : mConfigName(copy.mConfigName) {
+	mDictionary = copy.mDictionary;
+}
+
+
 Configurable::~Configurable() { }
 
 const std::string& Configurable::getConfigName() const {
@@ -14,7 +19,8 @@ std::unordered_map<std::string, std::string> Configurable::getDictionary() {
 
 
 void Configurable::addDictionary(std::string_view key, std::string_view value) {
-	mDictionary[std::string(key)] = std::string(value);
+	mDictionary.insert_or_assign(std::string(key), std::string(value));
+	// mDictionary[std::string(key)] = std::string(value);
 }
 
 const bool Configurable::hasKey(std::string_view key) const {
@@ -57,9 +63,31 @@ const std::vector<std::string> Configurable::findlist(std::string_view key) cons
 	}
 }
 
+const std::vector<std::string> Configurable::getKeyList() const {
+	std::vector<std::string> keyList;
+	for ( const std::pair<std::string, std::string> pair : mDictionary ) {
+		keyList.push_back(pair.first);
+	}
+	return keyList;
+}
+
+
 Configuration::Configuration(std::string_view configFile) {
 	addConfig(configFile);
 }
+
+void Configuration::addConfig(std::string_view configTitle, const std::vector<std::string>& configArray) {
+	Configurable* config = new Configurable(configTitle);
+	std::string key;
+	std::string value;
+	for ( const std::string& line : configArray ) {
+		key = line.substr(0, line.find("="));
+		value = line.substr(line.find("=") + 1);
+		config->addDictionary(key, value);
+	}
+	mConfigs.push_back(config);
+}
+
 
 void Configuration::addConfig(std::string_view configFile) {
 	if ( !std::filesystem::exists(configFile) ) {
@@ -76,7 +104,7 @@ void Configuration::addConfig(std::string_view configFile) {
 		if ( line[0] == '#' || line == "" ) {
 			continue;
 		} else if ( line[0] == '[' ) {
-			mConfigs.push_back(Configurable(line.substr(1, line.length() - 2)));
+			mConfigs.push_back(new Configurable(line.substr(1, line.length() - 2)));
 		} else {
 			key = line.substr(0, line.find("="));
 			// key.erase(remove(key.begin(), key.end(), '\t'), key.end());
@@ -87,7 +115,7 @@ void Configuration::addConfig(std::string_view configFile) {
 				// value.erase(remove(value.begin(), value.end(), '\t'), value.end());
 				// value.erase(remove(value.begin(), value.end(), ' '), value.end());
 
-				mConfigs.back().addDictionary(key, value);
+				mConfigs.back()->addDictionary(key, value);
 				key = "";
 				value = "";
 			} else {
@@ -97,7 +125,7 @@ void Configuration::addConfig(std::string_view configFile) {
 					if ( line[0] == '#' || line == "" ) {
 						continue;
 					} else if ( line.find('}') != std::string::npos ) {
-						mConfigs.back().addDictionary(key, value);
+						mConfigs.back()->addDictionary(key, value);
 						key = "";
 						value = "";
 						break;
@@ -115,19 +143,31 @@ void Configuration::addConfig(std::string_view configFile) {
 
 const std::vector<std::string> Configuration::getConfigurableNameList() const {
 	std::vector<std::string> configurableNameList;
-	for ( const Configurable& config : mConfigs ) {
-		configurableNameList.push_back(config.getConfigName());
+	for ( const Configurable* config : mConfigs ) {
+		configurableNameList.push_back(config->getConfigName());
 	}
 	return configurableNameList;
 }
 
-std::optional<Configurable> Configuration::getConfig(std::string_view configTitle) const {
+const Configurable* Configuration::getConfig(std::string_view configTitle) const {
+	Configurable* rConfig;
 	for ( auto& config : mConfigs ) {
-		if ( config.getConfigName() == configTitle ) {
-			return config;
+		if ( config->getConfigName() == configTitle ) {
+			rConfig = config;
+			break;
 		}
 	}
-	return std::nullopt;
+	return rConfig;
+}
+
+const bool Configuration::hasConfig(std::string_view configTitle) const {
+	bool hasValue = false;
+	for ( auto& config : mConfigs ) {
+		if ( config->getConfigName() == configTitle ) {
+			hasValue = true;
+		}
+	}
+	return hasValue;
 }
 
 std::ostream& operator<<(std::ostream& os, const Configurable& copy) {

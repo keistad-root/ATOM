@@ -21,6 +21,7 @@
 #include "TH2D.h"
 #include "TError.h"
 #include "TPaveText.h"
+#include "TDirectory.h"
 #include "TCanvas.h"
 
 #include "cpptqdm.h"
@@ -29,6 +30,7 @@
 #include "TExperimentData.h"
 #include "TMatrix2D.h"
 #include "TALPIDEEvent.h"
+#include "TClusterDivideData.h"
 #endif
 
 #include<string>
@@ -45,6 +47,8 @@ class Configurable;
 // struct TInputRoot;
 class TALPIDEEvent;
 class TExperimentData;
+class TClusterDivideData;
+class TDirectory;
 typedef unsigned int UInt_t;
 
 /**
@@ -63,32 +67,37 @@ private:
 	TTree* mTree;
 	TInputRoot mInput;
 
-	TH2D* mHitmap;
-	TH2D* mMaskedHitmap;
-	TH2D* mNoisePixelmap;
+
 protected:
-	std::string mPostfix;
-	TExperimentData* mExpData;
-	std::filesystem::path mSavePath;
+	TFile* mOutputFile = nullptr;
+	bool mIsOutputGraph = false;
 	TPaveText* mExpSettingLegend;
+	std::unordered_map<std::string, TH2D*> mHitmaps;
+	std::unordered_map<std::string, TDirectory*> mDirectorySet;
+	std::unordered_map<std::string, TExperimentData*> mExpData;
+	std::unordered_map<std::string, TClusterDivideData*> mDivideData;
 public:
 	TAnalyser() = default;
-	TAnalyser(TFile* inputFile, TExperimentData* expData);
+	TAnalyser(TFile* inputFile, std::unordered_map<std::string, TExperimentData*> expData);
 	TAnalyser(const TAnalyser& copy);
 	~TAnalyser();
 
 	TTree* openTree(std::string treeName);
 	void storeEvents();
 	void doMasking(int mMaskOver);
+	void openOutputGraphFile(std::string_view fileName);
+	void openDirectory(std::string_view typeName);
 
-	void setSavePath(const std::filesystem::path& savePath);
+	// void setSavePath(const std::filesystem::path& savePath);
 	void setExpSettingLegend(Configurable settingConfig);
+
+	void doDivideBySize(std::string_view typeName);
+
+	TExperimentData* getAnEventSet(std::string_view typeName) const;
 
 	TH2D* getHitPlot(const Configurable& config, const std::vector<TALPIDEEvent*>& events);
 
-	void saveHitmap(const Configurable& config);
-	void saveMaskedHitmap(const Configurable& config);
-	void saveNoisePixelmap(const Configurable& config);
+	void saveHitmap(std::string typeName, const Configurable& config);
 
 private:
 	UInt_t fBits;

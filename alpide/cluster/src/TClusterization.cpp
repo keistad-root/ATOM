@@ -68,7 +68,7 @@ bool TClusterization::clusterLitmusTest(const std::pair<int, int>& pixel, std::v
 }
 
 void TClusterization::clusterize() {
-	std::cout << "Generate clusters from events..." << std::endl;
+	std::clog << "Generate clusters from events..." << std::endl;
 
 	ProgressBar* pBar = new ProgressBar(mEvents.size());
 

@@ -2,10 +2,9 @@
 
 #include "TAnalyser.h"
 
-TAnalyser::TAnalyser(TFile* inputFile, TExperimentData* expData) : mInputFile(inputFile), mExpData(expData), fBits(kNotDeleted) {
+TAnalyser::TAnalyser(TFile* inputFile, std::unordered_map<std::string, TExperimentData*> expData) : mInputFile(inputFile), mExpData(expData), fBits(kNotDeleted) {
 	std::filesystem::path inputPath = mInputFile->GetName();
-	mPostfix = inputPath.stem();
-	std::clog << "TAnalyser object for \033[1;32m" << mPostfix << "\033[0m is armed" << std::endl;
+	std::clog << "TAnalyser object for \033[1;32m" << inputPath.stem() << "\033[0m is armed" << std::endl;
 	mTree = openTree("hit");
 	mTree->SetBranchAddress("ChipID", &mInput.chipid);
 	mTree->SetBranchAddress("TimeStamp", &mInput.timeStamp);
@@ -14,39 +13,40 @@ TAnalyser::TAnalyser(TFile* inputFile, TExperimentData* expData) : mInputFile(in
 	gErrorIgnoreLevel = kWarning;
 }
 
-TAnalyser::TAnalyser(const TAnalyser& copy) : mInputFile(copy.mInputFile), mTree(copy.mTree), mInput(copy.mInput), mHitmap(copy.mHitmap), mMaskedHitmap(copy.mMaskedHitmap), mNoisePixelmap(copy.mNoisePixelmap), mPostfix(copy.mPostfix), mExpData(copy.mExpData), mSavePath(copy.mSavePath), mExpSettingLegend(copy.mExpSettingLegend), fBits(kNotDeleted) { }
+TAnalyser::TAnalyser(const TAnalyser& copy) : mInputFile(copy.mInputFile), mTree(copy.mTree), mInput(copy.mInput), mOutputFile(copy.mOutputFile), mIsOutputGraph(copy.mIsOutputGraph), mExpSettingLegend(copy.mExpSettingLegend), mHitmaps(copy.mHitmaps), mDirectorySet(copy.mDirectorySet), mExpData(copy.mExpData), mDivideData(copy.mDivideData), fBits(kNotDeleted) {
+	std::clog << "Copy TAnalyser object is armed" << std::endl;
+}
 
 TAnalyser::~TAnalyser() {
-	if ( mHitmap != nullptr && !mHitmap->IsDestructed() ) {
-		delete mHitmap;
-		mHitmap = nullptr;
-	}
-	if ( mMaskedHitmap != nullptr && !(mMaskedHitmap->IsDestructed()) ) {
-		delete mMaskedHitmap;
-		mMaskedHitmap = nullptr;
-	}
-	if ( mNoisePixelmap != nullptr && !mNoisePixelmap->IsDestructed() ) {
-		delete mNoisePixelmap;
-		mNoisePixelmap = nullptr;
-	}
-	if ( !mExpData->IsDestructed() ) {
-		delete mExpData;
-		mExpData = nullptr;
-	}
-	if ( mInputFile != nullptr && !mInputFile->IsDestructed() ) {
-		mInputFile->Close();
-		delete mInputFile;
-		mInputFile = nullptr;
-	}
-	if ( mTree != nullptr && !mTree->IsDestructed() ) {
-		delete mTree;
-		mTree = nullptr;
-	}
-	if ( mExpSettingLegend != nullptr && !mExpSettingLegend->IsDestructed() ) {
-		delete mExpSettingLegend;
-		mExpSettingLegend = nullptr;
-	}
-	std::cout << "TAnalyser object is terminated" << std::endl;
+	// std::cout << "HELLO" << std::endl;
+	// if ( mOutputFile != nullptr && !mOutputFile->IsDestructed() ) {
+	// 	mOutputFile->Close();
+	// 	mOutputFile = nullptr;
+	// }
+	// for ( const auto& pair : mHitmaps ) {
+	// 	if ( !pair.second->IsDestructed() ) {
+	// 		delete pair.second;
+	// 	}
+	// }
+	// for ( const auto& pair : mExpData ) {
+	// 	if ( !pair.second->IsDestructed() ) {
+	// 		delete pair.second;
+	// 	}
+	// }
+	// if ( mInputFile != nullptr && !mInputFile->IsDestructed() ) {
+	// 	mInputFile->Close();
+	// 	delete mInputFile;
+	// 	mInputFile = nullptr;
+	// }
+	// if ( mTree != nullptr && !mTree->IsDestructed() ) {
+	// 	delete mTree;
+	// 	mTree = nullptr;
+	// }
+	// if ( mExpSettingLegend != nullptr && !mExpSettingLegend->IsDestructed() ) {
+	// 	delete mExpSettingLegend;
+	// 	mExpSettingLegend = nullptr;
+	// }
+	std::clog << "TAnalyser object is terminated" << std::endl;
 }
 
 TTree* TAnalyser::openTree(std::string treeName) {
@@ -59,6 +59,17 @@ TTree* TAnalyser::openTree(std::string treeName) {
 	} else {
 		return (TTree*) mInputFile->Get(static_cast<TString>(treeName));
 	}
+}
+
+void TAnalyser::openOutputGraphFile(std::string_view fileName) {
+	mOutputFile = new TFile(static_cast<TString>(fileName), "RECREATE");
+	mIsOutputGraph = true;
+}
+
+void TAnalyser::openDirectory(std::string_view typeName) {
+	mOutputFile->cd();
+	TDirectory* directory = mOutputFile->mkdir(static_cast<TString>(typeName));
+	mDirectorySet.insert_or_assign(std::string(typeName), directory);
 }
 
 void TAnalyser::storeEvents() {
@@ -90,14 +101,14 @@ void TAnalyser::storeEvents() {
 
 	delete pbar;
 	std::clog << "The " << tempEvents.size() << " of events is extracted from " << mTree->GetEntries() << " stamps." << std::endl;
-	mExpData->setEvents(std::move(tempEvents));
+	mExpData.find("Basic")->second->setEvents(std::move(tempEvents));
 }
 
 void TAnalyser::doMasking(int mMaskOver) {
 	TMatrix2D<int> matrix(1024, 512);
 	for ( int x = 0; x < 1024; x++ ) {
 		for ( int y = 0; y < 512; y++ ) {
-			if ( mHitmap->GetBinContent(x, y) > mMaskOver ) {
+			if ( mHitmaps.find("Basic")->second->GetBinContent(x, y) > mMaskOver ) {
 				matrix.setElement(x - 1, y - 1, 1);
 			}
 		}
@@ -106,7 +117,7 @@ void TAnalyser::doMasking(int mMaskOver) {
 	std::vector<TALPIDEEvent*> tempEvents;
 	std::vector<TALPIDEEvent*> noiseEvents;
 
-	for ( const TALPIDEEvent* event : mExpData->getEvents() ) {
+	for ( const TALPIDEEvent* event : mExpData.find("Basic")->second->getEvents() ) {
 		tempEvents.push_back(new TALPIDEEvent());
 		tempEvents.back()->setEvent(event->getEvent());
 		tempEvents.back()->setTime(event->getTime());
@@ -122,12 +133,13 @@ void TAnalyser::doMasking(int mMaskOver) {
 		}
 	}
 
-	mExpData->setMaskedEvents(std::move(tempEvents));
-	mExpData->setNoiseEvents(std::move(noiseEvents));
-}
+	TExperimentData* maskedData = new TExperimentData();
+	maskedData->setEvents(std::move(tempEvents));
+	mExpData.insert_or_assign("Masked", maskedData);
 
-void TAnalyser::setSavePath(const std::filesystem::path& savePath) {
-	mSavePath = savePath;
+	TExperimentData* noisePixelData = new TExperimentData();
+	noisePixelData->setEvents(std::move(noiseEvents));
+	mExpData.insert_or_assign("NoisePixel", noisePixelData);
 }
 
 void TAnalyser::setExpSettingLegend(Configurable settingConfig) {
@@ -148,6 +160,14 @@ void TAnalyser::setExpSettingLegend(Configurable settingConfig) {
 	mExpSettingLegend->AddText(static_cast<TString>("STROBEDELAYCHIP=" + settingConfig.find("STROBEDELAYCHIP")));
 	mExpSettingLegend->SetTextAlign(11);
 	mExpSettingLegend->SetTextFont(42);
+}
+
+TExperimentData* TAnalyser::getAnEventSet(std::string_view typeName) const {
+	if ( mExpData.count(std::string(typeName)) ) {
+		return mExpData.find(std::string(typeName))->second;
+	} else {
+		return new TExperimentData();
+	}
 }
 
 TH2D* TAnalyser::getHitPlot(const Configurable& config, const std::vector<TALPIDEEvent*>& events) {
@@ -188,17 +208,21 @@ TH2D* TAnalyser::getHitPlot(const Configurable& config, const std::vector<TALPID
 	return map;
 }
 
-void TAnalyser::saveHitmap(const Configurable& config) {
-	std::clog << "Generating \033[1;32mHitmap\033[1;0m..." << std::endl;
-	mHitmap = getHitPlot(config, mExpData->getEvents());
+void TAnalyser::saveHitmap(std::string typeName, const Configurable& config) {
+	std::clog << "Generating \033[1;32m" << typeName << " Hitmap\033[1;0m..." << std::endl;
+	if ( !mHitmaps.count(typeName) ) {
+		mHitmaps.insert_or_assign(typeName, getHitPlot(config, mExpData.find(typeName)->second->getEvents()));
+		if ( mIsOutputGraph ) {
+			mDirectorySet.find(std::string(typeName))->second->cd();
+			mHitmaps.find(std::string(typeName))->second->Write("hitmap");
+			mOutputFile->cd();
+		}
+	} else {
+		getHitPlot(config, mExpData.find(typeName)->second->getEvents());
+	}
 }
 
-void TAnalyser::saveMaskedHitmap(const Configurable& config) {
-	std::clog << "Generating \033[1;32mMasked Hitmap\033[1;0m..." << std::endl;
-	mMaskedHitmap = getHitPlot(config, mExpData->getMaskedEvents());
-}
-
-void TAnalyser::saveNoisePixelmap(const Configurable& config) {
-	std::clog << "Generating \033[1;32mNoise Pixelmap\033[1;0m..." << std::endl;
-	mNoisePixelmap = getHitPlot(config, mExpData->getNoiseEvents());
+void TAnalyser::doDivideBySize(std::string_view typeName) {
+	TClusterDivideData* clusterDivideData = new TClusterDivideData(mExpData.find(std::string(typeName))->second->getClusters());
+	mDivideData.insert_or_assign(std::string(typeName), clusterDivideData);
 }

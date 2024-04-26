@@ -13,9 +13,9 @@ ArgumentParser set_parse(int argc, char** argv) {
 
 int main(int argc, char** argv) {
 	ArgumentParser parser = set_parse(argc, argv);
-	Configuration config(parser.get_value<std::string>("config"));
-	std::string outputFileName = config.getConfig("Merge").value().find("output_file");
-	std::vector<std::string> inputFileNames = config.getConfig("Merge").value().findlist("input_files");
+	Configuration* config = new Configuration(parser.get_value<std::string>("config"));
+	std::string outputFileName = config->getConfig("Merge")->find("output_file");
+	std::vector<std::string> inputFileNames = config->getConfig("Merge")->findlist("input_files");
 	TMergeExperimentROOT* merger = new TMergeExperimentROOT(outputFileName, inputFileNames);
 	merger->mergeFile();
 	delete merger;

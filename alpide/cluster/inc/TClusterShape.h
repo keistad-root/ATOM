@@ -19,6 +19,7 @@
 #endif
 
 #include<vector>
+#include<unordered_map>
 
 class TH2I;
 
@@ -38,6 +39,7 @@ struct TShapeInfo {
 	TCluster* mPresidentCluster;
 	TMatrix2D<int>* mClusterMatrix;
 	TH2I* mClusterMap;
+	int iShape;
 	int mEntry;
 	int mShortBinN;
 	int mLongBinN;
@@ -56,11 +58,14 @@ struct TShapeInfo {
 class TClusterShape {
 private:
 	int mClusterSize; /**< The cluster size of this shape*/
-	std::vector<TCluster*> mClusterWithN; /**< The set of clusters extracting from all clusters if their size is mClusterSize */
+	std::vector<TCluster*> mClusterOriginSet;
+	std::unordered_map<int, std::vector<TCluster*>> mClusterSameSizeSet; /**< The set of clusters extracting from all clusters if their size is mClusterSize */
 	std::vector<TShapeInfo> mClusterShapeInfos; /**< The set of cluster shape informations */
 public:
-	TClusterShape() = default;
-	TClusterShape(const std::vector<TCluster*> clusters, const int clusterSize);
+	TClusterShape();
+	TClusterShape(const int clusterSize, const std::vector<TCluster*>& clusters);
+	TClusterShape(const std::vector<TCluster*> clusters);
+	// TClusterShape(const std::vector<TCluster*> clusters, const int clusterSize);
 	~TClusterShape();
 
 	void identifyShapes();
@@ -73,6 +78,15 @@ public:
 
 	void setClusterSize(const int ClusterSize);
 	const int getClusterSize() const;
+	const std::unordered_map<int, std::vector<TCluster*>>& getClusterSameSizeSet() const;
+private:
+	unsigned int fBits;
+public:
+	enum {
+		kNotDeleted = 0x02000000
+	};
+	bool IsDestructed() const { return !TestBit(kNotDeleted); }
+	bool TestBit(unsigned int f) const { return (bool) ((fBits & f) != 0); }
 };
 
 #endif
