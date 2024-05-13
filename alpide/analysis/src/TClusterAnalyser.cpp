@@ -18,7 +18,6 @@ TClusterAnalyser::TClusterAnalyser(const TClusterAnalyser& copy) : TAnalyser(cop
  *
 */
 TClusterAnalyser::~TClusterAnalyser() {
-	// std::cout << "HELLO" << std::endl;
 	// for ( const auto& pair : mClustermaps ) {
 	// 	delete pair.second;
 	// }
@@ -42,11 +41,26 @@ TClusterAnalyser::~TClusterAnalyser() {
  * @param clusters Dataset to draw
  * @return const TH2*
 */
-TH2D* TClusterAnalyser::getClusterPlot(const Configurable& config, const std::vector<TCluster*>& clusters) {
+TH2D* TClusterAnalyser::getClusterPlot(const CppConfigDictionary& config, const std::vector<TCluster*>& clusters) {
 	// Static variable for numbering
 	static int iMap = 0;
 	// Allocate a 2d histogram.
-	TH2D* map = new TH2D(Form("map%d", iMap), static_cast<TString>(config.find("plot_titles")), 1024, 0, 1024, 512, 0, 512);
+	std::string plotTitle = "";
+	if ( config.hasKey("title") ) {
+		plotTitle += config.find("title");
+	}
+	if ( config.hasKey("x_title") ) {
+		plotTitle += "; " + config.find("x_title");
+	} else {
+		plotTitle += "; ";
+	}
+	if ( config.hasKey("y_title") ) {
+		plotTitle += "; " + config.find("y_title");
+	} else {
+		plotTitle += "; ";
+	}
+
+	TH2D* map = new TH2D(Form("map%d", iMap), static_cast<TString>(plotTitle), 1024, 0, 1024, 512, 0, 512);
 	// Fill data
 	for ( const TCluster* cluster : clusters ) {
 		map->Fill(cluster->getCenter().first, cluster->getCenter().second);
@@ -57,21 +71,33 @@ TH2D* TClusterAnalyser::getClusterPlot(const Configurable& config, const std::ve
 	map->GetXaxis()->SetTitleOffset(1.4);
 	map->GetXaxis()->SetLabelOffset(0.003);
 	// Find directory for saving clustermap. If it doesn't exist, then make the directory with mother directories.
-	std::filesystem::path filePath(config.find("file_path"));
-	std::filesystem::create_directories(filePath.parent_path());
+	std::filesystem::path filePath(config.find("output_path"));
+	filePath /= config.find("subdirectory");
+	std::filesystem::create_directories(filePath);
 
 	// Draw plot with options
 	if ( config.hasKey("options") ) {
-		for ( const std::string& optionName : config.findlist("options") ) {
+		for ( const std::string& optionName : config.getSubConfig("options").getValueList() ) {
 			map->Draw(static_cast<TString>(optionName));
 			mExpSettingLegend->Draw("SAME");
-			std::filesystem::path file = filePath.parent_path() / (filePath.stem().string() + "_" + optionName + filePath.extension().string());
+			std::filesystem::path file = filePath / (config.find("filename") + "_" + optionName);
+			if ( config.hasKey("extension") ) {
+				file.replace_extension(config.find("extension"));
+			} else {
+				file.replace_extension("png");
+			}
 			canvas->SaveAs(static_cast<TString>(file));
 		}
 	} else {
 		map->Draw();
 		mExpSettingLegend->Draw("SAME");
-		canvas->SaveAs(static_cast<TString>(filePath));
+		std::filesystem::path file = filePath / (config.find("filename"));
+		if ( config.hasKey("extension") ) {
+			file.replace_extension(config.find("extension"));
+		} else {
+			file.replace_extension("png");
+		}
+		canvas->SaveAs(static_cast<TString>(file));
 	}
 	// Delete canvas;
 	delete canvas;
@@ -85,7 +111,7 @@ TH2D* TClusterAnalyser::getClusterPlot(const Configurable& config, const std::ve
  * @param clusters
  * @return TH1D*
 */
-TH1D* TClusterAnalyser::getClustersizePlot(const Configurable& config, const std::vector<TCluster*>& clusters) {
+TH1D* TClusterAnalyser::getClustersizePlot(const CppConfigDictionary& config, const std::vector<TCluster*>& clusters) {
 	static int iDistribution = 0;
 	TH1D* distribution = new TH1D(Form("distribution%d", iDistribution), static_cast<TString>(config.find("plot_titles")), 80, .5, 80.5);
 	for ( const TCluster* cluster : clusters ) {
@@ -96,34 +122,53 @@ TH1D* TClusterAnalyser::getClustersizePlot(const Configurable& config, const std
 	distribution->GetXaxis()->SetTitleOffset(1.4);
 	distribution->GetXaxis()->SetLabelOffset(0.003);
 
-	std::filesystem::path filePath(config.find("file_path"));
-	std::filesystem::create_directories(filePath.parent_path());
+	std::filesystem::path filePath(config.find("output_path"));
+	filePath /= config.find("subdirectory");
+	std::filesystem::create_directories(filePath);
 
 	if ( config.hasKey("options") ) {
-		for ( const std::string& optionName : config.findlist("options") ) {
+		for ( const std::string& optionName : config.getSubConfig("options").getValueList() ) {
 			if ( optionName == "logy" ) {
 				distribution->Draw();
 				mExpSettingLegend->Draw("SAME");
 				canvas->SetLogy();
-				std::filesystem::path file = filePath.parent_path() / (filePath.stem().string() + "_" + optionName + filePath.extension().string());
+				std::filesystem::path file = filePath / (config.find("filename") + "_" + optionName);
+				if ( config.hasKey("extension") ) {
+					file.replace_extension(config.find("extension"));
+				} else {
+					file.replace_extension("png");
+				}
 				canvas->SaveAs(static_cast<TString>(file));
 			} else if ( optionName == "basic" ) {
 				distribution->Draw();
 				mExpSettingLegend->Draw("SAME");
-				canvas->SaveAs(static_cast<TString>(filePath));
+				std::filesystem::path file = filePath / config.find("filename");
+				if ( config.hasKey("extension") ) {
+					file.replace_extension(config.find("extension"));
+				} else {
+					file.replace_extension("png");
+				}
+				canvas->SetLogy(0);
+				canvas->SaveAs(static_cast<TString>(file));
 			}
 		}
 	} else {
 		distribution->Draw();
 		mExpSettingLegend->Draw("SAME");
-		canvas->SaveAs(static_cast<TString>(filePath));
+		std::filesystem::path file = filePath / (config.find("filename"));
+		if ( config.hasKey("extension") ) {
+			file.replace_extension(config.find("extension"));
+		} else {
+			file.replace_extension("png");
+		}
+		canvas->SaveAs(static_cast<TString>(file));
 	}
 	delete canvas;
 	iDistribution++;
 	return distribution;
 }
 
-void TClusterAnalyser::saveClustermap(std::string typeName, const Configurable& config) {
+void TClusterAnalyser::saveClustermap(std::string typeName, const CppConfigDictionary& config) {
 	std::clog << "Generating \033[1;32mClustermap\033[1;0m..." << std::endl;
 	if ( !mClustermaps.count(typeName) ) {
 		mClustermaps.insert_or_assign(typeName, getClusterPlot(config, mExpData.find(typeName)->second->getClusters()));
@@ -137,7 +182,7 @@ void TClusterAnalyser::saveClustermap(std::string typeName, const Configurable& 
 	}
 }
 
-void TClusterAnalyser::saveClustersize(std::string typeName, const Configurable& config) {
+void TClusterAnalyser::saveClustersize(std::string typeName, const CppConfigDictionary& config) {
 	std::clog << "Generating \033[1;32mCluster Size Distribution\033[1;0m..." << std::endl;
 	if ( !mClustersizes.count(typeName) ) {
 		mClustersizes.insert_or_assign(typeName, getClustersizePlot(config, mExpData.find(typeName)->second->getClusters()));
@@ -160,39 +205,39 @@ void TClusterAnalyser::setClusterDataWithShape(const std::vector<int>& clusterSi
 
 
 
-void TClusterAnalyser::saveHitmapByClustersize(const Configurable& config) {
+void TClusterAnalyser::saveHitmapByClustersize(const CppConfigDictionary& config) {
 	// std::filesystem::create_directories(mSavePath / "hitmap_by_cluster_size");
-	for ( int clusterSize = 1; clusterSize < 80; clusterSize++ ) {
-		TH2D* clusterHitmap = new TH2D(Form("hitmap%d", clusterSize), Form("Hitmap of cluster size %d", clusterSize), 1024, 0, 1024, 512, 0, 512);
-		TH2D* clusterClustermap = new TH2D(Form("clustermap%d", clusterSize), Form("Clustermap of cluster size %d", clusterSize), 1024, 0, 1024, 512, 0, 512);
-		TH1D* clusterBinFire = new TH1D(Form("fired%d", clusterSize), Form("The number of fired of each bins in cluster size %d", clusterSize), 50, 0, 50);
-		// for ( const TCluster* cluster : mExpData->getClusters() ) {
-		// 	if ( cluster->getSize() == clusterSize ) {
-		// 		for ( const std::pair<int, int>& pixel : cluster->getPixels() ) {
-		// 			clusterHitmap->Fill(pixel.first, pixel.second);
-		// 		}
-		// 		clusterClustermap->Fill(cluster->getCenter().first, cluster->getCenter().second);
-		// 	}
-		// }
-		for ( int iRow = 0; iRow < 1024; iRow++ ) {
-			for ( int iColumn = 0; iColumn < 512; iColumn++ ) {
-				if ( clusterHitmap->GetBinContent(iRow, iColumn) != 0 ) {
-					clusterBinFire->Fill(clusterHitmap->GetBinContent(iRow, iColumn));
-				}
-			}
-		}
-		if ( clusterBinFire->GetEntries() != 0 ) {
-			TCanvas* hcanvas = new TCanvas(Form("hcan%d", clusterSize), "", 2000, 1000);
-			clusterHitmap->Draw();
-			// hcanvas->SaveAs(static_cast<TString>(mSavePath / "hitmap_by_cluster_size" / ("hitmap_cs_" + std::to_string(clusterSize) + ".png")));
-			TCanvas* ccanvas = new TCanvas(Form("ccan%d", clusterSize), "", 2000, 1000);
-			clusterClustermap->Draw();
-			// ccanvas->SaveAs(static_cast<TString>(mSavePath / "hitmap_by_cluster_size" / ("clustermap_cs_" + std::to_string(clusterSize) + ".png")));
-			TCanvas* dcanvas = new TCanvas(Form("dcan%d", clusterSize), "", 1000, 1000);
-			clusterBinFire->Draw();
-			dcanvas->SetLogy();
-			// dcanvas->SaveAs(static_cast<TString>(mSavePath / "hitmap_by_cluster_size" / ("fire_distribution_cs_" + std::to_string(clusterSize) + ".png")));
+	// for ( int clusterSize = 1; clusterSize < 80; clusterSize++ ) {
+	// 	TH2D* clusterHitmap = new TH2D(Form("hitmap%d", clusterSize), Form("Hitmap of cluster size %d", clusterSize), 1024, 0, 1024, 512, 0, 512);
+	// 	TH2D* clusterClustermap = new TH2D(Form("clustermap%d", clusterSize), Form("Clustermap of cluster size %d", clusterSize), 1024, 0, 1024, 512, 0, 512);
+	// 	TH1D* clusterBinFire = new TH1D(Form("fired%d", clusterSize), Form("The number of fired of each bins in cluster size %d", clusterSize), 50, 0, 50);
+	// 	// for ( const TCluster* cluster : mExpData->getClusters() ) {
+	// 	// 	if ( cluster->getSize() == clusterSize ) {
+	// 	// 		for ( const std::pair<int, int>& pixel : cluster->getPixels() ) {
+	// 	// 			clusterHitmap->Fill(pixel.first, pixel.second);
+	// 	// 		}
+	// 	// 		clusterClustermap->Fill(cluster->getCenter().first, cluster->getCenter().second);
+	// 	// 	}
+	// 	// }
+	// 	for ( int iRow = 0; iRow < 1024; iRow++ ) {
+	// 		for ( int iColumn = 0; iColumn < 512; iColumn++ ) {
+	// 			if ( clusterHitmap->GetBinContent(iRow, iColumn) != 0 ) {
+	// 				clusterBinFire->Fill(clusterHitmap->GetBinContent(iRow, iColumn));
+	// 			}
+	// 		}
+	// 	}
+	// 	if ( clusterBinFire->GetEntries() != 0 ) {
+	// 		TCanvas* hcanvas = new TCanvas(Form("hcan%d", clusterSize), "", 2000, 1000);
+	// 		clusterHitmap->Draw();
+	// 		// hcanvas->SaveAs(static_cast<TString>(mSavePath / "hitmap_by_cluster_size" / ("hitmap_cs_" + std::to_string(clusterSize) + ".png")));
+	// 		TCanvas* ccanvas = new TCanvas(Form("ccan%d", clusterSize), "", 2000, 1000);
+	// 		clusterClustermap->Draw();
+	// 		// ccanvas->SaveAs(static_cast<TString>(mSavePath / "hitmap_by_cluster_size" / ("clustermap_cs_" + std::to_string(clusterSize) + ".png")));
+	// 		TCanvas* dcanvas = new TCanvas(Form("dcan%d", clusterSize), "", 1000, 1000);
+	// 		clusterBinFire->Draw();
+	// 		dcanvas->SetLogy();
+	// 		// dcanvas->SaveAs(static_cast<TString>(mSavePath / "hitmap_by_cluster_size" / ("fire_distribution_cs_" + std::to_string(clusterSize) + ".png")));
 
-		}
-	}
+	// 	}
+	// }
 }

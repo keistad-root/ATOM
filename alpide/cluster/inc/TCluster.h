@@ -26,6 +26,7 @@ private:
 	int mMinX = 1024, mMinY = 512; /**< Maximum pixel x and y value in cluster*/
 	int mMaxX = 0, mMaxY = 0; /**< Minimum pixel x and y value in cluster*/
 	std::pair<double, double> center; /**< cluster centre value. The average of x and y values.*/
+	double mLongRadius;
 	// std::pair<double, double> stdevInAxis; /**< standard deviation in x and y direction */
 	// double stdev; /**< Root of mean of squared distance from cluster centre */
 	int size = 0; /**< The number of pixels in cluster */
@@ -54,6 +55,7 @@ public:
 	void calMembers();
 	void calMinMax();
 	void calCenter();
+	void calLongRadius();
 	// void calStdevInAxis();
 	// void calStdev();
 	void calSize();
@@ -61,6 +63,7 @@ public:
 
 	// Getter
 	const std::pair<double, double> getCenter() const;
+	const double getLongRadius() const;
 	// const std::pair<double, double> getStdevInAxis() const;
 	// const double getStdev() const;
 	const int getSize() const;

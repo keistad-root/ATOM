@@ -59,7 +59,6 @@ class TClusterShape {
 private:
 	int mClusterSize; /**< The cluster size of this shape*/
 	std::vector<TCluster*> mClusterOriginSet;
-	std::unordered_map<int, std::vector<TCluster*>> mClusterSameSizeSet; /**< The set of clusters extracting from all clusters if their size is mClusterSize */
 	std::vector<TShapeInfo> mClusterShapeInfos; /**< The set of cluster shape informations */
 public:
 	TClusterShape();
@@ -78,7 +77,6 @@ public:
 
 	void setClusterSize(const int ClusterSize);
 	const int getClusterSize() const;
-	const std::unordered_map<int, std::vector<TCluster*>>& getClusterSameSizeSet() const;
 private:
 	unsigned int fBits;
 public:

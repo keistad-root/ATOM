@@ -104,8 +104,8 @@ message(STATUS "Geant4 Include Directory: ${Geant4_INCLUDE_DIR}")
 message(STATUS "Garfield Include Directory: ${Garfield_INCLUDE_DIR}")
 
 # Find header files and source files and store it as variable
-file(GLOB_RECURSE HEADERS RELATIVE ${PROJECT_SOURCE_DIR} alpide/*/inc/* apts/inc/* chip/inc/* geant4/*/inc/* pycpp/inc/*)
-file(GLOB_RECURSE SOURCES RELATIVE ${PROJECT_SOURCE_DIR} alpide/*/src/* apts/src/* chip/src/* geant4/*/src/* pycpp/src/*)
+file(GLOB_RECURSE HEADERS RELATIVE ${PROJECT_SOURCE_DIR} alpide/*/inc/* apts/inc/* chip/inc/* geant4/*/inc/* pycpp/inc/* pycpp/config/inc/*)
+file(GLOB_RECURSE SOURCES RELATIVE ${PROJECT_SOURCE_DIR} alpide/*/src/* apts/src/* chip/src/* geant4/*/src/* pycpp/src/* pycpp/config/src/*)
 
 message(${HEADERS})
 # file(GLOB_RECURSE HEADERS "${PROJECT_SOURCE_DIR}/include/*.h")
@@ -129,6 +129,6 @@ include_directories(${Garfield_INCLUDE_DIRS})
 add_subdirectory(exe)
 
 # Make data directory to deal with input and output data
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/data)
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/output)
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/config)
+# file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/data)
+# file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/output)
+# file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/config)

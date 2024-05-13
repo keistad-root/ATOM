@@ -3,7 +3,7 @@
 #include <filesystem>
 
 // #include "TEvent.h"
-#include "cppconfig.h"
+#include "CppConfigFile.h"
 #include "TClusterAnalyser.h"
 #include "TClusterShapeAnalyser.h"
 #include "TExperimentData.h"
@@ -16,28 +16,23 @@
 
 class ControlExperimentAnalysis {
 	ArgumentParser mParser;
-	Configuration* mConfig = nullptr;
-	bool mHasConfig = false;
+	CppConfigFile* mConfig;
 	std::vector<std::string> mTypeNameSet;
-	std::unordered_map<std::string, Configuration*> mSubConfigSet;
+	std::unordered_map<std::string, CppConfigDictionary*> mSubConfigSet;
 	std::unordered_map<std::string, TExperimentData*> mExpDataSet;
 
+	std::string mInputFilePath;
 	TFile* mInputFile = nullptr;
 	TAnalyser* mAnalyser;
 	TClusterAnalyser* mClusterAnalyser;
 	TClusterShapeAnalyser* mClusterShapeAnalyser;
 	std::vector<int> mClusterRange;
 
-	Configurable* mSharedProperty;
-
-
 public:
 	ControlExperimentAnalysis(int argc, char** argv);
 	~ControlExperimentAnalysis();
-	void openOutputGraphFile();
 	void setConfig();
 	void openInputFile();
-	void setSubConfigSet();
 	void setExpDataSet();
 	void doBasicAnalysis();
 	void doMasking();
@@ -47,20 +42,7 @@ public:
 	void doDivideBySize();
 	void drawClusterShapeInfos();
 
-	std::filesystem::path getOutputPathFromConfig(const Configurable* privateProperty);
-	std::string getPlotTitleFromConfig(const Configurable* privateProperty);
-	std::string getOptionFromConfig(const Configurable* privateProperty);
-	std::vector<int> getClusterSizeRange(const Configurable* privateProperty);
-
-	Configurable* mHitmapPrivateConfigGenerator(const Configurable* privateProperty);
-	Configurable* mClustermapPrivateConfigGenerator(const Configurable* privateProperty);
-	Configurable* mClustersizePrivateConfigGenerator(const Configurable* privateProperty);
-	Configurable* mIndividualClusterShapePrivateGenerator(const Configurable* privateProperty);
-	Configurable* mSameSizeClusterShapePrivateGenerator(const Configurable* privateProperty);
-	Configurable* mTotalClusterShapePrivateGenerator(const Configurable* privateProperty);
-	Configurable* mSameSizeClusterShapeEntryPrivateGenerator(const Configurable* privateProperty);
-	Configurable* mTotalClusterShapeEntryPrivateGenerator(const Configurable* privateProperty);
-
+	std::vector<int> getClusterSizeRange(const CppConfigDictionary privateProperty);
 };
 
 ControlExperimentAnalysis::ControlExperimentAnalysis(int argc, char** argv) : mParser(argc, argv) {
@@ -70,9 +52,6 @@ ControlExperimentAnalysis::ControlExperimentAnalysis(int argc, char** argv) : mP
 }
 
 ControlExperimentAnalysis::~ControlExperimentAnalysis() {
-	if ( mHasConfig ) {
-		delete mConfig;
-	}
 	for ( auto& key : mSubConfigSet ) {
 		delete key.second;
 		key.second = nullptr;
@@ -102,43 +81,18 @@ ControlExperimentAnalysis::~ControlExperimentAnalysis() {
 
 void ControlExperimentAnalysis::setConfig() {
 	std::string configPath = mParser.get_value<std::string>("config");
-	mConfig = new Configuration(configPath);
-	mHasConfig = true;
+	mConfig = new CppConfigFile(configPath);
+
+	mTypeNameSet = mConfig->getConfig("File").getSubConfig("type_name").getValueList();
+	mInputFilePath = mConfig->getConfig("File").find("input_file");
 }
 
 void ControlExperimentAnalysis::openInputFile() {
-	const Configurable* fileConfig = mConfig->getConfig("File");
-	std::string inputFilePath = fileConfig->find("input_file");
-	mInputFile = new TFile(static_cast<TString>(inputFilePath), "READ");
-}
-
-void ControlExperimentAnalysis::setSubConfigSet() {
-	for ( std::string_view mainKey : mConfig->getConfigurableNameList() ) {
-		const Configurable* mainConfig = mConfig->getConfig(mainKey);
-		Configuration* subConfiguration = new Configuration();
-		int configSize = 0;
-		for ( std::string_view subKey : mainConfig->getKeyList() ) {
-			if ( mainConfig->findlist(subKey).size() > 1 ) {
-				std::vector<std::string> subValue = mainConfig->findlist(subKey);
-				subConfiguration->addConfig(subKey, subValue);
-				configSize++;
-			}
-		}
-		if ( configSize != 0 ) {
-			mTypeNameSet.push_back(std::string(mainKey));
-			mSubConfigSet.insert_or_assign(std::string(mainKey), subConfiguration);
-		} else {
-			delete subConfiguration;
-		}
-		subConfiguration = nullptr;
-		mainConfig = nullptr;
-	}
-	mSharedProperty = const_cast<Configurable*>(mConfig->getConfig("SharedProperty"));
+	mInputFile = new TFile(static_cast<TString>(mInputFilePath), "READ");
 }
 
 void ControlExperimentAnalysis::setExpDataSet() {
-	for ( const auto& subConfig : mSubConfigSet ) {
-		std::string typeName = subConfig.first;
+	for ( const std::string& typeName : mTypeNameSet ) {
 		mExpDataSet.insert_or_assign(typeName, new TExperimentData());
 	}
 }
@@ -146,9 +100,9 @@ void ControlExperimentAnalysis::setExpDataSet() {
 void ControlExperimentAnalysis::doBasicAnalysis() {
 	mAnalyser = new TAnalyser(mInputFile, mExpDataSet);
 	mAnalyser->storeEvents();
-	mAnalyser->setExpSettingLegend(*mConfig->getConfig("ExperimentSetting"));
-	if ( mConfig->getConfig("File")->hasKey("output_graph") ) {
-		mAnalyser->openOutputGraphFile(mConfig->getConfig("File")->find("output_graph"));
+	mAnalyser->setExpSettingLegend(mConfig->getConfig("ExperimentSetting"));
+	if ( mConfig->getConfig("File").hasKey("output_graph") ) {
+		mAnalyser->openOutputGraphFile(mConfig->getConfig("File").find("output_graph"));
 		for ( std::string_view typeName : mTypeNameSet ) {
 			mAnalyser->openDirectory(typeName);
 		}
@@ -156,7 +110,7 @@ void ControlExperimentAnalysis::doBasicAnalysis() {
 }
 
 void ControlExperimentAnalysis::doMasking() {
-	mAnalyser->doMasking(stoi(mConfig->getConfig("Masking")->find("cut")));
+	mAnalyser->doMasking(stoi(mConfig->getConfig("Masking").find("cut")));
 	for ( std::string_view typeName : mTypeNameSet ) {
 		if ( typeName != "Basic" ) {
 			mExpDataSet.insert_or_assign(std::string(typeName), mAnalyser->getAnEventSet(typeName));
@@ -165,26 +119,25 @@ void ControlExperimentAnalysis::doMasking() {
 }
 
 void ControlExperimentAnalysis::drawHitmap() {
-	std::vector<std::string> plotNameSet = mSubConfigSet.find("Basic")->second->getConfigurableNameList();
-	for ( std::string_view plotName : plotNameSet ) {
-		if ( mSubConfigSet.find("Basic")->second->getConfig(plotName)->find("type") == "hitmap" ) {
-			mAnalyser->saveHitmap("Basic", *mHitmapPrivateConfigGenerator(mSubConfigSet.find("Basic")->second->getConfig(plotName)));
-		}
+	if ( mConfig->getConfig("Basic").hasKey("hitmap") ) {
+		CppConfigDictionary hitmapConfig = mConfig->getConfig("Basic").getSubConfig("hitmap");
+		hitmapConfig += mConfig->getConfig("SharedProperty");
+		mAnalyser->saveHitmap("Basic", hitmapConfig);
 	}
 	doMasking();
 	for ( const std::string& typeName : mTypeNameSet ) {
 		if ( typeName != "Basic" ) {
-			for ( std::string_view plotName : mSubConfigSet.find(typeName)->second->getConfigurableNameList() ) {
-				if ( mSubConfigSet.find(typeName)->second->getConfig(plotName)->find("type") == "hitmap" ) {
-					mAnalyser->saveHitmap(typeName, *mHitmapPrivateConfigGenerator(mSubConfigSet.find(typeName)->second->getConfig(plotName)));
-				}
+			if ( mConfig->getConfig(typeName).hasKey("hitmap") ) {
+				CppConfigDictionary hitmapConfig = mConfig->getConfig(typeName).getSubConfig("hitmap");
+				hitmapConfig += mConfig->getConfig("SharedProperty");
+				mAnalyser->saveHitmap(typeName, hitmapConfig);
 			}
 		}
 	}
 }
 
 void ControlExperimentAnalysis::clusterization() {
-	for ( std::string_view typeName : mTypeNameSet ) {
+	for ( const std::string& typeName : mTypeNameSet ) {
 		TClusterization clusterization(mExpDataSet.find(std::string(typeName))->second->getEvents());
 		clusterization.clusterize();
 		mExpDataSet.find(std::string(typeName))->second->setClusters(clusterization.getClusters());
@@ -194,14 +147,16 @@ void ControlExperimentAnalysis::clusterization() {
 void ControlExperimentAnalysis::drawClustermapAndClustersize() {
 	mClusterAnalyser = new TClusterAnalyser(*mAnalyser);
 
-	for ( std::string_view typeName : mTypeNameSet ) {
-		for ( std::string_view plotName : mSubConfigSet.find(std::string(typeName))->second->getConfigurableNameList() ) {
-			if ( mSubConfigSet.find(std::string(typeName))->second->getConfig(plotName)->find("type") == "clustermap" ) {
-				mClusterAnalyser->saveClustermap(std::string(typeName), *mHitmapPrivateConfigGenerator(mSubConfigSet.find(std::string(typeName))->second->getConfig(plotName)));
-			}
-			if ( mSubConfigSet.find(std::string(typeName))->second->getConfig(plotName)->find("type") == "clustersize" ) {
-				mClusterAnalyser->saveClustersize(std::string(typeName), *mHitmapPrivateConfigGenerator(mSubConfigSet.find(std::string(typeName))->second->getConfig(plotName)));
-			}
+	for ( const std::string& typeName : mTypeNameSet ) {
+		if ( mConfig->getConfig(typeName).hasKey("clustermap") ) {
+			CppConfigDictionary hitmapConfig = mConfig->getConfig(typeName).getSubConfig("clustermap");
+			hitmapConfig += mConfig->getConfig("SharedProperty");
+			mClusterAnalyser->saveClustermap(typeName, hitmapConfig);
+		}
+		if ( mConfig->getConfig(typeName).hasKey("clustersize") ) {
+			CppConfigDictionary hitmapConfig = mConfig->getConfig(typeName).getSubConfig("clustersize");
+			hitmapConfig += mConfig->getConfig("SharedProperty");
+			mClusterAnalyser->saveClustersize(typeName, hitmapConfig);
 		}
 	}
 }
@@ -215,39 +170,46 @@ void ControlExperimentAnalysis::doDivideBySize() {
 
 void ControlExperimentAnalysis::drawClusterShapeInfos() {
 	mClusterShapeAnalyser = new TClusterShapeAnalyser(*mClusterAnalyser);
-	for ( std::string_view typeName : mTypeNameSet ) {
+	for ( const std::string& typeName : mTypeNameSet ) {
 		mClusterShapeAnalyser->doShaping(typeName, mClusterRange);
-		for ( std::string_view plotName : mSubConfigSet.find(std::string(typeName))->second->getConfigurableNameList() ) {
-			if ( mSubConfigSet.find(std::string(typeName))->second->getConfig(plotName)->find("type") == "shape_individual" ) {
-				mClusterShapeAnalyser->saveIndividualShapes(std::string(typeName), mIndividualClusterShapePrivateGenerator(mSubConfigSet.find(std::string(typeName))->second->getConfig(plotName)));
-			}
-			if ( mSubConfigSet.find(std::string(typeName))->second->getConfig(plotName)->find("type") == "shape_same_size" ) {
-				mClusterShapeAnalyser->saveSameSizeShapes(std::string(typeName), mSameSizeClusterShapePrivateGenerator(mSubConfigSet.find(std::string(typeName))->second->getConfig(plotName)));
-			}
-			if ( mSubConfigSet.find(std::string(typeName))->second->getConfig(plotName)->find("type") == "shape_total" ) {
-				mClusterShapeAnalyser->saveTotalShapes(std::string(typeName), mTotalClusterShapePrivateGenerator(mSubConfigSet.find(std::string(typeName))->second->getConfig(plotName)));
-			}
-			if ( mSubConfigSet.find(std::string(typeName))->second->getConfig(plotName)->find("type") == "shape_same_size_entry" ) {
-				mClusterShapeAnalyser->saveSameSizeShapeEntry(std::string(typeName), mSameSizeClusterShapeEntryPrivateGenerator(mSubConfigSet.find(std::string(typeName))->second->getConfig(plotName)));
-			}
-			if ( mSubConfigSet.find(std::string(typeName))->second->getConfig(plotName)->find("type") == "shape_total_entry" ) {
-				mClusterShapeAnalyser->saveTotalShapeEntry(std::string(typeName), mTotalClusterShapeEntryPrivateGenerator(mSubConfigSet.find(std::string(typeName))->second->getConfig(plotName)));
-			}
+		if ( mConfig->getConfig(typeName).hasKey("shape_individual") ) {
+			CppConfigDictionary shapeConfig = mConfig->getConfig(typeName).getSubConfig("shape_individual");
+			shapeConfig += mConfig->getConfig("SharedProperty");
+			mClusterShapeAnalyser->saveIndividualShapes(typeName, shapeConfig);
+		}
+		if ( mConfig->getConfig(typeName).hasKey("shape_same_size") ) {
+			CppConfigDictionary shapeConfig = mConfig->getConfig(typeName).getSubConfig("shape_same_size");
+			shapeConfig += mConfig->getConfig("SharedProperty");
+			mClusterShapeAnalyser->saveSameSizeShapes(typeName, shapeConfig);
+		}
+		if ( mConfig->getConfig(typeName).hasKey("shape_total") ) {
+			CppConfigDictionary shapeConfig = mConfig->getConfig(typeName).getSubConfig("shape_total");
+			shapeConfig += mConfig->getConfig("SharedProperty");
+			mClusterShapeAnalyser->saveTotalShapes(typeName, shapeConfig);
+		}
+		if ( mConfig->getConfig(typeName).hasKey("shape_same_size_entry") ) {
+			CppConfigDictionary shapeConfig = mConfig->getConfig(typeName).getSubConfig("shape_same_size_entry");
+			shapeConfig += mConfig->getConfig("SharedProperty");
+			mClusterShapeAnalyser->saveSameSizeShapeEntry(typeName, shapeConfig);
+		}
+		if ( mConfig->getConfig(typeName).hasKey("shape_total_entry") ) {
+			CppConfigDictionary shapeConfig = mConfig->getConfig(typeName).getSubConfig("shape_total_entry");
+			shapeConfig += mConfig->getConfig("SharedProperty");
+			mClusterShapeAnalyser->saveTotalShapeEntry(typeName, shapeConfig);
+		}
+		if ( mConfig->getConfig(typeName).hasKey("shape_info") ) {
+			CppConfigDictionary shapeConfig = mConfig->getConfig(typeName).getSubConfig("shape_info");
+			shapeConfig += mConfig->getConfig("SharedProperty");
+			mClusterShapeAnalyser->saveSameSizeInfos(typeName, shapeConfig);
 		}
 	}
 }
 
 
-
-
-
-
-
-
-std::vector<int> ControlExperimentAnalysis::getClusterSizeRange(const Configurable* privateProperty) {
+std::vector<int> ControlExperimentAnalysis::getClusterSizeRange(const CppConfigDictionary privateProperty) {
 	std::vector<int> clusterSizeRange;
-	if ( privateProperty->hasKey("cluster_size_oi") ) {
-		for ( const std::string& rangeStr : privateProperty->findlist("cluster_size_oi") ) {
+	if ( privateProperty.hasKey("cluster_size_oi") ) {
+		for ( const std::string& rangeStr : privateProperty.getSubConfig("cluster_size_oi").getValueList() ) {
 			if ( rangeStr.find('.') != std::string::npos ) {
 				for ( int i = stoi(rangeStr.substr(0, rangeStr.find('.'))); i < stoi(rangeStr.substr(rangeStr.find('.') + 3)) + 1; i++ ) {
 					clusterSizeRange.push_back(i);
@@ -262,169 +224,4 @@ std::vector<int> ControlExperimentAnalysis::getClusterSizeRange(const Configurab
 		}
 	}
 	return clusterSizeRange;
-}
-
-std::filesystem::path ControlExperimentAnalysis::getOutputPathFromConfig(const Configurable* privateProperty) {
-	std::filesystem::path outputPath = std::filesystem::absolute(mSharedProperty->find("output_path"));
-	if ( privateProperty->hasKey("subdirectory") ) {
-		outputPath /= privateProperty->find("subdirectory");
-	}
-	outputPath /= privateProperty->find("filename");
-	if ( mSharedProperty->hasKey("extension") || privateProperty->hasKey("extension") ) {
-		std::string extension = privateProperty->hasKey("extension") ? privateProperty->find("extinsion") : mSharedProperty->find("extension");
-		outputPath.replace_extension(extension);
-	} else {
-		outputPath.replace_extension("root");
-	}
-	return outputPath;
-}
-
-std::string ControlExperimentAnalysis::getPlotTitleFromConfig(const Configurable* privateProperty) {
-	std::string plotTitle;
-	if ( privateProperty->hasKey("title") ) {
-		plotTitle = privateProperty->find("title");
-	} else {
-		plotTitle = "";
-	}
-	if ( privateProperty->hasKey("x_title") ) {
-		plotTitle += ";" + privateProperty->find("x_title");
-	}
-	if ( privateProperty->hasKey("y_title") ) {
-		plotTitle += ";" + privateProperty->find("y_title");
-	}
-	if ( privateProperty->hasKey("z_title") ) {
-		plotTitle += ";" + privateProperty->find("z_title");
-	}
-	return plotTitle;
-}
-
-std::string ControlExperimentAnalysis::getOptionFromConfig(const Configurable* privateProperty) {
-	std::string option;
-	if ( privateProperty->hasKey("options") ) {
-		option = privateProperty->find("options");
-	} else {
-		option = "";
-	}
-	return option;
-}
-
-Configurable* ControlExperimentAnalysis::mHitmapPrivateConfigGenerator(const Configurable* privateProperty) {
-	Configurable* config = new Configurable("Map");
-	// Set path for hitmap plot
-	std::filesystem::path outputPath = getOutputPathFromConfig(privateProperty);
-	config->addDictionary("file_path", std::string(outputPath));
-	// Set title for hitmap plot
-	std::string plotTitles = getPlotTitleFromConfig(privateProperty);
-	config->addDictionary("plot_titles", plotTitles);
-	// Set option for hitmap plot
-	std::string option = getOptionFromConfig(privateProperty);
-	config->addDictionary("options", option);
-
-	return config;
-}
-
-Configurable* ControlExperimentAnalysis::mClustermapPrivateConfigGenerator(const Configurable* privateProperty) {
-	Configurable* config = new Configurable("Map");
-	// Set path for hitmap plot
-	std::filesystem::path outputPath = getOutputPathFromConfig(privateProperty);
-	config->addDictionary("file_path", std::string(outputPath));
-	// Set title for hitmap plot
-	std::string plotTitles = getPlotTitleFromConfig(privateProperty);
-	config->addDictionary("plot_titles", plotTitles);
-	// Set option for hitmap plot
-	std::string option = getOptionFromConfig(privateProperty);
-	config->addDictionary("options", option);
-
-	return config;
-}
-
-Configurable* ControlExperimentAnalysis::mClustersizePrivateConfigGenerator(const Configurable* privateProperty) {
-	Configurable* config = new Configurable("Map");
-	// Set path for hitmap plot
-	std::filesystem::path outputPath = getOutputPathFromConfig(privateProperty);
-	config->addDictionary("file_path", std::string(outputPath));
-	// Set title for hitmap plot
-	std::string plotTitles = getPlotTitleFromConfig(privateProperty);
-	config->addDictionary("plot_titles", plotTitles);
-	// Set option for hitmap plot
-	std::string option = getOptionFromConfig(privateProperty);
-	config->addDictionary("options", option);
-
-	return config;
-}
-
-
-Configurable* ControlExperimentAnalysis::mIndividualClusterShapePrivateGenerator(const Configurable* privateProperty) {
-	Configurable* config = new Configurable("Map");
-	// Set path for hitmap plot
-	std::filesystem::path outputPath = getOutputPathFromConfig(privateProperty);
-	config->addDictionary("file_path", std::string(outputPath));
-	// Set title for hitmap plot
-	std::string plotTitles = getPlotTitleFromConfig(privateProperty);
-	config->addDictionary("plot_titles", plotTitles);
-	// Set option for hitmap plot
-	std::string option = getOptionFromConfig(privateProperty);
-	config->addDictionary("options", option);
-
-	return config;
-}
-
-Configurable* ControlExperimentAnalysis::mSameSizeClusterShapePrivateGenerator(const Configurable* privateProperty) {
-	Configurable* config = new Configurable("Map");
-	// Set path for hitmap plot
-	std::filesystem::path outputPath = getOutputPathFromConfig(privateProperty);
-	config->addDictionary("file_path", std::string(outputPath));
-	// Set title for hitmap plot
-	std::string plotTitles = getPlotTitleFromConfig(privateProperty);
-	config->addDictionary("plot_titles", plotTitles);
-	// Set option for hitmap plot
-	std::string option = getOptionFromConfig(privateProperty);
-	config->addDictionary("options", option);
-
-	return config;
-}
-
-Configurable* ControlExperimentAnalysis::mTotalClusterShapePrivateGenerator(const Configurable* privateProperty) {
-	Configurable* config = new Configurable("Map");
-	// Set path for hitmap plot
-	std::filesystem::path outputPath = getOutputPathFromConfig(privateProperty);
-	config->addDictionary("file_path", std::string(outputPath));
-	// Set title for hitmap plot
-	std::string plotTitles = getPlotTitleFromConfig(privateProperty);
-	config->addDictionary("plot_titles", plotTitles);
-	// Set option for hitmap plot
-	std::string option = getOptionFromConfig(privateProperty);
-	config->addDictionary("options", option);
-
-	return config;
-}
-
-Configurable* ControlExperimentAnalysis::mSameSizeClusterShapeEntryPrivateGenerator(const Configurable* privateProperty) {
-	Configurable* config = new Configurable("Map");
-	// Set path for hitmap plot
-	std::filesystem::path outputPath = getOutputPathFromConfig(privateProperty);
-	config->addDictionary("file_path", std::string(outputPath));
-	// Set title for hitmap plot
-	std::string plotTitles = getPlotTitleFromConfig(privateProperty);
-	config->addDictionary("plot_titles", plotTitles);
-	// Set option for hitmap plot
-	std::string option = getOptionFromConfig(privateProperty);
-	config->addDictionary("options", option);
-
-	return config;
-}
-
-Configurable* ControlExperimentAnalysis::mTotalClusterShapeEntryPrivateGenerator(const Configurable* privateProperty) {
-	Configurable* config = new Configurable("Map");
-	// Set path for hitmap plot
-	std::filesystem::path outputPath = getOutputPathFromConfig(privateProperty);
-	config->addDictionary("file_path", std::string(outputPath));
-	// Set title for hitmap plot
-	std::string plotTitles = getPlotTitleFromConfig(privateProperty);
-	config->addDictionary("plot_titles", plotTitles);
-	// Set option for hitmap plot
-	std::string option = getOptionFromConfig(privateProperty);
-	config->addDictionary("options", option);
-
-	return config;
 }

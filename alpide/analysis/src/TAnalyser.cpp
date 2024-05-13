@@ -18,11 +18,10 @@ TAnalyser::TAnalyser(const TAnalyser& copy) : mInputFile(copy.mInputFile), mTree
 }
 
 TAnalyser::~TAnalyser() {
-	// std::cout << "HELLO" << std::endl;
-	// if ( mOutputFile != nullptr && !mOutputFile->IsDestructed() ) {
-	// 	mOutputFile->Close();
-	// 	mOutputFile = nullptr;
-	// }
+	if ( mOutputFile != nullptr && !mOutputFile->IsDestructed() ) {
+		mOutputFile->Close();
+		mOutputFile = nullptr;
+	}
 	// for ( const auto& pair : mHitmaps ) {
 	// 	if ( !pair.second->IsDestructed() ) {
 	// 		delete pair.second;
@@ -142,7 +141,7 @@ void TAnalyser::doMasking(int mMaskOver) {
 	mExpData.insert_or_assign("NoisePixel", noisePixelData);
 }
 
-void TAnalyser::setExpSettingLegend(Configurable settingConfig) {
+void TAnalyser::setExpSettingLegend(CppConfigDictionary settingConfig) {
 	mExpSettingLegend = new TPaveText(.78, .1, .981, .65, "NDC");
 
 	mExpSettingLegend->AddText(static_cast<TString>("VRESETP=" + settingConfig.find("VRESETP") + ", VRESETD=" + settingConfig.find("VRESETD")));
@@ -170,11 +169,26 @@ TExperimentData* TAnalyser::getAnEventSet(std::string_view typeName) const {
 	}
 }
 
-TH2D* TAnalyser::getHitPlot(const Configurable& config, const std::vector<TALPIDEEvent*>& events) {
+TH2D* TAnalyser::getHitPlot(const CppConfigDictionary& config, const std::vector<TALPIDEEvent*>& events) {
 	// Static variable for numbering
 	static int iHMap = 0;
 	// Allocate a 2d histogram.
-	TH2D* map = new TH2D(Form("hmap%d", iHMap), static_cast<TString>(config.find("plot_titles")), 1024, 0, 1024, 512, 0, 512);
+	std::string plotTitle = "";
+	if ( config.hasKey("title") ) {
+		plotTitle += config.find("title");
+	}
+	if ( config.hasKey("x_title") ) {
+		plotTitle += "; " + config.find("x_title");
+	} else {
+		plotTitle += "; ";
+	}
+	if ( config.hasKey("y_title") ) {
+		plotTitle += "; " + config.find("y_title");
+	} else {
+		plotTitle += "; ";
+	}
+
+	TH2D* map = new TH2D(Form("hmap%d", iHMap), static_cast<TString>(plotTitle), 1024, 0, 1024, 512, 0, 512);
 	// Fill data
 	for ( const TALPIDEEvent* event : events ) {
 		for ( const std::pair<int, int>& pixel : event->getData() ) {
@@ -187,14 +201,20 @@ TH2D* TAnalyser::getHitPlot(const Configurable& config, const std::vector<TALPID
 	map->GetXaxis()->SetTitleOffset(1.4);
 	map->GetXaxis()->SetLabelOffset(0.003);
 	// Find directory for saving clustermap. If it doesn't exist, then make the directory with mother directories.
-	std::filesystem::path filePath(config.find("file_path"));
-	std::filesystem::create_directories(filePath.parent_path());
+	std::filesystem::path filePath(config.find("output_path"));
+	filePath /= config.find("subdirectory");
+	std::filesystem::create_directories(filePath);
 	// Draw plot with options
 	if ( config.hasKey("options") ) {
-		for ( const std::string& optionName : config.findlist("options") ) {
+		for ( const std::string& optionName : config.getSubConfig("options").getValueList() ) {
 			map->Draw(static_cast<TString>(optionName));
 			mExpSettingLegend->Draw("SAME");
-			std::filesystem::path file = filePath.parent_path() / (filePath.stem().string() + "_" + optionName + filePath.extension().string());
+			std::filesystem::path file = filePath / (config.find("filename") + "_" + optionName);
+			if ( config.hasKey("extension") ) {
+				file.replace_extension(config.find("extension"));
+			} else {
+				file.replace_extension("png");
+			}
 			canvas->SaveAs(static_cast<TString>(file));
 		}
 	} else {
@@ -208,7 +228,7 @@ TH2D* TAnalyser::getHitPlot(const Configurable& config, const std::vector<TALPID
 	return map;
 }
 
-void TAnalyser::saveHitmap(std::string typeName, const Configurable& config) {
+void TAnalyser::saveHitmap(std::string typeName, const CppConfigDictionary& config) {
 	std::clog << "Generating \033[1;32m" << typeName << " Hitmap\033[1;0m..." << std::endl;
 	if ( !mHitmaps.count(typeName) ) {
 		mHitmaps.insert_or_assign(typeName, getHitPlot(config, mExpData.find(typeName)->second->getEvents()));

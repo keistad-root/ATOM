@@ -64,7 +64,6 @@ void TClusterShape::identifyShapes() {
 			shapeInfo.mClusterMap = clusterMap(shapeInfo.mClusterMatrix);
 			mClusterShapeInfos.push_back(shapeInfo);
 			std::vector<TCluster*> newClusterSet;
-			mClusterSameSizeSet.insert_or_assign(iShape, newClusterSet);
 			isFirst = false;
 			continue;
 		}
@@ -90,7 +89,6 @@ void TClusterShape::identifyShapes() {
 			shapeInfo.mClusterMap = clusterMap(shapeInfo.mClusterMatrix);
 			mClusterShapeInfos.push_back(shapeInfo);
 			std::vector<TCluster*> newClusterSet;
-			mClusterSameSizeSet.insert_or_assign(iShape, newClusterSet);
 		}
 	}
 }
@@ -214,8 +212,4 @@ const std::vector<TShapeInfo>& TClusterShape::getClusterShapeInfos() const {
 */
 const int TClusterShape::getClusterSize() const {
 	return mClusterSize;
-}
-
-const std::unordered_map<int, std::vector<TCluster*>>& TClusterShape::getClusterSameSizeSet() const {
-	return mClusterSameSizeSet;
 }

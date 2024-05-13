@@ -25,7 +25,7 @@
 #include "TCanvas.h"
 
 #include "cpptqdm.h"
-#include "cppconfig.h"
+#include "CppConfigFile.h"
 
 #include "TExperimentData.h"
 #include "TMatrix2D.h"
@@ -49,6 +49,8 @@ class TALPIDEEvent;
 class TExperimentData;
 class TClusterDivideData;
 class TDirectory;
+
+class CppConfigDictionary;
 typedef unsigned int UInt_t;
 
 /**
@@ -89,15 +91,15 @@ public:
 	void openDirectory(std::string_view typeName);
 
 	// void setSavePath(const std::filesystem::path& savePath);
-	void setExpSettingLegend(Configurable settingConfig);
+	void setExpSettingLegend(CppConfigDictionary settingConfig);
 
 	void doDivideBySize(std::string_view typeName);
 
 	TExperimentData* getAnEventSet(std::string_view typeName) const;
 
-	TH2D* getHitPlot(const Configurable& config, const std::vector<TALPIDEEvent*>& events);
+	TH2D* getHitPlot(const CppConfigDictionary& config, const std::vector<TALPIDEEvent*>& events);
 
-	void saveHitmap(std::string typeName, const Configurable& config);
+	void saveHitmap(std::string typeName, const CppConfigDictionary& config);
 
 private:
 	UInt_t fBits;

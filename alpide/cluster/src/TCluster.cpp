@@ -93,6 +93,7 @@ void TCluster::calMembers() {
 	calMinMax();
 	calCenter();
 	calSize();
+	calLongRadius();
 	// calShape();
 	// calStdevInAxis();
 	// calStdev();
@@ -122,12 +123,25 @@ void TCluster::calSize() {
 	size = mPixels.size();
 }
 
+void TCluster::calLongRadius() {
+	double maxDistance = 0.;
+	for ( const std::pair<int, int>& pixel : mPixels ) {
+		double distance = pow(abs(pixel.first - center.first) + .5, 2) + pow(abs(pixel.second - center.second) + .5, 2);
+		maxDistance = std::max(maxDistance, distance);
+	}
+	mLongRadius = sqrt(maxDistance);
+}
+
 const std::pair<double, double> TCluster::getCenter() const {
 	return center;
 }
 
 const int TCluster::getSize() const {
 	return size;
+}
+
+const double TCluster::getLongRadius() const {
+	return mLongRadius;
 }
 
 // Setter for member

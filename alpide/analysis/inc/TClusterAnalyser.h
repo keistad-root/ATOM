@@ -22,7 +22,7 @@
 #include "TH1D.h"
 #include "TH2D.h"
 
-#include "cppconfig.h"
+#include "CppConfigFile.h"
 #include "cpptqdm.h"
 
 #include "TCluster.h"
@@ -61,13 +61,13 @@ public:
 	TClusterAnalyser(const TClusterAnalyser& copy);
 	~TClusterAnalyser();
 
-	TH2D* getClusterPlot(const Configurable& config, const std::vector<TCluster*>& clusters);
-	TH1D* getClustersizePlot(const Configurable& config, const std::vector<TCluster*>& clusters);
+	TH2D* getClusterPlot(const CppConfigDictionary& config, const std::vector<TCluster*>& clusters);
+	TH1D* getClustersizePlot(const CppConfigDictionary& config, const std::vector<TCluster*>& clusters);
 	void setClusterDataWithShape(const std::vector<int>& clusterSizeRange);
 
-	void saveClustermap(std::string typeName, const Configurable& config);
-	void saveClustersize(std::string typeName, const Configurable& config);
-	void saveHitmapByClustersize(const Configurable& config);
+	void saveClustermap(std::string typeName, const CppConfigDictionary& config);
+	void saveClustersize(std::string typeName, const CppConfigDictionary& config);
+	void saveHitmapByClustersize(const CppConfigDictionary& config);
 
 private:
 	unsigned int fBits;

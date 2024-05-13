@@ -4,7 +4,6 @@ int main(int argc, char** argv) {
 	ControlExperimentAnalysis controller(argc, argv);
 	controller.setConfig();
 	controller.openInputFile();
-	controller.setSubConfigSet();
 	controller.setExpDataSet();
 	controller.doBasicAnalysis();
 	controller.drawHitmap();

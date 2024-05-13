@@ -11,7 +11,7 @@
 #include "ActionInitialization.h"
 #include "AnalysisManager.h"
 
-#include "cppconfig.h"
+#include "CppConfigFile.h"
 #include "cppargs.h"
 #include "cppUnit.h"
 #include "cppTimer.h"
@@ -23,7 +23,7 @@ ArgumentParser set_parse(int argc, char** argv) {
 	return parser;
 }
 
-void DetectorConstruct(DetectorConstruction* detectorConstructor, const Configurable& config) {
+void DetectorConstruct(DetectorConstruction* detectorConstructor, const CppConfigDictionary& config) {
 	double airPressure = Quantity(config.find("air_pressure")).getNum("bar");
 	detectorConstructor->SetWorld(airPressure);
 
@@ -43,7 +43,7 @@ void DetectorConstruct(DetectorConstruction* detectorConstructor, const Configur
 	detectorConstructor->Construct(standType, distance);
 }
 
-void SetParticleSource(G4SingleParticleSource* particleGun, const Configurable& config) {
+void SetParticleSource(G4SingleParticleSource* particleGun, const CppConfigDictionary& config) {
 	G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
 	std::string particleType = config.find("particle_type");
 	G4ParticleDefinition* particleDefinition = particleTable->FindParticle(particleType);
@@ -64,7 +64,7 @@ int main(int argc, char** argv) {
 	TTimer timer;
 	// Get config file using argument parser.
 	ArgumentParser parser = set_parse(argc, argv);
-	Configuration config(parser.get_value<std::string>("config"));
+	CppConfigFile config(parser.get_value<std::string>("config"));
 	Quantity::setUserQuantity();
 
 	// Set random engine
@@ -75,11 +75,11 @@ int main(int argc, char** argv) {
 	G4RunManager* runManager = new G4RunManager;
 
 	// Analysis Manager
-	AnalysisManager* analysisManager = new AnalysisManager(config.getConfig("Analysis")->find("output_file"));
+	AnalysisManager* analysisManager = new AnalysisManager(config.getConfig("Analysis").find("output_file"));
 
 	// Geometry construction
 	DetectorConstruction* detectorConstructor = new DetectorConstruction();
-	DetectorConstruct(detectorConstructor, *config.getConfig("Geometry"));
+	DetectorConstruct(detectorConstructor, config.getConfig("Geometry"));
 	runManager->SetUserInitialization(detectorConstructor);
 
 	// Set physics
@@ -95,11 +95,11 @@ int main(int argc, char** argv) {
 	// Set Particle Source
 	G4GeneralParticleSourceData* GPSData = G4GeneralParticleSourceData::Instance();
 	G4SingleParticleSource* particleGun = GPSData->GetCurrentSource();
-	SetParticleSource(particleGun, *config.getConfig("Source"));
+	SetParticleSource(particleGun, config.getConfig("Source"));
 
 	runManager->Initialize();
 
-	std::ifstream distFile(config.getConfig("Energy")->find("alpha_energy_distribution"));
+	std::ifstream distFile(config.getConfig("Energy").find("alpha_energy_distribution"));
 	std::string line;
 	getline(distFile, line);
 	while ( getline(distFile, line) ) {
