@@ -4,8 +4,7 @@
 
 // #include "TEvent.h"
 #include "CppConfigFile.h"
-#include "TClusterAnalyser.h"
-#include "TClusterShapeAnalyser.h"
+#include "TAnalyser.h"
 #include "TExperimentData.h"
 #include "cppargs.h"
 #include "TClusterDivideData.h"
@@ -24,8 +23,6 @@ class ControlExperimentAnalysis {
 	std::string mInputFilePath;
 	TFile* mInputFile = nullptr;
 	TAnalyser* mAnalyser;
-	TClusterAnalyser* mClusterAnalyser;
-	TClusterShapeAnalyser* mClusterShapeAnalyser;
 	std::vector<int> mClusterRange;
 
 public:
@@ -64,14 +61,6 @@ ControlExperimentAnalysis::~ControlExperimentAnalysis() {
 		mInputFile->Close();
 		delete mInputFile;
 		mInputFile = nullptr;
-	}
-	if ( mClusterShapeAnalyser != nullptr && !mClusterShapeAnalyser->IsDestructed() ) {
-		delete mClusterShapeAnalyser;
-		mClusterShapeAnalyser = nullptr;
-	}
-	if ( mClusterAnalyser != nullptr && !mClusterAnalyser->IsDestructed() ) {
-		delete mClusterAnalyser;
-		mClusterAnalyser = nullptr;
 	}
 	if ( mAnalyser != nullptr && !mAnalyser->IsDestructed() ) {
 		delete mAnalyser;
@@ -145,18 +134,17 @@ void ControlExperimentAnalysis::clusterization() {
 }
 
 void ControlExperimentAnalysis::drawClustermapAndClustersize() {
-	mClusterAnalyser = new TClusterAnalyser(*mAnalyser);
 
 	for ( const std::string& typeName : mTypeNameSet ) {
 		if ( mConfig->getConfig(typeName).hasKey("clustermap") ) {
 			CppConfigDictionary hitmapConfig = mConfig->getConfig(typeName).getSubConfig("clustermap");
 			hitmapConfig += mConfig->getConfig("SharedProperty");
-			mClusterAnalyser->saveClustermap(typeName, hitmapConfig);
+			mAnalyser->saveClustermap(typeName, hitmapConfig);
 		}
 		if ( mConfig->getConfig(typeName).hasKey("clustersize") ) {
 			CppConfigDictionary hitmapConfig = mConfig->getConfig(typeName).getSubConfig("clustersize");
 			hitmapConfig += mConfig->getConfig("SharedProperty");
-			mClusterAnalyser->saveClustersize(typeName, hitmapConfig);
+			mAnalyser->saveClustersize(typeName, hitmapConfig);
 		}
 	}
 }
@@ -164,43 +152,42 @@ void ControlExperimentAnalysis::drawClustermapAndClustersize() {
 void ControlExperimentAnalysis::doDivideBySize() {
 	mClusterRange = getClusterSizeRange(mConfig->getConfig("ShapeCut"));
 	for ( std::string_view typeName : mTypeNameSet ) {
-		mClusterAnalyser->doDivideBySize(typeName);
+		mAnalyser->doDivideBySize(typeName);
 	}
 }
 
 void ControlExperimentAnalysis::drawClusterShapeInfos() {
-	mClusterShapeAnalyser = new TClusterShapeAnalyser(*mClusterAnalyser);
 	for ( const std::string& typeName : mTypeNameSet ) {
-		mClusterShapeAnalyser->doShaping(typeName, mClusterRange);
+		mAnalyser->doShaping(typeName, mClusterRange);
 		if ( mConfig->getConfig(typeName).hasKey("shape_individual") ) {
 			CppConfigDictionary shapeConfig = mConfig->getConfig(typeName).getSubConfig("shape_individual");
 			shapeConfig += mConfig->getConfig("SharedProperty");
-			mClusterShapeAnalyser->saveIndividualShapes(typeName, shapeConfig);
+			mAnalyser->saveIndividualShapes(typeName, shapeConfig);
 		}
 		if ( mConfig->getConfig(typeName).hasKey("shape_same_size") ) {
 			CppConfigDictionary shapeConfig = mConfig->getConfig(typeName).getSubConfig("shape_same_size");
 			shapeConfig += mConfig->getConfig("SharedProperty");
-			mClusterShapeAnalyser->saveSameSizeShapes(typeName, shapeConfig);
+			mAnalyser->saveSameSizeShapes(typeName, shapeConfig);
 		}
 		if ( mConfig->getConfig(typeName).hasKey("shape_total") ) {
 			CppConfigDictionary shapeConfig = mConfig->getConfig(typeName).getSubConfig("shape_total");
 			shapeConfig += mConfig->getConfig("SharedProperty");
-			mClusterShapeAnalyser->saveTotalShapes(typeName, shapeConfig);
+			mAnalyser->saveTotalShapes(typeName, shapeConfig);
 		}
 		if ( mConfig->getConfig(typeName).hasKey("shape_same_size_entry") ) {
 			CppConfigDictionary shapeConfig = mConfig->getConfig(typeName).getSubConfig("shape_same_size_entry");
 			shapeConfig += mConfig->getConfig("SharedProperty");
-			mClusterShapeAnalyser->saveSameSizeShapeEntry(typeName, shapeConfig);
+			mAnalyser->saveSameSizeShapeEntry(typeName, shapeConfig);
 		}
 		if ( mConfig->getConfig(typeName).hasKey("shape_total_entry") ) {
 			CppConfigDictionary shapeConfig = mConfig->getConfig(typeName).getSubConfig("shape_total_entry");
 			shapeConfig += mConfig->getConfig("SharedProperty");
-			mClusterShapeAnalyser->saveTotalShapeEntry(typeName, shapeConfig);
+			mAnalyser->saveTotalShapeEntry(typeName, shapeConfig);
 		}
 		if ( mConfig->getConfig(typeName).hasKey("shape_info") ) {
 			CppConfigDictionary shapeConfig = mConfig->getConfig(typeName).getSubConfig("shape_info");
 			shapeConfig += mConfig->getConfig("SharedProperty");
-			mClusterShapeAnalyser->saveSameSizeInfos(typeName, shapeConfig);
+			mAnalyser->saveSameSizeInfos(typeName, shapeConfig);
 		}
 	}
 }

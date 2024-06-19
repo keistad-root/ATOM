@@ -18,11 +18,16 @@
 #include "TFile.h"
 #include "TTree.h"
 #include "TBranch.h"
+#include "TH1D.h"
 #include "TH2D.h"
 #include "TError.h"
 #include "TPaveText.h"
 #include "TDirectory.h"
 #include "TCanvas.h"
+#include "TLine.h"
+#include "TGraph.h"
+#include "TF1.h"
+#include "TLegend.h"
 
 #include "cpptqdm.h"
 #include "CppConfigFile.h"
@@ -30,7 +35,9 @@
 #include "TExperimentData.h"
 #include "TMatrix2D.h"
 #include "TALPIDEEvent.h"
+#include "TCluster.h"
 #include "TClusterDivideData.h"
+#include "TClusterShape.h"
 #endif
 
 #include<string>
@@ -40,6 +47,7 @@
 class TFile;
 class TTree;
 class TH2D;
+class TH1D;
 class TPaveText;
 
 class Configurable;
@@ -48,9 +56,11 @@ class Configurable;
 class TALPIDEEvent;
 class TExperimentData;
 class TClusterDivideData;
+class TClusterShape;
 class TDirectory;
 
 class CppConfigDictionary;
+class TCluster;
 typedef unsigned int UInt_t;
 
 /**
@@ -75,9 +85,15 @@ protected:
 	bool mIsOutputGraph = false;
 	TPaveText* mExpSettingLegend;
 	std::unordered_map<std::string, TH2D*> mHitmaps;
+	std::unordered_map<std::string, TH2D*> mClustermaps;
+	std::unordered_map<std::string, TH1D*> mClustersizes;
+	std::unordered_map<std::string, std::unordered_map<int, std::vector<TCluster*>>> mClusterDataWithShape;
 	std::unordered_map<std::string, TDirectory*> mDirectorySet;
 	std::unordered_map<std::string, TExperimentData*> mExpData;
 	std::unordered_map<std::string, TClusterDivideData*> mDivideData;
+	std::unordered_map<std::string, std::vector<TClusterShape*>> mClusterShapeSet;
+	std::unordered_map<std::string, int> mNTotalShapeSet;
+	std::unordered_map<std::string, int> mMaxModeSet;
 public:
 	TAnalyser() = default;
 	TAnalyser(TFile* inputFile, std::unordered_map<std::string, TExperimentData*> expData);
@@ -100,6 +116,22 @@ public:
 	TH2D* getHitPlot(const CppConfigDictionary& config, const std::vector<TALPIDEEvent*>& events);
 
 	void saveHitmap(std::string typeName, const CppConfigDictionary& config);
+
+	TH2D* getClusterPlot(const CppConfigDictionary& config, const std::vector<TCluster*>& clusters);
+	TH1D* getClustersizePlot(const CppConfigDictionary& config, const std::vector<TCluster*>& clusters);
+	void setClusterDataWithShape(const std::vector<int>& clusterSizeRange);
+
+	void saveClustermap(std::string typeName, const CppConfigDictionary& config);
+	void saveClustersize(std::string typeName, const CppConfigDictionary& config);
+	std::vector<int> getClusterSizeRange(const CppConfigDictionary& privateProperty);
+
+	void doShaping(std::string_view typeName, const std::vector<int>& clusterSizeRange);
+	void saveIndividualShapes(std::string_view typeName, const CppConfigDictionary config);
+	void saveSameSizeInfos(std::string_view typeName, const CppConfigDictionary config);
+	void saveSameSizeShapes(std::string_view typeName, const CppConfigDictionary config);
+	void saveTotalShapes(std::string_view typeName, const CppConfigDictionary config);
+	void saveSameSizeShapeEntry(std::string_view typeName, const CppConfigDictionary config);
+	void saveTotalShapeEntry(std::string_view typeName, const CppConfigDictionary config);
 
 private:
 	UInt_t fBits;

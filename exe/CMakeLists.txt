@@ -7,6 +7,7 @@ set(TEST_EXE
     GarfieldSimulation
 	Merge
 	CompareExperimentData
+	entrySimulation
 )
 
 # for now put the executables in the build root for compatibility with existing scripts

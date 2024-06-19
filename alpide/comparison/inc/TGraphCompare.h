@@ -13,6 +13,7 @@
 #include "TColor.h"
 #include "TLegend.h"
 #include "CppConfigFile.h"
+#include "TGraphAsymmErrors.h"
 #endif
 
 #include <unordered_map>

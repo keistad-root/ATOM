@@ -51,9 +51,9 @@ class TCluster;
  */
 class TClusterAnalyser : public TAnalyser {
 protected:
-	std::unordered_map<std::string, TH2D*> mClustermaps;
-	std::unordered_map<std::string, TH1D*> mClustersizes;
-	std::unordered_map<std::string, std::unordered_map<int, std::vector<TCluster*>>> mClusterDataWithShape;
+	// std::unordered_map<std::string, TH2D*> mClustermaps;
+	// std::unordered_map<std::string, TH1D*> mClustersizes;
+	// std::unordered_map<std::string, std::unordered_map<int, std::vector<TCluster*>>> mClusterDataWithShape;
 public:
 	//Constructor
 	TClusterAnalyser() = default;

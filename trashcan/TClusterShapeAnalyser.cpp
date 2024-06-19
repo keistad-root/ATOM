@@ -71,31 +71,49 @@ void TClusterShapeAnalyser::doShaping(std::string_view typeName, const std::vect
 	mNTotalShapeSet.insert_or_assign(std::string(typeName), nTotalShape);
 	mMaxModeSet.insert_or_assign(std::string(typeName), maxMode);
 }
-
+/**
+ * @brief Drawing individual shapes.
+ *
+ * @param typeName
+ * @param config
+*/
 void TClusterShapeAnalyser::saveIndividualShapes(std::string_view typeName, const CppConfigDictionary config) {
+	// Print log message
 	std::clog << "Generating " << "\033[1;32m" << "individual shapes" << "\033[1;0m" << "..." << std::endl;
 
+	// Get the total number of shapes for progress bar.
 	int nTotalShape = mNTotalShapeSet.find(std::string(typeName))->second;
+
+	// Get save path from config file.
 	std::filesystem::path filePath(config.find("output_path"));
 	filePath /= config.find("subdirectory");
 	std::filesystem::create_directories(filePath);
 
+	// Init progress bar
 	ProgressBar pBar(nTotalShape);
-	for ( const TClusterShape* clusterShape : mClusterShapeSet.find(std::string(typeName))->second ) {
-		int clusterSize = clusterShape->getClusterSize();
-		int iClusterShape = 0;
-		for ( const TShapeInfo& shapeInfo : clusterShape->getClusterShapeInfos() ) {
-			pBar.printProgress();
-			int shapeWidth = shapeInfo.mClusterMatrix->getNRow();
-			int shapeHeight = shapeInfo.mClusterMatrix->getNColumn();
 
+	for ( const TClusterShape* clusterShape : mClusterShapeSet.find(std::string(typeName))->second ) {
+		int clusterSize = clusterShape->getClusterSize(); // The cluster size of shape set.
+		int iClusterShape = 0; // The i-th cluster shape
+		for ( const TShapeInfo& shapeInfo : clusterShape->getClusterShapeInfos() ) {
+			pBar.printProgress(); // Print progress bar.
+
+			int shapeWidth = shapeInfo.mClusterMatrix->getNRow(); // Shape width of matrix
+			int shapeHeight = shapeInfo.mClusterMatrix->getNColumn(); // Shape height of matrix
+
+			// Initialize canvas
 			TCanvas* canvas = new TCanvas(Form("%d_%d.png", clusterSize, iClusterShape), "", (shapeWidth + 2) * 500, (shapeHeight + 2) * 500);
+			// Set canvas margin
 			canvas->SetMargin(0., 0., 0., 0.);
+			// Draw shape on canvas
 			shapeInfo.mClusterMap->Draw();
+			// Fill colour
 			shapeInfo.mClusterMap->SetDrawOption("COLZ");
+			// Remove histogram axis
 			shapeInfo.mClusterMap->GetXaxis()->SetAxisColor(0);
 			shapeInfo.mClusterMap->GetYaxis()->SetAxisColor(0);
 
+			// Fill line for seperating pixels
 			TLine* line = new TLine();
 			line->SetLineColorAlpha(kRed, 6. / 8);
 			for ( int i = 1; i <= shapeInfo.mClusterMap->GetNbinsX(); ++i ) {
@@ -113,11 +131,13 @@ void TClusterShapeAnalyser::saveIndividualShapes(std::string_view typeName, cons
 				}
 			}
 
+			// Set title of shape
 			TText* title = new TText(.5, 1. - .5 / (shapeHeight + 2), Form("%d-th Cluster Shape of Cluster Size %d", iClusterShape, clusterSize));
 			title->SetTextAlign(23);
 			title->SetNDC();
 			title->Draw();
 
+			// Save shape figure
 			std::filesystem::path file = filePath / (config.find("filename") + "_" + std::to_string(clusterSize) + "_" + std::to_string(iClusterShape));
 			if ( config.hasKey("extension") ) {
 				file.replace_extension(config.find("extension"));
@@ -130,6 +150,8 @@ void TClusterShapeAnalyser::saveIndividualShapes(std::string_view typeName, cons
 
 			delete title;
 			title = nullptr;
+			delete line;
+			line = nullptr;
 			delete canvas;
 			canvas = nullptr;
 		}
@@ -203,6 +225,12 @@ double calRatioOfRadius(const TMatrix2D<int>* matrix) {
 	return sqrt(static_cast<double>(shortRadiusSquare) / longRadiusSquare);
 }
 
+/**
+ * @brief Drawing information for classifying multi-cluster
+ *
+ * @param typeName
+ * @param config
+*/
 void TClusterShapeAnalyser::saveSameSizeInfos(std::string_view typeName, const CppConfigDictionary config) {
 	// Print out a log
 	std::cout << "Generating " << "\033[1;32m" << "Informations of shapes with same size" << "\033[1;0m" << "..." << std::endl;
@@ -212,42 +240,44 @@ void TClusterShapeAnalyser::saveSameSizeInfos(std::string_view typeName, const C
 	filePath /= config.find("subdirectory");
 	// The creation of directories of output path
 	std::filesystem::create_directories(filePath);
-
-	std::unordered_map<std::string, CppConfigDictionary> plotConfigList = config.getSubConfig("plots").getSubConfigSetWithName();
-	// Inits for histograms
+	// Call configs. First element is config name and second one is config values.
+	std::unordered_map<std::string, CppConfigDictionary> plotConfigList = config.getSubConfig("ratio_distribution").getSubConfigSetWithName();
+	// Call histograms 
 	std::unordered_map<std::string, TH1D*> distributionSet;
+	// Set the information of histograms from config file
 	for ( const auto& plotConfig : plotConfigList ) {
+		// Plot name is config name. It isn't value of "name" key.
 		std::string plotName = plotConfig.second.find("name");
+		// Set plot title and x, y label.
 		TString plotTitle = plotConfig.second.hasKey("title") ? plotConfig.second.find("title") : "";
 		TString plotXTitle = plotConfig.second.hasKey("x_title") ? plotConfig.second.find("x_title") : "";
 		TString plotYTitle = plotConfig.second.hasKey("y_title") ? plotConfig.second.find("y_title") : "";
+		// Set number of bin and min and max of x-direction range.
 		Int_t plotNBin = plotConfig.second.hasKey("n_bin") ? stoi(plotConfig.second.find("n_bin")) : 100;
 		Float_t plotXMin = plotConfig.second.hasKey("x_min") ? stof(plotConfig.second.find("x_min")) : 0.;
 		Float_t plotXMax = plotConfig.second.hasKey("x_max") ? stof(plotConfig.second.find("x_max")) : 1.;
 
+		// Add histograms to map.
 		distributionSet.insert_or_assign(plotConfig.first, new TH1D(static_cast<TString>(plotName), plotTitle + "; " + plotXTitle + "; " + plotYTitle, plotNBin, plotXMin, plotXMax));
 	}
 
 	ProgressBar pBar(mNTotalShapeSet.find(std::string(typeName))->second);
 	for ( const TClusterShape* clusterShape : mClusterShapeSet.find(std::string(typeName))->second ) {
+		// Get cluster size.
 		int clusterSize = clusterShape->getClusterSize();
-
+		if ( clusterSize < stoi(config.getSubConfig("ratio_distribution").find("cluster_size_oi_min")) || clusterSize > stoi(config.getSubConfig("ratio_distribution").find("cluster_size_oi_max")) ) {
+			continue;
+		}
+		// Initialize canvas.
 		TCanvas* canvas = new TCanvas(Form("shapeEntry%d", clusterSize), "shapeEntry", 2500, 1000);
 		// int binNum = clusterShape->getClusterShapeInfos().size();
-		TGraph* distribution = new TGraph();
+		TGraph* areaRatioGraph = new TGraph();
 		TGraph* radiusRatioGraph = new TGraph();
 
 		int iShape = 0;
-		TH1D* areaDistributionWithSize = new TH1D(Form("dist5_%d", clusterSize), Form("Area Ratio Distribution of cluster size %d", clusterSize), 101, 0, 1.01);
-		TH1D* areaWithEntryDistributionWithSize = new TH1D(Form("dist6_%d", clusterSize), Form("Area Ratio With Entry Distribution of cluster size %d", clusterSize), 101, 0, 1.01);
-		TH1D* radiusDistributionWithSize = new TH1D(Form("dist7_%d", clusterSize), Form("Radius Ratio Distribution of cluster size %d", clusterSize), 101, 0, 1.01);
-		TH1D* radiusWithEntryDistributionWithSize = new TH1D(Form("dist8_%d", clusterSize), Form("Radius Ratio With Entry Distribution of cluster size %d", clusterSize), 101, 0, 1.01);
-
 		for ( const TShapeInfo& shapeInfo : clusterShape->getClusterShapeInfos() ) {
-			pBar.printProgress();
-
+			// pBar.printProgress();
 			for ( const auto& plotConfig : plotConfigList ) {
-				std::cout << plotConfig.second.find("name") << std::endl;
 				if ( plotConfig.second.find("name") == "area_ratio" ) {
 					distributionSet.find(plotConfig.first)->second->Fill(static_cast<double>(clusterSize) / calNIncludePixel(shapeInfo.mClusterMatrix));
 				}
@@ -262,76 +292,52 @@ void TClusterShapeAnalyser::saveSameSizeInfos(std::string_view typeName, const C
 				}
 			}
 
-			distribution->SetPoint(iShape, iShape, static_cast<double>(clusterSize) / calNIncludePixel(shapeInfo.mClusterMatrix));
+			areaRatioGraph->SetPoint(iShape, iShape, static_cast<double>(clusterSize) / calNIncludePixel(shapeInfo.mClusterMatrix));
 			radiusRatioGraph->SetPoint(iShape, iShape, calRatioOfRadius(shapeInfo.mClusterMatrix));
-
-			areaDistributionWithSize->Fill(static_cast<double>(clusterSize) / calNIncludePixel(shapeInfo.mClusterMatrix));
-			areaWithEntryDistributionWithSize->Fill(static_cast<double>(clusterSize) / calNIncludePixel(shapeInfo.mClusterMatrix), shapeInfo.mEntry);
-			radiusDistributionWithSize->Fill(calRatioOfRadius(shapeInfo.mClusterMatrix));
-			radiusWithEntryDistributionWithSize->Fill(calRatioOfRadius(shapeInfo.mClusterMatrix), shapeInfo.mEntry);
-
+			// std::cout << clusterSize << "\t" << iShape << "\t" << static_cast<double>(clusterSize) / calNIncludePixel(shapeInfo.mClusterMatrix) << "\t" << calRatioOfRadius(shapeInfo.mClusterMatrix) << "\t" << shapeInfo.mEntry << std::endl;
 			iShape++;
 		}
 		TF1* line1 = new TF1("line1", "0.8", 0, iShape);
 		TF1* line2 = new TF1("line2", "0.5", 0, iShape);
-		distribution->SetTitle(Form("Informations for cluster shapes in cluster size %d", clusterSize));
-		distribution->GetXaxis()->SetTitle("i-th cluster shape");
-		distribution->GetXaxis()->SetTitleOffset(1.4);
-		distribution->GetXaxis()->SetLabelOffset(0.003);
-		distribution->GetYaxis()->SetTitle("Ratio");
-		distribution->GetYaxis()->SetTitleOffset(0.7);
-		distribution->SetMarkerStyle(45);
-		distribution->SetMarkerSize(4);
-		distribution->SetMarkerColor(kRed);
-		distribution->SetMaximum(1);
-		distribution->SetMinimum(0);
-		distribution->Draw("AP");
+
+		areaRatioGraph->SetTitle(Form("Informations for cluster shapes in cluster size %d", clusterSize));
+		areaRatioGraph->GetXaxis()->SetTitle("i-th cluster shape");
+		areaRatioGraph->GetXaxis()->SetTitleOffset(1.4);
+		areaRatioGraph->GetXaxis()->SetLabelOffset(0.003);
+		areaRatioGraph->GetYaxis()->SetTitle("Ratio");
+		areaRatioGraph->GetYaxis()->SetTitleOffset(0.7);
+		areaRatioGraph->SetMarkerStyle(45);
+		areaRatioGraph->SetMarkerSize(4);
+		areaRatioGraph->SetMarkerColor(kRed);
+		areaRatioGraph->SetMaximum(1);
+		areaRatioGraph->SetMinimum(0);
+		areaRatioGraph->Draw("AP");
 		radiusRatioGraph->SetMarkerStyle(41);
 		radiusRatioGraph->SetMarkerSize(4);
 		radiusRatioGraph->SetMarkerColor(kBlue);
 		radiusRatioGraph->Draw("P");
 		mExpSettingLegend->Draw("SAME");
 		line1->SetLineColor(kPink + 2);
-		line1->Draw("SAME");
+		// line1->Draw("SAME");
 		line2->SetLineColor(kCyan - 7);
-		line2->Draw("SAME");
+		// line2->Draw("SAME");
 		TLegend* legend = new TLegend(.78, .7, .98, .92);
 		legend->SetHeader("Ratios", "c");
-		legend->AddEntry(distribution, "Pixels / Full pixels", "p");
+		legend->AddEntry(areaRatioGraph, "Pixels / Full pixels", "p");
 		legend->AddEntry(radiusRatioGraph, "Short radius / Long radius", "p");
 		legend->Draw();
 		canvas->SetMargin(.07, .28, .12, .08);
-		std::filesystem::path file = filePath.parent_path() / (filePath.stem().string() + "_" + std::to_string(clusterSize) + filePath.extension().string());
-		// canvas->SaveAs(static_cast<TString>(file));
+		std::filesystem::path file = filePath;
 
-		TCanvas* canvas6 = new TCanvas(Form("canvas6_%d", clusterSize), "", 2000, 1000);
-		areaDistributionWithSize->SetStats(0);
-		areaDistributionWithSize->Draw();
-		std::filesystem::path file6 = filePath.parent_path() / (filePath.stem().string() + "_area_" + std::to_string(clusterSize) + filePath.extension().string());
-		// canvas6->SaveAs(static_cast<TString>(file6));
+		file /= config.getSubConfig("graphs").find("filename") + "_" + std::to_string(clusterSize);
+		file.replace_extension(config.find("extension"));
 
-		TCanvas* canvas7 = new TCanvas(Form("canvas7_%d", clusterSize), "", 2000, 1000);
-		areaWithEntryDistributionWithSize->SetStats(0);
-		areaWithEntryDistributionWithSize->Draw("HIST");
-		std::filesystem::path file7 = filePath.parent_path() / (filePath.stem().string() + "_area_with_entry_" + std::to_string(clusterSize) + filePath.extension().string());
-		canvas7->SetLogy();
-		// canvas7->SaveAs(static_cast<TString>(file7));
+		canvas->SaveAs(static_cast<TString>(file));
 
-		TCanvas* canvas8 = new TCanvas(Form("canvas8_%d", clusterSize), "", 2000, 1000);
-		radiusDistributionWithSize->SetStats(0);
-		radiusDistributionWithSize->Draw();
-		std::filesystem::path file8 = filePath.parent_path() / (filePath.stem().string() + "_radius_" + std::to_string(clusterSize) + filePath.extension().string());
-		// canvas8->SaveAs(static_cast<TString>(file8));
-
-
-		TCanvas* canvas9 = new TCanvas(Form("canvas9_%d", clusterSize), "", 2000, 1000);
-		radiusWithEntryDistributionWithSize->SetStats(0);
-		radiusWithEntryDistributionWithSize->Draw("HIST");
-		std::filesystem::path file9 = filePath.parent_path() / (filePath.stem().string() + "_radius_with_entry_" + std::to_string(clusterSize) + filePath.extension().string());
-		canvas9->SetLogy();
-		// canvas9->SaveAs(static_cast<TString>(file9));
-
-		delete distribution;
+		delete line1;
+		delete line2;
+		delete areaRatioGraph;
+		delete radiusRatioGraph;
 		delete canvas;
 	}
 
@@ -353,45 +359,20 @@ void TClusterShapeAnalyser::saveSameSizeInfos(std::string_view typeName, const C
 		file /= plotConfig.second.find("filename");
 		file.replace_extension(config.find("extension"));
 		canvas->SaveAs(static_cast<TString>(file));
+
+		delete canvas;
+		canvas = nullptr;
 	}
-
-	// TCanvas* canvas2 = new TCanvas("canvas2", "", 2000, 1000);
-	// areaDistribution->SetStats(0);
-	// areaDistribution->SetMaximum(100);
-	// areaDistribution->Draw();
-	// std::filesystem::path file2 = filePath.parent_path() / (filePath.stem().string() + "_area" + filePath.extension().string());
-	// canvas2->SaveAs(static_cast<TString>(file2));
-
-	// TCanvas* canvas3 = new TCanvas("canvas3", "", 2000, 1000);
-	// areaWithEntryDistribution->SetStats(0);
-	// areaWithEntryDistribution->SetMaximum(300000);
-	// areaWithEntryDistribution->Draw("HIST");
-	// std::filesystem::path file3 = filePath.parent_path() / (filePath.stem().string() + "_area_with_entry" + filePath.extension().string());
-	// canvas3->SetLogy();
-	// canvas3->SaveAs(static_cast<TString>(file3));
-
-	// TCanvas* canvas4 = new TCanvas("canvas4", "", 2000, 1000);
-	// radiusDistribution->SetStats(0);
-	// radiusDistribution->SetMaximum(50);
-	// radiusDistribution->Draw();
-	// std::filesystem::path file4 = filePath.parent_path() / (filePath.stem().string() + "_radius" + filePath.extension().string());
-	// canvas4->SaveAs(static_cast<TString>(file4));
-
-	// TCanvas* canvas5 = new TCanvas("canvas5", "", 2000, 1000);
-	// radiusWithEntryDistribution->SetStats(0);
-	// radiusWithEntryDistribution->SetMaximum(50000);
-	// radiusWithEntryDistribution->Draw("HIST");
-	// std::filesystem::path file5 = filePath.parent_path() / (filePath.stem().string() + "_radius_with_entry" + filePath.extension().string());
-	// canvas5->SetLogy();
-	// canvas5->SaveAs(static_cast<TString>(file5));
-
 }
 
 void TClusterShapeAnalyser::saveSameSizeShapes(std::string_view typeName, const CppConfigDictionary config) {
 	std::cout << "Generating " << "\033[1;32m" << "Shapes with same sized" << "\033[1;0m" << "..." << std::endl;
 
-	std::filesystem::path filePath(config.find("file_path"));
-	std::filesystem::create_directories(filePath.parent_path());
+	std::filesystem::path filePath(config.find("output_path"));
+	if ( config.hasKey("subdirectory") ) {
+		filePath /= config.find("subdirectory");
+	}
+	std::filesystem::create_directories(filePath);
 
 	int nTotalShape = mNTotalShapeSet.find(std::string(typeName))->second;
 
@@ -410,6 +391,11 @@ void TClusterShapeAnalyser::saveSameSizeShapes(std::string_view typeName, const 
 		TCanvas* canvas = new TCanvas(Form("shapes%d", clusterSize), "", plotsWidth, plotsHeight + nominalHeader);
 
 		int iClusterShape = 0;
+
+		std::vector<TPad*> padSet;
+		std::vector<TLine*> lineSet;
+		std::vector<TText*> textSet;
+
 		for ( const TShapeInfo& shapeInfo : clusterShape->getClusterShapeInfos() ) {
 			pBar.printProgress();
 
@@ -431,6 +417,7 @@ void TClusterShapeAnalyser::saveSameSizeShapes(std::string_view typeName, const 
 			shapeInfo.mClusterMap->GetYaxis()->SetAxisColor(0);
 			shapeInfo.mClusterMap->Draw("col");
 			pad->SetFrameLineWidth(0);
+			padSet.push_back(pad);
 
 			TLine* line = new TLine();
 			line->SetLineColorAlpha(kRed, 6. / 8);
@@ -448,6 +435,7 @@ void TClusterShapeAnalyser::saveSameSizeShapes(std::string_view typeName, const 
 					}
 				}
 			}
+			lineSet.push_back(line);
 
 			TText* numberingText = new TText(padCenterX, padCenterY, Form("%d", iClusterShape));
 			numberingText->SetNDC();
@@ -457,6 +445,7 @@ void TClusterShapeAnalyser::saveSameSizeShapes(std::string_view typeName, const 
 
 			canvas->cd();
 			numberingText->Draw();
+			textSet.push_back(numberingText);
 			iClusterShape++;
 		}
 		TText* titleText = new TText(.5, 1. - .5 * nominalHeader / (nominalHeader + plotsHeight), Form("Cluster shapes with cluster size %d", clusterSize));
@@ -464,16 +453,42 @@ void TClusterShapeAnalyser::saveSameSizeShapes(std::string_view typeName, const 
 		titleText->SetTextAlign(22);
 		titleText->SetNDC();
 		titleText->Draw();
-		std::filesystem::path file = filePath.parent_path() / (filePath.stem().string() + "_" + std::to_string(clusterSize) + filePath.extension().string());
+		std::filesystem::path file = filePath / (config.find("filename") + "_" + std::to_string(clusterSize));
+		file.replace_extension(config.find("extension"));
 		canvas->SaveAs(static_cast<TString>(file));
+
+		delete titleText;
+		titleText = nullptr;
+
+		for ( TPad* pad : padSet ) {
+			delete pad;
+			pad = nullptr;
+		}
+
+		for ( TLine* line : lineSet ) {
+			delete line;
+			line = nullptr;
+		}
+
+		for ( TText* text : textSet ) {
+			delete text;
+			text = nullptr;
+		}
+
+		delete canvas;
+		canvas = nullptr;
 	}
 }
 
 void TClusterShapeAnalyser::saveTotalShapes(std::string_view typeName, const CppConfigDictionary config) {
+	// Print log
 	std::cout << "Generating \033[1;32mTotal shapes\033[1;0m..." << std::endl;
 
-	std::filesystem::path filePath(config.find("file_path"));
-	std::filesystem::create_directories(filePath.parent_path());
+	std::filesystem::path filePath(config.find("output_path"));
+	if ( config.hasKey("subdirectory") ) {
+		filePath /= config.find("subdirectory");
+	}
+	std::filesystem::create_directories(filePath);
 
 	int nWidth = mMaxModeSet.find(std::string(typeName))->second;
 	int nHeight = mClusterShapeSet.find(std::string(typeName))->second.size();
@@ -485,24 +500,31 @@ void TClusterShapeAnalyser::saveTotalShapes(std::string_view typeName, const Cpp
 	int plotsHeight = nHeight * nominalWidth;
 	TCanvas* canvas = new TCanvas("tShape", "cluster shape", plotsWidth + nominalHeader, plotsHeight + nominalHeader);
 	int iClusterSize = 0;
-	ProgressBar* pBar = new ProgressBar(mNTotalShapeSet.find(std::string(typeName))->second);
+	std::vector<TPad*> padSet;
+	std::vector<TLine*> lineSet;
+	std::vector<TText*> textSet;
+
+	ProgressBar pBar(mNTotalShapeSet.find(std::string(typeName))->second);
 	for ( const TClusterShape* clusterShape : mClusterShapeSet.find(std::string(typeName))->second ) {
 		int clusterSize = clusterShape->getClusterSize();
 		int iClusterShape = 0;
 		for ( const TShapeInfo& shapeInfo : clusterShape->getClusterShapeInfos() ) {
-			pBar->printProgress();
+			pBar.printProgress();
 			int width = shapeInfo.mClusterMap->GetNbinsX();
 			int height = shapeInfo.mClusterMap->GetNbinsY();
 
 			TPad* pad = new TPad(Form("pad%d_%d", iClusterSize, iClusterShape), "pad", (double) nominalHeader / (plotsWidth + nominalHeader) + ((double) plotsWidth / (plotsWidth + nominalHeader)) * ((double) iClusterShape / nWidth), ((double) plotsHeight / (plotsHeight + nominalHeader)) * (((double) nHeight - iClusterSize - 1) / nHeight), (double) nominalHeader / (plotsWidth + nominalHeader) + ((double) plotsWidth / (plotsWidth + nominalHeader)) * (double) (iClusterShape + 1) / nWidth, ((double) plotsHeight / (plotsHeight + nominalHeader)) * (((double) nHeight - iClusterSize) / nHeight), -1, 1);
+			padSet.push_back(pad);
 			pad->Draw();
 			pad->cd();
 			pad->SetMargin(0., 0., .5 * (1. - (double) height / width), .5 * (1. - (double) height / width));
+
 			shapeInfo.mClusterMap->Draw();
 			shapeInfo.mClusterMap->SetDrawOption("COL");
 			shapeInfo.mClusterMap->GetXaxis()->SetAxisColor(0);
 			shapeInfo.mClusterMap->GetYaxis()->SetAxisColor(0);
 			TLine* line = new TLine();
+			lineSet.push_back(line);
 			line->SetLineColorAlpha(kRed, 6. / 8);
 			for ( int i = 1; i <= shapeInfo.mClusterMap->GetNbinsX(); ++i ) {
 				for ( int j = 1; j <= shapeInfo.mClusterMap->GetNbinsY(); ++j ) {
@@ -521,6 +543,7 @@ void TClusterShapeAnalyser::saveTotalShapes(std::string_view typeName, const Cpp
 			pad->SetFrameLineWidth(0);
 			canvas->cd();
 			TText* numberingText = new TText((double) nominalHeader / (plotsWidth + nominalHeader) + ((double) plotsWidth / (plotsWidth + nominalHeader)) * (((double) iClusterShape + .5) / nWidth), ((double) plotsHeight / (plotsHeight + nominalHeader)) * (((double) nHeight - iClusterSize) / nHeight), Form("%d", shapeInfo.mEntry));
+			textSet.push_back(numberingText);
 			numberingText->SetNDC();
 			numberingText->SetTextAlign(22);
 			numberingText->SetTextSize(.4 * nominalWidth / (plotsHeight + nominalHeader));
@@ -529,6 +552,7 @@ void TClusterShapeAnalyser::saveTotalShapes(std::string_view typeName, const Cpp
 			iClusterShape++;
 		}
 		TText* sizeText = new TText((double) nominalHeader * .5 / (nominalHeader + plotsWidth), ((double) plotsHeight / (plotsHeight + nominalHeader)) * (((double) nHeight - iClusterSize - .5) / nHeight), Form("%d", clusterSize));
+		textSet.push_back(sizeText);
 		sizeText->SetNDC();
 		sizeText->SetTextAlign(22);
 		sizeText->SetTextSize(.6 * nominalWidth / (plotsHeight + nominalHeader));
@@ -536,24 +560,46 @@ void TClusterShapeAnalyser::saveTotalShapes(std::string_view typeName, const Cpp
 		sizeText->Draw();
 		iClusterSize++;
 	}
-	delete pBar;
 	TText* titleText = new TText(.5, 1. - .5 * nominalHeader / (nominalHeader + plotsHeight), static_cast<TString>("Total Cluster Shapes"));
 	titleText->SetTextSize(.8 * nominalHeader / (plotsHeight + nominalHeader));
 	titleText->SetTextAlign(22);
 	titleText->SetNDC();
 	titleText->Draw();
 
-	canvas->SaveAs(static_cast<TString>(filePath));
+	std::filesystem::path file = filePath / config.find("filename");
+	file.replace_extension(config.find("extension"));
+	canvas->SaveAs(static_cast<TString>(file));
 
 	delete titleText;
+	titleText = nullptr;
+
+	for ( TPad* pad : padSet ) {
+		delete pad;
+		pad = nullptr;
+	}
+
+	for ( TLine* line : lineSet ) {
+		delete line;
+		line = nullptr;
+	}
+
+	for ( TText* text : textSet ) {
+		delete text;
+		text = nullptr;
+	}
+
 	delete canvas;
+	canvas = nullptr;
 }
 
 void TClusterShapeAnalyser::saveSameSizeShapeEntry(std::string_view typeName, const CppConfigDictionary config) {
 	std::cout << "Generating \033[1;32mEntry of shapes with same size\033[1;0m..." << std::endl;
 
-	std::filesystem::path filePath(config.find("file_path"));
-	std::filesystem::create_directories(filePath.parent_path());
+	std::filesystem::path filePath(config.find("output_path"));
+	if ( config.hasKey("subdirectory") ) {
+		filePath /= config.find("subdirectory");
+	}
+	std::filesystem::create_directories(filePath);
 
 	ProgressBar pBar(mNTotalShapeSet.find(std::string(typeName))->second);
 	for ( const TClusterShape* clusterShape : mClusterShapeSet.find(std::string(typeName))->second ) {
@@ -576,8 +622,11 @@ void TClusterShapeAnalyser::saveSameSizeShapeEntry(std::string_view typeName, co
 		distribution->Draw("HIST");
 		mExpSettingLegend->Draw("SAME");
 		canvas->SetMargin(.07, .28, .12, .08);
-		std::filesystem::path file = filePath.parent_path() / (filePath.stem().string() + "_" + std::to_string(clusterSize) + filePath.extension().string());
+
+		std::filesystem::path file = filePath / (config.find("filename") + "_" + std::to_string(clusterSize));
+		file.replace_extension(config.find("extension"));
 		canvas->SaveAs(static_cast<TString>(file));
+
 		delete distribution;
 		delete canvas;
 	}
@@ -585,8 +634,13 @@ void TClusterShapeAnalyser::saveSameSizeShapeEntry(std::string_view typeName, co
 
 void TClusterShapeAnalyser::saveTotalShapeEntry(std::string_view typeName, const CppConfigDictionary config) {
 	std::cout << "Generating \033[1;32mEntry of total shapes\033[1;0m..." << std::endl;
-	std::filesystem::path filePath(config.find("file_path"));
-	std::filesystem::create_directories(filePath.parent_path());
+
+	std::filesystem::path filePath(config.find("output_path"));
+	if ( config.hasKey("subdirectory") ) {
+		filePath /= config.find("subdirectory");
+	}
+	std::filesystem::create_directories(filePath);
+
 	int nXbin = 0;
 	int nYbin = 0;
 	for ( const TClusterShape* clusterShape : mClusterShapeSet.find(std::string(typeName))->second ) {
@@ -612,19 +666,25 @@ void TClusterShapeAnalyser::saveTotalShapeEntry(std::string_view typeName, const
 	for ( int iYbin = 1; iYbin < distribution->GetNbinsY(); ++(++iYbin) ) {
 		distribution->GetYaxis()->SetBinLabel(iYbin, Form("%g", floor(-1 * distribution->GetYaxis()->GetBinLowEdge(iYbin))));
 	}
+
 	distribution->SetStats(0);
 	if ( config.hasKey("options") ) {
-		for ( const std::string& optionName : config.getValueList() ) {
+		for ( const std::string& optionName : config.getSubConfig("options").getValueList() ) {
 			distribution->Draw(static_cast<TString>(optionName));
 			canvas->SetPhi(10);
 			canvas->SetTheta(25);
 			canvas->SetLogz();
-			std::filesystem::path file = filePath.parent_path() / (filePath.stem().string() + "_" + optionName + filePath.extension().string());
+			std::filesystem::path file = filePath;
+			file /= (config.find("filename") + "_" + optionName);
+			file.replace_extension(config.find("extension"));
 			canvas->SaveAs(static_cast<TString>(file));
 		}
 	} else {
 		distribution->Draw();
-		canvas->SaveAs(static_cast<TString>(filePath));
+		std::filesystem::path file = filePath;
+		file /= config.find("filename");
+		file.replace_extension(config.find("extension"));
+		canvas->SaveAs(static_cast<TString>(file));
 	}
 
 	delete distribution;

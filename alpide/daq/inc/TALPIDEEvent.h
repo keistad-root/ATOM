@@ -34,6 +34,8 @@ public:
 	void removeDuplication();
 	void sortPixel();
 
+	const int getNData() const;
+
 private:
 	unsigned int fBits;
 public:

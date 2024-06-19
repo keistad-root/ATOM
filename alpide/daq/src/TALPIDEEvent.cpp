@@ -83,3 +83,7 @@ void TALPIDEEvent::sortPixel() {
 		return a.first < b.first;  // If the first elements are equal, sort by second element in ascending order
 			  });
 }
+
+const int TALPIDEEvent::getNData() const {
+	return data.size();
+}

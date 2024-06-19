@@ -118,23 +118,39 @@ void TGraphCompare::TCompareClusterSize(std::string_view typeName, const CppConf
 
 			isFirst = false;
 		}
-		Float_t scaleFactor = stof(plotConfigList.find(distribution.first)->second.find("scale"));
-		distribution.second->Scale(scaleFactor);
 
-		int nEntry = 0;
+		double nEntry = 0;
 		int csMin = stoi(config.find("cluster_size_of_interest_min"));
 		int csMax = stoi(config.find("cluster_size_of_interest_max"));
-		for ( int clusterSize = csMin; clusterSize < csMax + 1; clusterSize++ ) {
-			nEntry += distribution.second->GetBinContent(clusterSize);
-		}
+
 		for ( int clusterSize = 1; clusterSize < 81; clusterSize++ ) {
 			if ( clusterSize < csMin || clusterSize > csMax ) {
 				distribution.second->SetBinContent(clusterSize, 0);
 			}
 		}
 
+		if ( config.hasKey("normalization") && (config.find("normalization") == "true") ) {
+			distribution.second->Scale(1. / nEntry);
+		} else if ( plotConfigList.find(distribution.first)->second.hasKey("scale") ) {
+			Float_t scaleFactor = stof(plotConfigList.find(distribution.first)->second.find("scale"));
+			distribution.second->Scale(scaleFactor);
+		}
+
+
+		for ( int clusterSize = csMin; clusterSize < csMax + 1; clusterSize++ ) {
+			nEntry += distribution.second->GetBinContent(clusterSize);
+		}
 		TString legendTitle = plotConfigList.find(distribution.first)->second.find("legend_title");
-		legend->AddEntry(distribution.second, legendTitle + "(" + std::to_string(nEntry) + " in " + std::to_string(csMin) + " ~ " + std::to_string(csMax) + ")", "l");
+		TString strEntry = Form("%.2f", round(nEntry * 100) / 100.);
+		if ( plotConfigList.find(distribution.first)->second.hasKey("scale_error_max") ) {
+			TString strEntryPlus = Form("%.2f", abs(round(nEntry * (stof(plotConfigList.find(distribution.first)->second.find("scale_error_max")) - 1) * 100) / 100.));
+			TString strEntryMinus = Form("%.2f", abs(round(nEntry * (1 - stof(plotConfigList.find(distribution.first)->second.find("scale_error_min"))) * 100) / 100.));
+			legend->AddEntry(distribution.second, legendTitle + "(" + strEntry + "+" + strEntryPlus + "-" + strEntryMinus + " in " + std::to_string(csMin) + " ~ " + std::to_string(csMax) + ")", "l");
+		} else {
+			Float_t scaleFactor = stof(plotConfigList.find(distribution.first)->second.find("scale"));
+			TString strError = Form("%.2f", sqrt(nEntry * scaleFactor));
+			legend->AddEntry(distribution.second, legendTitle + "(" + strEntry + char(0x00B1) + strError + " in " + std::to_string(csMin) + " ~ " + std::to_string(csMax) + ")", "l");
+		}
 
 		TString title = config.find("title");
 		TString xTitle = config.find("x_title");
@@ -142,105 +158,35 @@ void TGraphCompare::TCompareClusterSize(std::string_view typeName, const CppConf
 
 		distribution.second->SetMinimum(stof(config.find("y_min")));
 		distribution.second->SetMaximum(stof(config.find("y_max")));
-		distribution.second->GetXaxis()->SetRangeUser(csMin - 1.5, csMax + .5);
+		distribution.second->GetXaxis()->SetRangeUser(csMin - .5, csMax + .5);
 		distribution.second->SetTitle(title + "; " + xTitle + "; " + yTitle);
 		distribution.second->SetLineColor(getColor(plotConfigList.find(distribution.first)->second.find("line_color")));
+
+		Float_t lineWidth = config.hasKey("line_width") ? stof(config.find("line_width")) : 1.;
+		distribution.second->SetLineWidth(lineWidth);
+
 		distribution.second->SetStats(0);
 		distribution.second->Draw("SAME HISTE");
+		if ( plotConfigList.find(distribution.first)->second.hasKey("scale_error_max") ) {
+			TGraphAsymmErrors* systemGraph = new TGraphAsymmErrors();
+			for ( int clusterSize = csMin; clusterSize < csMax + 1; clusterSize++ ) {
+				systemGraph->SetPoint(clusterSize, clusterSize, distribution.second->GetBinContent(clusterSize));
+				systemGraph->SetPointError(clusterSize, .5, .5, distribution.second->GetBinContent(clusterSize) * (1 - stof(plotConfigList.find(distribution.first)->second.find("scale_error_min"))), distribution.second->GetBinContent(clusterSize) * (stof(plotConfigList.find(distribution.first)->second.find("scale_error_max")) - 1));
+			}
+			Float_t alpha = stof(config.find("error_box_alpha"));
+			systemGraph->SetFillColorAlpha(getColor(plotConfigList.find(distribution.first)->second.find("line_color")), alpha);
+			systemGraph->Draw("SAME E2");
+		}
 	}
 
 	legend->Draw();
-	canvas->SetLogy();
+	if ( config.hasKey("logy") && (config.find("logy") == "true") ) {
+		canvas->SetLogy();
+	}
 	std::filesystem::path outputPath(config.find("output_path"));
+	std::filesystem::create_directories(outputPath);
 	outputPath /= config.find("name");
 	outputPath.replace_extension(config.find("extension"));
 
 	canvas->SaveAs(static_cast<TString>(outputPath));
 }
-
-// void TGraphCompare::TCompareClusterSizeRatio(std::string_view typeName, const CppConfigDictionary config) {
-// 	TString canvasName = "can_mcs";
-
-
-// 	TCanvas* canvas = new TCanvas("Multi Cluster Size", "", 2000, 1000);
-// 	int colorIndex = 0;
-// 	TLegend* legend = new TLegend(0.5, 0.6, 0.9, 0.9);
-// 	legend->SetHeader(static_cast<TString>(config.find("legend")), "c");
-// 	int legend_divide = stoi(config.find("legend_divide"));
-// 	legend->SetNColumns(legend_divide);
-// 	double maximum = 0;
-// 	std::map<std::string, TH1D*> histSet;
-// 	TH1D* firstHist;
-// 	TH1D* criteriaHist;
-// 	bool isFirst = true;
-// 	for ( TGraphObjects& graphObject : mGraphObjectSet ) {
-// 		histSet.insert_or_assign(graphObject.name, graphObject.getClustersizeHistogram(std::string(typeName) + "/clustersize", mGraphFileSet));
-// 	}
-// 	for ( const auto& clusterSize : histSet ) {
-// 		if ( isFirst ) {
-// 			criteriaHist = clusterSize.second;
-// 		}
-// 		TH1D* hist1 = clusterSize.second;
-// 		TH1D* hist = new TH1D(*hist1);
-// 		if ( isFirst ) {
-// 			firstHist = hist;
-// 			isFirst = false;
-// 		}
-// 		hist->Divide(criteriaHist);
-// 		hist->SetTitle(static_cast<TString>(config.find("plot_title")));
-// 		for ( TGraphObjects& graphObject : mGraphObjectSet ) {
-// 			if ( graphObject.name == clusterSize.first ) {
-// 				hist->Scale(graphObject.weighting);
-// 			}
-// 		}
-// 		hist->SetStats(0);
-// 		maximum = hist->GetMaximum() > maximum ? hist->GetMaximum() : maximum;
-// 		int entry = 0;
-// 		for ( int i = 0; i < 35; i++ ) {
-// 			entry += hist->GetBinContent(i);
-// 		}
-// 		for ( TGraphObjects& graphObject : mGraphObjectSet ) {
-// 			if ( graphObject.name == clusterSize.first ) {
-// 				legend->AddEntry(hist, static_cast<TString>(graphObject.legend + "(" + std::to_string(entry) + " in 0 ~ 35)"), "l");
-// 			}
-// 		}
-// 		hist->SetLineColorAlpha(getColor(colorIndex), .9);
-// 		hist->SetLineWidth(2);
-// 		hist->Draw("SAME");
-// 		colorIndex++;
-// 	}
-// 	firstHist->SetMaximum(1000);
-// 	firstHist->SetMinimum(0.1);
-// 	legend->Draw();
-// 	canvas->SetLogy();
-// 	std::filesystem::path outputPath(config.find("file_path"));
-// 	canvas->SaveAs(static_cast<TString>(outputPath));
-// }
-
-// void TGraphCompare::TCompareClusterSize3D(std::string_view typeName, const CppConfigDictionary config) {
-// 	TCanvas* canvas = new TCanvas("mcs3D", "", 3000, 2000);
-// 	int nBinX = mClusterSizeSet.size();
-// 	TH2D* clusterSizeCompare = new TH2D("clusterSizeCompare", "Cluster Size Distributions", nBinX, -nBinX - 2.5, -2.5, 60, -60.5, -0.5);
-// 	int index = 0;
-// 	for ( const auto& clusterSize : mClusterSizeSet ) {
-// 		const TH1D* distribution = clusterSize;
-// 		for ( int i = 0; i < distribution->GetEntries(); i++ ) {
-// 			clusterSizeCompare->Fill(-stoi(getGraphInfo(std::string(mGraphInfoSet[index]), config.find("legend"))), -i, distribution->GetBinContent(i));
-// 		}
-// 		index++;
-// 	}
-// 	for ( int iXbin = 1; iXbin < clusterSizeCompare->GetNbinsX(); ++iXbin ) {
-// 		clusterSizeCompare->GetXaxis()->SetBinLabel(iXbin, Form("%g", floor(-1 * clusterSizeCompare->GetXaxis()->GetBinLowEdge(iXbin))));
-// 	}
-// 	for ( int iYbin = 1; iYbin < clusterSizeCompare->GetNbinsY(); ++(++iYbin) ) {
-// 		clusterSizeCompare->GetYaxis()->SetBinLabel(iYbin, Form("%g", floor(-1 * clusterSizeCompare->GetYaxis()->GetBinLowEdge(iYbin))));
-// 	}
-// 	clusterSizeCompare->SetTitle(static_cast<TString>(config.find("plot_title")));
-// 	clusterSizeCompare->Draw("LEGO2");
-// 	clusterSizeCompare->SetStats(0);
-// 	canvas->SetPhi(85);
-// 	canvas->SetTheta(40);
-// 	canvas->SetLogz();
-// 	std::filesystem::path outputPath(config.find("file_path"));
-// 	canvas->SaveAs(static_cast<TString>(outputPath));
-// }

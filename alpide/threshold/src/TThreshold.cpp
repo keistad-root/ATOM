@@ -80,8 +80,8 @@ void TThreshold::calculateThreshold() {
 			count++;
 		}
 		if ( !quality ) {
-			std::cout << fitFunction->GetChisquare() / fitFunction->GetNDF() << std::endl;
-			savePlot();
+			// std::cout << fitFunction->GetChisquare() / fitFunction->GetNDF() << std::endl;
+			// savePlot();
 		}
 	}
 }
@@ -90,7 +90,7 @@ void TThreshold::savePlot() {
 	std::unique_ptr<TCanvas> can(new TCanvas("can", "can", 500, 500));
 	thresholdGraph->SetTitle(static_cast<TString>("Threshold Graph at " + std::to_string(mX) + ", " + std::to_string(mY) + "; ADC[$500 \times e^-$]; DAC[# of Fire]"));
 	thresholdGraph->Draw();
-	can->SaveAs(static_cast<TString>("data/" + std::to_string(mX) + "_" + std::to_string(mY) + ".png"));
+	// can->SaveAs(static_cast<TString>("data/" + std::to_string(mX) + "_" + std::to_string(mY) + ".png"));
 }
 
 const double TThreshold::getX() const {
