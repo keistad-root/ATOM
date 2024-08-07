@@ -9,8 +9,8 @@ int main(int argc, char** argv) {
 	controller.drawHitmap();
 	controller.clusterization();
 	controller.drawClustermapAndClustersize();
-	controller.doDivideBySize();
-	controller.drawClusterShapeInfos();
+	// controller.doDivideBySize();
+	// controller.drawClusterShapeInfos();
 
 	// clusterAnalyser.saveHitmapByClustersize(*config->getConfig("Clustermap"));
 

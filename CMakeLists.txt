@@ -104,8 +104,8 @@ message(STATUS "Geant4 Include Directory: ${Geant4_INCLUDE_DIR}")
 message(STATUS "Garfield Include Directory: ${Garfield_INCLUDE_DIR}")
 
 # Find header files and source files and store it as variable
-file(GLOB_RECURSE HEADERS RELATIVE ${PROJECT_SOURCE_DIR} alpide/*/inc/* apts/inc/* chip/inc/* geant4/*/inc/* pycpp/inc/* pycpp/config/inc/* simulation/inc/*)
-file(GLOB_RECURSE SOURCES RELATIVE ${PROJECT_SOURCE_DIR} alpide/*/src/* apts/src/* chip/src/* geant4/*/src/* pycpp/src/* pycpp/config/src/* simulation/src/*)
+file(GLOB_RECURSE HEADERS RELATIVE ${PROJECT_SOURCE_DIR} alpide/*/inc/* apts/inc/* chip/inc/* geant4/*/inc/* pycpp/inc/* pycpp/config/inc/* simulation/inc/* drawing_tool/inc/*)
+file(GLOB_RECURSE SOURCES RELATIVE ${PROJECT_SOURCE_DIR} alpide/*/src/* apts/src/* chip/src/* geant4/*/src/* pycpp/src/* pycpp/config/src/* simulation/src/* drawing_tool/src/*)
 
 message(${HEADERS})
 # file(GLOB_RECURSE HEADERS "${PROJECT_SOURCE_DIR}/include/*.h")

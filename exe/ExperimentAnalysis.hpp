@@ -88,7 +88,8 @@ void ControlExperimentAnalysis::setExpDataSet() {
 
 void ControlExperimentAnalysis::doBasicAnalysis() {
 	mAnalyser = new TAnalyser(mInputFile, mExpDataSet);
-	mAnalyser->storeEvents();
+	mConfig->getConfig("Masking").hasKey("time_stamp_cut");
+	mAnalyser->storeEvents(mConfig->getConfig("SharedProperty"));
 	mAnalyser->setExpSettingLegend(mConfig->getConfig("ExperimentSetting"));
 	if ( mConfig->getConfig("File").hasKey("output_graph") ) {
 		mAnalyser->openOutputGraphFile(mConfig->getConfig("File").find("output_graph"));

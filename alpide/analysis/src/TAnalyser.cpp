@@ -2,21 +2,32 @@
 
 #include "TAnalyser.h"
 
+/**
+ * @brief Construct a new TAnalyser::TAnalyser object
+ * @details It opens raw root file and 'hit' tree. And it matches branch name and address.
+ * @param inputFile
+ * @param expData
+*/
 TAnalyser::TAnalyser(TFile* inputFile, std::unordered_map<std::string, TExperimentData*> expData) : mInputFile(inputFile), mExpData(expData), fBits(kNotDeleted) {
-	std::filesystem::path inputPath = mInputFile->GetName();
-	std::clog << "TAnalyser object for \033[1;32m" << inputPath.stem() << "\033[0m is armed" << std::endl;
+	std::filesystem::path inputPath = mInputFile->GetName(); /** Getting File path */
+	std::clog << "TAnalyser object for \033[1;32m" << inputPath.stem() << "\033[0m is armed" << std::endl; /** It prints out the constructor message. It outputs the file name. */
+
+	/**
+	 * 'hit' tree is opened. And the branches are matched to each variables.
+	 */
 	mTree = openTree("hit");
 	mTree->SetBranchAddress("ChipID", &mInput.chipid);
 	mTree->SetBranchAddress("TimeStamp", &mInput.timeStamp);
 	mTree->SetBranchAddress("X", &mInput.x);
 	mTree->SetBranchAddress("Y", &mInput.y);
-	gErrorIgnoreLevel = kWarning;
+
+	gErrorIgnoreLevel = kWarning; /** It sets ignore level. */
 }
 
-TAnalyser::TAnalyser(const TAnalyser& copy) : mInputFile(copy.mInputFile), mTree(copy.mTree), mInput(copy.mInput), mOutputFile(copy.mOutputFile), mIsOutputGraph(copy.mIsOutputGraph), mExpSettingLegend(copy.mExpSettingLegend), mHitmaps(copy.mHitmaps), mDirectorySet(copy.mDirectorySet), mExpData(copy.mExpData), mDivideData(copy.mDivideData), fBits(kNotDeleted) {
-	std::clog << "Copy TAnalyser object is armed" << std::endl;
-}
-
+/**
+ * @brief Destroy the TAnalyser::TAnalyser object
+ * @todo The desctructors are commented out. It should be set.
+*/
 TAnalyser::~TAnalyser() {
 	if ( mOutputFile != nullptr && !mOutputFile->IsDestructed() ) {
 		mOutputFile->Close();
@@ -48,38 +59,68 @@ TAnalyser::~TAnalyser() {
 	std::clog << "TAnalyser object is terminated" << std::endl;
 }
 
+/**
+ * @brief open trees
+ *
+ * @param treeName
+ * @return TTree*
+*/
 TTree* TAnalyser::openTree(std::string treeName) {
-	if ( mInputFile->Get(static_cast<TString>(treeName)) == nullptr ) {
-		std::cerr << "TTree " << treeName << " isn't belong to TFile" << std::endl;
-		return nullptr;
-	} else if ( std::string(mInputFile->Get(static_cast<TString>(treeName))->ClassName()) != "TTree" ) {
-		std::cerr << "" << treeName << " isn't TTree" << std::endl;
-		return nullptr;
-	} else {
-		return (TTree*) mInputFile->Get(static_cast<TString>(treeName));
+	/**
+	 * @brief It determines the tree is belong to TFile. If it exists, then this function return TTree.
+	 * @date 05/08/2024
+	*/
+	try {
+		if ( mInputFile->Get(static_cast<TString>(treeName)) == nullptr ) throw(treeName);
+		else if ( std::string(mInputFile->Get(static_cast<TString>(treeName))->ClassName()) != "TTree" ) throw(treeName);
+		return static_cast<TTree*>(mInputFile->Get(static_cast<TString>(treeName)));
+	} catch ( std::string treeName ) {
+		std::cerr << "There are no " << treeName << "TTree in this TFile" << std::endl;
+		exit(1);
 	}
 }
 
+/**
+ * @brief Open ROOT file to save results graph.
+ *
+ * @param fileName
+*/
 void TAnalyser::openOutputGraphFile(std::string_view fileName) {
-	mOutputFile = new TFile(static_cast<TString>(fileName), "RECREATE");
-	mIsOutputGraph = true;
+	mOutputFile = new TFile(static_cast<TString>(fileName), "RECREATE"); /** Open output file */
+	mIsOutputGraph = true; /** Set control variable */
 }
 
+/**
+ * @brief Set the new directory to store graph root file.
+ *
+ * @param typeName
+*/
 void TAnalyser::openDirectory(std::string_view typeName) {
-	mOutputFile->cd();
-	TDirectory* directory = mOutputFile->mkdir(static_cast<TString>(typeName));
-	mDirectorySet.insert_or_assign(std::string(typeName), directory);
+	mOutputFile->cd(); /** Open graph root file */
+	TDirectory* directory = mOutputFile->mkdir(static_cast<TString>(typeName)); /** Make new directory */
+	mDirectorySet.insert_or_assign(std::string(typeName), directory); /** Save the directory into graph root file */
 }
 
-void TAnalyser::storeEvents() {
-	std::clog << "Storing Events..." << std::endl;
-	std::vector<TALPIDEEvent*> tempEvents;
-	UInt_t preTime = 0;
+/**
+ * @brief Extract event from TTree.
+ *
+ * @param config
+*/
+void TAnalyser::storeEvents(CppConfigDictionary config) {
+	std::clog << "Extracting Events..." << std::endl;
+
+	std::vector<TALPIDEEvent*> tempEvents; /** Array for 'TALPIDEEvent' class. The events extracted from TTree will be saved here. */
+	UInt_t preTime = 0; /** Variable for storing previous time. */
+
+	/** Store initial event to 'TALPIDEEvent' array. */
 	tempEvents.push_back(new TALPIDEEvent());
 	tempEvents.back()->setEvent(0);
 	tempEvents.back()->setTime(static_cast<long int>(0));
 
-	ProgressBar* pbar = new ProgressBar(mTree->GetEntries());
+	ProgressBar* pbar = new ProgressBar(mTree->GetEntries()); /** Open progress bar */
+
+	TH1I* timeStampHist = new TH1I("TSHist", "", 50001, 0, 50000);
+
 	for ( int entry = 0; entry < mTree->GetEntries(); entry++ ) {
 		pbar->printProgress();
 		mTree->GetEntry(entry);
@@ -88,8 +129,10 @@ void TAnalyser::storeEvents() {
 		} else {
 			tempEvents.back()->removeDuplication();
 			tempEvents.back()->sortPixel();
-			if ( tempEvents.back()->getNData() > 1000 ) {
-				tempEvents.pop_back();
+			if ( config.hasKey("time_stamp_cut") ) {
+				if ( tempEvents.back()->getNData() > stoi(config.find("time_stamp_cut")) ) {
+					tempEvents.pop_back();
+				}
 			}
 			tempEvents.push_back(new TALPIDEEvent());
 			tempEvents.back()->setEvent(mInput.timeStamp);
@@ -101,6 +144,31 @@ void TAnalyser::storeEvents() {
 	tempEvents.back()->removeDuplication();
 	tempEvents.back()->sortPixel();
 
+	for ( auto& event : tempEvents ) {
+		if ( event->getNData() > 200000 ) std::cout << event->getNData();
+		timeStampHist->SetBinContent(event->getEvent(), event->getNData());
+	}
+
+	TCanvas* can = new TCanvas("TSCanvas", "", 2000, 1000);
+	timeStampHist->Draw();
+	std::filesystem::path filePath(config.find("output_path"));
+	std::filesystem::create_directories(filePath);
+	std::filesystem::path file = filePath;
+	file /= "timeStamp.png";
+	can->SaveAs(static_cast<TString>(std::string(file)));
+
+	TH1D* timeStampHist2 = new TH1D("TSHist2", "", 1000, 0, 1000);
+	for ( int i = 0; i < 50000; i++ ) {
+		timeStampHist2->Fill(timeStampHist->GetBinContent(i));
+	}
+	TCanvas* can2 = new TCanvas("TSCanvas2", "", 2000, 1000);
+	timeStampHist2->Draw();
+	std::filesystem::path filePath2(config.find("output_path"));
+	std::filesystem::create_directories(filePath2);
+	std::filesystem::path file2 = filePath2;
+	file2 /= "timeStampHist.png";
+	can2->SetLogy();
+	can2->SaveAs(static_cast<TString>(std::string(file2)));
 	delete pbar;
 	std::clog << "The " << tempEvents.size() << " of events is extracted from " << mTree->GetEntries() << " stamps." << std::endl;
 	mExpData.find("Basic")->second->setEvents(std::move(tempEvents));
@@ -146,20 +214,23 @@ void TAnalyser::doMasking(int mMaskOver) {
 
 void TAnalyser::setExpSettingLegend(CppConfigDictionary settingConfig) {
 	mExpSettingLegend = new TPaveText(.78, .1, .981, .65, "NDC");
+	if ( settingConfig.hasKey("NTRG") ) {
+		mExpSettingLegend->AddText(static_cast<TString>("NTRG= " + settingConfig.find("NTRG")));
+	}
+	mExpSettingLegend->AddText(static_cast<TString>("NEVT= " + std::to_string(mExpData.find("Basic")->second->getEvents().size())));
+	if ( settingConfig.hasKey("THRESHOLD") ) {
+		mExpSettingLegend->AddText(static_cast<TString>("Threshold= " + settingConfig.find("THRESHOLD")));
+	}
+	if ( settingConfig.hasKey("COL_LENGTH") ) {
+		mExpSettingLegend->AddText(static_cast<TString>("Collimator Length = " + settingConfig.find("COL_LENGTH")));
+	}
+	if ( settingConfig.hasKey("COL_DIAMETER") ) {
+		mExpSettingLegend->AddText(static_cast<TString>("Collimator Diameter = " + settingConfig.find("COL_DIAMETER")));
+	}
+	if ( settingConfig.hasKey("AIR_PRESSURE") ) {
+		mExpSettingLegend->AddText(static_cast<TString>("Air Pressure = " + settingConfig.find("AIR_PRESSURE")));
+	}
 
-	mExpSettingLegend->AddText(static_cast<TString>("VRESETP=" + settingConfig.find("VRESETP") + ", VRESETD=" + settingConfig.find("VRESETD")));
-	mExpSettingLegend->AddText(static_cast<TString>("IRESET=" + settingConfig.find("IRESET")));
-	mExpSettingLegend->AddText(static_cast<TString>("VPULSEH=" + settingConfig.find("VPULSEH") + ", VPULSEL=" + settingConfig.find("VPULSEL")));
-	mExpSettingLegend->AddText(static_cast<TString>("VCASP=" + settingConfig.find("VCASP")));
-	mExpSettingLegend->AddText(static_cast<TString>("IBIAS=" + settingConfig.find("IBIAS") + ", IDB=" + settingConfig.find("IDB")));
-	mExpSettingLegend->AddText(static_cast<TString>("VCASN=" + settingConfig.find("VCASN") + ", VCASN2=" + settingConfig.find("VCASN2")));
-	mExpSettingLegend->AddText(static_cast<TString>("ITHR=" + settingConfig.find("ITHR")));
-	mExpSettingLegend->AddText(static_cast<TString>("VCLIP=" + settingConfig.find("VCLIP")));
-	mExpSettingLegend->AddText(static_cast<TString>("NTRIG=" + settingConfig.find("NTRIG")));
-	mExpSettingLegend->AddText(static_cast<TString>("PULSEDURATION=" + settingConfig.find("PULSEDURATION")));
-	mExpSettingLegend->AddText(static_cast<TString>("PULSEDELAY=" + settingConfig.find("PULSEDELAY")));
-	mExpSettingLegend->AddText(static_cast<TString>("STROBEDURATION=" + settingConfig.find("STROBEDURATION")));
-	mExpSettingLegend->AddText(static_cast<TString>("STROBEDELAYCHIP=" + settingConfig.find("STROBEDELAYCHIP")));
 	mExpSettingLegend->SetTextAlign(11);
 	mExpSettingLegend->SetTextFont(42);
 }

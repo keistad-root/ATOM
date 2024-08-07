@@ -9,7 +9,7 @@ TThreshold::TThreshold(const std::array<int, 2>& coordinate) : mX(coordinate[0])
 
 TThreshold::TThreshold(int x, int y, const std::array<int, 50>& dacs) : mX(x), mY(y) {
 	std::copy(std::begin(dacs), std::end(dacs), std::begin(mDacs));
-	calculateThreshold();
+	mCondition = calculateThreshold();
 }
 
 TThreshold::TThreshold(const std::array<int, 2>& coordinate, const std::array<int, 50>& dacs) : mX(coordinate[0]), mY(coordinate[1]) {
@@ -52,10 +52,15 @@ TThreshold& TThreshold::operator=(TThreshold&& move) {
 
 TThreshold::~TThreshold() { }
 
-void TThreshold::calculateThreshold() {
-	if ( *std::begin(mDacs) > 25 || *(std::end(mDacs) - 1) < 25 ) {
-		mThr = -1;
-		mErr = -1;
+ThrCondition TThreshold::calculateThreshold() {
+	if ( *std::begin(mDacs) > 25 ) {
+		mThr = 0;
+		mErr = 0;
+		return ThrCondition::bad_too_low;
+	} else if ( *(std::end(mDacs) - 1) < 25 ) {
+		mThr = 100;
+		mErr = 100;
+		return ThrCondition::bad_too_high;
 	} else {
 		std::array<int, 50> adcs;
 		std::iota(std::begin(adcs), std::end(adcs), 1);
@@ -69,19 +74,20 @@ void TThreshold::calculateThreshold() {
 			mThr = fitFunction->GetParameter(1);
 			mErr = fitFunction->GetParameter(2);
 			mQualityFactor = fitFunction->GetChisquare() / fitFunction->GetNDF();
-			if ( mQualityFactor < 20. ) {
+			if ( mQualityFactor < 100. ) {
 				quality = true;
 			}
 			if ( count > 4 ) {
 				mThr = -1;
 				mErr = -1;
-				break;
+				return ThrCondition::bad_undefine;
 			}
 			count++;
 		}
-		if ( !quality ) {
-			// std::cout << fitFunction->GetChisquare() / fitFunction->GetNDF() << std::endl;
-			// savePlot();
+		if ( mThr > 0 && mThr < 50 ) {
+			return ThrCondition::good;
+		} else {
+			return ThrCondition::bad_undefine;
 		}
 	}
 }
@@ -111,4 +117,8 @@ const double TThreshold::getError() const {
 
 const double TThreshold::getQualityFactor() const {
 	return mQualityFactor;
+}
+
+const ThrCondition TThreshold::getCondition() const {
+	return mCondition;
 }

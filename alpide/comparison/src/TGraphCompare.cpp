@@ -164,6 +164,8 @@ void TGraphCompare::TCompareClusterSize(std::string_view typeName, const CppConf
 
 		Float_t lineWidth = config.hasKey("line_width") ? stof(config.find("line_width")) : 1.;
 		distribution.second->SetLineWidth(lineWidth);
+		Float_t lineStyle = plotConfigList.find(distribution.first)->second.hasKey("line_style") ? stof(plotConfigList.find(distribution.first)->second.find("line_style")) : 1.;
+		distribution.second->SetLineStyle(lineStyle);
 
 		distribution.second->SetStats(0);
 		distribution.second->Draw("SAME HISTE");

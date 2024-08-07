@@ -67,10 +67,34 @@ void CppConfigFile::addConfig(std::string_view configFile) {
 	bool isFirst = true;
 	while ( getline(conf, line) ) {
 		// Remove comment out part
-		if ( line.find('#') != std::string::npos ) {
-			line = line.substr(0, line.find('#'));
+		std::string result;
+		bool escapeNext = false;
+
+		for ( char c : line ) {
+			if ( escapeNext ) {
+				if ( c == '#' ) {
+					result += '#';
+				} else {
+					result += '\\';
+					result += c;
+				}
+				escapeNext = false;
+			} else {
+				if ( c == '\\' ) {
+					escapeNext = true;
+				} else {
+					result += c;
+				}
+			}
 		}
+		if ( escapeNext ) {
+			result += '\\'; // Add trailing backslash if input ends with a backslash
+		}
+		line = result;
 		line.erase(remove(line.begin(), line.end(), '\t'), line.end());
+		if ( line[0] == '#' ) {
+			line = "";
+		}
 		if ( line.find('=') != std::string::npos ) {
 			line.erase(remove(line.begin(), line.begin() + line.find('='), ' '), line.begin() + line.find('='));
 		} else {
@@ -78,7 +102,7 @@ void CppConfigFile::addConfig(std::string_view configFile) {
 		}
 		if ( line == "" ) { // Pass the blank line
 			continue;
-		} else if ( line.find('[') != std::string::npos ) { // The line started with '[' is considered as Configurable name
+		} else if ( line.find('[') != std::string::npos && (line[line.find('[') - 1] != '\\') ) { // The line started with '[' is considered as Configurable name
 			if ( !isFirst ) {
 				mConfigs.push_back(getConfigFromArray(key, valueArray));
 				valueArray.clear();
@@ -123,7 +147,7 @@ CppConfigDictionary CppConfigFile::getConfigFromArray(std::string_view motherKey
 			returnConfigDictionary.addDictionary(key, value);
 			key = "";
 			value = "";
-		} else if ( line.find('=') != std::string::npos && line.find('{') != std::string::npos ) {
+		} else if ( (line.find('=') != std::string::npos) && (line.find('{') != std::string::npos) && (line[line.find('{') - 1] != '\\') ) {
 			line.erase(remove(line.begin(), line.begin() + line.find('=') + 2, '\t'), line.begin() + line.find('=') + 2);
 			line.erase(remove(line.begin(), line.begin() + line.find('=') + 2, ' '), line.begin() + line.find('=') + 2);
 			key = line.substr(0, line.find('='));
@@ -132,12 +156,12 @@ CppConfigDictionary CppConfigFile::getConfigFromArray(std::string_view motherKey
 			lineNum++;
 			while ( true ) {
 				line = valueArray[lineNum];
-				if ( line.find('{') != std::string::npos ) {
+				if ( (line.find('{') != std::string::npos) && (line[line.find('{') - 1] != '\\') ) {
 					line.erase(remove(line.begin(), line.begin() + line.find('=') + 2, '\t'), line.begin() + line.find('=') + 2);
 					line.erase(remove(line.begin(), line.begin() + line.find('=') + 2, ' '), line.begin() + line.find('=') + 2);
 					tempValueArray.push_back(line);
 					numSubBra++;
-				} else if ( line.find('}') != std::string::npos ) {
+				} else if ( (line.find('}') != std::string::npos) && (line[line.find('}') - 1] != '\\') ) {
 					if ( numSubBra != 0 ) {
 						line.erase(remove(line.begin(), line.end(), '\t'), line.end());
 						line.erase(remove(line.begin(), line.end(), ' '), line.end());
@@ -154,6 +178,22 @@ CppConfigDictionary CppConfigFile::getConfigFromArray(std::string_view motherKey
 				}
 				lineNum++;
 			}
+		} else if ( (line.find('=') != std::string::npos) && (line.find('{') != std::string::npos) && (line[line.find('{') - 1] == '\\') ) {
+			line.erase(remove(line.begin(), line.end(), '\\'), line.end());
+			line.erase(remove(line.begin(), line.begin() + line.find('=') + 2, '\t'), line.begin() + line.find('=') + 2);
+			line.erase(remove(line.begin(), line.begin() + line.find('=') + 2, ' '), line.begin() + line.find('=') + 2);
+			key = line.substr(0, line.find('='));
+			value = line.substr(line.find('=') + 1);
+			while ( true ) {
+				if ( value[0] == '\t' || value[0] == ' ' ) {
+					value.erase(value.begin());
+				} else {
+					break;
+				}
+			}
+			returnConfigDictionary.addDictionary(key, value);
+			key = "";
+			value = "";
 		}
 	}
 	return returnConfigDictionary;

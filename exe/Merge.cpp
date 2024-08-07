@@ -1,7 +1,10 @@
 #include <iostream>
+#include <vector>
+#include <string>
 
 #include "cppargs.h"
 #include "CppConfigFile.h"
+#include "TMerge.h"
 
 ArgumentParser set_parse(int argc, char** argv) {
 	ArgumentParser parser = ArgumentParser(argc, argv).setDescription("Draw plots for analysis data");
@@ -13,9 +16,12 @@ ArgumentParser set_parse(int argc, char** argv) {
 int main(int argc, char** argv) {
 	ArgumentParser parser = set_parse(argc, argv);
 	CppConfigFile* config = new CppConfigFile(parser.get_value<std::string>("config"));
-	for ( std::string_view str : config->getConfig("Basic").getKeyList() ) {
-		std::cout << str << std::endl;
-	}
-	std::cout << config->getConfig("Basic").find("shape_info/infos/info2") << std::endl;
+
+	TMergeExperimentROOT* merge = new TMergeExperimentROOT(config->getConfig("Merge").find("output_file"), config->getConfig("Merge").getSubConfig("input_files").getValueList());
+
+	merge->mergeFile();
+
+	delete config;
+	delete merge;
 	return 0;
 }

@@ -42,7 +42,7 @@ void TMergeExperimentROOT::mergeFile() {
 				outputTree->Fill();
 			}
 			delete pbar;
-			preTime = mInputValue.timeStamp + 1;
+			preTime = mOutputValue.timeStamp + 1;
 			inputFile->Close();
 		}
 		mOutputFile->Write();

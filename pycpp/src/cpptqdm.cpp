@@ -34,7 +34,7 @@ int ProgressBar::getSecond(int num) {
 void ProgressBar::printProgress() {
 	called++;
 	std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
-	if ( std::chrono::duration_cast<std::chrono::milliseconds>(now - printPoint).count() > 20 || called == mSetSize || called == 1 ) {
+	if ( std::chrono::duration_cast<std::chrono::milliseconds>(now - printPoint).count() > 1 || called == mSetSize || called == 1 ) {
 		double percent = (double) called / mSetSize * 100;
 		double duration = std::chrono::duration_cast<std::chrono::milliseconds>(now - start_time).count();
 		double speed = 1000. * called / duration;

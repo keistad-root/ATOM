@@ -19,6 +19,7 @@
 #include "TTree.h"
 #include "TBranch.h"
 #include "TH1D.h"
+#include "TH1I.h"
 #include "TH2D.h"
 #include "TError.h"
 #include "TPaveText.h"
@@ -97,11 +98,10 @@ protected:
 public:
 	TAnalyser() = default;
 	TAnalyser(TFile* inputFile, std::unordered_map<std::string, TExperimentData*> expData);
-	TAnalyser(const TAnalyser& copy);
 	~TAnalyser();
 
 	TTree* openTree(std::string treeName);
-	void storeEvents();
+	void storeEvents(CppConfigDictionary settingConfig);
 	void doMasking(int mMaskOver);
 	void openOutputGraphFile(std::string_view fileName);
 	void openDirectory(std::string_view typeName);

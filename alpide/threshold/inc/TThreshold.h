@@ -14,6 +14,13 @@
 class TGraph;
 class TF1;
 
+enum ThrCondition {
+	good,
+	bad_too_low,
+	bad_too_high,
+	bad_undefine
+};
+
 class TThreshold {
 private:
 	int mX;
@@ -22,6 +29,8 @@ private:
 	double mThr;
 	double mErr;
 	double mQualityFactor;
+
+	ThrCondition mCondition;
 
 	std::unique_ptr<TGraph> thresholdGraph;
 	std::unique_ptr<TF1> fitFunction;
@@ -45,7 +54,7 @@ public:
 	//Destructor
 	~TThreshold();
 
-	void calculateThreshold();
+	ThrCondition calculateThreshold();
 	void savePlot();
 
 	const double getX() const;
@@ -53,6 +62,8 @@ public:
 	const double getThreshold() const;
 	const double getError() const;
 	const double getQualityFactor() const;
+
+	const ThrCondition getCondition() const;
 };
 
 #endif

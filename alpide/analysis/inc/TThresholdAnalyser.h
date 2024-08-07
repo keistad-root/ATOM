@@ -37,19 +37,15 @@ private:
 	std::ifstream mFile; /** Dat file */
 	int mVcasn, mIthr; /**< vcasn and ithr value. They are key values for determine threshold */
 
-	std::vector<std::unique_ptr<TThreshold>> mThresholds; /**< The array in which the informations about threshold of ALPIDE are stored */
+	std::vector<TThreshold*> mThresholds; /**< The array in which the informations about threshold of ALPIDE are stored */
 
-	std::unique_ptr<TH1> mThresholdDistribution; /**< Threshold value distribution plot*/
-	std::unique_ptr<TH1> mErrorDistribution; /**< Error value distribution plot*/
-	std::unique_ptr<TH2> mThresholdmap; /**< Thresholdmap*/
-	std::unique_ptr<TH1> mChi2NdfDistribution; /** Fitting quality distribution ( Chi2 / Ndof ) */
+	TH1* mThresholdDistribution; /**< Threshold value distribution plot*/
+	TH1* mErrorDistribution; /**< Error value distribution plot*/
+	TH2* mThresholdmap; /**< Thresholdmap*/
+	TH1* mChi2NdfDistribution; /** Fitting quality distribution ( Chi2 / Ndof ) */
 public:
 	TThresholdAnalyser();
 	TThresholdAnalyser(std::ifstream& file);
-	TThresholdAnalyser(const TThresholdAnalyser& copy);
-	TThresholdAnalyser& operator=(const TThresholdAnalyser& copy);
-	TThresholdAnalyser(TThresholdAnalyser&& move);
-	TThresholdAnalyser& operator=(TThresholdAnalyser&& move);
 	~TThresholdAnalyser();
 
 	void openFile(std::ifstream& file);

@@ -12,9 +12,7 @@ struct TDisk {
 	double radius;
 	double coordZ;
 	bool isBelong(double x, double y) {
-		int intX = round(x * 10);
-		int intY = round(y * 10);
-		if ( pow(intX, 2) + pow(intY, 2) < pow(int(radius * 10), 2) ) {
+		if ( pow(x, 2) + pow(y, 2) < pow(radius, 2) ) {
 			return true;
 		} else {
 			return false;
@@ -24,9 +22,9 @@ struct TDisk {
 
 struct TDetector {
 	double width, height;
-	double coordZ;
+	double coordX, coordY, coordZ;
 	bool isBelong(double x, double y) {
-		if ( (abs(x) < width / 2) && (abs(y) < height / 2) ) {
+		if ( (abs(x - coordX) < width / 2) && (abs(y - coordY) < height / 2) ) {
 			return true;
 		} else {
 			return false;
@@ -44,7 +42,7 @@ public:
 	void setInitGeometry(double diskRadius, double upperDiskCoordZ, double lowerDiskCoordZ, double detectorWidth, double detectorHeight, double detectorCoordZ);
 	void setSource(double sourceRadius);
 	void setCollimator(double diskRadius, double upperDiskCoordZ, double lowerDiskCoordZ);
-	void setDetector(double detectorWidth, double detectorHeight, double detectorCoordZ);
+	void setDetector(double detectorWidth, double detectorHeight, double detectorCoordX, double detectorCoordY, double detectorCoordZ);
 
 	double doCount();
 };
