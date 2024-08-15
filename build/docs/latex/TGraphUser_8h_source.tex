@@ -1,0 +1,53 @@
+\doxysection{TGraph\+User.\+h}
+\hypertarget{TGraphUser_8h_source}{}\label{TGraphUser_8h_source}\index{/home/ychoi/ATOM/drawing\_tool/inc/TGraphUser.h@{/home/ychoi/ATOM/drawing\_tool/inc/TGraphUser.h}}
+\mbox{\hyperlink{TGraphUser_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ \_\_TGRAPHUSER\_\_}}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ \_\_TGRAPHUSER\_\_}}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{CppConfigFile_8h}{CppConfigFile.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}TCanvas.h"{}}}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}TGraph.h"{}}}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}TGraphErrors.h"{}}}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}TLegend.h"{}}}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include\ "{}TAxis.h"{}}}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}TMultiGraph.h"{}}}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include<filesystem>}}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00017}\mbox{\hyperlink{classTGraphUser}{00017}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classTGraphUser}{TGraphUser}}\ :\ \textcolor{keyword}{public}\ TGraph\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00018}00018\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00019}\mbox{\hyperlink{classTGraphUser_a75be135676feb3d078e86cbc959acb4b}{00019}}\ \ \ \ \ TCanvas*\ \mbox{\hyperlink{classTGraphUser_a75be135676feb3d078e86cbc959acb4b}{mCanvas}};\ \textcolor{comment}{//\ Canvas\ for\ graph}}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00020}\mbox{\hyperlink{classTGraphUser_a2a29f5f69bbb532c6abc1975bae886e5}{00020}}\ \ \ \ \ TLegend*\ \mbox{\hyperlink{classTGraphUser_a2a29f5f69bbb532c6abc1975bae886e5}{mLegend}};\ \textcolor{comment}{//\ Legend}}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00021}\mbox{\hyperlink{classTGraphUser_a3b7dbb798a2984612f486072d3ca715b}{00021}}\ \ \ \ \ TMultiGraph*\ \mbox{\hyperlink{classTGraphUser_a3b7dbb798a2984612f486072d3ca715b}{mMultiGraph}};\ \textcolor{comment}{//\ Multi-\/graph}}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00022}00022\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00023}\mbox{\hyperlink{classTGraphUser_aa54723305a0da00f9a53303ea4834739}{00023}}\ \ \ \ \ TString\ \mbox{\hyperlink{classTGraphUser_aa54723305a0da00f9a53303ea4834739}{savePath}};\ \textcolor{comment}{//\ Save\ path\ and\ file\ name\ of\ graph}}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00024}\mbox{\hyperlink{classTGraphUser_ad42c87b36fb56161913e9520458efb6d}{00024}}\ \ \ \ \ std::string\ \mbox{\hyperlink{classTGraphUser_ad42c87b36fb56161913e9520458efb6d}{mFileName}};}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00026}\mbox{\hyperlink{classTGraphUser_ae170a734bbe3cbf2f1ba6e5d8d1a9092}{00026}}\ \ \ \ \ TString\ \mbox{\hyperlink{classTGraphUser_ae170a734bbe3cbf2f1ba6e5d8d1a9092}{title}},\ \mbox{\hyperlink{classTGraphUser_aa38d9592e7e85bc38bfcca6a708c9efc}{x\_title}},\ \mbox{\hyperlink{classTGraphUser_a16a5db8a884654f0f36e868dd1252e52}{y\_title}};\ \textcolor{comment}{//\ Graph\ title,\ x-\/axis\ and\ y-\/axis\ titles}}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00027}\mbox{\hyperlink{classTGraphUser_a6102fff1dc01023535e12a45022400dc}{00027}}\ \ \ \ \ std::vector<std::tuple<TGraph*,\ Style\_t,\ Size\_t,\ Style\_t,\ Size\_t>>\ \mbox{\hyperlink{classTGraphUser_a6102fff1dc01023535e12a45022400dc}{graphSetAndAttribute}};\ \textcolor{comment}{//\ Graph,\ marker\ style,\ marker\ size,\ line\ style,\ line\ size}}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00029}\mbox{\hyperlink{classTGraphUser_aa203523e6822756efddea22f6ba98691}{00029}}\ \ \ \ \ std::array<Float\_t,\ 4>\ \mbox{\hyperlink{classTGraphUser_aa203523e6822756efddea22f6ba98691}{canvasMargins}};\ \textcolor{comment}{//\ Left,\ Right,\ Bottom,\ Top}}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00030}\mbox{\hyperlink{classTGraphUser_af46d2f548a8301eaaf249d5cea2ea65a}{00030}}\ \ \ \ \ std::array<Float\_t,\ 4>\ \mbox{\hyperlink{classTGraphUser_af46d2f548a8301eaaf249d5cea2ea65a}{canvasOffsets}};}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00032}\mbox{\hyperlink{classTGraphUser_ab0d8acbb00e640561978cbce785e7a4c}{00032}}\ \ \ \ \ Style\_t\ \mbox{\hyperlink{classTGraphUser_ab0d8acbb00e640561978cbce785e7a4c}{mUniversialMarkerStyle}};}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00033}\mbox{\hyperlink{classTGraphUser_aaa84eb4c833cdb2ae436a96a9672ad30}{00033}}\ \ \ \ \ Size\_t\ \mbox{\hyperlink{classTGraphUser_aaa84eb4c833cdb2ae436a96a9672ad30}{mUniversialMarkerSize}};}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00034}\mbox{\hyperlink{classTGraphUser_a61343997044f476dcaa00fb2797a28b6}{00034}}\ \ \ \ \ Style\_t\ \mbox{\hyperlink{classTGraphUser_a61343997044f476dcaa00fb2797a28b6}{mUniversialLineStyle}};}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00035}\mbox{\hyperlink{classTGraphUser_a3c5cff479c5b69cc429f8743f8a3ba60}{00035}}\ \ \ \ \ Size\_t\ \mbox{\hyperlink{classTGraphUser_a3c5cff479c5b69cc429f8743f8a3ba60}{mUniversiallineWidth}};}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00037}\mbox{\hyperlink{classTGraphUser_a1b1a9608e84d1647fbd4609ab9a469a4}{00037}}\ \ \ \ \ TString\ \mbox{\hyperlink{classTGraphUser_a1b1a9608e84d1647fbd4609ab9a469a4}{mLegendTitle}};\ \textcolor{comment}{//\ Title\ of\ legend}}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00038}\mbox{\hyperlink{classTGraphUser_a2e3556d199027d46f8f6aa63e8ca4a82}{00038}}\ \ \ \ \ std::array<Float\_t,\ 4>\ \mbox{\hyperlink{classTGraphUser_a2e3556d199027d46f8f6aa63e8ca4a82}{mLegendPoints}};\ \textcolor{comment}{//\ The\ cornor\ points\ of\ legend}}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00039}00039\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00040}00040\ \ \ \ \ \mbox{\hyperlink{classTGraphUser}{TGraphUser}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\&\ config);}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00041}00041\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTGraphUser_a4704d7e4b6d2192899a7c98d11750541}{AddGraph}}(TGraph*\ graph);}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00042}00042\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTGraphUser_a4704d7e4b6d2192899a7c98d11750541}{AddGraph}}(TGraph*\ graph,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\&\ graphConfig);}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00043}00043\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTGraphUser_a500875e8656fe23c82133c8a19bcca71}{Save}}(\textcolor{keyword}{const}\ std::filesystem::path\&\ outputPath\ =\ \textcolor{stringliteral}{"{}."{}});}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00044}00044\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00045}00045\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTGraphUser_af0fa523b814ffd9f736bae044b16220c}{setCanvas}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\&\ config);}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00046}00046\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTGraphUser_a871021907186ff960a8c7200d5f14de6}{setLegend}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\&\ config);}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00048}00048\ \};}
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{TGraphUser_8h_source_l00051}00051\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

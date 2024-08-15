@@ -1,0 +1,1489 @@
+\@ifundefined {etoctocstyle}{\let \etoc@startlocaltoc \@gobble \let \etoc@settocdepth \@gobble \let \etoc@depthtag \@gobble \let \etoc@setlocaltop \@gobble }{}
+\contentsline {chapter}{\numberline {1}Purpose of this project.}{1}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Bug List}{3}{chapter.2}%
+\contentsline {chapter}{\numberline {3}Todo List}{5}{chapter.3}%
+\contentsline {chapter}{\numberline {4}Hierarchical Index}{7}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Class Hierarchy}{7}{section.4.1}%
+\contentsline {chapter}{\numberline {5}Class Index}{9}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Class List}{9}{section.5.1}%
+\contentsline {chapter}{\numberline {6}File Index}{11}{chapter.6}%
+\contentsline {section}{\numberline {6.1}File List}{11}{section.6.1}%
+\contentsline {chapter}{\numberline {7}Class Documentation}{15}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Action\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Initialization Class Reference}{15}{section.7.1}%
+\contentsline {subsection}{\numberline {7.1.1}Detailed Description}{15}{subsection.7.1.1}%
+\contentsline {subsection}{\numberline {7.1.2}Constructor \& Destructor Documentation}{15}{subsection.7.1.2}%
+\contentsline {subsubsection}{\numberline {7.1.2.1}ActionInitialization()}{15}{subsubsection.7.1.2.1}%
+\contentsline {subsubsection}{\numberline {7.1.2.2}$\sim $ActionInitialization()}{16}{subsubsection.7.1.2.2}%
+\contentsline {subsection}{\numberline {7.1.3}Member Function Documentation}{16}{subsection.7.1.3}%
+\contentsline {subsubsection}{\numberline {7.1.3.1}Build()}{16}{subsubsection.7.1.3.1}%
+\contentsline {subsubsection}{\numberline {7.1.3.2}BuildForMaster()}{16}{subsubsection.7.1.3.2}%
+\contentsline {section}{\numberline {7.2}Analysis\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Manager Class Reference}{16}{section.7.2}%
+\contentsline {subsection}{\numberline {7.2.1}Detailed Description}{17}{subsection.7.2.1}%
+\contentsline {subsection}{\numberline {7.2.2}Constructor \& Destructor Documentation}{17}{subsection.7.2.2}%
+\contentsline {subsubsection}{\numberline {7.2.2.1}AnalysisManager()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{17}{subsubsection.7.2.2.1}%
+\contentsline {subsubsection}{\numberline {7.2.2.2}AnalysisManager()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{17}{subsubsection.7.2.2.2}%
+\contentsline {subsubsection}{\numberline {7.2.2.3}$\sim $AnalysisManager()}{17}{subsubsection.7.2.2.3}%
+\contentsline {subsection}{\numberline {7.2.3}Member Function Documentation}{18}{subsection.7.2.3}%
+\contentsline {subsubsection}{\numberline {7.2.3.1}closeBook()}{18}{subsubsection.7.2.3.1}%
+\contentsline {subsubsection}{\numberline {7.2.3.2}getEventID()}{18}{subsubsection.7.2.3.2}%
+\contentsline {subsubsection}{\numberline {7.2.3.3}getEventTuple()}{18}{subsubsection.7.2.3.3}%
+\contentsline {subsubsection}{\numberline {7.2.3.4}getRunTuple()}{18}{subsubsection.7.2.3.4}%
+\contentsline {subsubsection}{\numberline {7.2.3.5}getStepTuple()}{18}{subsubsection.7.2.3.5}%
+\contentsline {subsubsection}{\numberline {7.2.3.6}getTrackID()}{18}{subsubsection.7.2.3.6}%
+\contentsline {subsubsection}{\numberline {7.2.3.7}getTrackTuple()}{18}{subsubsection.7.2.3.7}%
+\contentsline {subsubsection}{\numberline {7.2.3.8}Instance()}{19}{subsubsection.7.2.3.8}%
+\contentsline {subsubsection}{\numberline {7.2.3.9}openBook()}{19}{subsubsection.7.2.3.9}%
+\contentsline {subsubsection}{\numberline {7.2.3.10}RecordingEvent()}{19}{subsubsection.7.2.3.10}%
+\contentsline {subsubsection}{\numberline {7.2.3.11}RecordingRun()}{19}{subsubsection.7.2.3.11}%
+\contentsline {subsubsection}{\numberline {7.2.3.12}RecordingStep()}{19}{subsubsection.7.2.3.12}%
+\contentsline {subsubsection}{\numberline {7.2.3.13}RecordingTrackEnd()}{19}{subsubsection.7.2.3.13}%
+\contentsline {subsubsection}{\numberline {7.2.3.14}RecordingTrackStart()}{19}{subsubsection.7.2.3.14}%
+\contentsline {subsubsection}{\numberline {7.2.3.15}setEventID()}{20}{subsubsection.7.2.3.15}%
+\contentsline {subsubsection}{\numberline {7.2.3.16}setEventTree()}{20}{subsubsection.7.2.3.16}%
+\contentsline {subsubsection}{\numberline {7.2.3.17}setRunTree()}{20}{subsubsection.7.2.3.17}%
+\contentsline {subsubsection}{\numberline {7.2.3.18}setStepTree()}{20}{subsubsection.7.2.3.18}%
+\contentsline {subsubsection}{\numberline {7.2.3.19}setTrackID()}{20}{subsubsection.7.2.3.19}%
+\contentsline {subsubsection}{\numberline {7.2.3.20}setTrackTree()}{20}{subsubsection.7.2.3.20}%
+\contentsline {subsection}{\numberline {7.2.4}Member Data Documentation}{20}{subsection.7.2.4}%
+\contentsline {subsubsection}{\numberline {7.2.4.1}eventID}{20}{subsubsection.7.2.4.1}%
+\contentsline {subsubsection}{\numberline {7.2.4.2}eventTuple}{21}{subsubsection.7.2.4.2}%
+\contentsline {subsubsection}{\numberline {7.2.4.3}fInstance}{21}{subsubsection.7.2.4.3}%
+\contentsline {subsubsection}{\numberline {7.2.4.4}mEventTree}{21}{subsubsection.7.2.4.4}%
+\contentsline {subsubsection}{\numberline {7.2.4.5}mOutputFile}{21}{subsubsection.7.2.4.5}%
+\contentsline {subsubsection}{\numberline {7.2.4.6}mRunTree}{21}{subsubsection.7.2.4.6}%
+\contentsline {subsubsection}{\numberline {7.2.4.7}mStepTree}{21}{subsubsection.7.2.4.7}%
+\contentsline {subsubsection}{\numberline {7.2.4.8}mTrackTree}{21}{subsubsection.7.2.4.8}%
+\contentsline {subsubsection}{\numberline {7.2.4.9}runID}{21}{subsubsection.7.2.4.9}%
+\contentsline {subsubsection}{\numberline {7.2.4.10}runTuple}{22}{subsubsection.7.2.4.10}%
+\contentsline {subsubsection}{\numberline {7.2.4.11}stepID}{22}{subsubsection.7.2.4.11}%
+\contentsline {subsubsection}{\numberline {7.2.4.12}stepTuple}{22}{subsubsection.7.2.4.12}%
+\contentsline {subsubsection}{\numberline {7.2.4.13}trackID}{22}{subsubsection.7.2.4.13}%
+\contentsline {subsubsection}{\numberline {7.2.4.14}trackTuple}{22}{subsubsection.7.2.4.14}%
+\contentsline {section}{\numberline {7.3}Argument Class Reference}{22}{section.7.3}%
+\contentsline {subsection}{\numberline {7.3.1}Detailed Description}{23}{subsection.7.3.1}%
+\contentsline {subsection}{\numberline {7.3.2}Constructor \& Destructor Documentation}{24}{subsection.7.3.2}%
+\contentsline {subsubsection}{\numberline {7.3.2.1}Argument()}{24}{subsubsection.7.3.2.1}%
+\contentsline {subsection}{\numberline {7.3.3}Member Function Documentation}{24}{subsection.7.3.3}%
+\contentsline {subsubsection}{\numberline {7.3.3.1}getArgConst()}{24}{subsubsection.7.3.3.1}%
+\contentsline {subsubsection}{\numberline {7.3.3.2}getArgDenoteIn()}{24}{subsubsection.7.3.3.2}%
+\contentsline {subsubsection}{\numberline {7.3.3.3}getArgDenoteOut()}{24}{subsubsection.7.3.3.3}%
+\contentsline {subsubsection}{\numberline {7.3.3.4}getArgDescription()}{24}{subsubsection.7.3.3.4}%
+\contentsline {subsubsection}{\numberline {7.3.3.5}getArgDomain()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{24}{subsubsection.7.3.3.5}%
+\contentsline {subsubsection}{\numberline {7.3.3.6}getArgDomain()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{24}{subsubsection.7.3.3.6}%
+\contentsline {subsubsection}{\numberline {7.3.3.7}getArgMinorOpt()}{25}{subsubsection.7.3.3.7}%
+\contentsline {subsubsection}{\numberline {7.3.3.8}getArgMulti()}{25}{subsubsection.7.3.3.8}%
+\contentsline {subsubsection}{\numberline {7.3.3.9}getArgName()}{25}{subsubsection.7.3.3.9}%
+\contentsline {subsubsection}{\numberline {7.3.3.10}getArgOpt()}{25}{subsubsection.7.3.3.10}%
+\contentsline {subsubsection}{\numberline {7.3.3.11}getArgType()}{25}{subsubsection.7.3.3.11}%
+\contentsline {subsubsection}{\numberline {7.3.3.12}getArgValue()}{25}{subsubsection.7.3.3.12}%
+\contentsline {subsubsection}{\numberline {7.3.3.13}getArgValueList()}{25}{subsubsection.7.3.3.13}%
+\contentsline {subsubsection}{\numberline {7.3.3.14}isArgConst()}{26}{subsubsection.7.3.3.14}%
+\contentsline {subsubsection}{\numberline {7.3.3.15}isArgMulti()}{26}{subsubsection.7.3.3.15}%
+\contentsline {subsubsection}{\numberline {7.3.3.16}notArgConst()}{26}{subsubsection.7.3.3.16}%
+\contentsline {subsubsection}{\numberline {7.3.3.17}notArgMulti()}{26}{subsubsection.7.3.3.17}%
+\contentsline {subsubsection}{\numberline {7.3.3.18}replaceArgValueList()}{26}{subsubsection.7.3.3.18}%
+\contentsline {subsubsection}{\numberline {7.3.3.19}setArgDenoteIn()}{26}{subsubsection.7.3.3.19}%
+\contentsline {subsubsection}{\numberline {7.3.3.20}setArgDenoteOut()}{26}{subsubsection.7.3.3.20}%
+\contentsline {subsubsection}{\numberline {7.3.3.21}setArgDescription()}{27}{subsubsection.7.3.3.21}%
+\contentsline {subsubsection}{\numberline {7.3.3.22}setArgDomain()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{27}{subsubsection.7.3.3.22}%
+\contentsline {subsubsection}{\numberline {7.3.3.23}setArgDomain()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{27}{subsubsection.7.3.3.23}%
+\contentsline {subsubsection}{\numberline {7.3.3.24}setArgMinorOpt()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{27}{subsubsection.7.3.3.24}%
+\contentsline {subsubsection}{\numberline {7.3.3.25}setArgMinorOpt()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{27}{subsubsection.7.3.3.25}%
+\contentsline {subsubsection}{\numberline {7.3.3.26}setArgName()}{27}{subsubsection.7.3.3.26}%
+\contentsline {subsubsection}{\numberline {7.3.3.27}setArgOpt()}{27}{subsubsection.7.3.3.27}%
+\contentsline {subsubsection}{\numberline {7.3.3.28}setArgType()}{28}{subsubsection.7.3.3.28}%
+\contentsline {subsubsection}{\numberline {7.3.3.29}setArgValue()}{28}{subsubsection.7.3.3.29}%
+\contentsline {subsubsection}{\numberline {7.3.3.30}setArgValueList()}{28}{subsubsection.7.3.3.30}%
+\contentsline {subsection}{\numberline {7.3.4}Member Data Documentation}{28}{subsection.7.3.4}%
+\contentsline {subsubsection}{\numberline {7.3.4.1}\_argDenoteIn}{28}{subsubsection.7.3.4.1}%
+\contentsline {subsubsection}{\numberline {7.3.4.2}\_argDenoteOut}{28}{subsubsection.7.3.4.2}%
+\contentsline {subsubsection}{\numberline {7.3.4.3}\_argDomain}{28}{subsubsection.7.3.4.3}%
+\contentsline {subsubsection}{\numberline {7.3.4.4}\_argMinorOpt}{28}{subsubsection.7.3.4.4}%
+\contentsline {subsubsection}{\numberline {7.3.4.5}\_argName}{29}{subsubsection.7.3.4.5}%
+\contentsline {subsubsection}{\numberline {7.3.4.6}\_argOpt}{29}{subsubsection.7.3.4.6}%
+\contentsline {subsubsection}{\numberline {7.3.4.7}\_argType}{29}{subsubsection.7.3.4.7}%
+\contentsline {subsubsection}{\numberline {7.3.4.8}\_argValueList}{29}{subsubsection.7.3.4.8}%
+\contentsline {subsubsection}{\numberline {7.3.4.9}\_description}{29}{subsubsection.7.3.4.9}%
+\contentsline {subsubsection}{\numberline {7.3.4.10}\_isArgConst}{29}{subsubsection.7.3.4.10}%
+\contentsline {subsubsection}{\numberline {7.3.4.11}\_isArgMulti}{29}{subsubsection.7.3.4.11}%
+\contentsline {section}{\numberline {7.4}Argument\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Parser Class Reference}{30}{section.7.4}%
+\contentsline {subsection}{\numberline {7.4.1}Detailed Description}{30}{subsection.7.4.1}%
+\contentsline {subsection}{\numberline {7.4.2}Constructor \& Destructor Documentation}{30}{subsection.7.4.2}%
+\contentsline {subsubsection}{\numberline {7.4.2.1}ArgumentParser()}{30}{subsubsection.7.4.2.1}%
+\contentsline {subsubsection}{\numberline {7.4.2.2}$\sim $ArgumentParser()}{31}{subsubsection.7.4.2.2}%
+\contentsline {subsection}{\numberline {7.4.3}Member Function Documentation}{31}{subsection.7.4.3}%
+\contentsline {subsubsection}{\numberline {7.4.3.1}add\_argument()}{31}{subsubsection.7.4.3.1}%
+\contentsline {subsubsection}{\numberline {7.4.3.2}add\_domain()}{31}{subsubsection.7.4.3.2}%
+\contentsline {subsubsection}{\numberline {7.4.3.3}add\_finish()}{31}{subsubsection.7.4.3.3}%
+\contentsline {subsubsection}{\numberline {7.4.3.4}add\_minor\_argument()}{31}{subsubsection.7.4.3.4}%
+\contentsline {subsubsection}{\numberline {7.4.3.5}dest()}{31}{subsubsection.7.4.3.5}%
+\contentsline {subsubsection}{\numberline {7.4.3.6}detType()}{31}{subsubsection.7.4.3.6}%
+\contentsline {subsubsection}{\numberline {7.4.3.7}get\_value()\hspace {0.1cm}{\footnotesize \ttfamily [1/4]}}{32}{subsubsection.7.4.3.7}%
+\contentsline {subsubsection}{\numberline {7.4.3.8}get\_value()\hspace {0.1cm}{\footnotesize \ttfamily [2/4]}}{32}{subsubsection.7.4.3.8}%
+\contentsline {subsubsection}{\numberline {7.4.3.9}get\_value()\hspace {0.1cm}{\footnotesize \ttfamily [3/4]}}{32}{subsubsection.7.4.3.9}%
+\contentsline {subsubsection}{\numberline {7.4.3.10}get\_value()\hspace {0.1cm}{\footnotesize \ttfamily [4/4]}}{32}{subsubsection.7.4.3.10}%
+\contentsline {subsubsection}{\numberline {7.4.3.11}help()}{32}{subsubsection.7.4.3.11}%
+\contentsline {subsubsection}{\numberline {7.4.3.12}metavar()}{32}{subsubsection.7.4.3.12}%
+\contentsline {subsubsection}{\numberline {7.4.3.13}nargs()}{33}{subsubsection.7.4.3.13}%
+\contentsline {subsubsection}{\numberline {7.4.3.14}parse\_args()}{33}{subsubsection.7.4.3.14}%
+\contentsline {subsubsection}{\numberline {7.4.3.15}set\_const()}{33}{subsubsection.7.4.3.15}%
+\contentsline {subsubsection}{\numberline {7.4.3.16}set\_default()}{33}{subsubsection.7.4.3.16}%
+\contentsline {subsubsection}{\numberline {7.4.3.17}setDescription()}{33}{subsubsection.7.4.3.17}%
+\contentsline {subsubsection}{\numberline {7.4.3.18}type()}{33}{subsubsection.7.4.3.18}%
+\contentsline {subsection}{\numberline {7.4.4}Member Data Documentation}{33}{subsection.7.4.4}%
+\contentsline {subsubsection}{\numberline {7.4.4.1}args\_temp}{33}{subsubsection.7.4.4.1}%
+\contentsline {subsubsection}{\numberline {7.4.4.2}argv}{34}{subsubsection.7.4.4.2}%
+\contentsline {subsubsection}{\numberline {7.4.4.3}argv\_init}{34}{subsubsection.7.4.4.3}%
+\contentsline {subsubsection}{\numberline {7.4.4.4}description}{34}{subsubsection.7.4.4.4}%
+\contentsline {subsubsection}{\numberline {7.4.4.5}needHelp}{34}{subsubsection.7.4.4.5}%
+\contentsline {subsubsection}{\numberline {7.4.4.6}Opt\_args}{34}{subsubsection.7.4.4.6}%
+\contentsline {subsubsection}{\numberline {7.4.4.7}Pos\_args}{34}{subsubsection.7.4.4.7}%
+\contentsline {subsubsection}{\numberline {7.4.4.8}prog}{34}{subsubsection.7.4.4.8}%
+\contentsline {section}{\numberline {7.5}Colour Class Reference}{35}{section.7.5}%
+\contentsline {subsection}{\numberline {7.5.1}Detailed Description}{35}{subsection.7.5.1}%
+\contentsline {subsection}{\numberline {7.5.2}Constructor \& Destructor Documentation}{35}{subsection.7.5.2}%
+\contentsline {subsubsection}{\numberline {7.5.2.1}Colour()}{35}{subsubsection.7.5.2.1}%
+\contentsline {subsection}{\numberline {7.5.3}Member Function Documentation}{35}{subsection.7.5.3}%
+\contentsline {subsubsection}{\numberline {7.5.3.1}getAlpideColour()}{35}{subsubsection.7.5.3.1}%
+\contentsline {subsubsection}{\numberline {7.5.3.2}getBoardColour()}{35}{subsubsection.7.5.3.2}%
+\contentsline {subsubsection}{\numberline {7.5.3.3}getScreenColour()}{36}{subsubsection.7.5.3.3}%
+\contentsline {subsubsection}{\numberline {7.5.3.4}getStandColour()}{36}{subsubsection.7.5.3.4}%
+\contentsline {subsubsection}{\numberline {7.5.3.5}setAlpideColour()}{36}{subsubsection.7.5.3.5}%
+\contentsline {subsubsection}{\numberline {7.5.3.6}setBoardColour()}{36}{subsubsection.7.5.3.6}%
+\contentsline {subsubsection}{\numberline {7.5.3.7}setScreenColour()}{36}{subsubsection.7.5.3.7}%
+\contentsline {subsubsection}{\numberline {7.5.3.8}setStandColour()}{36}{subsubsection.7.5.3.8}%
+\contentsline {subsection}{\numberline {7.5.4}Member Data Documentation}{36}{subsection.7.5.4}%
+\contentsline {subsubsection}{\numberline {7.5.4.1}alpideColour}{36}{subsubsection.7.5.4.1}%
+\contentsline {subsubsection}{\numberline {7.5.4.2}boardColour}{37}{subsubsection.7.5.4.2}%
+\contentsline {subsubsection}{\numberline {7.5.4.3}screenColour}{37}{subsubsection.7.5.4.3}%
+\contentsline {subsubsection}{\numberline {7.5.4.4}standColour}{37}{subsubsection.7.5.4.4}%
+\contentsline {section}{\numberline {7.6}Configrable\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}No\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Value Class Reference}{37}{section.7.6}%
+\contentsline {subsection}{\numberline {7.6.1}Detailed Description}{37}{subsection.7.6.1}%
+\contentsline {subsection}{\numberline {7.6.2}Constructor \& Destructor Documentation}{38}{subsection.7.6.2}%
+\contentsline {subsubsection}{\numberline {7.6.2.1}ConfigrableNoValue()}{38}{subsubsection.7.6.2.1}%
+\contentsline {subsection}{\numberline {7.6.3}Member Function Documentation}{38}{subsection.7.6.3}%
+\contentsline {subsubsection}{\numberline {7.6.3.1}what()}{38}{subsubsection.7.6.3.1}%
+\contentsline {subsection}{\numberline {7.6.4}Member Data Documentation}{38}{subsection.7.6.4}%
+\contentsline {subsubsection}{\numberline {7.6.4.1}message}{38}{subsubsection.7.6.4.1}%
+\contentsline {section}{\numberline {7.7}Control\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Experiment\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analysis Class Reference}{38}{section.7.7}%
+\contentsline {subsection}{\numberline {7.7.1}Detailed Description}{39}{subsection.7.7.1}%
+\contentsline {subsection}{\numberline {7.7.2}Constructor \& Destructor Documentation}{39}{subsection.7.7.2}%
+\contentsline {subsubsection}{\numberline {7.7.2.1}ControlExperimentAnalysis()}{39}{subsubsection.7.7.2.1}%
+\contentsline {subsubsection}{\numberline {7.7.2.2}$\sim $ControlExperimentAnalysis()}{39}{subsubsection.7.7.2.2}%
+\contentsline {subsection}{\numberline {7.7.3}Member Function Documentation}{39}{subsection.7.7.3}%
+\contentsline {subsubsection}{\numberline {7.7.3.1}clusterization()}{39}{subsubsection.7.7.3.1}%
+\contentsline {subsubsection}{\numberline {7.7.3.2}doBasicAnalysis()}{39}{subsubsection.7.7.3.2}%
+\contentsline {subsubsection}{\numberline {7.7.3.3}doDivideBySize()}{40}{subsubsection.7.7.3.3}%
+\contentsline {subsubsection}{\numberline {7.7.3.4}doMasking()}{40}{subsubsection.7.7.3.4}%
+\contentsline {subsubsection}{\numberline {7.7.3.5}drawClustermapAndClustersize()}{40}{subsubsection.7.7.3.5}%
+\contentsline {subsubsection}{\numberline {7.7.3.6}drawClusterShapeInfos()}{40}{subsubsection.7.7.3.6}%
+\contentsline {subsubsection}{\numberline {7.7.3.7}drawHitmap()}{40}{subsubsection.7.7.3.7}%
+\contentsline {subsubsection}{\numberline {7.7.3.8}getClusterSizeRange()}{40}{subsubsection.7.7.3.8}%
+\contentsline {subsubsection}{\numberline {7.7.3.9}openInputFile()}{40}{subsubsection.7.7.3.9}%
+\contentsline {subsubsection}{\numberline {7.7.3.10}setConfig()}{41}{subsubsection.7.7.3.10}%
+\contentsline {subsubsection}{\numberline {7.7.3.11}setExpDataSet()}{41}{subsubsection.7.7.3.11}%
+\contentsline {subsection}{\numberline {7.7.4}Member Data Documentation}{41}{subsection.7.7.4}%
+\contentsline {subsubsection}{\numberline {7.7.4.1}mAnalyser}{41}{subsubsection.7.7.4.1}%
+\contentsline {subsubsection}{\numberline {7.7.4.2}mClusterRange}{41}{subsubsection.7.7.4.2}%
+\contentsline {subsubsection}{\numberline {7.7.4.3}mConfig}{41}{subsubsection.7.7.4.3}%
+\contentsline {subsubsection}{\numberline {7.7.4.4}mExpDataSet}{41}{subsubsection.7.7.4.4}%
+\contentsline {subsubsection}{\numberline {7.7.4.5}mInputFile}{41}{subsubsection.7.7.4.5}%
+\contentsline {subsubsection}{\numberline {7.7.4.6}mInputFilePath}{42}{subsubsection.7.7.4.6}%
+\contentsline {subsubsection}{\numberline {7.7.4.7}mParser}{42}{subsubsection.7.7.4.7}%
+\contentsline {subsubsection}{\numberline {7.7.4.8}mSubConfigSet}{42}{subsubsection.7.7.4.8}%
+\contentsline {subsubsection}{\numberline {7.7.4.9}mTypeNameSet}{42}{subsubsection.7.7.4.9}%
+\contentsline {section}{\numberline {7.8}Control\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Experiment\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Comparison Class Reference}{42}{section.7.8}%
+\contentsline {subsection}{\numberline {7.8.1}Detailed Description}{43}{subsection.7.8.1}%
+\contentsline {subsection}{\numberline {7.8.2}Constructor \& Destructor Documentation}{43}{subsection.7.8.2}%
+\contentsline {subsubsection}{\numberline {7.8.2.1}ControlExperimentComparison()}{43}{subsubsection.7.8.2.1}%
+\contentsline {subsection}{\numberline {7.8.3}Member Function Documentation}{43}{subsection.7.8.3}%
+\contentsline {subsubsection}{\numberline {7.8.3.1}initComparison()}{43}{subsubsection.7.8.3.1}%
+\contentsline {subsubsection}{\numberline {7.8.3.2}setConfig()}{43}{subsubsection.7.8.3.2}%
+\contentsline {subsection}{\numberline {7.8.4}Member Data Documentation}{43}{subsection.7.8.4}%
+\contentsline {subsubsection}{\numberline {7.8.4.1}mCompare}{43}{subsubsection.7.8.4.1}%
+\contentsline {subsubsection}{\numberline {7.8.4.2}mConfig}{43}{subsubsection.7.8.4.2}%
+\contentsline {subsubsection}{\numberline {7.8.4.3}mFileSet}{43}{subsubsection.7.8.4.3}%
+\contentsline {subsubsection}{\numberline {7.8.4.4}mParser}{44}{subsubsection.7.8.4.4}%
+\contentsline {subsubsection}{\numberline {7.8.4.5}mTypeNameSet}{44}{subsubsection.7.8.4.5}%
+\contentsline {section}{\numberline {7.9}Cpp\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Config\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Dictionary Class Reference}{44}{section.7.9}%
+\contentsline {subsection}{\numberline {7.9.1}Detailed Description}{45}{subsection.7.9.1}%
+\contentsline {subsection}{\numberline {7.9.2}Constructor \& Destructor Documentation}{45}{subsection.7.9.2}%
+\contentsline {subsubsection}{\numberline {7.9.2.1}CppConfigDictionary()\hspace {0.1cm}{\footnotesize \ttfamily [1/4]}}{45}{subsubsection.7.9.2.1}%
+\contentsline {subsubsection}{\numberline {7.9.2.2}CppConfigDictionary()\hspace {0.1cm}{\footnotesize \ttfamily [2/4]}}{45}{subsubsection.7.9.2.2}%
+\contentsline {subsubsection}{\numberline {7.9.2.3}CppConfigDictionary()\hspace {0.1cm}{\footnotesize \ttfamily [3/4]}}{45}{subsubsection.7.9.2.3}%
+\contentsline {subsubsection}{\numberline {7.9.2.4}CppConfigDictionary()\hspace {0.1cm}{\footnotesize \ttfamily [4/4]}}{45}{subsubsection.7.9.2.4}%
+\contentsline {subsection}{\numberline {7.9.3}Member Function Documentation}{45}{subsection.7.9.3}%
+\contentsline {subsubsection}{\numberline {7.9.3.1}addDictionary()}{45}{subsubsection.7.9.3.1}%
+\contentsline {subsubsection}{\numberline {7.9.3.2}addSubConfigDictionary()}{46}{subsubsection.7.9.3.2}%
+\contentsline {subsubsection}{\numberline {7.9.3.3}find()}{46}{subsubsection.7.9.3.3}%
+\contentsline {subsubsection}{\numberline {7.9.3.4}getConfigName()}{46}{subsubsection.7.9.3.4}%
+\contentsline {subsubsection}{\numberline {7.9.3.5}getDictionary()}{46}{subsubsection.7.9.3.5}%
+\contentsline {subsubsection}{\numberline {7.9.3.6}getKeyList()}{46}{subsubsection.7.9.3.6}%
+\contentsline {subsubsection}{\numberline {7.9.3.7}getSubConfig()}{46}{subsubsection.7.9.3.7}%
+\contentsline {subsubsection}{\numberline {7.9.3.8}getSubConfigSet()}{46}{subsubsection.7.9.3.8}%
+\contentsline {subsubsection}{\numberline {7.9.3.9}getSubConfigSetWithName()}{47}{subsubsection.7.9.3.9}%
+\contentsline {subsubsection}{\numberline {7.9.3.10}getValueList()}{47}{subsubsection.7.9.3.10}%
+\contentsline {subsubsection}{\numberline {7.9.3.11}hasKey()}{47}{subsubsection.7.9.3.11}%
+\contentsline {subsubsection}{\numberline {7.9.3.12}operator+()}{47}{subsubsection.7.9.3.12}%
+\contentsline {subsubsection}{\numberline {7.9.3.13}operator+=()}{47}{subsubsection.7.9.3.13}%
+\contentsline {subsubsection}{\numberline {7.9.3.14}operator=()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{47}{subsubsection.7.9.3.14}%
+\contentsline {subsubsection}{\numberline {7.9.3.15}operator=()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{47}{subsubsection.7.9.3.15}%
+\contentsline {subsection}{\numberline {7.9.4}Friends And Related Symbol Documentation}{48}{subsection.7.9.4}%
+\contentsline {subsubsection}{\numberline {7.9.4.1}operator$<$$<$}{48}{subsubsection.7.9.4.1}%
+\contentsline {subsection}{\numberline {7.9.5}Member Data Documentation}{48}{subsection.7.9.5}%
+\contentsline {subsubsection}{\numberline {7.9.5.1}mConfigName}{48}{subsubsection.7.9.5.1}%
+\contentsline {subsubsection}{\numberline {7.9.5.2}mDictionary}{48}{subsubsection.7.9.5.2}%
+\contentsline {subsubsection}{\numberline {7.9.5.3}mSubConfigDictionary}{48}{subsubsection.7.9.5.3}%
+\contentsline {section}{\numberline {7.10}Cpp\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Config\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}File Class Reference}{48}{section.7.10}%
+\contentsline {subsection}{\numberline {7.10.1}Detailed Description}{49}{subsection.7.10.1}%
+\contentsline {subsection}{\numberline {7.10.2}Constructor \& Destructor Documentation}{49}{subsection.7.10.2}%
+\contentsline {subsubsection}{\numberline {7.10.2.1}CppConfigFile()\hspace {0.1cm}{\footnotesize \ttfamily [1/4]}}{49}{subsubsection.7.10.2.1}%
+\contentsline {subsubsection}{\numberline {7.10.2.2}CppConfigFile()\hspace {0.1cm}{\footnotesize \ttfamily [2/4]}}{49}{subsubsection.7.10.2.2}%
+\contentsline {subsubsection}{\numberline {7.10.2.3}CppConfigFile()\hspace {0.1cm}{\footnotesize \ttfamily [3/4]}}{50}{subsubsection.7.10.2.3}%
+\contentsline {subsubsection}{\numberline {7.10.2.4}CppConfigFile()\hspace {0.1cm}{\footnotesize \ttfamily [4/4]}}{50}{subsubsection.7.10.2.4}%
+\contentsline {subsubsection}{\numberline {7.10.2.5}$\sim $CppConfigFile()}{50}{subsubsection.7.10.2.5}%
+\contentsline {subsection}{\numberline {7.10.3}Member Function Documentation}{50}{subsection.7.10.3}%
+\contentsline {subsubsection}{\numberline {7.10.3.1}addConfig()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{50}{subsubsection.7.10.3.1}%
+\contentsline {subsubsection}{\numberline {7.10.3.2}addConfig()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{50}{subsubsection.7.10.3.2}%
+\contentsline {subsubsection}{\numberline {7.10.3.3}getConfig()}{51}{subsubsection.7.10.3.3}%
+\contentsline {subsubsection}{\numberline {7.10.3.4}getConfigFromArray()}{51}{subsubsection.7.10.3.4}%
+\contentsline {subsubsection}{\numberline {7.10.3.5}getConfigurableNameList()}{51}{subsubsection.7.10.3.5}%
+\contentsline {subsubsection}{\numberline {7.10.3.6}hasConfig()}{51}{subsubsection.7.10.3.6}%
+\contentsline {subsubsection}{\numberline {7.10.3.7}operator=()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{51}{subsubsection.7.10.3.7}%
+\contentsline {subsubsection}{\numberline {7.10.3.8}operator=()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{51}{subsubsection.7.10.3.8}%
+\contentsline {subsection}{\numberline {7.10.4}Friends And Related Symbol Documentation}{52}{subsection.7.10.4}%
+\contentsline {subsubsection}{\numberline {7.10.4.1}operator$<$$<$}{52}{subsubsection.7.10.4.1}%
+\contentsline {subsection}{\numberline {7.10.5}Member Data Documentation}{52}{subsection.7.10.5}%
+\contentsline {subsubsection}{\numberline {7.10.5.1}mConfigs}{52}{subsubsection.7.10.5.1}%
+\contentsline {section}{\numberline {7.11}Cpp\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Config\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}File\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Error Class Reference}{52}{section.7.11}%
+\contentsline {subsection}{\numberline {7.11.1}Detailed Description}{52}{subsection.7.11.1}%
+\contentsline {subsection}{\numberline {7.11.2}Constructor \& Destructor Documentation}{53}{subsection.7.11.2}%
+\contentsline {subsubsection}{\numberline {7.11.2.1}CppConfigFileError()}{53}{subsubsection.7.11.2.1}%
+\contentsline {subsection}{\numberline {7.11.3}Member Function Documentation}{53}{subsection.7.11.3}%
+\contentsline {subsubsection}{\numberline {7.11.3.1}what()}{53}{subsubsection.7.11.3.1}%
+\contentsline {subsection}{\numberline {7.11.4}Member Data Documentation}{53}{subsection.7.11.4}%
+\contentsline {subsubsection}{\numberline {7.11.4.1}mMessage}{53}{subsubsection.7.11.4.1}%
+\contentsline {section}{\numberline {7.12}DACto\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ADC Class Reference}{53}{section.7.12}%
+\contentsline {subsection}{\numberline {7.12.1}Detailed Description}{54}{subsection.7.12.1}%
+\contentsline {subsection}{\numberline {7.12.2}Constructor \& Destructor Documentation}{54}{subsection.7.12.2}%
+\contentsline {subsubsection}{\numberline {7.12.2.1}DACtoADC()}{54}{subsubsection.7.12.2.1}%
+\contentsline {subsection}{\numberline {7.12.3}Member Function Documentation}{54}{subsection.7.12.3}%
+\contentsline {subsubsection}{\numberline {7.12.3.1}getADC()}{54}{subsubsection.7.12.3.1}%
+\contentsline {subsubsection}{\numberline {7.12.3.2}getDAC()}{54}{subsubsection.7.12.3.2}%
+\contentsline {subsubsection}{\numberline {7.12.3.3}getKind()}{54}{subsubsection.7.12.3.3}%
+\contentsline {subsubsection}{\numberline {7.12.3.4}setADC()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{54}{subsubsection.7.12.3.4}%
+\contentsline {subsubsection}{\numberline {7.12.3.5}setADC()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{54}{subsubsection.7.12.3.5}%
+\contentsline {subsubsection}{\numberline {7.12.3.6}setDAC()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{55}{subsubsection.7.12.3.6}%
+\contentsline {subsubsection}{\numberline {7.12.3.7}setDAC()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{55}{subsubsection.7.12.3.7}%
+\contentsline {subsection}{\numberline {7.12.4}Member Data Documentation}{55}{subsection.7.12.4}%
+\contentsline {subsubsection}{\numberline {7.12.4.1}adc\_}{55}{subsubsection.7.12.4.1}%
+\contentsline {subsubsection}{\numberline {7.12.4.2}dac\_}{55}{subsubsection.7.12.4.2}%
+\contentsline {subsubsection}{\numberline {7.12.4.3}kind\_}{55}{subsubsection.7.12.4.3}%
+\contentsline {section}{\numberline {7.13}Detector\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Construction Class Reference}{55}{section.7.13}%
+\contentsline {subsection}{\numberline {7.13.1}Detailed Description}{56}{subsection.7.13.1}%
+\contentsline {subsection}{\numberline {7.13.2}Constructor \& Destructor Documentation}{57}{subsection.7.13.2}%
+\contentsline {subsubsection}{\numberline {7.13.2.1}DetectorConstruction()}{57}{subsubsection.7.13.2.1}%
+\contentsline {subsubsection}{\numberline {7.13.2.2}$\sim $DetectorConstruction()}{57}{subsubsection.7.13.2.2}%
+\contentsline {subsection}{\numberline {7.13.3}Member Function Documentation}{57}{subsection.7.13.3}%
+\contentsline {subsubsection}{\numberline {7.13.3.1}Construct()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{57}{subsubsection.7.13.3.1}%
+\contentsline {subsubsection}{\numberline {7.13.3.2}Construct()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{57}{subsubsection.7.13.3.2}%
+\contentsline {subsubsection}{\numberline {7.13.3.3}DefineCommands()}{57}{subsubsection.7.13.3.3}%
+\contentsline {subsubsection}{\numberline {7.13.3.4}GetScoringALPIDECircuit()}{57}{subsubsection.7.13.3.4}%
+\contentsline {subsubsection}{\numberline {7.13.3.5}GetScoringALPIDEEpitaxial()}{57}{subsubsection.7.13.3.5}%
+\contentsline {subsubsection}{\numberline {7.13.3.6}GetScoringCarrierBoard()}{58}{subsubsection.7.13.3.6}%
+\contentsline {subsubsection}{\numberline {7.13.3.7}GetScoringShield()}{58}{subsubsection.7.13.3.7}%
+\contentsline {subsubsection}{\numberline {7.13.3.8}GetScoringStand()}{58}{subsubsection.7.13.3.8}%
+\contentsline {subsubsection}{\numberline {7.13.3.9}SetALPIDE()}{58}{subsubsection.7.13.3.9}%
+\contentsline {subsubsection}{\numberline {7.13.3.10}SetCarrierBoard()}{58}{subsubsection.7.13.3.10}%
+\contentsline {subsubsection}{\numberline {7.13.3.11}SetDistance()}{58}{subsubsection.7.13.3.11}%
+\contentsline {subsubsection}{\numberline {7.13.3.12}SetEnergy()}{58}{subsubsection.7.13.3.12}%
+\contentsline {subsubsection}{\numberline {7.13.3.13}SetHallWidth()}{58}{subsubsection.7.13.3.13}%
+\contentsline {subsubsection}{\numberline {7.13.3.14}SetShield()}{59}{subsubsection.7.13.3.14}%
+\contentsline {subsubsection}{\numberline {7.13.3.15}SetSourceType()}{59}{subsubsection.7.13.3.15}%
+\contentsline {subsubsection}{\numberline {7.13.3.16}SetStand()}{59}{subsubsection.7.13.3.16}%
+\contentsline {subsubsection}{\numberline {7.13.3.17}SetStandType()}{59}{subsubsection.7.13.3.17}%
+\contentsline {subsubsection}{\numberline {7.13.3.18}SetVacuum()}{59}{subsubsection.7.13.3.18}%
+\contentsline {subsubsection}{\numberline {7.13.3.19}SetWorld()}{59}{subsubsection.7.13.3.19}%
+\contentsline {subsection}{\numberline {7.13.4}Member Data Documentation}{59}{subsection.7.13.4}%
+\contentsline {subsubsection}{\numberline {7.13.4.1}ALPIDEAssembly}{59}{subsubsection.7.13.4.1}%
+\contentsline {subsubsection}{\numberline {7.13.4.2}ALPIDECircuitLogical}{60}{subsubsection.7.13.4.2}%
+\contentsline {subsubsection}{\numberline {7.13.4.3}ALPIDEEpitaxialLogical}{60}{subsubsection.7.13.4.3}%
+\contentsline {subsubsection}{\numberline {7.13.4.4}CarrierBoardLogical}{60}{subsubsection.7.13.4.4}%
+\contentsline {subsubsection}{\numberline {7.13.4.5}CarrierBoardPhysical}{60}{subsubsection.7.13.4.5}%
+\contentsline {subsubsection}{\numberline {7.13.4.6}cDiameter}{60}{subsubsection.7.13.4.6}%
+\contentsline {subsubsection}{\numberline {7.13.4.7}colour}{60}{subsubsection.7.13.4.7}%
+\contentsline {subsubsection}{\numberline {7.13.4.8}material}{60}{subsubsection.7.13.4.8}%
+\contentsline {subsubsection}{\numberline {7.13.4.9}sDistance}{60}{subsubsection.7.13.4.9}%
+\contentsline {subsubsection}{\numberline {7.13.4.10}sEnergy}{61}{subsubsection.7.13.4.10}%
+\contentsline {subsubsection}{\numberline {7.13.4.11}ShieldLogical}{61}{subsubsection.7.13.4.11}%
+\contentsline {subsubsection}{\numberline {7.13.4.12}ShieldPhysical}{61}{subsubsection.7.13.4.12}%
+\contentsline {subsubsection}{\numberline {7.13.4.13}solids}{61}{subsubsection.7.13.4.13}%
+\contentsline {subsubsection}{\numberline {7.13.4.14}sourceType}{61}{subsubsection.7.13.4.14}%
+\contentsline {subsubsection}{\numberline {7.13.4.15}StandLogical}{61}{subsubsection.7.13.4.15}%
+\contentsline {subsubsection}{\numberline {7.13.4.16}StandPhysical}{61}{subsubsection.7.13.4.16}%
+\contentsline {subsubsection}{\numberline {7.13.4.17}standType}{61}{subsubsection.7.13.4.17}%
+\contentsline {subsubsection}{\numberline {7.13.4.18}WorldLogical}{62}{subsubsection.7.13.4.18}%
+\contentsline {subsubsection}{\numberline {7.13.4.19}WorldPhysical}{62}{subsubsection.7.13.4.19}%
+\contentsline {section}{\numberline {7.14}Event\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Action Class Reference}{62}{section.7.14}%
+\contentsline {subsection}{\numberline {7.14.1}Detailed Description}{62}{subsection.7.14.1}%
+\contentsline {subsection}{\numberline {7.14.2}Constructor \& Destructor Documentation}{63}{subsection.7.14.2}%
+\contentsline {subsubsection}{\numberline {7.14.2.1}EventAction()}{63}{subsubsection.7.14.2.1}%
+\contentsline {subsubsection}{\numberline {7.14.2.2}$\sim $EventAction()}{63}{subsubsection.7.14.2.2}%
+\contentsline {subsection}{\numberline {7.14.3}Member Function Documentation}{63}{subsection.7.14.3}%
+\contentsline {subsubsection}{\numberline {7.14.3.1}BeginOfEventAction()}{63}{subsubsection.7.14.3.1}%
+\contentsline {subsubsection}{\numberline {7.14.3.2}EndOfEventAction()}{63}{subsubsection.7.14.3.2}%
+\contentsline {subsection}{\numberline {7.14.4}Member Data Documentation}{63}{subsection.7.14.4}%
+\contentsline {subsubsection}{\numberline {7.14.4.1}iStartTrack}{63}{subsubsection.7.14.4.1}%
+\contentsline {section}{\numberline {7.15}Event\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Tuple Struct Reference}{63}{section.7.15}%
+\contentsline {subsection}{\numberline {7.15.1}Detailed Description}{64}{subsection.7.15.1}%
+\contentsline {subsection}{\numberline {7.15.2}Member Data Documentation}{64}{subsection.7.15.2}%
+\contentsline {subsubsection}{\numberline {7.15.2.1}eventGlobalID}{64}{subsubsection.7.15.2.1}%
+\contentsline {subsubsection}{\numberline {7.15.2.2}eventLocalID}{64}{subsubsection.7.15.2.2}%
+\contentsline {subsubsection}{\numberline {7.15.2.3}nTracks}{64}{subsubsection.7.15.2.3}%
+\contentsline {subsubsection}{\numberline {7.15.2.4}runID}{64}{subsubsection.7.15.2.4}%
+\contentsline {section}{\numberline {7.16}Help\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Message Class Reference}{64}{section.7.16}%
+\contentsline {subsection}{\numberline {7.16.1}Detailed Description}{65}{subsection.7.16.1}%
+\contentsline {subsection}{\numberline {7.16.2}Constructor \& Destructor Documentation}{65}{subsection.7.16.2}%
+\contentsline {subsubsection}{\numberline {7.16.2.1}HelpMessage()}{65}{subsubsection.7.16.2.1}%
+\contentsline {subsection}{\numberline {7.16.3}Member Function Documentation}{65}{subsection.7.16.3}%
+\contentsline {subsubsection}{\numberline {7.16.3.1}print()}{65}{subsubsection.7.16.3.1}%
+\contentsline {subsection}{\numberline {7.16.4}Member Data Documentation}{65}{subsection.7.16.4}%
+\contentsline {subsubsection}{\numberline {7.16.4.1}usage}{65}{subsubsection.7.16.4.1}%
+\contentsline {section}{\numberline {7.17}Material Class Reference}{66}{section.7.17}%
+\contentsline {subsection}{\numberline {7.17.1}Detailed Description}{66}{subsection.7.17.1}%
+\contentsline {subsection}{\numberline {7.17.2}Constructor \& Destructor Documentation}{66}{subsection.7.17.2}%
+\contentsline {subsubsection}{\numberline {7.17.2.1}Material()}{66}{subsubsection.7.17.2.1}%
+\contentsline {subsection}{\numberline {7.17.3}Member Function Documentation}{67}{subsection.7.17.3}%
+\contentsline {subsubsection}{\numberline {7.17.3.1}getAlpideMaterial()}{67}{subsubsection.7.17.3.1}%
+\contentsline {subsubsection}{\numberline {7.17.3.2}getBoardMaterial()}{67}{subsubsection.7.17.3.2}%
+\contentsline {subsubsection}{\numberline {7.17.3.3}getScreenMaterial()}{67}{subsubsection.7.17.3.3}%
+\contentsline {subsubsection}{\numberline {7.17.3.4}getStandMaterial()}{67}{subsubsection.7.17.3.4}%
+\contentsline {subsubsection}{\numberline {7.17.3.5}getWorldMaterial()}{67}{subsubsection.7.17.3.5}%
+\contentsline {subsubsection}{\numberline {7.17.3.6}setAlpideMaterial()}{67}{subsubsection.7.17.3.6}%
+\contentsline {subsubsection}{\numberline {7.17.3.7}setBoardMaterial()}{67}{subsubsection.7.17.3.7}%
+\contentsline {subsubsection}{\numberline {7.17.3.8}setElement()}{68}{subsubsection.7.17.3.8}%
+\contentsline {subsubsection}{\numberline {7.17.3.9}setScreenMaterial()}{68}{subsubsection.7.17.3.9}%
+\contentsline {subsubsection}{\numberline {7.17.3.10}setStandMaterial()}{68}{subsubsection.7.17.3.10}%
+\contentsline {subsubsection}{\numberline {7.17.3.11}setWorldMaterial()}{68}{subsubsection.7.17.3.11}%
+\contentsline {subsection}{\numberline {7.17.4}Member Data Documentation}{68}{subsection.7.17.4}%
+\contentsline {subsubsection}{\numberline {7.17.4.1}alpideMaterial}{68}{subsubsection.7.17.4.1}%
+\contentsline {subsubsection}{\numberline {7.17.4.2}boardMaterial}{68}{subsubsection.7.17.4.2}%
+\contentsline {subsubsection}{\numberline {7.17.4.3}elAl}{68}{subsubsection.7.17.4.3}%
+\contentsline {subsubsection}{\numberline {7.17.4.4}elBr}{69}{subsubsection.7.17.4.4}%
+\contentsline {subsubsection}{\numberline {7.17.4.5}elC}{69}{subsubsection.7.17.4.5}%
+\contentsline {subsubsection}{\numberline {7.17.4.6}elCa}{69}{subsubsection.7.17.4.6}%
+\contentsline {subsubsection}{\numberline {7.17.4.7}elFe}{69}{subsubsection.7.17.4.7}%
+\contentsline {subsubsection}{\numberline {7.17.4.8}elH}{69}{subsubsection.7.17.4.8}%
+\contentsline {subsubsection}{\numberline {7.17.4.9}elMg}{69}{subsubsection.7.17.4.9}%
+\contentsline {subsubsection}{\numberline {7.17.4.10}elN}{69}{subsubsection.7.17.4.10}%
+\contentsline {subsubsection}{\numberline {7.17.4.11}elNa}{69}{subsubsection.7.17.4.11}%
+\contentsline {subsubsection}{\numberline {7.17.4.12}elO}{70}{subsubsection.7.17.4.12}%
+\contentsline {subsubsection}{\numberline {7.17.4.13}elSi}{70}{subsubsection.7.17.4.13}%
+\contentsline {subsubsection}{\numberline {7.17.4.14}elTi}{70}{subsubsection.7.17.4.14}%
+\contentsline {subsubsection}{\numberline {7.17.4.15}epoxyResin}{70}{subsubsection.7.17.4.15}%
+\contentsline {subsubsection}{\numberline {7.17.4.16}fibrousGlass}{70}{subsubsection.7.17.4.16}%
+\contentsline {subsubsection}{\numberline {7.17.4.17}screenMaterial}{70}{subsubsection.7.17.4.17}%
+\contentsline {subsubsection}{\numberline {7.17.4.18}standMaterial}{70}{subsubsection.7.17.4.18}%
+\contentsline {subsubsection}{\numberline {7.17.4.19}worldMaterial}{71}{subsubsection.7.17.4.19}%
+\contentsline {section}{\numberline {7.18}Merge\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}File\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Open Class Reference}{71}{section.7.18}%
+\contentsline {subsection}{\numberline {7.18.1}Detailed Description}{71}{subsection.7.18.1}%
+\contentsline {subsection}{\numberline {7.18.2}Constructor \& Destructor Documentation}{71}{subsection.7.18.2}%
+\contentsline {subsubsection}{\numberline {7.18.2.1}MergeFileOpen()}{71}{subsubsection.7.18.2.1}%
+\contentsline {subsection}{\numberline {7.18.3}Member Function Documentation}{72}{subsection.7.18.3}%
+\contentsline {subsubsection}{\numberline {7.18.3.1}what()}{72}{subsubsection.7.18.3.1}%
+\contentsline {subsection}{\numberline {7.18.4}Member Data Documentation}{72}{subsection.7.18.4}%
+\contentsline {subsubsection}{\numberline {7.18.4.1}message}{72}{subsubsection.7.18.4.1}%
+\contentsline {section}{\numberline {7.19}Merge\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Tree\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Open Class Reference}{72}{section.7.19}%
+\contentsline {subsection}{\numberline {7.19.1}Detailed Description}{72}{subsection.7.19.1}%
+\contentsline {subsection}{\numberline {7.19.2}Constructor \& Destructor Documentation}{73}{subsection.7.19.2}%
+\contentsline {subsubsection}{\numberline {7.19.2.1}MergeTreeOpen()}{73}{subsubsection.7.19.2.1}%
+\contentsline {subsection}{\numberline {7.19.3}Member Function Documentation}{73}{subsection.7.19.3}%
+\contentsline {subsubsection}{\numberline {7.19.3.1}what()}{73}{subsubsection.7.19.3.1}%
+\contentsline {subsection}{\numberline {7.19.4}Member Data Documentation}{73}{subsection.7.19.4}%
+\contentsline {subsubsection}{\numberline {7.19.4.1}message}{73}{subsubsection.7.19.4.1}%
+\contentsline {section}{\numberline {7.20}Primary\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Generator\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Action Class Reference}{73}{section.7.20}%
+\contentsline {subsection}{\numberline {7.20.1}Detailed Description}{74}{subsection.7.20.1}%
+\contentsline {subsection}{\numberline {7.20.2}Constructor \& Destructor Documentation}{74}{subsection.7.20.2}%
+\contentsline {subsubsection}{\numberline {7.20.2.1}PrimaryGeneratorAction()}{74}{subsubsection.7.20.2.1}%
+\contentsline {subsubsection}{\numberline {7.20.2.2}$\sim $PrimaryGeneratorAction()}{74}{subsubsection.7.20.2.2}%
+\contentsline {subsection}{\numberline {7.20.3}Member Function Documentation}{74}{subsection.7.20.3}%
+\contentsline {subsubsection}{\numberline {7.20.3.1}GeneratePrimaries()}{74}{subsubsection.7.20.3.1}%
+\contentsline {subsubsection}{\numberline {7.20.3.2}GetParticleGun()}{74}{subsubsection.7.20.3.2}%
+\contentsline {subsubsection}{\numberline {7.20.3.3}setParticleGun()}{74}{subsubsection.7.20.3.3}%
+\contentsline {subsection}{\numberline {7.20.4}Member Data Documentation}{75}{subsection.7.20.4}%
+\contentsline {subsubsection}{\numberline {7.20.4.1}fParticleGun}{75}{subsubsection.7.20.4.1}%
+\contentsline {section}{\numberline {7.21}Progress\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Bar Class Reference}{75}{section.7.21}%
+\contentsline {subsection}{\numberline {7.21.1}Detailed Description}{75}{subsection.7.21.1}%
+\contentsline {subsection}{\numberline {7.21.2}Constructor \& Destructor Documentation}{75}{subsection.7.21.2}%
+\contentsline {subsubsection}{\numberline {7.21.2.1}ProgressBar()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{75}{subsubsection.7.21.2.1}%
+\contentsline {subsubsection}{\numberline {7.21.2.2}ProgressBar()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{76}{subsubsection.7.21.2.2}%
+\contentsline {subsubsection}{\numberline {7.21.2.3}$\sim $ProgressBar()}{76}{subsubsection.7.21.2.3}%
+\contentsline {subsection}{\numberline {7.21.3}Member Function Documentation}{76}{subsection.7.21.3}%
+\contentsline {subsubsection}{\numberline {7.21.3.1}getMinute()}{76}{subsubsection.7.21.3.1}%
+\contentsline {subsubsection}{\numberline {7.21.3.2}getSecond()}{76}{subsubsection.7.21.3.2}%
+\contentsline {subsubsection}{\numberline {7.21.3.3}getTerminalLength()}{76}{subsubsection.7.21.3.3}%
+\contentsline {subsubsection}{\numberline {7.21.3.4}printProgress()}{76}{subsubsection.7.21.3.4}%
+\contentsline {subsection}{\numberline {7.21.4}Member Data Documentation}{76}{subsection.7.21.4}%
+\contentsline {subsubsection}{\numberline {7.21.4.1}called}{76}{subsubsection.7.21.4.1}%
+\contentsline {subsubsection}{\numberline {7.21.4.2}mSetSize}{77}{subsubsection.7.21.4.2}%
+\contentsline {subsubsection}{\numberline {7.21.4.3}mTerminalWidth}{77}{subsubsection.7.21.4.3}%
+\contentsline {subsubsection}{\numberline {7.21.4.4}printPoint}{77}{subsubsection.7.21.4.4}%
+\contentsline {subsubsection}{\numberline {7.21.4.5}start\_time}{77}{subsubsection.7.21.4.5}%
+\contentsline {section}{\numberline {7.22}Quantity Class Reference}{77}{section.7.22}%
+\contentsline {subsection}{\numberline {7.22.1}Detailed Description}{78}{subsection.7.22.1}%
+\contentsline {subsection}{\numberline {7.22.2}Constructor \& Destructor Documentation}{78}{subsection.7.22.2}%
+\contentsline {subsubsection}{\numberline {7.22.2.1}Quantity()\hspace {0.1cm}{\footnotesize \ttfamily [1/3]}}{78}{subsubsection.7.22.2.1}%
+\contentsline {subsubsection}{\numberline {7.22.2.2}Quantity()\hspace {0.1cm}{\footnotesize \ttfamily [2/3]}}{78}{subsubsection.7.22.2.2}%
+\contentsline {subsubsection}{\numberline {7.22.2.3}Quantity()\hspace {0.1cm}{\footnotesize \ttfamily [3/3]}}{78}{subsubsection.7.22.2.3}%
+\contentsline {subsection}{\numberline {7.22.3}Member Function Documentation}{79}{subsection.7.22.3}%
+\contentsline {subsubsection}{\numberline {7.22.3.1}getNum()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{79}{subsubsection.7.22.3.1}%
+\contentsline {subsubsection}{\numberline {7.22.3.2}getNum()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{79}{subsubsection.7.22.3.2}%
+\contentsline {subsubsection}{\numberline {7.22.3.3}getQuantity()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{79}{subsubsection.7.22.3.3}%
+\contentsline {subsubsection}{\numberline {7.22.3.4}getQuantity()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{79}{subsubsection.7.22.3.4}%
+\contentsline {subsubsection}{\numberline {7.22.3.5}getUnit()}{79}{subsubsection.7.22.3.5}%
+\contentsline {subsubsection}{\numberline {7.22.3.6}operator$\ast $()}{79}{subsubsection.7.22.3.6}%
+\contentsline {subsubsection}{\numberline {7.22.3.7}operator$\ast $=()}{79}{subsubsection.7.22.3.7}%
+\contentsline {subsubsection}{\numberline {7.22.3.8}operator+()}{80}{subsubsection.7.22.3.8}%
+\contentsline {subsubsection}{\numberline {7.22.3.9}operator+=()}{80}{subsubsection.7.22.3.9}%
+\contentsline {subsubsection}{\numberline {7.22.3.10}operator-\/()}{80}{subsubsection.7.22.3.10}%
+\contentsline {subsubsection}{\numberline {7.22.3.11}operator-\/=()}{80}{subsubsection.7.22.3.11}%
+\contentsline {subsubsection}{\numberline {7.22.3.12}operator/()}{80}{subsubsection.7.22.3.12}%
+\contentsline {subsubsection}{\numberline {7.22.3.13}operator/=()}{80}{subsubsection.7.22.3.13}%
+\contentsline {subsubsection}{\numberline {7.22.3.14}setUserQuantity()}{80}{subsubsection.7.22.3.14}%
+\contentsline {subsection}{\numberline {7.22.4}Friends And Related Symbol Documentation}{81}{subsection.7.22.4}%
+\contentsline {subsubsection}{\numberline {7.22.4.1}operator$<$$<$\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{81}{subsubsection.7.22.4.1}%
+\contentsline {subsubsection}{\numberline {7.22.4.2}operator$<$$<$\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{81}{subsubsection.7.22.4.2}%
+\contentsline {subsection}{\numberline {7.22.5}Member Data Documentation}{81}{subsection.7.22.5}%
+\contentsline {subsubsection}{\numberline {7.22.5.1}mDigit}{81}{subsubsection.7.22.5.1}%
+\contentsline {subsubsection}{\numberline {7.22.5.2}mNum}{81}{subsubsection.7.22.5.2}%
+\contentsline {subsubsection}{\numberline {7.22.5.3}mUnit}{81}{subsubsection.7.22.5.3}%
+\contentsline {subsubsection}{\numberline {7.22.5.4}userQuantity}{81}{subsubsection.7.22.5.4}%
+\contentsline {section}{\numberline {7.23}Run\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Action Class Reference}{82}{section.7.23}%
+\contentsline {subsection}{\numberline {7.23.1}Detailed Description}{82}{subsection.7.23.1}%
+\contentsline {subsection}{\numberline {7.23.2}Constructor \& Destructor Documentation}{82}{subsection.7.23.2}%
+\contentsline {subsubsection}{\numberline {7.23.2.1}RunAction()}{82}{subsubsection.7.23.2.1}%
+\contentsline {subsubsection}{\numberline {7.23.2.2}$\sim $RunAction()}{82}{subsubsection.7.23.2.2}%
+\contentsline {subsection}{\numberline {7.23.3}Member Function Documentation}{82}{subsection.7.23.3}%
+\contentsline {subsubsection}{\numberline {7.23.3.1}BeginOfRunAction()}{82}{subsubsection.7.23.3.1}%
+\contentsline {subsubsection}{\numberline {7.23.3.2}EndOfRunAction()}{83}{subsubsection.7.23.3.2}%
+\contentsline {subsection}{\numberline {7.23.4}Member Data Documentation}{83}{subsection.7.23.4}%
+\contentsline {subsubsection}{\numberline {7.23.4.1}fAnalysisManager}{83}{subsubsection.7.23.4.1}%
+\contentsline {section}{\numberline {7.24}Run\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Tuple Struct Reference}{83}{section.7.24}%
+\contentsline {subsection}{\numberline {7.24.1}Detailed Description}{83}{subsection.7.24.1}%
+\contentsline {subsection}{\numberline {7.24.2}Member Data Documentation}{83}{subsection.7.24.2}%
+\contentsline {subsubsection}{\numberline {7.24.2.1}nEvents}{83}{subsubsection.7.24.2.1}%
+\contentsline {subsubsection}{\numberline {7.24.2.2}runID}{84}{subsubsection.7.24.2.2}%
+\contentsline {section}{\numberline {7.25}Solid Class Reference}{84}{section.7.25}%
+\contentsline {subsection}{\numberline {7.25.1}Detailed Description}{84}{subsection.7.25.1}%
+\contentsline {subsection}{\numberline {7.25.2}Constructor \& Destructor Documentation}{85}{subsection.7.25.2}%
+\contentsline {subsubsection}{\numberline {7.25.2.1}Solid()}{85}{subsubsection.7.25.2.1}%
+\contentsline {subsection}{\numberline {7.25.3}Member Function Documentation}{85}{subsection.7.25.3}%
+\contentsline {subsubsection}{\numberline {7.25.3.1}getAlphaStandSolid()}{85}{subsubsection.7.25.3.1}%
+\contentsline {subsubsection}{\numberline {7.25.3.2}getAlpideCircuitSolid()}{85}{subsubsection.7.25.3.2}%
+\contentsline {subsubsection}{\numberline {7.25.3.3}getAlpideEpitaxialSolid()}{85}{subsubsection.7.25.3.3}%
+\contentsline {subsubsection}{\numberline {7.25.3.4}getBetaStandSolid()}{85}{subsubsection.7.25.3.4}%
+\contentsline {subsubsection}{\numberline {7.25.3.5}getBoardSolid()}{85}{subsubsection.7.25.3.5}%
+\contentsline {subsubsection}{\numberline {7.25.3.6}getNewStandSolid()}{85}{subsubsection.7.25.3.6}%
+\contentsline {subsubsection}{\numberline {7.25.3.7}getScreenSolid()}{86}{subsubsection.7.25.3.7}%
+\contentsline {subsubsection}{\numberline {7.25.3.8}setAlphaStandSolid()}{86}{subsubsection.7.25.3.8}%
+\contentsline {subsubsection}{\numberline {7.25.3.9}setAlpideCircuitSolid()}{86}{subsubsection.7.25.3.9}%
+\contentsline {subsubsection}{\numberline {7.25.3.10}setAlpideEpitaxialSolid()}{86}{subsubsection.7.25.3.10}%
+\contentsline {subsubsection}{\numberline {7.25.3.11}setBetaStandSolid()}{86}{subsubsection.7.25.3.11}%
+\contentsline {subsubsection}{\numberline {7.25.3.12}setBoardSolid()}{86}{subsubsection.7.25.3.12}%
+\contentsline {subsubsection}{\numberline {7.25.3.13}setNewStandSolid()}{86}{subsubsection.7.25.3.13}%
+\contentsline {subsubsection}{\numberline {7.25.3.14}setScreenSolid()}{87}{subsubsection.7.25.3.14}%
+\contentsline {subsection}{\numberline {7.25.4}Member Data Documentation}{87}{subsection.7.25.4}%
+\contentsline {subsubsection}{\numberline {7.25.4.1}alphaStandSolid}{87}{subsubsection.7.25.4.1}%
+\contentsline {subsubsection}{\numberline {7.25.4.2}alpideCircuitSolid}{87}{subsubsection.7.25.4.2}%
+\contentsline {subsubsection}{\numberline {7.25.4.3}alpideEpitaxialSolid}{87}{subsubsection.7.25.4.3}%
+\contentsline {subsubsection}{\numberline {7.25.4.4}betaStandSolid}{87}{subsubsection.7.25.4.4}%
+\contentsline {subsubsection}{\numberline {7.25.4.5}boardSolid}{87}{subsubsection.7.25.4.5}%
+\contentsline {subsubsection}{\numberline {7.25.4.6}newStandSolid}{87}{subsubsection.7.25.4.6}%
+\contentsline {subsubsection}{\numberline {7.25.4.7}screenSolid}{88}{subsubsection.7.25.4.7}%
+\contentsline {section}{\numberline {7.26}Stepping\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Action Class Reference}{88}{section.7.26}%
+\contentsline {subsection}{\numberline {7.26.1}Detailed Description}{88}{subsection.7.26.1}%
+\contentsline {subsection}{\numberline {7.26.2}Constructor \& Destructor Documentation}{88}{subsection.7.26.2}%
+\contentsline {subsubsection}{\numberline {7.26.2.1}SteppingAction()}{88}{subsubsection.7.26.2.1}%
+\contentsline {subsubsection}{\numberline {7.26.2.2}$\sim $SteppingAction()}{88}{subsubsection.7.26.2.2}%
+\contentsline {subsection}{\numberline {7.26.3}Member Function Documentation}{89}{subsection.7.26.3}%
+\contentsline {subsubsection}{\numberline {7.26.3.1}UserSteppingAction()}{89}{subsubsection.7.26.3.1}%
+\contentsline {section}{\numberline {7.27}Step\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Tuple Struct Reference}{89}{section.7.27}%
+\contentsline {subsection}{\numberline {7.27.1}Detailed Description}{89}{subsection.7.27.1}%
+\contentsline {subsection}{\numberline {7.27.2}Member Data Documentation}{89}{subsection.7.27.2}%
+\contentsline {subsubsection}{\numberline {7.27.2.1}deltaEnergy}{89}{subsubsection.7.27.2.1}%
+\contentsline {subsubsection}{\numberline {7.27.2.2}kineticEnergy}{89}{subsubsection.7.27.2.2}%
+\contentsline {subsubsection}{\numberline {7.27.2.3}momentum}{90}{subsubsection.7.27.2.3}%
+\contentsline {subsubsection}{\numberline {7.27.2.4}nonIonizingEnergyLoss}{90}{subsubsection.7.27.2.4}%
+\contentsline {subsubsection}{\numberline {7.27.2.5}position}{90}{subsubsection.7.27.2.5}%
+\contentsline {subsubsection}{\numberline {7.27.2.6}stepGlobalID}{90}{subsubsection.7.27.2.6}%
+\contentsline {subsubsection}{\numberline {7.27.2.7}time}{90}{subsubsection.7.27.2.7}%
+\contentsline {subsubsection}{\numberline {7.27.2.8}totalDepositEnergy}{90}{subsubsection.7.27.2.8}%
+\contentsline {subsubsection}{\numberline {7.27.2.9}trackGlobalID}{90}{subsubsection.7.27.2.9}%
+\contentsline {subsubsection}{\numberline {7.27.2.10}volumeName}{91}{subsubsection.7.27.2.10}%
+\contentsline {section}{\numberline {7.28}TALPIDEDecoder Class Reference}{91}{section.7.28}%
+\contentsline {subsection}{\numberline {7.28.1}Detailed Description}{92}{subsection.7.28.1}%
+\contentsline {subsection}{\numberline {7.28.2}Constructor \& Destructor Documentation}{92}{subsection.7.28.2}%
+\contentsline {subsubsection}{\numberline {7.28.2.1}TALPIDEDecoder()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{92}{subsubsection.7.28.2.1}%
+\contentsline {subsubsection}{\numberline {7.28.2.2}TALPIDEDecoder()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{92}{subsubsection.7.28.2.2}%
+\contentsline {subsection}{\numberline {7.28.3}Member Function Documentation}{92}{subsection.7.28.3}%
+\contentsline {subsubsection}{\numberline {7.28.3.1}bitwise\_and()}{92}{subsubsection.7.28.3.1}%
+\contentsline {subsubsection}{\numberline {7.28.3.2}bitwise\_or()}{92}{subsubsection.7.28.3.2}%
+\contentsline {subsubsection}{\numberline {7.28.3.3}bitwise\_xor()}{93}{subsubsection.7.28.3.3}%
+\contentsline {subsubsection}{\numberline {7.28.3.4}decode()}{93}{subsubsection.7.28.3.4}%
+\contentsline {subsubsection}{\numberline {7.28.3.5}getData()}{93}{subsubsection.7.28.3.5}%
+\contentsline {subsubsection}{\numberline {7.28.3.6}headerTest()}{93}{subsubsection.7.28.3.6}%
+\contentsline {subsubsection}{\numberline {7.28.3.7}hex\_to\_dec()}{93}{subsubsection.7.28.3.7}%
+\contentsline {subsubsection}{\numberline {7.28.3.8}inputEvent()}{93}{subsubsection.7.28.3.8}%
+\contentsline {subsubsection}{\numberline {7.28.3.9}isDone()}{93}{subsubsection.7.28.3.9}%
+\contentsline {subsubsection}{\numberline {7.28.3.10}preTest()}{94}{subsubsection.7.28.3.10}%
+\contentsline {subsubsection}{\numberline {7.28.3.11}strayTest()}{94}{subsubsection.7.28.3.11}%
+\contentsline {subsection}{\numberline {7.28.4}Member Data Documentation}{94}{subsection.7.28.4}%
+\contentsline {subsubsection}{\numberline {7.28.4.1}alpides}{94}{subsubsection.7.28.4.1}%
+\contentsline {subsubsection}{\numberline {7.28.4.2}index\_}{94}{subsubsection.7.28.4.2}%
+\contentsline {section}{\numberline {7.29}TALPIDEEvent Class Reference}{94}{section.7.29}%
+\contentsline {subsection}{\numberline {7.29.1}Detailed Description}{95}{subsection.7.29.1}%
+\contentsline {subsection}{\numberline {7.29.2}Member Enumeration Documentation}{95}{subsection.7.29.2}%
+\contentsline {subsubsection}{\numberline {7.29.2.1}anonymous enum}{95}{subsubsection.7.29.2.1}%
+\contentsline {subsection}{\numberline {7.29.3}Constructor \& Destructor Documentation}{96}{subsection.7.29.3}%
+\contentsline {subsubsection}{\numberline {7.29.3.1}TALPIDEEvent()\hspace {0.1cm}{\footnotesize \ttfamily [1/3]}}{96}{subsubsection.7.29.3.1}%
+\contentsline {subsubsection}{\numberline {7.29.3.2}TALPIDEEvent()\hspace {0.1cm}{\footnotesize \ttfamily [2/3]}}{96}{subsubsection.7.29.3.2}%
+\contentsline {subsubsection}{\numberline {7.29.3.3}TALPIDEEvent()\hspace {0.1cm}{\footnotesize \ttfamily [3/3]}}{96}{subsubsection.7.29.3.3}%
+\contentsline {subsection}{\numberline {7.29.4}Member Function Documentation}{96}{subsection.7.29.4}%
+\contentsline {subsubsection}{\numberline {7.29.4.1}getData()}{96}{subsubsection.7.29.4.1}%
+\contentsline {subsubsection}{\numberline {7.29.4.2}getNData()}{96}{subsubsection.7.29.4.2}%
+\contentsline {subsubsection}{\numberline {7.29.4.3}getTime()}{96}{subsubsection.7.29.4.3}%
+\contentsline {subsubsection}{\numberline {7.29.4.4}IsDestructed()}{96}{subsubsection.7.29.4.4}%
+\contentsline {subsubsection}{\numberline {7.29.4.5}operator=()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{97}{subsubsection.7.29.4.5}%
+\contentsline {subsubsection}{\numberline {7.29.4.6}operator=()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{97}{subsubsection.7.29.4.6}%
+\contentsline {subsubsection}{\numberline {7.29.4.7}pushData()}{97}{subsubsection.7.29.4.7}%
+\contentsline {subsubsection}{\numberline {7.29.4.8}removeDuplication()}{97}{subsubsection.7.29.4.8}%
+\contentsline {subsubsection}{\numberline {7.29.4.9}removePixel()}{97}{subsubsection.7.29.4.9}%
+\contentsline {subsubsection}{\numberline {7.29.4.10}setTime()}{97}{subsubsection.7.29.4.10}%
+\contentsline {subsubsection}{\numberline {7.29.4.11}sortPixel()}{97}{subsubsection.7.29.4.11}%
+\contentsline {subsubsection}{\numberline {7.29.4.12}TestBit()}{98}{subsubsection.7.29.4.12}%
+\contentsline {subsection}{\numberline {7.29.5}Member Data Documentation}{98}{subsection.7.29.5}%
+\contentsline {subsubsection}{\numberline {7.29.5.1}data}{98}{subsubsection.7.29.5.1}%
+\contentsline {subsubsection}{\numberline {7.29.5.2}fBits}{98}{subsubsection.7.29.5.2}%
+\contentsline {subsubsection}{\numberline {7.29.5.3}iTime}{98}{subsubsection.7.29.5.3}%
+\contentsline {section}{\numberline {7.30}TAnalyser Class Reference}{98}{section.7.30}%
+\contentsline {subsection}{\numberline {7.30.1}Detailed Description}{100}{subsection.7.30.1}%
+\contentsline {subsection}{\numberline {7.30.2}Member Enumeration Documentation}{100}{subsection.7.30.2}%
+\contentsline {subsubsection}{\numberline {7.30.2.1}anonymous enum}{100}{subsubsection.7.30.2.1}%
+\contentsline {subsection}{\numberline {7.30.3}Constructor \& Destructor Documentation}{101}{subsection.7.30.3}%
+\contentsline {subsubsection}{\numberline {7.30.3.1}TAnalyser()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{101}{subsubsection.7.30.3.1}%
+\contentsline {subsubsection}{\numberline {7.30.3.2}TAnalyser()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{101}{subsubsection.7.30.3.2}%
+\contentsline {subsubsection}{\numberline {7.30.3.3}$\sim $TAnalyser()}{101}{subsubsection.7.30.3.3}%
+\contentsline {subsection}{\numberline {7.30.4}Member Function Documentation}{102}{subsection.7.30.4}%
+\contentsline {subsubsection}{\numberline {7.30.4.1}doDivideBySize()}{102}{subsubsection.7.30.4.1}%
+\contentsline {subsubsection}{\numberline {7.30.4.2}doMasking()}{102}{subsubsection.7.30.4.2}%
+\contentsline {subsubsection}{\numberline {7.30.4.3}doShaping()}{102}{subsubsection.7.30.4.3}%
+\contentsline {subsubsection}{\numberline {7.30.4.4}getAnEventSet()}{102}{subsubsection.7.30.4.4}%
+\contentsline {subsubsection}{\numberline {7.30.4.5}getClusterPlot()}{102}{subsubsection.7.30.4.5}%
+\contentsline {subsubsection}{\numberline {7.30.4.6}getClustersizePlot()}{103}{subsubsection.7.30.4.6}%
+\contentsline {subsubsection}{\numberline {7.30.4.7}getClusterSizeRange()}{103}{subsubsection.7.30.4.7}%
+\contentsline {subsubsection}{\numberline {7.30.4.8}getHitPlot()}{103}{subsubsection.7.30.4.8}%
+\contentsline {subsubsection}{\numberline {7.30.4.9}IsDestructed()}{103}{subsubsection.7.30.4.9}%
+\contentsline {subsubsection}{\numberline {7.30.4.10}openDirectory()}{104}{subsubsection.7.30.4.10}%
+\contentsline {subsubsection}{\numberline {7.30.4.11}openOutputGraphFile()}{105}{subsubsection.7.30.4.11}%
+\contentsline {subsubsection}{\numberline {7.30.4.12}openTree()}{105}{subsubsection.7.30.4.12}%
+\contentsline {subsubsection}{\numberline {7.30.4.13}saveClustermap()}{106}{subsubsection.7.30.4.13}%
+\contentsline {subsubsection}{\numberline {7.30.4.14}saveClustersize()}{106}{subsubsection.7.30.4.14}%
+\contentsline {subsubsection}{\numberline {7.30.4.15}saveHitmap()}{106}{subsubsection.7.30.4.15}%
+\contentsline {subsubsection}{\numberline {7.30.4.16}saveIndividualShapes()}{106}{subsubsection.7.30.4.16}%
+\contentsline {subsubsection}{\numberline {7.30.4.17}saveSameSizeInfos()}{106}{subsubsection.7.30.4.17}%
+\contentsline {subsubsection}{\numberline {7.30.4.18}saveSameSizeShapeEntry()}{107}{subsubsection.7.30.4.18}%
+\contentsline {subsubsection}{\numberline {7.30.4.19}saveSameSizeShapes()}{107}{subsubsection.7.30.4.19}%
+\contentsline {subsubsection}{\numberline {7.30.4.20}saveTotalShapeEntry()}{107}{subsubsection.7.30.4.20}%
+\contentsline {subsubsection}{\numberline {7.30.4.21}saveTotalShapes()}{107}{subsubsection.7.30.4.21}%
+\contentsline {subsubsection}{\numberline {7.30.4.22}setClusterDataWithShape()}{107}{subsubsection.7.30.4.22}%
+\contentsline {subsubsection}{\numberline {7.30.4.23}setExpSettingLegend()}{108}{subsubsection.7.30.4.23}%
+\contentsline {subsubsection}{\numberline {7.30.4.24}storeEvents()}{108}{subsubsection.7.30.4.24}%
+\contentsline {subsubsection}{\numberline {7.30.4.25}TestBit()}{109}{subsubsection.7.30.4.25}%
+\contentsline {subsection}{\numberline {7.30.5}Member Data Documentation}{109}{subsection.7.30.5}%
+\contentsline {subsubsection}{\numberline {7.30.5.1}fBits}{109}{subsubsection.7.30.5.1}%
+\contentsline {subsubsection}{\numberline {7.30.5.2}mClusterDataWithShape}{109}{subsubsection.7.30.5.2}%
+\contentsline {subsubsection}{\numberline {7.30.5.3}mClustermaps}{109}{subsubsection.7.30.5.3}%
+\contentsline {subsubsection}{\numberline {7.30.5.4}mClusterShapeSet}{109}{subsubsection.7.30.5.4}%
+\contentsline {subsubsection}{\numberline {7.30.5.5}mClustersizes}{110}{subsubsection.7.30.5.5}%
+\contentsline {subsubsection}{\numberline {7.30.5.6}mDirectorySet}{110}{subsubsection.7.30.5.6}%
+\contentsline {subsubsection}{\numberline {7.30.5.7}mDivideData}{110}{subsubsection.7.30.5.7}%
+\contentsline {subsubsection}{\numberline {7.30.5.8}mExpData}{110}{subsubsection.7.30.5.8}%
+\contentsline {subsubsection}{\numberline {7.30.5.9}mExpSettingLegend}{110}{subsubsection.7.30.5.9}%
+\contentsline {subsubsection}{\numberline {7.30.5.10}mHitmaps}{110}{subsubsection.7.30.5.10}%
+\contentsline {subsubsection}{\numberline {7.30.5.11}mInput}{110}{subsubsection.7.30.5.11}%
+\contentsline {subsubsection}{\numberline {7.30.5.12}mInputFile}{111}{subsubsection.7.30.5.12}%
+\contentsline {subsubsection}{\numberline {7.30.5.13}mIsOutputGraph}{111}{subsubsection.7.30.5.13}%
+\contentsline {subsubsection}{\numberline {7.30.5.14}mMaxModeSet}{111}{subsubsection.7.30.5.14}%
+\contentsline {subsubsection}{\numberline {7.30.5.15}mNTotalShapeSet}{111}{subsubsection.7.30.5.15}%
+\contentsline {subsubsection}{\numberline {7.30.5.16}mOutputFile}{111}{subsubsection.7.30.5.16}%
+\contentsline {subsubsection}{\numberline {7.30.5.17}mTree}{111}{subsubsection.7.30.5.17}%
+\contentsline {section}{\numberline {7.31}TAPTSDecoder Class Reference}{112}{section.7.31}%
+\contentsline {subsection}{\numberline {7.31.1}Detailed Description}{113}{subsection.7.31.1}%
+\contentsline {subsection}{\numberline {7.31.2}Constructor \& Destructor Documentation}{113}{subsection.7.31.2}%
+\contentsline {subsubsection}{\numberline {7.31.2.1}TAPTSDecoder()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{113}{subsubsection.7.31.2.1}%
+\contentsline {subsubsection}{\numberline {7.31.2.2}TAPTSDecoder()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{113}{subsubsection.7.31.2.2}%
+\contentsline {subsection}{\numberline {7.31.3}Member Function Documentation}{113}{subsection.7.31.3}%
+\contentsline {subsubsection}{\numberline {7.31.3.1}decode()}{113}{subsubsection.7.31.3.1}%
+\contentsline {subsubsection}{\numberline {7.31.3.2}getData()}{113}{subsubsection.7.31.3.2}%
+\contentsline {subsubsection}{\numberline {7.31.3.3}getEventLength()}{113}{subsubsection.7.31.3.3}%
+\contentsline {subsubsection}{\numberline {7.31.3.4}headerTest()}{113}{subsubsection.7.31.3.4}%
+\contentsline {subsubsection}{\numberline {7.31.3.5}inputEvent()}{114}{subsubsection.7.31.3.5}%
+\contentsline {subsubsection}{\numberline {7.31.3.6}isDone()}{114}{subsubsection.7.31.3.6}%
+\contentsline {subsubsection}{\numberline {7.31.3.7}missingTest()}{114}{subsubsection.7.31.3.7}%
+\contentsline {subsubsection}{\numberline {7.31.3.8}postTest()}{114}{subsubsection.7.31.3.8}%
+\contentsline {subsubsection}{\numberline {7.31.3.9}preTest()}{114}{subsubsection.7.31.3.9}%
+\contentsline {subsubsection}{\numberline {7.31.3.10}rangeTest()}{114}{subsubsection.7.31.3.10}%
+\contentsline {subsection}{\numberline {7.31.4}Member Data Documentation}{114}{subsection.7.31.4}%
+\contentsline {subsubsection}{\numberline {7.31.4.1}aptss}{114}{subsubsection.7.31.4.1}%
+\contentsline {subsubsection}{\numberline {7.31.4.2}expected\_footer}{115}{subsubsection.7.31.4.2}%
+\contentsline {subsubsection}{\numberline {7.31.4.3}expected\_header}{115}{subsubsection.7.31.4.3}%
+\contentsline {subsubsection}{\numberline {7.31.4.4}iEvent\_}{115}{subsubsection.7.31.4.4}%
+\contentsline {subsubsection}{\numberline {7.31.4.5}index\_}{115}{subsubsection.7.31.4.5}%
+\contentsline {subsubsection}{\numberline {7.31.4.6}lenEvent\_}{115}{subsubsection.7.31.4.6}%
+\contentsline {subsubsection}{\numberline {7.31.4.7}mapping}{115}{subsubsection.7.31.4.7}%
+\contentsline {subsubsection}{\numberline {7.31.4.8}mux\_}{115}{subsubsection.7.31.4.8}%
+\contentsline {subsubsection}{\numberline {7.31.4.9}nFrame\_}{116}{subsubsection.7.31.4.9}%
+\contentsline {section}{\numberline {7.32}TAPTSEvent Class Reference}{116}{section.7.32}%
+\contentsline {subsection}{\numberline {7.32.1}Detailed Description}{116}{subsection.7.32.1}%
+\contentsline {subsection}{\numberline {7.32.2}Constructor \& Destructor Documentation}{117}{subsection.7.32.2}%
+\contentsline {subsubsection}{\numberline {7.32.2.1}TAPTSEvent()}{117}{subsubsection.7.32.2.1}%
+\contentsline {subsection}{\numberline {7.32.3}Member Function Documentation}{117}{subsection.7.32.3}%
+\contentsline {subsubsection}{\numberline {7.32.3.1}getData()}{117}{subsubsection.7.32.3.1}%
+\contentsline {subsubsection}{\numberline {7.32.3.2}getFrame()}{117}{subsubsection.7.32.3.2}%
+\contentsline {subsubsection}{\numberline {7.32.3.3}setFrame()}{117}{subsubsection.7.32.3.3}%
+\contentsline {subsection}{\numberline {7.32.4}Member Data Documentation}{117}{subsection.7.32.4}%
+\contentsline {subsubsection}{\numberline {7.32.4.1}data}{117}{subsubsection.7.32.4.1}%
+\contentsline {subsubsection}{\numberline {7.32.4.2}iFrame}{117}{subsubsection.7.32.4.2}%
+\contentsline {section}{\numberline {7.33}TCluster Class Reference}{118}{section.7.33}%
+\contentsline {subsection}{\numberline {7.33.1}Detailed Description}{119}{subsection.7.33.1}%
+\contentsline {subsection}{\numberline {7.33.2}Member Enumeration Documentation}{119}{subsection.7.33.2}%
+\contentsline {subsubsection}{\numberline {7.33.2.1}anonymous enum}{119}{subsubsection.7.33.2.1}%
+\contentsline {subsection}{\numberline {7.33.3}Constructor \& Destructor Documentation}{119}{subsection.7.33.3}%
+\contentsline {subsubsection}{\numberline {7.33.3.1}TCluster()\hspace {0.1cm}{\footnotesize \ttfamily [1/4]}}{119}{subsubsection.7.33.3.1}%
+\contentsline {subsubsection}{\numberline {7.33.3.2}TCluster()\hspace {0.1cm}{\footnotesize \ttfamily [2/4]}}{119}{subsubsection.7.33.3.2}%
+\contentsline {subsubsection}{\numberline {7.33.3.3}TCluster()\hspace {0.1cm}{\footnotesize \ttfamily [3/4]}}{120}{subsubsection.7.33.3.3}%
+\contentsline {subsubsection}{\numberline {7.33.3.4}TCluster()\hspace {0.1cm}{\footnotesize \ttfamily [4/4]}}{120}{subsubsection.7.33.3.4}%
+\contentsline {subsubsection}{\numberline {7.33.3.5}$\sim $TCluster()}{120}{subsubsection.7.33.3.5}%
+\contentsline {subsection}{\numberline {7.33.4}Member Function Documentation}{120}{subsection.7.33.4}%
+\contentsline {subsubsection}{\numberline {7.33.4.1}AddCluster()}{120}{subsubsection.7.33.4.1}%
+\contentsline {subsubsection}{\numberline {7.33.4.2}AddPixel()}{120}{subsubsection.7.33.4.2}%
+\contentsline {subsubsection}{\numberline {7.33.4.3}calCenter()}{120}{subsubsection.7.33.4.3}%
+\contentsline {subsubsection}{\numberline {7.33.4.4}calLongRadius()}{120}{subsubsection.7.33.4.4}%
+\contentsline {subsubsection}{\numberline {7.33.4.5}calMembers()}{121}{subsubsection.7.33.4.5}%
+\contentsline {subsubsection}{\numberline {7.33.4.6}calMinMax()}{121}{subsubsection.7.33.4.6}%
+\contentsline {subsubsection}{\numberline {7.33.4.7}calSize()}{121}{subsubsection.7.33.4.7}%
+\contentsline {subsubsection}{\numberline {7.33.4.8}getCenter()}{121}{subsubsection.7.33.4.8}%
+\contentsline {subsubsection}{\numberline {7.33.4.9}getDistance()}{121}{subsubsection.7.33.4.9}%
+\contentsline {subsubsection}{\numberline {7.33.4.10}getEvent()}{121}{subsubsection.7.33.4.10}%
+\contentsline {subsubsection}{\numberline {7.33.4.11}getLongRadius()}{121}{subsubsection.7.33.4.11}%
+\contentsline {subsubsection}{\numberline {7.33.4.12}getMaxX()}{122}{subsubsection.7.33.4.12}%
+\contentsline {subsubsection}{\numberline {7.33.4.13}getMaxY()}{122}{subsubsection.7.33.4.13}%
+\contentsline {subsubsection}{\numberline {7.33.4.14}getMinX()}{122}{subsubsection.7.33.4.14}%
+\contentsline {subsubsection}{\numberline {7.33.4.15}getMinY()}{122}{subsubsection.7.33.4.15}%
+\contentsline {subsubsection}{\numberline {7.33.4.16}getPixels()}{122}{subsubsection.7.33.4.16}%
+\contentsline {subsubsection}{\numberline {7.33.4.17}getSize()}{122}{subsubsection.7.33.4.17}%
+\contentsline {subsubsection}{\numberline {7.33.4.18}getTimeStamp()}{122}{subsubsection.7.33.4.18}%
+\contentsline {subsubsection}{\numberline {7.33.4.19}isContain()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{122}{subsubsection.7.33.4.19}%
+\contentsline {subsubsection}{\numberline {7.33.4.20}isContain()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{123}{subsubsection.7.33.4.20}%
+\contentsline {subsubsection}{\numberline {7.33.4.21}IsDestructed()}{123}{subsubsection.7.33.4.21}%
+\contentsline {subsubsection}{\numberline {7.33.4.22}isNeighbour()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{123}{subsubsection.7.33.4.22}%
+\contentsline {subsubsection}{\numberline {7.33.4.23}isNeighbour()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{123}{subsubsection.7.33.4.23}%
+\contentsline {subsubsection}{\numberline {7.33.4.24}operator"!=()}{123}{subsubsection.7.33.4.24}%
+\contentsline {subsubsection}{\numberline {7.33.4.25}operator=()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{123}{subsubsection.7.33.4.25}%
+\contentsline {subsubsection}{\numberline {7.33.4.26}operator=()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{123}{subsubsection.7.33.4.26}%
+\contentsline {subsubsection}{\numberline {7.33.4.27}operator==()}{124}{subsubsection.7.33.4.27}%
+\contentsline {subsubsection}{\numberline {7.33.4.28}setEvent()}{124}{subsubsection.7.33.4.28}%
+\contentsline {subsubsection}{\numberline {7.33.4.29}setMaxX()}{124}{subsubsection.7.33.4.29}%
+\contentsline {subsubsection}{\numberline {7.33.4.30}setMaxY()}{124}{subsubsection.7.33.4.30}%
+\contentsline {subsubsection}{\numberline {7.33.4.31}setMinX()}{124}{subsubsection.7.33.4.31}%
+\contentsline {subsubsection}{\numberline {7.33.4.32}setMinY()}{124}{subsubsection.7.33.4.32}%
+\contentsline {subsubsection}{\numberline {7.33.4.33}setTimeStamp()}{124}{subsubsection.7.33.4.33}%
+\contentsline {subsubsection}{\numberline {7.33.4.34}TestBit()}{125}{subsubsection.7.33.4.34}%
+\contentsline {subsection}{\numberline {7.33.5}Member Data Documentation}{125}{subsection.7.33.5}%
+\contentsline {subsubsection}{\numberline {7.33.5.1}center}{125}{subsubsection.7.33.5.1}%
+\contentsline {subsubsection}{\numberline {7.33.5.2}fBits}{125}{subsubsection.7.33.5.2}%
+\contentsline {subsubsection}{\numberline {7.33.5.3}mEvent}{125}{subsubsection.7.33.5.3}%
+\contentsline {subsubsection}{\numberline {7.33.5.4}mLongRadius}{125}{subsubsection.7.33.5.4}%
+\contentsline {subsubsection}{\numberline {7.33.5.5}mMaxX}{125}{subsubsection.7.33.5.5}%
+\contentsline {subsubsection}{\numberline {7.33.5.6}mMaxY}{126}{subsubsection.7.33.5.6}%
+\contentsline {subsubsection}{\numberline {7.33.5.7}mMinX}{126}{subsubsection.7.33.5.7}%
+\contentsline {subsubsection}{\numberline {7.33.5.8}mMinY}{126}{subsubsection.7.33.5.8}%
+\contentsline {subsubsection}{\numberline {7.33.5.9}mPixels}{126}{subsubsection.7.33.5.9}%
+\contentsline {subsubsection}{\numberline {7.33.5.10}mTime}{126}{subsubsection.7.33.5.10}%
+\contentsline {subsubsection}{\numberline {7.33.5.11}size}{126}{subsubsection.7.33.5.11}%
+\contentsline {section}{\numberline {7.34}TCluster\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analyser Class Reference}{127}{section.7.34}%
+\contentsline {subsection}{\numberline {7.34.1}Detailed Description}{129}{subsection.7.34.1}%
+\contentsline {subsection}{\numberline {7.34.2}Member Enumeration Documentation}{129}{subsection.7.34.2}%
+\contentsline {subsubsection}{\numberline {7.34.2.1}anonymous enum}{129}{subsubsection.7.34.2.1}%
+\contentsline {subsection}{\numberline {7.34.3}Constructor \& Destructor Documentation}{130}{subsection.7.34.3}%
+\contentsline {subsubsection}{\numberline {7.34.3.1}TClusterAnalyser()\hspace {0.1cm}{\footnotesize \ttfamily [1/3]}}{130}{subsubsection.7.34.3.1}%
+\contentsline {subsubsection}{\numberline {7.34.3.2}TClusterAnalyser()\hspace {0.1cm}{\footnotesize \ttfamily [2/3]}}{130}{subsubsection.7.34.3.2}%
+\contentsline {subsubsection}{\numberline {7.34.3.3}TClusterAnalyser()\hspace {0.1cm}{\footnotesize \ttfamily [3/3]}}{130}{subsubsection.7.34.3.3}%
+\contentsline {subsubsection}{\numberline {7.34.3.4}$\sim $TClusterAnalyser()}{130}{subsubsection.7.34.3.4}%
+\contentsline {subsection}{\numberline {7.34.4}Member Function Documentation}{130}{subsection.7.34.4}%
+\contentsline {subsubsection}{\numberline {7.34.4.1}getClusterPlot()}{130}{subsubsection.7.34.4.1}%
+\contentsline {subsubsection}{\numberline {7.34.4.2}getClustersizePlot()}{130}{subsubsection.7.34.4.2}%
+\contentsline {subsubsection}{\numberline {7.34.4.3}IsDestructed()}{131}{subsubsection.7.34.4.3}%
+\contentsline {subsubsection}{\numberline {7.34.4.4}saveClustermap()}{131}{subsubsection.7.34.4.4}%
+\contentsline {subsubsection}{\numberline {7.34.4.5}saveClustersize()}{131}{subsubsection.7.34.4.5}%
+\contentsline {subsubsection}{\numberline {7.34.4.6}saveHitmapByClustersize()}{131}{subsubsection.7.34.4.6}%
+\contentsline {subsubsection}{\numberline {7.34.4.7}setClusterDataWithShape()}{131}{subsubsection.7.34.4.7}%
+\contentsline {subsubsection}{\numberline {7.34.4.8}TestBit()}{131}{subsubsection.7.34.4.8}%
+\contentsline {subsection}{\numberline {7.34.5}Member Data Documentation}{131}{subsection.7.34.5}%
+\contentsline {subsubsection}{\numberline {7.34.5.1}fBits}{131}{subsubsection.7.34.5.1}%
+\contentsline {section}{\numberline {7.35}TCluster\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Divide\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Data Class Reference}{132}{section.7.35}%
+\contentsline {subsection}{\numberline {7.35.1}Detailed Description}{132}{subsection.7.35.1}%
+\contentsline {subsection}{\numberline {7.35.2}Constructor \& Destructor Documentation}{132}{subsection.7.35.2}%
+\contentsline {subsubsection}{\numberline {7.35.2.1}TClusterDivideData()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{132}{subsubsection.7.35.2.1}%
+\contentsline {subsubsection}{\numberline {7.35.2.2}TClusterDivideData()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{132}{subsubsection.7.35.2.2}%
+\contentsline {subsection}{\numberline {7.35.3}Member Function Documentation}{132}{subsection.7.35.3}%
+\contentsline {subsubsection}{\numberline {7.35.3.1}getClusterOfSize()}{132}{subsubsection.7.35.3.1}%
+\contentsline {subsection}{\numberline {7.35.4}Member Data Documentation}{133}{subsection.7.35.4}%
+\contentsline {subsubsection}{\numberline {7.35.4.1}mClusterData}{133}{subsubsection.7.35.4.1}%
+\contentsline {section}{\numberline {7.36}TClusterization Class Reference}{133}{section.7.36}%
+\contentsline {subsection}{\numberline {7.36.1}Detailed Description}{133}{subsection.7.36.1}%
+\contentsline {subsection}{\numberline {7.36.2}Constructor \& Destructor Documentation}{134}{subsection.7.36.2}%
+\contentsline {subsubsection}{\numberline {7.36.2.1}TClusterization()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{134}{subsubsection.7.36.2.1}%
+\contentsline {subsubsection}{\numberline {7.36.2.2}TClusterization()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{134}{subsubsection.7.36.2.2}%
+\contentsline {subsubsection}{\numberline {7.36.2.3}$\sim $TClusterization()}{134}{subsubsection.7.36.2.3}%
+\contentsline {subsection}{\numberline {7.36.3}Member Function Documentation}{134}{subsection.7.36.3}%
+\contentsline {subsubsection}{\numberline {7.36.3.1}addNewCluster()}{134}{subsubsection.7.36.3.1}%
+\contentsline {subsubsection}{\numberline {7.36.3.2}clusterize()}{134}{subsubsection.7.36.3.2}%
+\contentsline {subsubsection}{\numberline {7.36.3.3}clusterLitmusTest()}{134}{subsubsection.7.36.3.3}%
+\contentsline {subsubsection}{\numberline {7.36.3.4}getClusters()}{135}{subsubsection.7.36.3.4}%
+\contentsline {subsubsection}{\numberline {7.36.3.5}removeConsecutionPixels()}{135}{subsubsection.7.36.3.5}%
+\contentsline {subsubsection}{\numberline {7.36.3.6}removeIndependentCluster()}{135}{subsubsection.7.36.3.6}%
+\contentsline {subsection}{\numberline {7.36.4}Member Data Documentation}{135}{subsection.7.36.4}%
+\contentsline {subsubsection}{\numberline {7.36.4.1}mClusters}{135}{subsubsection.7.36.4.1}%
+\contentsline {subsubsection}{\numberline {7.36.4.2}mEvents}{135}{subsubsection.7.36.4.2}%
+\contentsline {section}{\numberline {7.37}TCluster\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Shape Class Reference}{135}{section.7.37}%
+\contentsline {subsection}{\numberline {7.37.1}Detailed Description}{136}{subsection.7.37.1}%
+\contentsline {subsection}{\numberline {7.37.2}Member Enumeration Documentation}{136}{subsection.7.37.2}%
+\contentsline {subsubsection}{\numberline {7.37.2.1}anonymous enum}{136}{subsubsection.7.37.2.1}%
+\contentsline {subsection}{\numberline {7.37.3}Constructor \& Destructor Documentation}{137}{subsection.7.37.3}%
+\contentsline {subsubsection}{\numberline {7.37.3.1}TClusterShape()\hspace {0.1cm}{\footnotesize \ttfamily [1/3]}}{137}{subsubsection.7.37.3.1}%
+\contentsline {subsubsection}{\numberline {7.37.3.2}TClusterShape()\hspace {0.1cm}{\footnotesize \ttfamily [2/3]}}{137}{subsubsection.7.37.3.2}%
+\contentsline {subsubsection}{\numberline {7.37.3.3}TClusterShape()\hspace {0.1cm}{\footnotesize \ttfamily [3/3]}}{137}{subsubsection.7.37.3.3}%
+\contentsline {subsubsection}{\numberline {7.37.3.4}$\sim $TClusterShape()}{138}{subsubsection.7.37.3.4}%
+\contentsline {subsection}{\numberline {7.37.4}Member Function Documentation}{138}{subsection.7.37.4}%
+\contentsline {subsubsection}{\numberline {7.37.4.1}calClusterInfo()}{138}{subsubsection.7.37.4.1}%
+\contentsline {subsubsection}{\numberline {7.37.4.2}clusterMap()}{138}{subsubsection.7.37.4.2}%
+\contentsline {subsubsection}{\numberline {7.37.4.3}clusterMatrix()}{139}{subsubsection.7.37.4.3}%
+\contentsline {subsubsection}{\numberline {7.37.4.4}getClusterShapeInfos()}{139}{subsubsection.7.37.4.4}%
+\contentsline {subsubsection}{\numberline {7.37.4.5}getClusterSize()}{139}{subsubsection.7.37.4.5}%
+\contentsline {subsubsection}{\numberline {7.37.4.6}identifyShapes()}{139}{subsubsection.7.37.4.6}%
+\contentsline {subsubsection}{\numberline {7.37.4.7}IsDestructed()}{140}{subsubsection.7.37.4.7}%
+\contentsline {subsubsection}{\numberline {7.37.4.8}setClusterSize()}{140}{subsubsection.7.37.4.8}%
+\contentsline {subsubsection}{\numberline {7.37.4.9}sortShapes()}{140}{subsubsection.7.37.4.9}%
+\contentsline {subsubsection}{\numberline {7.37.4.10}TestBit()}{141}{subsubsection.7.37.4.10}%
+\contentsline {subsection}{\numberline {7.37.5}Member Data Documentation}{141}{subsection.7.37.5}%
+\contentsline {subsubsection}{\numberline {7.37.5.1}fBits}{141}{subsubsection.7.37.5.1}%
+\contentsline {subsubsection}{\numberline {7.37.5.2}mClusterOriginSet}{141}{subsubsection.7.37.5.2}%
+\contentsline {subsubsection}{\numberline {7.37.5.3}mClusterShapeInfos}{141}{subsubsection.7.37.5.3}%
+\contentsline {subsubsection}{\numberline {7.37.5.4}mClusterSize}{141}{subsubsection.7.37.5.4}%
+\contentsline {section}{\numberline {7.38}TCluster\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Shape\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analyser Class Reference}{142}{section.7.38}%
+\contentsline {subsection}{\numberline {7.38.1}Detailed Description}{144}{subsection.7.38.1}%
+\contentsline {subsection}{\numberline {7.38.2}Member Enumeration Documentation}{144}{subsection.7.38.2}%
+\contentsline {subsubsection}{\numberline {7.38.2.1}anonymous enum}{144}{subsubsection.7.38.2.1}%
+\contentsline {subsection}{\numberline {7.38.3}Constructor \& Destructor Documentation}{144}{subsection.7.38.3}%
+\contentsline {subsubsection}{\numberline {7.38.3.1}TClusterShapeAnalyser()}{144}{subsubsection.7.38.3.1}%
+\contentsline {subsubsection}{\numberline {7.38.3.2}$\sim $TClusterShapeAnalyser()}{145}{subsubsection.7.38.3.2}%
+\contentsline {subsection}{\numberline {7.38.4}Member Function Documentation}{145}{subsection.7.38.4}%
+\contentsline {subsubsection}{\numberline {7.38.4.1}doShaping()}{145}{subsubsection.7.38.4.1}%
+\contentsline {subsubsection}{\numberline {7.38.4.2}IsDestructed()}{145}{subsubsection.7.38.4.2}%
+\contentsline {subsubsection}{\numberline {7.38.4.3}saveIndividualShapes()}{145}{subsubsection.7.38.4.3}%
+\contentsline {subsubsection}{\numberline {7.38.4.4}saveSameSizeInfos()}{146}{subsubsection.7.38.4.4}%
+\contentsline {subsubsection}{\numberline {7.38.4.5}saveSameSizeShapeEntry()}{146}{subsubsection.7.38.4.5}%
+\contentsline {subsubsection}{\numberline {7.38.4.6}saveSameSizeShapes()}{146}{subsubsection.7.38.4.6}%
+\contentsline {subsubsection}{\numberline {7.38.4.7}saveTotalShapeEntry()}{146}{subsubsection.7.38.4.7}%
+\contentsline {subsubsection}{\numberline {7.38.4.8}saveTotalShapes()}{147}{subsubsection.7.38.4.8}%
+\contentsline {subsubsection}{\numberline {7.38.4.9}TestBit()}{147}{subsubsection.7.38.4.9}%
+\contentsline {subsection}{\numberline {7.38.5}Member Data Documentation}{147}{subsection.7.38.5}%
+\contentsline {subsubsection}{\numberline {7.38.5.1}fBits}{147}{subsubsection.7.38.5.1}%
+\contentsline {subsubsection}{\numberline {7.38.5.2}mClusterShapeSet}{147}{subsubsection.7.38.5.2}%
+\contentsline {subsubsection}{\numberline {7.38.5.3}mMaxModeSet}{147}{subsubsection.7.38.5.3}%
+\contentsline {subsubsection}{\numberline {7.38.5.4}mNTotalShapeSet}{147}{subsubsection.7.38.5.4}%
+\contentsline {section}{\numberline {7.39}TDecoder Class Reference}{148}{section.7.39}%
+\contentsline {subsection}{\numberline {7.39.1}Detailed Description}{148}{subsection.7.39.1}%
+\contentsline {subsection}{\numberline {7.39.2}Constructor \& Destructor Documentation}{148}{subsection.7.39.2}%
+\contentsline {subsubsection}{\numberline {7.39.2.1}TDecoder()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{148}{subsubsection.7.39.2.1}%
+\contentsline {subsubsection}{\numberline {7.39.2.2}TDecoder()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{148}{subsubsection.7.39.2.2}%
+\contentsline {subsection}{\numberline {7.39.3}Member Function Documentation}{149}{subsection.7.39.3}%
+\contentsline {subsubsection}{\numberline {7.39.3.1}getBinaryData()}{149}{subsubsection.7.39.3.1}%
+\contentsline {subsubsection}{\numberline {7.39.3.2}getDataLength()}{149}{subsubsection.7.39.3.2}%
+\contentsline {subsubsection}{\numberline {7.39.3.3}readFile()}{149}{subsubsection.7.39.3.3}%
+\contentsline {subsection}{\numberline {7.39.4}Member Data Documentation}{149}{subsection.7.39.4}%
+\contentsline {subsubsection}{\numberline {7.39.4.1}binaryData\_}{149}{subsubsection.7.39.4.1}%
+\contentsline {subsubsection}{\numberline {7.39.4.2}binaryFile\_}{149}{subsubsection.7.39.4.2}%
+\contentsline {subsubsection}{\numberline {7.39.4.3}dataLength\_}{149}{subsubsection.7.39.4.3}%
+\contentsline {section}{\numberline {7.40}TDetector Struct Reference}{150}{section.7.40}%
+\contentsline {subsection}{\numberline {7.40.1}Detailed Description}{150}{subsection.7.40.1}%
+\contentsline {subsection}{\numberline {7.40.2}Member Function Documentation}{150}{subsection.7.40.2}%
+\contentsline {subsubsection}{\numberline {7.40.2.1}isBelong()}{150}{subsubsection.7.40.2.1}%
+\contentsline {subsection}{\numberline {7.40.3}Member Data Documentation}{150}{subsection.7.40.3}%
+\contentsline {subsubsection}{\numberline {7.40.3.1}coordX}{150}{subsubsection.7.40.3.1}%
+\contentsline {subsubsection}{\numberline {7.40.3.2}coordY}{150}{subsubsection.7.40.3.2}%
+\contentsline {subsubsection}{\numberline {7.40.3.3}coordZ}{151}{subsubsection.7.40.3.3}%
+\contentsline {subsubsection}{\numberline {7.40.3.4}height}{151}{subsubsection.7.40.3.4}%
+\contentsline {subsubsection}{\numberline {7.40.3.5}width}{151}{subsubsection.7.40.3.5}%
+\contentsline {section}{\numberline {7.41}TDisk Struct Reference}{151}{section.7.41}%
+\contentsline {subsection}{\numberline {7.41.1}Detailed Description}{151}{subsection.7.41.1}%
+\contentsline {subsection}{\numberline {7.41.2}Member Function Documentation}{151}{subsection.7.41.2}%
+\contentsline {subsubsection}{\numberline {7.41.2.1}isBelong()}{151}{subsubsection.7.41.2.1}%
+\contentsline {subsection}{\numberline {7.41.3}Member Data Documentation}{152}{subsection.7.41.3}%
+\contentsline {subsubsection}{\numberline {7.41.3.1}coordZ}{152}{subsubsection.7.41.3.1}%
+\contentsline {subsubsection}{\numberline {7.41.3.2}radius}{152}{subsubsection.7.41.3.2}%
+\contentsline {section}{\numberline {7.42}TEntry\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Simulation Class Reference}{152}{section.7.42}%
+\contentsline {subsection}{\numberline {7.42.1}Detailed Description}{152}{subsection.7.42.1}%
+\contentsline {subsection}{\numberline {7.42.2}Member Function Documentation}{153}{subsection.7.42.2}%
+\contentsline {subsubsection}{\numberline {7.42.2.1}doCount()}{153}{subsubsection.7.42.2.1}%
+\contentsline {subsubsection}{\numberline {7.42.2.2}setCollimator()}{153}{subsubsection.7.42.2.2}%
+\contentsline {subsubsection}{\numberline {7.42.2.3}setDetector()}{153}{subsubsection.7.42.2.3}%
+\contentsline {subsubsection}{\numberline {7.42.2.4}setInitGeometry()}{153}{subsubsection.7.42.2.4}%
+\contentsline {subsubsection}{\numberline {7.42.2.5}setSource()}{153}{subsubsection.7.42.2.5}%
+\contentsline {subsection}{\numberline {7.42.3}Member Data Documentation}{154}{subsection.7.42.3}%
+\contentsline {subsubsection}{\numberline {7.42.3.1}detector}{154}{subsubsection.7.42.3.1}%
+\contentsline {subsubsection}{\numberline {7.42.3.2}lowerDisk}{154}{subsubsection.7.42.3.2}%
+\contentsline {subsubsection}{\numberline {7.42.3.3}source}{154}{subsubsection.7.42.3.3}%
+\contentsline {subsubsection}{\numberline {7.42.3.4}upperDisk}{154}{subsubsection.7.42.3.4}%
+\contentsline {section}{\numberline {7.43}TEvent Class Reference}{154}{section.7.43}%
+\contentsline {subsection}{\numberline {7.43.1}Detailed Description}{155}{subsection.7.43.1}%
+\contentsline {subsection}{\numberline {7.43.2}Constructor \& Destructor Documentation}{155}{subsection.7.43.2}%
+\contentsline {subsubsection}{\numberline {7.43.2.1}TEvent()}{155}{subsubsection.7.43.2.1}%
+\contentsline {subsubsection}{\numberline {7.43.2.2}$\sim $TEvent()}{155}{subsubsection.7.43.2.2}%
+\contentsline {subsection}{\numberline {7.43.3}Member Function Documentation}{155}{subsection.7.43.3}%
+\contentsline {subsubsection}{\numberline {7.43.3.1}getEvent()}{155}{subsubsection.7.43.3.1}%
+\contentsline {subsubsection}{\numberline {7.43.3.2}setEvent()}{155}{subsubsection.7.43.3.2}%
+\contentsline {subsection}{\numberline {7.43.4}Member Data Documentation}{155}{subsection.7.43.4}%
+\contentsline {subsubsection}{\numberline {7.43.4.1}iEvent}{155}{subsubsection.7.43.4.1}%
+\contentsline {section}{\numberline {7.44}TExperiment\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Data Class Reference}{156}{section.7.44}%
+\contentsline {subsection}{\numberline {7.44.1}Detailed Description}{156}{subsection.7.44.1}%
+\contentsline {subsection}{\numberline {7.44.2}Member Enumeration Documentation}{156}{subsection.7.44.2}%
+\contentsline {subsubsection}{\numberline {7.44.2.1}anonymous enum}{156}{subsubsection.7.44.2.1}%
+\contentsline {subsection}{\numberline {7.44.3}Constructor \& Destructor Documentation}{157}{subsection.7.44.3}%
+\contentsline {subsubsection}{\numberline {7.44.3.1}TExperimentData()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{157}{subsubsection.7.44.3.1}%
+\contentsline {subsubsection}{\numberline {7.44.3.2}TExperimentData()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{157}{subsubsection.7.44.3.2}%
+\contentsline {subsubsection}{\numberline {7.44.3.3}$\sim $TExperimentData()}{157}{subsubsection.7.44.3.3}%
+\contentsline {subsection}{\numberline {7.44.4}Member Function Documentation}{157}{subsection.7.44.4}%
+\contentsline {subsubsection}{\numberline {7.44.4.1}getClusters()}{157}{subsubsection.7.44.4.1}%
+\contentsline {subsubsection}{\numberline {7.44.4.2}getEvents()}{157}{subsubsection.7.44.4.2}%
+\contentsline {subsubsection}{\numberline {7.44.4.3}IsDestructed()}{157}{subsubsection.7.44.4.3}%
+\contentsline {subsubsection}{\numberline {7.44.4.4}operator=()}{157}{subsubsection.7.44.4.4}%
+\contentsline {subsubsection}{\numberline {7.44.4.5}setClusters()}{158}{subsubsection.7.44.4.5}%
+\contentsline {subsubsection}{\numberline {7.44.4.6}setEvents()}{158}{subsubsection.7.44.4.6}%
+\contentsline {subsubsection}{\numberline {7.44.4.7}TestBit()}{158}{subsubsection.7.44.4.7}%
+\contentsline {subsection}{\numberline {7.44.5}Member Data Documentation}{158}{subsection.7.44.5}%
+\contentsline {subsubsection}{\numberline {7.44.5.1}fBits}{158}{subsubsection.7.44.5.1}%
+\contentsline {subsubsection}{\numberline {7.44.5.2}mClusters}{158}{subsubsection.7.44.5.2}%
+\contentsline {subsubsection}{\numberline {7.44.5.3}mEvents}{158}{subsubsection.7.44.5.3}%
+\contentsline {section}{\numberline {7.45}TGeant\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analyser Class Reference}{159}{section.7.45}%
+\contentsline {subsection}{\numberline {7.45.1}Detailed Description}{160}{subsection.7.45.1}%
+\contentsline {subsection}{\numberline {7.45.2}Constructor \& Destructor Documentation}{160}{subsection.7.45.2}%
+\contentsline {subsubsection}{\numberline {7.45.2.1}TGeantAnalyser()}{160}{subsubsection.7.45.2.1}%
+\contentsline {section}{\numberline {7.46}TGraph\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Compare Class Reference}{160}{section.7.46}%
+\contentsline {subsection}{\numberline {7.46.1}Detailed Description}{161}{subsection.7.46.1}%
+\contentsline {subsection}{\numberline {7.46.2}Constructor \& Destructor Documentation}{161}{subsection.7.46.2}%
+\contentsline {subsubsection}{\numberline {7.46.2.1}TGraphCompare()}{161}{subsubsection.7.46.2.1}%
+\contentsline {subsection}{\numberline {7.46.3}Member Function Documentation}{161}{subsection.7.46.3}%
+\contentsline {subsubsection}{\numberline {7.46.3.1}getClustersizeHistogram()}{161}{subsubsection.7.46.3.1}%
+\contentsline {subsubsection}{\numberline {7.46.3.2}TCompareClusterSize()}{161}{subsubsection.7.46.3.2}%
+\contentsline {subsection}{\numberline {7.46.4}Member Data Documentation}{161}{subsection.7.46.4}%
+\contentsline {subsubsection}{\numberline {7.46.4.1}mClusterSizeSet}{161}{subsubsection.7.46.4.1}%
+\contentsline {subsubsection}{\numberline {7.46.4.2}mGraphFileSet}{162}{subsubsection.7.46.4.2}%
+\contentsline {subsubsection}{\numberline {7.46.4.3}mGraphInfoSet}{162}{subsubsection.7.46.4.3}%
+\contentsline {section}{\numberline {7.47}TGraph\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}User Class Reference}{162}{section.7.47}%
+\contentsline {subsection}{\numberline {7.47.1}Detailed Description}{163}{subsection.7.47.1}%
+\contentsline {subsection}{\numberline {7.47.2}Constructor \& Destructor Documentation}{163}{subsection.7.47.2}%
+\contentsline {subsubsection}{\numberline {7.47.2.1}TGraphUser()}{163}{subsubsection.7.47.2.1}%
+\contentsline {subsection}{\numberline {7.47.3}Member Function Documentation}{163}{subsection.7.47.3}%
+\contentsline {subsubsection}{\numberline {7.47.3.1}AddGraph()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{163}{subsubsection.7.47.3.1}%
+\contentsline {subsubsection}{\numberline {7.47.3.2}AddGraph()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{164}{subsubsection.7.47.3.2}%
+\contentsline {subsubsection}{\numberline {7.47.3.3}Save()}{164}{subsubsection.7.47.3.3}%
+\contentsline {subsubsection}{\numberline {7.47.3.4}setCanvas()}{164}{subsubsection.7.47.3.4}%
+\contentsline {subsubsection}{\numberline {7.47.3.5}setLegend()}{164}{subsubsection.7.47.3.5}%
+\contentsline {subsection}{\numberline {7.47.4}Member Data Documentation}{164}{subsection.7.47.4}%
+\contentsline {subsubsection}{\numberline {7.47.4.1}canvasMargins}{164}{subsubsection.7.47.4.1}%
+\contentsline {subsubsection}{\numberline {7.47.4.2}canvasOffsets}{165}{subsubsection.7.47.4.2}%
+\contentsline {subsubsection}{\numberline {7.47.4.3}graphSetAndAttribute}{165}{subsubsection.7.47.4.3}%
+\contentsline {subsubsection}{\numberline {7.47.4.4}mCanvas}{165}{subsubsection.7.47.4.4}%
+\contentsline {subsubsection}{\numberline {7.47.4.5}mFileName}{165}{subsubsection.7.47.4.5}%
+\contentsline {subsubsection}{\numberline {7.47.4.6}mLegend}{165}{subsubsection.7.47.4.6}%
+\contentsline {subsubsection}{\numberline {7.47.4.7}mLegendPoints}{165}{subsubsection.7.47.4.7}%
+\contentsline {subsubsection}{\numberline {7.47.4.8}mLegendTitle}{165}{subsubsection.7.47.4.8}%
+\contentsline {subsubsection}{\numberline {7.47.4.9}mMultiGraph}{166}{subsubsection.7.47.4.9}%
+\contentsline {subsubsection}{\numberline {7.47.4.10}mUniversialLineStyle}{166}{subsubsection.7.47.4.10}%
+\contentsline {subsubsection}{\numberline {7.47.4.11}mUniversiallineWidth}{166}{subsubsection.7.47.4.11}%
+\contentsline {subsubsection}{\numberline {7.47.4.12}mUniversialMarkerSize}{166}{subsubsection.7.47.4.12}%
+\contentsline {subsubsection}{\numberline {7.47.4.13}mUniversialMarkerStyle}{166}{subsubsection.7.47.4.13}%
+\contentsline {subsubsection}{\numberline {7.47.4.14}savePath}{166}{subsubsection.7.47.4.14}%
+\contentsline {subsubsection}{\numberline {7.47.4.15}title}{166}{subsubsection.7.47.4.15}%
+\contentsline {subsubsection}{\numberline {7.47.4.16}x\_title}{166}{subsubsection.7.47.4.16}%
+\contentsline {subsubsection}{\numberline {7.47.4.17}y\_title}{167}{subsubsection.7.47.4.17}%
+\contentsline {section}{\numberline {7.48}TInput\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Root Struct Reference}{167}{section.7.48}%
+\contentsline {subsection}{\numberline {7.48.1}Detailed Description}{167}{subsection.7.48.1}%
+\contentsline {subsection}{\numberline {7.48.2}Member Data Documentation}{167}{subsection.7.48.2}%
+\contentsline {subsubsection}{\numberline {7.48.2.1}chipid}{167}{subsubsection.7.48.2.1}%
+\contentsline {subsubsection}{\numberline {7.48.2.2}timeStamp}{167}{subsubsection.7.48.2.2}%
+\contentsline {subsubsection}{\numberline {7.48.2.3}x}{167}{subsubsection.7.48.2.3}%
+\contentsline {subsubsection}{\numberline {7.48.2.4}y}{168}{subsubsection.7.48.2.4}%
+\contentsline {section}{\numberline {7.49}TMatrix2D$<$ numT $>$ Class Template Reference}{168}{section.7.49}%
+\contentsline {subsection}{\numberline {7.49.1}Detailed Description}{169}{subsection.7.49.1}%
+\contentsline {subsection}{\numberline {7.49.2}Constructor \& Destructor Documentation}{169}{subsection.7.49.2}%
+\contentsline {subsubsection}{\numberline {7.49.2.1}TMatrix2D()\hspace {0.1cm}{\footnotesize \ttfamily [1/3]}}{169}{subsubsection.7.49.2.1}%
+\contentsline {subsubsection}{\numberline {7.49.2.2}TMatrix2D()\hspace {0.1cm}{\footnotesize \ttfamily [2/3]}}{170}{subsubsection.7.49.2.2}%
+\contentsline {subsubsection}{\numberline {7.49.2.3}TMatrix2D()\hspace {0.1cm}{\footnotesize \ttfamily [3/3]}}{170}{subsubsection.7.49.2.3}%
+\contentsline {subsection}{\numberline {7.49.3}Member Function Documentation}{170}{subsection.7.49.3}%
+\contentsline {subsubsection}{\numberline {7.49.3.1}getDimension()}{170}{subsubsection.7.49.3.1}%
+\contentsline {subsubsection}{\numberline {7.49.3.2}getElement()}{170}{subsubsection.7.49.3.2}%
+\contentsline {subsubsection}{\numberline {7.49.3.3}getNColumn()}{170}{subsubsection.7.49.3.3}%
+\contentsline {subsubsection}{\numberline {7.49.3.4}getNRow()}{170}{subsubsection.7.49.3.4}%
+\contentsline {subsubsection}{\numberline {7.49.3.5}hasHomeomorphism()}{171}{subsubsection.7.49.3.5}%
+\contentsline {subsubsection}{\numberline {7.49.3.6}hasRSymmetry()}{171}{subsubsection.7.49.3.6}%
+\contentsline {subsubsection}{\numberline {7.49.3.7}hasRXSymmetry()}{171}{subsubsection.7.49.3.7}%
+\contentsline {subsubsection}{\numberline {7.49.3.8}hasRXYSymmetry()}{171}{subsubsection.7.49.3.8}%
+\contentsline {subsubsection}{\numberline {7.49.3.9}hasRYSymmetry()}{171}{subsubsection.7.49.3.9}%
+\contentsline {subsubsection}{\numberline {7.49.3.10}hasXSymmetry()}{171}{subsubsection.7.49.3.10}%
+\contentsline {subsubsection}{\numberline {7.49.3.11}hasXYSymmetry()}{172}{subsubsection.7.49.3.11}%
+\contentsline {subsubsection}{\numberline {7.49.3.12}hasYSymmetry()}{172}{subsubsection.7.49.3.12}%
+\contentsline {subsubsection}{\numberline {7.49.3.13}isSame()}{172}{subsubsection.7.49.3.13}%
+\contentsline {subsubsection}{\numberline {7.49.3.14}isSameDimension()}{172}{subsubsection.7.49.3.14}%
+\contentsline {subsubsection}{\numberline {7.49.3.15}operator$\ast $()\hspace {0.1cm}{\footnotesize \ttfamily [1/4]}}{172}{subsubsection.7.49.3.15}%
+\contentsline {subsubsection}{\numberline {7.49.3.16}operator$\ast $()\hspace {0.1cm}{\footnotesize \ttfamily [2/4]}}{172}{subsubsection.7.49.3.16}%
+\contentsline {subsubsection}{\numberline {7.49.3.17}operator$\ast $()\hspace {0.1cm}{\footnotesize \ttfamily [3/4]}}{173}{subsubsection.7.49.3.17}%
+\contentsline {subsubsection}{\numberline {7.49.3.18}operator$\ast $()\hspace {0.1cm}{\footnotesize \ttfamily [4/4]}}{173}{subsubsection.7.49.3.18}%
+\contentsline {subsubsection}{\numberline {7.49.3.19}operator$\ast $=()\hspace {0.1cm}{\footnotesize \ttfamily [1/4]}}{173}{subsubsection.7.49.3.19}%
+\contentsline {subsubsection}{\numberline {7.49.3.20}operator$\ast $=()\hspace {0.1cm}{\footnotesize \ttfamily [2/4]}}{173}{subsubsection.7.49.3.20}%
+\contentsline {subsubsection}{\numberline {7.49.3.21}operator$\ast $=()\hspace {0.1cm}{\footnotesize \ttfamily [3/4]}}{173}{subsubsection.7.49.3.21}%
+\contentsline {subsubsection}{\numberline {7.49.3.22}operator$\ast $=()\hspace {0.1cm}{\footnotesize \ttfamily [4/4]}}{173}{subsubsection.7.49.3.22}%
+\contentsline {subsubsection}{\numberline {7.49.3.23}operator+()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{174}{subsubsection.7.49.3.23}%
+\contentsline {subsubsection}{\numberline {7.49.3.24}operator+()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{174}{subsubsection.7.49.3.24}%
+\contentsline {subsubsection}{\numberline {7.49.3.25}operator+=()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{174}{subsubsection.7.49.3.25}%
+\contentsline {subsubsection}{\numberline {7.49.3.26}operator+=()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{174}{subsubsection.7.49.3.26}%
+\contentsline {subsubsection}{\numberline {7.49.3.27}operator-\/()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{174}{subsubsection.7.49.3.27}%
+\contentsline {subsubsection}{\numberline {7.49.3.28}operator-\/()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{174}{subsubsection.7.49.3.28}%
+\contentsline {subsubsection}{\numberline {7.49.3.29}operator-\/=()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{175}{subsubsection.7.49.3.29}%
+\contentsline {subsubsection}{\numberline {7.49.3.30}operator-\/=()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{175}{subsubsection.7.49.3.30}%
+\contentsline {subsubsection}{\numberline {7.49.3.31}setElement()}{175}{subsubsection.7.49.3.31}%
+\contentsline {subsubsection}{\numberline {7.49.3.32}setMatrix()}{175}{subsubsection.7.49.3.32}%
+\contentsline {subsection}{\numberline {7.49.4}Friends And Related Symbol Documentation}{175}{subsection.7.49.4}%
+\contentsline {subsubsection}{\numberline {7.49.4.1}operator$<$$<$}{175}{subsubsection.7.49.4.1}%
+\contentsline {subsection}{\numberline {7.49.5}Member Data Documentation}{176}{subsection.7.49.5}%
+\contentsline {subsubsection}{\numberline {7.49.5.1}mMatrix}{176}{subsubsection.7.49.5.1}%
+\contentsline {subsubsection}{\numberline {7.49.5.2}mNColumn}{176}{subsubsection.7.49.5.2}%
+\contentsline {subsubsection}{\numberline {7.49.5.3}mNRow}{176}{subsubsection.7.49.5.3}%
+\contentsline {section}{\numberline {7.50}TMerge Class Reference}{176}{section.7.50}%
+\contentsline {subsection}{\numberline {7.50.1}Detailed Description}{177}{subsection.7.50.1}%
+\contentsline {subsection}{\numberline {7.50.2}Constructor \& Destructor Documentation}{177}{subsection.7.50.2}%
+\contentsline {subsubsection}{\numberline {7.50.2.1}TMerge()}{177}{subsubsection.7.50.2.1}%
+\contentsline {subsection}{\numberline {7.50.3}Member Data Documentation}{177}{subsection.7.50.3}%
+\contentsline {subsubsection}{\numberline {7.50.3.1}mInputFileNames}{177}{subsubsection.7.50.3.1}%
+\contentsline {subsubsection}{\numberline {7.50.3.2}mOutputFileName}{177}{subsubsection.7.50.3.2}%
+\contentsline {section}{\numberline {7.51}TMerge\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Experiment\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ROOT Class Reference}{177}{section.7.51}%
+\contentsline {subsection}{\numberline {7.51.1}Detailed Description}{178}{subsection.7.51.1}%
+\contentsline {subsection}{\numberline {7.51.2}Constructor \& Destructor Documentation}{178}{subsection.7.51.2}%
+\contentsline {subsubsection}{\numberline {7.51.2.1}TMergeExperimentROOT()}{178}{subsubsection.7.51.2.1}%
+\contentsline {subsubsection}{\numberline {7.51.2.2}$\sim $TMergeExperimentROOT()}{178}{subsubsection.7.51.2.2}%
+\contentsline {subsection}{\numberline {7.51.3}Member Function Documentation}{179}{subsection.7.51.3}%
+\contentsline {subsubsection}{\numberline {7.51.3.1}mergeFile()}{179}{subsubsection.7.51.3.1}%
+\contentsline {subsection}{\numberline {7.51.4}Member Data Documentation}{179}{subsection.7.51.4}%
+\contentsline {subsubsection}{\numberline {7.51.4.1}mInputValue}{179}{subsubsection.7.51.4.1}%
+\contentsline {subsubsection}{\numberline {7.51.4.2}mOutputFile}{179}{subsubsection.7.51.4.2}%
+\contentsline {subsubsection}{\numberline {7.51.4.3}mOutputValue}{179}{subsubsection.7.51.4.3}%
+\contentsline {section}{\numberline {7.52}Tracking\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Action Class Reference}{179}{section.7.52}%
+\contentsline {subsection}{\numberline {7.52.1}Detailed Description}{180}{subsection.7.52.1}%
+\contentsline {subsection}{\numberline {7.52.2}Constructor \& Destructor Documentation}{180}{subsection.7.52.2}%
+\contentsline {subsubsection}{\numberline {7.52.2.1}TrackingAction()}{180}{subsubsection.7.52.2.1}%
+\contentsline {subsubsection}{\numberline {7.52.2.2}$\sim $TrackingAction()}{180}{subsubsection.7.52.2.2}%
+\contentsline {subsection}{\numberline {7.52.3}Member Function Documentation}{180}{subsection.7.52.3}%
+\contentsline {subsubsection}{\numberline {7.52.3.1}PostUserTrackingAction()}{180}{subsubsection.7.52.3.1}%
+\contentsline {subsubsection}{\numberline {7.52.3.2}PreUserTrackingAction()}{180}{subsubsection.7.52.3.2}%
+\contentsline {section}{\numberline {7.53}Track\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Tuple Struct Reference}{181}{section.7.53}%
+\contentsline {subsection}{\numberline {7.53.1}Detailed Description}{181}{subsection.7.53.1}%
+\contentsline {subsection}{\numberline {7.53.2}Member Data Documentation}{181}{subsection.7.53.2}%
+\contentsline {subsubsection}{\numberline {7.53.2.1}eventGlobalID}{181}{subsubsection.7.53.2.1}%
+\contentsline {subsubsection}{\numberline {7.53.2.2}genKineteicEnergy}{181}{subsubsection.7.53.2.2}%
+\contentsline {subsubsection}{\numberline {7.53.2.3}genMomentum}{181}{subsubsection.7.53.2.3}%
+\contentsline {subsubsection}{\numberline {7.53.2.4}genPosition}{181}{subsubsection.7.53.2.4}%
+\contentsline {subsubsection}{\numberline {7.53.2.5}genTime}{182}{subsubsection.7.53.2.5}%
+\contentsline {subsubsection}{\numberline {7.53.2.6}nSteps}{182}{subsubsection.7.53.2.6}%
+\contentsline {subsubsection}{\numberline {7.53.2.7}particleName}{182}{subsubsection.7.53.2.7}%
+\contentsline {subsubsection}{\numberline {7.53.2.8}processName}{182}{subsubsection.7.53.2.8}%
+\contentsline {subsubsection}{\numberline {7.53.2.9}trackGlobalID}{182}{subsubsection.7.53.2.9}%
+\contentsline {subsubsection}{\numberline {7.53.2.10}trackLocalID}{182}{subsubsection.7.53.2.10}%
+\contentsline {subsubsection}{\numberline {7.53.2.11}trackParentLocalID}{182}{subsubsection.7.53.2.11}%
+\contentsline {subsubsection}{\numberline {7.53.2.12}volumeName}{183}{subsubsection.7.53.2.12}%
+\contentsline {section}{\numberline {7.54}TShape\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Info Struct Reference}{183}{section.7.54}%
+\contentsline {subsection}{\numberline {7.54.1}Detailed Description}{183}{subsection.7.54.1}%
+\contentsline {subsection}{\numberline {7.54.2}Member Data Documentation}{183}{subsection.7.54.2}%
+\contentsline {subsubsection}{\numberline {7.54.2.1}iShape}{183}{subsubsection.7.54.2.1}%
+\contentsline {subsubsection}{\numberline {7.54.2.2}mClusterMap}{184}{subsubsection.7.54.2.2}%
+\contentsline {subsubsection}{\numberline {7.54.2.3}mClusterMatrix}{184}{subsubsection.7.54.2.3}%
+\contentsline {subsubsection}{\numberline {7.54.2.4}mEntry}{184}{subsubsection.7.54.2.4}%
+\contentsline {subsubsection}{\numberline {7.54.2.5}mLongBinN}{184}{subsubsection.7.54.2.5}%
+\contentsline {subsubsection}{\numberline {7.54.2.6}mPresidentCluster}{184}{subsubsection.7.54.2.6}%
+\contentsline {subsubsection}{\numberline {7.54.2.7}mShortBinN}{184}{subsubsection.7.54.2.7}%
+\contentsline {section}{\numberline {7.55}TThreshold Class Reference}{184}{section.7.55}%
+\contentsline {subsection}{\numberline {7.55.1}Detailed Description}{185}{subsection.7.55.1}%
+\contentsline {subsection}{\numberline {7.55.2}Constructor \& Destructor Documentation}{185}{subsection.7.55.2}%
+\contentsline {subsubsection}{\numberline {7.55.2.1}TThreshold()\hspace {0.1cm}{\footnotesize \ttfamily [1/9]}}{185}{subsubsection.7.55.2.1}%
+\contentsline {subsubsection}{\numberline {7.55.2.2}TThreshold()\hspace {0.1cm}{\footnotesize \ttfamily [2/9]}}{186}{subsubsection.7.55.2.2}%
+\contentsline {subsubsection}{\numberline {7.55.2.3}TThreshold()\hspace {0.1cm}{\footnotesize \ttfamily [3/9]}}{186}{subsubsection.7.55.2.3}%
+\contentsline {subsubsection}{\numberline {7.55.2.4}TThreshold()\hspace {0.1cm}{\footnotesize \ttfamily [4/9]}}{186}{subsubsection.7.55.2.4}%
+\contentsline {subsubsection}{\numberline {7.55.2.5}TThreshold()\hspace {0.1cm}{\footnotesize \ttfamily [5/9]}}{186}{subsubsection.7.55.2.5}%
+\contentsline {subsubsection}{\numberline {7.55.2.6}TThreshold()\hspace {0.1cm}{\footnotesize \ttfamily [6/9]}}{186}{subsubsection.7.55.2.6}%
+\contentsline {subsubsection}{\numberline {7.55.2.7}TThreshold()\hspace {0.1cm}{\footnotesize \ttfamily [7/9]}}{186}{subsubsection.7.55.2.7}%
+\contentsline {subsubsection}{\numberline {7.55.2.8}TThreshold()\hspace {0.1cm}{\footnotesize \ttfamily [8/9]}}{187}{subsubsection.7.55.2.8}%
+\contentsline {subsubsection}{\numberline {7.55.2.9}TThreshold()\hspace {0.1cm}{\footnotesize \ttfamily [9/9]}}{187}{subsubsection.7.55.2.9}%
+\contentsline {subsubsection}{\numberline {7.55.2.10}$\sim $TThreshold()}{187}{subsubsection.7.55.2.10}%
+\contentsline {subsection}{\numberline {7.55.3}Member Function Documentation}{187}{subsection.7.55.3}%
+\contentsline {subsubsection}{\numberline {7.55.3.1}calculateThreshold()}{187}{subsubsection.7.55.3.1}%
+\contentsline {subsubsection}{\numberline {7.55.3.2}getCondition()}{187}{subsubsection.7.55.3.2}%
+\contentsline {subsubsection}{\numberline {7.55.3.3}getError()}{187}{subsubsection.7.55.3.3}%
+\contentsline {subsubsection}{\numberline {7.55.3.4}getQualityFactor()}{187}{subsubsection.7.55.3.4}%
+\contentsline {subsubsection}{\numberline {7.55.3.5}getThreshold()}{188}{subsubsection.7.55.3.5}%
+\contentsline {subsubsection}{\numberline {7.55.3.6}getX()}{188}{subsubsection.7.55.3.6}%
+\contentsline {subsubsection}{\numberline {7.55.3.7}getY()}{188}{subsubsection.7.55.3.7}%
+\contentsline {subsubsection}{\numberline {7.55.3.8}operator=()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{188}{subsubsection.7.55.3.8}%
+\contentsline {subsubsection}{\numberline {7.55.3.9}operator=()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{188}{subsubsection.7.55.3.9}%
+\contentsline {subsubsection}{\numberline {7.55.3.10}savePlot()}{188}{subsubsection.7.55.3.10}%
+\contentsline {subsection}{\numberline {7.55.4}Member Data Documentation}{188}{subsection.7.55.4}%
+\contentsline {subsubsection}{\numberline {7.55.4.1}fitFunction}{188}{subsubsection.7.55.4.1}%
+\contentsline {subsubsection}{\numberline {7.55.4.2}mCondition}{189}{subsubsection.7.55.4.2}%
+\contentsline {subsubsection}{\numberline {7.55.4.3}mDacs}{189}{subsubsection.7.55.4.3}%
+\contentsline {subsubsection}{\numberline {7.55.4.4}mErr}{189}{subsubsection.7.55.4.4}%
+\contentsline {subsubsection}{\numberline {7.55.4.5}mQualityFactor}{189}{subsubsection.7.55.4.5}%
+\contentsline {subsubsection}{\numberline {7.55.4.6}mThr}{189}{subsubsection.7.55.4.6}%
+\contentsline {subsubsection}{\numberline {7.55.4.7}mX}{189}{subsubsection.7.55.4.7}%
+\contentsline {subsubsection}{\numberline {7.55.4.8}mY}{189}{subsubsection.7.55.4.8}%
+\contentsline {subsubsection}{\numberline {7.55.4.9}thresholdGraph}{190}{subsubsection.7.55.4.9}%
+\contentsline {section}{\numberline {7.56}TThreshold\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analyser Class Reference}{190}{section.7.56}%
+\contentsline {subsection}{\numberline {7.56.1}Detailed Description}{190}{subsection.7.56.1}%
+\contentsline {subsection}{\numberline {7.56.2}Constructor \& Destructor Documentation}{190}{subsection.7.56.2}%
+\contentsline {subsubsection}{\numberline {7.56.2.1}TThresholdAnalyser()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{190}{subsubsection.7.56.2.1}%
+\contentsline {subsubsection}{\numberline {7.56.2.2}TThresholdAnalyser()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{191}{subsubsection.7.56.2.2}%
+\contentsline {subsubsection}{\numberline {7.56.2.3}$\sim $TThresholdAnalyser()}{191}{subsubsection.7.56.2.3}%
+\contentsline {subsection}{\numberline {7.56.3}Member Function Documentation}{191}{subsection.7.56.3}%
+\contentsline {subsubsection}{\numberline {7.56.3.1}openFile()}{191}{subsubsection.7.56.3.1}%
+\contentsline {subsubsection}{\numberline {7.56.3.2}refineData()}{191}{subsubsection.7.56.3.2}%
+\contentsline {subsubsection}{\numberline {7.56.3.3}saveErrorDistribution()}{191}{subsubsection.7.56.3.3}%
+\contentsline {subsubsection}{\numberline {7.56.3.4}saveQualityDistribution()}{191}{subsubsection.7.56.3.4}%
+\contentsline {subsubsection}{\numberline {7.56.3.5}saveThresholdDistribution()}{191}{subsubsection.7.56.3.5}%
+\contentsline {subsubsection}{\numberline {7.56.3.6}saveThresholdmap()}{192}{subsubsection.7.56.3.6}%
+\contentsline {subsection}{\numberline {7.56.4}Member Data Documentation}{192}{subsection.7.56.4}%
+\contentsline {subsubsection}{\numberline {7.56.4.1}mChi2NdfDistribution}{192}{subsubsection.7.56.4.1}%
+\contentsline {subsubsection}{\numberline {7.56.4.2}mErrorDistribution}{192}{subsubsection.7.56.4.2}%
+\contentsline {subsubsection}{\numberline {7.56.4.3}mFile}{192}{subsubsection.7.56.4.3}%
+\contentsline {subsubsection}{\numberline {7.56.4.4}mIthr}{192}{subsubsection.7.56.4.4}%
+\contentsline {subsubsection}{\numberline {7.56.4.5}mThresholdDistribution}{192}{subsubsection.7.56.4.5}%
+\contentsline {subsubsection}{\numberline {7.56.4.6}mThresholdmap}{193}{subsubsection.7.56.4.6}%
+\contentsline {subsubsection}{\numberline {7.56.4.7}mThresholds}{193}{subsubsection.7.56.4.7}%
+\contentsline {subsubsection}{\numberline {7.56.4.8}mVcasn}{193}{subsubsection.7.56.4.8}%
+\contentsline {section}{\numberline {7.57}TThreshold\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Compare Class Reference}{193}{section.7.57}%
+\contentsline {subsection}{\numberline {7.57.1}Detailed Description}{193}{subsection.7.57.1}%
+\contentsline {subsection}{\numberline {7.57.2}Constructor \& Destructor Documentation}{194}{subsection.7.57.2}%
+\contentsline {subsubsection}{\numberline {7.57.2.1}TThresholdCompare()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{194}{subsubsection.7.57.2.1}%
+\contentsline {subsubsection}{\numberline {7.57.2.2}TThresholdCompare()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{194}{subsubsection.7.57.2.2}%
+\contentsline {subsection}{\numberline {7.57.3}Member Data Documentation}{194}{subsection.7.57.3}%
+\contentsline {subsubsection}{\numberline {7.57.3.1}thresholds\_}{194}{subsubsection.7.57.3.1}%
+\contentsline {section}{\numberline {7.58}TTimer Class Reference}{194}{section.7.58}%
+\contentsline {subsection}{\numberline {7.58.1}Detailed Description}{195}{subsection.7.58.1}%
+\contentsline {subsection}{\numberline {7.58.2}Constructor \& Destructor Documentation}{195}{subsection.7.58.2}%
+\contentsline {subsubsection}{\numberline {7.58.2.1}TTimer()}{195}{subsubsection.7.58.2.1}%
+\contentsline {subsection}{\numberline {7.58.3}Member Function Documentation}{195}{subsection.7.58.3}%
+\contentsline {subsubsection}{\numberline {7.58.3.1}EndProgram()}{195}{subsubsection.7.58.3.1}%
+\contentsline {subsubsection}{\numberline {7.58.3.2}Measure()}{195}{subsubsection.7.58.3.2}%
+\contentsline {subsection}{\numberline {7.58.4}Member Data Documentation}{195}{subsection.7.58.4}%
+\contentsline {subsubsection}{\numberline {7.58.4.1}duration}{195}{subsubsection.7.58.4.1}%
+\contentsline {subsubsection}{\numberline {7.58.4.2}finish}{195}{subsubsection.7.58.4.2}%
+\contentsline {subsubsection}{\numberline {7.58.4.3}start}{196}{subsubsection.7.58.4.3}%
+\contentsline {section}{\numberline {7.59}Unit Class Reference}{196}{section.7.59}%
+\contentsline {subsection}{\numberline {7.59.1}Detailed Description}{197}{subsection.7.59.1}%
+\contentsline {subsection}{\numberline {7.59.2}Constructor \& Destructor Documentation}{197}{subsection.7.59.2}%
+\contentsline {subsubsection}{\numberline {7.59.2.1}Unit()\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{197}{subsubsection.7.59.2.1}%
+\contentsline {subsubsection}{\numberline {7.59.2.2}Unit()\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{197}{subsubsection.7.59.2.2}%
+\contentsline {subsection}{\numberline {7.59.3}Member Function Documentation}{197}{subsection.7.59.3}%
+\contentsline {subsubsection}{\numberline {7.59.3.1}getDigit()}{197}{subsubsection.7.59.3.1}%
+\contentsline {subsubsection}{\numberline {7.59.3.2}getNonBasicUnits()}{197}{subsubsection.7.59.3.2}%
+\contentsline {subsubsection}{\numberline {7.59.3.3}getUnit()}{198}{subsubsection.7.59.3.3}%
+\contentsline {subsubsection}{\numberline {7.59.3.4}getUnitCount()}{198}{subsubsection.7.59.3.4}%
+\contentsline {subsubsection}{\numberline {7.59.3.5}operator"!=()}{198}{subsubsection.7.59.3.5}%
+\contentsline {subsubsection}{\numberline {7.59.3.6}operator$\ast $()}{198}{subsubsection.7.59.3.6}%
+\contentsline {subsubsection}{\numberline {7.59.3.7}operator$\ast $=()}{198}{subsubsection.7.59.3.7}%
+\contentsline {subsubsection}{\numberline {7.59.3.8}operator/()}{198}{subsubsection.7.59.3.8}%
+\contentsline {subsubsection}{\numberline {7.59.3.9}operator/=()}{198}{subsubsection.7.59.3.9}%
+\contentsline {subsubsection}{\numberline {7.59.3.10}operator==()}{199}{subsubsection.7.59.3.10}%
+\contentsline {subsubsection}{\numberline {7.59.3.11}plusCount()}{199}{subsubsection.7.59.3.11}%
+\contentsline {subsubsection}{\numberline {7.59.3.12}removePrefix()}{199}{subsubsection.7.59.3.12}%
+\contentsline {subsubsection}{\numberline {7.59.3.13}seperate()}{199}{subsubsection.7.59.3.13}%
+\contentsline {subsubsection}{\numberline {7.59.3.14}setUnit()}{199}{subsubsection.7.59.3.14}%
+\contentsline {subsubsection}{\numberline {7.59.3.15}setUnitCount()}{199}{subsubsection.7.59.3.15}%
+\contentsline {subsubsection}{\numberline {7.59.3.16}setUserUnit()}{200}{subsubsection.7.59.3.16}%
+\contentsline {subsubsection}{\numberline {7.59.3.17}vanishSlash()}{200}{subsubsection.7.59.3.17}%
+\contentsline {subsection}{\numberline {7.59.4}Friends And Related Symbol Documentation}{200}{subsection.7.59.4}%
+\contentsline {subsubsection}{\numberline {7.59.4.1}operator$<$$<$\hspace {0.1cm}{\footnotesize \ttfamily [1/2]}}{200}{subsubsection.7.59.4.1}%
+\contentsline {subsubsection}{\numberline {7.59.4.2}operator$<$$<$\hspace {0.1cm}{\footnotesize \ttfamily [2/2]}}{200}{subsubsection.7.59.4.2}%
+\contentsline {subsection}{\numberline {7.59.5}Member Data Documentation}{200}{subsection.7.59.5}%
+\contentsline {subsubsection}{\numberline {7.59.5.1}exceptPrefixList}{200}{subsubsection.7.59.5.1}%
+\contentsline {subsubsection}{\numberline {7.59.5.2}isUserUnit}{200}{subsubsection.7.59.5.2}%
+\contentsline {subsubsection}{\numberline {7.59.5.3}mDigit}{201}{subsubsection.7.59.5.3}%
+\contentsline {subsubsection}{\numberline {7.59.5.4}nonBasicUnit}{201}{subsubsection.7.59.5.4}%
+\contentsline {subsubsection}{\numberline {7.59.5.5}unitCount}{201}{subsubsection.7.59.5.5}%
+\contentsline {subsubsection}{\numberline {7.59.5.6}userUnits}{201}{subsubsection.7.59.5.6}%
+\contentsline {chapter}{\numberline {8}File Documentation}{203}{chapter.8}%
+\contentsline {section}{\numberline {8.1}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/alpide/analysis/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TAnalyser.h File Reference}{203}{section.8.1}%
+\contentsline {subsection}{\numberline {8.1.1}Detailed Description}{203}{subsection.8.1.1}%
+\contentsline {subsection}{\numberline {8.1.2}Typedef Documentation}{204}{subsection.8.1.2}%
+\contentsline {subsubsection}{\numberline {8.1.2.1}UInt\_t}{204}{subsubsection.8.1.2.1}%
+\contentsline {section}{\numberline {8.2}TAnalyser.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{204}{section.8.2}%
+\contentsline {section}{\numberline {8.3}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/alpide/analysis/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TFile\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Format.h File Reference}{205}{section.8.3}%
+\contentsline {subsection}{\numberline {8.3.1}Typedef Documentation}{206}{subsection.8.3.1}%
+\contentsline {subsubsection}{\numberline {8.3.1.1}UChar\_t}{206}{subsubsection.8.3.1.1}%
+\contentsline {subsubsection}{\numberline {8.3.1.2}UInt\_t}{206}{subsubsection.8.3.1.2}%
+\contentsline {subsubsection}{\numberline {8.3.1.3}UShort\_t}{206}{subsubsection.8.3.1.3}%
+\contentsline {section}{\numberline {8.4}TFile\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Format.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{206}{section.8.4}%
+\contentsline {section}{\numberline {8.5}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/alpide/analysis/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TThreshold\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analyser.h File Reference}{206}{section.8.5}%
+\contentsline {subsection}{\numberline {8.5.1}Detailed Description}{207}{subsection.8.5.1}%
+\contentsline {section}{\numberline {8.6}TThreshold\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analyser.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{207}{section.8.6}%
+\contentsline {section}{\numberline {8.7}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/alpide/analysis/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TAnalyser.cpp File Reference}{208}{section.8.7}%
+\contentsline {subsection}{\numberline {8.7.1}Macro Definition Documentation}{208}{subsection.8.7.1}%
+\contentsline {subsubsection}{\numberline {8.7.1.1}\_\_TANALYSER\_HEADERS\_\_}{208}{subsubsection.8.7.1.1}%
+\contentsline {subsection}{\numberline {8.7.2}Function Documentation}{208}{subsection.8.7.2}%
+\contentsline {subsubsection}{\numberline {8.7.2.1}calNIncludePixel()}{208}{subsubsection.8.7.2.1}%
+\contentsline {subsubsection}{\numberline {8.7.2.2}calRatioOfRadius()}{208}{subsubsection.8.7.2.2}%
+\contentsline {section}{\numberline {8.8}TAnalyser.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{209}{section.8.8}%
+\contentsline {section}{\numberline {8.9}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/alpide/analysis/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TThreshold\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analyser.cpp File Reference}{223}{section.8.9}%
+\contentsline {subsection}{\numberline {8.9.1}Macro Definition Documentation}{223}{subsection.8.9.1}%
+\contentsline {subsubsection}{\numberline {8.9.1.1}\_\_TTHRESHOLDANALYSER\_HEADER\_\_}{223}{subsubsection.8.9.1.1}%
+\contentsline {section}{\numberline {8.10}TThreshold\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analyser.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{223}{section.8.10}%
+\contentsline {section}{\numberline {8.11}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/alpide/cluster/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TCluster.h File Reference}{224}{section.8.11}%
+\contentsline {subsection}{\numberline {8.11.1}Detailed Description}{225}{subsection.8.11.1}%
+\contentsline {section}{\numberline {8.12}TCluster.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{225}{section.8.12}%
+\contentsline {section}{\numberline {8.13}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/alpide/cluster/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TCluster\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Divide\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Data.h File Reference}{226}{section.8.13}%
+\contentsline {section}{\numberline {8.14}TCluster\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Divide\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Data.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{226}{section.8.14}%
+\contentsline {section}{\numberline {8.15}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/alpide/cluster/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TClusterization.h File Reference}{227}{section.8.15}%
+\contentsline {subsection}{\numberline {8.15.1}Detailed Description}{227}{subsection.8.15.1}%
+\contentsline {section}{\numberline {8.16}TClusterization.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{228}{section.8.16}%
+\contentsline {section}{\numberline {8.17}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/alpide/cluster/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TCluster\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Shape.h File Reference}{228}{section.8.17}%
+\contentsline {subsection}{\numberline {8.17.1}Detailed Description}{228}{subsection.8.17.1}%
+\contentsline {section}{\numberline {8.18}TCluster\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Shape.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{229}{section.8.18}%
+\contentsline {section}{\numberline {8.19}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/alpide/cluster/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TExperiment\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Data.h File Reference}{230}{section.8.19}%
+\contentsline {subsection}{\numberline {8.19.1}Detailed Description}{230}{subsection.8.19.1}%
+\contentsline {section}{\numberline {8.20}TExperiment\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Data.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{231}{section.8.20}%
+\contentsline {section}{\numberline {8.21}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/alpide/cluster/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TMatrix2D.h File Reference}{231}{section.8.21}%
+\contentsline {subsection}{\numberline {8.21.1}Function Documentation}{232}{subsection.8.21.1}%
+\contentsline {subsubsection}{\numberline {8.21.1.1}operator$<$$<$()}{232}{subsubsection.8.21.1.1}%
+\contentsline {section}{\numberline {8.22}TMatrix2\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}D.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{232}{section.8.22}%
+\contentsline {section}{\numberline {8.23}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/alpide/cluster/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TCluster.cpp File Reference}{237}{section.8.23}%
+\contentsline {subsection}{\numberline {8.23.1}Macro Definition Documentation}{237}{subsection.8.23.1}%
+\contentsline {subsubsection}{\numberline {8.23.1.1}\_\_TCLUSTER\_HEADER\_\_}{237}{subsubsection.8.23.1.1}%
+\contentsline {section}{\numberline {8.24}TCluster.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{238}{section.8.24}%
+\contentsline {section}{\numberline {8.25}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/alpide/cluster/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TCluster\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Divide\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Data.cpp File Reference}{240}{section.8.25}%
+\contentsline {subsection}{\numberline {8.25.1}Macro Definition Documentation}{240}{subsection.8.25.1}%
+\contentsline {subsubsection}{\numberline {8.25.1.1}\_\_TCLUSTERDIVIDEDATA\_HEADER\_\_}{240}{subsubsection.8.25.1.1}%
+\contentsline {section}{\numberline {8.26}TCluster\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Divide\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Data.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{240}{section.8.26}%
+\contentsline {section}{\numberline {8.27}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/alpide/cluster/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TClusterization.cpp File Reference}{240}{section.8.27}%
+\contentsline {subsection}{\numberline {8.27.1}Macro Definition Documentation}{241}{subsection.8.27.1}%
+\contentsline {subsubsection}{\numberline {8.27.1.1}\_\_TCLUSTERIZATION\_HEADER\_\_}{241}{subsubsection.8.27.1.1}%
+\contentsline {section}{\numberline {8.28}TClusterization.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{241}{section.8.28}%
+\contentsline {section}{\numberline {8.29}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/alpide/cluster/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TCluster\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Operator.cpp File Reference}{242}{section.8.29}%
+\contentsline {section}{\numberline {8.30}TCluster\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Operator.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{242}{section.8.30}%
+\contentsline {section}{\numberline {8.31}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/alpide/cluster/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TCluster\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Shape.cpp File Reference}{243}{section.8.31}%
+\contentsline {subsection}{\numberline {8.31.1}Macro Definition Documentation}{243}{subsection.8.31.1}%
+\contentsline {subsubsection}{\numberline {8.31.1.1}\_\_TCLUSTERSHAPE\_HEADER\_\_}{243}{subsubsection.8.31.1.1}%
+\contentsline {section}{\numberline {8.32}TCluster\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Shape.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{243}{section.8.32}%
+\contentsline {section}{\numberline {8.33}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/alpide/cluster/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TExperiment\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Data.cpp File Reference}{245}{section.8.33}%
+\contentsline {subsection}{\numberline {8.33.1}Macro Definition Documentation}{245}{subsection.8.33.1}%
+\contentsline {subsubsection}{\numberline {8.33.1.1}\_\_TEXPERIMENTDATA\_HEADER\_\_}{245}{subsubsection.8.33.1.1}%
+\contentsline {section}{\numberline {8.34}TExperiment\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Data.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{246}{section.8.34}%
+\contentsline {section}{\numberline {8.35}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/alpide/comparison/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TGraph\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Compare.h File Reference}{247}{section.8.35}%
+\contentsline {section}{\numberline {8.36}TGraph\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Compare.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{247}{section.8.36}%
+\contentsline {section}{\numberline {8.37}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/alpide/comparison/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TMerge.h File Reference}{248}{section.8.37}%
+\contentsline {subsection}{\numberline {8.37.1}Detailed Description}{248}{subsection.8.37.1}%
+\contentsline {section}{\numberline {8.38}TMerge.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{249}{section.8.38}%
+\contentsline {section}{\numberline {8.39}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/alpide/comparison/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TGraph\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Compare.cpp File Reference}{249}{section.8.39}%
+\contentsline {subsection}{\numberline {8.39.1}Macro Definition Documentation}{250}{subsection.8.39.1}%
+\contentsline {subsubsection}{\numberline {8.39.1.1}\_\_TGRAPHCOMPARE\_HEADER\_\_}{250}{subsubsection.8.39.1.1}%
+\contentsline {subsection}{\numberline {8.39.2}Function Documentation}{250}{subsection.8.39.2}%
+\contentsline {subsubsection}{\numberline {8.39.2.1}getColor()}{250}{subsubsection.8.39.2.1}%
+\contentsline {subsubsection}{\numberline {8.39.2.2}getStyle()}{250}{subsubsection.8.39.2.2}%
+\contentsline {section}{\numberline {8.40}TGraph\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Compare.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{250}{section.8.40}%
+\contentsline {section}{\numberline {8.41}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/alpide/comparison/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TMerge.cpp File Reference}{253}{section.8.41}%
+\contentsline {subsection}{\numberline {8.41.1}Macro Definition Documentation}{253}{subsection.8.41.1}%
+\contentsline {subsubsection}{\numberline {8.41.1.1}\_\_TMERGE\_HEADER\_\_}{253}{subsubsection.8.41.1.1}%
+\contentsline {section}{\numberline {8.42}TMerge.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{253}{section.8.42}%
+\contentsline {section}{\numberline {8.43}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/alpide/daq/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TALPIDEDecoder.h File Reference}{254}{section.8.43}%
+\contentsline {section}{\numberline {8.44}TALPIDEDecoder.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{254}{section.8.44}%
+\contentsline {section}{\numberline {8.45}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/alpide/daq/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TALPIDEEvent.h File Reference}{255}{section.8.45}%
+\contentsline {section}{\numberline {8.46}TALPIDEEvent.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{255}{section.8.46}%
+\contentsline {section}{\numberline {8.47}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/alpide/daq/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TALPIDEDecoder.cpp File Reference}{256}{section.8.47}%
+\contentsline {subsection}{\numberline {8.47.1}Macro Definition Documentation}{256}{subsection.8.47.1}%
+\contentsline {subsubsection}{\numberline {8.47.1.1}\_\_TALPIDEDECODER\_HEADER\_\_}{256}{subsubsection.8.47.1.1}%
+\contentsline {subsection}{\numberline {8.47.2}Variable Documentation}{256}{subsection.8.47.2}%
+\contentsline {subsubsection}{\numberline {8.47.2.1}stray\_sequence}{256}{subsubsection.8.47.2.1}%
+\contentsline {section}{\numberline {8.48}TALPIDEDecoder.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{257}{section.8.48}%
+\contentsline {section}{\numberline {8.49}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/alpide/daq/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TALPIDEEvent.cpp File Reference}{259}{section.8.49}%
+\contentsline {subsection}{\numberline {8.49.1}Macro Definition Documentation}{259}{subsection.8.49.1}%
+\contentsline {subsubsection}{\numberline {8.49.1.1}\_\_TALPIDEEVENT\_HEADER\_\_}{259}{subsubsection.8.49.1.1}%
+\contentsline {section}{\numberline {8.50}TALPIDEEvent.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{259}{section.8.50}%
+\contentsline {section}{\numberline {8.51}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/alpide/threshold/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TThreshold.h File Reference}{260}{section.8.51}%
+\contentsline {subsection}{\numberline {8.51.1}Enumeration Type Documentation}{260}{subsection.8.51.1}%
+\contentsline {subsubsection}{\numberline {8.51.1.1}ThrCondition}{260}{subsubsection.8.51.1.1}%
+\contentsline {section}{\numberline {8.52}TThreshold.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{261}{section.8.52}%
+\contentsline {section}{\numberline {8.53}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/alpide/threshold/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TThreshold\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Compare.h File Reference}{262}{section.8.53}%
+\contentsline {section}{\numberline {8.54}TThreshold\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Compare.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{262}{section.8.54}%
+\contentsline {section}{\numberline {8.55}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/alpide/threshold/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TThreshold.cpp File Reference}{262}{section.8.55}%
+\contentsline {subsection}{\numberline {8.55.1}Macro Definition Documentation}{263}{subsection.8.55.1}%
+\contentsline {subsubsection}{\numberline {8.55.1.1}\_\_TTHRESHOLD\_HEADER\_\_}{263}{subsubsection.8.55.1.1}%
+\contentsline {section}{\numberline {8.56}TThreshold.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{263}{section.8.56}%
+\contentsline {section}{\numberline {8.57}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/alpide/threshold/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TThreshold\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Compare.cpp File Reference}{264}{section.8.57}%
+\contentsline {subsection}{\numberline {8.57.1}Macro Definition Documentation}{265}{subsection.8.57.1}%
+\contentsline {subsubsection}{\numberline {8.57.1.1}\_\_TTHRESHOLDCOMPARE\_HEADER\_\_}{265}{subsubsection.8.57.1.1}%
+\contentsline {section}{\numberline {8.58}TThreshold\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Compare.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{265}{section.8.58}%
+\contentsline {section}{\numberline {8.59}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/apts/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TAPTSDecoder.h File Reference}{265}{section.8.59}%
+\contentsline {section}{\numberline {8.60}TAPTSDecoder.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{265}{section.8.60}%
+\contentsline {section}{\numberline {8.61}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/apts/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TAPTSEvent.h File Reference}{266}{section.8.61}%
+\contentsline {section}{\numberline {8.62}TAPTSEvent.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{266}{section.8.62}%
+\contentsline {section}{\numberline {8.63}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/apts/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TAPTSDecoder.cpp File Reference}{266}{section.8.63}%
+\contentsline {subsection}{\numberline {8.63.1}Macro Definition Documentation}{267}{subsection.8.63.1}%
+\contentsline {subsubsection}{\numberline {8.63.1.1}\_\_TAPTSDECODER\_HEADER\_\_}{267}{subsubsection.8.63.1.1}%
+\contentsline {subsection}{\numberline {8.63.2}Variable Documentation}{267}{subsection.8.63.2}%
+\contentsline {subsubsection}{\numberline {8.63.2.1}APTS\_MUX\_PIXEL\_ADC\_MAPPING}{267}{subsubsection.8.63.2.1}%
+\contentsline {subsubsection}{\numberline {8.63.2.2}APTS\_PIXEL\_ADC\_MAPPING}{267}{subsubsection.8.63.2.2}%
+\contentsline {section}{\numberline {8.64}TAPTSDecoder.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{267}{section.8.64}%
+\contentsline {section}{\numberline {8.65}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/apts/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TAPTSEvent.cpp File Reference}{269}{section.8.65}%
+\contentsline {section}{\numberline {8.66}TAPTSEvent.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{269}{section.8.66}%
+\contentsline {section}{\numberline {8.67}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/chip/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TDecoder.h File Reference}{269}{section.8.67}%
+\contentsline {section}{\numberline {8.68}TDecoder.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{270}{section.8.68}%
+\contentsline {section}{\numberline {8.69}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/chip/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TEvent.h File Reference}{270}{section.8.69}%
+\contentsline {section}{\numberline {8.70}TEvent.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{270}{section.8.70}%
+\contentsline {section}{\numberline {8.71}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/chip/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TDecoder.cpp File Reference}{270}{section.8.71}%
+\contentsline {section}{\numberline {8.72}TDecoder.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{271}{section.8.72}%
+\contentsline {section}{\numberline {8.73}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/chip/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TEvent.cpp File Reference}{271}{section.8.73}%
+\contentsline {section}{\numberline {8.74}TEvent.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{271}{section.8.74}%
+\contentsline {section}{\numberline {8.75}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/drawing\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}tool/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TGraph\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}User.h File Reference}{271}{section.8.75}%
+\contentsline {section}{\numberline {8.76}TGraph\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}User.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{272}{section.8.76}%
+\contentsline {section}{\numberline {8.77}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/drawing\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}tool/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TH1\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}User.h File Reference}{272}{section.8.77}%
+\contentsline {section}{\numberline {8.78}TH1\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}User.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{272}{section.8.78}%
+\contentsline {section}{\numberline {8.79}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/drawing\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}tool/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TGraph\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}User.cpp File Reference}{272}{section.8.79}%
+\contentsline {subsection}{\numberline {8.79.1}Variable Documentation}{273}{subsection.8.79.1}%
+\contentsline {subsubsection}{\numberline {8.79.1.1}colourSet}{273}{subsubsection.8.79.1.1}%
+\contentsline {section}{\numberline {8.80}TGraph\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}User.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{273}{section.8.80}%
+\contentsline {section}{\numberline {8.81}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/entry\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Calculator\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}copy.cpp File Reference}{274}{section.8.81}%
+\contentsline {subsection}{\numberline {8.81.1}Function Documentation}{275}{subsection.8.81.1}%
+\contentsline {subsubsection}{\numberline {8.81.1.1}entryCalculator\_copy()}{275}{subsubsection.8.81.1.1}%
+\contentsline {section}{\numberline {8.82}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/entry\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Calculator\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}copy.cpp}{275}{section.8.82}%
+\contentsline {section}{\numberline {8.83}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/exe/alpide\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}dac.cpp File Reference}{276}{section.8.83}%
+\contentsline {subsection}{\numberline {8.83.1}Function Documentation}{277}{subsection.8.83.1}%
+\contentsline {subsubsection}{\numberline {8.83.1.1}add\_parser()}{277}{subsubsection.8.83.1.1}%
+\contentsline {subsubsection}{\numberline {8.83.1.2}file\_open()}{277}{subsubsection.8.83.1.2}%
+\contentsline {subsubsection}{\numberline {8.83.1.3}get\_graph()}{277}{subsubsection.8.83.1.3}%
+\contentsline {subsubsection}{\numberline {8.83.1.4}get\_multi\_graph()}{277}{subsubsection.8.83.1.4}%
+\contentsline {subsubsection}{\numberline {8.83.1.5}input\_data()}{278}{subsubsection.8.83.1.5}%
+\contentsline {subsubsection}{\numberline {8.83.1.6}main()}{278}{subsubsection.8.83.1.6}%
+\contentsline {subsubsection}{\numberline {8.83.1.7}make\_root\_file()}{278}{subsubsection.8.83.1.7}%
+\contentsline {subsubsection}{\numberline {8.83.1.8}set\_legend()}{278}{subsubsection.8.83.1.8}%
+\contentsline {section}{\numberline {8.84}alpide\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}dac.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{278}{section.8.84}%
+\contentsline {section}{\numberline {8.85}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/exe/alpide\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}hitmap.cpp File Reference}{280}{section.8.85}%
+\contentsline {subsection}{\numberline {8.85.1}Function Documentation}{281}{subsection.8.85.1}%
+\contentsline {subsubsection}{\numberline {8.85.1.1}decode\_event()}{281}{subsubsection.8.85.1.1}%
+\contentsline {subsubsection}{\numberline {8.85.1.2}draw\_histogram()}{281}{subsubsection.8.85.1.2}%
+\contentsline {subsubsection}{\numberline {8.85.1.3}draw\_hitmap()}{281}{subsubsection.8.85.1.3}%
+\contentsline {subsubsection}{\numberline {8.85.1.4}main()}{281}{subsubsection.8.85.1.4}%
+\contentsline {subsubsection}{\numberline {8.85.1.5}open\_file()}{282}{subsubsection.8.85.1.5}%
+\contentsline {subsubsection}{\numberline {8.85.1.6}read\_file()}{282}{subsubsection.8.85.1.6}%
+\contentsline {subsubsection}{\numberline {8.85.1.7}save\_canvas()}{282}{subsubsection.8.85.1.7}%
+\contentsline {subsubsection}{\numberline {8.85.1.8}set\_parse()}{282}{subsubsection.8.85.1.8}%
+\contentsline {section}{\numberline {8.86}alpide\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}hitmap.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{282}{section.8.86}%
+\contentsline {section}{\numberline {8.87}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/exe/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Compare\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Experiment\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Data.cpp File Reference}{284}{section.8.87}%
+\contentsline {subsection}{\numberline {8.87.1}Function Documentation}{285}{subsection.8.87.1}%
+\contentsline {subsubsection}{\numberline {8.87.1.1}main()}{285}{subsubsection.8.87.1.1}%
+\contentsline {section}{\numberline {8.88}Compare\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Experiment\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Data.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{285}{section.8.88}%
+\contentsline {section}{\numberline {8.89}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/exe/entry\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Simulation.cpp File Reference}{286}{section.8.89}%
+\contentsline {subsection}{\numberline {8.89.1}Function Documentation}{286}{subsection.8.89.1}%
+\contentsline {subsubsection}{\numberline {8.89.1.1}main()}{286}{subsubsection.8.89.1.1}%
+\contentsline {subsubsection}{\numberline {8.89.1.2}set\_parse()}{287}{subsubsection.8.89.1.2}%
+\contentsline {section}{\numberline {8.90}entry\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Simulation.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{287}{section.8.90}%
+\contentsline {section}{\numberline {8.91}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/exe/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Experiment\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analysis.cpp File Reference}{289}{section.8.91}%
+\contentsline {subsection}{\numberline {8.91.1}Function Documentation}{289}{subsection.8.91.1}%
+\contentsline {subsubsection}{\numberline {8.91.1.1}main()}{289}{subsubsection.8.91.1.1}%
+\contentsline {section}{\numberline {8.92}Experiment\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analysis.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{289}{section.8.92}%
+\contentsline {section}{\numberline {8.93}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/exe/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Experiment\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analysis.hpp File Reference}{289}{section.8.93}%
+\contentsline {section}{\numberline {8.94}Experiment\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analysis.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}hpp}{290}{section.8.94}%
+\contentsline {section}{\numberline {8.95}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/exe/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Garfield\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Simulation.cpp File Reference}{292}{section.8.95}%
+\contentsline {subsection}{\numberline {8.95.1}Function Documentation}{293}{subsection.8.95.1}%
+\contentsline {subsubsection}{\numberline {8.95.1.1}main()}{293}{subsubsection.8.95.1.1}%
+\contentsline {section}{\numberline {8.96}Garfield\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Simulation.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{293}{section.8.96}%
+\contentsline {section}{\numberline {8.97}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/exe/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Merge.cpp File Reference}{296}{section.8.97}%
+\contentsline {subsection}{\numberline {8.97.1}Function Documentation}{296}{subsection.8.97.1}%
+\contentsline {subsubsection}{\numberline {8.97.1.1}main()}{296}{subsubsection.8.97.1.1}%
+\contentsline {subsubsection}{\numberline {8.97.1.2}set\_parse()}{296}{subsubsection.8.97.1.2}%
+\contentsline {section}{\numberline {8.98}Merge.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{297}{section.8.98}%
+\contentsline {section}{\numberline {8.99}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/exe/simulation.cpp File Reference}{297}{section.8.99}%
+\contentsline {subsection}{\numberline {8.99.1}Function Documentation}{298}{subsection.8.99.1}%
+\contentsline {subsubsection}{\numberline {8.99.1.1}DetectorConstruct()}{298}{subsubsection.8.99.1.1}%
+\contentsline {subsubsection}{\numberline {8.99.1.2}main()}{298}{subsubsection.8.99.1.2}%
+\contentsline {subsubsection}{\numberline {8.99.1.3}set\_parse()}{298}{subsubsection.8.99.1.3}%
+\contentsline {subsubsection}{\numberline {8.99.1.4}SetParticleSource()}{298}{subsubsection.8.99.1.4}%
+\contentsline {section}{\numberline {8.100}simulation.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{298}{section.8.100}%
+\contentsline {section}{\numberline {8.101}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/exe/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Simulation\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analysis.cpp File Reference}{300}{section.8.101}%
+\contentsline {subsection}{\numberline {8.101.1}Function Documentation}{300}{subsection.8.101.1}%
+\contentsline {subsubsection}{\numberline {8.101.1.1}main()}{300}{subsubsection.8.101.1.1}%
+\contentsline {subsubsection}{\numberline {8.101.1.2}set\_parse()}{300}{subsubsection.8.101.1.2}%
+\contentsline {section}{\numberline {8.102}Simulation\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analysis.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{301}{section.8.102}%
+\contentsline {section}{\numberline {8.103}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/exe/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Threshold\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analysis.cpp File Reference}{301}{section.8.103}%
+\contentsline {subsection}{\numberline {8.103.1}Function Documentation}{301}{subsection.8.103.1}%
+\contentsline {subsubsection}{\numberline {8.103.1.1}main()}{301}{subsubsection.8.103.1.1}%
+\contentsline {subsubsection}{\numberline {8.103.1.2}set\_parse()}{302}{subsubsection.8.103.1.2}%
+\contentsline {section}{\numberline {8.104}Threshold\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analysis.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{302}{section.8.104}%
+\contentsline {section}{\numberline {8.105}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/geant4/analysis/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TGeant\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analyser.h File Reference}{303}{section.8.105}%
+\contentsline {section}{\numberline {8.106}TGeant\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analyser.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{303}{section.8.106}%
+\contentsline {section}{\numberline {8.107}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/geant4/analysis/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TGeant\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analyser.cpp File Reference}{303}{section.8.107}%
+\contentsline {section}{\numberline {8.108}TGeant\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analyser.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{304}{section.8.108}%
+\contentsline {section}{\numberline {8.109}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/geant4/main/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Action\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Initialization.h File Reference}{305}{section.8.109}%
+\contentsline {section}{\numberline {8.110}Action\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Initialization.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{305}{section.8.110}%
+\contentsline {section}{\numberline {8.111}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/geant4/main/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analysis\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Manager.h File Reference}{305}{section.8.111}%
+\contentsline {section}{\numberline {8.112}Analysis\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Manager.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{306}{section.8.112}%
+\contentsline {section}{\numberline {8.113}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/geant4/main/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Colour.h File Reference}{307}{section.8.113}%
+\contentsline {section}{\numberline {8.114}Colour.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{307}{section.8.114}%
+\contentsline {section}{\numberline {8.115}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/geant4/main/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Detector\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Construction.h File Reference}{308}{section.8.115}%
+\contentsline {subsection}{\numberline {8.115.1}Enumeration Type Documentation}{308}{subsection.8.115.1}%
+\contentsline {subsubsection}{\numberline {8.115.1.1}SourceType}{308}{subsubsection.8.115.1.1}%
+\contentsline {subsubsection}{\numberline {8.115.1.2}StandType}{308}{subsubsection.8.115.1.2}%
+\contentsline {section}{\numberline {8.116}Detector\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Construction.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{309}{section.8.116}%
+\contentsline {section}{\numberline {8.117}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/geant4/main/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Event\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Action.h File Reference}{310}{section.8.117}%
+\contentsline {subsection}{\numberline {8.117.1}Typedef Documentation}{310}{subsection.8.117.1}%
+\contentsline {subsubsection}{\numberline {8.117.1.1}G4int}{310}{subsubsection.8.117.1.1}%
+\contentsline {section}{\numberline {8.118}Event\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Action.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{311}{section.8.118}%
+\contentsline {section}{\numberline {8.119}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/geant4/main/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Material.h File Reference}{311}{section.8.119}%
+\contentsline {section}{\numberline {8.120}Material.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{311}{section.8.120}%
+\contentsline {section}{\numberline {8.121}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/geant4/main/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Primary\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Generator\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Action.h File Reference}{312}{section.8.121}%
+\contentsline {section}{\numberline {8.122}Primary\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Generator\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Action.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{312}{section.8.122}%
+\contentsline {section}{\numberline {8.123}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/geant4/main/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Run\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Action.h File Reference}{313}{section.8.123}%
+\contentsline {section}{\numberline {8.124}Run\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Action.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{313}{section.8.124}%
+\contentsline {section}{\numberline {8.125}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/geant4/main/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Solid.h File Reference}{313}{section.8.125}%
+\contentsline {section}{\numberline {8.126}Solid.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{313}{section.8.126}%
+\contentsline {section}{\numberline {8.127}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/geant4/main/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Stepping\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Action.h File Reference}{314}{section.8.127}%
+\contentsline {section}{\numberline {8.128}Stepping\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Action.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{314}{section.8.128}%
+\contentsline {section}{\numberline {8.129}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/geant4/main/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Tracking\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Action.h File Reference}{315}{section.8.129}%
+\contentsline {section}{\numberline {8.130}Tracking\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Action.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{315}{section.8.130}%
+\contentsline {section}{\numberline {8.131}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/geant4/main/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Action\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Initialization.cpp File Reference}{315}{section.8.131}%
+\contentsline {subsection}{\numberline {8.131.1}Macro Definition Documentation}{315}{subsection.8.131.1}%
+\contentsline {subsubsection}{\numberline {8.131.1.1}\_\_ACTIONINITIALIZATION\_HEADER\_\_}{315}{subsubsection.8.131.1.1}%
+\contentsline {section}{\numberline {8.132}Action\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Initialization.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{316}{section.8.132}%
+\contentsline {section}{\numberline {8.133}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/geant4/main/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analysis\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Manager.cpp File Reference}{316}{section.8.133}%
+\contentsline {subsection}{\numberline {8.133.1}Macro Definition Documentation}{316}{subsection.8.133.1}%
+\contentsline {subsubsection}{\numberline {8.133.1.1}\_\_ANALYSISMANAGER\_HEADER\_\_}{316}{subsubsection.8.133.1.1}%
+\contentsline {section}{\numberline {8.134}Analysis\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Manager.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{317}{section.8.134}%
+\contentsline {section}{\numberline {8.135}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/geant4/main/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Colour.cpp File Reference}{319}{section.8.135}%
+\contentsline {subsection}{\numberline {8.135.1}Macro Definition Documentation}{319}{subsection.8.135.1}%
+\contentsline {subsubsection}{\numberline {8.135.1.1}\_\_COLOUR\_HEADER\_\_}{319}{subsubsection.8.135.1.1}%
+\contentsline {section}{\numberline {8.136}Colour.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{319}{section.8.136}%
+\contentsline {section}{\numberline {8.137}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/geant4/main/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Detector\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Construction.cpp File Reference}{320}{section.8.137}%
+\contentsline {subsection}{\numberline {8.137.1}Macro Definition Documentation}{320}{subsection.8.137.1}%
+\contentsline {subsubsection}{\numberline {8.137.1.1}\_\_DETECTORCONSTRUCTION\_HEADER\_\_}{320}{subsubsection.8.137.1.1}%
+\contentsline {section}{\numberline {8.138}Detector\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Construction.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{320}{section.8.138}%
+\contentsline {section}{\numberline {8.139}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/geant4/main/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Event\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Action.cpp File Reference}{322}{section.8.139}%
+\contentsline {subsection}{\numberline {8.139.1}Macro Definition Documentation}{322}{subsection.8.139.1}%
+\contentsline {subsubsection}{\numberline {8.139.1.1}\_\_EVENTACTION\_HEADER\_\_}{322}{subsubsection.8.139.1.1}%
+\contentsline {section}{\numberline {8.140}Event\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Action.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{322}{section.8.140}%
+\contentsline {section}{\numberline {8.141}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/geant4/main/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Material.cpp File Reference}{323}{section.8.141}%
+\contentsline {subsection}{\numberline {8.141.1}Macro Definition Documentation}{323}{subsection.8.141.1}%
+\contentsline {subsubsection}{\numberline {8.141.1.1}\_\_MATERIAL\_HEADER\_\_}{323}{subsubsection.8.141.1.1}%
+\contentsline {section}{\numberline {8.142}Material.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{323}{section.8.142}%
+\contentsline {section}{\numberline {8.143}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/geant4/main/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Primary\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Generator\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Action.cpp File Reference}{324}{section.8.143}%
+\contentsline {subsection}{\numberline {8.143.1}Macro Definition Documentation}{325}{subsection.8.143.1}%
+\contentsline {subsubsection}{\numberline {8.143.1.1}\_\_PRIMARYGENERATORACTION\_HEADER\_\_}{325}{subsubsection.8.143.1.1}%
+\contentsline {section}{\numberline {8.144}Primary\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Generator\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Action.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{325}{section.8.144}%
+\contentsline {section}{\numberline {8.145}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/geant4/main/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Run\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Action.cpp File Reference}{325}{section.8.145}%
+\contentsline {subsection}{\numberline {8.145.1}Macro Definition Documentation}{325}{subsection.8.145.1}%
+\contentsline {subsubsection}{\numberline {8.145.1.1}\_\_RUNACTION\_HEADER\_\_}{325}{subsubsection.8.145.1.1}%
+\contentsline {section}{\numberline {8.146}Run\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Action.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{326}{section.8.146}%
+\contentsline {section}{\numberline {8.147}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/geant4/main/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Solid.cpp File Reference}{326}{section.8.147}%
+\contentsline {subsection}{\numberline {8.147.1}Macro Definition Documentation}{326}{subsection.8.147.1}%
+\contentsline {subsubsection}{\numberline {8.147.1.1}\_\_SOLID\_HEADER\_\_}{326}{subsubsection.8.147.1.1}%
+\contentsline {section}{\numberline {8.148}Solid.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{326}{section.8.148}%
+\contentsline {section}{\numberline {8.149}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/geant4/main/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Stepping\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Action.cpp File Reference}{328}{section.8.149}%
+\contentsline {subsection}{\numberline {8.149.1}Macro Definition Documentation}{328}{subsection.8.149.1}%
+\contentsline {subsubsection}{\numberline {8.149.1.1}\_\_STEPPINGACTION\_HEADER\_\_}{328}{subsubsection.8.149.1.1}%
+\contentsline {section}{\numberline {8.150}Stepping\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Action.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{328}{section.8.150}%
+\contentsline {section}{\numberline {8.151}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/geant4/main/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Tracking\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Action.cpp File Reference}{328}{section.8.151}%
+\contentsline {subsection}{\numberline {8.151.1}Macro Definition Documentation}{329}{subsection.8.151.1}%
+\contentsline {subsubsection}{\numberline {8.151.1.1}\_\_TRACKINGACTION\_HEADER\_\_}{329}{subsubsection.8.151.1.1}%
+\contentsline {section}{\numberline {8.152}Tracking\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Action.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{329}{section.8.152}%
+\contentsline {section}{\numberline {8.153}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/graph\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}draw.cpp File Reference}{329}{section.8.153}%
+\contentsline {subsection}{\numberline {8.153.1}Function Documentation}{330}{subsection.8.153.1}%
+\contentsline {subsubsection}{\numberline {8.153.1.1}EffectiveExpression()}{330}{subsubsection.8.153.1.1}%
+\contentsline {subsubsection}{\numberline {8.153.1.2}getEffectiveValueAndDigit()}{330}{subsubsection.8.153.1.2}%
+\contentsline {subsubsection}{\numberline {8.153.1.3}graph\_draw()}{330}{subsubsection.8.153.1.3}%
+\contentsline {section}{\numberline {8.154}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/graph\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}draw.cpp}{330}{section.8.154}%
+\contentsline {section}{\numberline {8.155}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/pycpp/config/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Cpp\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Config\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Dictionary.h File Reference}{332}{section.8.155}%
+\contentsline {section}{\numberline {8.156}Cpp\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Config\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Dictionary.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{332}{section.8.156}%
+\contentsline {section}{\numberline {8.157}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/pycpp/config/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Cpp\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Config\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Error.h File Reference}{333}{section.8.157}%
+\contentsline {section}{\numberline {8.158}Cpp\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Config\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Error.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{333}{section.8.158}%
+\contentsline {section}{\numberline {8.159}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/pycpp/config/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Cpp\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Config\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}File.h File Reference}{334}{section.8.159}%
+\contentsline {section}{\numberline {8.160}Cpp\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Config\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}File.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{334}{section.8.160}%
+\contentsline {section}{\numberline {8.161}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/pycpp/config/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Cpp\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Config\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Dictionary.cpp File Reference}{335}{section.8.161}%
+\contentsline {subsection}{\numberline {8.161.1}Function Documentation}{335}{subsection.8.161.1}%
+\contentsline {subsubsection}{\numberline {8.161.1.1}operator$<$$<$()}{335}{subsubsection.8.161.1.1}%
+\contentsline {section}{\numberline {8.162}Cpp\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Config\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Dictionary.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{335}{section.8.162}%
+\contentsline {section}{\numberline {8.163}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/pycpp/config/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Cpp\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Config\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Error.cpp File Reference}{337}{section.8.163}%
+\contentsline {section}{\numberline {8.164}Cpp\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Config\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Error.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{338}{section.8.164}%
+\contentsline {section}{\numberline {8.165}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/pycpp/config/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Cpp\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Config\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}File.cpp File Reference}{338}{section.8.165}%
+\contentsline {subsection}{\numberline {8.165.1}Function Documentation}{338}{subsection.8.165.1}%
+\contentsline {subsubsection}{\numberline {8.165.1.1}operator$<$$<$()}{338}{subsubsection.8.165.1.1}%
+\contentsline {section}{\numberline {8.166}Cpp\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Config\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}File.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{338}{section.8.166}%
+\contentsline {section}{\numberline {8.167}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/pycpp/inc/cppargs.h File Reference}{341}{section.8.167}%
+\contentsline {subsection}{\numberline {8.167.1}Enumeration Type Documentation}{342}{subsection.8.167.1}%
+\contentsline {subsubsection}{\numberline {8.167.1.1}ActionType}{342}{subsubsection.8.167.1.1}%
+\contentsline {subsubsection}{\numberline {8.167.1.2}ARGTYPES}{342}{subsubsection.8.167.1.2}%
+\contentsline {section}{\numberline {8.168}cppargs.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{342}{section.8.168}%
+\contentsline {section}{\numberline {8.169}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/pycpp/inc/cpp\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Timer.h File Reference}{344}{section.8.169}%
+\contentsline {section}{\numberline {8.170}cpp\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Timer.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{344}{section.8.170}%
+\contentsline {section}{\numberline {8.171}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/pycpp/inc/cpptqdm.h File Reference}{345}{section.8.171}%
+\contentsline {section}{\numberline {8.172}cpptqdm.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{345}{section.8.172}%
+\contentsline {section}{\numberline {8.173}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/pycpp/inc/cpp\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Unit.h File Reference}{345}{section.8.173}%
+\contentsline {subsection}{\numberline {8.173.1}Variable Documentation}{346}{subsection.8.173.1}%
+\contentsline {subsubsection}{\numberline {8.173.1.1}prefix}{346}{subsubsection.8.173.1.1}%
+\contentsline {section}{\numberline {8.174}cpp\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Unit.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{346}{section.8.174}%
+\contentsline {section}{\numberline {8.175}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/pycpp/src/cppargs.cpp File Reference}{347}{section.8.175}%
+\contentsline {subsection}{\numberline {8.175.1}Function Documentation}{347}{subsection.8.175.1}%
+\contentsline {subsubsection}{\numberline {8.175.1.1}ArgumentParser::get\_value$<$ std::string $>$()}{347}{subsubsection.8.175.1.1}%
+\contentsline {subsubsection}{\numberline {8.175.1.2}ArgumentParser::get\_value$<$ std::vector$<$ bool $>$ $>$()}{348}{subsubsection.8.175.1.2}%
+\contentsline {subsubsection}{\numberline {8.175.1.3}ArgumentParser::get\_value$<$ std::vector$<$ double $>$ $>$()}{348}{subsubsection.8.175.1.3}%
+\contentsline {subsubsection}{\numberline {8.175.1.4}ArgumentParser::get\_value$<$ std::vector$<$ int $>$ $>$()}{348}{subsubsection.8.175.1.4}%
+\contentsline {subsubsection}{\numberline {8.175.1.5}ArgumentParser::get\_value$<$ std::vector$<$ std::string $>$ $>$()}{348}{subsubsection.8.175.1.5}%
+\contentsline {section}{\numberline {8.176}cppargs.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{348}{section.8.176}%
+\contentsline {section}{\numberline {8.177}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/pycpp/src/cpp\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Timer.cpp File Reference}{357}{section.8.177}%
+\contentsline {section}{\numberline {8.178}cpp\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Timer.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{357}{section.8.178}%
+\contentsline {section}{\numberline {8.179}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/pycpp/src/cpptqdm.cpp File Reference}{357}{section.8.179}%
+\contentsline {section}{\numberline {8.180}cpptqdm.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{357}{section.8.180}%
+\contentsline {section}{\numberline {8.181}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/pycpp/src/cpp\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Unit.cpp File Reference}{358}{section.8.181}%
+\contentsline {subsection}{\numberline {8.181.1}Function Documentation}{358}{subsection.8.181.1}%
+\contentsline {subsubsection}{\numberline {8.181.1.1}operator$<$$<$()\hspace {0.1cm}{\footnotesize \ttfamily [1/4]}}{358}{subsubsection.8.181.1.1}%
+\contentsline {subsubsection}{\numberline {8.181.1.2}operator$<$$<$()\hspace {0.1cm}{\footnotesize \ttfamily [2/4]}}{359}{subsubsection.8.181.1.2}%
+\contentsline {subsubsection}{\numberline {8.181.1.3}operator$<$$<$()\hspace {0.1cm}{\footnotesize \ttfamily [3/4]}}{359}{subsubsection.8.181.1.3}%
+\contentsline {subsubsection}{\numberline {8.181.1.4}operator$<$$<$()\hspace {0.1cm}{\footnotesize \ttfamily [4/4]}}{359}{subsubsection.8.181.1.4}%
+\contentsline {section}{\numberline {8.182}cpp\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Unit.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{359}{section.8.182}%
+\contentsline {section}{\numberline {8.183}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}README.md File Reference}{364}{section.8.183}%
+\contentsline {section}{\numberline {8.184}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/simulation/inc/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TEntry\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Simulation.h File Reference}{364}{section.8.184}%
+\contentsline {section}{\numberline {8.185}TEntry\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Simulation.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{364}{section.8.185}%
+\contentsline {section}{\numberline {8.186}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/simulation/src/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TEntry\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Simulation.cpp File Reference}{365}{section.8.186}%
+\contentsline {section}{\numberline {8.187}TEntry\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Simulation.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{365}{section.8.187}%
+\contentsline {section}{\numberline {8.188}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/trashcan/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TCluster\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analyser.cpp File Reference}{366}{section.8.188}%
+\contentsline {subsection}{\numberline {8.188.1}Macro Definition Documentation}{366}{subsection.8.188.1}%
+\contentsline {subsubsection}{\numberline {8.188.1.1}\_\_TCLUSTERANALYSER\_HEADERS\_\_}{366}{subsubsection.8.188.1.1}%
+\contentsline {section}{\numberline {8.189}TCluster\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analyser.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{367}{section.8.189}%
+\contentsline {section}{\numberline {8.190}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/trashcan/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TCluster\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analyser.h File Reference}{370}{section.8.190}%
+\contentsline {subsection}{\numberline {8.190.1}Detailed Description}{370}{subsection.8.190.1}%
+\contentsline {section}{\numberline {8.191}TCluster\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analyser.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{371}{section.8.191}%
+\contentsline {section}{\numberline {8.192}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/trashcan/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TCluster\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Shape\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analyser.cpp File Reference}{372}{section.8.192}%
+\contentsline {subsection}{\numberline {8.192.1}Detailed Description}{372}{subsection.8.192.1}%
+\contentsline {subsection}{\numberline {8.192.2}Macro Definition Documentation}{373}{subsection.8.192.2}%
+\contentsline {subsubsection}{\numberline {8.192.2.1}\_\_TCLUSTERSHAPEANALYSER\_HEADER\_\_}{373}{subsubsection.8.192.2.1}%
+\contentsline {subsection}{\numberline {8.192.3}Function Documentation}{373}{subsection.8.192.3}%
+\contentsline {subsubsection}{\numberline {8.192.3.1}calNIncludePixel()}{373}{subsubsection.8.192.3.1}%
+\contentsline {subsubsection}{\numberline {8.192.3.2}calRatioOfRadius()}{373}{subsubsection.8.192.3.2}%
+\contentsline {section}{\numberline {8.193}TCluster\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Shape\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analyser.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}cpp}{373}{section.8.193}%
+\contentsline {section}{\numberline {8.194}/home/ychoi/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ATOM/trashcan/\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}TCluster\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Shape\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analyser.h File Reference}{382}{section.8.194}%
+\contentsline {subsection}{\numberline {8.194.1}Detailed Description}{382}{subsection.8.194.1}%
+\contentsline {section}{\numberline {8.195}TCluster\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Shape\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analyser.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}h}{383}{section.8.195}%

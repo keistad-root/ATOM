@@ -1,0 +1,124 @@
+\doxysection{Material.\+cpp}
+\hypertarget{Material_8cpp_source}{}\label{Material_8cpp_source}\index{/home/ychoi/ATOM/geant4/main/src/Material.cpp@{/home/ychoi/ATOM/geant4/main/src/Material.cpp}}
+\mbox{\hyperlink{Material_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00001}\mbox{\hyperlink{Material_8cpp_adf36cb967e5ce50a623e0354288ccf7e}{00001}}\ \textcolor{preprocessor}{\#define\ \_\_MATERIAL\_HEADER\_\_}}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{Material_8h}{Material.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00004}\mbox{\hyperlink{classMaterial_a137e987401b63eb7c6c27c3e38bc74b5}{00004}}\ \mbox{\hyperlink{classMaterial_a137e987401b63eb7c6c27c3e38bc74b5}{Material::Material}}()\ \{}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00005}00005\ \ \ \ \ \mbox{\hyperlink{classMaterial_acf966426551c76d31feda93bfefe76de}{setElement}}();}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00007}00007\ \ \ \ \ \mbox{\hyperlink{classMaterial_a3d06812148d66b9238d52cab54655c22}{setWorldMaterial}}();}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00008}00008\ \ \ \ \ \mbox{\hyperlink{classMaterial_a8978c69399eacd8b5955c53074fbf1a9}{setStandMaterial}}();}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00009}00009\ \ \ \ \ \mbox{\hyperlink{classMaterial_a1d98f4b0d526b9be9c72eeb43278fc63}{setScreenMaterial}}();}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00010}00010\ \ \ \ \ \mbox{\hyperlink{classMaterial_aa0f4969eabd255834902717893138ad2}{setAlpideMaterial}}();}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00011}00011\ \ \ \ \ \mbox{\hyperlink{classMaterial_a2cb78a117854bbb87dd4bbb52b2ce144}{setBoardMaterial}}();}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00012}00012\ \}}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00014}\mbox{\hyperlink{classMaterial_acf966426551c76d31feda93bfefe76de}{00014}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMaterial_acf966426551c76d31feda93bfefe76de}{Material::setElement}}()\ \{}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00015}00015\ \ \ \ \ \mbox{\hyperlink{classMaterial_ad976f7bb74c440e81f22b6ef8ba8c7f2}{elSi}}\ =\ \textcolor{keyword}{new}\ G4Element(\textcolor{stringliteral}{"{}Silicon"{}},\ \textcolor{stringliteral}{"{}Si"{}},\ 14,\ 28.085\ *\ g\ /\ mole);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00016}00016\ \ \ \ \ \mbox{\hyperlink{classMaterial_a0c96c95b519dada0c306f01322bb401f}{elN}}\ =\ \textcolor{keyword}{new}\ G4Element(\textcolor{stringliteral}{"{}Nitrogen"{}},\ \textcolor{stringliteral}{"{}N"{}},\ 7.,\ 14.007\ *\ g\ /\ mole);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00017}00017\ \ \ \ \ \mbox{\hyperlink{classMaterial_a011a4c2ce9121e8711e539d4e9aed67e}{elO}}\ =\ \textcolor{keyword}{new}\ G4Element(\textcolor{stringliteral}{"{}Oxygen"{}},\ \textcolor{stringliteral}{"{}O"{}},\ 8,\ 15.999\ *\ g\ /\ mole);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00018}00018\ \ \ \ \ \mbox{\hyperlink{classMaterial_ac8dd6bece7ba7420ba3be191d6869c64}{elAl}}\ =\ \textcolor{keyword}{new}\ G4Element(\textcolor{stringliteral}{"{}Aluminium"{}},\ \textcolor{stringliteral}{"{}Al"{}},\ 13,\ 26.982\ *\ g\ /\ mole);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00019}00019\ \ \ \ \ \mbox{\hyperlink{classMaterial_a816ea7dfc64d800e926fa890522098c6}{elFe}}\ =\ \textcolor{keyword}{new}\ G4Element(\textcolor{stringliteral}{"{}Iron"{}},\ \textcolor{stringliteral}{"{}Fe"{}},\ 26,\ 55.845\ *\ g\ /\ mole);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00020}00020\ \ \ \ \ \mbox{\hyperlink{classMaterial_af2f583bce3e05c99836efd85424234f2}{elCa}}\ =\ \textcolor{keyword}{new}\ G4Element(\textcolor{stringliteral}{"{}Calcium"{}},\ \textcolor{stringliteral}{"{}Ca"{}},\ 20,\ 40.078\ *\ g\ /\ mole);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00021}00021\ \ \ \ \ \mbox{\hyperlink{classMaterial_a3571366748dc359c4de58ae585872eba}{elMg}}\ =\ \textcolor{keyword}{new}\ G4Element(\textcolor{stringliteral}{"{}Magnesium"{}},\ \textcolor{stringliteral}{"{}Mg"{}},\ 12,\ 24.305\ *\ g\ /\ mole);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00022}00022\ \ \ \ \ \mbox{\hyperlink{classMaterial_ad3ca50a6d8ea4e213f5649dee6c8689d}{elNa}}\ =\ \textcolor{keyword}{new}\ G4Element(\textcolor{stringliteral}{"{}Natrium"{}},\ \textcolor{stringliteral}{"{}Na"{}},\ 11,\ 22.990\ *\ g\ /\ mole);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00023}00023\ \ \ \ \ \mbox{\hyperlink{classMaterial_abe751bf644af8b2187e408c748111cc3}{elTi}}\ =\ \textcolor{keyword}{new}\ G4Element(\textcolor{stringliteral}{"{}Titanium"{}},\ \textcolor{stringliteral}{"{}Ti"{}},\ 22,\ 47.867\ *\ g\ /\ mole);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00024}00024\ \ \ \ \ \mbox{\hyperlink{classMaterial_adb96246ad78048d9d918d2f16ef6fedd}{elC}}\ =\ \textcolor{keyword}{new}\ G4Element(\textcolor{stringliteral}{"{}Carbon"{}},\ \textcolor{stringliteral}{"{}C"{}},\ 6,\ 12.011\ *\ g\ /\ mole);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00025}00025\ \ \ \ \ \mbox{\hyperlink{classMaterial_a6e65cd94e16849c6f1f0d82b49f8733c}{elH}}\ =\ \textcolor{keyword}{new}\ G4Element(\textcolor{stringliteral}{"{}Hydrogen"{}},\ \textcolor{stringliteral}{"{}H"{}},\ 1,\ 1.008\ *\ g\ /\ mole);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00026}00026\ \ \ \ \ \mbox{\hyperlink{classMaterial_a089225bd86ca1ef5bf7136374f0f2e97}{elBr}}\ =\ \textcolor{keyword}{new}\ G4Element(\textcolor{stringliteral}{"{}Bromine"{}},\ \textcolor{stringliteral}{"{}Br"{}},\ 35,\ 79.904\ *\ g\ /\ mole);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00027}00027\ \}}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00029}\mbox{\hyperlink{classMaterial_a3d06812148d66b9238d52cab54655c22}{00029}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMaterial_a3d06812148d66b9238d52cab54655c22}{Material::setWorldMaterial}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ pressure)\ \{}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00030}00030\ \ \ \ \ \mbox{\hyperlink{classMaterial_a9e58fba08ea5ec18da4c1b3b063123f0}{worldMaterial}}\ =\ \textcolor{keyword}{new}\ G4Material(\textcolor{stringliteral}{"{}worldMaterial"{}},\ pressure\ *\ 1.2929e-\/03\ *\ g\ /\ cm3,\ 2);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00031}00031\ \ \ \ \ \mbox{\hyperlink{classMaterial_a9e58fba08ea5ec18da4c1b3b063123f0}{worldMaterial}}-\/>AddElement(\mbox{\hyperlink{classMaterial_a0c96c95b519dada0c306f01322bb401f}{elN}},\ .7);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00032}00032\ \ \ \ \ \mbox{\hyperlink{classMaterial_a9e58fba08ea5ec18da4c1b3b063123f0}{worldMaterial}}-\/>AddElement(\mbox{\hyperlink{classMaterial_a011a4c2ce9121e8711e539d4e9aed67e}{elO}},\ .3);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00033}00033\ \}}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00035}\mbox{\hyperlink{classMaterial_a8978c69399eacd8b5955c53074fbf1a9}{00035}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMaterial_a8978c69399eacd8b5955c53074fbf1a9}{Material::setStandMaterial}}()\ \{}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00036}00036\ \ \ \ \ \mbox{\hyperlink{classMaterial_a65e54e7d6c4fbb408b6677c51011dddf}{standMaterial}}\ =\ \textcolor{keyword}{new}\ G4Material(\textcolor{stringliteral}{"{}PLA"{}},\ 0.3\ *\ 1.210\ *\ g\ /\ cm3,\ 3);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00037}00037\ \ \ \ \ \mbox{\hyperlink{classMaterial_a65e54e7d6c4fbb408b6677c51011dddf}{standMaterial}}-\/>AddElement(\mbox{\hyperlink{classMaterial_adb96246ad78048d9d918d2f16ef6fedd}{elC}},\ 3);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00038}00038\ \ \ \ \ \mbox{\hyperlink{classMaterial_a65e54e7d6c4fbb408b6677c51011dddf}{standMaterial}}-\/>AddElement(\mbox{\hyperlink{classMaterial_a6e65cd94e16849c6f1f0d82b49f8733c}{elH}},\ 4);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00039}00039\ \ \ \ \ \mbox{\hyperlink{classMaterial_a65e54e7d6c4fbb408b6677c51011dddf}{standMaterial}}-\/>AddElement(\mbox{\hyperlink{classMaterial_a011a4c2ce9121e8711e539d4e9aed67e}{elO}},\ 2);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00040}00040\ \}}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00042}\mbox{\hyperlink{classMaterial_a1d98f4b0d526b9be9c72eeb43278fc63}{00042}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMaterial_a1d98f4b0d526b9be9c72eeb43278fc63}{Material::setScreenMaterial}}()\ \{}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00043}00043\ \ \ \ \ \mbox{\hyperlink{classMaterial_abaf81ee66c969b56e71207778ee79996}{screenMaterial}}\ =\ \textcolor{keyword}{new}\ G4Material(\textcolor{stringliteral}{"{}Aluminium"{}},\ 13,\ 26.982\ *\ g\ /\ mole,\ 2.7\ *\ g\ /\ cm3);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00044}00044\ \}}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00046}\mbox{\hyperlink{classMaterial_aa0f4969eabd255834902717893138ad2}{00046}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMaterial_aa0f4969eabd255834902717893138ad2}{Material::setAlpideMaterial}}()\ \{}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00047}00047\ \ \ \ \ \mbox{\hyperlink{classMaterial_a05db89ba09e99d201fc8de28e6634a64}{alpideMaterial}}\ =\ \textcolor{keyword}{new}\ G4Material(\textcolor{stringliteral}{"{}Silicon"{}},\ 14,\ 28.085\ *\ g\ /\ mole,\ 2.33\ *\ g\ /\ cm3);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00048}00048\ \}}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00050}\mbox{\hyperlink{classMaterial_a2cb78a117854bbb87dd4bbb52b2ce144}{00050}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classMaterial_a2cb78a117854bbb87dd4bbb52b2ce144}{Material::setBoardMaterial}}()\ \{}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00051}00051\ \ \ \ \ \mbox{\hyperlink{classMaterial_a519878a3228d1ee4ac689407f4784cb7}{fibrousGlass}}\ =\ \textcolor{keyword}{new}\ G4Material(\textcolor{stringliteral}{"{}fibrousGlass"{}},\ 2.74351\ *\ g\ /\ cm3,\ 7);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00053}00053\ \ \ \ \ G4Material*\ SiO2\ =\ \textcolor{keyword}{new}\ G4Material(\textcolor{stringliteral}{"{}SiO2"{}},\ 2.20\ *\ g\ /\ cm3,\ 2);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00054}00054\ \ \ \ \ SiO2-\/>AddElement(\mbox{\hyperlink{classMaterial_ad976f7bb74c440e81f22b6ef8ba8c7f2}{elSi}},\ 1);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00055}00055\ \ \ \ \ SiO2-\/>AddElement(\mbox{\hyperlink{classMaterial_a011a4c2ce9121e8711e539d4e9aed67e}{elO}},\ 2);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00057}00057\ \ \ \ \ G4Material*\ Al2O3\ =\ \textcolor{keyword}{new}\ G4Material(\textcolor{stringliteral}{"{}Al2O3"{}},\ 3.97\ *\ g\ /\ cm3,\ 2);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00058}00058\ \ \ \ \ Al2O3-\/>AddElement(\mbox{\hyperlink{classMaterial_ac8dd6bece7ba7420ba3be191d6869c64}{elAl}},\ 2);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00059}00059\ \ \ \ \ Al2O3-\/>AddElement(\mbox{\hyperlink{classMaterial_a011a4c2ce9121e8711e539d4e9aed67e}{elO}},\ 3);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00060}00060\ }
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00061}00061\ \ \ \ \ G4Material*\ Fe2O3\ =\ \textcolor{keyword}{new}\ G4Material(\textcolor{stringliteral}{"{}Fe2O3"{}},\ 5.24\ *\ g\ /\ cm3,\ 2);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00062}00062\ \ \ \ \ Fe2O3-\/>AddElement(\mbox{\hyperlink{classMaterial_a816ea7dfc64d800e926fa890522098c6}{elFe}},\ 2);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00063}00063\ \ \ \ \ Fe2O3-\/>AddElement(\mbox{\hyperlink{classMaterial_a011a4c2ce9121e8711e539d4e9aed67e}{elO}},\ 3);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00065}00065\ \ \ \ \ G4Material*\ CaO\ =\ \textcolor{keyword}{new}\ G4Material(\textcolor{stringliteral}{"{}CaO"{}},\ 3.35\ *\ g\ /\ cm3,\ 2);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00066}00066\ \ \ \ \ CaO-\/>AddElement(\mbox{\hyperlink{classMaterial_af2f583bce3e05c99836efd85424234f2}{elCa}},\ 1);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00067}00067\ \ \ \ \ CaO-\/>AddElement(\mbox{\hyperlink{classMaterial_a011a4c2ce9121e8711e539d4e9aed67e}{elO}},\ 1);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00069}00069\ \ \ \ \ G4Material*\ MgO\ =\ \textcolor{keyword}{new}\ G4Material(\textcolor{stringliteral}{"{}MgO"{}},\ 3.58\ *\ g\ /\ cm3,\ 2);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00070}00070\ \ \ \ \ MgO-\/>AddElement(\mbox{\hyperlink{classMaterial_a3571366748dc359c4de58ae585872eba}{elMg}},\ 1);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00071}00071\ \ \ \ \ MgO-\/>AddElement(\mbox{\hyperlink{classMaterial_a011a4c2ce9121e8711e539d4e9aed67e}{elO}},\ 1);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00073}00073\ \ \ \ \ G4Material*\ Na2O\ =\ \textcolor{keyword}{new}\ G4Material(\textcolor{stringliteral}{"{}Na2O"{}},\ 2.27\ *\ g\ /\ cm3,\ 2);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00074}00074\ \ \ \ \ Na2O-\/>AddElement(\mbox{\hyperlink{classMaterial_ad3ca50a6d8ea4e213f5649dee6c8689d}{elNa}},\ 2);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00075}00075\ \ \ \ \ Na2O-\/>AddElement(\mbox{\hyperlink{classMaterial_a011a4c2ce9121e8711e539d4e9aed67e}{elO}},\ 1);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00077}00077\ \ \ \ \ G4Material*\ TiO2\ =\ \textcolor{keyword}{new}\ G4Material(\textcolor{stringliteral}{"{}TiO2"{}},\ 4.24\ *\ g\ /\ cm3,\ 2);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00078}00078\ \ \ \ \ TiO2-\/>AddElement(\mbox{\hyperlink{classMaterial_abe751bf644af8b2187e408c748111cc3}{elTi}},\ 1);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00079}00079\ \ \ \ \ TiO2-\/>AddElement(\mbox{\hyperlink{classMaterial_a011a4c2ce9121e8711e539d4e9aed67e}{elO}},\ 2);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00080}00080\ }
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00081}00081\ \ \ \ \ \mbox{\hyperlink{classMaterial_a519878a3228d1ee4ac689407f4784cb7}{fibrousGlass}}-\/>AddMaterial(SiO2,\ 60.0\ *\ perCent);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00082}00082\ \ \ \ \ \mbox{\hyperlink{classMaterial_a519878a3228d1ee4ac689407f4784cb7}{fibrousGlass}}-\/>AddMaterial(Al2O3,\ 11.8\ *\ perCent);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00083}00083\ \ \ \ \ \mbox{\hyperlink{classMaterial_a519878a3228d1ee4ac689407f4784cb7}{fibrousGlass}}-\/>AddMaterial(Fe2O3,\ 0.1\ *\ perCent);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00084}00084\ \ \ \ \ \mbox{\hyperlink{classMaterial_a519878a3228d1ee4ac689407f4784cb7}{fibrousGlass}}-\/>AddMaterial(CaO,\ 22.4\ *\ perCent);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00085}00085\ \ \ \ \ \mbox{\hyperlink{classMaterial_a519878a3228d1ee4ac689407f4784cb7}{fibrousGlass}}-\/>AddMaterial(MgO,\ 3.4\ *\ perCent);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00086}00086\ \ \ \ \ \mbox{\hyperlink{classMaterial_a519878a3228d1ee4ac689407f4784cb7}{fibrousGlass}}-\/>AddMaterial(Na2O,\ 1.0\ *\ perCent);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00087}00087\ \ \ \ \ \mbox{\hyperlink{classMaterial_a519878a3228d1ee4ac689407f4784cb7}{fibrousGlass}}-\/>AddMaterial(TiO2,\ 1.3\ *\ perCent);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00089}00089\ \ \ \ \ \mbox{\hyperlink{classMaterial_a159129902b9ce0ca068aa5dedf69ac12}{epoxyResin}}\ =\ \textcolor{keyword}{new}\ G4Material(\textcolor{stringliteral}{"{}epoxyResin"{}},\ 1.1250\ *\ g\ /\ cm3,\ 4);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00090}00090\ \ \ \ \ \mbox{\hyperlink{classMaterial_a159129902b9ce0ca068aa5dedf69ac12}{epoxyResin}}-\/>AddElement(\mbox{\hyperlink{classMaterial_adb96246ad78048d9d918d2f16ef6fedd}{elC}},\ 38);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00091}00091\ \ \ \ \ \mbox{\hyperlink{classMaterial_a159129902b9ce0ca068aa5dedf69ac12}{epoxyResin}}-\/>AddElement(\mbox{\hyperlink{classMaterial_a6e65cd94e16849c6f1f0d82b49f8733c}{elH}},\ 40);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00092}00092\ \ \ \ \ \mbox{\hyperlink{classMaterial_a159129902b9ce0ca068aa5dedf69ac12}{epoxyResin}}-\/>AddElement(\mbox{\hyperlink{classMaterial_a011a4c2ce9121e8711e539d4e9aed67e}{elO}},\ 6);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00093}00093\ \ \ \ \ \mbox{\hyperlink{classMaterial_a159129902b9ce0ca068aa5dedf69ac12}{epoxyResin}}-\/>AddElement(\mbox{\hyperlink{classMaterial_a089225bd86ca1ef5bf7136374f0f2e97}{elBr}},\ 4);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00095}00095\ \ \ \ \ \mbox{\hyperlink{classMaterial_a1a5171f7dc92dec35566880e4dcf645d}{boardMaterial}}\ =\ \textcolor{keyword}{new}\ G4Material(\textcolor{stringliteral}{"{}Fr4"{}},\ 1.98281\ *\ mg\ /\ cm3,\ 2);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00096}00096\ \ \ \ \ \mbox{\hyperlink{classMaterial_a1a5171f7dc92dec35566880e4dcf645d}{boardMaterial}}-\/>AddMaterial(\mbox{\hyperlink{classMaterial_a519878a3228d1ee4ac689407f4784cb7}{fibrousGlass}},\ 53\ *\ perCent);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00097}00097\ \ \ \ \ \mbox{\hyperlink{classMaterial_a1a5171f7dc92dec35566880e4dcf645d}{boardMaterial}}-\/>AddMaterial(\mbox{\hyperlink{classMaterial_a159129902b9ce0ca068aa5dedf69ac12}{epoxyResin}},\ 47\ *\ perCent);}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00098}00098\ \}}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00100}\mbox{\hyperlink{classMaterial_a6b5f617d3ddb10ac9f334250cc45cf2c}{00100}}\ G4Material*\ \mbox{\hyperlink{classMaterial_a6b5f617d3ddb10ac9f334250cc45cf2c}{Material::getWorldMaterial}}()\textcolor{keyword}{\ \ const\ }\{}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00101}00101\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classMaterial_a9e58fba08ea5ec18da4c1b3b063123f0}{worldMaterial}};}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00102}00102\ \}}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00104}\mbox{\hyperlink{classMaterial_a94b486e287e3a739842dcf3ce1258282}{00104}}\ G4Material*\ \mbox{\hyperlink{classMaterial_a94b486e287e3a739842dcf3ce1258282}{Material::getStandMaterial}}()\textcolor{keyword}{\ \ const\ }\{}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00105}00105\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classMaterial_a65e54e7d6c4fbb408b6677c51011dddf}{standMaterial}};}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00106}00106\ \}}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00107}00107\ }
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00108}\mbox{\hyperlink{classMaterial_afd784f46cc05432b6dfb7475e5cfefde}{00108}}\ G4Material*\ \mbox{\hyperlink{classMaterial_afd784f46cc05432b6dfb7475e5cfefde}{Material::getScreenMaterial}}()\textcolor{keyword}{\ \ const\ }\{}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00109}00109\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classMaterial_abaf81ee66c969b56e71207778ee79996}{screenMaterial}};}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00110}00110\ \}}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00111}00111\ }
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00112}\mbox{\hyperlink{classMaterial_a655b2c8494e829c9b1b4f84a4d886832}{00112}}\ G4Material*\ \mbox{\hyperlink{classMaterial_a655b2c8494e829c9b1b4f84a4d886832}{Material::getAlpideMaterial}}()\textcolor{keyword}{\ \ const\ }\{}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00113}00113\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classMaterial_a05db89ba09e99d201fc8de28e6634a64}{alpideMaterial}};}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00114}00114\ \}}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00116}\mbox{\hyperlink{classMaterial_a42c883208c8dc7600144c8dec61306fb}{00116}}\ G4Material*\ \mbox{\hyperlink{classMaterial_a42c883208c8dc7600144c8dec61306fb}{Material::getBoardMaterial}}()\textcolor{keyword}{\ \ const\ }\{}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00117}00117\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classMaterial_a1a5171f7dc92dec35566880e4dcf645d}{boardMaterial}};}
+\DoxyCodeLine{\Hypertarget{Material_8cpp_source_l00118}00118\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,231 @@
+\doxysection{Cpp\+Config\+File.\+cpp}
+\hypertarget{CppConfigFile_8cpp_source}{}\label{CppConfigFile_8cpp_source}\index{/home/ychoi/ATOM/pycpp/config/src/CppConfigFile.cpp@{/home/ychoi/ATOM/pycpp/config/src/CppConfigFile.cpp}}
+\mbox{\hyperlink{CppConfigFile_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{CppConfigFile_8h}{CppConfigFile.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00007}00007\ \mbox{\hyperlink{classCppConfigFile_ad3ee16a1193c646393a96f42108ffa76}{CppConfigFile::CppConfigFile}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00015}\mbox{\hyperlink{classCppConfigFile_a631b19c3cf17f8204f3173bba7374a8f}{00015}}\ \mbox{\hyperlink{classCppConfigFile_ad3ee16a1193c646393a96f42108ffa76}{CppConfigFile::CppConfigFile}}(std::string\_view\ configFile)\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00016}00016\ \ \ \ \ \textcolor{comment}{//\ Find\ config\ file.\ If\ the\ file\ doens't\ exist,\ then\ it\ omits\ error\ message.}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00017}00017\ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00018}00018\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ !std::filesystem::exists(configFile)\ )\ \{\ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classCppConfigFileError}{CppConfigFileError}}(\textcolor{stringliteral}{"{}FileExist"{}},\ configFile);\ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00019}00019\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCppConfigFile_a18fd114ee6dcdb49605da7c49abdde7a}{addConfig}}(configFile);}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00020}00020\ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (\ \mbox{\hyperlink{classCppConfigFileError}{CppConfigFileError}}\ error\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00021}00021\ \ \ \ \ \ \ \ \ error.\mbox{\hyperlink{classCppConfigFileError_a7b50d9cb7ef751694602cce3ed3a6067}{what}}();}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00022}00022\ \ \ \ \ \ \ \ \ exit(1);}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00023}00023\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00024}00024\ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00026}\mbox{\hyperlink{classCppConfigFile_a16f1c43b05f93804a550fcf4a5bfec34}{00026}}\ \mbox{\hyperlink{classCppConfigFile_ad3ee16a1193c646393a96f42108ffa76}{CppConfigFile::CppConfigFile}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigFile}{CppConfigFile}}\&\ copy)\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00027}00027\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\&\ dict\ :\ copy.\mbox{\hyperlink{classCppConfigFile_a86ac8071587dce50a4333c50b71d8431}{mConfigs}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00028}00028\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCppConfigFile_a86ac8071587dce50a4333c50b71d8431}{mConfigs}}.push\_back(dict);}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00029}00029\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00030}00030\ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00031}\mbox{\hyperlink{classCppConfigFile_a91ba0cfe9732b610b14e991156200e48}{00031}}\ \mbox{\hyperlink{classCppConfigFile}{CppConfigFile}}\&\ \mbox{\hyperlink{classCppConfigFile_a91ba0cfe9732b610b14e991156200e48}{CppConfigFile::operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigFile}{CppConfigFile}}\&\ copy)\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00032}00032\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\&\ dict\ :\ copy.\mbox{\hyperlink{classCppConfigFile_a86ac8071587dce50a4333c50b71d8431}{mConfigs}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCppConfigFile_a86ac8071587dce50a4333c50b71d8431}{mConfigs}}.push\_back(dict);}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00034}00034\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00035}00035\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00036}00036\ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00037}\mbox{\hyperlink{classCppConfigFile_a439930b31eec7eda90815b7efa778bc2}{00037}}\ \mbox{\hyperlink{classCppConfigFile_ad3ee16a1193c646393a96f42108ffa76}{CppConfigFile::CppConfigFile}}(\mbox{\hyperlink{classCppConfigFile}{CppConfigFile}}\&\&\ copy)\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00038}00038\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\&\ dict\ :\ copy.mConfigs\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00039}00039\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCppConfigFile_a86ac8071587dce50a4333c50b71d8431}{mConfigs}}.push\_back(dict);}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00040}00040\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00041}00041\ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00042}\mbox{\hyperlink{classCppConfigFile_a35e7d3560ea72e0b969cfcddf04ce043}{00042}}\ \mbox{\hyperlink{classCppConfigFile}{CppConfigFile}}\&\ \mbox{\hyperlink{classCppConfigFile_a91ba0cfe9732b610b14e991156200e48}{CppConfigFile::operator=}}(\mbox{\hyperlink{classCppConfigFile}{CppConfigFile}}\&\&\ copy)\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00043}00043\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\&\ dict\ :\ copy.mConfigs\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00044}00044\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCppConfigFile_a86ac8071587dce50a4333c50b71d8431}{mConfigs}}.push\_back(dict);}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00045}00045\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00046}00046\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00047}00047\ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00054}\mbox{\hyperlink{classCppConfigFile_a18fd114ee6dcdb49605da7c49abdde7a}{00054}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCppConfigFile_a18fd114ee6dcdb49605da7c49abdde7a}{CppConfigFile::addConfig}}(std::string\_view\ configFile)\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00055}00055\ \ \ \ \ \textcolor{comment}{//\ Open\ config\ file}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00056}00056\ \ \ \ \ std::ifstream\ conf\{std::string(configFile)\};}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00058}00058\ \ \ \ \ \textcolor{comment}{//\ The\ reading\ line}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00059}00059\ \ \ \ \ std::string\ line;}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00060}00060\ \ \ \ \ \textcolor{comment}{//\ The\ key\ }}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00061}00061\ \ \ \ \ std::string\ key;}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00062}00062\ \ \ \ \ \textcolor{comment}{//\ The\ value\ is\ stored\ as\ std::string\ form}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00063}00063\ \ \ \ \ std::string\ value;}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00065}00065\ \ \ \ \ \textcolor{comment}{//\ Read\ config\ file\ line\ by\ line}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00066}00066\ \ \ \ \ std::vector<std::string>\ valueArray;}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00067}00067\ \ \ \ \ \textcolor{keywordtype}{bool}\ isFirst\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00068}00068\ \ \ \ \ \textcolor{keywordflow}{while}\ (\ getline(conf,\ line)\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00069}00069\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Remove\ comment\ out\ part}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00070}00070\ \ \ \ \ \ \ \ \ std::string\ result;}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00071}00071\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ escapeNext\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00073}00073\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{char}\ c\ :\ line\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ escapeNext\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ c\ ==\ \textcolor{charliteral}{'\#'}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ \textcolor{charliteral}{'\#'};}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'};}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ c;}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ escapeNext\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ c\ ==\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ escapeNext\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ c;}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00089}00089\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00090}00090\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ escapeNext\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'};\ \textcolor{comment}{//\ Add\ trailing\ backslash\ if\ input\ ends\ with\ a\ backslash}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00092}00092\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00093}00093\ \ \ \ \ \ \ \ \ line\ =\ result;}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00094}00094\ \ \ \ \ \ \ \ \ line.erase(remove(line.begin(),\ line.end(),\ \textcolor{charliteral}{'\(\backslash\)t'}),\ line.end());}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ line[0]\ ==\ \textcolor{charliteral}{'\#'}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ line\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ line.find(\textcolor{charliteral}{'='})\ !=\ std::string::npos\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ line.erase(remove(line.begin(),\ line.begin()\ +\ line.find(\textcolor{charliteral}{'='}),\ \textcolor{charliteral}{'\ '}),\ line.begin()\ +\ line.find(\textcolor{charliteral}{'='}));}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ line.erase(remove(line.begin(),\ line.end(),\ \textcolor{charliteral}{'\ '}),\ line.end());}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00102}00102\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00103}00103\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ line\ ==\ \textcolor{stringliteral}{"{}"{}}\ )\ \{\ \textcolor{comment}{//\ Pass\ the\ blank\ line}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00105}00105\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ line.find(\textcolor{charliteral}{'['})\ !=\ std::string::npos\ \&\&\ (line[line.find(\textcolor{charliteral}{'['})\ -\/\ 1]\ !=\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'})\ )\ \{\ \textcolor{comment}{//\ The\ line\ started\ with\ '['\ is\ considered\ as\ Configurable\ name}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ !isFirst\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCppConfigFile_a86ac8071587dce50a4333c50b71d8431}{mConfigs}}.push\_back(\mbox{\hyperlink{classCppConfigFile_ac0236a68e9ca8bb3a94db88c1401286e}{getConfigFromArray}}(key,\ valueArray));}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ valueArray.clear();}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ isFirst\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ key\ =\ line.substr(line.find(\textcolor{charliteral}{'['})\ +\ 1,\ line.find(\textcolor{charliteral}{']'})\ -\/\ 1);}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Make\ new\ configurable\ \ }}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ valueArray.push\_back(line);}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00117}00117\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00118}00118\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ valueArray.size()\ !=\ 0\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classCppConfigFile_a86ac8071587dce50a4333c50b71d8431}{mConfigs}}.push\_back(\mbox{\hyperlink{classCppConfigFile_ac0236a68e9ca8bb3a94db88c1401286e}{getConfigFromArray}}(key,\ valueArray));}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00120}00120\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00121}00121\ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00122}00122\ }
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00123}\mbox{\hyperlink{classCppConfigFile_ae2abadc0cbbaad797693b0628bba4905}{00123}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classCppConfigFile_a18fd114ee6dcdb49605da7c49abdde7a}{CppConfigFile::addConfig}}(std::string\_view\ configTitle,\ \textcolor{keyword}{const}\ std::vector<std::string>\&\ configArray)\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00124}00124\ \ \ \ \ \mbox{\hyperlink{classCppConfigFile_a86ac8071587dce50a4333c50b71d8431}{mConfigs}}.push\_back(\mbox{\hyperlink{classCppConfigFile_ac0236a68e9ca8bb3a94db88c1401286e}{getConfigFromArray}}(configTitle,\ configArray));}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00125}00125\ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00126}00126\ }
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00127}00127\ }
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00128}\mbox{\hyperlink{classCppConfigFile_ac0236a68e9ca8bb3a94db88c1401286e}{00128}}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\ \mbox{\hyperlink{classCppConfigFile_ac0236a68e9ca8bb3a94db88c1401286e}{CppConfigFile::getConfigFromArray}}(std::string\_view\ motherKey,\ \textcolor{keyword}{const}\ std::vector<std::string>\&\ valueArray)\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00129}00129\ \ \ \ \ std::string\ key,\ value;}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00130}00130\ \ \ \ \ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\ returnConfigDictionary(motherKey);}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00131}00131\ \ \ \ \ \textcolor{keywordtype}{int}\ numBra\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00132}00132\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ lineNum\ =\ 0;\ lineNum\ <\ valueArray.size();\ lineNum++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00133}00133\ \ \ \ \ \ \ \ \ std::string\ line\ =\ valueArray[lineNum];}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00134}00134\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ (line.find(\textcolor{charliteral}{'='})\ !=\ std::string::npos\ \&\&\ line.find(\textcolor{charliteral}{'\{'})\ ==\ std::string::npos)\ \&\&\ numBra\ ==\ 0\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ line.erase(remove(line.begin(),\ line.begin()\ +\ line.find(\textcolor{charliteral}{'='})\ +\ 2,\ \textcolor{charliteral}{'\(\backslash\)t'}),\ line.begin()\ +\ line.find(\textcolor{charliteral}{'='})\ +\ 2);}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ line.erase(remove(line.begin(),\ line.begin()\ +\ line.find(\textcolor{charliteral}{'='})\ +\ 2,\ \textcolor{charliteral}{'\ '}),\ line.begin()\ +\ line.find(\textcolor{charliteral}{'='})\ +\ 2);}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00137}00137\ }
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ key\ =\ line.substr(0,\ line.find(\textcolor{charliteral}{'='}));}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ value\ =\ line.substr(line.find(\textcolor{charliteral}{'='})\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (\ \textcolor{keyword}{true}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ value[0]\ ==\ \textcolor{charliteral}{'\(\backslash\)t'}\ ||\ value[0]\ ==\ \textcolor{charliteral}{'\ '}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ value.erase(value.begin());}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ returnConfigDictionary.\mbox{\hyperlink{classCppConfigDictionary_a0d6f15f4d9b94d97fc204007a62eb74d}{addDictionary}}(key,\ value);}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ key\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ value\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00150}00150\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ (line.find(\textcolor{charliteral}{'='})\ !=\ std::string::npos)\ \&\&\ (line.find(\textcolor{charliteral}{'\{'})\ !=\ std::string::npos)\ \&\&\ (line[line.find(\textcolor{charliteral}{'\{'})\ -\/\ 1]\ !=\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'})\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ line.erase(remove(line.begin(),\ line.begin()\ +\ line.find(\textcolor{charliteral}{'='})\ +\ 2,\ \textcolor{charliteral}{'\(\backslash\)t'}),\ line.begin()\ +\ line.find(\textcolor{charliteral}{'='})\ +\ 2);}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ line.erase(remove(line.begin(),\ line.begin()\ +\ line.find(\textcolor{charliteral}{'='})\ +\ 2,\ \textcolor{charliteral}{'\ '}),\ line.begin()\ +\ line.find(\textcolor{charliteral}{'='})\ +\ 2);}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ key\ =\ line.substr(0,\ line.find(\textcolor{charliteral}{'='}));}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<std::string>\ tempValueArray;}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ numSubBra\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ lineNum++;}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00157}00157\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (\ \textcolor{keyword}{true}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00158}00158\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line\ =\ valueArray[lineNum];}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00159}00159\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ (line.find(\textcolor{charliteral}{'\{'})\ !=\ std::string::npos)\ \&\&\ (line[line.find(\textcolor{charliteral}{'\{'})\ -\/\ 1]\ !=\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'})\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line.erase(remove(line.begin(),\ line.begin()\ +\ line.find(\textcolor{charliteral}{'='})\ +\ 2,\ \textcolor{charliteral}{'\(\backslash\)t'}),\ line.begin()\ +\ line.find(\textcolor{charliteral}{'='})\ +\ 2);}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line.erase(remove(line.begin(),\ line.begin()\ +\ line.find(\textcolor{charliteral}{'='})\ +\ 2,\ \textcolor{charliteral}{'\ '}),\ line.begin()\ +\ line.find(\textcolor{charliteral}{'='})\ +\ 2);}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tempValueArray.push\_back(line);}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00163}00163\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ numSubBra++;}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00164}00164\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ (line.find(\textcolor{charliteral}{'\}'})\ !=\ std::string::npos)\ \&\&\ (line[line.find(\textcolor{charliteral}{'\}'})\ -\/\ 1]\ !=\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'})\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00165}00165\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ numSubBra\ !=\ 0\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line.erase(remove(line.begin(),\ line.end(),\ \textcolor{charliteral}{'\(\backslash\)t'}),\ line.end());}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line.erase(remove(line.begin(),\ line.end(),\ \textcolor{charliteral}{'\ '}),\ line.end());}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tempValueArray.push\_back(line);}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ returnConfigDictionary.\mbox{\hyperlink{classCppConfigDictionary_abbb1c4b8d46b3e6b3c045b45382ec46a}{addSubConfigDictionary}}(\mbox{\hyperlink{classCppConfigFile_ac0236a68e9ca8bb3a94db88c1401286e}{getConfigFromArray}}(key,\ tempValueArray));}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00171}00171\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00172}00172\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ numSubBra-\/-\/;}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line.erase(remove(line.begin(),\ line.begin()\ +\ line.find(\textcolor{charliteral}{'='})\ +\ 2,\ \textcolor{charliteral}{'\(\backslash\)t'}),\ line.begin()\ +\ line.find(\textcolor{charliteral}{'='})\ +\ 2);}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line.erase(remove(line.begin(),\ line.begin()\ +\ line.find(\textcolor{charliteral}{'='})\ +\ 2,\ \textcolor{charliteral}{'\ '}),\ line.begin()\ +\ line.find(\textcolor{charliteral}{'='})\ +\ 2);}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tempValueArray.push\_back(line);}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ lineNum++;}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00181}00181\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ (line.find(\textcolor{charliteral}{'='})\ !=\ std::string::npos)\ \&\&\ (line.find(\textcolor{charliteral}{'\{'})\ !=\ std::string::npos)\ \&\&\ (line[line.find(\textcolor{charliteral}{'\{'})\ -\/\ 1]\ ==\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'})\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00182}00182\ \ \ \ \ \ \ \ \ \ \ \ \ line.erase(remove(line.begin(),\ line.end(),\ \textcolor{charliteral}{'\(\backslash\)\(\backslash\)'}),\ line.end());}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00183}00183\ \ \ \ \ \ \ \ \ \ \ \ \ line.erase(remove(line.begin(),\ line.begin()\ +\ line.find(\textcolor{charliteral}{'='})\ +\ 2,\ \textcolor{charliteral}{'\(\backslash\)t'}),\ line.begin()\ +\ line.find(\textcolor{charliteral}{'='})\ +\ 2);}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00184}00184\ \ \ \ \ \ \ \ \ \ \ \ \ line.erase(remove(line.begin(),\ line.begin()\ +\ line.find(\textcolor{charliteral}{'='})\ +\ 2,\ \textcolor{charliteral}{'\ '}),\ line.begin()\ +\ line.find(\textcolor{charliteral}{'='})\ +\ 2);}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ key\ =\ line.substr(0,\ line.find(\textcolor{charliteral}{'='}));}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ value\ =\ line.substr(line.find(\textcolor{charliteral}{'='})\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (\ \textcolor{keyword}{true}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00188}00188\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ value[0]\ ==\ \textcolor{charliteral}{'\(\backslash\)t'}\ ||\ value[0]\ ==\ \textcolor{charliteral}{'\ '}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00189}00189\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ value.erase(value.begin());}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00190}00190\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00191}00191\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00192}00192\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00193}00193\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00194}00194\ \ \ \ \ \ \ \ \ \ \ \ \ returnConfigDictionary.\mbox{\hyperlink{classCppConfigDictionary_a0d6f15f4d9b94d97fc204007a62eb74d}{addDictionary}}(key,\ value);}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00195}00195\ \ \ \ \ \ \ \ \ \ \ \ \ key\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00196}00196\ \ \ \ \ \ \ \ \ \ \ \ \ value\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00197}00197\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00198}00198\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00199}00199\ \ \ \ \ \textcolor{keywordflow}{return}\ returnConfigDictionary;}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00200}00200\ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00201}00201\ }
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00202}\mbox{\hyperlink{classCppConfigFile_a8952eae6c71a85df00075622b31d7233}{00202}}\ \textcolor{keyword}{const}\ std::vector<std::string>\ \mbox{\hyperlink{classCppConfigFile_a8952eae6c71a85df00075622b31d7233}{CppConfigFile::getConfigurableNameList}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00203}00203\ \ \ \ \ std::vector<std::string>\ configurableNameList;}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00204}00204\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\&\ config\ :\ \mbox{\hyperlink{classCppConfigFile_a86ac8071587dce50a4333c50b71d8431}{mConfigs}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00205}00205\ \ \ \ \ \ \ \ \ configurableNameList.push\_back(std::string(config.getConfigName()));}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00206}00206\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00207}00207\ \ \ \ \ \textcolor{keywordflow}{return}\ configurableNameList;}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00208}00208\ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00209}00209\ }
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00210}00210\ }
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00211}\mbox{\hyperlink{classCppConfigFile_a8469a5f95abf337e3d9644c481f181bd}{00211}}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\ \mbox{\hyperlink{classCppConfigFile_a8469a5f95abf337e3d9644c481f181bd}{CppConfigFile::getConfig}}(std::string\_view\ configTitle)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00212}00212\ \ \ \ \ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\ rConfig;}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00213}00213\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{auto}\&\ config\ :\ \mbox{\hyperlink{classCppConfigFile_a86ac8071587dce50a4333c50b71d8431}{mConfigs}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00214}00214\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ config.getConfigName()\ ==\ configTitle\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ rConfig\ =\ config;}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00217}00217\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00218}00218\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00219}00219\ \ \ \ \ \textcolor{keywordflow}{return}\ rConfig;}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00220}00220\ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00221}00221\ }
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00222}\mbox{\hyperlink{classCppConfigFile_a24f3ff7ed9f39dd605ed74b2f8701fea}{00222}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classCppConfigFile_a24f3ff7ed9f39dd605ed74b2f8701fea}{CppConfigFile::hasConfig}}(std::string\_view\ configTitle)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00223}00223\ \ \ \ \ \textcolor{keywordtype}{bool}\ hasValue\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00224}00224\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{auto}\&\ config\ :\ \mbox{\hyperlink{classCppConfigFile_a86ac8071587dce50a4333c50b71d8431}{mConfigs}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00225}00225\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ config.getConfigName()\ ==\ configTitle\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00226}00226\ \ \ \ \ \ \ \ \ \ \ \ \ hasValue\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00227}00227\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00228}00228\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00229}00229\ \ \ \ \ \textcolor{keywordflow}{return}\ hasValue;}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00230}00230\ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00231}00231\ }
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00232}\mbox{\hyperlink{classCppConfigFile_a4777bc6044be13fc0f50b7f162faaa49}{00232}}\ std::ostream\&\ \mbox{\hyperlink{CppConfigFile_8cpp_a4777bc6044be13fc0f50b7f162faaa49}{operator<<}}(std::ostream\&\ os,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigFile}{CppConfigFile}}\&\ copy)\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00233}00233\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Config\ list\ (white:\ keys,\ green:\ subConfig)"{}}\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00234}00234\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{auto}\&\ config\ :\ copy.\mbox{\hyperlink{classCppConfigFile_a86ac8071587dce50a4333c50b71d8431}{mConfigs}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00235}00235\ \ \ \ \ \ \ \ \ os\ <<\ config;}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00236}00236\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00237}00237\ \ \ \ \ \textcolor{keywordflow}{return}\ os;}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00238}00238\ \}}
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00239}00239\ }
+\DoxyCodeLine{\Hypertarget{CppConfigFile_8cpp_source_l00240}\mbox{\hyperlink{classCppConfigFile_a2de2a75af674eec44213083854a39851}{00240}}\ \mbox{\hyperlink{classCppConfigFile_a2de2a75af674eec44213083854a39851}{CppConfigFile::\string~CppConfigFile}}()\ \{\ \}}
+
+\end{DoxyCode}

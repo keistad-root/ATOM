@@ -24,7 +24,7 @@ class G4AssemblyVolume;
 enum SourceType {
 	alpha,
 	beta,
-	gamma
+	photon
 };
 
 enum StandType {

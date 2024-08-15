@@ -1,0 +1,99 @@
+\doxysection{TCluster.\+h}
+\hypertarget{TCluster_8h_source}{}\label{TCluster_8h_source}\index{/home/ychoi/ATOM/alpide/cluster/inc/TCluster.h@{/home/ychoi/ATOM/alpide/cluster/inc/TCluster.h}}
+\mbox{\hyperlink{TCluster_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00012}00012\ \textcolor{preprocessor}{\#ifndef\ \_\_TCLUSTER\_\_}}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00013}00013\ \textcolor{preprocessor}{\#define\ \_\_TCLUSTER\_\_}}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00015}00015\ \textcolor{preprocessor}{\#ifdef\ \_\_TCLUSTER\_HEADER\_\_}}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00016}00016\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00018}00018\ \textcolor{preprocessor}{\#include<vector>}}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00019}00019\ \textcolor{preprocessor}{\#include<algorithm>}}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00020}00020\ \textcolor{preprocessor}{\#include<cmath>}}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00022}\mbox{\hyperlink{classTCluster}{00022}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classTCluster}{TCluster}}\ \{}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00023}00023\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00024}\mbox{\hyperlink{classTCluster_af22e10fc45cc916e7c4429eb4f3434d4}{00024}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTCluster_af22e10fc45cc916e7c4429eb4f3434d4}{mEvent}};\ }
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00025}\mbox{\hyperlink{classTCluster_ab8072405cb23e94f6d50ab471ed896e1}{00025}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTCluster_ab8072405cb23e94f6d50ab471ed896e1}{mTime}};\ }
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00026}\mbox{\hyperlink{classTCluster_af6514b0da528c942c5f488a4c24add4e}{00026}}\ \ \ \ \ std::vector\ <std::pair<int,\ int>>\ \mbox{\hyperlink{classTCluster_af6514b0da528c942c5f488a4c24add4e}{mPixels}};\ }
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00028}\mbox{\hyperlink{classTCluster_a9f0c100e2971aa7fec8081109a6192ba}{00028}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTCluster_a9f0c100e2971aa7fec8081109a6192ba}{mMinX}}\ =\ 1024,\ \mbox{\hyperlink{classTCluster_a779e15d577eae78da599c0ca7022a10e}{mMinY}}\ =\ 512;\ }
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00029}\mbox{\hyperlink{classTCluster_a9e340b2f8bc7c75234850c873197ae64}{00029}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTCluster_a9e340b2f8bc7c75234850c873197ae64}{mMaxX}}\ =\ 0,\ \mbox{\hyperlink{classTCluster_a8650a4a4969956a25494179b6556b26b}{mMaxY}}\ =\ 0;\ }
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00030}\mbox{\hyperlink{classTCluster_aa6ab3c16b3da70b6376bf601139b2338}{00030}}\ \ \ \ \ std::pair<double,\ double>\ \mbox{\hyperlink{classTCluster_aa6ab3c16b3da70b6376bf601139b2338}{center}};\ }
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00031}\mbox{\hyperlink{classTCluster_af295cbe8d0523c4250b35de27b121da5}{00031}}\ \ \ \ \ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classTCluster_af295cbe8d0523c4250b35de27b121da5}{mLongRadius}};}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00032}00032\ \ \ \ \ \textcolor{comment}{//\ std::pair<double,\ double>\ stdevInAxis;\ /**<\ standard\ deviation\ in\ x\ and\ y\ direction\ */}}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00033}00033\ \ \ \ \ \textcolor{comment}{//\ double\ stdev;\ /**<\ Root\ of\ mean\ of\ squared\ distance\ from\ cluster\ centre\ */}}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00034}\mbox{\hyperlink{classTCluster_a08d45f89484fea87d5bd585ba0ab78e2}{00034}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTCluster_a08d45f89484fea87d5bd585ba0ab78e2}{size}}\ =\ 0;\ }
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00035}00035\ \ \ \ \ \textcolor{comment}{//\ TMatrix2D<int>\ shape;\ /**<\ The\ shape\ matrix\ for\ analyse\ cluster\ shape\ */}}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00037}00037\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00038}00038\ \ \ \ \ \mbox{\hyperlink{classTCluster_aff0e758a6ee4249eb0115b0806570a93}{TCluster}}();}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00039}00039\ \ \ \ \ \mbox{\hyperlink{classTCluster_aff0e758a6ee4249eb0115b0806570a93}{TCluster}}(\textcolor{keywordtype}{int}\ event,\ \textcolor{keywordtype}{int}\ time);}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00040}00040\ \ \ \ \ \mbox{\hyperlink{classTCluster_aff0e758a6ee4249eb0115b0806570a93}{TCluster}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classTCluster}{TCluster}}\&\ copy);}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00041}00041\ \ \ \ \ \mbox{\hyperlink{classTCluster}{TCluster}}\&\ \mbox{\hyperlink{classTCluster_a0687e1e1a3f81feb3bf7dc76ce8d94ff}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classTCluster}{TCluster}}\&\ copy);}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00042}00042\ \ \ \ \ \mbox{\hyperlink{classTCluster_aff0e758a6ee4249eb0115b0806570a93}{TCluster}}(\mbox{\hyperlink{classTCluster}{TCluster}}\&\&\ move);}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00043}00043\ \ \ \ \ \mbox{\hyperlink{classTCluster}{TCluster}}\&\ \mbox{\hyperlink{classTCluster_a0687e1e1a3f81feb3bf7dc76ce8d94ff}{operator=}}(\mbox{\hyperlink{classTCluster}{TCluster}}\&\&\ move);}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00044}00044\ \ \ \ \ \mbox{\hyperlink{classTCluster_aac329ca2d7a76d8c8fa80d68f8e8f23a}{\string~TCluster}}();}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00046}00046\ \ \ \ \ \textcolor{comment}{//\ Add\ Function}}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00047}00047\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTCluster_a1f9c6f7c4ce30d0809c9e874e86c99dd}{AddPixel}}(\textcolor{keyword}{const}\ std::pair<int,\ int>\&\ pixel);}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00048}00048\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTCluster_addb5a575839505e06a498447b8842abf}{AddCluster}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classTCluster}{TCluster}}\&\ cluster);}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00050}00050\ \ \ \ \ \textcolor{comment}{//\ Compare\ functions}}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00051}00051\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classTCluster_ad5826ca32e5b25654dfdebd7dff7ea32}{isNeighbour}}(\textcolor{keyword}{const}\ std::pair<int,\ int>\&\ pixel)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00052}00052\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classTCluster_ad5826ca32e5b25654dfdebd7dff7ea32}{isNeighbour}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classTCluster}{TCluster}}\&\ cluster)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00053}00053\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classTCluster_a6d0192928631950a9c95a00a184f7f2e}{isContain}}(\textcolor{keyword}{const}\ std::pair<int,\ int>\&\ pixel)\textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00054}00054\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classTCluster_a6d0192928631950a9c95a00a184f7f2e}{isContain}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classTCluster}{TCluster}}\&\ cluster)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00055}00055\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTCluster_a3bc29d5067f2d89bc1d4379cb6246f38}{getDistance}}(\textcolor{keyword}{const}\ std::pair<int,\ int>\&\ pixel1,\ \textcolor{keyword}{const}\ std::pair<int,\ int>\&\ pixel2)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00057}00057\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTCluster_abed781852492ec1795a6a6764cb4f09a}{calMembers}}();}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00058}00058\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTCluster_a9a9c8b7b4d896a29f1b388e78f0f6257}{calMinMax}}();}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00059}00059\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTCluster_a4a08c41d7636d91a127cf34a7f061f0d}{calCenter}}();}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00060}00060\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTCluster_af4502229099509ff3fb5e6d1bdb7145f}{calLongRadius}}();}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00061}00061\ \ \ \ \ \textcolor{comment}{//\ void\ calStdevInAxis();}}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00062}00062\ \ \ \ \ \textcolor{comment}{//\ void\ calStdev();}}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00063}00063\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTCluster_af6f12f08784459d0b9720e06a0a63576}{calSize}}();}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00064}00064\ \ \ \ \ \textcolor{comment}{//\ void\ calShape();}}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00066}00066\ \ \ \ \ \textcolor{comment}{//\ Getter}}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00067}00067\ \ \ \ \ \textcolor{keyword}{const}\ std::pair<double,\ double>\ \mbox{\hyperlink{classTCluster_abdf8d94aade92b0566609b0ffe4e3a80}{getCenter}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00068}00068\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classTCluster_abac556eaa38a2619a26c1f6748e34ec8}{getLongRadius}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00069}00069\ \ \ \ \ \textcolor{comment}{//\ const\ std::pair<double,\ double>\ getStdevInAxis()\ const;}}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00070}00070\ \ \ \ \ \textcolor{comment}{//\ const\ double\ getStdev()\ const;}}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00071}00071\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTCluster_afc9c8267e7c599bf00bf822627df0900}{getSize}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00072}00072\ \ \ \ \ \textcolor{comment}{//\ const\ TMatrix2D<int>\&\ getShape()\ const;}}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00074}00074\ \ \ \ \ \textcolor{comment}{//\ Setter\ for\ member}}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00075}00075\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTCluster_a9d1a65eb79af2178f97104310f7cbbac}{setEvent}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ event);}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00076}00076\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTCluster_a1c1cf1169c6c7de65f1fac67cd6e8169}{setTimeStamp}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ time);}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00077}00077\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTCluster_a81eada076fed6324f6a74f83b217b214}{setMinX}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ minX);}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00078}00078\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTCluster_ac4085728415481e05d3ead93adfaeec4}{setMinY}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ minY);}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00079}00079\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTCluster_a1be6e0acb9bbde70d5911f08ffb3970f}{setMaxX}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ maxX);}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00080}00080\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTCluster_a7749c1ef34254388b85ad10f25c66438}{setMaxY}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ maxY);}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00081}00081\ }
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00082}00082\ \ \ \ \ \textcolor{comment}{//\ Getter\ for\ member}}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00083}00083\ \ \ \ \ \textcolor{keyword}{const}\ std::vector\ <std::pair<int,\ int>>\ \mbox{\hyperlink{classTCluster_a397170b559cf79ff5470c2a8e73f9feb}{getPixels}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00084}00084\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTCluster_a0070ece4cbd7495f106dda80a03a3ade}{getEvent}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00085}00085\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTCluster_adb5d71e052be47fc089a080d480ca8d9}{getTimeStamp}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00086}00086\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTCluster_a41eaea4310c8d20ce933331963b9f39f}{getMinX}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00087}00087\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTCluster_a66b209b60e71862503fb17bd9576c82e}{getMinY}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00088}00088\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTCluster_a8313b3a3bdc38bb7f1be4e3fa18de26e}{getMaxX}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00089}00089\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTCluster_a5139ba2f95a86e61a82857f398a83eea}{getMaxY}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00091}00091\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classTCluster_a45bfaabe3e78b94f035c002424cd1ac3}{operator==}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classTCluster}{TCluster}}\&\ cluster)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00092}00092\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classTCluster_a30c759a03ee0861efd6484310cdaede3}{operator!=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classTCluster}{TCluster}}\&\ cluster)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00094}00094\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00095}\mbox{\hyperlink{classTCluster_a6b8086e4189c2862c449fa33f3297eca}{00095}}\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTCluster_a6b8086e4189c2862c449fa33f3297eca}{fBits}};}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00096}00096\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00097}00097\ \ \ \ \ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00098}00098\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTCluster_a52f0c06deca6c9b58939607653a28023a651383a76c0f557e2464c88044e9a387}{kNotDeleted}}\ =\ 0x02000000}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00099}\mbox{\hyperlink{classTCluster_a52f0c06deca6c9b58939607653a28023a651383a76c0f557e2464c88044e9a387}{00099}}\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00100}\mbox{\hyperlink{classTCluster_a3082edb138149f3445afb671d08ee835}{00100}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classTCluster_a3082edb138149f3445afb671d08ee835}{IsDestructed}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ !\mbox{\hyperlink{classTCluster_ab831447d27823fa35eb574b4b67457c5}{TestBit}}(\mbox{\hyperlink{classTCluster_a52f0c06deca6c9b58939607653a28023a651383a76c0f557e2464c88044e9a387}{kNotDeleted}});\ \}}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00101}\mbox{\hyperlink{classTCluster_ab831447d27823fa35eb574b4b67457c5}{00101}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classTCluster_ab831447d27823fa35eb574b4b67457c5}{TestBit}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ f)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ (\textcolor{keywordtype}{bool})\ ((\mbox{\hyperlink{classTCluster_a6b8086e4189c2862c449fa33f3297eca}{fBits}}\ \&\ f)\ !=\ 0);\ \}}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00102}00102\ \};}
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{TCluster_8h_source_l00104}00104\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

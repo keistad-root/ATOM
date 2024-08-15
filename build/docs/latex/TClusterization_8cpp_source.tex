@@ -1,0 +1,112 @@
+\doxysection{TClusterization.\+cpp}
+\hypertarget{TClusterization_8cpp_source}{}\label{TClusterization_8cpp_source}\index{/home/ychoi/ATOM/alpide/cluster/src/TClusterization.cpp@{/home/ychoi/ATOM/alpide/cluster/src/TClusterization.cpp}}
+\mbox{\hyperlink{TClusterization_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00001}\mbox{\hyperlink{TClusterization_8cpp_ac2d89792e139b413a709a1f3a71e59db}{00001}}\ \textcolor{preprocessor}{\#define\ \_\_TCLUSTERIZATION\_HEADER\_\_}}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{TClusterization_8h}{TClusterization.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00004}\mbox{\hyperlink{classTClusterization_acc014ff6d4cc1d75e2faa08f1db78942}{00004}}\ \mbox{\hyperlink{classTClusterization_a58d26e686bbc3c1470bed9e88dc55cba}{TClusterization::TClusterization}}(\textcolor{keyword}{const}\ std::vector<TALPIDEEvent*>\&\ events)\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00005}00005\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{auto}\&\ event\ :\ events\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00006}00006\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTClusterization_a86f2d72120002d8b34d399d2567030df}{mEvents}}.push\_back(event);}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00007}00007\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00008}00008\ \}}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00010}\mbox{\hyperlink{classTClusterization_af899d6eede79bc2eb3c98f0b6afb85be}{00010}}\ \mbox{\hyperlink{classTClusterization_af899d6eede79bc2eb3c98f0b6afb85be}{TClusterization::\string~TClusterization}}()\ \{\ \}}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00012}\mbox{\hyperlink{classTClusterization_abf2c2035248bbe41c836e123c394e930}{00012}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTClusterization_abf2c2035248bbe41c836e123c394e930}{TClusterization::removeConsecutionPixels}}()\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00013}00013\ \ \ \ \ std::vector<std::pair<int,\ int>>\ preDeletedPixel;}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00014}00014\ \ \ \ \ std::vector<std::pair<int,\ int>>\ currentDeletedPixel;}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00015}00015\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ iEvent\ =\ 1;\ iEvent\ <\ \mbox{\hyperlink{classTClusterization_a86f2d72120002d8b34d399d2567030df}{mEvents}}.size();\ iEvent++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00016}00016\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ iPixel\ =\ \mbox{\hyperlink{classTClusterization_a86f2d72120002d8b34d399d2567030df}{mEvents}}[iEvent]-\/>getData().size()\ -\/\ 1;\ iPixel\ >\ -\/1;\ iPixel-\/-\/\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00018}00018\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ std::find(\mbox{\hyperlink{classTClusterization_a86f2d72120002d8b34d399d2567030df}{mEvents}}[iEvent\ -\/\ 1]-\/>getData().begin(),\ \mbox{\hyperlink{classTClusterization_a86f2d72120002d8b34d399d2567030df}{mEvents}}[iEvent\ -\/\ 1]-\/>getData().end(),\ \mbox{\hyperlink{classTClusterization_a86f2d72120002d8b34d399d2567030df}{mEvents}}[iEvent]-\/>getData()[iPixel])\ !=\ \mbox{\hyperlink{classTClusterization_a86f2d72120002d8b34d399d2567030df}{mEvents}}[iEvent\ -\/\ 1]-\/>getData().end()\ ||\ (!preDeletedPixel.empty()\ \&\&\ find(preDeletedPixel.begin(),\ preDeletedPixel.end(),\ \mbox{\hyperlink{classTClusterization_a86f2d72120002d8b34d399d2567030df}{mEvents}}[iEvent]-\/>getData()[iPixel])\ !=\ preDeletedPixel.end())\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00019}00019\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ currentDeletedPixel.push\_back(\mbox{\hyperlink{classTClusterization_a86f2d72120002d8b34d399d2567030df}{mEvents}}[iEvent]-\/>getData()[iPixel]);}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00020}00020\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTClusterization_a86f2d72120002d8b34d399d2567030df}{mEvents}}[iEvent]-\/>removePixel(\mbox{\hyperlink{classTClusterization_a86f2d72120002d8b34d399d2567030df}{mEvents}}[iEvent]-\/>getData()[iPixel]);}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00021}00021\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00022}00022\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00023}00023\ \ \ \ \ \ \ \ \ preDeletedPixel.clear();}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00024}00024\ \ \ \ \ \ \ \ \ preDeletedPixel\ =\ std::move(currentDeletedPixel);}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00025}00025\ \ \ \ \ \ \ \ \ currentDeletedPixel.clear();}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00026}00026\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00027}00027\ \}}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00029}\mbox{\hyperlink{classTClusterization_a4523c992f68c68ef0a17a9808dcafa02}{00029}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTClusterization_a4523c992f68c68ef0a17a9808dcafa02}{TClusterization::addNewCluster}}(\textcolor{keyword}{const}\ std::pair<int,\ int>\&\ pixel,\ std::vector<TCluster*>\&\ clusters,\ \textcolor{keywordtype}{int}\ iEvent,\ \textcolor{keywordtype}{int}\ iTime)\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00030}00030\ \ \ \ \ \mbox{\hyperlink{classTCluster}{TCluster}}*\ cluster\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classTCluster}{TCluster}}(iEvent,\ iTime);}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00031}00031\ \ \ \ \ cluster-\/>\mbox{\hyperlink{classTCluster_a1f9c6f7c4ce30d0809c9e874e86c99dd}{AddPixel}}(pixel);}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00032}00032\ \ \ \ \ clusters.push\_back(cluster);}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00033}00033\ \}}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00035}\mbox{\hyperlink{classTClusterization_a462e0a79f9135c9c906f803ee00f3ffc}{00035}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTClusterization_a462e0a79f9135c9c906f803ee00f3ffc}{TClusterization::removeIndependentCluster}}(\textcolor{keyword}{const}\ std::pair<int,\ int>\&\ pixel,\ std::vector<TCluster*>\&\ clusters)\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00036}00036\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ clusters[0]-\/>getMaxY()\ +\ 2\ <\ pixel.second\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ cut\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classTCluster}{TCluster}}*\ cluster\ :\ clusters\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ cluster-\/>getMaxY()\ +\ 2\ <\ pixel.second\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cut++;}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00042}00042\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTClusterization_a49db7513399e33e6b48d3362b020adc4}{mClusters}}.insert(\mbox{\hyperlink{classTClusterization_a49db7513399e33e6b48d3362b020adc4}{mClusters}}.end(),\ clusters.begin(),\ clusters.begin()\ +\ cut);}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00044}00044\ \ \ \ \ \ \ \ \ clusters.erase(clusters.begin(),\ clusters.begin()\ +\ cut);}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00045}00045\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00046}00046\ \}}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00048}\mbox{\hyperlink{classTClusterization_a26b0a1051d309ca33e291dc6d8ae0dab}{00048}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classTClusterization_a26b0a1051d309ca33e291dc6d8ae0dab}{TClusterization::clusterLitmusTest}}(\textcolor{keyword}{const}\ std::pair<int,\ int>\&\ pixel,\ std::vector<TCluster*>\&\ clusters)\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00049}00049\ \ \ \ \ \textcolor{keywordtype}{bool}\ clusterExist\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00050}00050\ \ \ \ \ \textcolor{keywordtype}{int}\ iCluster\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00051}00051\ \ \ \ \ \textcolor{keywordtype}{int}\ iOrigin\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00052}00052\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \mbox{\hyperlink{classTCluster}{TCluster}}*\&\ clustered\ :\ clusters\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00053}00053\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ clustered-\/>isNeighbour(pixel)\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ clusterExist\ ==\ \textcolor{keyword}{false}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ clustered-\/>AddPixel(pixel);}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ clusterExist\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ iOrigin\ =\ iCluster;}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ clusters[iOrigin]-\/>AddCluster(*clustered);}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ clusters.erase(clusters.begin()\ +\ iCluster);}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00063}00063\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00064}00064\ \ \ \ \ \ \ \ \ iCluster++;}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00065}00065\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00067}00067\ \ \ \ \ \textcolor{keywordflow}{return}\ clusterExist;}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00068}00068\ \}}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00070}\mbox{\hyperlink{classTClusterization_a01ac1602ea199217b48fc070f760ef48}{00070}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTClusterization_a01ac1602ea199217b48fc070f760ef48}{TClusterization::clusterize}}()\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00071}00071\ \ \ \ \ std::clog\ <<\ \textcolor{stringliteral}{"{}Generate\ clusters\ from\ events..."{}}\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00073}00073\ \ \ \ \ \mbox{\hyperlink{classProgressBar}{ProgressBar}}*\ pBar\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classProgressBar}{ProgressBar}}(\mbox{\hyperlink{classTClusterization_a86f2d72120002d8b34d399d2567030df}{mEvents}}.size());}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00074}00074\ }
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00075}00075\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}}*\&\ event\ :\ \mbox{\hyperlink{classTClusterization_a86f2d72120002d8b34d399d2567030df}{mEvents}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00076}00076\ \ \ \ \ \ \ \ \ pBar-\/>\mbox{\hyperlink{classProgressBar_a5d9bc9175bf342ac00f2de8d27984cde}{printProgress}}();}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00077}00077\ \ \ \ \ \ \ \ \ std::vector<TCluster*>\ clusterCandidate;}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00078}00078\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isFirst\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00079}00079\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ std::pair<int,\ int>\&\ pixel\ :\ \textcolor{keyword}{event}-\/>getData()\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ isFirst\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTClusterization_a4523c992f68c68ef0a17a9808dcafa02}{addNewCluster}}(pixel,\ clusterCandidate,\ event-\/>getEvent(),\ event-\/>getTime());}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ isFirst\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTClusterization_a462e0a79f9135c9c906f803ee00f3ffc}{removeIndependentCluster}}(pixel,\ clusterCandidate);}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ clusterExist\ =\ \mbox{\hyperlink{classTClusterization_a26b0a1051d309ca33e291dc6d8ae0dab}{clusterLitmusTest}}(pixel,\ clusterCandidate);}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ !clusterExist\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTClusterization_a4523c992f68c68ef0a17a9808dcafa02}{addNewCluster}}(pixel,\ clusterCandidate,\ event-\/>getEvent(),\ event-\/>getTime());}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{comment}{//\ Make\ new\ cluster\ if\ no\ relation\ with\ any\ cluster\ candidates.}}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00090}00090\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ !clusterCandidate.empty()\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTClusterization_a49db7513399e33e6b48d3362b020adc4}{mClusters}}.insert(\mbox{\hyperlink{classTClusterization_a49db7513399e33e6b48d3362b020adc4}{mClusters}}.end(),\ clusterCandidate.begin(),\ clusterCandidate.end());}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ clusterCandidate.clear();}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \}\ \textcolor{comment}{//\ Move\ remained\ cluster\ candidates\ to\ cluster}}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00095}00095\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00096}00096\ \ \ \ \ \textcolor{keyword}{delete}\ pBar;}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00097}00097\ \ \ \ \ pBar\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00098}00098\ \ \ \ \ std::clog\ <<\ \textcolor{stringliteral}{"{}Total\ "{}}\ <<\ \mbox{\hyperlink{classTClusterization_a49db7513399e33e6b48d3362b020adc4}{mClusters}}.size()\ <<\ \textcolor{stringliteral}{"{}\ clusters\ are\ extracted\ from\ "{}}\ <<\ \mbox{\hyperlink{classTClusterization_a86f2d72120002d8b34d399d2567030df}{mEvents}}.size()\ <<\ \textcolor{stringliteral}{"{}\ events."{}}\ <<\ std::endl\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00099}00099\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \mbox{\hyperlink{classTCluster}{TCluster}}*\ cluster\ :\ \mbox{\hyperlink{classTClusterization_a49db7513399e33e6b48d3362b020adc4}{mClusters}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00100}00100\ \ \ \ \ \ \ \ \ cluster-\/>calMembers();}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00101}00101\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00102}00102\ \}}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00104}\mbox{\hyperlink{classTClusterization_a3b1cc6283358e47aa85489bc9ff7a9f9}{00104}}\ \textcolor{keyword}{const}\ std::vector<TCluster*>\&\ \mbox{\hyperlink{classTClusterization_a3b1cc6283358e47aa85489bc9ff7a9f9}{TClusterization::getClusters}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00105}00105\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classTClusterization_a49db7513399e33e6b48d3362b020adc4}{mClusters}};}
+\DoxyCodeLine{\Hypertarget{TClusterization_8cpp_source_l00106}00106\ \}}
+
+\end{DoxyCode}

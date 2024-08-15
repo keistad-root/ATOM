@@ -1,0 +1,66 @@
+\doxysection{TMerge.\+cpp}
+\hypertarget{TMerge_8cpp_source}{}\label{TMerge_8cpp_source}\index{/home/ychoi/ATOM/alpide/comparison/src/TMerge.cpp@{/home/ychoi/ATOM/alpide/comparison/src/TMerge.cpp}}
+\mbox{\hyperlink{TMerge_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00001}\mbox{\hyperlink{TMerge_8cpp_aba194ea28570ae51c4451825d001897b}{00001}}\ \textcolor{preprocessor}{\#define\ \_\_TMERGE\_HEADER\_\_}}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{TMerge_8h}{TMerge.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00004}\mbox{\hyperlink{classTMerge_ae4e4161d8441008d8694fae6b595a92d}{00004}}\ \mbox{\hyperlink{classTMerge_ae4e4161d8441008d8694fae6b595a92d}{TMerge::TMerge}}(std::string\_view\ outputFileName,\ \textcolor{keyword}{const}\ std::vector<std::string>\&\ inputFileNames)\ :\ mOutputFileName(outputFileName)\ \{}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00005}00005\ \ \ \ \ \mbox{\hyperlink{classTMerge_a3f6ceb5a0ec0fa0508e3e7a58159e115}{mInputFileNames}}.assign(inputFileNames.begin(),\ inputFileNames.end());}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00006}00006\ \}}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00008}\mbox{\hyperlink{classTMergeExperimentROOT_a86d13b888682645ad0add0d7427b718a}{00008}}\ \mbox{\hyperlink{classTMergeExperimentROOT_a86d13b888682645ad0add0d7427b718a}{TMergeExperimentROOT::TMergeExperimentROOT}}(std::string\_view\ outputFileName,\ \textcolor{keyword}{const}\ std::vector<std::string>\&\ inputFileNames)\ :\ \mbox{\hyperlink{classTMerge}{TMerge}}(outputFileName,\ inputFileNames)\ \{}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00009}00009\ \ \ \ \ \mbox{\hyperlink{classTMergeExperimentROOT_a3c1fc3ce2e5d404d3104799fa70db0a4}{mOutputFile}}\ =\ \textcolor{keyword}{new}\ TFile(\textcolor{keyword}{static\_cast<}TString\textcolor{keyword}{>}(outputFileName),\ \textcolor{stringliteral}{"{}RECREATE"{}});}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00010}00010\ \}}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00012}\mbox{\hyperlink{classTMergeExperimentROOT_ac99cf9367e5c2985663dc0f9d509d9c6}{00012}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTMergeExperimentROOT_ac99cf9367e5c2985663dc0f9d509d9c6}{TMergeExperimentROOT::mergeFile}}()\ \{}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00013}00013\ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00014}00014\ \ \ \ \ \ \ \ \ TTree*\ outputTree\ =\ \textcolor{keyword}{new}\ TTree(\textcolor{stringliteral}{"{}hit"{}},\ \textcolor{stringliteral}{"{}hit"{}});}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00015}00015\ \ \ \ \ \ \ \ \ outputTree-\/>Branch(\textcolor{stringliteral}{"{}ChipID"{}},\ \&\mbox{\hyperlink{classTMergeExperimentROOT_a2debc043c7fed217cc1ad2af1efb6820}{mOutputValue}}.\mbox{\hyperlink{structTInputRoot_adf57e7d5f9d1db4cae11477b9538d016}{chipid}},\ \textcolor{stringliteral}{"{}id/b"{}});}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00016}00016\ \ \ \ \ \ \ \ \ outputTree-\/>Branch(\textcolor{stringliteral}{"{}TimeStamp"{}},\ \&\mbox{\hyperlink{classTMergeExperimentROOT_a2debc043c7fed217cc1ad2af1efb6820}{mOutputValue}}.\mbox{\hyperlink{structTInputRoot_ab379662a87f52da2f83de3b22f379176}{timeStamp}},\ \textcolor{stringliteral}{"{}t/i"{}});}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00017}00017\ \ \ \ \ \ \ \ \ outputTree-\/>Branch(\textcolor{stringliteral}{"{}X"{}},\ \&\mbox{\hyperlink{classTMergeExperimentROOT_a2debc043c7fed217cc1ad2af1efb6820}{mOutputValue}}.\mbox{\hyperlink{structTInputRoot_ac12b2be5c3acbab540b35802323e10a1}{x}},\ \textcolor{stringliteral}{"{}x/s"{}});}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00018}00018\ \ \ \ \ \ \ \ \ outputTree-\/>Branch(\textcolor{stringliteral}{"{}Y"{}},\ \&\mbox{\hyperlink{classTMergeExperimentROOT_a2debc043c7fed217cc1ad2af1efb6820}{mOutputValue}}.\mbox{\hyperlink{structTInputRoot_ade50c854965fb1ed822d5ab09b3aea6e}{y}},\ \textcolor{stringliteral}{"{}y/s"{}});}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00020}00020\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ preTime\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00021}00021\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ std::string\_view\ inputFileName\ :\ \mbox{\hyperlink{classTMerge_a3f6ceb5a0ec0fa0508e3e7a58159e115}{mInputFileNames}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00022}00022\ \ \ \ \ \ \ \ \ \ \ \ \ TFile*\ inputFile\ =\ \textcolor{keyword}{new}\ TFile(\textcolor{keyword}{static\_cast<}TString\textcolor{keyword}{>}(inputFileName),\ \textcolor{stringliteral}{"{}READ"{}});}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ !inputFile-\/>IsOpen()\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classMergeFileOpen}{MergeFileOpen}}(inputFileName);}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ inputFile-\/>Get(\textcolor{stringliteral}{"{}hit"{}})\ ==\ \textcolor{keyword}{nullptr}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{throw}\ \mbox{\hyperlink{classMergeTreeOpen}{MergeTreeOpen}}(inputFileName);}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ std::clog\ <<\ inputFileName\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00029}00029\ \ \ \ \ \ \ \ \ \ \ \ \ TTree*\ inputTree\ =\ \textcolor{keyword}{static\_cast<}TTree*\textcolor{keyword}{>}(inputFile-\/>Get(\textcolor{stringliteral}{"{}hit"{}}));}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ inputTree-\/>SetBranchAddress(\textcolor{stringliteral}{"{}ChipID"{}},\ \&\mbox{\hyperlink{classTMergeExperimentROOT_ae84efb2c879e47c2dacea2b595de87b7}{mInputValue}}.\mbox{\hyperlink{structTInputRoot_adf57e7d5f9d1db4cae11477b9538d016}{chipid}});}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ inputTree-\/>SetBranchAddress(\textcolor{stringliteral}{"{}TimeStamp"{}},\ \&\mbox{\hyperlink{classTMergeExperimentROOT_ae84efb2c879e47c2dacea2b595de87b7}{mInputValue}}.\mbox{\hyperlink{structTInputRoot_ab379662a87f52da2f83de3b22f379176}{timeStamp}});}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ inputTree-\/>SetBranchAddress(\textcolor{stringliteral}{"{}X"{}},\ \&\mbox{\hyperlink{classTMergeExperimentROOT_ae84efb2c879e47c2dacea2b595de87b7}{mInputValue}}.\mbox{\hyperlink{structTInputRoot_ac12b2be5c3acbab540b35802323e10a1}{x}});}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ inputTree-\/>SetBranchAddress(\textcolor{stringliteral}{"{}Y"{}},\ \&\mbox{\hyperlink{classTMergeExperimentROOT_ae84efb2c879e47c2dacea2b595de87b7}{mInputValue}}.\mbox{\hyperlink{structTInputRoot_ade50c854965fb1ed822d5ab09b3aea6e}{y}});}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classProgressBar}{ProgressBar}}*\ pbar\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classProgressBar}{ProgressBar}}(inputTree-\/>GetEntries());}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ entry\ =\ 0;\ entry\ <\ inputTree-\/>GetEntries();\ entry++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pbar-\/>\mbox{\hyperlink{classProgressBar_a5d9bc9175bf342ac00f2de8d27984cde}{printProgress}}();}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ inputTree-\/>GetEntry(entry);}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTMergeExperimentROOT_a2debc043c7fed217cc1ad2af1efb6820}{mOutputValue}}.\mbox{\hyperlink{structTInputRoot_adf57e7d5f9d1db4cae11477b9538d016}{chipid}}\ =\ \mbox{\hyperlink{classTMergeExperimentROOT_ae84efb2c879e47c2dacea2b595de87b7}{mInputValue}}.\mbox{\hyperlink{structTInputRoot_adf57e7d5f9d1db4cae11477b9538d016}{chipid}};}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTMergeExperimentROOT_a2debc043c7fed217cc1ad2af1efb6820}{mOutputValue}}.\mbox{\hyperlink{structTInputRoot_ab379662a87f52da2f83de3b22f379176}{timeStamp}}\ =\ \mbox{\hyperlink{classTMergeExperimentROOT_ae84efb2c879e47c2dacea2b595de87b7}{mInputValue}}.\mbox{\hyperlink{structTInputRoot_ab379662a87f52da2f83de3b22f379176}{timeStamp}}\ +\ preTime;}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTMergeExperimentROOT_a2debc043c7fed217cc1ad2af1efb6820}{mOutputValue}}.\mbox{\hyperlink{structTInputRoot_ac12b2be5c3acbab540b35802323e10a1}{x}}\ =\ \mbox{\hyperlink{classTMergeExperimentROOT_ae84efb2c879e47c2dacea2b595de87b7}{mInputValue}}.\mbox{\hyperlink{structTInputRoot_ac12b2be5c3acbab540b35802323e10a1}{x}};}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTMergeExperimentROOT_a2debc043c7fed217cc1ad2af1efb6820}{mOutputValue}}.\mbox{\hyperlink{structTInputRoot_ade50c854965fb1ed822d5ab09b3aea6e}{y}}\ =\ \mbox{\hyperlink{classTMergeExperimentROOT_ae84efb2c879e47c2dacea2b595de87b7}{mInputValue}}.\mbox{\hyperlink{structTInputRoot_ade50c854965fb1ed822d5ab09b3aea6e}{y}};}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ outputTree-\/>Fill();}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ pbar;}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ preTime\ =\ \mbox{\hyperlink{classTMergeExperimentROOT_a2debc043c7fed217cc1ad2af1efb6820}{mOutputValue}}.\mbox{\hyperlink{structTInputRoot_ab379662a87f52da2f83de3b22f379176}{timeStamp}}\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ inputFile-\/>Close();}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTMergeExperimentROOT_a3c1fc3ce2e5d404d3104799fa70db0a4}{mOutputFile}}-\/>Write();}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00049}00049\ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (\ \mbox{\hyperlink{classMergeFileOpen}{MergeFileOpen}}\ error\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00050}00050\ \ \ \ \ \ \ \ \ std::cerr\ <<\ error.\mbox{\hyperlink{classMergeFileOpen_add2d9270ad54e4563930f5e667f88fb2}{what}}()\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00051}00051\ \ \ \ \ \ \ \ \ exit(1);}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00052}00052\ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (\ \mbox{\hyperlink{classMergeTreeOpen}{MergeTreeOpen}}\ error\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00053}00053\ \ \ \ \ \ \ \ \ std::cerr\ <<\ error.\mbox{\hyperlink{classMergeFileOpen_add2d9270ad54e4563930f5e667f88fb2}{what}}()\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00054}00054\ \ \ \ \ \ \ \ \ exit(1);}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00055}00055\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00056}00056\ \}}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00057}00057\ }
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00058}\mbox{\hyperlink{classTMergeExperimentROOT_a27096d96eb601f9814f54a0808fce907}{00058}}\ \mbox{\hyperlink{classTMergeExperimentROOT_a27096d96eb601f9814f54a0808fce907}{TMergeExperimentROOT::\string~TMergeExperimentROOT}}()\ \{}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00059}00059\ \ \ \ \ \mbox{\hyperlink{classTMergeExperimentROOT_a3c1fc3ce2e5d404d3104799fa70db0a4}{mOutputFile}}-\/>Close();}
+\DoxyCodeLine{\Hypertarget{TMerge_8cpp_source_l00060}00060\ \}}
+
+\end{DoxyCode}

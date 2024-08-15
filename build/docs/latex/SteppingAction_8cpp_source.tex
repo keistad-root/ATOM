@@ -1,0 +1,21 @@
+\doxysection{Stepping\+Action.\+cpp}
+\hypertarget{SteppingAction_8cpp_source}{}\label{SteppingAction_8cpp_source}\index{/home/ychoi/ATOM/geant4/main/src/SteppingAction.cpp@{/home/ychoi/ATOM/geant4/main/src/SteppingAction.cpp}}
+\mbox{\hyperlink{SteppingAction_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{SteppingAction_8cpp_source_l00001}\mbox{\hyperlink{SteppingAction_8cpp_a7e8970d01cf21da07538ca9e52f08b19}{00001}}\ \textcolor{preprocessor}{\#define\ \_\_STEPPINGACTION\_HEADER\_\_}}
+\DoxyCodeLine{\Hypertarget{SteppingAction_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{SteppingAction_8h}{SteppingAction.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{SteppingAction_8cpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{SteppingAction_8cpp_source_l00004}\mbox{\hyperlink{classSteppingAction_a2673d156c76aa1a5fc29ead95b67cf5d}{00004}}\ \mbox{\hyperlink{classSteppingAction_a2673d156c76aa1a5fc29ead95b67cf5d}{SteppingAction::SteppingAction}}(\mbox{\hyperlink{classEventAction}{EventAction}}*\ eventAction)\ :\ G4UserSteppingAction()\ \{}
+\DoxyCodeLine{\Hypertarget{SteppingAction_8cpp_source_l00005}00005\ \ \ \ \ G4cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[1;36m"{}}\ <<\ \textcolor{stringliteral}{"{}Stepping\ Action"{}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[0m"{}}\ <<\ \textcolor{stringliteral}{"{}\ is\ armed"{}}\ <<\ G4endl;}
+\DoxyCodeLine{\Hypertarget{SteppingAction_8cpp_source_l00006}00006\ \}}
+\DoxyCodeLine{\Hypertarget{SteppingAction_8cpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{SteppingAction_8cpp_source_l00008}\mbox{\hyperlink{classSteppingAction_ace65491c5f93bdf39d14914767f896bf}{00008}}\ \mbox{\hyperlink{classSteppingAction_ace65491c5f93bdf39d14914767f896bf}{SteppingAction::\string~SteppingAction}}()\ \{}
+\DoxyCodeLine{\Hypertarget{SteppingAction_8cpp_source_l00009}00009\ \ \ \ \ G4cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[1;36m"{}}\ <<\ \textcolor{stringliteral}{"{}Stepping\ Action"{}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[0m"{}}\ <<\ \textcolor{stringliteral}{"{}\ is\ terminated"{}}\ <<\ G4endl;}
+\DoxyCodeLine{\Hypertarget{SteppingAction_8cpp_source_l00010}00010\ \}}
+\DoxyCodeLine{\Hypertarget{SteppingAction_8cpp_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{SteppingAction_8cpp_source_l00012}\mbox{\hyperlink{classSteppingAction_a0b072524d0b994cff18f76270ea1ba2a}{00012}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classSteppingAction_a0b072524d0b994cff18f76270ea1ba2a}{SteppingAction::UserSteppingAction}}(\textcolor{keyword}{const}\ G4Step*\ step)\ \{}
+\DoxyCodeLine{\Hypertarget{SteppingAction_8cpp_source_l00013}00013\ \ \ \ \ \mbox{\hyperlink{classAnalysisManager}{AnalysisManager}}*\ analysisManager\ =\ \mbox{\hyperlink{classAnalysisManager_a44fe853a226f1e604b2bffa1acfb6816}{AnalysisManager::Instance}}();}
+\DoxyCodeLine{\Hypertarget{SteppingAction_8cpp_source_l00014}00014\ \ \ \ \ analysisManager-\/>\mbox{\hyperlink{classAnalysisManager_afa1e5bad7ba9ae10191d51b6ce80f85f}{RecordingStep}}(step);}
+\DoxyCodeLine{\Hypertarget{SteppingAction_8cpp_source_l00015}00015\ \}}
+
+\end{DoxyCode}

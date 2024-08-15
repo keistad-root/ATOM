@@ -1,0 +1,161 @@
+\doxysection{entry\+Simulation.\+cpp}
+\hypertarget{entrySimulation_8cpp_source}{}\label{entrySimulation_8cpp_source}\index{/home/ychoi/ATOM/exe/entrySimulation.cpp@{/home/ychoi/ATOM/exe/entrySimulation.cpp}}
+\mbox{\hyperlink{entrySimulation_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{TEntrySimulation__v2_8h}{TEntrySimulation\_v2.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}TGraph.h"{}}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}TCanvas.h"{}}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}TMath.h"{}}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}TF1.h"{}}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}TColor.h"{}}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}TLegend.h"{}}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00009}00009\ \textcolor{preprocessor}{\#include\ "{}TMultiGraph.h"{}}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cppargs_8h}{cppargs.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{CppConfigFile_8h}{CppConfigFile.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ "{}TGraphErrors.h"{}}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00013}00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{TGraphUser_8h}{TGraphUser.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00015}\mbox{\hyperlink{entrySimulation_8cpp_aab44b1dab240272ed0bee958aa729f94}{00015}}\ \mbox{\hyperlink{classArgumentParser}{ArgumentParser}}\ \mbox{\hyperlink{entrySimulation_8cpp_aab44b1dab240272ed0bee958aa729f94}{set\_parse}}(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}**\ argv)\ \{}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00016}00016\ \ \ \ \ \mbox{\hyperlink{classArgumentParser}{ArgumentParser}}\ parser\ =\ \mbox{\hyperlink{classArgumentParser}{ArgumentParser}}(argc,\ argv).\mbox{\hyperlink{classArgumentParser_a2d7ea458fda2ee2f00e75ab20bf99680}{setDescription}}(\textcolor{stringliteral}{"{}Simulation\ for\ entry\ research"{}});}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00017}00017\ \ \ \ \ parser.\mbox{\hyperlink{classArgumentParser_af00214a4cc011bc62671b65bc99b7e70}{add\_argument}}(\textcolor{stringliteral}{"{}config"{}}).\mbox{\hyperlink{classArgumentParser_a7cac3ec87e9c8800c373bbf064a6509a}{help}}(\textcolor{stringliteral}{"{}Config\ file\ for\ controling\ simulation"{}}).\mbox{\hyperlink{classArgumentParser_ac057f9c338901af3c6416fdc9e19b043}{set\_default}}(\textcolor{stringliteral}{"{}"{}}).\mbox{\hyperlink{classArgumentParser_ac3096e6e13298ac6c77607f5569d2e71}{add\_finish}}();}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00018}00018\ \ \ \ \ parser.\mbox{\hyperlink{classArgumentParser_af2c0b3751dd75a8524f20076f61c9bcf}{parse\_args}}();}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00019}00019\ \ \ \ \ \textcolor{keywordflow}{return}\ parser;}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00020}00020\ \}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00022}\mbox{\hyperlink{entrySimulation_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{00022}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{entrySimulation_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main}}(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}**\ argv)\ \{}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00023}00023\ \ \ \ \ \textcolor{comment}{//\ Call\ setting\ configs\ from\ config\ file.}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00024}00024\ \ \ \ \ \mbox{\hyperlink{classArgumentParser}{ArgumentParser}}\ parser\ =\ \mbox{\hyperlink{entrySimulation_8cpp_aab44b1dab240272ed0bee958aa729f94}{set\_parse}}(argc,\ argv);}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00025}00025\ \ \ \ \ std::string\ configPath\ =\ parser.\mbox{\hyperlink{classArgumentParser_ad21c880d53afb04d0a2de0ed067ae75b}{get\_value}}<std::string>(\textcolor{stringliteral}{"{}config"{}});}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00026}00026\ \ \ \ \ \mbox{\hyperlink{classCppConfigFile}{CppConfigFile}}\ config(configPath);}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00027}00027\ \ \ \ \ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\ fileConfig\ =\ config.getConfig(\textcolor{stringliteral}{"{}File"{}});}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00028}00028\ \ \ \ \ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\ environmentConfig\ =\ config.getConfig(\textcolor{stringliteral}{"{}Environment"{}});}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00029}00029\ \ \ \ \ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\ graphConfig\ =\ config.getConfig(\textcolor{stringliteral}{"{}Graph"{}});}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00031}00031\ \ \ \ \ \textcolor{comment}{//\ Set\ source\ radius}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00032}00032\ \ \ \ \ \textcolor{keywordtype}{double}\ sourceRadius\ =\ 2.5;}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00033}00033\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ environmentConfig.\mbox{\hyperlink{classCppConfigDictionary_a1ab483f98a2a411b93b616bc8d65b83d}{hasKey}}(\textcolor{stringliteral}{"{}source\_radius"{}})\ )\ \{}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00034}00034\ \ \ \ \ \ \ \ \ sourceRadius\ =\ stod(environmentConfig.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}source\_radius"{}}));}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00035}00035\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00037}00037\ \ \ \ \ \textcolor{comment}{//Set\ detector\ paramters}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00038}00038\ \ \ \ \ \textcolor{keywordtype}{double}\ detectorX\ =\ 30.;}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00039}00039\ \ \ \ \ \textcolor{keywordtype}{double}\ detectorY\ =\ 15.;}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00040}00040\ \ \ \ \ \textcolor{keywordtype}{double}\ S2CDistance\ =\ .5;}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00041}00041\ \ \ \ \ \textcolor{keywordtype}{double}\ C2DDistance\ =\ 2.;}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00042}00042\ \ \ \ \ \textcolor{keywordtype}{double}\ collimatorLength\ =\ 1.;}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00043}00043\ \ \ \ \ \textcolor{keywordtype}{double}\ detectorCoordX\ =\ 0.;}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00044}00044\ \ \ \ \ \textcolor{keywordtype}{double}\ detectorCoordY\ =\ 0.;}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00045}00045\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ environmentConfig.\mbox{\hyperlink{classCppConfigDictionary_a1ab483f98a2a411b93b616bc8d65b83d}{hasKey}}(\textcolor{stringliteral}{"{}detector\_x"{}})\ )\ \{}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00046}00046\ \ \ \ \ \ \ \ \ detectorX\ =\ stod(environmentConfig.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}detector\_x"{}}));}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00047}00047\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00048}00048\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ environmentConfig.\mbox{\hyperlink{classCppConfigDictionary_a1ab483f98a2a411b93b616bc8d65b83d}{hasKey}}(\textcolor{stringliteral}{"{}detector\_y"{}})\ )\ \{}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00049}00049\ \ \ \ \ \ \ \ \ detectorY\ =\ stod(environmentConfig.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}detector\_y"{}}));}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00050}00050\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00051}00051\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ environmentConfig.\mbox{\hyperlink{classCppConfigDictionary_a1ab483f98a2a411b93b616bc8d65b83d}{hasKey}}(\textcolor{stringliteral}{"{}source\_to\_collimator"{}})\ )\ \{}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00052}00052\ \ \ \ \ \ \ \ \ S2CDistance\ =\ stod(environmentConfig.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}source\_to\_collimator"{}}));}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00053}00053\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00054}00054\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ environmentConfig.\mbox{\hyperlink{classCppConfigDictionary_a1ab483f98a2a411b93b616bc8d65b83d}{hasKey}}(\textcolor{stringliteral}{"{}collimator\_to\_detector"{}})\ )\ \{}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00055}00055\ \ \ \ \ \ \ \ \ C2DDistance\ =\ stod(environmentConfig.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}collimator\_to\_detector"{}}));}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00056}00056\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00057}00057\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ environmentConfig.\mbox{\hyperlink{classCppConfigDictionary_a1ab483f98a2a411b93b616bc8d65b83d}{hasKey}}(\textcolor{stringliteral}{"{}collimator\_length"{}})\ )\ \{}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00058}00058\ \ \ \ \ \ \ \ \ collimatorLength\ =\ stod(environmentConfig.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}collimator\_length"{}}));}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00059}00059\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00060}00060\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ environmentConfig.\mbox{\hyperlink{classCppConfigDictionary_a1ab483f98a2a411b93b616bc8d65b83d}{hasKey}}(\textcolor{stringliteral}{"{}detector\_coord\_x"{}})\ )\ \{}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00061}00061\ \ \ \ \ \ \ \ \ detectorCoordX\ =\ stod(environmentConfig.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}detector\_coord\_x"{}}));}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00062}00062\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00063}00063\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ environmentConfig.\mbox{\hyperlink{classCppConfigDictionary_a1ab483f98a2a411b93b616bc8d65b83d}{hasKey}}(\textcolor{stringliteral}{"{}detector\_coord\_y"{}})\ )\ \{}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00064}00064\ \ \ \ \ \ \ \ \ detectorCoordY\ =\ stod(environmentConfig.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}detector\_coord\_y"{}}));}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00065}00065\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00067}00067\ \ \ \ \ \textcolor{comment}{//\ Set\ collimator\ paramters}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00068}00068\ \ \ \ \ \textcolor{keywordtype}{double}\ collimatorRadius\ =\ 1.5;}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00069}00069\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ environmentConfig.\mbox{\hyperlink{classCppConfigDictionary_a1ab483f98a2a411b93b616bc8d65b83d}{hasKey}}(\textcolor{stringliteral}{"{}collimator\_radius"{}})\ )\ \{}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00070}00070\ \ \ \ \ \ \ \ \ collimatorRadius\ =\ stod(environmentConfig.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}collimator\_radius"{}}));}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00071}00071\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00072}00072\ }
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00074}00074\ \ \ \ \ \mbox{\hyperlink{classTAdvancedEntrySimulation}{TAdvancedEntrySimulation}}*\ simulation\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classTAdvancedEntrySimulation}{TAdvancedEntrySimulation}}(.1);}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00075}00075\ \ \ \ \ simulation-\/>\mbox{\hyperlink{classTAdvancedEntrySimulation_a28464f148e763cefdd3baefee98faa6c}{setSource}}(sourceRadius);}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00076}00076\ \ \ \ \ simulation-\/>\mbox{\hyperlink{classTAdvancedEntrySimulation_a19da55f3185abc09aa81b3c366cc5545}{setDetector}}(\{detectorCoordX,\ detectorCoordY,\ -\/(S2CDistance\ +\ C2DDistance\ +\ collimatorLength)\},\ detectorX,\ detectorY);}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00077}00077\ \ \ \ \ simulation-\/>\mbox{\hyperlink{classTAdvancedEntrySimulation_a3d29a78e6667765d0b145678efb3b479}{setCollimator}}(\{0.,\ 0.,\ -\/S2CDistance\},\ collimatorRadius,\ \{0.,\ 0.,\ -\/(S2CDistance\ +\ collimatorLength)\},\ collimatorRadius);}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00078}00078\ \ \ \ \ simulation-\/>\mbox{\hyperlink{classTAdvancedEntrySimulation_ad791cfa8f1325c97f150aa836fe92490}{extractTrack}}(180);}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00080}00080\ \ \ \ \ \textcolor{comment}{//\ TGraph*\ graph\ =\ new\ TGraph();}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00081}00081\ \ \ \ \ std::vector<std::pair<std::string,\ std::vector<std::array<double,\ 2>>>>\ ratio;}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00082}00082\ \ \ \ \ \textcolor{keywordtype}{double}\ divideCriteria\ =\ 0.;}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00083}00083\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ graphConfig.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}type"{}})\ ==\ \textcolor{stringliteral}{"{}comprehensive\_point"{}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ nGraph\ =\ graphConfig.\mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{getSubConfig}}(\textcolor{stringliteral}{"{}graphs"{}}).\mbox{\hyperlink{classCppConfigDictionary_a90502cc74f89c01049cafe5740ba8a1a}{getSubConfigSet}}().size();}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ previousLength\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ iGraph\ =\ 0;\ iGraph\ <\ nGraph;\ iGraph++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<std::array<double,\ 2>>\ tempRatio;}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ length\ =\ stod(graphConfig.\mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{getSubConfig}}(\textcolor{stringliteral}{"{}graphs"{}}).\mbox{\hyperlink{classCppConfigDictionary_a90502cc74f89c01049cafe5740ba8a1a}{getSubConfigSet}}()[iGraph].find(\textcolor{stringliteral}{"{}length"{}}));}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ std::string\ widthStr\ =\ graphConfig.\mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{getSubConfig}}(\textcolor{stringliteral}{"{}graphs"{}}).\mbox{\hyperlink{classCppConfigDictionary_a90502cc74f89c01049cafe5740ba8a1a}{getSubConfigSet}}()[iGraph].find(\textcolor{stringliteral}{"{}width"{}});}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00090}00090\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ min\ =\ stod(widthStr.substr(0,\ widthStr.find(\textcolor{charliteral}{':'})));}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ widthStr\ =\ widthStr.substr(widthStr.find(\textcolor{charliteral}{':'})\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ max\ =\ stod(widthStr.substr(0,\ widthStr.find(\textcolor{charliteral}{':'})));}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00093}00093\ \ \ \ \ \ \ \ \ \ \ \ \ widthStr\ =\ widthStr.substr(widthStr.find(\textcolor{charliteral}{':'})\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ gap\ =\ stod(widthStr.substr(0,\ widthStr.find(\textcolor{charliteral}{':'})));}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Collimator\ Length\ =\ "{}}\ <<\ length\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{double}\ width\ =\ min;\ width\ <\ max;\ width\ +=\ gap\ )\ \{}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ simulation-\/>\mbox{\hyperlink{classTAdvancedEntrySimulation_a19da55f3185abc09aa81b3c366cc5545}{setDetector}}(\{detectorCoordX,\ detectorCoordY,\ -\/(S2CDistance\ +\ C2DDistance\ +\ length)\},\ detectorX,\ detectorY);}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ simulation-\/>\mbox{\hyperlink{classTAdvancedEntrySimulation_a3d29a78e6667765d0b145678efb3b479}{setCollimator}}(\{0.,\ 0.,\ -\/S2CDistance\},\ sqrt(width\ /\ TMath::Pi()),\ \{0.,\ 0.,\ -\/(S2CDistance\ +\ length)\},\ sqrt(width\ /\ TMath::Pi()));}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ previousLength\ !=\ length\ )\ \{}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ simulation-\/>\mbox{\hyperlink{classTAdvancedEntrySimulation_ad791cfa8f1325c97f150aa836fe92490}{extractTrack}}(360);}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ entryRatio\ =\ simulation-\/>\mbox{\hyperlink{classTAdvancedEntrySimulation_a78bf8556edda40ab33deec57936ff9a3}{calculateEntry}}();}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00103}00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ tempRatio.push\_back(\{width,\ entryRatio\});}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ width\ >\ 34.9\ \&\&\ width\ <\ 35.1\ \&\&\ length\ >\ 0.9\ \&\&\ length\ <\ 1.1\ )\ \{}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ divideCriteria\ =\ entryRatio;}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ length\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)t"{}}\ <<\ width\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)t"{}}\ <<\ entryRatio\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ previousLength\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(length\ *\ 10);}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ ratio.push\_back(\{std::string(graphConfig.\mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{getSubConfig}}(\textcolor{stringliteral}{"{}graphs"{}}).\mbox{\hyperlink{classCppConfigDictionary_a90502cc74f89c01049cafe5740ba8a1a}{getSubConfigSet}}()[iGraph].getConfigName()),\ tempRatio\});}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00112}00112\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00113}00113\ \ \ \ \ \ \ \ \ std::vector<TGraph*>\ entryRatioGraph;}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00114}00114\ }
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ totalActivity\ =\ stod(environmentConfig.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}source\_becquerel"{}}))\ *\ stod(environmentConfig.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}time"{}}));}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00116}00116\ }
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00117}00117\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTGraphUser}{TGraphUser}}*\ graph1\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classTGraphUser}{TGraphUser}}(graphConfig.\mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{getSubConfig}}(\textcolor{stringliteral}{"{}entryRatio"{}}));}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00118}00118\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ std::pair<std::string,\ std::vector<std::array<double,\ 2>>>\&ratioSet\ :\ ratio\ )\ \{}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ entryRatioGraph.push\_back(\textcolor{keyword}{new}\ TGraph());}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ std::array<double,\ 2>\&point\ :\ ratioSet.second\ )\ \{}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ entryRatioGraph.back()-\/>AddPoint(point[0],\ point[1]\ *\ totalActivity);}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ nGraph\ =\ graphConfig.\mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{getSubConfig}}(\textcolor{stringliteral}{"{}graphs"{}}).\mbox{\hyperlink{classCppConfigDictionary_a90502cc74f89c01049cafe5740ba8a1a}{getSubConfigSet}}().size();}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ iGraph\ =\ 0;\ iGraph\ <\ nGraph;\ iGraph++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ graphConfig.\mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{getSubConfig}}(\textcolor{stringliteral}{"{}graphs"{}}).\mbox{\hyperlink{classCppConfigDictionary_a90502cc74f89c01049cafe5740ba8a1a}{getSubConfigSet}}()[iGraph].getConfigName()\ ==\ ratioSet.first\ )\ \{}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ graph1-\/>\mbox{\hyperlink{classTGraphUser_a4704d7e4b6d2192899a7c98d11750541}{AddGraph}}(entryRatioGraph.back(),\ graphConfig.\mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{getSubConfig}}(\textcolor{stringliteral}{"{}graphs"{}}).\mbox{\hyperlink{classCppConfigDictionary_a90502cc74f89c01049cafe5740ba8a1a}{getSubConfigSet}}()[iGraph]);}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00130}00130\ }
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\&\ expData\ :\ graphConfig.\mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{getSubConfig}}(\textcolor{stringliteral}{"{}exp\_data"{}}).\mbox{\hyperlink{classCppConfigDictionary_a90502cc74f89c01049cafe5740ba8a1a}{getSubConfigSet}}()\ )\ \{}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ TGraphErrors*\ eGraph\ =\ \textcolor{keyword}{new}\ TGraphErrors();}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ i\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\&\ point\ :\ expData.getSubConfig(\textcolor{stringliteral}{"{}point"{}}).getSubConfigSet()\ )\ \{}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Double\_t\ width\ =\ stod(point.find(\textcolor{stringliteral}{"{}width"{}}));}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Double\_t\ width\_error\ =\ stod(point.find(\textcolor{stringliteral}{"{}width\_error"{}}));}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Double\_t\ value\ =\ stod(point.find(\textcolor{stringliteral}{"{}value"{}}));}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Double\_t\ error\ =\ stod(point.find(\textcolor{stringliteral}{"{}error"{}}));}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00139}00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ eGraph-\/>SetPoint(i,\ width,\ value);}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ eGraph-\/>SetPointError(i,\ width\_error,\ error);}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ i++;}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ graph1-\/>\mbox{\hyperlink{classTGraphUser_a4704d7e4b6d2192899a7c98d11750541}{AddGraph}}(eGraph,\ expData);}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00144}00144\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00145}00145\ }
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00146}00146\ }
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00147}00147\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Set\ output\ path\ and\ create\ directories\ if\ it\ isn't.}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00148}00148\ \ \ \ \ \ \ \ \ std::filesystem::path\ outputPath\ =\ fileConfig.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}output\_path"{}});}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00149}00149\ \ \ \ \ \ \ \ \ std::filesystem::create\_directories(outputPath);}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00150}00150\ }
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00151}00151\ \ \ \ \ \ \ \ \ graph1-\/>\mbox{\hyperlink{classTGraphUser_a500875e8656fe23c82133c8a19bcca71}{Save}}(outputPath);}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00152}00152\ }
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00153}00153\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00154}00154\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{entrySimulation_8cpp_source_l00155}00155\ \}}
+
+\end{DoxyCode}

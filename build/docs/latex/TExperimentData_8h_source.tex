@@ -1,0 +1,59 @@
+\doxysection{TExperiment\+Data.\+h}
+\hypertarget{TExperimentData_8h_source}{}\label{TExperimentData_8h_source}\index{/home/ychoi/ATOM/alpide/cluster/inc/TExperimentData.h@{/home/ychoi/ATOM/alpide/cluster/inc/TExperimentData.h}}
+\mbox{\hyperlink{TExperimentData_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00012}00012\ \textcolor{preprocessor}{\#ifndef\ \_\_TEXPERIMENTDATA\_\_}}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00013}00013\ \textcolor{preprocessor}{\#define\ \_\_TEXPERIMENTDATA\_\_}}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00015}00015\ \textcolor{preprocessor}{\#ifdef\ \_\_TEXPERIMENTDATA\_HEADER\_\_}}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{TALPIDEEvent_8h}{TALPIDEEvent.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00017}00017\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{TCluster_8h}{TCluster.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00018}00018\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00020}00020\ \textcolor{preprocessor}{\#include<vector>}}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00022}00022\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}};}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00023}00023\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classTCluster}{TCluster}};}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00025}\mbox{\hyperlink{classTExperimentData}{00025}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classTExperimentData}{TExperimentData}}\ \{}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00026}00026\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00027}\mbox{\hyperlink{classTExperimentData_aa537fb104e3ef16ea71b95685a2ea132}{00027}}\ \ \ \ \ std::vector<TALPIDEEvent*>\ \mbox{\hyperlink{classTExperimentData_aa537fb104e3ef16ea71b95685a2ea132}{mEvents}};}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00028}\mbox{\hyperlink{classTExperimentData_a94feaa58d280b4d00d3f774967e12542}{00028}}\ \ \ \ \ std::vector<TCluster*>\ \mbox{\hyperlink{classTExperimentData_a94feaa58d280b4d00d3f774967e12542}{mClusters}};}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00029}00029\ \ \ \ \ \textcolor{comment}{//\ std::vector<TALPIDEEvent*>\ mMaskedEvents;}}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00030}00030\ \ \ \ \ \textcolor{comment}{//\ std::vector<TCluster*>\ mMaskedClusters;}}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00031}00031\ \ \ \ \ \textcolor{comment}{//\ std::vector<TALPIDEEvent*>\ mNoiseEvents;}}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00032}00032\ \ \ \ \ \textcolor{comment}{//\ std::vector<TCluster*>\ mNoiseClusters;}}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00034}00034\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00035}00035\ \ \ \ \ \mbox{\hyperlink{classTExperimentData_a140341700f3a1c4cbc6e5056eb2b8d8b}{TExperimentData}}();}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00036}00036\ \ \ \ \ \mbox{\hyperlink{classTExperimentData_a140341700f3a1c4cbc6e5056eb2b8d8b}{TExperimentData}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classTExperimentData}{TExperimentData}}\&\ copy);}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00037}00037\ \ \ \ \ \mbox{\hyperlink{classTExperimentData}{TExperimentData}}\&\ \mbox{\hyperlink{classTExperimentData_ac968088a2b40fabbe9ac2adf2b4d4113}{operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classTExperimentData}{TExperimentData}}\&\ copy);}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00038}00038\ \ \ \ \ \mbox{\hyperlink{classTExperimentData_a5f5784749efe757eca41dea05321f240}{\string~TExperimentData}}();}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00040}00040\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTExperimentData_a0668c48f804328cbb76aad94fac7d88c}{setEvents}}(\textcolor{keyword}{const}\ std::vector<TALPIDEEvent*>\&\ events);}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00041}00041\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTExperimentData_a70d452f308c4a6cb4b4db859cf3b281e}{setClusters}}(\textcolor{keyword}{const}\ std::vector<TCluster*>\&\ clusters);}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00042}00042\ \ \ \ \ \textcolor{comment}{//\ void\ setMaskedEvents(const\ std::vector<TALPIDEEvent*>\&\&\ maskedEvents);}}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00043}00043\ \ \ \ \ \textcolor{comment}{//\ void\ setMaskedClusters(const\ std::vector<TCluster*>\&\&\ maskedClusters);}}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00044}00044\ \ \ \ \ \textcolor{comment}{//\ void\ setNoiseEvents(const\ std::vector<TALPIDEEvent*>\&\&\ noiseEvents);}}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00045}00045\ \ \ \ \ \textcolor{comment}{//\ void\ setNoiseClusters(const\ std::vector<TCluster*>\&\&\ noiseClusters);}}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00046}00046\ \ \ \ \ \textcolor{keyword}{const}\ std::vector<TALPIDEEvent*>\ \mbox{\hyperlink{classTExperimentData_ad15db01c483841f4f2022574606cfb20}{getEvents}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00047}00047\ \ \ \ \ \textcolor{keyword}{const}\ std::vector<TCluster*>\ \mbox{\hyperlink{classTExperimentData_ab6e135b0a28f9fac9a9b80a722c62a10}{getClusters}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00048}00048\ \ \ \ \ \textcolor{comment}{//\ const\ std::vector<TALPIDEEvent*>\ getMaskedEvents()\ const;}}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00049}00049\ \ \ \ \ \textcolor{comment}{//\ const\ std::vector<TCluster*>\ getMaskedClusters()\ const;}}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00050}00050\ \ \ \ \ \textcolor{comment}{//\ const\ std::vector<TALPIDEEvent*>\ getNoiseEvents()\ const;}}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00051}00051\ \ \ \ \ \textcolor{comment}{//\ const\ std::vector<TCluster*>\ getNoiseClusters()\ const;}}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00053}00053\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00054}\mbox{\hyperlink{classTExperimentData_a3e164c45b9aca4b7881611d81e88b15c}{00054}}\ \ \ \ \ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTExperimentData_a3e164c45b9aca4b7881611d81e88b15c}{fBits}};}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00055}00055\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00056}00056\ \ \ \ \ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00057}00057\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTExperimentData_ab8112e4bcc7d6a9391dbe7007c1836acadef8da48ecd6694db4b74e8cd0ff25af}{kNotDeleted}}\ =\ 0x02000000}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00058}\mbox{\hyperlink{classTExperimentData_ab8112e4bcc7d6a9391dbe7007c1836acadef8da48ecd6694db4b74e8cd0ff25af}{00058}}\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00059}\mbox{\hyperlink{classTExperimentData_a0bacd15675cedfbe1ac5c9564e150f3b}{00059}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classTExperimentData_a0bacd15675cedfbe1ac5c9564e150f3b}{IsDestructed}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ !\mbox{\hyperlink{classTExperimentData_a3bac04b9ecf3284fa0b15cb2b46132c5}{TestBit}}(\mbox{\hyperlink{classTExperimentData_ab8112e4bcc7d6a9391dbe7007c1836acadef8da48ecd6694db4b74e8cd0ff25af}{kNotDeleted}});\ \}}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00060}\mbox{\hyperlink{classTExperimentData_a3bac04b9ecf3284fa0b15cb2b46132c5}{00060}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classTExperimentData_a3bac04b9ecf3284fa0b15cb2b46132c5}{TestBit}}(\textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ f)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ (\textcolor{keywordtype}{bool})\ ((\mbox{\hyperlink{classTExperimentData_a3e164c45b9aca4b7881611d81e88b15c}{fBits}}\ \&\ f)\ !=\ 0);\ \}}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00061}00061\ \};}
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{TExperimentData_8h_source_l00063}00063\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

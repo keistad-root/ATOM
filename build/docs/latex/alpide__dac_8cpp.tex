@@ -1,0 +1,120 @@
+\doxysection{/home/ychoi/\+ATOM/exe/alpide\+\_\+dac.cpp File Reference}
+\hypertarget{alpide__dac_8cpp}{}\label{alpide__dac_8cpp}\index{/home/ychoi/ATOM/exe/alpide\_dac.cpp@{/home/ychoi/ATOM/exe/alpide\_dac.cpp}}
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$filesystem$>$}\newline
+{\ttfamily \#include "{}TFile.\+h"{}}\newline
+{\ttfamily \#include "{}TCanvas.\+h"{}}\newline
+{\ttfamily \#include "{}TGraph.\+h"{}}\newline
+{\ttfamily \#include "{}TLegend.\+h"{}}\newline
+{\ttfamily \#include "{}TMulti\+Graph.\+h"{}}\newline
+{\ttfamily \#include "{}TStyle.\+h"{}}\newline
+{\ttfamily \#include "{}TMarker.\+h"{}}\newline
+{\ttfamily \#include "{}cppargs.\+h"{}}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classDACtoADC}{DACto\+ADC}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classArgumentParser}{Argument\+Parser}} \mbox{\hyperlink{alpide__dac_8cpp_a95db9291a23068d337f3e3f8264ca257}{add\+\_\+parser}} (int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv)
+\item 
+void \mbox{\hyperlink{alpide__dac_8cpp_ad0f493272fb0455aaeb2dbe1cfb2a4c0}{file\+\_\+open}} (std\+::ifstream \&inputfile, \mbox{\hyperlink{classArgumentParser}{Argument\+Parser}} parser)
+\item 
+void \mbox{\hyperlink{alpide__dac_8cpp_aa09fd69dd02972b0b23006fe00cf07a2}{input\+\_\+data}} (std\+::vector$<$ \mbox{\hyperlink{classDACtoADC}{DACto\+ADC}} $>$ \&data, std\+::ifstream \&inputfile)
+\item 
+void \mbox{\hyperlink{alpide__dac_8cpp_a18f9335a6a64224ae50fe927ee230055}{get\+\_\+graph}} (std\+::vector$<$ TGraph $>$ \&graphs, const std\+::vector$<$ \mbox{\hyperlink{classDACtoADC}{DACto\+ADC}} $>$ \&datas)
+\item 
+void \mbox{\hyperlink{alpide__dac_8cpp_a2a3d1b778f2f60dd8cd930fd9de77bcc}{get\+\_\+multi\+\_\+graph}} (TMulti\+Graph \&mg, std\+::vector$<$ TGraph $>$ \&graphs)
+\item 
+void \mbox{\hyperlink{alpide__dac_8cpp_a87c9c54e5a92ab30e864f87f123ac7f9}{set\+\_\+legend}} (TLegend \&legend, std\+::vector$<$ TGraph $>$ \&graphs)
+\item 
+void \mbox{\hyperlink{alpide__dac_8cpp_ad2d42edd47b0d25ae2fc6e298a271e2a}{make\+\_\+root\+\_\+file}} (TMulti\+Graph \&mg, std\+::vector$<$ TGraph $>$ \&graphs, TLegend \&legend)
+\item 
+int \mbox{\hyperlink{alpide__dac_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{alpide__dac_8cpp_a95db9291a23068d337f3e3f8264ca257}\label{alpide__dac_8cpp_a95db9291a23068d337f3e3f8264ca257} 
+\index{alpide\_dac.cpp@{alpide\_dac.cpp}!add\_parser@{add\_parser}}
+\index{add\_parser@{add\_parser}!alpide\_dac.cpp@{alpide\_dac.cpp}}
+\doxysubsubsection{\texorpdfstring{add\_parser()}{add\_parser()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classArgumentParser}{Argument\+Parser}} add\+\_\+parser (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{argv }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{alpide__dac_8cpp_source_l00047}{47}} of file \mbox{\hyperlink{alpide__dac_8cpp_source}{alpide\+\_\+dac.\+cpp}}.
+
+\Hypertarget{alpide__dac_8cpp_ad0f493272fb0455aaeb2dbe1cfb2a4c0}\label{alpide__dac_8cpp_ad0f493272fb0455aaeb2dbe1cfb2a4c0} 
+\index{alpide\_dac.cpp@{alpide\_dac.cpp}!file\_open@{file\_open}}
+\index{file\_open@{file\_open}!alpide\_dac.cpp@{alpide\_dac.cpp}}
+\doxysubsubsection{\texorpdfstring{file\_open()}{file\_open()}}
+{\footnotesize\ttfamily void file\+\_\+open (\begin{DoxyParamCaption}\item[{std\+::ifstream \&}]{inputfile,  }\item[{\mbox{\hyperlink{classArgumentParser}{Argument\+Parser}}}]{parser }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{alpide__dac_8cpp_source_l00056}{56}} of file \mbox{\hyperlink{alpide__dac_8cpp_source}{alpide\+\_\+dac.\+cpp}}.
+
+\Hypertarget{alpide__dac_8cpp_a18f9335a6a64224ae50fe927ee230055}\label{alpide__dac_8cpp_a18f9335a6a64224ae50fe927ee230055} 
+\index{alpide\_dac.cpp@{alpide\_dac.cpp}!get\_graph@{get\_graph}}
+\index{get\_graph@{get\_graph}!alpide\_dac.cpp@{alpide\_dac.cpp}}
+\doxysubsubsection{\texorpdfstring{get\_graph()}{get\_graph()}}
+{\footnotesize\ttfamily void get\+\_\+graph (\begin{DoxyParamCaption}\item[{std\+::vector$<$ TGraph $>$ \&}]{graphs,  }\item[{const std\+::vector$<$ \mbox{\hyperlink{classDACtoADC}{DACto\+ADC}} $>$ \&}]{datas }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{alpide__dac_8cpp_source_l00094}{94}} of file \mbox{\hyperlink{alpide__dac_8cpp_source}{alpide\+\_\+dac.\+cpp}}.
+
+\Hypertarget{alpide__dac_8cpp_a2a3d1b778f2f60dd8cd930fd9de77bcc}\label{alpide__dac_8cpp_a2a3d1b778f2f60dd8cd930fd9de77bcc} 
+\index{alpide\_dac.cpp@{alpide\_dac.cpp}!get\_multi\_graph@{get\_multi\_graph}}
+\index{get\_multi\_graph@{get\_multi\_graph}!alpide\_dac.cpp@{alpide\_dac.cpp}}
+\doxysubsubsection{\texorpdfstring{get\_multi\_graph()}{get\_multi\_graph()}}
+{\footnotesize\ttfamily void get\+\_\+multi\+\_\+graph (\begin{DoxyParamCaption}\item[{TMulti\+Graph \&}]{mg,  }\item[{std\+::vector$<$ TGraph $>$ \&}]{graphs }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{alpide__dac_8cpp_source_l00115}{115}} of file \mbox{\hyperlink{alpide__dac_8cpp_source}{alpide\+\_\+dac.\+cpp}}.
+
+\Hypertarget{alpide__dac_8cpp_aa09fd69dd02972b0b23006fe00cf07a2}\label{alpide__dac_8cpp_aa09fd69dd02972b0b23006fe00cf07a2} 
+\index{alpide\_dac.cpp@{alpide\_dac.cpp}!input\_data@{input\_data}}
+\index{input\_data@{input\_data}!alpide\_dac.cpp@{alpide\_dac.cpp}}
+\doxysubsubsection{\texorpdfstring{input\_data()}{input\_data()}}
+{\footnotesize\ttfamily void input\+\_\+data (\begin{DoxyParamCaption}\item[{std\+::vector$<$ \mbox{\hyperlink{classDACtoADC}{DACto\+ADC}} $>$ \&}]{data,  }\item[{std\+::ifstream \&}]{inputfile }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{alpide__dac_8cpp_source_l00064}{64}} of file \mbox{\hyperlink{alpide__dac_8cpp_source}{alpide\+\_\+dac.\+cpp}}.
+
+\Hypertarget{alpide__dac_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}\label{alpide__dac_8cpp_a3c04138a5bfe5d72780bb7e82a18e627} 
+\index{alpide\_dac.cpp@{alpide\_dac.cpp}!main@{main}}
+\index{main@{main}!alpide\_dac.cpp@{alpide\_dac.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{argv }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{alpide__dac_8cpp_source_l00149}{149}} of file \mbox{\hyperlink{alpide__dac_8cpp_source}{alpide\+\_\+dac.\+cpp}}.
+
+\Hypertarget{alpide__dac_8cpp_ad2d42edd47b0d25ae2fc6e298a271e2a}\label{alpide__dac_8cpp_ad2d42edd47b0d25ae2fc6e298a271e2a} 
+\index{alpide\_dac.cpp@{alpide\_dac.cpp}!make\_root\_file@{make\_root\_file}}
+\index{make\_root\_file@{make\_root\_file}!alpide\_dac.cpp@{alpide\_dac.cpp}}
+\doxysubsubsection{\texorpdfstring{make\_root\_file()}{make\_root\_file()}}
+{\footnotesize\ttfamily void make\+\_\+root\+\_\+file (\begin{DoxyParamCaption}\item[{TMulti\+Graph \&}]{mg,  }\item[{std\+::vector$<$ TGraph $>$ \&}]{graphs,  }\item[{TLegend \&}]{legend }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{alpide__dac_8cpp_source_l00131}{131}} of file \mbox{\hyperlink{alpide__dac_8cpp_source}{alpide\+\_\+dac.\+cpp}}.
+
+\Hypertarget{alpide__dac_8cpp_a87c9c54e5a92ab30e864f87f123ac7f9}\label{alpide__dac_8cpp_a87c9c54e5a92ab30e864f87f123ac7f9} 
+\index{alpide\_dac.cpp@{alpide\_dac.cpp}!set\_legend@{set\_legend}}
+\index{set\_legend@{set\_legend}!alpide\_dac.cpp@{alpide\_dac.cpp}}
+\doxysubsubsection{\texorpdfstring{set\_legend()}{set\_legend()}}
+{\footnotesize\ttfamily void set\+\_\+legend (\begin{DoxyParamCaption}\item[{TLegend \&}]{legend,  }\item[{std\+::vector$<$ TGraph $>$ \&}]{graphs }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{alpide__dac_8cpp_source_l00121}{121}} of file \mbox{\hyperlink{alpide__dac_8cpp_source}{alpide\+\_\+dac.\+cpp}}.
+

@@ -1,0 +1,95 @@
+\doxysection{TALPIDEEvent.\+cpp}
+\hypertarget{TALPIDEEvent_8cpp_source}{}\label{TALPIDEEvent_8cpp_source}\index{/home/ychoi/ATOM/alpide/daq/src/TALPIDEEvent.cpp@{/home/ychoi/ATOM/alpide/daq/src/TALPIDEEvent.cpp}}
+\mbox{\hyperlink{TALPIDEEvent_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00001}\mbox{\hyperlink{TALPIDEEvent_8cpp_a3bb61cd198299bcf43c55c1bb15737b6}{00001}}\ \textcolor{preprocessor}{\#define\ \_\_TALPIDEEVENT\_HEADER\_\_}}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{TALPIDEEvent_8h}{TALPIDEEvent.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00004}\mbox{\hyperlink{classTALPIDEEvent_a62aac7218438766f3a83f4ea31eb94a6}{00004}}\ \mbox{\hyperlink{classTALPIDEEvent_a62aac7218438766f3a83f4ea31eb94a6}{TALPIDEEvent::TALPIDEEvent}}()\ :\ \mbox{\hyperlink{classTEvent}{TEvent}}(),\ fBits(kNotDeleted)\ \{\ \}}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00006}\mbox{\hyperlink{classTALPIDEEvent_a7d5998ce890c1d32ec80da70856d88c4}{00006}}\ \mbox{\hyperlink{classTALPIDEEvent_a62aac7218438766f3a83f4ea31eb94a6}{TALPIDEEvent::TALPIDEEvent}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}}\&\ copy)\ :\ iTime(copy.iTime),\ fBits(copy.fBits)\ \{}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00007}00007\ \ \ \ \ \mbox{\hyperlink{classTEvent_a65aa45f0a4ffc353f0b0a016a1974623}{setEvent}}(copy.\mbox{\hyperlink{classTEvent_af04919c8b1ad5edc164811f9fe3990aa}{getEvent}}());}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00008}00008\ \ \ \ \ \mbox{\hyperlink{classTALPIDEEvent_a147421da75ebcdf40f2671ff167027b5}{data}}.assign(copy.\mbox{\hyperlink{classTALPIDEEvent_a147421da75ebcdf40f2671ff167027b5}{data}}.begin(),\ copy.\mbox{\hyperlink{classTALPIDEEvent_a147421da75ebcdf40f2671ff167027b5}{data}}.end());}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00009}00009\ \}}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00011}\mbox{\hyperlink{classTALPIDEEvent_afd6f53f87002ba183ddaa88d61367dc7}{00011}}\ \mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}}\&\ \mbox{\hyperlink{classTALPIDEEvent_afd6f53f87002ba183ddaa88d61367dc7}{TALPIDEEvent::operator=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}}\&\ copy)\ \{}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00012}00012\ \ \ \ \ \mbox{\hyperlink{classTEvent_a65aa45f0a4ffc353f0b0a016a1974623}{setEvent}}(copy.\mbox{\hyperlink{classTEvent_af04919c8b1ad5edc164811f9fe3990aa}{getEvent}}());}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00013}00013\ \ \ \ \ \mbox{\hyperlink{classTALPIDEEvent_ae3a42778be8aa6fb872a0153e303bb49}{fBits}}\ =\ copy.\mbox{\hyperlink{classTALPIDEEvent_ae3a42778be8aa6fb872a0153e303bb49}{fBits}};}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00014}00014\ \ \ \ \ \mbox{\hyperlink{classTALPIDEEvent_a06ecb205148e2c6b5bfddd2881f9c8b4}{iTime}}\ =\ copy.\mbox{\hyperlink{classTALPIDEEvent_a06ecb205148e2c6b5bfddd2881f9c8b4}{iTime}};}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00015}00015\ \ \ \ \ \mbox{\hyperlink{classTALPIDEEvent_a147421da75ebcdf40f2671ff167027b5}{data}}.assign(copy.\mbox{\hyperlink{classTALPIDEEvent_a147421da75ebcdf40f2671ff167027b5}{data}}.begin(),\ copy.\mbox{\hyperlink{classTALPIDEEvent_a147421da75ebcdf40f2671ff167027b5}{data}}.end());}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00016}00016\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00017}00017\ \}}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00019}\mbox{\hyperlink{classTALPIDEEvent_ac9128b25f47916b168f0a96aaa62cd12}{00019}}\ \mbox{\hyperlink{classTALPIDEEvent_a62aac7218438766f3a83f4ea31eb94a6}{TALPIDEEvent::TALPIDEEvent}}(\mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}}\&\&\ move)\ :\ iTime(move.iTime),\ fBits(move.fBits)\ \{}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00020}00020\ \ \ \ \ \mbox{\hyperlink{classTEvent_a65aa45f0a4ffc353f0b0a016a1974623}{setEvent}}(move.getEvent());}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00021}00021\ \ \ \ \ \mbox{\hyperlink{classTALPIDEEvent_a147421da75ebcdf40f2671ff167027b5}{data}}.assign(move.data.begin(),\ move.data.end());}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00022}00022\ \ \ \ \ move.fBits\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00023}00023\ \ \ \ \ move.setEvent(0);}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00024}00024\ \ \ \ \ move.iTime\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00025}00025\ \ \ \ \ move.data.clear();}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00026}00026\ \}}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00028}\mbox{\hyperlink{classTALPIDEEvent_aad4334e0e3606a46eaf300a8dfd6a1cc}{00028}}\ \mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}}\&\ \mbox{\hyperlink{classTALPIDEEvent_afd6f53f87002ba183ddaa88d61367dc7}{TALPIDEEvent::operator=}}(\mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}}\&\&\ move)\ \{}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00029}00029\ \ \ \ \ \mbox{\hyperlink{classTEvent_a65aa45f0a4ffc353f0b0a016a1974623}{setEvent}}(move.getEvent());}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00030}00030\ \ \ \ \ \mbox{\hyperlink{classTALPIDEEvent_ae3a42778be8aa6fb872a0153e303bb49}{fBits}}\ =\ move.fBits;}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00031}00031\ \ \ \ \ \mbox{\hyperlink{classTALPIDEEvent_a06ecb205148e2c6b5bfddd2881f9c8b4}{iTime}}\ =\ move.iTime;}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00032}00032\ \ \ \ \ \mbox{\hyperlink{classTALPIDEEvent_a147421da75ebcdf40f2671ff167027b5}{data}}.assign(move.data.begin(),\ move.data.end());}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00033}00033\ \ \ \ \ move.setEvent(0);}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00034}00034\ \ \ \ \ move.fBits\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00035}00035\ \ \ \ \ move.iTime\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00036}00036\ \ \ \ \ move.data.clear();}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00037}00037\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00038}00038\ \}}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00040}\mbox{\hyperlink{classTALPIDEEvent_a172ccf66acf7092114eb40949906de05}{00040}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTALPIDEEvent_a172ccf66acf7092114eb40949906de05}{TALPIDEEvent::setTime}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{int}\ time)\ \{}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00041}00041\ \ \ \ \ \mbox{\hyperlink{classTALPIDEEvent_a06ecb205148e2c6b5bfddd2881f9c8b4}{iTime}}\ =\ time;}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00042}00042\ \}}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00043}00043\ }
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00044}\mbox{\hyperlink{classTALPIDEEvent_a94d8244426217816ac281c1965a65cbb}{00044}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTALPIDEEvent_a94d8244426217816ac281c1965a65cbb}{TALPIDEEvent::pushData}}(\textcolor{keyword}{const}\ std::pair<int,\ int>\&\ coordinate)\ \{}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00045}00045\ \ \ \ \ \mbox{\hyperlink{classTALPIDEEvent_a147421da75ebcdf40f2671ff167027b5}{data}}.push\_back(std::move(coordinate));}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00046}00046\ \}}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00047}00047\ }
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00048}\mbox{\hyperlink{classTALPIDEEvent_a22a08b6232d640739322c2d1a995d3b2}{00048}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTALPIDEEvent_a22a08b6232d640739322c2d1a995d3b2}{TALPIDEEvent::getTime}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00049}00049\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classTALPIDEEvent_a06ecb205148e2c6b5bfddd2881f9c8b4}{iTime}};}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00050}00050\ \}}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00052}\mbox{\hyperlink{classTALPIDEEvent_a6ab3ca13dc8fa60e65ad02392569b9d7}{00052}}\ \textcolor{keyword}{const}\ std::vector<std::pair<int,\ int>>\&\ \mbox{\hyperlink{classTALPIDEEvent_a6ab3ca13dc8fa60e65ad02392569b9d7}{TALPIDEEvent::getData}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00053}00053\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classTALPIDEEvent_a147421da75ebcdf40f2671ff167027b5}{data}};}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00054}00054\ \}}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00055}00055\ }
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00056}\mbox{\hyperlink{classTALPIDEEvent_aa10872964bcfc23f08ac16b90d01e970}{00056}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTALPIDEEvent_aa10872964bcfc23f08ac16b90d01e970}{TALPIDEEvent::removePixel}}(\textcolor{keyword}{const}\ std::pair<int,\ int>\&\ coordinate)\ \{}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00057}00057\ \ \ \ \ \mbox{\hyperlink{classTALPIDEEvent_a147421da75ebcdf40f2671ff167027b5}{data}}.erase(std::find(\mbox{\hyperlink{classTALPIDEEvent_a147421da75ebcdf40f2671ff167027b5}{data}}.begin(),\ \mbox{\hyperlink{classTALPIDEEvent_a147421da75ebcdf40f2671ff167027b5}{data}}.end(),\ coordinate));}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00058}00058\ \}}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00060}\mbox{\hyperlink{classTALPIDEEvent_a3e6a7277e0a3929daeb64dd04ff4db77}{00060}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTALPIDEEvent_a3e6a7277e0a3929daeb64dd04ff4db77}{TALPIDEEvent::removeDuplication}}()\ \{}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00061}00061\ \ \ \ \ std::vector<std::pair<int,\ int>>\ uniqueData;}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00063}00063\ \ \ \ \ \textcolor{keyword}{auto}\ arrayHash\ =\ [\ ](\textcolor{keyword}{const}\ std::pair<int,\ int>\&\ arr)\ \{}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ std::hash<int>()(arr.first)\ \string^\ (std::hash<int>()(arr.second)\ <<\ 1);}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00065}00065\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00066}00066\ }
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00067}00067\ \ \ \ \ std::unordered\_set<std::pair<int,\ int>,\ \textcolor{keyword}{decltype}(arrayHash)>\ uniqueSet(\mbox{\hyperlink{classTALPIDEEvent_a147421da75ebcdf40f2671ff167027b5}{data}}.size()\ *\ 2,\ arrayHash);}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00068}00068\ }
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00069}00069\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ arr\ :\ \mbox{\hyperlink{classTALPIDEEvent_a147421da75ebcdf40f2671ff167027b5}{data}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00070}00070\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ uniqueSet.find(arr)\ ==\ uniqueSet.end()\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00071}00071\ \ \ \ \ \ \ \ \ \ \ \ \ uniqueData.push\_back(arr);}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ uniqueSet.insert(arr);}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00073}00073\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00074}00074\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00075}00075\ \ \ \ \ \mbox{\hyperlink{classTALPIDEEvent_a147421da75ebcdf40f2671ff167027b5}{data}}\ =\ std::move(uniqueData);}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00076}00076\ \}}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00077}00077\ }
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00078}\mbox{\hyperlink{classTALPIDEEvent_a896147b6dcd59ddc4681f7fe8008905a}{00078}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTALPIDEEvent_a896147b6dcd59ddc4681f7fe8008905a}{TALPIDEEvent::sortPixel}}()\ \{}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00079}00079\ \ \ \ \ std::sort(\mbox{\hyperlink{classTALPIDEEvent_a147421da75ebcdf40f2671ff167027b5}{data}}.begin(),\ \mbox{\hyperlink{classTALPIDEEvent_a147421da75ebcdf40f2671ff167027b5}{data}}.end(),\ [\ ](\textcolor{keyword}{const}\ std::pair<int,\ int>\&\ a,\ \textcolor{keyword}{const}\ std::pair<int,\ int>\&\ b)\ \{}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00080}00080\ \ \ \ \ \ \ \ \ if\ (\ a.second\ !=\ b.second\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ return\ a.second\ <\ b.second;\ \ \textcolor{comment}{//\ Sort\ by\ first\ element\ in\ ascending\ order}}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a.first\ <\ b.first;\ \ \textcolor{comment}{//\ If\ the\ first\ elements\ are\ equal,\ sort\ by\ second\ element\ in\ ascending\ order}}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00085}00085\ \}}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00087}\mbox{\hyperlink{classTALPIDEEvent_a8c00decbb334e2967e34af3f749728d8}{00087}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTALPIDEEvent_a8c00decbb334e2967e34af3f749728d8}{TALPIDEEvent::getNData}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00088}00088\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classTALPIDEEvent_a147421da75ebcdf40f2671ff167027b5}{data}}.size();}
+\DoxyCodeLine{\Hypertarget{TALPIDEEvent_8cpp_source_l00089}00089\ \}}
+
+\end{DoxyCode}

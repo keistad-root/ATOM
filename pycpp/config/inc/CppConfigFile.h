@@ -7,6 +7,9 @@
 #include <vector>
 #include <unordered_map>
 #include <fstream>
+#include<filesystem>
+#include<algorithm>
+#include<fstream>
 
 #include "CppConfigDictionary.h"
 #include "CppConfigError.h"

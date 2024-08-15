@@ -1,0 +1,45 @@
+\doxysection{Simulation\+Analysis.\+cpp}
+\hypertarget{SimulationAnalysis_8cpp_source}{}\label{SimulationAnalysis_8cpp_source}\index{/home/ychoi/ATOM/exe/SimulationAnalysis.cpp@{/home/ychoi/ATOM/exe/SimulationAnalysis.cpp}}
+\mbox{\hyperlink{SimulationAnalysis_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ <filesystem>}}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{TGeantAnalyser_8h}{TGeantAnalyser.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cppargs_8h}{cppargs.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00006}\mbox{\hyperlink{SimulationAnalysis_8cpp_aab44b1dab240272ed0bee958aa729f94}{00006}}\ \mbox{\hyperlink{classArgumentParser}{ArgumentParser}}\ \mbox{\hyperlink{SimulationAnalysis_8cpp_aab44b1dab240272ed0bee958aa729f94}{set\_parse}}(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}**\ argv)\ \{}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00007}00007\ \ \ \ \ \mbox{\hyperlink{classArgumentParser}{ArgumentParser}}\ parser\ =\ \mbox{\hyperlink{classArgumentParser}{ArgumentParser}}(argc,\ argv).\mbox{\hyperlink{classArgumentParser_a2d7ea458fda2ee2f00e75ab20bf99680}{setDescription}}(\textcolor{stringliteral}{"{}Draw\ plots\ for\ simulation"{}});}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00008}00008\ \ \ \ \ parser.\mbox{\hyperlink{classArgumentParser_af00214a4cc011bc62671b65bc99b7e70}{add\_argument}}(\textcolor{stringliteral}{"{}simulFile"{}}).\mbox{\hyperlink{classArgumentParser_a5425606bd37027f06b0dbdc87863315a}{metavar}}(\textcolor{stringliteral}{"{}FILENAME"{}}).\mbox{\hyperlink{classArgumentParser_a7cac3ec87e9c8800c373bbf064a6509a}{help}}(\textcolor{stringliteral}{"{}simulation\ file"{}}).\mbox{\hyperlink{classArgumentParser_ac3096e6e13298ac6c77607f5569d2e71}{add\_finish}}();}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00009}00009\ \ \ \ \ parser.\mbox{\hyperlink{classArgumentParser_af00214a4cc011bc62671b65bc99b7e70}{add\_argument}}(\textcolor{stringliteral}{"{}-\/-\/output"{}}).\mbox{\hyperlink{classArgumentParser_a7cac3ec87e9c8800c373bbf064a6509a}{help}}(\textcolor{stringliteral}{"{}output\ path"{}}).\mbox{\hyperlink{classArgumentParser_ac057f9c338901af3c6416fdc9e19b043}{set\_default}}(\textcolor{stringliteral}{"{}default"{}}).\mbox{\hyperlink{classArgumentParser_ac3096e6e13298ac6c77607f5569d2e71}{add\_finish}}();}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00010}00010\ \ \ \ \ parser.\mbox{\hyperlink{classArgumentParser_af2c0b3751dd75a8524f20076f61c9bcf}{parse\_args}}();}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00011}00011\ \ \ \ \ \textcolor{keywordflow}{return}\ parser;}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00012}00012\ \}}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00014}\mbox{\hyperlink{SimulationAnalysis_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{00014}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{SimulationAnalysis_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main}}(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}**\ argv)\ \{}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00015}00015\ \ \ \ \ \textcolor{comment}{//\ ArgumentParser\ parser\ =\ set\_parse(argc,\ argv);}}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00016}00016\ \ \ \ \ \textcolor{comment}{//\ std::filesystem::path\ input(parser.get\_value<std::string>("{}simulFile"{}));}}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00017}00017\ \ \ \ \ \textcolor{comment}{//\ std::filesystem::path\ path;}}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00019}00019\ \ \ \ \ \textcolor{comment}{//\ if\ (\ parser.get\_value<std::string>("{}output"{})\ ==\ "{}default"{}\ )\ \{}}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00020}00020\ \ \ \ \ \textcolor{comment}{//\ \ path\ =\ std::filesystem::absolute(input.parent\_path());}}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00021}00021\ \ \ \ \ \textcolor{comment}{//\ \}\ else\ \{}}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00022}00022\ \ \ \ \ \textcolor{comment}{//\ \ path\ =\ parser.get\_value<std::string>("{}output"{});}}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00023}00023\ \ \ \ \ \textcolor{comment}{//\ \}}}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00025}00025\ \ \ \ \ \textcolor{comment}{//\ std::filesystem::path\ stem\ =\ input.stem();}}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00026}00026\ \ \ \ \ \textcolor{comment}{//\ TFile*\ file\ =\ new\ TFile(static\_cast<TString>((input.replace\_extension("{}.root"{})).string()),\ "{}READ"{});}}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00027}00027\ \ \ \ \ \textcolor{comment}{//\ path.append(stem.string());}}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00028}00028\ \ \ \ \ \textcolor{comment}{//\ std::filesystem::create\_directory(path);}}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00029}00029\ \ \ \ \ \textcolor{comment}{//\ TGeantAnalyser\ drawer(std::move(file));}}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00030}00030\ \ \ \ \ \textcolor{comment}{//\ drawer.refineData();}}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00031}00031\ \ \ \ \ \textcolor{comment}{//\ std::filesystem::path\ energyLossFile\ =\ "{}energy\_loss\_"{}\ +\ stem.string();}}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00032}00032\ \ \ \ \ \textcolor{comment}{//\ drawer.saveEnergyLossDistribution((path\ /\ energyLossFile.replace\_extension("{}.png"{})).string());}}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00033}00033\ \ \ \ \ \textcolor{comment}{//\ std::filesystem::path\ clustermapFile\ =\ "{}clustermap\_"{}\ +\ stem.string();}}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00034}00034\ \ \ \ \ \textcolor{comment}{//\ drawer.saveClustermap((path\ /\ clustermapFile.replace\_extension("{}.png"{})).string());}}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00035}00035\ \ \ \ \ \textcolor{comment}{//\ std::filesystem::path\ doubleClusterFile\ =\ "{}Doubled\_cluster\_frequencymap\_"{}\ +\ stem.string();}}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00036}00036\ \ \ \ \ \textcolor{comment}{//\ drawer.saveDoubleClusterFrequencymap((path\ /\ doubleClusterFile.replace\_extension("{}.png"{})).string());}}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00037}00037\ }
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00038}00038\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{SimulationAnalysis_8cpp_source_l00039}00039\ \}}
+
+\end{DoxyCode}

@@ -18,6 +18,7 @@
 
 #include <unordered_map>
 #include <vector>
+#include<filesystem>
 
 class TFile;
 class TH1D;
@@ -34,7 +35,7 @@ public:
 	void TCompareClusterSize(std::string_view typeName, const CppConfigDictionary config);
 	// void TCompareClusterSizeRatio(std::string_view typeName, const Configurable* config);
 	// void TCompareClusterSize3D(std::string_view typeName, const Configurable* config);
-	TH1D* getClustersizeHistogram(std::string_view pathInRoot, std::string operation);
+	TH1D* getClustersizeHistogram(std::string pathInRoot, std::string operation);
 
 };
 

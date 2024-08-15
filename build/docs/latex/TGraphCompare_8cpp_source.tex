@@ -1,0 +1,200 @@
+\doxysection{TGraph\+Compare.\+cpp}
+\hypertarget{TGraphCompare_8cpp_source}{}\label{TGraphCompare_8cpp_source}\index{/home/ychoi/ATOM/alpide/comparison/src/TGraphCompare.cpp@{/home/ychoi/ATOM/alpide/comparison/src/TGraphCompare.cpp}}
+\mbox{\hyperlink{TGraphCompare_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00001}\mbox{\hyperlink{TGraphCompare_8cpp_a2ea37d12d65bb3d40a9d70970c93d013}{00001}}\ \textcolor{preprocessor}{\#define\ \_\_TGRAPHCOMPARE\_HEADER\_\_}}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{TGraphCompare_8h}{TGraphCompare.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00004}\mbox{\hyperlink{classTGraphCompare_a0baf471ef57713f8bd438d7048ee3483}{00004}}\ TH1D*\ \mbox{\hyperlink{classTGraphCompare_a0baf471ef57713f8bd438d7048ee3483}{TGraphCompare::getClustersizeHistogram}}(std::string\ pathInRoot,\ std::string\ operation)\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00005}00005\ \ \ \ \ std::vector<std::string>\ stringSet;}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00007}00007\ \ \ \ \ \textcolor{keywordtype}{size\_t}\ start\ =\ 0,\ end\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00008}00008\ \ \ \ \ operation.erase(remove(operation.begin(),\ operation.end(),\ \textcolor{charliteral}{'\ '}),\ operation.end());}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00009}00009\ \ \ \ \ \textcolor{keywordflow}{while}\ (\ (end\ =\ operation.find\_first\_of(\textcolor{stringliteral}{"{}+-\/*/"{}},\ start))\ !=\ std::string::npos\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00010}00010\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ end\ !=\ start\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00011}00011\ \ \ \ \ \ \ \ \ \ \ \ \ stringSet.push\_back(operation.substr(start,\ end\ -\/\ start));}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00012}00012\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00013}00013\ \ \ \ \ \ \ \ \ stringSet.push\_back(std::string(1,\ operation[end]));}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00014}00014\ \ \ \ \ \ \ \ \ start\ =\ end\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00015}00015\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00016}00016\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ start\ <\ operation.length()\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00017}00017\ \ \ \ \ \ \ \ \ stringSet.push\_back(operation.substr(start));}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00018}00018\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00020}00020\ \ \ \ \ TH1D*\ hist1\ =\ (TH1D*)\ \mbox{\hyperlink{classTGraphCompare_a700c369a8242894e228b8334d9ea5457}{mGraphFileSet}}.find(stringSet[0])-\/>second-\/>Get(\textcolor{keyword}{static\_cast<}TString\textcolor{keyword}{>}(pathInRoot));}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00021}00021\ \ \ \ \ TH1D*\ newHist\ =\ \textcolor{keyword}{new}\ TH1D(*hist1);}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00022}00022\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ stringSet.size()\ ==\ 3\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00023}00023\ \ \ \ \ \ \ \ \ TH1D*\ hist2\ =\ (TH1D*)\ \mbox{\hyperlink{classTGraphCompare_a700c369a8242894e228b8334d9ea5457}{mGraphFileSet}}.find(stringSet[2])-\/>second-\/>Get(\textcolor{keyword}{static\_cast<}TString\textcolor{keyword}{>}(pathInRoot));}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00024}00024\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ stringSet[1]\ ==\ \textcolor{stringliteral}{"{}+"{}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00025}00025\ \ \ \ \ \ \ \ \ \ \ \ \ newHist-\/>Add(hist2);}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00026}00026\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 80;\ i++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00027}00027\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ newHist-\/>SetBinError(i,\ sqrt(hist1-\/>GetBinContent(i)\ +\ hist2-\/>GetBinContent(i)));}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00028}00028\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00029}00029\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ stringSet[1]\ ==\ \textcolor{stringliteral}{"{}-\/"{}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ newHist-\/>Add(hist2,\ -\/1);}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 80;\ i++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ newHist-\/>SetBinError(i,\ sqrt(hist1-\/>GetBinContent(i)\ +\ hist2-\/>GetBinContent(i)));}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ stringSet[1]\ ==\ \textcolor{stringliteral}{"{}*"{}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \ \ \ \ newHist-\/>Multiply(hist2);}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 80;\ i++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ newHist-\/>SetBinError(i,\ sqrt(hist1-\/>GetBinContent(i)\ *\ hist2-\/>GetBinContent(i)\ *\ (hist1-\/>GetBinContent(i)\ +\ hist2-\/>GetBinContent(i))));}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00039}00039\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ stringSet[1]\ ==\ \textcolor{stringliteral}{"{}/"{}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ newHist-\/>Divide(hist2);}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 80;\ i++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ newHist-\/>SetBinError(i,\ sqrt(pow(hist1-\/>GetBinContent(i)\ /\ hist2-\/>GetBinContent(i),\ 4)\ +\ 1));}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00044}00044\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00045}00045\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00046}00046\ \ \ \ \ \textcolor{keywordflow}{return}\ newHist;}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00047}00047\ \}}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00048}00048\ }
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00049}\mbox{\hyperlink{TGraphCompare_8cpp_aa9fe341433fac159bb240a94aecbf3fa}{00049}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{TGraphCompare_8cpp_aa9fe341433fac159bb240a94aecbf3fa}{getColor}}(\textcolor{keyword}{const}\ std::string\ colorName)\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00050}00050\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ colorName\ ==\ \textcolor{stringliteral}{"{}kRed"{}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00051}00051\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ kRed;}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00052}00052\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ colorName\ ==\ \textcolor{stringliteral}{"{}kMagenta"{}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00053}00053\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ kMagenta;}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00054}00054\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ colorName\ ==\ \textcolor{stringliteral}{"{}kBlue"{}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ kBlue;}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00056}00056\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ colorName\ ==\ \textcolor{stringliteral}{"{}kCyan"{}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ kCyan\ +\ 2;}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00058}00058\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ colorName\ ==\ \textcolor{stringliteral}{"{}kOrange"{}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00059}00059\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ kOrange;}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00060}00060\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00061}00061\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ kWhite;}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00062}00062\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00063}00063\ \}}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00065}\mbox{\hyperlink{TGraphCompare_8cpp_a14dadedf1e75a033e77cf5e1d67413ad}{00065}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{TGraphCompare_8cpp_a14dadedf1e75a033e77cf5e1d67413ad}{getStyle}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ index)\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00066}00066\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ index\ ==\ 0\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00067}00067\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 1;}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00068}00068\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ index\ ==\ 1\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00069}00069\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 8;}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00070}00070\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ index\ ==\ 2\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00071}00071\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 10;}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00072}00072\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ index\ ==\ 3\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00073}00073\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 6;}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00074}00074\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ index\ ==\ 4\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00075}00075\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 9;}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00076}00076\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00077}00077\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00078}00078\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00079}00079\ \}}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00080}00080\ }
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00081}\mbox{\hyperlink{classTGraphCompare_a0e2486d6371553a95d029dbca2853751}{00081}}\ \mbox{\hyperlink{classTGraphCompare_a0e2486d6371553a95d029dbca2853751}{TGraphCompare::TGraphCompare}}(\textcolor{keyword}{const}\ std::vector<std::string>\&\ graphFilePath)\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00082}00082\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ std::string\_view\ filePath\ :\ graphFilePath\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00083}00083\ \ \ \ \ \ \ \ \ std::filesystem::path\ path(filePath);}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00084}00084\ \ \ \ \ \ \ \ \ TFile*\ file\ =\ \textcolor{keyword}{new}\ TFile(\textcolor{keyword}{static\_cast<}TString\textcolor{keyword}{>}(path));}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTGraphCompare_a700c369a8242894e228b8334d9ea5457}{mGraphFileSet}}.insert\_or\_assign(std::string(path.stem()),\ file);}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00086}00086\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00087}00087\ \}}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00089}\mbox{\hyperlink{classTGraphCompare_a28af380aa550cedcc03fa767c4bf14de}{00089}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTGraphCompare_a28af380aa550cedcc03fa767c4bf14de}{TGraphCompare::TCompareClusterSize}}(std::string\_view\ typeName,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\ config)\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00090}00090\ \ \ \ \ TString\ canvasName\ =\ \textcolor{stringliteral}{"{}can\_"{}}\ +\ config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}name"{}});}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00091}00091\ \ \ \ \ Int\_t\ canvasWidth\ =\ stoi(config.\mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{getSubConfig}}(\textcolor{stringliteral}{"{}canvas"{}}).\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}width"{}}));}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00092}00092\ \ \ \ \ Int\_t\ canvasHeight\ =\ stoi(config.\mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{getSubConfig}}(\textcolor{stringliteral}{"{}canvas"{}}).\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}height"{}}));}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00093}00093\ \ \ \ \ TCanvas*\ canvas\ =\ \textcolor{keyword}{new}\ TCanvas(canvasName,\ \textcolor{stringliteral}{"{}"{}},\ canvasWidth,\ canvasHeight);}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00095}00095\ \ \ \ \ TString\ legendTitle\ =\ config.\mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{getSubConfig}}(\textcolor{stringliteral}{"{}legend"{}}).\mbox{\hyperlink{classCppConfigDictionary_a1ab483f98a2a411b93b616bc8d65b83d}{hasKey}}(\textcolor{stringliteral}{"{}title"{}})\ ?\ config.\mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{getSubConfig}}(\textcolor{stringliteral}{"{}legend"{}}).\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}title"{}})\ :\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00096}00096\ \ \ \ \ Float\_t\ legendXmin\ =\ config.\mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{getSubConfig}}(\textcolor{stringliteral}{"{}legend"{}}).\mbox{\hyperlink{classCppConfigDictionary_a1ab483f98a2a411b93b616bc8d65b83d}{hasKey}}(\textcolor{stringliteral}{"{}x\_min"{}})\ ?\ stof(config.\mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{getSubConfig}}(\textcolor{stringliteral}{"{}legend"{}}).\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}x\_min"{}}))\ :\ 0.7;}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00097}00097\ \ \ \ \ Float\_t\ legendXmax\ =\ config.\mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{getSubConfig}}(\textcolor{stringliteral}{"{}legend"{}}).\mbox{\hyperlink{classCppConfigDictionary_a1ab483f98a2a411b93b616bc8d65b83d}{hasKey}}(\textcolor{stringliteral}{"{}x\_max"{}})\ ?\ stof(config.\mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{getSubConfig}}(\textcolor{stringliteral}{"{}legend"{}}).\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}x\_max"{}}))\ :\ 0.7;}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00098}00098\ \ \ \ \ Float\_t\ legendYmin\ =\ config.\mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{getSubConfig}}(\textcolor{stringliteral}{"{}legend"{}}).\mbox{\hyperlink{classCppConfigDictionary_a1ab483f98a2a411b93b616bc8d65b83d}{hasKey}}(\textcolor{stringliteral}{"{}y\_min"{}})\ ?\ stof(config.\mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{getSubConfig}}(\textcolor{stringliteral}{"{}legend"{}}).\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}y\_min"{}}))\ :\ 0.9;}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00099}00099\ \ \ \ \ Float\_t\ legendYmax\ =\ config.\mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{getSubConfig}}(\textcolor{stringliteral}{"{}legend"{}}).\mbox{\hyperlink{classCppConfigDictionary_a1ab483f98a2a411b93b616bc8d65b83d}{hasKey}}(\textcolor{stringliteral}{"{}y\_max"{}})\ ?\ stof(config.\mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{getSubConfig}}(\textcolor{stringliteral}{"{}legend"{}}).\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}y\_max"{}}))\ :\ 0.9;}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00100}00100\ \ \ \ \ Float\_t\ legendDivide\ =\ config.\mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{getSubConfig}}(\textcolor{stringliteral}{"{}legend"{}}).\mbox{\hyperlink{classCppConfigDictionary_a1ab483f98a2a411b93b616bc8d65b83d}{hasKey}}(\textcolor{stringliteral}{"{}divide"{}})\ ?\ stoi(config.\mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{getSubConfig}}(\textcolor{stringliteral}{"{}legend"{}}).\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}divide"{}}))\ :\ 1;}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00101}00101\ \ \ \ \ TLegend*\ legend\ =\ \textcolor{keyword}{new}\ TLegend(legendXmin,\ legendYmin,\ legendXmax,\ legendYmax);}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00102}00102\ \ \ \ \ legend-\/>SetHeader(legendTitle,\ \textcolor{stringliteral}{"{}c"{}});}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00103}00103\ \ \ \ \ legend-\/>SetNColumns(legendDivide);}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00104}00104\ \ \ \ \ std::map<std::string,\ CppConfigDictionary>\ plotConfigList;}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00105}00105\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ pair\ :\ config.\mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{getSubConfig}}(\textcolor{stringliteral}{"{}plots"{}}).\mbox{\hyperlink{classCppConfigDictionary_ab310b82038ceea3c2cdcd37ab728712c}{getSubConfigSetWithName}}()\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00106}00106\ \ \ \ \ \ \ \ \ plotConfigList.insert\_or\_assign(pair.first,\ pair.second);}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00107}00107\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00108}00108\ \ \ \ \ std::map<std::string,\ TH1D*>\ distributionSet;}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00109}00109\ }
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00110}00110\ \ \ \ \ std::string\ rootPath\ =\ config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}root\_path"{}});}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00111}00111\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ plotConfig\ :\ plotConfigList\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00112}00112\ \ \ \ \ \ \ \ \ distributionSet.insert\_or\_assign(plotConfig.first,\ \mbox{\hyperlink{classTGraphCompare_a0baf471ef57713f8bd438d7048ee3483}{getClustersizeHistogram}}(rootPath,\ plotConfig.second.find(\textcolor{stringliteral}{"{}histogram"{}})));}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00113}00113\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00114}00114\ }
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00115}00115\ \ \ \ \ \textcolor{keywordtype}{bool}\ isFirst;}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00116}00116\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ distribution\ :\ distributionSet\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00117}00117\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ isFirst\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00118}00118\ }
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ isFirst\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00121}00121\ }
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00122}00122\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ nEntry\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00123}00123\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ csMin\ =\ stoi(config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}cluster\_size\_of\_interest\_min"{}}));}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00124}00124\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ csMax\ =\ stoi(config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}cluster\_size\_of\_interest\_max"{}}));}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00125}00125\ }
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00126}00126\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ clusterSize\ =\ 1;\ clusterSize\ <\ 81;\ clusterSize++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ clusterSize\ <\ csMin\ ||\ clusterSize\ >\ csMax\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ distribution.second-\/>SetBinContent(clusterSize,\ 0);}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00130}00130\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00131}00131\ }
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00132}00132\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ config.\mbox{\hyperlink{classCppConfigDictionary_a1ab483f98a2a411b93b616bc8d65b83d}{hasKey}}(\textcolor{stringliteral}{"{}normalization"{}})\ \&\&\ (config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}normalization"{}})\ ==\ \textcolor{stringliteral}{"{}true"{}})\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ distribution.second-\/>Scale(1.\ /\ nEntry);}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00134}00134\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ plotConfigList.find(distribution.first)-\/>second.hasKey(\textcolor{stringliteral}{"{}scale"{}})\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ Float\_t\ scaleFactor\ =\ stof(plotConfigList.find(distribution.first)-\/>second.find(\textcolor{stringliteral}{"{}scale"{}}));}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ distribution.second-\/>Scale(scaleFactor);}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00137}00137\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00138}00138\ }
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00140}00140\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ clusterSize\ =\ csMin;\ clusterSize\ <\ csMax\ +\ 1;\ clusterSize++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ nEntry\ +=\ distribution.second-\/>GetBinContent(clusterSize);}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00142}00142\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00143}00143\ \ \ \ \ \ \ \ \ TString\ legendTitle\ =\ plotConfigList.find(distribution.first)-\/>second.find(\textcolor{stringliteral}{"{}legend\_title"{}});}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00144}00144\ \ \ \ \ \ \ \ \ TString\ strEntry\ =\ Form(\textcolor{stringliteral}{"{}\%.2f"{}},\ round(nEntry\ *\ 100)\ /\ 100.);}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00145}00145\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ plotConfigList.find(distribution.first)-\/>second.hasKey(\textcolor{stringliteral}{"{}scale\_error\_max"{}})\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ TString\ strEntryPlus\ =\ Form(\textcolor{stringliteral}{"{}\%.2f"{}},\ abs(round(nEntry\ *\ (stof(plotConfigList.find(distribution.first)-\/>second.find(\textcolor{stringliteral}{"{}scale\_error\_max"{}}))\ -\/\ 1)\ *\ 100)\ /\ 100.));}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ TString\ strEntryMinus\ =\ Form(\textcolor{stringliteral}{"{}\%.2f"{}},\ abs(round(nEntry\ *\ (1\ -\/\ stof(plotConfigList.find(distribution.first)-\/>second.find(\textcolor{stringliteral}{"{}scale\_error\_min"{}})))\ *\ 100)\ /\ 100.));}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00148}00148\ \ \ \ \ \ \ \ \ \ \ \ \ legend-\/>AddEntry(distribution.second,\ legendTitle\ +\ \textcolor{stringliteral}{"{}("{}}\ +\ strEntry\ +\ \textcolor{stringliteral}{"{}+"{}}\ +\ strEntryPlus\ +\ \textcolor{stringliteral}{"{}-\/"{}}\ +\ strEntryMinus\ +\ \textcolor{stringliteral}{"{}\ in\ "{}}\ +\ std::to\_string(csMin)\ +\ \textcolor{stringliteral}{"{}\ \string~\ "{}}\ +\ std::to\_string(csMax)\ +\ \textcolor{stringliteral}{"{})"{}},\ \textcolor{stringliteral}{"{}l"{}});}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00149}00149\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00150}00150\ \ \ \ \ \ \ \ \ \ \ \ \ Float\_t\ scaleFactor\ =\ stof(plotConfigList.find(distribution.first)-\/>second.find(\textcolor{stringliteral}{"{}scale"{}}));}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ TString\ strError\ =\ Form(\textcolor{stringliteral}{"{}\%.2f"{}},\ sqrt(nEntry\ *\ scaleFactor));}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ legend-\/>AddEntry(distribution.second,\ legendTitle\ +\ \textcolor{stringliteral}{"{}("{}}\ +\ strEntry\ +\ \textcolor{keywordtype}{char}(0x00B1)\ +\ strError\ +\ \textcolor{stringliteral}{"{}\ in\ "{}}\ +\ std::to\_string(csMin)\ +\ \textcolor{stringliteral}{"{}\ \string~\ "{}}\ +\ std::to\_string(csMax)\ +\ \textcolor{stringliteral}{"{})"{}},\ \textcolor{stringliteral}{"{}l"{}});}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00153}00153\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00154}00154\ }
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00155}00155\ \ \ \ \ \ \ \ \ TString\ title\ =\ config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}title"{}});}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00156}00156\ \ \ \ \ \ \ \ \ TString\ xTitle\ =\ config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}x\_title"{}});}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00157}00157\ \ \ \ \ \ \ \ \ TString\ yTitle\ =\ config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}y\_title"{}});}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00158}00158\ }
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00159}00159\ \ \ \ \ \ \ \ \ distribution.second-\/>SetMinimum(stof(config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}y\_min"{}})));}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00160}00160\ \ \ \ \ \ \ \ \ distribution.second-\/>SetMaximum(stof(config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}y\_max"{}})));}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00161}00161\ \ \ \ \ \ \ \ \ distribution.second-\/>GetXaxis()-\/>SetRangeUser(csMin\ -\/\ .5,\ csMax\ +\ .5);}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00162}00162\ \ \ \ \ \ \ \ \ distribution.second-\/>SetTitle(title\ +\ \textcolor{stringliteral}{"{};\ "{}}\ +\ xTitle\ +\ \textcolor{stringliteral}{"{};\ "{}}\ +\ yTitle);}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00163}00163\ \ \ \ \ \ \ \ \ distribution.second-\/>SetLineColor(\mbox{\hyperlink{TGraphCompare_8cpp_aa9fe341433fac159bb240a94aecbf3fa}{getColor}}(plotConfigList.find(distribution.first)-\/>second.find(\textcolor{stringliteral}{"{}line\_color"{}})));}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00164}00164\ }
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00165}00165\ \ \ \ \ \ \ \ \ Float\_t\ lineWidth\ =\ config.\mbox{\hyperlink{classCppConfigDictionary_a1ab483f98a2a411b93b616bc8d65b83d}{hasKey}}(\textcolor{stringliteral}{"{}line\_width"{}})\ ?\ stof(config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}line\_width"{}}))\ :\ 1.;}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00166}00166\ \ \ \ \ \ \ \ \ distribution.second-\/>SetLineWidth(lineWidth);}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00167}00167\ \ \ \ \ \ \ \ \ Float\_t\ lineStyle\ =\ plotConfigList.find(distribution.first)-\/>second.hasKey(\textcolor{stringliteral}{"{}line\_style"{}})\ ?\ stof(plotConfigList.find(distribution.first)-\/>second.find(\textcolor{stringliteral}{"{}line\_style"{}}))\ :\ 1.;}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00168}00168\ \ \ \ \ \ \ \ \ distribution.second-\/>SetLineStyle(lineStyle);}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00169}00169\ }
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00170}00170\ \ \ \ \ \ \ \ \ distribution.second-\/>SetStats(0);}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00171}00171\ \ \ \ \ \ \ \ \ distribution.second-\/>Draw(\textcolor{stringliteral}{"{}SAME\ HISTE"{}});}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00172}00172\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ plotConfigList.find(distribution.first)-\/>second.hasKey(\textcolor{stringliteral}{"{}scale\_error\_max"{}})\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00173}00173\ \ \ \ \ \ \ \ \ \ \ \ \ TGraphAsymmErrors*\ systemGraph\ =\ \textcolor{keyword}{new}\ TGraphAsymmErrors();}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00174}00174\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ clusterSize\ =\ csMin;\ clusterSize\ <\ csMax\ +\ 1;\ clusterSize++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00175}00175\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ systemGraph-\/>SetPoint(clusterSize,\ clusterSize,\ distribution.second-\/>GetBinContent(clusterSize));}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ systemGraph-\/>SetPointError(clusterSize,\ .5,\ .5,\ distribution.second-\/>GetBinContent(clusterSize)\ *\ (1\ -\/\ stof(plotConfigList.find(distribution.first)-\/>second.find(\textcolor{stringliteral}{"{}scale\_error\_min"{}}))),\ distribution.second-\/>GetBinContent(clusterSize)\ *\ (stof(plotConfigList.find(distribution.first)-\/>second.find(\textcolor{stringliteral}{"{}scale\_error\_max"{}}))\ -\/\ 1));}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ Float\_t\ \mbox{\hyperlink{DetectorConstruction_8h_a3ae727773c367ac1041d72ac770a0ab1a2cf6ecbb4e108d5977ec6bcc0750f86a}{alpha}}\ =\ stof(config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}error\_box\_alpha"{}}));}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ systemGraph-\/>SetFillColorAlpha(\mbox{\hyperlink{TGraphCompare_8cpp_aa9fe341433fac159bb240a94aecbf3fa}{getColor}}(plotConfigList.find(distribution.first)-\/>second.find(\textcolor{stringliteral}{"{}line\_color"{}})),\ \mbox{\hyperlink{DetectorConstruction_8h_a3ae727773c367ac1041d72ac770a0ab1a2cf6ecbb4e108d5977ec6bcc0750f86a}{alpha}});}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00180}00180\ \ \ \ \ \ \ \ \ \ \ \ \ systemGraph-\/>Draw(\textcolor{stringliteral}{"{}SAME\ E2"{}});}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00181}00181\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00182}00182\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00183}00183\ }
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00184}00184\ \ \ \ \ legend-\/>Draw();}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00185}00185\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ config.\mbox{\hyperlink{classCppConfigDictionary_a1ab483f98a2a411b93b616bc8d65b83d}{hasKey}}(\textcolor{stringliteral}{"{}logy"{}})\ \&\&\ (config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}logy"{}})\ ==\ \textcolor{stringliteral}{"{}true"{}})\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00186}00186\ \ \ \ \ \ \ \ \ canvas-\/>SetLogy();}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00187}00187\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00188}00188\ \ \ \ \ std::filesystem::path\ outputPath(config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}output\_path"{}}));}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00189}00189\ \ \ \ \ std::filesystem::create\_directories(outputPath);}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00190}00190\ \ \ \ \ outputPath\ /=\ config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}name"{}});}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00191}00191\ \ \ \ \ outputPath.replace\_extension(config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}extension"{}}));}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00192}00192\ }
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00193}00193\ \ \ \ \ canvas-\/>SaveAs(\textcolor{keyword}{static\_cast<}TString\textcolor{keyword}{>}(outputPath));}
+\DoxyCodeLine{\Hypertarget{TGraphCompare_8cpp_source_l00194}00194\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,35 @@
+\doxysection{TCluster\+Divide\+Data.\+cpp}
+\hypertarget{TClusterDivideData_8cpp_source}{}\label{TClusterDivideData_8cpp_source}\index{/home/ychoi/ATOM/alpide/cluster/src/TClusterDivideData.cpp@{/home/ychoi/ATOM/alpide/cluster/src/TClusterDivideData.cpp}}
+\mbox{\hyperlink{TClusterDivideData_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{TClusterDivideData_8cpp_source_l00001}\mbox{\hyperlink{TClusterDivideData_8cpp_ac6e9ebc27cf541a77e327417caee0583}{00001}}\ \textcolor{preprocessor}{\#define\ \_\_TCLUSTERDIVIDEDATA\_HEADER\_\_}}
+\DoxyCodeLine{\Hypertarget{TClusterDivideData_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{TClusterDivideData_8h}{TClusterDivideData.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{TClusterDivideData_8cpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{TClusterDivideData_8cpp_source_l00004}\mbox{\hyperlink{classTClusterDivideData_a9d4aa2467353d790766be26611d9ec36}{00004}}\ \mbox{\hyperlink{classTClusterDivideData_a9d4aa2467353d790766be26611d9ec36}{TClusterDivideData::TClusterDivideData}}(\textcolor{keyword}{const}\ std::vector<TCluster*>\&\ clusters)\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterDivideData_8cpp_source_l00005}00005\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \mbox{\hyperlink{classTCluster}{TCluster}}*\ cluster\ :\ clusters\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterDivideData_8cpp_source_l00006}00006\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ clusterSize\ =\ cluster-\/>getSize();}
+\DoxyCodeLine{\Hypertarget{TClusterDivideData_8cpp_source_l00007}00007\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ \mbox{\hyperlink{classTClusterDivideData_af6eef67aa62246c737439508f8e4723f}{mClusterData}}.count(clusterSize)\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterDivideData_8cpp_source_l00008}00008\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTClusterDivideData_af6eef67aa62246c737439508f8e4723f}{mClusterData}}.find(clusterSize)-\/>second.push\_back(cluster);}
+\DoxyCodeLine{\Hypertarget{TClusterDivideData_8cpp_source_l00009}00009\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterDivideData_8cpp_source_l00010}00010\ \ \ \ \ \ \ \ \ \ \ \ \ std::vector<TCluster*>\ set;}
+\DoxyCodeLine{\Hypertarget{TClusterDivideData_8cpp_source_l00011}00011\ \ \ \ \ \ \ \ \ \ \ \ \ set.push\_back(cluster);}
+\DoxyCodeLine{\Hypertarget{TClusterDivideData_8cpp_source_l00012}00012\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTClusterDivideData_af6eef67aa62246c737439508f8e4723f}{mClusterData}}.insert\_or\_assign(clusterSize,\ set);}
+\DoxyCodeLine{\Hypertarget{TClusterDivideData_8cpp_source_l00013}00013\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterDivideData_8cpp_source_l00014}00014\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterDivideData_8cpp_source_l00015}00015\ \}}
+\DoxyCodeLine{\Hypertarget{TClusterDivideData_8cpp_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{TClusterDivideData_8cpp_source_l00017}\mbox{\hyperlink{classTClusterDivideData_aa5b0521134ca06386b2aa0cfdef2492b}{00017}}\ \mbox{\hyperlink{classTClusterDivideData_a9d4aa2467353d790766be26611d9ec36}{TClusterDivideData::TClusterDivideData}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classTClusterDivideData}{TClusterDivideData}}\&\ copy)\ :\ mClusterData(copy.mClusterData)\ \{\ \}}
+\DoxyCodeLine{\Hypertarget{TClusterDivideData_8cpp_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{TClusterDivideData_8cpp_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{TClusterDivideData_8cpp_source_l00020}\mbox{\hyperlink{classTClusterDivideData_a24dd05e65e943f3b313717fff7d18726}{00020}}\ \textcolor{keyword}{const}\ std::vector<TCluster*>\&\ \mbox{\hyperlink{classTClusterDivideData_a24dd05e65e943f3b313717fff7d18726}{TClusterDivideData::getClusterOfSize}}(\textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ clusterSize)\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterDivideData_8cpp_source_l00021}00021\ \ \ \ \ \textcolor{keywordflow}{try}\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterDivideData_8cpp_source_l00022}00022\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ !\mbox{\hyperlink{classTClusterDivideData_af6eef67aa62246c737439508f8e4723f}{mClusterData}}.count(clusterSize)\ )\ \textcolor{keywordflow}{throw}\ clusterSize;}
+\DoxyCodeLine{\Hypertarget{TClusterDivideData_8cpp_source_l00023}00023\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classTClusterDivideData_af6eef67aa62246c737439508f8e4723f}{mClusterData}}.find(clusterSize)-\/>second;}
+\DoxyCodeLine{\Hypertarget{TClusterDivideData_8cpp_source_l00024}00024\ \ \ \ \ \}\ \textcolor{keywordflow}{catch}\ (\ \textcolor{keywordtype}{int}\ clusterSize\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterDivideData_8cpp_source_l00025}00025\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}There\ are\ no\ clusters\ having\ cluster\ Size\ "{}}\ +\ std::to\_string(clusterSize)\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{TClusterDivideData_8cpp_source_l00026}00026\ \ \ \ \ \ \ \ \ std::vector<TCluster*>*\ empty;}
+\DoxyCodeLine{\Hypertarget{TClusterDivideData_8cpp_source_l00027}00027\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *empty;}
+\DoxyCodeLine{\Hypertarget{TClusterDivideData_8cpp_source_l00028}00028\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterDivideData_8cpp_source_l00029}00029\ \}}
+
+\end{DoxyCode}

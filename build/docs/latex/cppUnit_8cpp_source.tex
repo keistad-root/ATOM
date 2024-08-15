@@ -1,0 +1,407 @@
+\doxysection{cpp\+Unit.\+cpp}
+\hypertarget{cppUnit_8cpp_source}{}\label{cppUnit_8cpp_source}\index{/home/ychoi/ATOM/pycpp/src/cppUnit.cpp@{/home/ychoi/ATOM/pycpp/src/cppUnit.cpp}}
+\mbox{\hyperlink{cppUnit_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cppUnit_8h}{cppUnit.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00003}\mbox{\hyperlink{classUnit_a8e46f663a95736c8002d85ab271a7581}{00003}}\ \mbox{\hyperlink{classUnit_a8e46f663a95736c8002d85ab271a7581}{Unit::Unit}}()\ \{\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00005}\mbox{\hyperlink{classUnit_ac7ab9b21c00dbd5b883497f1ed4d2d9c}{00005}}\ \mbox{\hyperlink{classUnit_a8e46f663a95736c8002d85ab271a7581}{Unit::Unit}}(std::string\_view\ unit)\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00006}00006\ \ \ \ \ \mbox{\hyperlink{classUnit_af5c145159dd8b8f1f85af13c622c1c8c}{setUnit}}(unit);}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00007}00007\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00009}00009\ std::vector<std::tuple<std::string,\ std::string,\ Unit>>\ \mbox{\hyperlink{classQuantity_a326a62f0578c1362672c8c2df12bc127}{Quantity::userQuantity}}\ =\ \{\ \};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00010}00010\ std::vector<std::pair<std::string,\ std::array<int,\ 7>>>\ \mbox{\hyperlink{classUnit_adb965cf6eccd7f5845751eb79962cf91}{Unit::userUnits}}\ =\ \{\ \};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00011}00011\ std::vector<std::string>\ \mbox{\hyperlink{classUnit_a6283c6d53580992776f31a1efb41572d}{Unit::exceptPrefixList}}\ =\ \{\textcolor{stringliteral}{"{}m"{}},\ \textcolor{stringliteral}{"{}mol"{}},\ \textcolor{stringliteral}{"{}cd"{}}\};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00012}00012\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classUnit_a7cb7783b0b0c02cec4ec744c916ec4e9}{Unit::isUserUnit}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00014}\mbox{\hyperlink{classUnit_a95d103b74b3b62a1c0bdb8e3d6652b5e}{00014}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classUnit_a95d103b74b3b62a1c0bdb8e3d6652b5e}{Unit::setUserUnit}}(std::string\_view\ newUnit,\ std::string\_view\ newSiUnit)\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00015}00015\ \ \ \ \ \mbox{\hyperlink{classUnit}{Unit}}\ object;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00016}00016\ \ \ \ \ std::vector<std::string>\ store;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00017}00017\ \ \ \ \ \textcolor{keywordtype}{object}.\mbox{\hyperlink{classUnit_afc7980a21ffc442eddb64f56dbf0175e}{seperate}}(store,\ newSiUnit);}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00018}00018\ \ \ \ \ \textcolor{keywordtype}{object}.vanishSlash(store);}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00019}00019\ \ \ \ \ \textcolor{keywordtype}{object}.removePrefix(store);}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00021}00021\ \ \ \ \ \textcolor{keywordtype}{int}\ iNow\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00022}00022\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ std::string\&\ str\ :\ store\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00023}00023\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ isalpha(str[0])\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00024}00024\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{object}.setUnitCount(store[iNow],\ stoi(store[iNow\ +\ 1]));}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00025}00025\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00026}00026\ \ \ \ \ \ \ \ \ iNow++;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00027}00027\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00028}00028\ \ \ \ \ \mbox{\hyperlink{classUnit_adb965cf6eccd7f5845751eb79962cf91}{userUnits}}.push\_back(\{std::string(newUnit),\ \textcolor{keywordtype}{object}.getUnitCount()\});}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00029}00029\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ \mbox{\hyperlink{cppUnit_8h_ad743bb2d28c9f83604b9d27f82d38b23}{prefix}}.count(newUnit[0])\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00030}00030\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classUnit_a6283c6d53580992776f31a1efb41572d}{exceptPrefixList}}.push\_back(std::string(newUnit));}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00031}00031\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00032}00032\ \ \ \ \ \mbox{\hyperlink{classUnit_a7cb7783b0b0c02cec4ec744c916ec4e9}{isUserUnit}}\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00034}00034\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00035}00035\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00036}\mbox{\hyperlink{classQuantity_adc63ea7983efa83167fb83f53c375745}{00036}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classQuantity_adc63ea7983efa83167fb83f53c375745}{Quantity::setUserQuantity}}()\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00037}00037\ \ \ \ \ std::ifstream\ unitFile(\textcolor{stringliteral}{"{}\string~/source/ATOM/src/pycpp/UserUnit.txt"{}});}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00038}00038\ \ \ \ \ std::string\ str;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00040}00040\ \ \ \ \ \textcolor{keywordflow}{while}\ (\ getline(unitFile,\ str)\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00041}00041\ \ \ \ \ \ \ \ \ std::istringstream\ strstr(str);}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00042}00042\ \ \ \ \ \ \ \ \ std::string\ newUnit,\ relation,\ newSiUnit;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00043}00043\ \ \ \ \ \ \ \ \ strstr\ >>\ newUnit\ >>\ relation\ >>\ newSiUnit;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00044}00044\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classUnit_a95d103b74b3b62a1c0bdb8e3d6652b5e}{Unit::setUserUnit}}(newUnit,\ newSiUnit);}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00045}00045\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classQuantity_a326a62f0578c1362672c8c2df12bc127}{Quantity::userQuantity}}.push\_back(std::make\_tuple(newUnit,\ relation,\ \mbox{\hyperlink{classUnit}{Unit}}(newSiUnit)));}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00046}00046\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00047}00047\ \ \ \ \ unitFile.close();}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00048}00048\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00049}00049\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00050}\mbox{\hyperlink{classUnit_af5c145159dd8b8f1f85af13c622c1c8c}{00050}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classUnit_af5c145159dd8b8f1f85af13c622c1c8c}{Unit::setUnit}}(std::string\_view\ unit)\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00051}00051\ \ \ \ \ std::vector<std::string>\ store;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00052}00052\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00053}00053\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ \mbox{\hyperlink{classUnit_afc7980a21ffc442eddb64f56dbf0175e}{seperate}}(store,\ unit)\ ||\ \mbox{\hyperlink{classUnit_a8825896f8aefd941a80e82c3b6cfeebb}{vanishSlash}}(store)\ ||\ \mbox{\hyperlink{classUnit_a29690342bb56e101aed9ad261db29b96}{removePrefix}}(store)\ )\ \{\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00054}00054\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00055}00055\ \ \ \ \ \textcolor{keywordtype}{int}\ iNow\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00056}00056\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ std::string\&\ str\ :\ store\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ isalpha(str[0])\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classUnit_a8d9ef22c7d77d5b8dd790951e5b38468}{setUnitCount}}(store[iNow],\ stoi(store[iNow\ +\ 1]));}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00059}00059\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00060}00060\ \ \ \ \ \ \ \ \ iNow++;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00061}00061\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00062}00062\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00063}00063\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00064}\mbox{\hyperlink{classUnit_afc7980a21ffc442eddb64f56dbf0175e}{00064}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classUnit_afc7980a21ffc442eddb64f56dbf0175e}{Unit::seperate}}(std::vector<std::string>\&\ store,\ std::string\_view\ unit)\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00065}00065\ \ \ \ \ \textcolor{keywordtype}{int}\ iStart\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00066}00066\ \ \ \ \ \textcolor{keywordtype}{int}\ iNow\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00067}00067\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00068}00068\ \ \ \ \ \textcolor{keywordtype}{bool}\ doubleSlash\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00069}00069\ \ \ \ \ \textcolor{keywordtype}{bool}\ isNum\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00071}00071\ \ \ \ \ \textcolor{keywordtype}{bool}\ error\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00072}00072\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ letter\ :\ unit\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00073}00073\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ letter\ ==\ \textcolor{charliteral}{'*'}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ store.push\_back(\textcolor{keyword}{static\_cast<}std::string\textcolor{keyword}{>}(unit.substr(iStart,\ iNow\ -\/\ iStart)));}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ store.push\_back(\textcolor{keyword}{static\_cast<}std::string\textcolor{keyword}{>}(unit.substr(iNow,\ 1)));}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ iStart\ =\ iNow\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00077}00077\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ letter\ ==\ \textcolor{charliteral}{'/'}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ doubleSlash\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Unit\ notation\ to\ write\ '/'\ twice\ is\ forbidden"{}}\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00080}00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ error\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00081}00081\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00082}00082\ \ \ \ \ \ \ \ \ \ \ \ \ store.push\_back(\textcolor{keyword}{static\_cast<}std::string\textcolor{keyword}{>}(unit.substr(iStart,\ iNow\ -\/\ iStart)));}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00083}00083\ \ \ \ \ \ \ \ \ \ \ \ \ store.push\_back(\textcolor{keyword}{static\_cast<}std::string\textcolor{keyword}{>}(unit.substr(iNow,\ 1)));}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00084}00084\ \ \ \ \ \ \ \ \ \ \ \ \ iStart\ =\ iNow\ +\ 1;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00085}00085\ \ \ \ \ \ \ \ \ \ \ \ \ doubleSlash\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00086}00086\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ (letter\ ==\ \textcolor{charliteral}{'-\/'}\ ||\ isdigit(letter))\ \&\&\ !isNum\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00087}00087\ \ \ \ \ \ \ \ \ \ \ \ \ store.push\_back(\textcolor{keyword}{static\_cast<}std::string\textcolor{keyword}{>}(unit.substr(iStart,\ iNow\ -\/\ iStart)));}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00088}00088\ \ \ \ \ \ \ \ \ \ \ \ \ isNum\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00089}00089\ \ \ \ \ \ \ \ \ \ \ \ \ iStart\ =\ iNow;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00090}00090\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ isNum\ \&\&\ !isdigit(letter)\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00091}00091\ \ \ \ \ \ \ \ \ \ \ \ \ iStart\ =\ iNow;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00092}00092\ \ \ \ \ \ \ \ \ \ \ \ \ isNum\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00093}00093\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00094}00094\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ iNow\ ==\ unit.size()\ -\/\ 1\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00095}00095\ \ \ \ \ \ \ \ \ \ \ \ \ store.push\_back(\textcolor{keyword}{static\_cast<}std::string\textcolor{keyword}{>}(unit.substr(iStart)));}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00097}00097\ \ \ \ \ \ \ \ \ iNow++;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00098}00098\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00099}00099\ \ \ \ \ \textcolor{keywordflow}{return}\ error;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00100}00100\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00102}\mbox{\hyperlink{classUnit_a8825896f8aefd941a80e82c3b6cfeebb}{00102}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classUnit_a8825896f8aefd941a80e82c3b6cfeebb}{Unit::vanishSlash}}(std::vector<std::string>\&\ store)\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00103}00103\ \ \ \ \ \textcolor{keywordtype}{int}\ iNow\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00104}00104\ \ \ \ \ \textcolor{keywordtype}{bool}\ afterSlash\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00105}00105\ \ \ \ \ \textcolor{keywordflow}{while}\ (\ store.end()\ -\/\ store.begin()\ -\/\ iNow\ >\ 0\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00106}00106\ \ \ \ \ \ \ \ \ std::string\ str\ =\ store[iNow];}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ str\ ==\ \textcolor{stringliteral}{"{}/"{}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ afterSlash\ =\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ store[iNow]\ =\ \textcolor{stringliteral}{"{}*"{}};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00110}00110\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00111}00111\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ (str[0]\ ==\ \textcolor{charliteral}{'-\/'}\ ||\ isdigit(str[0]))\ \&\&\ afterSlash\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ store[iNow]\ =\ \textcolor{stringliteral}{"{}-\/"{}}\ +\ store[iNow];}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00113}00113\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ isalpha(str[0])\ \&\&\ ((store[iNow\ +\ 1][0]\ !=\ \textcolor{charliteral}{'-\/'}\ \&\&\ !isdigit(store[iNow\ +\ 1][0]))\ ||\ (store.begin()\ +\ iNow\ +\ 1)\ ==\ store.end())\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \ \ \ \ store.insert(store.begin()\ +\ iNow\ +\ 1,\ \textcolor{stringliteral}{"{}1"{}});}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00117}00117\ \ \ \ \ \ \ \ \ iNow++;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00118}00118\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00119}00119\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00120}00120\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00121}00121\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00122}\mbox{\hyperlink{classUnit_a29690342bb56e101aed9ad261db29b96}{00122}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classUnit_a29690342bb56e101aed9ad261db29b96}{Unit::removePrefix}}(std::vector<std::string>\&\ store)\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00123}00123\ \ \ \ \ \mbox{\hyperlink{classUnit_a828eac4bde5bc828b54c47f3df85c8ab}{mDigit}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00124}00124\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00125}00125\ \ \ \ \ \textcolor{keywordtype}{int}\ iNow\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00126}00126\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ std::string\_view\ str\ :\ store\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00127}00127\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ \mbox{\hyperlink{cppUnit_8h_ad743bb2d28c9f83604b9d27f82d38b23}{prefix}}.count(str[0])\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ std::find(\mbox{\hyperlink{classUnit_a6283c6d53580992776f31a1efb41572d}{exceptPrefixList}}.begin(),\ \mbox{\hyperlink{classUnit_a6283c6d53580992776f31a1efb41572d}{exceptPrefixList}}.end(),\ str)\ !=\ \mbox{\hyperlink{classUnit_a6283c6d53580992776f31a1efb41572d}{exceptPrefixList}}.end()\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ str.substr(1)\ ==\ \textcolor{stringliteral}{"{}g"{}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classUnit_a828eac4bde5bc828b54c47f3df85c8ab}{mDigit}}\ +=\ (\mbox{\hyperlink{cppUnit_8h_ad743bb2d28c9f83604b9d27f82d38b23}{prefix}}.find(str[0])-\/>second\ -\/\ 3)\ *\ stoi(store[iNow\ +\ 1]);}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ store[iNow]\ =\ \textcolor{stringliteral}{"{}kg"{}};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00133}00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classUnit_a828eac4bde5bc828b54c47f3df85c8ab}{mDigit}}\ +=\ \mbox{\hyperlink{cppUnit_8h_ad743bb2d28c9f83604b9d27f82d38b23}{prefix}}.find(str[0])-\/>second\ *\ stoi(store[iNow\ +\ 1]);}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ store[iNow]\ =\ str.substr(1);}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00136}00136\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ isalpha(str[0])\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00137}00137\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00138}00138\ \ \ \ \ \ \ \ \ iNow++;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00139}00139\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00140}00140\ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00141}00141\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00142}00142\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00143}\mbox{\hyperlink{classUnit_a8d9ef22c7d77d5b8dd790951e5b38468}{00143}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classUnit_a8d9ef22c7d77d5b8dd790951e5b38468}{Unit::setUnitCount}}(std::string\ unit,\ \textcolor{keywordtype}{int}\ power)\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00144}00144\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ unit\ ==\ \textcolor{stringliteral}{"{}m"{}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00145}00145\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classUnit_a68e3968d4060788d8bf0c89fff93505c}{plusCount}}(\{1\ *\ power,\ 0\ *\ power,\ 0\ *\ power,\ 0\ *\ power,\ 0\ *\ power,\ 0\ *\ power,\ 0\ *\ power\});}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00146}00146\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ unit\ ==\ \textcolor{stringliteral}{"{}kg"{}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00147}00147\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classUnit_a68e3968d4060788d8bf0c89fff93505c}{plusCount}}(\{0\ *\ power,\ 1\ *\ power,\ 0\ *\ power,\ 0\ *\ power,\ 0\ *\ power,\ 0\ *\ power,\ 0\ *\ power\});}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00148}00148\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ unit\ ==\ \textcolor{stringliteral}{"{}s"{}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00149}00149\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classUnit_a68e3968d4060788d8bf0c89fff93505c}{plusCount}}(\{0\ *\ power,\ 0\ *\ power,\ 1\ *\ power,\ 0\ *\ power,\ 0\ *\ power,\ 0\ *\ power,\ 0\ *\ power\});}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00150}00150\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ unit\ ==\ \textcolor{stringliteral}{"{}A"{}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00151}00151\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classUnit_a68e3968d4060788d8bf0c89fff93505c}{plusCount}}(\{0\ *\ power,\ 0\ *\ power,\ 0\ *\ power,\ 1\ *\ power,\ 0\ *\ power,\ 0\ *\ power,\ 0\ *\ power\});}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00152}00152\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ unit\ ==\ \textcolor{stringliteral}{"{}K"{}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00153}00153\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classUnit_a68e3968d4060788d8bf0c89fff93505c}{plusCount}}(\{0\ *\ power,\ 0\ *\ power,\ 0\ *\ power,\ 0\ *\ power,\ 1\ *\ power,\ 0\ *\ power,\ 0\ *\ power\});}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00154}00154\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ unit\ ==\ \textcolor{stringliteral}{"{}mol"{}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00155}00155\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classUnit_a68e3968d4060788d8bf0c89fff93505c}{plusCount}}(\{0\ *\ power,\ 0\ *\ power,\ 0\ *\ power,\ 0\ *\ power,\ 0\ *\ power,\ 1\ *\ power,\ 0\ *\ power\});}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00156}00156\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ unit\ ==\ \textcolor{stringliteral}{"{}cd"{}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00157}00157\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classUnit_a68e3968d4060788d8bf0c89fff93505c}{plusCount}}(\{0\ *\ power,\ 0\ *\ power,\ 0\ *\ power,\ 0\ *\ power,\ 0\ *\ power,\ 0\ *\ power,\ 1\ *\ power\});}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00158}00158\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ \mbox{\hyperlink{classUnit_a7cb7783b0b0c02cec4ec744c916ec4e9}{isUserUnit}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00159}00159\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ std::pair<std::string,\ std::array<int,\ 7>>\&userUnit\ :\ \mbox{\hyperlink{classUnit_adb965cf6eccd7f5845751eb79962cf91}{userUnits}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00160}00160\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ userUnit.first\ ==\ unit\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00161}00161\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classUnit_a68e3968d4060788d8bf0c89fff93505c}{plusCount}}(\{userUnit.second[0]\ *\ power,\ userUnit.second[1]\ *\ power,\ userUnit.second[2]\ *\ power,\ userUnit.second[3]\ *\ power,\ userUnit.second[4]\ *\ power,\ userUnit.second[5]\ *\ power,\ userUnit.second[6]\ *\ power\});}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00162}00162\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00163}00163\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00164}00164\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00165}00165\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}'"{}}\ <<\ unit\ <<\ \textcolor{stringliteral}{"{};\ is\ un-\/defined\ unit.\ Set\ user\ difine\ option."{}}\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00166}00166\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00167}00167\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00168}00168\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00169}\mbox{\hyperlink{classUnit_a68e3968d4060788d8bf0c89fff93505c}{00169}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classUnit_a68e3968d4060788d8bf0c89fff93505c}{Unit::plusCount}}(std::array<int,\ 7>\ nums)\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00170}00170\ \ \ \ \ \mbox{\hyperlink{classUnit_a094a32247f9ee138725c4cad195077e8}{unitCount}}[0]\ +=\ nums[0];}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00171}00171\ \ \ \ \ \mbox{\hyperlink{classUnit_a094a32247f9ee138725c4cad195077e8}{unitCount}}[1]\ +=\ nums[1];}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00172}00172\ \ \ \ \ \mbox{\hyperlink{classUnit_a094a32247f9ee138725c4cad195077e8}{unitCount}}[2]\ +=\ nums[2];}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00173}00173\ \ \ \ \ \mbox{\hyperlink{classUnit_a094a32247f9ee138725c4cad195077e8}{unitCount}}[3]\ +=\ nums[3];}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00174}00174\ \ \ \ \ \mbox{\hyperlink{classUnit_a094a32247f9ee138725c4cad195077e8}{unitCount}}[4]\ +=\ nums[4];}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00175}00175\ \ \ \ \ \mbox{\hyperlink{classUnit_a094a32247f9ee138725c4cad195077e8}{unitCount}}[5]\ +=\ nums[5];}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00176}00176\ \ \ \ \ \mbox{\hyperlink{classUnit_a094a32247f9ee138725c4cad195077e8}{unitCount}}[6]\ +=\ nums[6];}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00177}00177\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00178}00178\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00179}\mbox{\hyperlink{classUnit_a8cf502c8042b9b167b1bda89aad2a48c}{00179}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classUnit_a8cf502c8042b9b167b1bda89aad2a48c}{Unit::operator==}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classUnit}{Unit}}\&\ ref)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00180}00180\ \ \ \ \ \textcolor{keywordflow}{return}\ ref.\mbox{\hyperlink{classUnit_a094a32247f9ee138725c4cad195077e8}{unitCount}}\ ==\ \mbox{\hyperlink{classUnit_a094a32247f9ee138725c4cad195077e8}{unitCount}};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00181}00181\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00182}00182\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00183}\mbox{\hyperlink{classUnit_acd4fa7b11f08954248bc92bac54cc93a}{00183}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classUnit_acd4fa7b11f08954248bc92bac54cc93a}{Unit::operator!=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classUnit}{Unit}}\&\ ref)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00184}00184\ \ \ \ \ \textcolor{keywordflow}{return}\ ref.\mbox{\hyperlink{classUnit_a094a32247f9ee138725c4cad195077e8}{unitCount}}\ !=\ \mbox{\hyperlink{classUnit_a094a32247f9ee138725c4cad195077e8}{unitCount}};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00185}00185\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00186}00186\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00187}\mbox{\hyperlink{classUnit_a61e7a830b5d2883e857d5421f55a38e6}{00187}}\ \mbox{\hyperlink{classUnit}{Unit}}\ \mbox{\hyperlink{classUnit_a61e7a830b5d2883e857d5421f55a38e6}{Unit::operator*}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classUnit}{Unit}}\&\ ref)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00188}00188\ \ \ \ \ \mbox{\hyperlink{classUnit}{Unit}}\ result\ =\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00189}00189\ \ \ \ \ result\ *=\ ref;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00190}00190\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00191}00191\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00192}00192\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00193}\mbox{\hyperlink{classUnit_a3864991d4632378bc3200d0e2b8634cc}{00193}}\ \mbox{\hyperlink{classUnit}{Unit}}\ \mbox{\hyperlink{classUnit_a3864991d4632378bc3200d0e2b8634cc}{Unit::operator*=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classUnit}{Unit}}\&\ ref)\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00194}00194\ \ \ \ \ \mbox{\hyperlink{classUnit_a828eac4bde5bc828b54c47f3df85c8ab}{mDigit}}\ +=\ ref.\mbox{\hyperlink{classUnit_a828eac4bde5bc828b54c47f3df85c8ab}{mDigit}};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00195}00195\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 7;\ i++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00196}00196\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classUnit_a094a32247f9ee138725c4cad195077e8}{unitCount}}[i]\ +=\ ref.\mbox{\hyperlink{classUnit_a094a32247f9ee138725c4cad195077e8}{unitCount}}[i];}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00197}00197\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00198}00198\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ std::string\_view\ nonBasic\ :\ ref.\mbox{\hyperlink{classUnit_a14fdf5dc207b1a62f9bf4cc5fef6fb4c}{nonBasicUnit}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00199}00199\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ find(\mbox{\hyperlink{classUnit_a14fdf5dc207b1a62f9bf4cc5fef6fb4c}{nonBasicUnit}}.begin(),\ \mbox{\hyperlink{classUnit_a14fdf5dc207b1a62f9bf4cc5fef6fb4c}{nonBasicUnit}}.end(),\ nonBasic)\ !=\ \mbox{\hyperlink{classUnit_a14fdf5dc207b1a62f9bf4cc5fef6fb4c}{nonBasicUnit}}.end()\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classUnit_a14fdf5dc207b1a62f9bf4cc5fef6fb4c}{nonBasicUnit}}.push\_back(\textcolor{keyword}{static\_cast<}std::string\textcolor{keyword}{>}(nonBasic));}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00201}00201\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00202}00202\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00203}00203\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00204}00204\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00205}00205\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00206}\mbox{\hyperlink{classUnit_ac6ebb81c15637f3e4d2cef67e146100a}{00206}}\ \mbox{\hyperlink{classUnit}{Unit}}\ \mbox{\hyperlink{classUnit_ac6ebb81c15637f3e4d2cef67e146100a}{Unit::operator/}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classUnit}{Unit}}\&\ ref)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00207}00207\ \ \ \ \ \mbox{\hyperlink{classUnit}{Unit}}\ result\ =\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00208}00208\ \ \ \ \ result\ /=\ ref;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00209}00209\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00210}00210\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00211}00211\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00212}\mbox{\hyperlink{classUnit_a32dc9eafa5ee64d483bca44e332e48ee}{00212}}\ \mbox{\hyperlink{classUnit}{Unit}}\ \mbox{\hyperlink{classUnit_a32dc9eafa5ee64d483bca44e332e48ee}{Unit::operator/=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classUnit}{Unit}}\&\ ref)\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00213}00213\ \ \ \ \ \mbox{\hyperlink{classUnit_a828eac4bde5bc828b54c47f3df85c8ab}{mDigit}}\ -\/=\ ref.\mbox{\hyperlink{classUnit_a828eac4bde5bc828b54c47f3df85c8ab}{mDigit}};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00214}00214\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 7;\ i++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00215}00215\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classUnit_a094a32247f9ee138725c4cad195077e8}{unitCount}}[i]\ -\/=\ ref.\mbox{\hyperlink{classUnit_a094a32247f9ee138725c4cad195077e8}{unitCount}}[i];}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00216}00216\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00217}00217\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ std::string\_view\ nonBasic\ :\ ref.\mbox{\hyperlink{classUnit_a14fdf5dc207b1a62f9bf4cc5fef6fb4c}{nonBasicUnit}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00218}00218\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ find(\mbox{\hyperlink{classUnit_a14fdf5dc207b1a62f9bf4cc5fef6fb4c}{nonBasicUnit}}.begin(),\ \mbox{\hyperlink{classUnit_a14fdf5dc207b1a62f9bf4cc5fef6fb4c}{nonBasicUnit}}.end(),\ nonBasic)\ !=\ \mbox{\hyperlink{classUnit_a14fdf5dc207b1a62f9bf4cc5fef6fb4c}{nonBasicUnit}}.end()\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classUnit_a14fdf5dc207b1a62f9bf4cc5fef6fb4c}{nonBasicUnit}}.push\_back(\textcolor{keyword}{static\_cast<}std::string\textcolor{keyword}{>}(nonBasic));}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00220}00220\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00221}00221\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00222}00222\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00223}00223\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00224}00224\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00225}\mbox{\hyperlink{classUnit_a0e4605da77911fff74fc588f80fc1f6a}{00225}}\ std::ostream\&\ \mbox{\hyperlink{cppUnit_8cpp_a0e4605da77911fff74fc588f80fc1f6a}{operator<<}}(std::ostream\&\ os,\ \mbox{\hyperlink{classUnit}{Unit}}\&\ ref)\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00226}00226\ \ \ \ \ std::string\ unitTable[7]\ =\ \{\textcolor{stringliteral}{"{}m"{}},\ \textcolor{stringliteral}{"{}kg"{}},\ \textcolor{stringliteral}{"{}s"{}},\ \textcolor{stringliteral}{"{}A"{}},\ \textcolor{stringliteral}{"{}K"{}},\ \textcolor{stringliteral}{"{}mol"{}},\ \textcolor{stringliteral}{"{}cd"{}}\};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00227}00227\ \ \ \ \ \textcolor{keywordtype}{int}\ multiCount\ =\ 7\ -\/\ std::count(std::begin(ref.\mbox{\hyperlink{classUnit_a094a32247f9ee138725c4cad195077e8}{unitCount}}),\ std::end(ref.\mbox{\hyperlink{classUnit_a094a32247f9ee138725c4cad195077e8}{unitCount}}),\ (\textcolor{keywordtype}{int})\ 0);}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00228}00228\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 7;\ i++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00229}00229\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ ref.\mbox{\hyperlink{classUnit_a094a32247f9ee138725c4cad195077e8}{unitCount}}[i]\ !=\ 0\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00230}00230\ \ \ \ \ \ \ \ \ \ \ \ \ os\ <<\ unitTable[i]\ <<\ (int)\ ref.\mbox{\hyperlink{classUnit_a094a32247f9ee138725c4cad195077e8}{unitCount}}[i];}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00231}00231\ \ \ \ \ \ \ \ \ \ \ \ \ multiCount-\/-\/;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00232}00232\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ multiCount\ >\ 0\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00233}00233\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ os\ <<\ \textcolor{stringliteral}{"{}*"{}};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00234}00234\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00235}00235\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00236}00236\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00237}00237\ \ \ \ \ \textcolor{keywordflow}{return}\ os;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00238}00238\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00239}00239\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00240}\mbox{\hyperlink{classUnit_a6a5e7d4e19cbc6948c79df10f43aaf91}{00240}}\ std::ostream\&\ \mbox{\hyperlink{cppUnit_8cpp_a0e4605da77911fff74fc588f80fc1f6a}{operator<<}}(std::ostream\&\ os,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classUnit}{Unit}}\&\ ref)\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00241}00241\ \ \ \ \ std::string\ unitTable[7]\ =\ \{\textcolor{stringliteral}{"{}m"{}},\ \textcolor{stringliteral}{"{}kg"{}},\ \textcolor{stringliteral}{"{}s"{}},\ \textcolor{stringliteral}{"{}A"{}},\ \textcolor{stringliteral}{"{}K"{}},\ \textcolor{stringliteral}{"{}mol"{}},\ \textcolor{stringliteral}{"{}cd"{}}\};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00242}00242\ \ \ \ \ \textcolor{keywordtype}{int}\ multiCount\ =\ 7\ -\/\ std::count(std::begin(ref.\mbox{\hyperlink{classUnit_a094a32247f9ee138725c4cad195077e8}{unitCount}}),\ std::end(ref.\mbox{\hyperlink{classUnit_a094a32247f9ee138725c4cad195077e8}{unitCount}}),\ (\textcolor{keywordtype}{int})\ 0);}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00243}00243\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 7;\ i++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00244}00244\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ ref.\mbox{\hyperlink{classUnit_a094a32247f9ee138725c4cad195077e8}{unitCount}}[i]\ !=\ 0\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00245}00245\ \ \ \ \ \ \ \ \ \ \ \ \ os\ <<\ unitTable[i]\ <<\ (int)\ ref.\mbox{\hyperlink{classUnit_a094a32247f9ee138725c4cad195077e8}{unitCount}}[i];}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00246}00246\ \ \ \ \ \ \ \ \ \ \ \ \ multiCount-\/-\/;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00247}00247\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ multiCount\ >\ 0\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00248}00248\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ os\ <<\ \textcolor{stringliteral}{"{}*"{}};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00249}00249\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00250}00250\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00251}00251\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00252}00252\ \ \ \ \ \textcolor{keywordflow}{return}\ os;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00253}00253\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00254}00254\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00255}\mbox{\hyperlink{classUnit_a40f34010133c74232cc2bde14e0e1edf}{00255}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classUnit_a40f34010133c74232cc2bde14e0e1edf}{Unit::getDigit}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00256}00256\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classUnit_a828eac4bde5bc828b54c47f3df85c8ab}{mDigit}};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00257}00257\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00258}00258\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00259}\mbox{\hyperlink{classUnit_acbe872bdb10853432e84e89920b015a0}{00259}}\ \textcolor{keyword}{const}\ std::array<int,\ 7>\&\ \mbox{\hyperlink{classUnit_acbe872bdb10853432e84e89920b015a0}{Unit::getUnitCount}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00260}00260\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classUnit_a094a32247f9ee138725c4cad195077e8}{unitCount}};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00261}00261\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00262}00262\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00263}\mbox{\hyperlink{classUnit_a72b1c0205d776c413f05ba049d04e3f0}{00263}}\ \textcolor{keyword}{const}\ std::vector<std::string>\ \mbox{\hyperlink{classUnit_a72b1c0205d776c413f05ba049d04e3f0}{Unit::getNonBasicUnits}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00264}00264\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classUnit_a14fdf5dc207b1a62f9bf4cc5fef6fb4c}{nonBasicUnit}};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00265}00265\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00266}00266\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00267}\mbox{\hyperlink{classUnit_abe45a5d962341b33833decda5f5c9780}{00267}}\ \textcolor{keyword}{const}\ std::string\ \mbox{\hyperlink{classUnit_abe45a5d962341b33833decda5f5c9780}{Unit::getUnit}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00268}00268\ \ \ \ \ std::string\ unitTable[7]\ =\ \{\textcolor{stringliteral}{"{}m"{}},\ \textcolor{stringliteral}{"{}kg"{}},\ \textcolor{stringliteral}{"{}s"{}},\ \textcolor{stringliteral}{"{}A"{}},\ \textcolor{stringliteral}{"{}K"{}},\ \textcolor{stringliteral}{"{}mol"{}},\ \textcolor{stringliteral}{"{}cd"{}}\};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00269}00269\ \ \ \ \ \textcolor{keywordtype}{int}\ multiCount\ =\ 7\ -\/\ std::count(std::begin(\mbox{\hyperlink{classUnit_a094a32247f9ee138725c4cad195077e8}{unitCount}}),\ std::end(\mbox{\hyperlink{classUnit_a094a32247f9ee138725c4cad195077e8}{unitCount}}),\ (\textcolor{keywordtype}{int})\ 0);}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00270}00270\ \ \ \ \ std::string\ result;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00271}00271\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 7;\ i++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00272}00272\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ \mbox{\hyperlink{classUnit_a094a32247f9ee138725c4cad195077e8}{unitCount}}[i]\ !=\ 0\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00273}00273\ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ unitTable[i]\ +\ std::to\_string((\textcolor{keywordtype}{int})\ \mbox{\hyperlink{classUnit_a094a32247f9ee138725c4cad195077e8}{unitCount}}[i]);}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00274}00274\ \ \ \ \ \ \ \ \ \ \ \ \ multiCount-\/-\/;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00275}00275\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ multiCount\ >\ 0\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00276}00276\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ result\ +=\ \textcolor{stringliteral}{"{}*"{}};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00277}00277\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00278}00278\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00279}00279\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00280}00280\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00281}00281\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00282}00282\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00283}\mbox{\hyperlink{classQuantity_a9ced2cd0acdaa87e009d44aaf9969485}{00283}}\ \mbox{\hyperlink{classQuantity_a4fd2a0a2cba19509ca1cfa10810d2bc9}{Quantity::Quantity}}(std::string\ quantity)\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00284}00284\ \ \ \ \ \textcolor{keywordtype}{int}\ posChar\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00285}00285\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ uint\ letter\ :\ quantity\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00286}00286\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ isdigit(letter)\ ||\ (letter\ ==\ \textcolor{charliteral}{'.'})\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ posChar++;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00288}00288\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00290}00290\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00291}00291\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00292}00292\ \ \ \ \ \mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ =\ stof(quantity.substr(0,\ posChar));}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00293}00293\ \ \ \ \ \mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}}\ =\ floor(log10(\mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}));}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00294}00294\ \ \ \ \ \mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ =\ \mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ *\ pow(10,\ -\/\mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}});}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00295}00295\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00296}00296\ \ \ \ \ \mbox{\hyperlink{classQuantity_a435fde70b0cdf01fe6c67e7ea34881d4}{mUnit}}\ =\ \mbox{\hyperlink{classUnit}{Unit}}(quantity.substr(posChar));}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00297}00297\ \ \ \ \ \mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}}\ +=\ \mbox{\hyperlink{classQuantity_a435fde70b0cdf01fe6c67e7ea34881d4}{mUnit}}.\mbox{\hyperlink{classUnit_a40f34010133c74232cc2bde14e0e1edf}{getDigit}}();}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00298}00298\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00299}00299\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00300}\mbox{\hyperlink{classQuantity_a9c174ea85cab46bdf1ff671feedd2d5a}{00300}}\ \mbox{\hyperlink{classQuantity_a4fd2a0a2cba19509ca1cfa10810d2bc9}{Quantity::Quantity}}(\textcolor{keywordtype}{double}\ num,\ std::string\ unit)\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00301}00301\ \ \ \ \ \mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}}\ =\ floor(log10(\mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}}));}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00302}00302\ \ \ \ \ \mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ =\ \mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ *\ pow(10,\ -\/\mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}});}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00303}00303\ \ \ \ \ \mbox{\hyperlink{classQuantity_a435fde70b0cdf01fe6c67e7ea34881d4}{mUnit}}\ =\ \mbox{\hyperlink{classUnit}{Unit}}(unit);}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00304}00304\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00305}00305\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00306}\mbox{\hyperlink{classQuantity_a83e20101221a51142bc18073e44d901b}{00306}}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classQuantity_a83e20101221a51142bc18073e44d901b}{Quantity::getNum}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00307}00307\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ *\ pow(10,\ \mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}});}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00308}00308\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00309}00309\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00310}\mbox{\hyperlink{classQuantity_a60550f964b6c5af93329d95ade977240}{00310}}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{classQuantity_a83e20101221a51142bc18073e44d901b}{Quantity::getNum}}(std::string\_view\ unit)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00311}00311\ \ \ \ \ \mbox{\hyperlink{classUnit}{Unit}}\ givenUnit(unit);}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00312}00312\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ \mbox{\hyperlink{classQuantity_a435fde70b0cdf01fe6c67e7ea34881d4}{mUnit}}\ !=\ givenUnit\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00313}00313\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}The\ operands\ doesn't\ have\ same\ dimension."{}}\ <<\ \mbox{\hyperlink{classQuantity_a435fde70b0cdf01fe6c67e7ea34881d4}{mUnit}}\ <<\ \textcolor{stringliteral}{"{}!="{}}\ <<\ givenUnit\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00314}00314\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00315}00315\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ *\ pow(10,\ \mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}}\ -\/\ givenUnit.\mbox{\hyperlink{classUnit_a40f34010133c74232cc2bde14e0e1edf}{getDigit}}());}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00316}00316\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00317}00317\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00318}\mbox{\hyperlink{classQuantity_af7559314aa129f6704260bdac6161c76}{00318}}\ \textcolor{keyword}{const}\ std::string\ \mbox{\hyperlink{classQuantity_af7559314aa129f6704260bdac6161c76}{Quantity::getUnit}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00319}00319\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classQuantity_a435fde70b0cdf01fe6c67e7ea34881d4}{mUnit}}.\mbox{\hyperlink{classUnit_abe45a5d962341b33833decda5f5c9780}{getUnit}}();}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00320}00320\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00321}00321\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00322}\mbox{\hyperlink{classQuantity_ab09576a50f1bb7b9fae3362916c86119}{00322}}\ \textcolor{keyword}{const}\ std::string\ \mbox{\hyperlink{classQuantity_ab09576a50f1bb7b9fae3362916c86119}{Quantity::getQuantity}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00323}00323\ \ \ \ \ \textcolor{keywordflow}{return}\ std::to\_string(\mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ *\ pow(10,\ \mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}}));}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00324}00324\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00325}00325\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00326}\mbox{\hyperlink{classQuantity_a173c5397e1fbc8f6ef2aa967c1675153}{00326}}\ \textcolor{keyword}{const}\ std::string\ \mbox{\hyperlink{classQuantity_ab09576a50f1bb7b9fae3362916c86119}{Quantity::getQuantity}}(std::string\_view\ unit)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00327}00327\ \ \ \ \ \mbox{\hyperlink{classUnit}{Unit}}\ givenUnit(unit);}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00328}00328\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ \mbox{\hyperlink{classQuantity_a435fde70b0cdf01fe6c67e7ea34881d4}{mUnit}}\ !=\ givenUnit\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00329}00329\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}The\ operands\ doesn't\ have\ same\ dimension."{}}\ <<\ \mbox{\hyperlink{classQuantity_a435fde70b0cdf01fe6c67e7ea34881d4}{mUnit}}\ <<\ \textcolor{stringliteral}{"{}!="{}}\ <<\ givenUnit\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00330}00330\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00331}00331\ \ \ \ \ \textcolor{keywordflow}{return}\ std::to\_string(\mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ *\ pow(10,\ \mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}}\ -\/\ givenUnit.\mbox{\hyperlink{classUnit_a40f34010133c74232cc2bde14e0e1edf}{getDigit}}()))\ +\ \textcolor{keyword}{static\_cast<}std::string\textcolor{keyword}{>}(unit);}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00332}00332\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00333}00333\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00334}\mbox{\hyperlink{classQuantity_a9905b766444fab8735f9f4b5bb77e9d8}{00334}}\ \mbox{\hyperlink{classQuantity}{Quantity}}\ \mbox{\hyperlink{classQuantity_a9905b766444fab8735f9f4b5bb77e9d8}{Quantity::operator+}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classQuantity}{Quantity}}\&\ ref)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00335}00335\ \ \ \ \ \mbox{\hyperlink{classQuantity}{Quantity}}\ result\ =\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00336}00336\ \ \ \ \ result\ +=\ ref;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00337}00337\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00338}00338\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00339}\mbox{\hyperlink{classQuantity_ac4e195c334f96dd3dc2e1ebb6a52027c}{00339}}\ \mbox{\hyperlink{classQuantity}{Quantity}}\ \mbox{\hyperlink{classQuantity_ac4e195c334f96dd3dc2e1ebb6a52027c}{Quantity::operator-\/}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classQuantity}{Quantity}}\&\ ref)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00340}00340\ \ \ \ \ \mbox{\hyperlink{classQuantity}{Quantity}}\ result\ =\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00341}00341\ \ \ \ \ result\ -\/=\ ref;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00342}00342\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00343}00343\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00344}\mbox{\hyperlink{classQuantity_a893b33b8a2330116bdeb1f0c761632b2}{00344}}\ \mbox{\hyperlink{classQuantity}{Quantity}}\ \mbox{\hyperlink{classQuantity_a893b33b8a2330116bdeb1f0c761632b2}{Quantity::operator*}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classQuantity}{Quantity}}\&\ ref)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00345}00345\ \ \ \ \ \mbox{\hyperlink{classQuantity}{Quantity}}\ result\ =\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00346}00346\ \ \ \ \ result\ *=\ ref;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00347}00347\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00348}00348\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00349}\mbox{\hyperlink{classQuantity_a70e2e16f4f1e27f8eb429d097d619a3a}{00349}}\ \mbox{\hyperlink{classQuantity}{Quantity}}\ \mbox{\hyperlink{classQuantity_a70e2e16f4f1e27f8eb429d097d619a3a}{Quantity::operator/}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classQuantity}{Quantity}}\&\ ref)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00350}00350\ \ \ \ \ \mbox{\hyperlink{classQuantity}{Quantity}}\ result\ =\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00351}00351\ \ \ \ \ result\ /=\ ref;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00352}00352\ \ \ \ \ \textcolor{keywordflow}{return}\ result;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00353}00353\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00354}\mbox{\hyperlink{classQuantity_aeead4749c868b5a78c1cec4b947b58b3}{00354}}\ \mbox{\hyperlink{classQuantity}{Quantity}}\ \mbox{\hyperlink{classQuantity_aeead4749c868b5a78c1cec4b947b58b3}{Quantity::operator+=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classQuantity}{Quantity}}\&\ ref)\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00355}00355\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ \mbox{\hyperlink{classQuantity_a435fde70b0cdf01fe6c67e7ea34881d4}{mUnit}}\ !=\ ref.\mbox{\hyperlink{classQuantity_a435fde70b0cdf01fe6c67e7ea34881d4}{mUnit}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00356}00356\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}The\ operands\ doesn't\ have\ same\ dimension."{}}\ <<\ \mbox{\hyperlink{classQuantity_a435fde70b0cdf01fe6c67e7ea34881d4}{mUnit}}\ <<\ \textcolor{stringliteral}{"{}!="{}}\ <<\ ref.\mbox{\hyperlink{classQuantity_a435fde70b0cdf01fe6c67e7ea34881d4}{mUnit}}\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00357}00357\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00358}00358\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ mainDigit\ =\ std::max(\mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}},\ ref.\mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}});}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00359}00359\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ =\ \mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ *\ pow(10,\ \mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}}\ -\/\ mainDigit)\ +\ ref.\mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ *\ pow(10,\ ref.\mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}}\ -\/\ mainDigit);}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00360}00360\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}}\ =\ mainDigit\ +\ floor(log10(\mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}));}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00361}00361\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ =\ \mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ *\ pow(10,\ -\/floor(log10(\mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}})));}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00362}00362\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00363}00363\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00364}00364\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00365}\mbox{\hyperlink{classQuantity_afd9ae0a138ce6caeec1351ac7421c34d}{00365}}\ \mbox{\hyperlink{classQuantity}{Quantity}}\ \mbox{\hyperlink{classQuantity_afd9ae0a138ce6caeec1351ac7421c34d}{Quantity::operator-\/=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classQuantity}{Quantity}}\&\ ref)\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00366}00366\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ \mbox{\hyperlink{classQuantity_a435fde70b0cdf01fe6c67e7ea34881d4}{mUnit}}\ !=\ ref.\mbox{\hyperlink{classQuantity_a435fde70b0cdf01fe6c67e7ea34881d4}{mUnit}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00367}00367\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}The\ operands\ doesn't\ have\ same\ dimension."{}}\ <<\ \mbox{\hyperlink{classQuantity_a435fde70b0cdf01fe6c67e7ea34881d4}{mUnit}}\ <<\ \textcolor{stringliteral}{"{}!="{}}\ <<\ ref.\mbox{\hyperlink{classQuantity_a435fde70b0cdf01fe6c67e7ea34881d4}{mUnit}}\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00368}00368\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00369}00369\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ mainDigit\ =\ std::max(\mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}},\ ref.\mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}});}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00370}00370\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ =\ \mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ *\ pow(10,\ \mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}}\ -\/\ mainDigit)\ -\/\ ref.\mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ *\ pow(10,\ ref.\mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}}\ -\/\ mainDigit);}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00371}00371\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}}\ =\ mainDigit\ +\ floor(log10(abs(\mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}})));}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00372}00372\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ =\ \mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ *\ pow(10,\ -\/floor(log10(abs(\mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}))));}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00373}00373\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00374}00374\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00375}00375\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00376}\mbox{\hyperlink{classQuantity_abf0c8fef0e19c150eb35983f1f793f84}{00376}}\ \mbox{\hyperlink{classQuantity}{Quantity}}\ \mbox{\hyperlink{classQuantity_abf0c8fef0e19c150eb35983f1f793f84}{Quantity::operator*=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classQuantity}{Quantity}}\&\ ref)\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00377}00377\ \ \ \ \ \textcolor{keywordtype}{int}\ mainDigit\ =\ std::max(\mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}},\ ref.\mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}});}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00378}00378\ \ \ \ \ \mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ =\ \mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ *\ pow(10,\ \mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}}\ -\/\ mainDigit)\ *\ ref.\mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ *\ pow(10,\ ref.\mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}}\ -\/\ mainDigit);}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00379}00379\ \ \ \ \ \mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}}\ =\ mainDigit\ +\ floor(log10(abs(\mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}})));}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00380}00380\ \ \ \ \ \mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ =\ \mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ *\ pow(10,\ -\/floor(log10(abs(\mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}))));}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00381}00381\ \ \ \ \ \mbox{\hyperlink{classQuantity_a435fde70b0cdf01fe6c67e7ea34881d4}{mUnit}}\ *=\ ref.\mbox{\hyperlink{classQuantity_a435fde70b0cdf01fe6c67e7ea34881d4}{mUnit}};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00382}00382\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00383}00383\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00384}\mbox{\hyperlink{classQuantity_a868e9d0c74b3651ba6c05740403f739d}{00384}}\ \mbox{\hyperlink{classQuantity}{Quantity}}\ \mbox{\hyperlink{classQuantity_a868e9d0c74b3651ba6c05740403f739d}{Quantity::operator/=}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classQuantity}{Quantity}}\&\ ref)\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00385}00385\ \ \ \ \ \textcolor{keywordtype}{int}\ mainDigit\ =\ std::max(\mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}},\ ref.\mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}});}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00386}00386\ \ \ \ \ \mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ =\ \mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ *\ pow(10,\ \mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}}\ -\/\ mainDigit)\ /\ (ref.\mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ *\ pow(10,\ ref.\mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}}\ -\/\ mainDigit));}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00387}00387\ \ \ \ \ \mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}}\ =\ mainDigit\ +\ floor(log10(abs(\mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}})));}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00388}00388\ \ \ \ \ \mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ =\ \mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ *\ pow(10,\ -\/floor(log10(abs(\mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}))));}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00389}00389\ \ \ \ \ \mbox{\hyperlink{classQuantity_a435fde70b0cdf01fe6c67e7ea34881d4}{mUnit}}\ /=\ ref.\mbox{\hyperlink{classQuantity_a435fde70b0cdf01fe6c67e7ea34881d4}{mUnit}};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00390}00390\ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00391}00391\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00392}00392\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00393}\mbox{\hyperlink{classQuantity_a37369e8c8961883e16173405ef57f222}{00393}}\ std::ostream\&\ \mbox{\hyperlink{cppUnit_8cpp_a0e4605da77911fff74fc588f80fc1f6a}{operator<<}}(std::ostream\&\ os,\ \mbox{\hyperlink{classQuantity}{Quantity}}\&\ ref)\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00394}00394\ \ \ \ \ os\ <<\ ref.\mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ <<\ \textcolor{stringliteral}{"{}e"{}}\ <<\ ref.\mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}}\ <<\ \textcolor{stringliteral}{"{}\ "{}}\ <<\ ref.\mbox{\hyperlink{classQuantity_a435fde70b0cdf01fe6c67e7ea34881d4}{mUnit}};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00395}00395\ \ \ \ \ \textcolor{keywordflow}{return}\ os;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00396}00396\ \}}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00397}00397\ }
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00398}\mbox{\hyperlink{classQuantity_acbea8a91c11a667916efba86d385c979}{00398}}\ std::ostream\&\ \mbox{\hyperlink{cppUnit_8cpp_a0e4605da77911fff74fc588f80fc1f6a}{operator<<}}(std::ostream\&\ os,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classQuantity}{Quantity}}\&\ ref)\ \{}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00399}00399\ \ \ \ \ os\ <<\ ref.\mbox{\hyperlink{classQuantity_abaacb9499a52e6460c37cf710a12773c}{mNum}}\ <<\ \textcolor{stringliteral}{"{}e"{}}\ <<\ ref.\mbox{\hyperlink{classQuantity_a22778ece353513100af0445892d3c975}{mDigit}}\ <<\ \textcolor{stringliteral}{"{}\ "{}}\ <<\ ref.\mbox{\hyperlink{classQuantity_a435fde70b0cdf01fe6c67e7ea34881d4}{mUnit}};}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00400}00400\ \ \ \ \ \textcolor{keywordflow}{return}\ os;}
+\DoxyCodeLine{\Hypertarget{cppUnit_8cpp_source_l00401}00401\ \}}
+
+\end{DoxyCode}

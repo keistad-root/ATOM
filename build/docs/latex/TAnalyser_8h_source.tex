@@ -1,0 +1,165 @@
+\doxysection{TAnalyser.\+h}
+\hypertarget{TAnalyser_8h_source}{}\label{TAnalyser_8h_source}\index{/home/ychoi/ATOM/alpide/analysis/inc/TAnalyser.h@{/home/ychoi/ATOM/alpide/analysis/inc/TAnalyser.h}}
+\mbox{\hyperlink{TAnalyser_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00012}00012\ \textcolor{preprocessor}{\#ifndef\ \_\_TANALYSER\_\_}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00013}00013\ \textcolor{preprocessor}{\#define\ \_\_TANALYSER\_\_}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00015}00015\ \textcolor{preprocessor}{\#ifdef\ \_\_TANALYSER\_HEADERS\_\_}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00018}00018\ \textcolor{preprocessor}{\#include\ "{}TFile.h"{}}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00019}00019\ \textcolor{preprocessor}{\#include\ "{}TTree.h"{}}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00020}00020\ \textcolor{preprocessor}{\#include\ "{}TBranch.h"{}}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00021}00021\ \textcolor{preprocessor}{\#include\ "{}TH1D.h"{}}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00022}00022\ \textcolor{preprocessor}{\#include\ "{}TH1I.h"{}}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00023}00023\ \textcolor{preprocessor}{\#include\ "{}TH2D.h"{}}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00024}00024\ \textcolor{preprocessor}{\#include\ "{}TError.h"{}}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00025}00025\ \textcolor{preprocessor}{\#include\ "{}TPaveText.h"{}}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00026}00026\ \textcolor{preprocessor}{\#include\ "{}TDirectory.h"{}}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00027}00027\ \textcolor{preprocessor}{\#include\ "{}TCanvas.h"{}}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00028}00028\ \textcolor{preprocessor}{\#include\ "{}TLine.h"{}}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00029}00029\ \textcolor{preprocessor}{\#include\ "{}TGraph.h"{}}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00030}00030\ \textcolor{preprocessor}{\#include\ "{}TF1.h"{}}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00031}00031\ \textcolor{preprocessor}{\#include\ "{}TLegend.h"{}}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00032}00032\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{TH1IUser_8h}{TH1IUser.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00034}00034\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cpptqdm_8h}{cpptqdm.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00035}00035\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{CppConfigFile_8h}{CppConfigFile.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00036}00036\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00037}00037\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{TExperimentData_8h}{TExperimentData.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00038}00038\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{TMatrix2D_8h}{TMatrix2D.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00039}00039\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{TALPIDEEvent_8h}{TALPIDEEvent.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00040}00040\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{TCluster_8h}{TCluster.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00041}00041\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{TClusterDivideData_8h}{TClusterDivideData.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00042}00042\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{TClusterShape_8h}{TClusterShape.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00043}00043\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00044}00044\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00045}00045\ \textcolor{preprocessor}{\#include<string>}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00046}00046\ \textcolor{preprocessor}{\#include<filesystem>}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00047}00047\ \textcolor{preprocessor}{\#include<unordered\_map>}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00048}00048\ \textcolor{preprocessor}{\#include<vector>}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00049}00049\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{TFileFormat_8h}{TFileFormat.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00050}00050\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00051}00051\ \textcolor{keyword}{class\ }TFile;}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00052}00052\ \textcolor{keyword}{class\ }TTree;}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00053}00053\ \textcolor{keyword}{class\ }TH2D;}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00054}00054\ \textcolor{keyword}{class\ }TH1D;}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00055}00055\ \textcolor{keyword}{class\ }TPaveText;}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00056}00056\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00057}00057\ \textcolor{keyword}{class\ }Configurable;}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00058}00058\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00059}00059\ \textcolor{comment}{//\ struct\ TInputRoot;}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00060}00060\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00061}00061\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classTExperimentData}{TExperimentData}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00062}00062\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classTClusterDivideData}{TClusterDivideData}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00063}00063\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classTClusterShape}{TClusterShape}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00064}00064\ \textcolor{keyword}{class\ }TDirectory;}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00065}00065\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00066}00066\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00067}00067\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classTCluster}{TCluster}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00068}\mbox{\hyperlink{TAnalyser_8h_a7c1bc4939263cb6c0f48e434d77ac258}{00068}}\ \textcolor{keyword}{typedef}\ \textcolor{keywordtype}{unsigned}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{TAnalyser_8h_a7c1bc4939263cb6c0f48e434d77ac258}{UInt\_t}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00080}\mbox{\hyperlink{classTAnalyser}{00080}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classTAnalyser}{TAnalyser}}\ \{}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00081}00081\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00082}\mbox{\hyperlink{classTAnalyser_af3bd9146298a40a576e007cd0d8353e8}{00082}}\ \ \ \ \ TFile*\ \mbox{\hyperlink{classTAnalyser_af3bd9146298a40a576e007cd0d8353e8}{mInputFile}}\ =\ \textcolor{keyword}{nullptr};\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00083}\mbox{\hyperlink{classTAnalyser_af743b72d21720f6fb424c2583ef37b04}{00083}}\ \ \ \ \ TTree*\ \mbox{\hyperlink{classTAnalyser_af743b72d21720f6fb424c2583ef37b04}{mTree}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00084}\mbox{\hyperlink{classTAnalyser_a218163ec966ad17412a97f168ee2b90d}{00084}}\ \ \ \ \ \mbox{\hyperlink{structTInputRoot}{TInputRoot}}\ \mbox{\hyperlink{classTAnalyser_a218163ec966ad17412a97f168ee2b90d}{mInput}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00085}00085\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00086}\mbox{\hyperlink{classTAnalyser_a56c417bf0f32ee1c7c39ccc2268e77ed}{00086}}\ \ \ \ \ std::filesystem::path\ \mbox{\hyperlink{classTAnalyser_a56c417bf0f32ee1c7c39ccc2268e77ed}{mOutputPath}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00087}00087\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00088}\mbox{\hyperlink{classTAnalyser_a26a74d44814993fdaac02c7c850ef770}{00088}}\ \ \ \ \ \mbox{\hyperlink{classCppConfigFile}{CppConfigFile}}\ \mbox{\hyperlink{classTAnalyser_a26a74d44814993fdaac02c7c850ef770}{mConfigFile}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00089}\mbox{\hyperlink{classTAnalyser_aaecd3e877174394d9dd04e5f16f20cc4}{00089}}\ \ \ \ \ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\ \mbox{\hyperlink{classTAnalyser_aaecd3e877174394d9dd04e5f16f20cc4}{mFileConfig}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00090}\mbox{\hyperlink{classTAnalyser_aeb479cfd7dae5524b6b9134593d41d3a}{00090}}\ \ \ \ \ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\ \mbox{\hyperlink{classTAnalyser_aeb479cfd7dae5524b6b9134593d41d3a}{mMaskingConfig}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00091}\mbox{\hyperlink{classTAnalyser_a4d4469293ffd888b770c3ecd5d46377d}{00091}}\ \ \ \ \ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\ \mbox{\hyperlink{classTAnalyser_a4d4469293ffd888b770c3ecd5d46377d}{mBasicAnalysisConfig}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00092}\mbox{\hyperlink{classTAnalyser_a5f37f9a916ef6b81aed57ddfa1077592}{00092}}\ \ \ \ \ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\ \mbox{\hyperlink{classTAnalyser_a5f37f9a916ef6b81aed57ddfa1077592}{mSettingConfig}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00093}00093\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00094}\mbox{\hyperlink{classTAnalyser_a48047456b887b29e47fd764620e7876b}{00094}}\ \ \ \ \ std::vector<TALPIDEEvent*>\ \mbox{\hyperlink{classTAnalyser_a48047456b887b29e47fd764620e7876b}{mOriginEvents}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00095}\mbox{\hyperlink{classTAnalyser_a41e14d9f2312de57de48dd41cb099c42}{00095}}\ \ \ \ \ std::vector<TALPIDEEvent*>\ \mbox{\hyperlink{classTAnalyser_a41e14d9f2312de57de48dd41cb099c42}{mTimeStampCutEvents}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00096}\mbox{\hyperlink{classTAnalyser_ab707858bff9722194fc587ed9873b9f8}{00096}}\ \ \ \ \ std::vector<TALPIDEEvent*>\ \mbox{\hyperlink{classTAnalyser_ab707858bff9722194fc587ed9873b9f8}{mHitmapMaskedEvents}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00097}\mbox{\hyperlink{classTAnalyser_a43d89ecab652ffd0e9519e027a136b5c}{00097}}\ \ \ \ \ std::vector<TALPIDEEvent*>\ \mbox{\hyperlink{classTAnalyser_a43d89ecab652ffd0e9519e027a136b5c}{mHitmapMaskedNoises}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00098}\mbox{\hyperlink{classTAnalyser_adbd7a5ab4f61b24b27c949233fa69820}{00098}}\ \ \ \ \ std::vector<int>\ \mbox{\hyperlink{classTAnalyser_adbd7a5ab4f61b24b27c949233fa69820}{nPixelPerFrame}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00100}\mbox{\hyperlink{classTAnalyser_aa0f81656b14cb55a1a5aef77708de096}{00100}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classTAnalyser_aa0f81656b14cb55a1a5aef77708de096}{isTimeStampCut}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00101}\mbox{\hyperlink{classTAnalyser_a7cb2e4a3c016ba42746edddb5fd0bd6d}{00101}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classTAnalyser_a7cb2e4a3c016ba42746edddb5fd0bd6d}{isHitmapCut}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00102}\mbox{\hyperlink{classTAnalyser_a5c6df77a3aceb5cb9f28556fb441a073}{00102}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classTAnalyser_a5c6df77a3aceb5cb9f28556fb441a073}{isPixelPerTimeStampMap}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00103}\mbox{\hyperlink{classTAnalyser_ab3d19912031b63586ceb8cd43b465e97}{00103}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTAnalyser_ab3d19912031b63586ceb8cd43b465e97}{mTimeStampCut}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00104}\mbox{\hyperlink{classTAnalyser_ae1e1ecc81caea21b5a3661ecce83fc2c}{00104}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTAnalyser_ae1e1ecc81caea21b5a3661ecce83fc2c}{mHitmapCut}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00106}\mbox{\hyperlink{classTAnalyser_a119034a7c9acb25e2f12cbba4a3ac3b4}{00106}}\ \ \ \ \ TH1D*\ \mbox{\hyperlink{classTAnalyser_a119034a7c9acb25e2f12cbba4a3ac3b4}{mPixelPerTimeStampMap}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00107}\mbox{\hyperlink{classTAnalyser_a2a8bb7bac0eeec9c721059956aaa5371}{00107}}\ \ \ \ \ TH2D*\ \mbox{\hyperlink{classTAnalyser_a2a8bb7bac0eeec9c721059956aaa5371}{mOriginHitmap}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00108}\mbox{\hyperlink{classTAnalyser_aedcb52d15f10c30c632074e44bbc981f}{00108}}\ \ \ \ \ TH2D*\ \mbox{\hyperlink{classTAnalyser_aedcb52d15f10c30c632074e44bbc981f}{mHitmapMaskedHitmap}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00109}\mbox{\hyperlink{classTAnalyser_a121b60128b62cbd0af891b1e784c77cd}{00109}}\ \ \ \ \ TH2D*\ \mbox{\hyperlink{classTAnalyser_a121b60128b62cbd0af891b1e784c77cd}{mHitmapMaskedNoisemap}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00110}\mbox{\hyperlink{classTAnalyser_a84ca5f2e2365dacc2c40977348a89bfa}{00110}}\ \ \ \ \ TPaveText*\ \mbox{\hyperlink{classTAnalyser_a84ca5f2e2365dacc2c40977348a89bfa}{mExpSettingLegend}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00111}00111\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00112}00112\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00113}\mbox{\hyperlink{classTAnalyser_af094380b37465491dfa113aef0fef925}{00113}}\ \ \ \ \ TFile*\ \mbox{\hyperlink{classTAnalyser_af094380b37465491dfa113aef0fef925}{mOutputFile}}\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00114}\mbox{\hyperlink{classTAnalyser_a1197df526d191b24a8d6eb78274a222f}{00114}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classTAnalyser_a1197df526d191b24a8d6eb78274a222f}{mIsOutputGraph}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00115}\mbox{\hyperlink{classTAnalyser_a100c8527a7bc1ace5983506de106161e}{00115}}\ \ \ \ \ std::unordered\_map<std::string,\ TH2D*>\ \mbox{\hyperlink{classTAnalyser_a100c8527a7bc1ace5983506de106161e}{mHitmaps}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00116}\mbox{\hyperlink{classTAnalyser_a8131406096a3246453b1e6e4a72d67c2}{00116}}\ \ \ \ \ std::unordered\_map<std::string,\ TH2D*>\ \mbox{\hyperlink{classTAnalyser_a8131406096a3246453b1e6e4a72d67c2}{mClustermaps}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00117}\mbox{\hyperlink{classTAnalyser_af2c29a16d4843508dd938776ccaabda8}{00117}}\ \ \ \ \ std::unordered\_map<std::string,\ TH1D*>\ \mbox{\hyperlink{classTAnalyser_af2c29a16d4843508dd938776ccaabda8}{mClustersizes}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00118}\mbox{\hyperlink{classTAnalyser_a731f1b8742c1593f74d723c51b3658e5}{00118}}\ \ \ \ \ std::unordered\_map<std::string,\ std::unordered\_map<int,\ std::vector<TCluster*>>>\ \mbox{\hyperlink{classTAnalyser_a731f1b8742c1593f74d723c51b3658e5}{mClusterDataWithShape}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00119}\mbox{\hyperlink{classTAnalyser_a01d6af58f412a14847fd377ef87309ae}{00119}}\ \ \ \ \ std::unordered\_map<std::string,\ TDirectory*>\ \mbox{\hyperlink{classTAnalyser_a01d6af58f412a14847fd377ef87309ae}{mDirectorySet}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00120}\mbox{\hyperlink{classTAnalyser_a5c369bcacb87bfc3fb0bb5366cef837e}{00120}}\ \ \ \ \ std::unordered\_map<std::string,\ TExperimentData*>\ \mbox{\hyperlink{classTAnalyser_a5c369bcacb87bfc3fb0bb5366cef837e}{mExpData}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00121}\mbox{\hyperlink{classTAnalyser_af8e6f63a3e0890ea9168d7d4779f9a97}{00121}}\ \ \ \ \ std::unordered\_map<std::string,\ TClusterDivideData*>\ \mbox{\hyperlink{classTAnalyser_af8e6f63a3e0890ea9168d7d4779f9a97}{mDivideData}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00122}\mbox{\hyperlink{classTAnalyser_ad9f1097135aa4be3a02162e6d42a4fea}{00122}}\ \ \ \ \ std::unordered\_map<std::string,\ std::vector<TClusterShape*>>\ \mbox{\hyperlink{classTAnalyser_ad9f1097135aa4be3a02162e6d42a4fea}{mClusterShapeSet}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00123}\mbox{\hyperlink{classTAnalyser_a06ee2773a1f93137cd57a2bd1b2267a3}{00123}}\ \ \ \ \ std::unordered\_map<std::string,\ int>\ \mbox{\hyperlink{classTAnalyser_a06ee2773a1f93137cd57a2bd1b2267a3}{mNTotalShapeSet}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00124}\mbox{\hyperlink{classTAnalyser_a4973b527c677e448b0d48811d7bccafe}{00124}}\ \ \ \ \ std::unordered\_map<std::string,\ int>\ \mbox{\hyperlink{classTAnalyser_a4973b527c677e448b0d48811d7bccafe}{mMaxModeSet}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00125}00125\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00126}00126\ \ \ \ \ \mbox{\hyperlink{classTAnalyser}{TAnalyser}}(TFile*\ inputFile,\ std::unordered\_map<std::string,\ TExperimentData*>\ expData);}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00127}00127\ \ \ \ \ \mbox{\hyperlink{classTAnalyser}{TAnalyser}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigFile}{CppConfigFile}}\&\ configFile);}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00128}00128\ \ \ \ \ \mbox{\hyperlink{classTAnalyser_a233a02507d96d20b0ec465118c157620}{\string~TAnalyser}}();}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00129}00129\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00130}00130\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAnalyser_a8fb9c8fb0be3b6eefea204f29296ac55}{setConfig}}();}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00131}00131\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAnalyser_ad9141c1ccc83cb14aca3cfcca133ba16}{storeEvents}}();}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00132}00132\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAnalyser_a5912a3b92a44d1fdfc97505f5118db1c}{getHitmaps}}();}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00133}00133\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00134}00134\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAnalyser_ab4f67cb7cf2a9cfdfecf5a7dd365926e}{doMasking}}();}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00135}00135\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAnalyser_a4398c447e7676f1d8582d2ae16cd457b}{openOutputGraphFile}}(std::string\_view\ fileName);}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00136}00136\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00137}00137\ \ \ \ \ \textcolor{comment}{//\ void\ setSavePath(const\ std::filesystem::path\&\ savePath);}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00138}00138\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAnalyser_ae9d568f19496bd4e44193da4fb5ab572}{setExpSettingLegend}}();}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00140}00140\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAnalyser_a305a29e96d708674de8b5061c8485e60}{getOriginHitmap}}();}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00141}00141\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAnalyser_aec693cd488973d63d8f88aa12855363e}{getHitmapMaskedHitmap}}();}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00142}00142\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAnalyser_a53d999586b991103b7f99127336f6327}{getHitmapMaskedNoisemap}}();}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00143}00143\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00144}00144\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00145}00145\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00146}00146\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00147}00147\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAnalyser_a33bf1091cd73cf1bc513dd245cad5990}{doDivideBySize}}(std::string\_view\ typeName);}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00148}00148\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00149}\mbox{\hyperlink{classTAnalyser_af4ab2d9c5b2786d02f2f025ac16ca83e}{00149}}\ \ \ \ \ TH2D*\ \mbox{\hyperlink{classTAnalyser_af4ab2d9c5b2786d02f2f025ac16ca83e}{getHitPlot}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\&\ config,\ \textcolor{keyword}{const}\ std::vector<TALPIDEEvent*>\&\ events);}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00150}00150\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00151}\mbox{\hyperlink{classTAnalyser_a930313c2e15537873e9c9d802b6612fc}{00151}}\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAnalyser_a930313c2e15537873e9c9d802b6612fc}{saveHitmap}}(std::string\ typeName,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\&\ config);}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00152}00152\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00153}00153\ \ \ \ \ TH2D*\ \mbox{\hyperlink{classTAnalyser_a7978c30c9906403983665a018953e0a2}{getClusterPlot}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\&\ config,\ \textcolor{keyword}{const}\ std::vector<TCluster*>\&\ clusters);}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00154}00154\ \ \ \ \ TH1D*\ \mbox{\hyperlink{classTAnalyser_ab95af92066e02b12498005e6dc26142b}{getClustersizePlot}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\&\ config,\ \textcolor{keyword}{const}\ std::vector<TCluster*>\&\ clusters);}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00155}00155\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAnalyser_ad10d20ae30012577be878f69694c71e7}{setClusterDataWithShape}}(\textcolor{keyword}{const}\ std::vector<int>\&\ clusterSizeRange);}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00156}00156\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00157}00157\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAnalyser_a8c2643bdcda0c7028c398f33ea9f24c2}{saveClustermap}}(std::string\ typeName,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\&\ config);}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00158}00158\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAnalyser_aede935525cc437e4637c3717cfa40463}{saveClustersize}}(std::string\ typeName,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\&\ config);}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00159}00159\ \ \ \ \ std::vector<int>\ \mbox{\hyperlink{classTAnalyser_aed56a18db3dbba303f571fb1815b8068}{getClusterSizeRange}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\&\ privateProperty);}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00160}00160\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00161}00161\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAnalyser_ae3b9be084183f64e06fccf034777a478}{doShaping}}(std::string\_view\ typeName,\ \textcolor{keyword}{const}\ std::vector<int>\&\ clusterSizeRange);}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00162}00162\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAnalyser_a71369b3fdf4718b3697cc05e05c8e58b}{saveIndividualShapes}}(std::string\_view\ typeName,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\ config);}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00163}00163\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAnalyser_a825ad32ae180e5c57f9190793e0296ef}{saveSameSizeInfos}}(std::string\_view\ typeName,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\ config);}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00164}00164\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAnalyser_aace5dbb624191f44a7efc4575f52f9ae}{saveSameSizeShapes}}(std::string\_view\ typeName,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\ config);}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00165}00165\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAnalyser_aed30fc7bfed2c963e15a9d7453efc04b}{saveTotalShapes}}(std::string\_view\ typeName,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\ config);}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00166}00166\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAnalyser_a16992d9499462338766f9a2331353e3b}{saveSameSizeShapeEntry}}(std::string\_view\ typeName,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\ config);}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00167}00167\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAnalyser_a41584d2d58304b327bdd959e74726ccd}{saveTotalShapeEntry}}(std::string\_view\ typeName,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\ config);}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00168}00168\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00169}00169\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00170}\mbox{\hyperlink{classTAnalyser_ae7d23176d74e4a26067c5ef6bcfc2879}{00170}}\ \ \ \ \ \mbox{\hyperlink{TAnalyser_8h_a7c1bc4939263cb6c0f48e434d77ac258}{UInt\_t}}\ \mbox{\hyperlink{classTAnalyser_ae7d23176d74e4a26067c5ef6bcfc2879}{fBits}};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00171}00171\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00172}00172\ \ \ \ \ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00173}00173\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTAnalyser_a5600c6f458a3a9cba82013ce1d575bc6aef44f7d2e9011f243a3c9ff0506316e0}{kNotDeleted}}\ =\ 0x02000000}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00174}\mbox{\hyperlink{classTAnalyser_a5600c6f458a3a9cba82013ce1d575bc6aef44f7d2e9011f243a3c9ff0506316e0}{00174}}\ \ \ \ \ \};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00175}\mbox{\hyperlink{classTAnalyser_adfb640919a31e47581b7d4654b2a1c6b}{00175}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classTAnalyser_adfb640919a31e47581b7d4654b2a1c6b}{IsDestructed}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ !\mbox{\hyperlink{classTAnalyser_a1b99ba13444c77d674853aba00246dc0}{TestBit}}(\mbox{\hyperlink{classTAnalyser_a5600c6f458a3a9cba82013ce1d575bc6aef44f7d2e9011f243a3c9ff0506316e0}{kNotDeleted}});\ \}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00176}\mbox{\hyperlink{classTAnalyser_a1b99ba13444c77d674853aba00246dc0}{00176}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classTAnalyser_a1b99ba13444c77d674853aba00246dc0}{TestBit}}(\mbox{\hyperlink{TAnalyser_8h_a7c1bc4939263cb6c0f48e434d77ac258}{UInt\_t}}\ f)\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ (\textcolor{keywordtype}{bool})\ ((\mbox{\hyperlink{classTAnalyser_ae7d23176d74e4a26067c5ef6bcfc2879}{fBits}}\ \&\ f)\ !=\ 0);\ \}}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00177}00177\ \};}
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00178}00178\ }
+\DoxyCodeLine{\Hypertarget{TAnalyser_8h_source_l00179}00179\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

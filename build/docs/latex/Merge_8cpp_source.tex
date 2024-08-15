@@ -1,0 +1,33 @@
+\doxysection{Merge.\+cpp}
+\hypertarget{Merge_8cpp_source}{}\label{Merge_8cpp_source}\index{/home/ychoi/ATOM/exe/Merge.cpp@{/home/ychoi/ATOM/exe/Merge.cpp}}
+\mbox{\hyperlink{Merge_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{Merge_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\Hypertarget{Merge_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{Merge_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{Merge_8cpp_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{Merge_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cppargs_8h}{cppargs.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{Merge_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{CppConfigFile_8h}{CppConfigFile.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{Merge_8cpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{TMerge_8h}{TMerge.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{Merge_8cpp_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{Merge_8cpp_source_l00009}\mbox{\hyperlink{Merge_8cpp_aab44b1dab240272ed0bee958aa729f94}{00009}}\ \mbox{\hyperlink{classArgumentParser}{ArgumentParser}}\ \mbox{\hyperlink{Merge_8cpp_aab44b1dab240272ed0bee958aa729f94}{set\_parse}}(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}**\ argv)\ \{}
+\DoxyCodeLine{\Hypertarget{Merge_8cpp_source_l00010}00010\ \ \ \ \ \mbox{\hyperlink{classArgumentParser}{ArgumentParser}}\ parser\ =\ \mbox{\hyperlink{classArgumentParser}{ArgumentParser}}(argc,\ argv).\mbox{\hyperlink{classArgumentParser_a2d7ea458fda2ee2f00e75ab20bf99680}{setDescription}}(\textcolor{stringliteral}{"{}Draw\ plots\ for\ analysis\ data"{}});}
+\DoxyCodeLine{\Hypertarget{Merge_8cpp_source_l00011}00011\ \ \ \ \ parser.\mbox{\hyperlink{classArgumentParser_af00214a4cc011bc62671b65bc99b7e70}{add\_argument}}(\textcolor{stringliteral}{"{}config"{}}).\mbox{\hyperlink{classArgumentParser_a7cac3ec87e9c8800c373bbf064a6509a}{help}}(\textcolor{stringliteral}{"{}Config\ file"{}}).\mbox{\hyperlink{classArgumentParser_ac057f9c338901af3c6416fdc9e19b043}{set\_default}}(\textcolor{stringliteral}{"{}default"{}}).\mbox{\hyperlink{classArgumentParser_ac3096e6e13298ac6c77607f5569d2e71}{add\_finish}}();}
+\DoxyCodeLine{\Hypertarget{Merge_8cpp_source_l00012}00012\ \ \ \ \ parser.\mbox{\hyperlink{classArgumentParser_af2c0b3751dd75a8524f20076f61c9bcf}{parse\_args}}();}
+\DoxyCodeLine{\Hypertarget{Merge_8cpp_source_l00013}00013\ \ \ \ \ \textcolor{keywordflow}{return}\ parser;}
+\DoxyCodeLine{\Hypertarget{Merge_8cpp_source_l00014}00014\ \}}
+\DoxyCodeLine{\Hypertarget{Merge_8cpp_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{Merge_8cpp_source_l00016}\mbox{\hyperlink{Merge_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{00016}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{Merge_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main}}(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}**\ argv)\ \{}
+\DoxyCodeLine{\Hypertarget{Merge_8cpp_source_l00017}00017\ \ \ \ \ \mbox{\hyperlink{classArgumentParser}{ArgumentParser}}\ parser\ =\ \mbox{\hyperlink{Merge_8cpp_aab44b1dab240272ed0bee958aa729f94}{set\_parse}}(argc,\ argv);}
+\DoxyCodeLine{\Hypertarget{Merge_8cpp_source_l00018}00018\ \ \ \ \ \mbox{\hyperlink{classCppConfigFile}{CppConfigFile}}*\ config\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classCppConfigFile}{CppConfigFile}}(parser.\mbox{\hyperlink{classArgumentParser_ad21c880d53afb04d0a2de0ed067ae75b}{get\_value}}<std::string>(\textcolor{stringliteral}{"{}config"{}}));}
+\DoxyCodeLine{\Hypertarget{Merge_8cpp_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{Merge_8cpp_source_l00020}00020\ \ \ \ \ \mbox{\hyperlink{classTMergeExperimentROOT}{TMergeExperimentROOT}}*\ merge\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classTMergeExperimentROOT}{TMergeExperimentROOT}}(config-\/>\mbox{\hyperlink{classCppConfigFile_a8469a5f95abf337e3d9644c481f181bd}{getConfig}}(\textcolor{stringliteral}{"{}Merge"{}}).\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}output\_file"{}}),\ config-\/>\mbox{\hyperlink{classCppConfigFile_a8469a5f95abf337e3d9644c481f181bd}{getConfig}}(\textcolor{stringliteral}{"{}Merge"{}}).\mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{getSubConfig}}(\textcolor{stringliteral}{"{}input\_files"{}}).\mbox{\hyperlink{classCppConfigDictionary_a5654c5a804deedb4e22c70a402c977cb}{getValueList}}());}
+\DoxyCodeLine{\Hypertarget{Merge_8cpp_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{Merge_8cpp_source_l00022}00022\ \ \ \ \ merge-\/>\mbox{\hyperlink{classTMergeExperimentROOT_ac99cf9367e5c2985663dc0f9d509d9c6}{mergeFile}}();}
+\DoxyCodeLine{\Hypertarget{Merge_8cpp_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{Merge_8cpp_source_l00024}00024\ \ \ \ \ \textcolor{keyword}{delete}\ config;}
+\DoxyCodeLine{\Hypertarget{Merge_8cpp_source_l00025}00025\ \ \ \ \ \textcolor{keyword}{delete}\ merge;}
+\DoxyCodeLine{\Hypertarget{Merge_8cpp_source_l00026}00026\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{Merge_8cpp_source_l00027}00027\ \}}
+
+\end{DoxyCode}

@@ -5,6 +5,7 @@
 #endif
 
 #include <vector>
+#include<memory>
 
 class TThreshold;
 

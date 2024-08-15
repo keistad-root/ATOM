@@ -1,0 +1,395 @@
+\doxysection{TCluster\+Shape Class Reference}
+\hypertarget{classTClusterShape}{}\label{classTClusterShape}\index{TClusterShape@{TClusterShape}}
+
+
+Class for extracting cluster shape information with same cluster size.  
+
+
+
+
+{\ttfamily \#include $<$TCluster\+Shape.\+h$>$}
+
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \{ \mbox{\hyperlink{classTClusterShape_a3d782a49df65fdbfe39bb309763bf0cca96ec61841ae6855835be3f8b2fb9b16e}{k\+Not\+Deleted}} = 0x02000000
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classTClusterShape_ad7d57433db926c90ae84483bc060e675}{TCluster\+Shape}} ()
+\begin{DoxyCompactList}\small\item\em Construct a new \doxylink{classTClusterShape_ad7d57433db926c90ae84483bc060e675}{TCluster\+Shape\+::\+TCluster\+Shape} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classTClusterShape_a3082f10b2e233ac7396c1ec5ba6ad039}{TCluster\+Shape}} (const int cluster\+Size, const std\+::vector$<$ \mbox{\hyperlink{classTCluster}{TCluster}} \texorpdfstring{$\ast$}{*} $>$ \&clusters)
+\item 
+\mbox{\hyperlink{classTClusterShape_a6279a788162b3939352e2c14a061a744}{TCluster\+Shape}} (const std\+::vector$<$ \mbox{\hyperlink{classTCluster}{TCluster}} \texorpdfstring{$\ast$}{*} $>$ clusters)
+\item 
+\mbox{\hyperlink{classTClusterShape_a5bd3fd1c76659f654997768952ca448d}{\texorpdfstring{$\sim$}{\string~}\+TCluster\+Shape}} ()
+\item 
+void \mbox{\hyperlink{classTClusterShape_a8f9122608ad8f9a1184a4ec1cc5eb65c}{identify\+Shapes}} ()
+\begin{DoxyCompactList}\small\item\em Specificate the clusters according to their shapes. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classTClusterShape_ae06f2f873cccf6036d05c1210122fed8}{sort\+Shapes}} (bool descend=true)
+\begin{DoxyCompactList}\small\item\em Sorting shapes according to the entry. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classTClusterShape_a227871d65741ba24e840f3883a80428d}{cal\+Cluster\+Info}} (\mbox{\hyperlink{structTShapeInfo}{TShape\+Info}} \&shape\+Info, \mbox{\hyperlink{classTCluster}{TCluster}} \texorpdfstring{$\ast$}{*}cluster)
+\item 
+\mbox{\hyperlink{classTMatrix2D}{TMatrix2D}}$<$ int $>$ \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classTClusterShape_a32094762ebf3f0e385856ad133f60d84}{cluster\+Matrix}} (const \mbox{\hyperlink{classTCluster}{TCluster}} \texorpdfstring{$\ast$}{*}cluster)
+\item 
+TH2I \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classTClusterShape_a0bf1d1638ef8e81de7e1a6e5b8fbb676}{cluster\+Map}} (const \mbox{\hyperlink{classTMatrix2D}{TMatrix2D}}$<$ int $>$ \texorpdfstring{$\ast$}{*}\mbox{\hyperlink{classTClusterShape_a32094762ebf3f0e385856ad133f60d84}{cluster\+Matrix}})
+\begin{DoxyCompactList}\small\item\em Drawing and saving shape image. \end{DoxyCompactList}\item 
+const std\+::vector$<$ \mbox{\hyperlink{structTShapeInfo}{TShape\+Info}} $>$ \& \mbox{\hyperlink{classTClusterShape_a3f7435d77a2f88921915ce794cb08299}{get\+Cluster\+Shape\+Infos}} () const
+\begin{DoxyCompactList}\small\item\em Getter of {\ttfamily m\+Cluster\+Shape\+Infos} member. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classTClusterShape_a5a0adf0fd79f5797266ff53d10aa4408}{set\+Cluster\+Size}} (const int Cluster\+Size)
+\begin{DoxyCompactList}\small\item\em Setter of {\ttfamily m\+Cluster\+Size} member. \end{DoxyCompactList}\item 
+const int \mbox{\hyperlink{classTClusterShape_a09c53c9a4a263dfb448cc98eb40ab079}{get\+Cluster\+Size}} () const
+\begin{DoxyCompactList}\small\item\em Getter of {\ttfamily m\+Cluster\+Size} member. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classTClusterShape_aec1587d80470da9fd9380ddb247de587}{Is\+Destructed}} () const
+\item 
+bool \mbox{\hyperlink{classTClusterShape_acec6071e0e7ba1a7f8fb8aee1e7cdd5a}{Test\+Bit}} (unsigned int f) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{classTClusterShape_a4474ba754e26e671ba4d0957c5e3c969}{m\+Cluster\+Size}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classTCluster}{TCluster}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classTClusterShape_a3e9848452b4164f39ee504d8f998b1fa}{m\+Cluster\+Origin\+Set}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{structTShapeInfo}{TShape\+Info}} $>$ \mbox{\hyperlink{classTClusterShape_aa49ab5ed48d5d4d87af64f9ec7390d70}{m\+Cluster\+Shape\+Infos}}
+\item 
+unsigned int \mbox{\hyperlink{classTClusterShape_ab4b1b5348270dfa64e901ce5a05027a3}{f\+Bits}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class for extracting cluster shape information with same cluster size. 
+
+It collects clusters having same cluster size. And specificate the clusters according to their shapes. The image and other informations can be extract by {\ttfamily \doxylink{structTShapeInfo}{TShape\+Info}} struct. \begin{DoxyWarning}{Warning}
+
+\end{DoxyWarning}
+\begin{DoxyRefDesc}{Bug}
+\item[\mbox{\hyperlink{bug__bug000003}{Bug}}]\end{DoxyRefDesc}
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000004}{Todo}}]It can be modified if needed. \end{DoxyRefDesc}
+
+
+Definition at line \mbox{\hyperlink{TClusterShape_8h_source_l00058}{58}} of file \mbox{\hyperlink{TClusterShape_8h_source}{TCluster\+Shape.\+h}}.
+
+
+
+\doxysubsection{Member Enumeration Documentation}
+\Hypertarget{classTClusterShape_a3d782a49df65fdbfe39bb309763bf0cc}\label{classTClusterShape_a3d782a49df65fdbfe39bb309763bf0cc} 
+\doxysubsubsection{\texorpdfstring{anonymous enum}{anonymous enum}}
+{\footnotesize\ttfamily anonymous enum}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kNotDeleted@{kNotDeleted}!TClusterShape@{TClusterShape}}\index{TClusterShape@{TClusterShape}!kNotDeleted@{kNotDeleted}}}\Hypertarget{classTClusterShape_a3d782a49df65fdbfe39bb309763bf0cca96ec61841ae6855835be3f8b2fb9b16e}\label{classTClusterShape_a3d782a49df65fdbfe39bb309763bf0cca96ec61841ae6855835be3f8b2fb9b16e} 
+k\+Not\+Deleted&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{TClusterShape_8h_source_l00083}{83}} of file \mbox{\hyperlink{TClusterShape_8h_source}{TCluster\+Shape.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classTClusterShape_ad7d57433db926c90ae84483bc060e675}\label{classTClusterShape_ad7d57433db926c90ae84483bc060e675} 
+\index{TClusterShape@{TClusterShape}!TClusterShape@{TClusterShape}}
+\index{TClusterShape@{TClusterShape}!TClusterShape@{TClusterShape}}
+\doxysubsubsection{\texorpdfstring{TClusterShape()}{TClusterShape()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily TCluster\+Shape\+::\+TCluster\+Shape (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Construct a new \doxylink{classTClusterShape_ad7d57433db926c90ae84483bc060e675}{TCluster\+Shape\+::\+TCluster\+Shape} object. 
+
+It takes cluster set and cluster size for analysing here. The role of this construct is extracting cluster from cluster set according to cluster size. 
+\begin{DoxyParams}{Parameters}
+{\em clusters} & \\
+\hline
+{\em cluster\+Size} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{Warning}
+
+\end{DoxyWarning}
+\begin{DoxyRefDesc}{Bug}
+\item[\mbox{\hyperlink{bug__bug000004}{Bug}}]\end{DoxyRefDesc}
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000005}{Todo}}]\end{DoxyRefDesc}
+\begin{DoxySeeAlso}{See also}
+\doxylink{classTCluster_afc9c8267e7c599bf00bf822627df0900}{TCluster\+::get\+Size()} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{TClusterShape_8cpp_source_l00017}{17}} of file \mbox{\hyperlink{TClusterShape_8cpp_source}{TCluster\+Shape.\+cpp}}.
+
+\Hypertarget{classTClusterShape_a3082f10b2e233ac7396c1ec5ba6ad039}\label{classTClusterShape_a3082f10b2e233ac7396c1ec5ba6ad039} 
+\index{TClusterShape@{TClusterShape}!TClusterShape@{TClusterShape}}
+\index{TClusterShape@{TClusterShape}!TClusterShape@{TClusterShape}}
+\doxysubsubsection{\texorpdfstring{TClusterShape()}{TClusterShape()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily TCluster\+Shape\+::\+TCluster\+Shape (\begin{DoxyParamCaption}\item[{const int}]{cluster\+Size,  }\item[{const std\+::vector$<$ \mbox{\hyperlink{classTCluster}{TCluster}} \texorpdfstring{$\ast$}{*} $>$ \&}]{clusters }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TClusterShape_8cpp_source_l00019}{19}} of file \mbox{\hyperlink{TClusterShape_8cpp_source}{TCluster\+Shape.\+cpp}}.
+
+\Hypertarget{classTClusterShape_a6279a788162b3939352e2c14a061a744}\label{classTClusterShape_a6279a788162b3939352e2c14a061a744} 
+\index{TClusterShape@{TClusterShape}!TClusterShape@{TClusterShape}}
+\index{TClusterShape@{TClusterShape}!TClusterShape@{TClusterShape}}
+\doxysubsubsection{\texorpdfstring{TClusterShape()}{TClusterShape()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily TCluster\+Shape\+::\+TCluster\+Shape (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ \mbox{\hyperlink{classTCluster}{TCluster}} \texorpdfstring{$\ast$}{*} $>$}]{clusters }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TClusterShape_8cpp_source_l00031}{31}} of file \mbox{\hyperlink{TClusterShape_8cpp_source}{TCluster\+Shape.\+cpp}}.
+
+\Hypertarget{classTClusterShape_a5bd3fd1c76659f654997768952ca448d}\label{classTClusterShape_a5bd3fd1c76659f654997768952ca448d} 
+\index{TClusterShape@{TClusterShape}!````~TClusterShape@{\texorpdfstring{$\sim$}{\string~}TClusterShape}}
+\index{````~TClusterShape@{\texorpdfstring{$\sim$}{\string~}TClusterShape}!TClusterShape@{TClusterShape}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}TClusterShape()}{\string~TClusterShape()}}
+{\footnotesize\ttfamily TCluster\+Shape\+::\texorpdfstring{$\sim$}{\string~}\+TCluster\+Shape (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TClusterShape_8cpp_source_l00035}{35}} of file \mbox{\hyperlink{TClusterShape_8cpp_source}{TCluster\+Shape.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classTClusterShape_a227871d65741ba24e840f3883a80428d}\label{classTClusterShape_a227871d65741ba24e840f3883a80428d} 
+\index{TClusterShape@{TClusterShape}!calClusterInfo@{calClusterInfo}}
+\index{calClusterInfo@{calClusterInfo}!TClusterShape@{TClusterShape}}
+\doxysubsubsection{\texorpdfstring{calClusterInfo()}{calClusterInfo()}}
+{\footnotesize\ttfamily void TCluster\+Shape\+::cal\+Cluster\+Info (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structTShapeInfo}{TShape\+Info}} \&}]{shape\+Info,  }\item[{\mbox{\hyperlink{classTCluster}{TCluster}} \texorpdfstring{$\ast$}{*}}]{cluster }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TClusterShape_8cpp_source_l00164}{164}} of file \mbox{\hyperlink{TClusterShape_8cpp_source}{TCluster\+Shape.\+cpp}}.
+
+\Hypertarget{classTClusterShape_a0bf1d1638ef8e81de7e1a6e5b8fbb676}\label{classTClusterShape_a0bf1d1638ef8e81de7e1a6e5b8fbb676} 
+\index{TClusterShape@{TClusterShape}!clusterMap@{clusterMap}}
+\index{clusterMap@{clusterMap}!TClusterShape@{TClusterShape}}
+\doxysubsubsection{\texorpdfstring{clusterMap()}{clusterMap()}}
+{\footnotesize\ttfamily TH2I \texorpdfstring{$\ast$}{*} TCluster\+Shape\+::cluster\+Map (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classTMatrix2D}{TMatrix2D}}$<$ int $>$ \texorpdfstring{$\ast$}{*}}]{cluster\+Matrix }\end{DoxyParamCaption})}
+
+
+
+Drawing and saving shape image. 
+
+It visulaizes shape informations form matrix form. {\ttfamily TImage} class is used for saving plots. The extra pixel on border of plot is drawn for readability. 
+\begin{DoxyParams}{Parameters}
+{\em cluster\+Matrix} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+TImage\texorpdfstring{$\ast$}{*} 
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+
+\end{DoxyWarning}
+\begin{DoxyRefDesc}{Bug}
+\item[\mbox{\hyperlink{bug__bug000007}{Bug}}]The canvases and histograms have same name with each other. \end{DoxyRefDesc}
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000008}{Todo}}]Avoiding same name problem. \end{DoxyRefDesc}
+\begin{DoxySeeAlso}{See also}
+
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{TClusterShape_8cpp_source_l00134}{134}} of file \mbox{\hyperlink{TClusterShape_8cpp_source}{TCluster\+Shape.\+cpp}}.
+
+\Hypertarget{classTClusterShape_a32094762ebf3f0e385856ad133f60d84}\label{classTClusterShape_a32094762ebf3f0e385856ad133f60d84} 
+\index{TClusterShape@{TClusterShape}!clusterMatrix@{clusterMatrix}}
+\index{clusterMatrix@{clusterMatrix}!TClusterShape@{TClusterShape}}
+\doxysubsubsection{\texorpdfstring{clusterMatrix()}{clusterMatrix()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classTMatrix2D}{TMatrix2D}}$<$ int $>$ \texorpdfstring{$\ast$}{*} TCluster\+Shape\+::cluster\+Matrix (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classTCluster}{TCluster}} \texorpdfstring{$\ast$}{*}}]{cluster }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TClusterShape_8cpp_source_l00184}{184}} of file \mbox{\hyperlink{TClusterShape_8cpp_source}{TCluster\+Shape.\+cpp}}.
+
+\Hypertarget{classTClusterShape_a3f7435d77a2f88921915ce794cb08299}\label{classTClusterShape_a3f7435d77a2f88921915ce794cb08299} 
+\index{TClusterShape@{TClusterShape}!getClusterShapeInfos@{getClusterShapeInfos}}
+\index{getClusterShapeInfos@{getClusterShapeInfos}!TClusterShape@{TClusterShape}}
+\doxysubsubsection{\texorpdfstring{getClusterShapeInfos()}{getClusterShapeInfos()}}
+{\footnotesize\ttfamily const std\+::vector$<$ \mbox{\hyperlink{structTShapeInfo}{TShape\+Info}} $>$ \& TCluster\+Shape\+::get\+Cluster\+Shape\+Infos (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Getter of {\ttfamily m\+Cluster\+Shape\+Infos} member. 
+
+\begin{DoxyReturn}{Returns}
+const std\+::vector$<$\+TShape\+Info$>$\& 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{TClusterShape_8cpp_source_l00206}{206}} of file \mbox{\hyperlink{TClusterShape_8cpp_source}{TCluster\+Shape.\+cpp}}.
+
+\Hypertarget{classTClusterShape_a09c53c9a4a263dfb448cc98eb40ab079}\label{classTClusterShape_a09c53c9a4a263dfb448cc98eb40ab079} 
+\index{TClusterShape@{TClusterShape}!getClusterSize@{getClusterSize}}
+\index{getClusterSize@{getClusterSize}!TClusterShape@{TClusterShape}}
+\doxysubsubsection{\texorpdfstring{getClusterSize()}{getClusterSize()}}
+{\footnotesize\ttfamily const int TCluster\+Shape\+::get\+Cluster\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Getter of {\ttfamily m\+Cluster\+Size} member. 
+
+\begin{DoxyReturn}{Returns}
+const int 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{TClusterShape_8cpp_source_l00213}{213}} of file \mbox{\hyperlink{TClusterShape_8cpp_source}{TCluster\+Shape.\+cpp}}.
+
+\Hypertarget{classTClusterShape_a8f9122608ad8f9a1184a4ec1cc5eb65c}\label{classTClusterShape_a8f9122608ad8f9a1184a4ec1cc5eb65c} 
+\index{TClusterShape@{TClusterShape}!identifyShapes@{identifyShapes}}
+\index{identifyShapes@{identifyShapes}!TClusterShape@{TClusterShape}}
+\doxysubsubsection{\texorpdfstring{identifyShapes()}{identifyShapes()}}
+{\footnotesize\ttfamily void TCluster\+Shape\+::identify\+Shapes (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Specificate the clusters according to their shapes. 
+
+This function checks homeomorphism of cluster and store the shape informations. By the pixel structure, there are 8 types for homeomorphism. \begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+
+\end{DoxyWarning}
+\begin{DoxyRefDesc}{Bug}
+\item[\mbox{\hyperlink{bug__bug000005}{Bug}}]\end{DoxyRefDesc}
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000006}{Todo}}]\end{DoxyRefDesc}
+\begin{DoxySeeAlso}{See also}
+TCluster\+::get\+Shape(), \doxylink{classTMatrix2D_a6f52b10d21e3c37d6714c53dc8a14a9c}{TMatrix2\+D\+::has\+Homeomorphism} 
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{TClusterShape_8cpp_source_l00053}{53}} of file \mbox{\hyperlink{TClusterShape_8cpp_source}{TCluster\+Shape.\+cpp}}.
+
+\Hypertarget{classTClusterShape_aec1587d80470da9fd9380ddb247de587}\label{classTClusterShape_aec1587d80470da9fd9380ddb247de587} 
+\index{TClusterShape@{TClusterShape}!IsDestructed@{IsDestructed}}
+\index{IsDestructed@{IsDestructed}!TClusterShape@{TClusterShape}}
+\doxysubsubsection{\texorpdfstring{IsDestructed()}{IsDestructed()}}
+{\footnotesize\ttfamily bool TCluster\+Shape\+::\+Is\+Destructed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{TClusterShape_8h_source_l00086}{86}} of file \mbox{\hyperlink{TClusterShape_8h_source}{TCluster\+Shape.\+h}}.
+
+\Hypertarget{classTClusterShape_a5a0adf0fd79f5797266ff53d10aa4408}\label{classTClusterShape_a5a0adf0fd79f5797266ff53d10aa4408} 
+\index{TClusterShape@{TClusterShape}!setClusterSize@{setClusterSize}}
+\index{setClusterSize@{setClusterSize}!TClusterShape@{TClusterShape}}
+\doxysubsubsection{\texorpdfstring{setClusterSize()}{setClusterSize()}}
+{\footnotesize\ttfamily void TCluster\+Shape\+::set\+Cluster\+Size (\begin{DoxyParamCaption}\item[{const int}]{cluster\+Size }\end{DoxyParamCaption})}
+
+
+
+Setter of {\ttfamily m\+Cluster\+Size} member. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cluster\+Size} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{TClusterShape_8cpp_source_l00199}{199}} of file \mbox{\hyperlink{TClusterShape_8cpp_source}{TCluster\+Shape.\+cpp}}.
+
+\Hypertarget{classTClusterShape_ae06f2f873cccf6036d05c1210122fed8}\label{classTClusterShape_ae06f2f873cccf6036d05c1210122fed8} 
+\index{TClusterShape@{TClusterShape}!sortShapes@{sortShapes}}
+\index{sortShapes@{sortShapes}!TClusterShape@{TClusterShape}}
+\doxysubsubsection{\texorpdfstring{sortShapes()}{sortShapes()}}
+{\footnotesize\ttfamily void TCluster\+Shape\+::sort\+Shapes (\begin{DoxyParamCaption}\item[{bool}]{descend = {\ttfamily true} }\end{DoxyParamCaption})}
+
+
+
+Sorting shapes according to the entry. 
+
+It sorts cluster information structs with same shapes. The number of clusters having same shapes is saved in cluster information. It is used for sort criteria. 
+\begin{DoxyParams}{Parameters}
+{\em descend} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+void 
+\end{DoxyReturn}
+\begin{DoxyWarning}{Warning}
+
+\end{DoxyWarning}
+\begin{DoxyRefDesc}{Bug}
+\item[\mbox{\hyperlink{bug__bug000006}{Bug}}]\end{DoxyRefDesc}
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000007}{Todo}}]More strict criteria is needed. If they have same entry, then it cannot be sorted and saved by coming order. \end{DoxyRefDesc}
+\begin{DoxySeeAlso}{See also}
+
+\end{DoxySeeAlso}
+
+
+Definition at line \mbox{\hyperlink{TClusterShape_8cpp_source_l00107}{107}} of file \mbox{\hyperlink{TClusterShape_8cpp_source}{TCluster\+Shape.\+cpp}}.
+
+\Hypertarget{classTClusterShape_acec6071e0e7ba1a7f8fb8aee1e7cdd5a}\label{classTClusterShape_acec6071e0e7ba1a7f8fb8aee1e7cdd5a} 
+\index{TClusterShape@{TClusterShape}!TestBit@{TestBit}}
+\index{TestBit@{TestBit}!TClusterShape@{TClusterShape}}
+\doxysubsubsection{\texorpdfstring{TestBit()}{TestBit()}}
+{\footnotesize\ttfamily bool TCluster\+Shape\+::\+Test\+Bit (\begin{DoxyParamCaption}\item[{unsigned int}]{f }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{TClusterShape_8h_source_l00087}{87}} of file \mbox{\hyperlink{TClusterShape_8h_source}{TCluster\+Shape.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classTClusterShape_ab4b1b5348270dfa64e901ce5a05027a3}\label{classTClusterShape_ab4b1b5348270dfa64e901ce5a05027a3} 
+\index{TClusterShape@{TClusterShape}!fBits@{fBits}}
+\index{fBits@{fBits}!TClusterShape@{TClusterShape}}
+\doxysubsubsection{\texorpdfstring{fBits}{fBits}}
+{\footnotesize\ttfamily unsigned int TCluster\+Shape\+::f\+Bits\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TClusterShape_8h_source_l00081}{81}} of file \mbox{\hyperlink{TClusterShape_8h_source}{TCluster\+Shape.\+h}}.
+
+\Hypertarget{classTClusterShape_a3e9848452b4164f39ee504d8f998b1fa}\label{classTClusterShape_a3e9848452b4164f39ee504d8f998b1fa} 
+\index{TClusterShape@{TClusterShape}!mClusterOriginSet@{mClusterOriginSet}}
+\index{mClusterOriginSet@{mClusterOriginSet}!TClusterShape@{TClusterShape}}
+\doxysubsubsection{\texorpdfstring{mClusterOriginSet}{mClusterOriginSet}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{classTCluster}{TCluster}}\texorpdfstring{$\ast$}{*}$>$ TCluster\+Shape\+::m\+Cluster\+Origin\+Set\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TClusterShape_8h_source_l00061}{61}} of file \mbox{\hyperlink{TClusterShape_8h_source}{TCluster\+Shape.\+h}}.
+
+\Hypertarget{classTClusterShape_aa49ab5ed48d5d4d87af64f9ec7390d70}\label{classTClusterShape_aa49ab5ed48d5d4d87af64f9ec7390d70} 
+\index{TClusterShape@{TClusterShape}!mClusterShapeInfos@{mClusterShapeInfos}}
+\index{mClusterShapeInfos@{mClusterShapeInfos}!TClusterShape@{TClusterShape}}
+\doxysubsubsection{\texorpdfstring{mClusterShapeInfos}{mClusterShapeInfos}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{structTShapeInfo}{TShape\+Info}}$>$ TCluster\+Shape\+::m\+Cluster\+Shape\+Infos\hspace{0.3cm}{\ttfamily [private]}}
+
+The set of cluster shape informations 
+
+Definition at line \mbox{\hyperlink{TClusterShape_8h_source_l00062}{62}} of file \mbox{\hyperlink{TClusterShape_8h_source}{TCluster\+Shape.\+h}}.
+
+\Hypertarget{classTClusterShape_a4474ba754e26e671ba4d0957c5e3c969}\label{classTClusterShape_a4474ba754e26e671ba4d0957c5e3c969} 
+\index{TClusterShape@{TClusterShape}!mClusterSize@{mClusterSize}}
+\index{mClusterSize@{mClusterSize}!TClusterShape@{TClusterShape}}
+\doxysubsubsection{\texorpdfstring{mClusterSize}{mClusterSize}}
+{\footnotesize\ttfamily int TCluster\+Shape\+::m\+Cluster\+Size\hspace{0.3cm}{\ttfamily [private]}}
+
+The cluster size of this shape 
+
+Definition at line \mbox{\hyperlink{TClusterShape_8h_source_l00060}{60}} of file \mbox{\hyperlink{TClusterShape_8h_source}{TCluster\+Shape.\+h}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/ychoi/\+ATOM/alpide/cluster/inc/\mbox{\hyperlink{TClusterShape_8h}{TCluster\+Shape.\+h}}\item 
+/home/ychoi/\+ATOM/alpide/cluster/src/\mbox{\hyperlink{TClusterShape_8cpp}{TCluster\+Shape.\+cpp}}\end{DoxyCompactItemize}

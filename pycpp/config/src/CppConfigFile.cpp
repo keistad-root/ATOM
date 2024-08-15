@@ -53,7 +53,7 @@ CppConfigFile& CppConfigFile::operator=(CppConfigFile&& copy) {
 */
 void CppConfigFile::addConfig(std::string_view configFile) {
 	// Open config file
-	std::ifstream conf(configFile);
+	std::ifstream conf{std::string(configFile)};
 
 	// The reading line
 	std::string line;

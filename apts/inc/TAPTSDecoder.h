@@ -8,6 +8,7 @@
 #include<vector>
 #include<array>
 #include<string>
+#include<cmath>
 
 #include "TDecoder.h"
 

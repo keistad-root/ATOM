@@ -1,0 +1,114 @@
+\doxysection{TAPTSDecoder.\+cpp}
+\hypertarget{TAPTSDecoder_8cpp_source}{}\label{TAPTSDecoder_8cpp_source}\index{/home/ychoi/ATOM/apts/src/TAPTSDecoder.cpp@{/home/ychoi/ATOM/apts/src/TAPTSDecoder.cpp}}
+\mbox{\hyperlink{TAPTSDecoder_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00001}\mbox{\hyperlink{TAPTSDecoder_8cpp_a0b8bfb9e5e9863889f1ef20421d5e0a4}{00001}}\ \textcolor{preprocessor}{\#define\ \_\_TAPTSDECODER\_HEADER\_\_}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{TAPTSDecoder_8h}{TAPTSDecoder.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00004}\mbox{\hyperlink{TAPTSDecoder_8cpp_a2d858b916c1e7f6bc0e6a4b47044bb47}{00004}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{TAPTSDecoder_8cpp_a2d858b916c1e7f6bc0e6a4b47044bb47}{APTS\_PIXEL\_ADC\_MAPPING}}[16]\ =\ \{2,\ 1,\ 5,\ 0,\ 4,\ 8,\ 9,\ 12,\ 13,\ 14,\ 10,\ 15,\ 11,\ 7,\ 6,\ 3\};}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00005}\mbox{\hyperlink{TAPTSDecoder_8cpp_a86f1cd561b2ceaac62862e4953e5b85e}{00005}}\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{TAPTSDecoder_8cpp_a86f1cd561b2ceaac62862e4953e5b85e}{APTS\_MUX\_PIXEL\_ADC\_MAPPING}}[16]\ =\ \{3,\ 2,\ 1,\ 0,\ 4,\ 8,\ 9,\ 5,\ 12,\ 13,\ 14,\ 15,\ 10,\ 11,\ 6,\ 7\};}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00007}\mbox{\hyperlink{classTAPTSDecoder_a9da6d732f7c852ae93d834b845224c54}{00007}}\ \mbox{\hyperlink{classTAPTSDecoder_a9da6d732f7c852ae93d834b845224c54}{TAPTSDecoder::TAPTSDecoder}}(\textcolor{keyword}{const}\ std::filesystem::path\&\ binaryPath)\ :\ \mbox{\hyperlink{classTDecoder}{TDecoder}}(binaryPath)\ \{\ \}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00008}\mbox{\hyperlink{classTAPTSDecoder_a204c363e5036754ddb6ad714f6da4456}{00008}}\ \mbox{\hyperlink{classTAPTSDecoder_a9da6d732f7c852ae93d834b845224c54}{TAPTSDecoder::TAPTSDecoder}}(\textcolor{keyword}{const}\ std::string\&\ binaryPath)\ :\ \mbox{\hyperlink{classTDecoder}{TDecoder}}(binaryPath)\ \{\ \}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00010}\mbox{\hyperlink{classTAPTSDecoder_a1215ba49dcf1a58702c442fc3ce884b1}{00010}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAPTSDecoder_a1215ba49dcf1a58702c442fc3ce884b1}{TAPTSDecoder::decode}}()\ \{}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00011}00011\ \ \ \ \ \mbox{\hyperlink{classTAPTSDecoder_aadc7d9fe6b3da7248b359ec6b6fe2ae7}{mux\_}}\ ?\ std::copy(std::begin(\mbox{\hyperlink{TAPTSDecoder_8cpp_a86f1cd561b2ceaac62862e4953e5b85e}{APTS\_MUX\_PIXEL\_ADC\_MAPPING}}),\ std::end(\mbox{\hyperlink{TAPTSDecoder_8cpp_a86f1cd561b2ceaac62862e4953e5b85e}{APTS\_MUX\_PIXEL\_ADC\_MAPPING}}),\ \mbox{\hyperlink{classTAPTSDecoder_ab90571894692a43957f0d0289fe95378}{mapping}}.begin())}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00012}00012\ \ \ \ \ \ \ \ \ :\ std::copy(std::begin(\mbox{\hyperlink{TAPTSDecoder_8cpp_a2d858b916c1e7f6bc0e6a4b47044bb47}{APTS\_PIXEL\_ADC\_MAPPING}}),\ std::end(\mbox{\hyperlink{TAPTSDecoder_8cpp_a2d858b916c1e7f6bc0e6a4b47044bb47}{APTS\_PIXEL\_ADC\_MAPPING}}),\ \mbox{\hyperlink{classTAPTSDecoder_ab90571894692a43957f0d0289fe95378}{mapping}}.begin());}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00013}00013\ \ \ \ \ \textcolor{comment}{//\ Set\ mapping\ array.\ }}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00015}00015\ \ \ \ \ \textcolor{keywordflow}{while}\ (\ !\mbox{\hyperlink{classTAPTSDecoder_a47e9254b565f9608fcf0363b4f0c10c2}{isDone}}()\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00016}00016\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTAPTSDecoder_a54bf988e5a0134ad2d14030a609d89dd}{inputEvent}}();}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00017}00017\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00018}00018\ \}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00019}00019\ }
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00020}\mbox{\hyperlink{classTAPTSDecoder_ad345f95aef04a320fcb27fc097eec695}{00020}}\ std::vector<TAPTSEvent*>\ \mbox{\hyperlink{classTAPTSDecoder_ad345f95aef04a320fcb27fc097eec695}{TAPTSDecoder::getData}}()\ \{}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00021}00021\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classTAPTSDecoder_a03e4702c3532a35267b1ba3e073e3a28}{aptss}};}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00022}00022\ \}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00024}\mbox{\hyperlink{classTAPTSDecoder_a54bf988e5a0134ad2d14030a609d89dd}{00024}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAPTSDecoder_a54bf988e5a0134ad2d14030a609d89dd}{TAPTSDecoder::inputEvent}}()\ \{}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00025}00025\ \ \ \ \ \mbox{\hyperlink{classTAPTSDecoder_aec1c8d59ee9e6cab59807e997b2898f9}{preTest}}();}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00027}00027\ \ \ \ \ std::vector<uint8\_t>\ eventData(\mbox{\hyperlink{classTDecoder_a763d701c171878671a32f28815fd97ea}{getBinaryData}}().begin()\ +\ \mbox{\hyperlink{classTAPTSDecoder_ad73b32c63ad6268f825ca32af487a6e0}{index\_}},\ \mbox{\hyperlink{classTDecoder_a763d701c171878671a32f28815fd97ea}{getBinaryData}}().begin()\ +\ \mbox{\hyperlink{classTAPTSDecoder_ad73b32c63ad6268f825ca32af487a6e0}{index\_}}\ +\ \mbox{\hyperlink{classTAPTSDecoder_a7853f4d0bb0036ada205dce3817698b5}{lenEvent\_}});}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00028}00028\ \ \ \ \ \textcolor{comment}{//\ A\ part\ of\ binary\ data.}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00030}00030\ \ \ \ \ \mbox{\hyperlink{classTAPTSDecoder_ab63b0be2ec2110a4a0f703ba3f563ba3}{nFrame\_}}\ =\ \mbox{\hyperlink{classTAPTSDecoder_a7853f4d0bb0036ada205dce3817698b5}{lenEvent\_}}\ /\ 40;}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00031}00031\ \ \ \ \ \textcolor{comment}{//\ Set\ number\ of\ frame.}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00032}00032\ }
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00033}00033\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ iFrame\ =\ 0;\ iFrame\ <\ \mbox{\hyperlink{classTAPTSDecoder_ab63b0be2ec2110a4a0f703ba3f563ba3}{nFrame\_}};\ iFrame++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTAPTSEvent}{TAPTSEvent}}*\ apts\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classTAPTSEvent}{TAPTSEvent}}();}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00035}00035\ \ \ \ \ \ \ \ \ apts-\/>\mbox{\hyperlink{classTEvent_a65aa45f0a4ffc353f0b0a016a1974623}{setEvent}}(\mbox{\hyperlink{classTAPTSDecoder_a9e1427bc3043d8e7e6bc1e78429ccd79}{iEvent\_}});}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ 16;\ j++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ share1\ =\ eventData[iFrame\ *\ 40\ +\ 2\ *\ j];}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ share2\ =\ eventData[iFrame\ *\ 40\ +\ 2\ *\ j\ +\ 1];}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00039}00039\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ rest1\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00040}00040\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ rest2\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00041}00041\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ digit\ =\ 0;\ digit\ <\ 8;\ digit++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00042}00042\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rest1\ =\ share1\ \%\ 2;}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00043}00043\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rest2\ =\ share2\ \%\ 2;}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00044}00044\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ apts-\/>\mbox{\hyperlink{classTAPTSEvent_a650bcfd621782b092276fcd259b9f6bc}{getData}}()[\mbox{\hyperlink{classTAPTSDecoder_ab90571894692a43957f0d0289fe95378}{mapping}}[digit]]\ +=\ rest1\ *\ pow(2,\ 15\ -\/\ j);}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00045}00045\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ apts-\/>\mbox{\hyperlink{classTAPTSEvent_a650bcfd621782b092276fcd259b9f6bc}{getData}}()[\mbox{\hyperlink{classTAPTSDecoder_ab90571894692a43957f0d0289fe95378}{mapping}}[digit\ +\ 8]]\ +=\ rest2\ *\ pow(2,\ 15\ -\/\ j);}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00046}00046\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ share1\ =\ ceil(share1\ /\ 2);}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00047}00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ share2\ =\ ceil(share2\ /\ 2);}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00048}00048\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00049}00049\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00050}00050\ \ \ \ \ \ \ \ \ apts-\/>\mbox{\hyperlink{classTAPTSEvent_a048bf6ca71ffb286c735dc9b806af9b4}{setFrame}}(iFrame);}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00052}00052\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ trailer\ =\ eventData[iFrame\ *\ 40\ +\ 39]\ +\ eventData[iFrame\ *\ 40\ +\ 38]\ *\ 256;}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00053}00053\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ iFrame\ <\ \mbox{\hyperlink{classTAPTSDecoder_ab63b0be2ec2110a4a0f703ba3f563ba3}{nFrame\_}}\ -\/\ 1\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ trailer\ !=\ 0xFEFE\ )\ std::cout\ <<\ \textcolor{stringliteral}{"{}Unexpected\ frame\ trailer\ 0x"{}}\ <<\ std::hex\ <<\ trailer\ <<\ \textcolor{stringliteral}{"{}\ for\ frame\ "{}}\ <<\ iFrame\ +\ 1\ <<\ \textcolor{stringliteral}{"{}\ out\ of\ "{}}\ <<\ std::dec\ <<\ \mbox{\hyperlink{classTAPTSDecoder_ab63b0be2ec2110a4a0f703ba3f563ba3}{nFrame\_}}\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ trailer\ !=\ 0xAEAE\ )\ std::cout\ <<\ \textcolor{stringliteral}{"{}Unexpected\ event\ trailer\ 0x"{}}\ <<\ std::hex\ <<\ trailer\ <<\ \textcolor{stringliteral}{"{}\ for\ frame\ "{}}\ <<\ iFrame\ +\ 1\ <<\ \textcolor{stringliteral}{"{}\ out\ of\ "{}}\ <<\ std::dec\ <<\ \mbox{\hyperlink{classTAPTSDecoder_ab63b0be2ec2110a4a0f703ba3f563ba3}{nFrame\_}}\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTAPTSDecoder_a03e4702c3532a35267b1ba3e073e3a28}{aptss}}.push\_back(apts);}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00059}00059\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00060}00060\ \ \ \ \ \mbox{\hyperlink{classTAPTSDecoder_ad73b32c63ad6268f825ca32af487a6e0}{index\_}}\ +=\ \mbox{\hyperlink{classTAPTSDecoder_a7853f4d0bb0036ada205dce3817698b5}{lenEvent\_}};}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00061}00061\ \ \ \ \ \mbox{\hyperlink{classTAPTSDecoder_a386c0648429b956954926992d2f64a77}{postTest}}();}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00062}00062\ \ \ \ \ \mbox{\hyperlink{classTAPTSDecoder_a9e1427bc3043d8e7e6bc1e78429ccd79}{iEvent\_}}++;}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00063}00063\ \}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00064}00064\ }
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00065}\mbox{\hyperlink{classTAPTSDecoder_a386c0648429b956954926992d2f64a77}{00065}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAPTSDecoder_a386c0648429b956954926992d2f64a77}{TAPTSDecoder::postTest}}()\ \{}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00066}00066\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ \mbox{\hyperlink{classTAPTSDecoder_ad73b32c63ad6268f825ca32af487a6e0}{index\_}}\ +\ 12\ <=\ \mbox{\hyperlink{classTDecoder_a0d8b4e84d32b4f339c747802c57a39ed}{getDataLength}}()\ \&\&\ std::equal(\mbox{\hyperlink{classTDecoder_a763d701c171878671a32f28815fd97ea}{getBinaryData}}().begin()\ +\ \mbox{\hyperlink{classTAPTSDecoder_ad73b32c63ad6268f825ca32af487a6e0}{index\_}},\ \mbox{\hyperlink{classTDecoder_a763d701c171878671a32f28815fd97ea}{getBinaryData}}().begin()\ +\ \mbox{\hyperlink{classTAPTSDecoder_ad73b32c63ad6268f825ca32af487a6e0}{index\_}}\ +\ 3,\ \mbox{\hyperlink{classTAPTSDecoder_a0009ace80a45ed5adf9c16a67211ba13}{expected\_footer}}.begin())\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00067}00067\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTAPTSDecoder_ad73b32c63ad6268f825ca32af487a6e0}{index\_}}\ +=\ 16;}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00068}00068\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00069}00069\ \}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00071}\mbox{\hyperlink{classTAPTSDecoder_aec1c8d59ee9e6cab59807e997b2898f9}{00071}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAPTSDecoder_aec1c8d59ee9e6cab59807e997b2898f9}{TAPTSDecoder::preTest}}()\ \{}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00072}00072\ \ \ \ \ \mbox{\hyperlink{classTAPTSDecoder_a1624512ef467ddc774d1e5ba951ca126}{rangeTest}}();}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00073}00073\ \ \ \ \ \mbox{\hyperlink{classTAPTSDecoder_a065891a376865e14adb0ab8660eb0bfa}{headerTest}}();}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00074}00074\ \ \ \ \ \mbox{\hyperlink{classTAPTSDecoder_a7853f4d0bb0036ada205dce3817698b5}{lenEvent\_}}\ =\ \mbox{\hyperlink{classTAPTSDecoder_acf2ffb21ca868c39f527aadfa7ea7506}{getEventLength}}();}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00075}00075\ \ \ \ \ \mbox{\hyperlink{classTAPTSDecoder_ad73b32c63ad6268f825ca32af487a6e0}{index\_}}\ +=\ 8;}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00076}00076\ \ \ \ \ \mbox{\hyperlink{classTAPTSDecoder_ac0162d565fb8315e3a5f2d0e1ad79b91}{missingTest}}();}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00077}00077\ \}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00078}00078\ }
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00079}\mbox{\hyperlink{classTAPTSDecoder_a1624512ef467ddc774d1e5ba951ca126}{00079}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAPTSDecoder_a1624512ef467ddc774d1e5ba951ca126}{TAPTSDecoder::rangeTest}}()\ \{}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00080}00080\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ !(\mbox{\hyperlink{classTAPTSDecoder_ad73b32c63ad6268f825ca32af487a6e0}{index\_}}\ +\ 8\ <=\ \mbox{\hyperlink{classTDecoder_a0d8b4e84d32b4f339c747802c57a39ed}{getDataLength}}())\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00081}00081\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Ev\ "{}}\ <<\ \mbox{\hyperlink{classTAPTSDecoder_a9e1427bc3043d8e7e6bc1e78429ccd79}{iEvent\_}}\ <<\ \textcolor{stringliteral}{"{}:\ Unexpected\ data\ length("{}}\ <<\ \mbox{\hyperlink{classTDecoder_a0d8b4e84d32b4f339c747802c57a39ed}{getDataLength}}()\ -\/\ 1\ <<\ \textcolor{stringliteral}{"{}\ <\ 8)"{}}\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00082}00082\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00083}00083\ \}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00085}\mbox{\hyperlink{classTAPTSDecoder_a065891a376865e14adb0ab8660eb0bfa}{00085}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAPTSDecoder_a065891a376865e14adb0ab8660eb0bfa}{TAPTSDecoder::headerTest}}()\ \{}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00086}00086\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ !std::equal(\mbox{\hyperlink{classTDecoder_a763d701c171878671a32f28815fd97ea}{getBinaryData}}().begin()\ +\ \mbox{\hyperlink{classTAPTSDecoder_ad73b32c63ad6268f825ca32af487a6e0}{index\_}},\ \mbox{\hyperlink{classTDecoder_a763d701c171878671a32f28815fd97ea}{getBinaryData}}().begin()\ +\ \mbox{\hyperlink{classTAPTSDecoder_ad73b32c63ad6268f825ca32af487a6e0}{index\_}}\ +\ 3,\ \mbox{\hyperlink{classTAPTSDecoder_acd34b0ab08ad297b5bba9acfe2d38dd1}{expected\_header}}.begin())\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00087}00087\ \ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Ev\ "{}}\ <<\ \mbox{\hyperlink{classTAPTSDecoder_a9e1427bc3043d8e7e6bc1e78429ccd79}{iEvent\_}}\ <<\ std::hex\ <<\ int(\mbox{\hyperlink{classTDecoder_a763d701c171878671a32f28815fd97ea}{getBinaryData}}()[\mbox{\hyperlink{classTAPTSDecoder_ad73b32c63ad6268f825ca32af487a6e0}{index\_}}])\ <<\ \textcolor{stringliteral}{"{}-\/"{}}\ <<\ int(\mbox{\hyperlink{classTDecoder_a763d701c171878671a32f28815fd97ea}{getBinaryData}}()[\mbox{\hyperlink{classTAPTSDecoder_ad73b32c63ad6268f825ca32af487a6e0}{index\_}}\ +\ 1])\ <<\ \textcolor{stringliteral}{"{}-\/"{}}\ <<\ int(\mbox{\hyperlink{classTDecoder_a763d701c171878671a32f28815fd97ea}{getBinaryData}}()[\mbox{\hyperlink{classTAPTSDecoder_ad73b32c63ad6268f825ca32af487a6e0}{index\_}}\ +\ 2])\ <<\ \textcolor{stringliteral}{"{}-\/"{}}\ <<\ int(\mbox{\hyperlink{classTDecoder_a763d701c171878671a32f28815fd97ea}{getBinaryData}}()[\mbox{\hyperlink{classTAPTSDecoder_ad73b32c63ad6268f825ca32af487a6e0}{index\_}}\ +\ 3])\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00088}00088\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00089}00089\ \}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00091}\mbox{\hyperlink{classTAPTSDecoder_ac0162d565fb8315e3a5f2d0e1ad79b91}{00091}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAPTSDecoder_ac0162d565fb8315e3a5f2d0e1ad79b91}{TAPTSDecoder::missingTest}}()\ \{}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00092}00092\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ !(\mbox{\hyperlink{classTAPTSDecoder_ad73b32c63ad6268f825ca32af487a6e0}{index\_}}\ +\ \mbox{\hyperlink{classTAPTSDecoder_a7853f4d0bb0036ada205dce3817698b5}{lenEvent\_}}\ <=\ \mbox{\hyperlink{classTDecoder_a0d8b4e84d32b4f339c747802c57a39ed}{getDataLength}}())\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00093}00093\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Ev\ "{}}\ <<\ \mbox{\hyperlink{classTAPTSDecoder_a9e1427bc3043d8e7e6bc1e78429ccd79}{iEvent\_}}\ <<\ \textcolor{stringliteral}{"{}:Missing\ data\ ("{}}\ <<\ \mbox{\hyperlink{classTAPTSDecoder_ad73b32c63ad6268f825ca32af487a6e0}{index\_}}\ <<\ \textcolor{stringliteral}{"{}\ "{}}\ <<\ \mbox{\hyperlink{classTAPTSDecoder_a7853f4d0bb0036ada205dce3817698b5}{lenEvent\_}}\ <<\ \textcolor{stringliteral}{"{}\ "{}}\ <<\ \mbox{\hyperlink{classTDecoder_a0d8b4e84d32b4f339c747802c57a39ed}{getDataLength}}()\ <<\ \textcolor{stringliteral}{"{})"{}}\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00094}00094\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00095}00095\ \}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00096}00096\ }
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00097}\mbox{\hyperlink{classTAPTSDecoder_acf2ffb21ca868c39f527aadfa7ea7506}{00097}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTAPTSDecoder_acf2ffb21ca868c39f527aadfa7ea7506}{TAPTSDecoder::getEventLength}}()\ \{}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00098}00098\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTAPTSDecoder_a7853f4d0bb0036ada205dce3817698b5}{lenEvent\_}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00099}00099\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 4;\ i++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00100}00100\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTAPTSDecoder_a7853f4d0bb0036ada205dce3817698b5}{lenEvent\_}}\ +=\ \mbox{\hyperlink{classTDecoder_a763d701c171878671a32f28815fd97ea}{getBinaryData}}()[\mbox{\hyperlink{classTAPTSDecoder_ad73b32c63ad6268f825ca32af487a6e0}{index\_}}\ +\ 4\ +\ i]\ *\ pow(256,\ i);}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00101}00101\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00102}00102\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classTAPTSDecoder_a7853f4d0bb0036ada205dce3817698b5}{lenEvent\_}};}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00103}00103\ \}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00104}00104\ }
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00105}\mbox{\hyperlink{classTAPTSDecoder_a47e9254b565f9608fcf0363b4f0c10c2}{00105}}\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classTAPTSDecoder_a47e9254b565f9608fcf0363b4f0c10c2}{TAPTSDecoder::isDone}}()\ \{}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00106}00106\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ \mbox{\hyperlink{classTAPTSDecoder_ad73b32c63ad6268f825ca32af487a6e0}{index\_}}\ >=\ \mbox{\hyperlink{classTDecoder_a0d8b4e84d32b4f339c747802c57a39ed}{getDataLength}}()\ )\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00107}00107\ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{return}\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8cpp_source_l00108}00108\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,484 @@
+\doxysection{Analysis\+Manager Class Reference}
+\hypertarget{classAnalysisManager}{}\label{classAnalysisManager}\index{AnalysisManager@{AnalysisManager}}
+
+
+{\ttfamily \#include $<$Analysis\+Manager.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classAnalysisManager_ad01a29b31d55b631bff0901c63491f10}{Analysis\+Manager}} ()
+\item 
+\mbox{\hyperlink{classAnalysisManager_a207f5a6cfb85cc7d600e4ed185b7de45}{Analysis\+Manager}} (std\+::string name)
+\item 
+\mbox{\hyperlink{classAnalysisManager_a0dcba8d85dc5fa56e5c5b6b0fffb6b58}{\texorpdfstring{$\sim$}{\string~}\+Analysis\+Manager}} ()
+\item 
+void \mbox{\hyperlink{classAnalysisManager_aa063ab86ce02c9ca9551b0aabb8f9120}{set\+Event\+ID}} (const int id)
+\item 
+void \mbox{\hyperlink{classAnalysisManager_a6402d53c04d1253b4f7e44567d0de38b}{set\+Track\+ID}} (const int id)
+\item 
+int \mbox{\hyperlink{classAnalysisManager_a6289f8dfbd8ea0543e791dbb89c91c81}{get\+Event\+ID}} () const
+\item 
+int \mbox{\hyperlink{classAnalysisManager_a3478114f34b0c73245dcfb86d130babd}{get\+Track\+ID}} () const
+\item 
+void \mbox{\hyperlink{classAnalysisManager_a5f35ce1ece7fe54011f51b9d0a5af1a7}{open\+Book}} (std\+::string name)
+\item 
+void \mbox{\hyperlink{classAnalysisManager_acdb2c6b79d43a10f62cf8cea0f4e1ea0}{set\+Run\+Tree}} ()
+\item 
+void \mbox{\hyperlink{classAnalysisManager_a753f4de580c88b526c87489b4d02e502}{set\+Event\+Tree}} ()
+\item 
+void \mbox{\hyperlink{classAnalysisManager_a579d746b94a67b6052e122ad89113f10}{set\+Track\+Tree}} ()
+\item 
+void \mbox{\hyperlink{classAnalysisManager_a665bc102bb4e9288fa57d0df8f66bd51}{set\+Step\+Tree}} ()
+\item 
+void \mbox{\hyperlink{classAnalysisManager_a88f729a5c5b3c76f49c4399eaaff5979}{Recording\+Run}} (const G4\+Run \texorpdfstring{$\ast$}{*}run)
+\item 
+void \mbox{\hyperlink{classAnalysisManager_a1329eb612c6fa515930ac385f8dd98aa}{Recording\+Event}} (const G4\+Event \texorpdfstring{$\ast$}{*}event)
+\item 
+void \mbox{\hyperlink{classAnalysisManager_a6f0c4d106c364e7842eb51a886a67140}{Recording\+Track\+Start}} (const G4\+Track \texorpdfstring{$\ast$}{*}track)
+\item 
+void \mbox{\hyperlink{classAnalysisManager_a68f59922185583160d57237792e3edc2}{Recording\+Track\+End}} (const G4\+Track \texorpdfstring{$\ast$}{*}track)
+\item 
+void \mbox{\hyperlink{classAnalysisManager_afa1e5bad7ba9ae10191d51b6ce80f85f}{Recording\+Step}} (const G4\+Step \texorpdfstring{$\ast$}{*}step)
+\item 
+void \mbox{\hyperlink{classAnalysisManager_aac1c5ae3615493ca9fed0e33e7e772b1}{close\+Book}} ()
+\item 
+\mbox{\hyperlink{structRunTuple}{Run\+Tuple}} \& \mbox{\hyperlink{classAnalysisManager_ac3934972811b7f09bdd888ebcd867c60}{get\+Run\+Tuple}} ()
+\item 
+\mbox{\hyperlink{structEventTuple}{Event\+Tuple}} \& \mbox{\hyperlink{classAnalysisManager_ae029834d16af6b17453c870836f1ca07}{get\+Event\+Tuple}} ()
+\item 
+\mbox{\hyperlink{structTrackTuple}{Track\+Tuple}} \& \mbox{\hyperlink{classAnalysisManager_a5e1c2001ce1c7b040c0cc6a8754a78b7}{get\+Track\+Tuple}} ()
+\item 
+\mbox{\hyperlink{structStepTuple}{Step\+Tuple}} \& \mbox{\hyperlink{classAnalysisManager_aec2ff647a0d73ccd25baa85c5aa1b6a3}{get\+Step\+Tuple}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{classAnalysisManager}{Analysis\+Manager}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classAnalysisManager_a44fe853a226f1e604b2bffa1acfb6816}{Instance}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{classAnalysisManager_a3cd9c3c857b4b347d00680d724e376bc}{run\+ID}} = 0
+\item 
+int \mbox{\hyperlink{classAnalysisManager_ad5d678ab63ccec1ada0f50c6257b25ba}{event\+ID}} = 0
+\item 
+int \mbox{\hyperlink{classAnalysisManager_a75537321c9675acc15b67f9d13c71a70}{track\+ID}} = 0
+\item 
+int \mbox{\hyperlink{classAnalysisManager_abfecc0ed772d6f9c82bb177086a26bc1}{step\+ID}} = 0
+\item 
+TFile \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classAnalysisManager_a22fef115af19ffefcdf9de462873fc44}{m\+Output\+File}}
+\item 
+TTree \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classAnalysisManager_a2269668097cd823b1f8f8d6cd0001202}{m\+Run\+Tree}}
+\item 
+TTree \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classAnalysisManager_aef71c76514216a61944d15814a3cc5ff}{m\+Event\+Tree}}
+\item 
+TTree \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classAnalysisManager_aec2b272dbe6b379cbccb28021771a4be}{m\+Track\+Tree}}
+\item 
+TTree \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classAnalysisManager_acb7e30795142414551ef73ee31f77fdc}{m\+Step\+Tree}}
+\item 
+\mbox{\hyperlink{structRunTuple}{Run\+Tuple}} \mbox{\hyperlink{classAnalysisManager_a30b13a70f986118a3fb17044ba0d2983}{run\+Tuple}}
+\item 
+\mbox{\hyperlink{structEventTuple}{Event\+Tuple}} \mbox{\hyperlink{classAnalysisManager_a6fd873adad5e97084a7b38f0cd524052}{event\+Tuple}}
+\item 
+\mbox{\hyperlink{structTrackTuple}{Track\+Tuple}} \mbox{\hyperlink{classAnalysisManager_aa24f166b7c90af20e9cd75840c8b9573}{track\+Tuple}}
+\item 
+\mbox{\hyperlink{structStepTuple}{Step\+Tuple}} \mbox{\hyperlink{classAnalysisManager_abc70455ac8c5d0481029844b89679a75}{step\+Tuple}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{classAnalysisManager}{Analysis\+Manager}} \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classAnalysisManager_a8abe5034df47f0db6322687826b17ce8}{f\+Instance}} = nullptr
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8h_source_l00064}{64}} of file \mbox{\hyperlink{AnalysisManager_8h_source}{Analysis\+Manager.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classAnalysisManager_ad01a29b31d55b631bff0901c63491f10}\label{classAnalysisManager_ad01a29b31d55b631bff0901c63491f10} 
+\index{AnalysisManager@{AnalysisManager}!AnalysisManager@{AnalysisManager}}
+\index{AnalysisManager@{AnalysisManager}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{AnalysisManager()}{AnalysisManager()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Analysis\+Manager\+::\+Analysis\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8cpp_source_l00006}{6}} of file \mbox{\hyperlink{AnalysisManager_8cpp_source}{Analysis\+Manager.\+cpp}}.
+
+\Hypertarget{classAnalysisManager_a207f5a6cfb85cc7d600e4ed185b7de45}\label{classAnalysisManager_a207f5a6cfb85cc7d600e4ed185b7de45} 
+\index{AnalysisManager@{AnalysisManager}!AnalysisManager@{AnalysisManager}}
+\index{AnalysisManager@{AnalysisManager}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{AnalysisManager()}{AnalysisManager()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Analysis\+Manager\+::\+Analysis\+Manager (\begin{DoxyParamCaption}\item[{std\+::string}]{name }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8cpp_source_l00011}{11}} of file \mbox{\hyperlink{AnalysisManager_8cpp_source}{Analysis\+Manager.\+cpp}}.
+
+\Hypertarget{classAnalysisManager_a0dcba8d85dc5fa56e5c5b6b0fffb6b58}\label{classAnalysisManager_a0dcba8d85dc5fa56e5c5b6b0fffb6b58} 
+\index{AnalysisManager@{AnalysisManager}!````~AnalysisManager@{\texorpdfstring{$\sim$}{\string~}AnalysisManager}}
+\index{````~AnalysisManager@{\texorpdfstring{$\sim$}{\string~}AnalysisManager}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}AnalysisManager()}{\string~AnalysisManager()}}
+{\footnotesize\ttfamily Analysis\+Manager\+::\texorpdfstring{$\sim$}{\string~}\+Analysis\+Manager (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8cpp_source_l00017}{17}} of file \mbox{\hyperlink{AnalysisManager_8cpp_source}{Analysis\+Manager.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classAnalysisManager_aac1c5ae3615493ca9fed0e33e7e772b1}\label{classAnalysisManager_aac1c5ae3615493ca9fed0e33e7e772b1} 
+\index{AnalysisManager@{AnalysisManager}!closeBook@{closeBook}}
+\index{closeBook@{closeBook}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{closeBook()}{closeBook()}}
+{\footnotesize\ttfamily void Analysis\+Manager\+::close\+Book (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8cpp_source_l00157}{157}} of file \mbox{\hyperlink{AnalysisManager_8cpp_source}{Analysis\+Manager.\+cpp}}.
+
+\Hypertarget{classAnalysisManager_a6289f8dfbd8ea0543e791dbb89c91c81}\label{classAnalysisManager_a6289f8dfbd8ea0543e791dbb89c91c81} 
+\index{AnalysisManager@{AnalysisManager}!getEventID@{getEventID}}
+\index{getEventID@{getEventID}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{getEventID()}{getEventID()}}
+{\footnotesize\ttfamily int Analysis\+Manager\+::get\+Event\+ID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8h_source_l00092}{92}} of file \mbox{\hyperlink{AnalysisManager_8h_source}{Analysis\+Manager.\+h}}.
+
+\Hypertarget{classAnalysisManager_ae029834d16af6b17453c870836f1ca07}\label{classAnalysisManager_ae029834d16af6b17453c870836f1ca07} 
+\index{AnalysisManager@{AnalysisManager}!getEventTuple@{getEventTuple}}
+\index{getEventTuple@{getEventTuple}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{getEventTuple()}{getEventTuple()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structEventTuple}{Event\+Tuple}} \& Analysis\+Manager\+::get\+Event\+Tuple (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8h_source_l00111}{111}} of file \mbox{\hyperlink{AnalysisManager_8h_source}{Analysis\+Manager.\+h}}.
+
+\Hypertarget{classAnalysisManager_ac3934972811b7f09bdd888ebcd867c60}\label{classAnalysisManager_ac3934972811b7f09bdd888ebcd867c60} 
+\index{AnalysisManager@{AnalysisManager}!getRunTuple@{getRunTuple}}
+\index{getRunTuple@{getRunTuple}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{getRunTuple()}{getRunTuple()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structRunTuple}{Run\+Tuple}} \& Analysis\+Manager\+::get\+Run\+Tuple (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8h_source_l00110}{110}} of file \mbox{\hyperlink{AnalysisManager_8h_source}{Analysis\+Manager.\+h}}.
+
+\Hypertarget{classAnalysisManager_aec2ff647a0d73ccd25baa85c5aa1b6a3}\label{classAnalysisManager_aec2ff647a0d73ccd25baa85c5aa1b6a3} 
+\index{AnalysisManager@{AnalysisManager}!getStepTuple@{getStepTuple}}
+\index{getStepTuple@{getStepTuple}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{getStepTuple()}{getStepTuple()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structStepTuple}{Step\+Tuple}} \& Analysis\+Manager\+::get\+Step\+Tuple (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8h_source_l00113}{113}} of file \mbox{\hyperlink{AnalysisManager_8h_source}{Analysis\+Manager.\+h}}.
+
+\Hypertarget{classAnalysisManager_a3478114f34b0c73245dcfb86d130babd}\label{classAnalysisManager_a3478114f34b0c73245dcfb86d130babd} 
+\index{AnalysisManager@{AnalysisManager}!getTrackID@{getTrackID}}
+\index{getTrackID@{getTrackID}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{getTrackID()}{getTrackID()}}
+{\footnotesize\ttfamily int Analysis\+Manager\+::get\+Track\+ID (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8h_source_l00093}{93}} of file \mbox{\hyperlink{AnalysisManager_8h_source}{Analysis\+Manager.\+h}}.
+
+\Hypertarget{classAnalysisManager_a5e1c2001ce1c7b040c0cc6a8754a78b7}\label{classAnalysisManager_a5e1c2001ce1c7b040c0cc6a8754a78b7} 
+\index{AnalysisManager@{AnalysisManager}!getTrackTuple@{getTrackTuple}}
+\index{getTrackTuple@{getTrackTuple}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{getTrackTuple()}{getTrackTuple()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structTrackTuple}{Track\+Tuple}} \& Analysis\+Manager\+::get\+Track\+Tuple (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8h_source_l00112}{112}} of file \mbox{\hyperlink{AnalysisManager_8h_source}{Analysis\+Manager.\+h}}.
+
+\Hypertarget{classAnalysisManager_a44fe853a226f1e604b2bffa1acfb6816}\label{classAnalysisManager_a44fe853a226f1e604b2bffa1acfb6816} 
+\index{AnalysisManager@{AnalysisManager}!Instance@{Instance}}
+\index{Instance@{Instance}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{Instance()}{Instance()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classAnalysisManager}{Analysis\+Manager}} \texorpdfstring{$\ast$}{*} Analysis\+Manager\+::\+Instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8cpp_source_l00021}{21}} of file \mbox{\hyperlink{AnalysisManager_8cpp_source}{Analysis\+Manager.\+cpp}}.
+
+\Hypertarget{classAnalysisManager_a5f35ce1ece7fe54011f51b9d0a5af1a7}\label{classAnalysisManager_a5f35ce1ece7fe54011f51b9d0a5af1a7} 
+\index{AnalysisManager@{AnalysisManager}!openBook@{openBook}}
+\index{openBook@{openBook}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{openBook()}{openBook()}}
+{\footnotesize\ttfamily void Analysis\+Manager\+::open\+Book (\begin{DoxyParamCaption}\item[{std\+::string}]{name }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8cpp_source_l00028}{28}} of file \mbox{\hyperlink{AnalysisManager_8cpp_source}{Analysis\+Manager.\+cpp}}.
+
+\Hypertarget{classAnalysisManager_a1329eb612c6fa515930ac385f8dd98aa}\label{classAnalysisManager_a1329eb612c6fa515930ac385f8dd98aa} 
+\index{AnalysisManager@{AnalysisManager}!RecordingEvent@{RecordingEvent}}
+\index{RecordingEvent@{RecordingEvent}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{RecordingEvent()}{RecordingEvent()}}
+{\footnotesize\ttfamily void Analysis\+Manager\+::\+Recording\+Event (\begin{DoxyParamCaption}\item[{const G4\+Event \texorpdfstring{$\ast$}{*}}]{event }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8cpp_source_l00096}{96}} of file \mbox{\hyperlink{AnalysisManager_8cpp_source}{Analysis\+Manager.\+cpp}}.
+
+\Hypertarget{classAnalysisManager_a88f729a5c5b3c76f49c4399eaaff5979}\label{classAnalysisManager_a88f729a5c5b3c76f49c4399eaaff5979} 
+\index{AnalysisManager@{AnalysisManager}!RecordingRun@{RecordingRun}}
+\index{RecordingRun@{RecordingRun}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{RecordingRun()}{RecordingRun()}}
+{\footnotesize\ttfamily void Analysis\+Manager\+::\+Recording\+Run (\begin{DoxyParamCaption}\item[{const G4\+Run \texorpdfstring{$\ast$}{*}}]{run }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8cpp_source_l00088}{88}} of file \mbox{\hyperlink{AnalysisManager_8cpp_source}{Analysis\+Manager.\+cpp}}.
+
+\Hypertarget{classAnalysisManager_afa1e5bad7ba9ae10191d51b6ce80f85f}\label{classAnalysisManager_afa1e5bad7ba9ae10191d51b6ce80f85f} 
+\index{AnalysisManager@{AnalysisManager}!RecordingStep@{RecordingStep}}
+\index{RecordingStep@{RecordingStep}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{RecordingStep()}{RecordingStep()}}
+{\footnotesize\ttfamily void Analysis\+Manager\+::\+Recording\+Step (\begin{DoxyParamCaption}\item[{const G4\+Step \texorpdfstring{$\ast$}{*}}]{step }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8cpp_source_l00133}{133}} of file \mbox{\hyperlink{AnalysisManager_8cpp_source}{Analysis\+Manager.\+cpp}}.
+
+\Hypertarget{classAnalysisManager_a68f59922185583160d57237792e3edc2}\label{classAnalysisManager_a68f59922185583160d57237792e3edc2} 
+\index{AnalysisManager@{AnalysisManager}!RecordingTrackEnd@{RecordingTrackEnd}}
+\index{RecordingTrackEnd@{RecordingTrackEnd}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{RecordingTrackEnd()}{RecordingTrackEnd()}}
+{\footnotesize\ttfamily void Analysis\+Manager\+::\+Recording\+Track\+End (\begin{DoxyParamCaption}\item[{const G4\+Track \texorpdfstring{$\ast$}{*}}]{track }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8cpp_source_l00125}{125}} of file \mbox{\hyperlink{AnalysisManager_8cpp_source}{Analysis\+Manager.\+cpp}}.
+
+\Hypertarget{classAnalysisManager_a6f0c4d106c364e7842eb51a886a67140}\label{classAnalysisManager_a6f0c4d106c364e7842eb51a886a67140} 
+\index{AnalysisManager@{AnalysisManager}!RecordingTrackStart@{RecordingTrackStart}}
+\index{RecordingTrackStart@{RecordingTrackStart}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{RecordingTrackStart()}{RecordingTrackStart()}}
+{\footnotesize\ttfamily void Analysis\+Manager\+::\+Recording\+Track\+Start (\begin{DoxyParamCaption}\item[{const G4\+Track \texorpdfstring{$\ast$}{*}}]{track }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8cpp_source_l00105}{105}} of file \mbox{\hyperlink{AnalysisManager_8cpp_source}{Analysis\+Manager.\+cpp}}.
+
+\Hypertarget{classAnalysisManager_aa063ab86ce02c9ca9551b0aabb8f9120}\label{classAnalysisManager_aa063ab86ce02c9ca9551b0aabb8f9120} 
+\index{AnalysisManager@{AnalysisManager}!setEventID@{setEventID}}
+\index{setEventID@{setEventID}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{setEventID()}{setEventID()}}
+{\footnotesize\ttfamily void Analysis\+Manager\+::set\+Event\+ID (\begin{DoxyParamCaption}\item[{const int}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8h_source_l00090}{90}} of file \mbox{\hyperlink{AnalysisManager_8h_source}{Analysis\+Manager.\+h}}.
+
+\Hypertarget{classAnalysisManager_a753f4de580c88b526c87489b4d02e502}\label{classAnalysisManager_a753f4de580c88b526c87489b4d02e502} 
+\index{AnalysisManager@{AnalysisManager}!setEventTree@{setEventTree}}
+\index{setEventTree@{setEventTree}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{setEventTree()}{setEventTree()}}
+{\footnotesize\ttfamily void Analysis\+Manager\+::set\+Event\+Tree (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8cpp_source_l00042}{42}} of file \mbox{\hyperlink{AnalysisManager_8cpp_source}{Analysis\+Manager.\+cpp}}.
+
+\Hypertarget{classAnalysisManager_acdb2c6b79d43a10f62cf8cea0f4e1ea0}\label{classAnalysisManager_acdb2c6b79d43a10f62cf8cea0f4e1ea0} 
+\index{AnalysisManager@{AnalysisManager}!setRunTree@{setRunTree}}
+\index{setRunTree@{setRunTree}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{setRunTree()}{setRunTree()}}
+{\footnotesize\ttfamily void Analysis\+Manager\+::set\+Run\+Tree (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8cpp_source_l00036}{36}} of file \mbox{\hyperlink{AnalysisManager_8cpp_source}{Analysis\+Manager.\+cpp}}.
+
+\Hypertarget{classAnalysisManager_a665bc102bb4e9288fa57d0df8f66bd51}\label{classAnalysisManager_a665bc102bb4e9288fa57d0df8f66bd51} 
+\index{AnalysisManager@{AnalysisManager}!setStepTree@{setStepTree}}
+\index{setStepTree@{setStepTree}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{setStepTree()}{setStepTree()}}
+{\footnotesize\ttfamily void Analysis\+Manager\+::set\+Step\+Tree (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8cpp_source_l00070}{70}} of file \mbox{\hyperlink{AnalysisManager_8cpp_source}{Analysis\+Manager.\+cpp}}.
+
+\Hypertarget{classAnalysisManager_a6402d53c04d1253b4f7e44567d0de38b}\label{classAnalysisManager_a6402d53c04d1253b4f7e44567d0de38b} 
+\index{AnalysisManager@{AnalysisManager}!setTrackID@{setTrackID}}
+\index{setTrackID@{setTrackID}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{setTrackID()}{setTrackID()}}
+{\footnotesize\ttfamily void Analysis\+Manager\+::set\+Track\+ID (\begin{DoxyParamCaption}\item[{const int}]{id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8h_source_l00091}{91}} of file \mbox{\hyperlink{AnalysisManager_8h_source}{Analysis\+Manager.\+h}}.
+
+\Hypertarget{classAnalysisManager_a579d746b94a67b6052e122ad89113f10}\label{classAnalysisManager_a579d746b94a67b6052e122ad89113f10} 
+\index{AnalysisManager@{AnalysisManager}!setTrackTree@{setTrackTree}}
+\index{setTrackTree@{setTrackTree}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{setTrackTree()}{setTrackTree()}}
+{\footnotesize\ttfamily void Analysis\+Manager\+::set\+Track\+Tree (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8cpp_source_l00050}{50}} of file \mbox{\hyperlink{AnalysisManager_8cpp_source}{Analysis\+Manager.\+cpp}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classAnalysisManager_ad5d678ab63ccec1ada0f50c6257b25ba}\label{classAnalysisManager_ad5d678ab63ccec1ada0f50c6257b25ba} 
+\index{AnalysisManager@{AnalysisManager}!eventID@{eventID}}
+\index{eventID@{eventID}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{eventID}{eventID}}
+{\footnotesize\ttfamily int Analysis\+Manager\+::event\+ID = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8h_source_l00067}{67}} of file \mbox{\hyperlink{AnalysisManager_8h_source}{Analysis\+Manager.\+h}}.
+
+\Hypertarget{classAnalysisManager_a6fd873adad5e97084a7b38f0cd524052}\label{classAnalysisManager_a6fd873adad5e97084a7b38f0cd524052} 
+\index{AnalysisManager@{AnalysisManager}!eventTuple@{eventTuple}}
+\index{eventTuple@{eventTuple}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{eventTuple}{eventTuple}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structEventTuple}{Event\+Tuple}} Analysis\+Manager\+::event\+Tuple\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8h_source_l00080}{80}} of file \mbox{\hyperlink{AnalysisManager_8h_source}{Analysis\+Manager.\+h}}.
+
+\Hypertarget{classAnalysisManager_a8abe5034df47f0db6322687826b17ce8}\label{classAnalysisManager_a8abe5034df47f0db6322687826b17ce8} 
+\index{AnalysisManager@{AnalysisManager}!fInstance@{fInstance}}
+\index{fInstance@{fInstance}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{fInstance}{fInstance}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classAnalysisManager}{Analysis\+Manager}} \texorpdfstring{$\ast$}{*} Analysis\+Manager\+::f\+Instance = nullptr\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8h_source_l00071}{71}} of file \mbox{\hyperlink{AnalysisManager_8h_source}{Analysis\+Manager.\+h}}.
+
+\Hypertarget{classAnalysisManager_aef71c76514216a61944d15814a3cc5ff}\label{classAnalysisManager_aef71c76514216a61944d15814a3cc5ff} 
+\index{AnalysisManager@{AnalysisManager}!mEventTree@{mEventTree}}
+\index{mEventTree@{mEventTree}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{mEventTree}{mEventTree}}
+{\footnotesize\ttfamily TTree\texorpdfstring{$\ast$}{*} Analysis\+Manager\+::m\+Event\+Tree\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8h_source_l00075}{75}} of file \mbox{\hyperlink{AnalysisManager_8h_source}{Analysis\+Manager.\+h}}.
+
+\Hypertarget{classAnalysisManager_a22fef115af19ffefcdf9de462873fc44}\label{classAnalysisManager_a22fef115af19ffefcdf9de462873fc44} 
+\index{AnalysisManager@{AnalysisManager}!mOutputFile@{mOutputFile}}
+\index{mOutputFile@{mOutputFile}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{mOutputFile}{mOutputFile}}
+{\footnotesize\ttfamily TFile\texorpdfstring{$\ast$}{*} Analysis\+Manager\+::m\+Output\+File\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8h_source_l00073}{73}} of file \mbox{\hyperlink{AnalysisManager_8h_source}{Analysis\+Manager.\+h}}.
+
+\Hypertarget{classAnalysisManager_a2269668097cd823b1f8f8d6cd0001202}\label{classAnalysisManager_a2269668097cd823b1f8f8d6cd0001202} 
+\index{AnalysisManager@{AnalysisManager}!mRunTree@{mRunTree}}
+\index{mRunTree@{mRunTree}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{mRunTree}{mRunTree}}
+{\footnotesize\ttfamily TTree\texorpdfstring{$\ast$}{*} Analysis\+Manager\+::m\+Run\+Tree\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8h_source_l00074}{74}} of file \mbox{\hyperlink{AnalysisManager_8h_source}{Analysis\+Manager.\+h}}.
+
+\Hypertarget{classAnalysisManager_acb7e30795142414551ef73ee31f77fdc}\label{classAnalysisManager_acb7e30795142414551ef73ee31f77fdc} 
+\index{AnalysisManager@{AnalysisManager}!mStepTree@{mStepTree}}
+\index{mStepTree@{mStepTree}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{mStepTree}{mStepTree}}
+{\footnotesize\ttfamily TTree\texorpdfstring{$\ast$}{*} Analysis\+Manager\+::m\+Step\+Tree\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8h_source_l00077}{77}} of file \mbox{\hyperlink{AnalysisManager_8h_source}{Analysis\+Manager.\+h}}.
+
+\Hypertarget{classAnalysisManager_aec2b272dbe6b379cbccb28021771a4be}\label{classAnalysisManager_aec2b272dbe6b379cbccb28021771a4be} 
+\index{AnalysisManager@{AnalysisManager}!mTrackTree@{mTrackTree}}
+\index{mTrackTree@{mTrackTree}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{mTrackTree}{mTrackTree}}
+{\footnotesize\ttfamily TTree\texorpdfstring{$\ast$}{*} Analysis\+Manager\+::m\+Track\+Tree\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8h_source_l00076}{76}} of file \mbox{\hyperlink{AnalysisManager_8h_source}{Analysis\+Manager.\+h}}.
+
+\Hypertarget{classAnalysisManager_a3cd9c3c857b4b347d00680d724e376bc}\label{classAnalysisManager_a3cd9c3c857b4b347d00680d724e376bc} 
+\index{AnalysisManager@{AnalysisManager}!runID@{runID}}
+\index{runID@{runID}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{runID}{runID}}
+{\footnotesize\ttfamily int Analysis\+Manager\+::run\+ID = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8h_source_l00066}{66}} of file \mbox{\hyperlink{AnalysisManager_8h_source}{Analysis\+Manager.\+h}}.
+
+\Hypertarget{classAnalysisManager_a30b13a70f986118a3fb17044ba0d2983}\label{classAnalysisManager_a30b13a70f986118a3fb17044ba0d2983} 
+\index{AnalysisManager@{AnalysisManager}!runTuple@{runTuple}}
+\index{runTuple@{runTuple}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{runTuple}{runTuple}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structRunTuple}{Run\+Tuple}} Analysis\+Manager\+::run\+Tuple\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8h_source_l00079}{79}} of file \mbox{\hyperlink{AnalysisManager_8h_source}{Analysis\+Manager.\+h}}.
+
+\Hypertarget{classAnalysisManager_abfecc0ed772d6f9c82bb177086a26bc1}\label{classAnalysisManager_abfecc0ed772d6f9c82bb177086a26bc1} 
+\index{AnalysisManager@{AnalysisManager}!stepID@{stepID}}
+\index{stepID@{stepID}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{stepID}{stepID}}
+{\footnotesize\ttfamily int Analysis\+Manager\+::step\+ID = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8h_source_l00069}{69}} of file \mbox{\hyperlink{AnalysisManager_8h_source}{Analysis\+Manager.\+h}}.
+
+\Hypertarget{classAnalysisManager_abc70455ac8c5d0481029844b89679a75}\label{classAnalysisManager_abc70455ac8c5d0481029844b89679a75} 
+\index{AnalysisManager@{AnalysisManager}!stepTuple@{stepTuple}}
+\index{stepTuple@{stepTuple}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{stepTuple}{stepTuple}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structStepTuple}{Step\+Tuple}} Analysis\+Manager\+::step\+Tuple\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8h_source_l00082}{82}} of file \mbox{\hyperlink{AnalysisManager_8h_source}{Analysis\+Manager.\+h}}.
+
+\Hypertarget{classAnalysisManager_a75537321c9675acc15b67f9d13c71a70}\label{classAnalysisManager_a75537321c9675acc15b67f9d13c71a70} 
+\index{AnalysisManager@{AnalysisManager}!trackID@{trackID}}
+\index{trackID@{trackID}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{trackID}{trackID}}
+{\footnotesize\ttfamily int Analysis\+Manager\+::track\+ID = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8h_source_l00068}{68}} of file \mbox{\hyperlink{AnalysisManager_8h_source}{Analysis\+Manager.\+h}}.
+
+\Hypertarget{classAnalysisManager_aa24f166b7c90af20e9cd75840c8b9573}\label{classAnalysisManager_aa24f166b7c90af20e9cd75840c8b9573} 
+\index{AnalysisManager@{AnalysisManager}!trackTuple@{trackTuple}}
+\index{trackTuple@{trackTuple}!AnalysisManager@{AnalysisManager}}
+\doxysubsubsection{\texorpdfstring{trackTuple}{trackTuple}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structTrackTuple}{Track\+Tuple}} Analysis\+Manager\+::track\+Tuple\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{AnalysisManager_8h_source_l00081}{81}} of file \mbox{\hyperlink{AnalysisManager_8h_source}{Analysis\+Manager.\+h}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/ychoi/\+ATOM/geant4/main/inc/\mbox{\hyperlink{AnalysisManager_8h}{Analysis\+Manager.\+h}}\item 
+/home/ychoi/\+ATOM/geant4/main/src/\mbox{\hyperlink{AnalysisManager_8cpp}{Analysis\+Manager.\+cpp}}\end{DoxyCompactItemize}

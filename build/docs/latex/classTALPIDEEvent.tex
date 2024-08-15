@@ -1,0 +1,290 @@
+\doxysection{TALPIDEEvent Class Reference}
+\hypertarget{classTALPIDEEvent}{}\label{classTALPIDEEvent}\index{TALPIDEEvent@{TALPIDEEvent}}
+
+
+{\ttfamily \#include $<$TALPIDEEvent.\+h$>$}
+
+Inheritance diagram for TALPIDEEvent\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classTALPIDEEvent}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \{ \mbox{\hyperlink{classTALPIDEEvent_ad72eb1028c5c8b11a61659cae86ac2fba96967e437fe05c8bec1aa19a74367fe3}{k\+Not\+Deleted}} = 0x02000000
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classTALPIDEEvent_a62aac7218438766f3a83f4ea31eb94a6}{TALPIDEEvent}} ()
+\item 
+\mbox{\hyperlink{classTALPIDEEvent_a7d5998ce890c1d32ec80da70856d88c4}{TALPIDEEvent}} (const \mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}} \&copy)
+\item 
+\mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}} \& \mbox{\hyperlink{classTALPIDEEvent_afd6f53f87002ba183ddaa88d61367dc7}{operator=}} (const \mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}} \&copy)
+\item 
+\mbox{\hyperlink{classTALPIDEEvent_ac9128b25f47916b168f0a96aaa62cd12}{TALPIDEEvent}} (\mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}} \&\&move)
+\item 
+\mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}} \& \mbox{\hyperlink{classTALPIDEEvent_aad4334e0e3606a46eaf300a8dfd6a1cc}{operator=}} (\mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}} \&\&move)
+\item 
+void \mbox{\hyperlink{classTALPIDEEvent_a172ccf66acf7092114eb40949906de05}{set\+Time}} (const long int time)
+\item 
+const long int \mbox{\hyperlink{classTALPIDEEvent_a22a08b6232d640739322c2d1a995d3b2}{get\+Time}} () const
+\item 
+const std\+::vector$<$ std\+::pair$<$ int, int $>$ $>$ \& \mbox{\hyperlink{classTALPIDEEvent_a6ab3ca13dc8fa60e65ad02392569b9d7}{get\+Data}} () const
+\item 
+void \mbox{\hyperlink{classTALPIDEEvent_aa10872964bcfc23f08ac16b90d01e970}{remove\+Pixel}} (const std\+::pair$<$ int, int $>$ \&coordinate)
+\item 
+void \mbox{\hyperlink{classTALPIDEEvent_a94d8244426217816ac281c1965a65cbb}{push\+Data}} (const std\+::pair$<$ int, int $>$ \&coordinate)
+\item 
+void \mbox{\hyperlink{classTALPIDEEvent_a3e6a7277e0a3929daeb64dd04ff4db77}{remove\+Duplication}} ()
+\item 
+void \mbox{\hyperlink{classTALPIDEEvent_a896147b6dcd59ddc4681f7fe8008905a}{sort\+Pixel}} ()
+\item 
+const int \mbox{\hyperlink{classTALPIDEEvent_a8c00decbb334e2967e34af3f749728d8}{get\+NData}} () const
+\item 
+bool \mbox{\hyperlink{classTALPIDEEvent_a7e840adec822572c84d10ece838c4f24}{Is\+Destructed}} () const
+\item 
+bool \mbox{\hyperlink{classTALPIDEEvent_a85025dc047d06d439a5a2a5f57afdc44}{Test\+Bit}} (unsigned int f) const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classTEvent}{TEvent}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classTEvent_ae7a4c7281e6195bc47af7227f7ddaa55}{TEvent}} ()
+\item 
+virtual \mbox{\hyperlink{classTEvent_abe1f2bbb53810903db086bfaa942c770}{\texorpdfstring{$\sim$}{\string~}\+TEvent}} ()
+\item 
+void \mbox{\hyperlink{classTEvent_a65aa45f0a4ffc353f0b0a016a1974623}{set\+Event}} (const int event)
+\item 
+const int \mbox{\hyperlink{classTEvent_af04919c8b1ad5edc164811f9fe3990aa}{get\+Event}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+long int \mbox{\hyperlink{classTALPIDEEvent_a06ecb205148e2c6b5bfddd2881f9c8b4}{i\+Time}}
+\item 
+std\+::vector$<$ std\+::pair$<$ int, int $>$ $>$ \mbox{\hyperlink{classTALPIDEEvent_a147421da75ebcdf40f2671ff167027b5}{data}}
+\item 
+unsigned int \mbox{\hyperlink{classTALPIDEEvent_ae3a42778be8aa6fb872a0153e303bb49}{f\+Bits}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{TALPIDEEvent_8h_source_l00014}{14}} of file \mbox{\hyperlink{TALPIDEEvent_8h_source}{TALPIDEEvent.\+h}}.
+
+
+
+\doxysubsection{Member Enumeration Documentation}
+\Hypertarget{classTALPIDEEvent_ad72eb1028c5c8b11a61659cae86ac2fb}\label{classTALPIDEEvent_ad72eb1028c5c8b11a61659cae86ac2fb} 
+\doxysubsubsection{\texorpdfstring{anonymous enum}{anonymous enum}}
+{\footnotesize\ttfamily anonymous enum}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kNotDeleted@{kNotDeleted}!TALPIDEEvent@{TALPIDEEvent}}\index{TALPIDEEvent@{TALPIDEEvent}!kNotDeleted@{kNotDeleted}}}\Hypertarget{classTALPIDEEvent_ad72eb1028c5c8b11a61659cae86ac2fba96967e437fe05c8bec1aa19a74367fe3}\label{classTALPIDEEvent_ad72eb1028c5c8b11a61659cae86ac2fba96967e437fe05c8bec1aa19a74367fe3} 
+k\+Not\+Deleted&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{TALPIDEEvent_8h_source_l00043}{43}} of file \mbox{\hyperlink{TALPIDEEvent_8h_source}{TALPIDEEvent.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classTALPIDEEvent_a62aac7218438766f3a83f4ea31eb94a6}\label{classTALPIDEEvent_a62aac7218438766f3a83f4ea31eb94a6} 
+\index{TALPIDEEvent@{TALPIDEEvent}!TALPIDEEvent@{TALPIDEEvent}}
+\index{TALPIDEEvent@{TALPIDEEvent}!TALPIDEEvent@{TALPIDEEvent}}
+\doxysubsubsection{\texorpdfstring{TALPIDEEvent()}{TALPIDEEvent()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily TALPIDEEvent\+::\+TALPIDEEvent (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEEvent_8cpp_source_l00004}{4}} of file \mbox{\hyperlink{TALPIDEEvent_8cpp_source}{TALPIDEEvent.\+cpp}}.
+
+\Hypertarget{classTALPIDEEvent_a7d5998ce890c1d32ec80da70856d88c4}\label{classTALPIDEEvent_a7d5998ce890c1d32ec80da70856d88c4} 
+\index{TALPIDEEvent@{TALPIDEEvent}!TALPIDEEvent@{TALPIDEEvent}}
+\index{TALPIDEEvent@{TALPIDEEvent}!TALPIDEEvent@{TALPIDEEvent}}
+\doxysubsubsection{\texorpdfstring{TALPIDEEvent()}{TALPIDEEvent()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily TALPIDEEvent\+::\+TALPIDEEvent (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}} \&}]{copy }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEEvent_8cpp_source_l00006}{6}} of file \mbox{\hyperlink{TALPIDEEvent_8cpp_source}{TALPIDEEvent.\+cpp}}.
+
+\Hypertarget{classTALPIDEEvent_ac9128b25f47916b168f0a96aaa62cd12}\label{classTALPIDEEvent_ac9128b25f47916b168f0a96aaa62cd12} 
+\index{TALPIDEEvent@{TALPIDEEvent}!TALPIDEEvent@{TALPIDEEvent}}
+\index{TALPIDEEvent@{TALPIDEEvent}!TALPIDEEvent@{TALPIDEEvent}}
+\doxysubsubsection{\texorpdfstring{TALPIDEEvent()}{TALPIDEEvent()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily TALPIDEEvent\+::\+TALPIDEEvent (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}} \&\&}]{move }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEEvent_8cpp_source_l00019}{19}} of file \mbox{\hyperlink{TALPIDEEvent_8cpp_source}{TALPIDEEvent.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classTALPIDEEvent_a6ab3ca13dc8fa60e65ad02392569b9d7}\label{classTALPIDEEvent_a6ab3ca13dc8fa60e65ad02392569b9d7} 
+\index{TALPIDEEvent@{TALPIDEEvent}!getData@{getData}}
+\index{getData@{getData}!TALPIDEEvent@{TALPIDEEvent}}
+\doxysubsubsection{\texorpdfstring{getData()}{getData()}}
+{\footnotesize\ttfamily const std\+::vector$<$ std\+::pair$<$ int, int $>$ $>$ \& TALPIDEEvent\+::get\+Data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEEvent_8cpp_source_l00052}{52}} of file \mbox{\hyperlink{TALPIDEEvent_8cpp_source}{TALPIDEEvent.\+cpp}}.
+
+\Hypertarget{classTALPIDEEvent_a8c00decbb334e2967e34af3f749728d8}\label{classTALPIDEEvent_a8c00decbb334e2967e34af3f749728d8} 
+\index{TALPIDEEvent@{TALPIDEEvent}!getNData@{getNData}}
+\index{getNData@{getNData}!TALPIDEEvent@{TALPIDEEvent}}
+\doxysubsubsection{\texorpdfstring{getNData()}{getNData()}}
+{\footnotesize\ttfamily const int TALPIDEEvent\+::get\+NData (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEEvent_8cpp_source_l00087}{87}} of file \mbox{\hyperlink{TALPIDEEvent_8cpp_source}{TALPIDEEvent.\+cpp}}.
+
+\Hypertarget{classTALPIDEEvent_a22a08b6232d640739322c2d1a995d3b2}\label{classTALPIDEEvent_a22a08b6232d640739322c2d1a995d3b2} 
+\index{TALPIDEEvent@{TALPIDEEvent}!getTime@{getTime}}
+\index{getTime@{getTime}!TALPIDEEvent@{TALPIDEEvent}}
+\doxysubsubsection{\texorpdfstring{getTime()}{getTime()}}
+{\footnotesize\ttfamily const long int TALPIDEEvent\+::get\+Time (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEEvent_8cpp_source_l00048}{48}} of file \mbox{\hyperlink{TALPIDEEvent_8cpp_source}{TALPIDEEvent.\+cpp}}.
+
+\Hypertarget{classTALPIDEEvent_a7e840adec822572c84d10ece838c4f24}\label{classTALPIDEEvent_a7e840adec822572c84d10ece838c4f24} 
+\index{TALPIDEEvent@{TALPIDEEvent}!IsDestructed@{IsDestructed}}
+\index{IsDestructed@{IsDestructed}!TALPIDEEvent@{TALPIDEEvent}}
+\doxysubsubsection{\texorpdfstring{IsDestructed()}{IsDestructed()}}
+{\footnotesize\ttfamily bool TALPIDEEvent\+::\+Is\+Destructed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEEvent_8h_source_l00046}{46}} of file \mbox{\hyperlink{TALPIDEEvent_8h_source}{TALPIDEEvent.\+h}}.
+
+\Hypertarget{classTALPIDEEvent_afd6f53f87002ba183ddaa88d61367dc7}\label{classTALPIDEEvent_afd6f53f87002ba183ddaa88d61367dc7} 
+\index{TALPIDEEvent@{TALPIDEEvent}!operator=@{operator=}}
+\index{operator=@{operator=}!TALPIDEEvent@{TALPIDEEvent}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}} \& TALPIDEEvent\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}} \&}]{copy }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEEvent_8cpp_source_l00011}{11}} of file \mbox{\hyperlink{TALPIDEEvent_8cpp_source}{TALPIDEEvent.\+cpp}}.
+
+\Hypertarget{classTALPIDEEvent_aad4334e0e3606a46eaf300a8dfd6a1cc}\label{classTALPIDEEvent_aad4334e0e3606a46eaf300a8dfd6a1cc} 
+\index{TALPIDEEvent@{TALPIDEEvent}!operator=@{operator=}}
+\index{operator=@{operator=}!TALPIDEEvent@{TALPIDEEvent}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}} \& TALPIDEEvent\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}} \&\&}]{move }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEEvent_8cpp_source_l00028}{28}} of file \mbox{\hyperlink{TALPIDEEvent_8cpp_source}{TALPIDEEvent.\+cpp}}.
+
+\Hypertarget{classTALPIDEEvent_a94d8244426217816ac281c1965a65cbb}\label{classTALPIDEEvent_a94d8244426217816ac281c1965a65cbb} 
+\index{TALPIDEEvent@{TALPIDEEvent}!pushData@{pushData}}
+\index{pushData@{pushData}!TALPIDEEvent@{TALPIDEEvent}}
+\doxysubsubsection{\texorpdfstring{pushData()}{pushData()}}
+{\footnotesize\ttfamily void TALPIDEEvent\+::push\+Data (\begin{DoxyParamCaption}\item[{const std\+::pair$<$ int, int $>$ \&}]{coordinate }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEEvent_8cpp_source_l00044}{44}} of file \mbox{\hyperlink{TALPIDEEvent_8cpp_source}{TALPIDEEvent.\+cpp}}.
+
+\Hypertarget{classTALPIDEEvent_a3e6a7277e0a3929daeb64dd04ff4db77}\label{classTALPIDEEvent_a3e6a7277e0a3929daeb64dd04ff4db77} 
+\index{TALPIDEEvent@{TALPIDEEvent}!removeDuplication@{removeDuplication}}
+\index{removeDuplication@{removeDuplication}!TALPIDEEvent@{TALPIDEEvent}}
+\doxysubsubsection{\texorpdfstring{removeDuplication()}{removeDuplication()}}
+{\footnotesize\ttfamily void TALPIDEEvent\+::remove\+Duplication (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEEvent_8cpp_source_l00060}{60}} of file \mbox{\hyperlink{TALPIDEEvent_8cpp_source}{TALPIDEEvent.\+cpp}}.
+
+\Hypertarget{classTALPIDEEvent_aa10872964bcfc23f08ac16b90d01e970}\label{classTALPIDEEvent_aa10872964bcfc23f08ac16b90d01e970} 
+\index{TALPIDEEvent@{TALPIDEEvent}!removePixel@{removePixel}}
+\index{removePixel@{removePixel}!TALPIDEEvent@{TALPIDEEvent}}
+\doxysubsubsection{\texorpdfstring{removePixel()}{removePixel()}}
+{\footnotesize\ttfamily void TALPIDEEvent\+::remove\+Pixel (\begin{DoxyParamCaption}\item[{const std\+::pair$<$ int, int $>$ \&}]{coordinate }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEEvent_8cpp_source_l00056}{56}} of file \mbox{\hyperlink{TALPIDEEvent_8cpp_source}{TALPIDEEvent.\+cpp}}.
+
+\Hypertarget{classTALPIDEEvent_a172ccf66acf7092114eb40949906de05}\label{classTALPIDEEvent_a172ccf66acf7092114eb40949906de05} 
+\index{TALPIDEEvent@{TALPIDEEvent}!setTime@{setTime}}
+\index{setTime@{setTime}!TALPIDEEvent@{TALPIDEEvent}}
+\doxysubsubsection{\texorpdfstring{setTime()}{setTime()}}
+{\footnotesize\ttfamily void TALPIDEEvent\+::set\+Time (\begin{DoxyParamCaption}\item[{const long int}]{time }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEEvent_8cpp_source_l00040}{40}} of file \mbox{\hyperlink{TALPIDEEvent_8cpp_source}{TALPIDEEvent.\+cpp}}.
+
+\Hypertarget{classTALPIDEEvent_a896147b6dcd59ddc4681f7fe8008905a}\label{classTALPIDEEvent_a896147b6dcd59ddc4681f7fe8008905a} 
+\index{TALPIDEEvent@{TALPIDEEvent}!sortPixel@{sortPixel}}
+\index{sortPixel@{sortPixel}!TALPIDEEvent@{TALPIDEEvent}}
+\doxysubsubsection{\texorpdfstring{sortPixel()}{sortPixel()}}
+{\footnotesize\ttfamily void TALPIDEEvent\+::sort\+Pixel (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEEvent_8cpp_source_l00078}{78}} of file \mbox{\hyperlink{TALPIDEEvent_8cpp_source}{TALPIDEEvent.\+cpp}}.
+
+\Hypertarget{classTALPIDEEvent_a85025dc047d06d439a5a2a5f57afdc44}\label{classTALPIDEEvent_a85025dc047d06d439a5a2a5f57afdc44} 
+\index{TALPIDEEvent@{TALPIDEEvent}!TestBit@{TestBit}}
+\index{TestBit@{TestBit}!TALPIDEEvent@{TALPIDEEvent}}
+\doxysubsubsection{\texorpdfstring{TestBit()}{TestBit()}}
+{\footnotesize\ttfamily bool TALPIDEEvent\+::\+Test\+Bit (\begin{DoxyParamCaption}\item[{unsigned int}]{f }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEEvent_8h_source_l00047}{47}} of file \mbox{\hyperlink{TALPIDEEvent_8h_source}{TALPIDEEvent.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classTALPIDEEvent_a147421da75ebcdf40f2671ff167027b5}\label{classTALPIDEEvent_a147421da75ebcdf40f2671ff167027b5} 
+\index{TALPIDEEvent@{TALPIDEEvent}!data@{data}}
+\index{data@{data}!TALPIDEEvent@{TALPIDEEvent}}
+\doxysubsubsection{\texorpdfstring{data}{data}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::pair$<$int, int$>$ $>$ TALPIDEEvent\+::data\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEEvent_8h_source_l00017}{17}} of file \mbox{\hyperlink{TALPIDEEvent_8h_source}{TALPIDEEvent.\+h}}.
+
+\Hypertarget{classTALPIDEEvent_ae3a42778be8aa6fb872a0153e303bb49}\label{classTALPIDEEvent_ae3a42778be8aa6fb872a0153e303bb49} 
+\index{TALPIDEEvent@{TALPIDEEvent}!fBits@{fBits}}
+\index{fBits@{fBits}!TALPIDEEvent@{TALPIDEEvent}}
+\doxysubsubsection{\texorpdfstring{fBits}{fBits}}
+{\footnotesize\ttfamily unsigned int TALPIDEEvent\+::f\+Bits\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEEvent_8h_source_l00041}{41}} of file \mbox{\hyperlink{TALPIDEEvent_8h_source}{TALPIDEEvent.\+h}}.
+
+\Hypertarget{classTALPIDEEvent_a06ecb205148e2c6b5bfddd2881f9c8b4}\label{classTALPIDEEvent_a06ecb205148e2c6b5bfddd2881f9c8b4} 
+\index{TALPIDEEvent@{TALPIDEEvent}!iTime@{iTime}}
+\index{iTime@{iTime}!TALPIDEEvent@{TALPIDEEvent}}
+\doxysubsubsection{\texorpdfstring{iTime}{iTime}}
+{\footnotesize\ttfamily long int TALPIDEEvent\+::i\+Time\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEEvent_8h_source_l00016}{16}} of file \mbox{\hyperlink{TALPIDEEvent_8h_source}{TALPIDEEvent.\+h}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/ychoi/\+ATOM/alpide/daq/inc/\mbox{\hyperlink{TALPIDEEvent_8h}{TALPIDEEvent.\+h}}\item 
+/home/ychoi/\+ATOM/alpide/daq/src/\mbox{\hyperlink{TALPIDEEvent_8cpp}{TALPIDEEvent.\+cpp}}\end{DoxyCompactItemize}

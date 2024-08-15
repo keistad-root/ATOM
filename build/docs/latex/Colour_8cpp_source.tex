@@ -1,0 +1,55 @@
+\doxysection{Colour.\+cpp}
+\hypertarget{Colour_8cpp_source}{}\label{Colour_8cpp_source}\index{/home/ychoi/ATOM/geant4/main/src/Colour.cpp@{/home/ychoi/ATOM/geant4/main/src/Colour.cpp}}
+\mbox{\hyperlink{Colour_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00001}\mbox{\hyperlink{Colour_8cpp_a9b89b57403de13fc9c07a4fc18b2b04e}{00001}}\ \textcolor{preprocessor}{\#define\ \_\_COLOUR\_HEADER\_\_}}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{Colour_8h}{Colour.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00004}\mbox{\hyperlink{classColour_a46612b9524fcd4cee818af6a86b7a4d2}{00004}}\ \mbox{\hyperlink{classColour_a46612b9524fcd4cee818af6a86b7a4d2}{Colour::Colour}}()\ \{}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00005}00005\ \ \ \ \ \mbox{\hyperlink{classColour_a0ef96a5f31d19abc0c97f7c50a378439}{setStandColour}}();}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00006}00006\ \ \ \ \ \mbox{\hyperlink{classColour_aa9d2d03dbc236236e9c9533c52039807}{setScreenColour}}();}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00007}00007\ \ \ \ \ \mbox{\hyperlink{classColour_aed4285be03e58b69e9a9ec76a6c1924a}{setAlpideColour}}();}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00008}00008\ \ \ \ \ \mbox{\hyperlink{classColour_a0f8c61b344facdd0a1539c0a5201c3c9}{setBoardColour}}();}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00009}00009\ \}}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00011}\mbox{\hyperlink{classColour_a0ef96a5f31d19abc0c97f7c50a378439}{00011}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classColour_a0ef96a5f31d19abc0c97f7c50a378439}{Colour::setStandColour}}()\ \{}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00012}00012\ \ \ \ \ \mbox{\hyperlink{classColour_a3e7d0b396a6198c2acfeac0227848be4}{standColour}}\ =\ \textcolor{keyword}{new}\ G4VisAttributes(G4Colour(1.,\ 1.,\ 1.));}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00013}00013\ \ \ \ \ \mbox{\hyperlink{classColour_a3e7d0b396a6198c2acfeac0227848be4}{standColour}}-\/>SetVisibility(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00014}00014\ \ \ \ \ \mbox{\hyperlink{classColour_a3e7d0b396a6198c2acfeac0227848be4}{standColour}}-\/>SetForceSolid(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00015}00015\ \}}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00017}\mbox{\hyperlink{classColour_aa9d2d03dbc236236e9c9533c52039807}{00017}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classColour_aa9d2d03dbc236236e9c9533c52039807}{Colour::setScreenColour}}()\ \{}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00018}00018\ \ \ \ \ \mbox{\hyperlink{classColour_a48d857cc97d46c0885169c4e9dc5f080}{screenColour}}\ =\ \textcolor{keyword}{new}\ G4VisAttributes(G4Colour(211\ /\ 255.,\ 211\ /\ 255.,\ 211\ /\ 255.));}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00019}00019\ \ \ \ \ \mbox{\hyperlink{classColour_a48d857cc97d46c0885169c4e9dc5f080}{screenColour}}-\/>SetVisibility(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00020}00020\ \ \ \ \ \mbox{\hyperlink{classColour_a48d857cc97d46c0885169c4e9dc5f080}{screenColour}}-\/>SetForceSolid(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00021}00021\ \}}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00023}\mbox{\hyperlink{classColour_aed4285be03e58b69e9a9ec76a6c1924a}{00023}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classColour_aed4285be03e58b69e9a9ec76a6c1924a}{Colour::setAlpideColour}}()\ \{}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00024}00024\ \ \ \ \ \mbox{\hyperlink{classColour_ac6d938aa646487b0f0fafd22ffbb22a0}{alpideColour}}\ =\ \textcolor{keyword}{new}\ G4VisAttributes(G4Colour(1.,\ 1.,\ 0.));}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00025}00025\ \ \ \ \ \mbox{\hyperlink{classColour_ac6d938aa646487b0f0fafd22ffbb22a0}{alpideColour}}-\/>SetVisibility(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00026}00026\ \ \ \ \ \mbox{\hyperlink{classColour_ac6d938aa646487b0f0fafd22ffbb22a0}{alpideColour}}-\/>SetForceSolid(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00027}00027\ \}}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00029}\mbox{\hyperlink{classColour_a0f8c61b344facdd0a1539c0a5201c3c9}{00029}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classColour_a0f8c61b344facdd0a1539c0a5201c3c9}{Colour::setBoardColour}}()\ \{}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00030}00030\ \ \ \ \ \mbox{\hyperlink{classColour_a99817dda4e75a89d0ac6ec16afa40b42}{boardColour}}\ =\ \textcolor{keyword}{new}\ G4VisAttributes(G4Colour(0\ /\ 255.,\ 100\ /\ 255.,\ 0\ /\ 255.));}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00031}00031\ \ \ \ \ \mbox{\hyperlink{classColour_a99817dda4e75a89d0ac6ec16afa40b42}{boardColour}}-\/>SetVisibility(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00032}00032\ \ \ \ \ \mbox{\hyperlink{classColour_a99817dda4e75a89d0ac6ec16afa40b42}{boardColour}}-\/>SetForceSolid(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00033}00033\ \}}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00034}00034\ }
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00035}\mbox{\hyperlink{classColour_a5e80e0cdfc0183dbc93f491fa383cc2e}{00035}}\ G4VisAttributes*\ \mbox{\hyperlink{classColour_a5e80e0cdfc0183dbc93f491fa383cc2e}{Colour::getStandColour}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00036}00036\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classColour_a3e7d0b396a6198c2acfeac0227848be4}{standColour}};}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00037}00037\ \}}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00039}\mbox{\hyperlink{classColour_a92bf4bb0e441b2ae29e9f2318d69ae66}{00039}}\ G4VisAttributes*\ \mbox{\hyperlink{classColour_a92bf4bb0e441b2ae29e9f2318d69ae66}{Colour::getScreenColour}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00040}00040\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classColour_a48d857cc97d46c0885169c4e9dc5f080}{screenColour}};}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00041}00041\ \}}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00043}\mbox{\hyperlink{classColour_a0c40c1931a89bbf1718f995f22a9278b}{00043}}\ G4VisAttributes*\ \mbox{\hyperlink{classColour_a0c40c1931a89bbf1718f995f22a9278b}{Colour::getAlpideColour}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00044}00044\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classColour_ac6d938aa646487b0f0fafd22ffbb22a0}{alpideColour}};}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00045}00045\ \}}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00047}\mbox{\hyperlink{classColour_a43476890197eba68ed7cb53e8ac71c2c}{00047}}\ G4VisAttributes*\ \mbox{\hyperlink{classColour_a43476890197eba68ed7cb53e8ac71c2c}{Colour::getBoardColour}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00048}00048\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classColour_a99817dda4e75a89d0ac6ec16afa40b42}{boardColour}};}
+\DoxyCodeLine{\Hypertarget{Colour_8cpp_source_l00049}00049\ \}}
+
+\end{DoxyCode}

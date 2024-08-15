@@ -1,0 +1,133 @@
+\doxysection{simulation.\+cpp}
+\hypertarget{simulation_8cpp_source}{}\label{simulation_8cpp_source}\index{/home/ychoi/ATOM/exe/simulation.cpp@{/home/ychoi/ATOM/exe/simulation.cpp}}
+\mbox{\hyperlink{simulation_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}Randomize.hh"{}}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}G4RunManager.hh"{}}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}QBBC.hh"{}}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}G4SystemOfUnits.hh"{}}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}G4ParticleTable.hh"{}}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}G4SingleParticleSource.hh"{}}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00008}00008\ \textcolor{preprocessor}{\#include\ "{}G4GeneralParticleSource.hh"{}}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{DetectorConstruction_8h}{DetectorConstruction.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00011}00011\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{ActionInitialization_8h}{ActionInitialization.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{AnalysisManager_8h}{AnalysisManager.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00014}00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{CppConfigFile_8h}{CppConfigFile.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00015}00015\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cppargs_8h}{cppargs.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00016}00016\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cppUnit_8h}{cppUnit.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00017}00017\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cppTimer_8h}{cppTimer.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00019}\mbox{\hyperlink{simulation_8cpp_aab44b1dab240272ed0bee958aa729f94}{00019}}\ \mbox{\hyperlink{classArgumentParser}{ArgumentParser}}\ \mbox{\hyperlink{simulation_8cpp_aab44b1dab240272ed0bee958aa729f94}{set\_parse}}(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}**\ argv)\ \{}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00020}00020\ \ \ \ \ \mbox{\hyperlink{classArgumentParser}{ArgumentParser}}\ parser\ =\ \mbox{\hyperlink{classArgumentParser}{ArgumentParser}}(argc,\ argv).\mbox{\hyperlink{classArgumentParser_a2d7ea458fda2ee2f00e75ab20bf99680}{setDescription}}(\textcolor{stringliteral}{"{}Draw\ plots\ for\ analysis\ data"{}});}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00021}00021\ \ \ \ \ parser.\mbox{\hyperlink{classArgumentParser_af00214a4cc011bc62671b65bc99b7e70}{add\_argument}}(\textcolor{stringliteral}{"{}-\/-\/config"{}}).\mbox{\hyperlink{classArgumentParser_a3dff4221e1ae41df3a9b48bca9c8f53f}{add\_minor\_argument}}(\textcolor{stringliteral}{"{}-\/c"{}}).\mbox{\hyperlink{classArgumentParser_a7cac3ec87e9c8800c373bbf064a6509a}{help}}(\textcolor{stringliteral}{"{}Config\ file\ for\ controling\ simulation"{}}).\mbox{\hyperlink{classArgumentParser_ac057f9c338901af3c6416fdc9e19b043}{set\_default}}(\textcolor{stringliteral}{"{}"{}}).\mbox{\hyperlink{classArgumentParser_ac3096e6e13298ac6c77607f5569d2e71}{add\_finish}}();}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00022}00022\ \ \ \ \ parser.\mbox{\hyperlink{classArgumentParser_af2c0b3751dd75a8524f20076f61c9bcf}{parse\_args}}();}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00023}00023\ \ \ \ \ \textcolor{keywordflow}{return}\ parser;}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00024}00024\ \}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00026}\mbox{\hyperlink{simulation_8cpp_a12b88a3888c941c8b8cf66f20b2200c8}{00026}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{simulation_8cpp_a12b88a3888c941c8b8cf66f20b2200c8}{DetectorConstruct}}(\mbox{\hyperlink{classDetectorConstruction}{DetectorConstruction}}*\ detectorConstructor,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\&\ config)\ \{}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00027}00027\ \ \ \ \ \textcolor{keywordtype}{double}\ airPressure\ =\ \mbox{\hyperlink{classQuantity}{Quantity}}(config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}air\_pressure"{}})).\mbox{\hyperlink{classQuantity_a83e20101221a51142bc18073e44d901b}{getNum}}(\textcolor{stringliteral}{"{}bar"{}});}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00028}00028\ \ \ \ \ detectorConstructor-\/>\mbox{\hyperlink{classDetectorConstruction_a07842c0a697e12607f46a6b9b6cfe6de}{SetWorld}}(airPressure);}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00030}00030\ \ \ \ \ \textcolor{keywordtype}{double}\ hallDiameter\ =\ \mbox{\hyperlink{classQuantity}{Quantity}}(config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}hall\_diameter"{}})).\mbox{\hyperlink{classQuantity_a83e20101221a51142bc18073e44d901b}{getNum}}(\textcolor{stringliteral}{"{}mm"{}});}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00031}00031\ \ \ \ \ std::string\ standType\ =\ config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}stand\_type"{}});}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00032}00032\ \ \ \ \ detectorConstructor-\/>\mbox{\hyperlink{classDetectorConstruction_ab67f421f74fe03ed0c17eea2189620be}{SetStand}}(standType,\ hallDiameter);}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00033}00033\ }
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00034}00034\ \ \ \ \ \textcolor{keywordtype}{double}\ shieldWidth\ =\ \mbox{\hyperlink{classQuantity}{Quantity}}(config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}shield\_width"{}})).\mbox{\hyperlink{classQuantity_a83e20101221a51142bc18073e44d901b}{getNum}}(\textcolor{stringliteral}{"{}mm"{}});}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00035}00035\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ !(shieldWidth\ <\ 0.001)\ )\ \{}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00036}00036\ \ \ \ \ \ \ \ \ detectorConstructor-\/>\mbox{\hyperlink{classDetectorConstruction_a6218da812bd8aab3ea4de37ed175e365}{SetShield}}(shieldWidth);}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00037}00037\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00038}00038\ }
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00039}00039\ \ \ \ \ std::string\ alpideType\ =\ config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}alpide\_type"{}});}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00040}00040\ \ \ \ \ detectorConstructor-\/>\mbox{\hyperlink{classDetectorConstruction_a1a9544db8d5f268f402e9fb6da23fa3d}{SetALPIDE}}(alpideType);}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00042}00042\ \ \ \ \ \textcolor{keywordtype}{double}\ distance\ =\ \mbox{\hyperlink{classQuantity}{Quantity}}(config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}distance"{}})).\mbox{\hyperlink{classQuantity_a83e20101221a51142bc18073e44d901b}{getNum}}(\textcolor{stringliteral}{"{}mm"{}});}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00043}00043\ \ \ \ \ detectorConstructor-\/>\mbox{\hyperlink{classDetectorConstruction_a662c618480b345a747f014b845d5ffdf}{Construct}}(standType,\ distance);}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00044}00044\ \}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00045}00045\ }
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00046}\mbox{\hyperlink{simulation_8cpp_a06f401a25885c960dbec5a07203b1d10}{00046}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{simulation_8cpp_a06f401a25885c960dbec5a07203b1d10}{SetParticleSource}}(G4SingleParticleSource*\ particleGun,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\&\ config)\ \{}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00047}00047\ \ \ \ \ G4ParticleTable*\ particleTable\ =\ G4ParticleTable::GetParticleTable();}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00048}00048\ \ \ \ \ std::string\ particleType\ =\ config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}particle\_type"{}});}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00049}00049\ \ \ \ \ G4ParticleDefinition*\ particleDefinition\ =\ particleTable-\/>FindParticle(particleType);}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00050}00050\ \ \ \ \ particleGun-\/>SetParticleDefinition(particleDefinition);\ \textcolor{comment}{//\ /gps/particle\ alpha}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00051}00051\ \ \ \ \ particleGun-\/>GetPosDist()-\/>SetPosDisType(\textcolor{stringliteral}{"{}Plane"{}});\ \textcolor{comment}{//\ /gps/pos/type\ Plane}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00052}00052\ \ \ \ \ particleGun-\/>GetPosDist()-\/>SetPosDisShape(\textcolor{stringliteral}{"{}Circle"{}});\ \textcolor{comment}{//\ /gps/pos/shape}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00053}00053\ \ \ \ \ particleGun-\/>GetPosDist()-\/>SetRadius(2.5\ *\ mm);\ \textcolor{comment}{//\ /gps/pos/radius\ 2.5\ *\ mm}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00054}00054\ \ \ \ \ particleGun-\/>GetPosDist()-\/>SetPosRot1(G4ThreeVector(0.,\ 0.,\ 1.));\ \textcolor{comment}{//\ /gps/pos/rot1\ 0.\ 0.\ 1.}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00055}00055\ \ \ \ \ particleGun-\/>GetPosDist()-\/>SetPosRot2(G4ThreeVector(1.,\ 0.,\ 0.));\ \textcolor{comment}{//\ /gps/pos/rot2\ 1.\ 0.\ 0.}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00056}00056\ \ \ \ \ particleGun-\/>GetAngDist()-\/>SetAngDistType(\textcolor{stringliteral}{"{}iso"{}});\ \textcolor{comment}{//\ /gps/ang/type\ iso}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00057}00057\ \ \ \ \ particleGun-\/>GetEneDist()-\/>SetEnergyDisType(\textcolor{stringliteral}{"{}Mono"{}});}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00058}00058\ \ \ \ \ particleGun-\/>GetEneDist()-\/>ApplyEnergyWeight(\textcolor{keyword}{false});\ \textcolor{comment}{//\ /gps/ene/type\ Mono}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00059}00059\ \ \ \ \ \textcolor{keywordtype}{double}\ distance\ =\ \mbox{\hyperlink{classQuantity}{Quantity}}(config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}distance"{}})).\mbox{\hyperlink{classQuantity_a83e20101221a51142bc18073e44d901b}{getNum}}(\textcolor{stringliteral}{"{}mm"{}});}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00060}00060\ \ \ \ \ particleGun-\/>GetPosDist()-\/>SetCentreCoords(G4ThreeVector(0.,\ distance,\ 0.));\ \textcolor{comment}{//\ /gps/pos/centre\ 0.\ 2.\ 0.}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00061}00061\ \}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00062}00062\ }
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00063}\mbox{\hyperlink{simulation_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{00063}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{simulation_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main}}(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}**\ argv)\ \{}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00064}00064\ \ \ \ \ \mbox{\hyperlink{classTTimer}{TTimer}}\ timer;}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00065}00065\ \ \ \ \ \textcolor{comment}{//\ Get\ config\ file\ using\ argument\ parser.}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00066}00066\ \ \ \ \ \mbox{\hyperlink{classArgumentParser}{ArgumentParser}}\ parser\ =\ \mbox{\hyperlink{simulation_8cpp_aab44b1dab240272ed0bee958aa729f94}{set\_parse}}(argc,\ argv);}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00067}00067\ \ \ \ \ \mbox{\hyperlink{classCppConfigFile}{CppConfigFile}}\ config(parser.\mbox{\hyperlink{classArgumentParser_ad21c880d53afb04d0a2de0ed067ae75b}{get\_value}}<std::string>(\textcolor{stringliteral}{"{}config"{}}));}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00068}00068\ \ \ \ \ \mbox{\hyperlink{classQuantity_adc63ea7983efa83167fb83f53c375745}{Quantity::setUserQuantity}}();}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00069}00069\ }
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00070}00070\ \ \ \ \ \textcolor{comment}{//\ Set\ random\ engine}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00071}00071\ \ \ \ \ CLHEP::RanecuEngine*\ RandomEngine\ =\ \textcolor{keyword}{new}\ CLHEP::RanecuEngine;}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00072}00072\ \ \ \ \ G4Random::setTheEngine(RandomEngine);}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00073}00073\ }
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00074}00074\ \ \ \ \ \textcolor{comment}{//\ Define\ Run\ Manager}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00075}00075\ \ \ \ \ G4RunManager*\ runManager\ =\ \textcolor{keyword}{new}\ G4RunManager;}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00077}00077\ \ \ \ \ \textcolor{comment}{//\ Analysis\ Manager}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00078}00078\ \ \ \ \ \mbox{\hyperlink{classAnalysisManager}{AnalysisManager}}*\ analysisManager\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classAnalysisManager}{AnalysisManager}}(config.\mbox{\hyperlink{classCppConfigFile_a8469a5f95abf337e3d9644c481f181bd}{getConfig}}(\textcolor{stringliteral}{"{}Analysis"{}}).\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}output\_file"{}}));}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00079}00079\ }
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00080}00080\ \ \ \ \ \textcolor{comment}{//\ Geometry\ construction}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00081}00081\ \ \ \ \ \mbox{\hyperlink{classDetectorConstruction}{DetectorConstruction}}*\ detectorConstructor\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classDetectorConstruction}{DetectorConstruction}}();}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00082}00082\ \ \ \ \ \mbox{\hyperlink{simulation_8cpp_a12b88a3888c941c8b8cf66f20b2200c8}{DetectorConstruct}}(detectorConstructor,\ config.\mbox{\hyperlink{classCppConfigFile_a8469a5f95abf337e3d9644c481f181bd}{getConfig}}(\textcolor{stringliteral}{"{}Geometry"{}}));}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00083}00083\ \ \ \ \ runManager-\/>SetUserInitialization(detectorConstructor);}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00084}00084\ }
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00085}00085\ \ \ \ \ \textcolor{comment}{//\ Set\ physics}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00086}00086\ \ \ \ \ G4VModularPhysicsList*\ QBBCList\ =\ \textcolor{keyword}{new}\ QBBC(0);}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00087}00087\ \ \ \ \ G4VUserPhysicsList*\ physicsList\ =\ QBBCList;}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00088}00088\ \ \ \ \ physicsList-\/>SetVerboseLevel(0);}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00089}00089\ \ \ \ \ runManager-\/>SetUserInitialization(physicsList);}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00090}00090\ }
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00091}00091\ \ \ \ \ \textcolor{comment}{//\ Set\ initial\ action\ }}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00092}00092\ \ \ \ \ G4VUserActionInitialization*\ actionInitialator\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classActionInitialization}{ActionInitialization}}();}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00093}00093\ \ \ \ \ runManager-\/>SetUserInitialization(actionInitialator);}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00095}00095\ \ \ \ \ \textcolor{comment}{//\ Set\ Particle\ Source}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00096}00096\ \ \ \ \ G4GeneralParticleSourceData*\ GPSData\ =\ G4GeneralParticleSourceData::Instance();}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00097}00097\ \ \ \ \ G4SingleParticleSource*\ particleGun\ =\ GPSData-\/>GetCurrentSource();}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00098}00098\ \ \ \ \ \mbox{\hyperlink{simulation_8cpp_a06f401a25885c960dbec5a07203b1d10}{SetParticleSource}}(particleGun,\ config.\mbox{\hyperlink{classCppConfigFile_a8469a5f95abf337e3d9644c481f181bd}{getConfig}}(\textcolor{stringliteral}{"{}Source"{}}));}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00099}00099\ }
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00100}00100\ \ \ \ \ runManager-\/>Initialize();}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00101}00101\ }
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00102}00102\ \ \ \ \ std::ifstream\ distFile(config.\mbox{\hyperlink{classCppConfigFile_a8469a5f95abf337e3d9644c481f181bd}{getConfig}}(\textcolor{stringliteral}{"{}Energy"{}}).\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}alpha\_energy\_distribution"{}}));}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00103}00103\ \ \ \ \ std::string\ line;}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00104}00104\ \ \ \ \ getline(distFile,\ line);}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00105}00105\ \ \ \ \ \textcolor{keywordflow}{while}\ (\ getline(distFile,\ line)\ )\ \{}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00106}00106\ \ \ \ \ \ \ \ \ std::stringstream\ sstr(line,\ \textcolor{charliteral}{','});}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00107}00107\ \ \ \ \ \ \ \ \ std::string\ energyStr;}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00108}00108\ \ \ \ \ \ \ \ \ std::string\ intensityStr;}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00109}00109\ \ \ \ \ \ \ \ \ std::getline(sstr,\ energyStr,\ \textcolor{charliteral}{','});}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00110}00110\ \ \ \ \ \ \ \ \ std::getline(sstr,\ intensityStr,\ \textcolor{charliteral}{','});}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00111}00111\ \ \ \ \ \ \ \ \ std::getline(sstr,\ intensityStr,\ \textcolor{charliteral}{','});}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00112}00112\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ intensityStr\ ==\ \textcolor{stringliteral}{"{}"{}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00115}00115\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ energy\ =\ stoi(energyStr)\ *\ 0.001;}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ intensity\ =\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(round(stod(intensityStr)\ *\ 2000));}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00117}00117\ \ \ \ \ \ \ \ \ particleGun-\/>GetEneDist()-\/>SetMonoEnergy(energy\ *\ MeV);}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00118}00118\ \ \ \ \ \ \ \ \ runManager-\/>BeamOn(intensity);}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00119}00119\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00120}00120\ \ \ \ \ analysisManager-\/>\mbox{\hyperlink{classAnalysisManager_aac1c5ae3615493ca9fed0e33e7e772b1}{closeBook}}();}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00121}00121\ }
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00122}00122\ \ \ \ \ \textcolor{keyword}{delete}\ analysisManager;}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00123}00123\ \ \ \ \ \textcolor{keyword}{delete}\ runManager;}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00124}00124\ \ \ \ \ \textcolor{keyword}{delete}\ RandomEngine;}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00125}00125\ \ \ \ \ timer.\mbox{\hyperlink{classTTimer_a4ea716cc7a077ff2adc3ba3d27a2d050}{EndProgram}}();}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00126}00126\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{simulation_8cpp_source_l00127}00127\ \}}
+
+\end{DoxyCode}

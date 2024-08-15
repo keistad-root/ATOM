@@ -16,6 +16,8 @@
 #endif
 
 #include<vector>
+#include<algorithm>
+#include<cmath>
 
 class TCluster {
 private:

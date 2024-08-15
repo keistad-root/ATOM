@@ -1,0 +1,38 @@
+\doxysection{TGeant\+Analyser.\+h}
+\hypertarget{TGeantAnalyser_8h_source}{}\label{TGeantAnalyser_8h_source}\index{/home/ychoi/ATOM/geant4/analysis/inc/TGeantAnalyser.h@{/home/ychoi/ATOM/geant4/analysis/inc/TGeantAnalyser.h}}
+\mbox{\hyperlink{TGeantAnalyser_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ \_\_TGEANTANALYSER\_\_}}
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ \_\_TGEANTANALYSER\_\_}}
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{TAnalyser_8h}{TAnalyser.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00006}\mbox{\hyperlink{classTGeantAnalyser}{00006}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classTGeantAnalyser}{TGeantAnalyser}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classTAnalyser}{TAnalyser}}\ \{}
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00007}00007\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00008}00008\ }
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00009}00009\ \ \ \ \ \textcolor{comment}{//\ std::unique\_ptr<TTree>\ tSource;}}
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00010}00010\ \ \ \ \ \textcolor{comment}{//\ std::unique\_ptr<TTree>\ tTrack;}}
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00012}00012\ \ \ \ \ \textcolor{comment}{//\ std::unique\_ptr<TH1D>\ eLossHist[6];}}
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00013}00013\ \ \ \ \ \textcolor{comment}{//\ std::unique\_ptr<TH1D>\ eDep;}}
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00014}00014\ \ \ \ \ \textcolor{comment}{//\ std::unique\_ptr<TH2D>\ clusterMap;}}
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00015}00015\ \ \ \ \ \textcolor{comment}{//\ std::unique\_ptr<TH2D>\ angleMap;}}
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00016}00016\ \ \ \ \ \textcolor{comment}{//\ std::unique\_ptr<TH2D>\ doubleClusterMap;}}
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00017}00017\ \ \ \ \ \textcolor{comment}{//\ double\ clusterDensity;}}
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00018}00018\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00019}\mbox{\hyperlink{classTGeantAnalyser_a6bc0693144ef0f81b56780531f9b38a5}{00019}}\ \ \ \ \ \mbox{\hyperlink{classTGeantAnalyser_a6bc0693144ef0f81b56780531f9b38a5}{TGeantAnalyser}}()\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00020}00020\ \ \ \ \ \textcolor{comment}{//\ TGeantAnalyser(TString\ inputFile);}}
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00021}00021\ \ \ \ \ \textcolor{comment}{//\ TGeantAnalyser(TFile*\ inputFile);}}
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00022}00022\ \ \ \ \ \textcolor{comment}{//\ \string~TGeantAnalyser();}}
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00023}00023\ \ \ \ \ \textcolor{comment}{//\ void\ refineData();}}
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00024}00024\ \ \ \ \ \textcolor{comment}{//\ void\ saveEnergyLossDistribution(std::string\_view\ output\_file\_Name);}}
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00025}00025\ \ \ \ \ \textcolor{comment}{//\ void\ saveTotalDepositEnergyInALPIDE(std::string\_view\ output\_file\_Name);}}
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00026}00026\ \ \ \ \ \textcolor{comment}{//\ void\ saveClustermap(std::string\_view\ output\_file\_Name);}}
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00027}00027\ \ \ \ \ \textcolor{comment}{//\ void\ saveAnglemap(std::string\_view\ output\_file\_Name);}}
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00028}00028\ \ \ \ \ \textcolor{comment}{//\ void\ saveDoubleClusterFrequencymap(std::string\_view\ output\_file\_Name);}}
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00029}00029\ \ \ \ \ \textcolor{comment}{//\ const\ double\ getClusterDensity()\ const;}}
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00030}00030\ \};}
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00031}00031\ }
+\DoxyCodeLine{\Hypertarget{TGeantAnalyser_8h_source_l00032}00032\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

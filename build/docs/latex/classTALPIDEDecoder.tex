@@ -1,0 +1,236 @@
+\doxysection{TALPIDEDecoder Class Reference}
+\hypertarget{classTALPIDEDecoder}{}\label{classTALPIDEDecoder}\index{TALPIDEDecoder@{TALPIDEDecoder}}
+
+
+{\ttfamily \#include $<$TALPIDEDecoder.\+h$>$}
+
+Inheritance diagram for TALPIDEDecoder\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classTALPIDEDecoder}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classTALPIDEDecoder_ace64bfd371208ee2e73a527c49fe075c}{TALPIDEDecoder}} (const std\+::filesystem\+::path \&binary\+Path)
+\item 
+\mbox{\hyperlink{classTALPIDEDecoder_abb29622b912ef1babf4105414528d86f}{TALPIDEDecoder}} (const std\+::string \&binary\+Path)
+\item 
+void \mbox{\hyperlink{classTALPIDEDecoder_a02e1d72c3f5db413f5cefd20ed20af52}{decode}} ()
+\item 
+std\+::vector$<$ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}} $>$ $>$ \mbox{\hyperlink{classTALPIDEDecoder_ac6795c4c4a9e192941bca8f1d5c1242e}{get\+Data}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classTDecoder}{TDecoder}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classTDecoder_aed3b385682cb7f5a596443d19349f338}{TDecoder}} (const std\+::filesystem\+::path \&binary\+Path)
+\item 
+\mbox{\hyperlink{classTDecoder_a0f74e770926a5135a4ffaeec2f787448}{TDecoder}} (const std\+::string \&binary\+Path)
+\item 
+void \mbox{\hyperlink{classTDecoder_abe96491c7cfb7925ff062a2d0f9cbec9}{read\+File}} ()
+\item 
+int \mbox{\hyperlink{classTDecoder_a0d8b4e84d32b4f339c747802c57a39ed}{get\+Data\+Length}} ()
+\item 
+std\+::vector$<$ uint8\+\_\+t $>$ \& \mbox{\hyperlink{classTDecoder_a763d701c171878671a32f28815fd97ea}{get\+Binary\+Data}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classTALPIDEDecoder_a23a09830f85d09249de6268f480ea7dc}{input\+Event}} ()
+\item 
+bool \mbox{\hyperlink{classTALPIDEDecoder_abc643abbbb2791a97190b458a2c3b33f}{is\+Done}} ()
+\item 
+void \mbox{\hyperlink{classTALPIDEDecoder_ae52a377de96f60cd3f4d5ef9c14fcafb}{pre\+Test}} ()
+\item 
+bool \mbox{\hyperlink{classTALPIDEDecoder_a86ba89c3a7497239819d26065f6f81e7}{stray\+Test}} ()
+\item 
+void \mbox{\hyperlink{classTALPIDEDecoder_a22d4838e2d2406522608b36fe92b1ee3}{header\+Test}} ()
+\item 
+long int \mbox{\hyperlink{classTALPIDEDecoder_a4dea3956f18939712aadd479f100b437}{hex\+\_\+to\+\_\+dec}} (const uint8\+\_\+t \texorpdfstring{$\ast$}{*}data, const int \&digits)
+\item 
+int \mbox{\hyperlink{classTALPIDEDecoder_a7648f16adf32a005083817c45bf2bbd1}{bitwise\+\_\+and}} (int v1, int v2)
+\item 
+int \mbox{\hyperlink{classTALPIDEDecoder_a98f3383b9b4abbf05c4a02358257c38c}{bitwise\+\_\+or}} (int v1, int v2)
+\item 
+int \mbox{\hyperlink{classTALPIDEDecoder_a0ae2fef6f3e7403bbcd6f1446c1db407}{bitwise\+\_\+xor}} (int v1, int v2)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}} $>$ $>$ \mbox{\hyperlink{classTALPIDEDecoder_ae92179bc78d1f2187cbd4961c24cbbb0}{alpides}}
+\item 
+int \mbox{\hyperlink{classTALPIDEDecoder_a08472c7ccabdc5fceb095e424587e01b}{index\+\_\+}} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{TALPIDEDecoder_8h_source_l00018}{18}} of file \mbox{\hyperlink{TALPIDEDecoder_8h_source}{TALPIDEDecoder.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classTALPIDEDecoder_ace64bfd371208ee2e73a527c49fe075c}\label{classTALPIDEDecoder_ace64bfd371208ee2e73a527c49fe075c} 
+\index{TALPIDEDecoder@{TALPIDEDecoder}!TALPIDEDecoder@{TALPIDEDecoder}}
+\index{TALPIDEDecoder@{TALPIDEDecoder}!TALPIDEDecoder@{TALPIDEDecoder}}
+\doxysubsubsection{\texorpdfstring{TALPIDEDecoder()}{TALPIDEDecoder()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily TALPIDEDecoder\+::\+TALPIDEDecoder (\begin{DoxyParamCaption}\item[{const std\+::filesystem\+::path \&}]{binary\+Path }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEDecoder_8cpp_source_l00006}{6}} of file \mbox{\hyperlink{TALPIDEDecoder_8cpp_source}{TALPIDEDecoder.\+cpp}}.
+
+\Hypertarget{classTALPIDEDecoder_abb29622b912ef1babf4105414528d86f}\label{classTALPIDEDecoder_abb29622b912ef1babf4105414528d86f} 
+\index{TALPIDEDecoder@{TALPIDEDecoder}!TALPIDEDecoder@{TALPIDEDecoder}}
+\index{TALPIDEDecoder@{TALPIDEDecoder}!TALPIDEDecoder@{TALPIDEDecoder}}
+\doxysubsubsection{\texorpdfstring{TALPIDEDecoder()}{TALPIDEDecoder()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily TALPIDEDecoder\+::\+TALPIDEDecoder (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{binary\+Path }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEDecoder_8cpp_source_l00007}{7}} of file \mbox{\hyperlink{TALPIDEDecoder_8cpp_source}{TALPIDEDecoder.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classTALPIDEDecoder_a7648f16adf32a005083817c45bf2bbd1}\label{classTALPIDEDecoder_a7648f16adf32a005083817c45bf2bbd1} 
+\index{TALPIDEDecoder@{TALPIDEDecoder}!bitwise\_and@{bitwise\_and}}
+\index{bitwise\_and@{bitwise\_and}!TALPIDEDecoder@{TALPIDEDecoder}}
+\doxysubsubsection{\texorpdfstring{bitwise\_and()}{bitwise\_and()}}
+{\footnotesize\ttfamily int TALPIDEDecoder\+::bitwise\+\_\+and (\begin{DoxyParamCaption}\item[{int}]{v1,  }\item[{int}]{v2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEDecoder_8cpp_source_l00119}{119}} of file \mbox{\hyperlink{TALPIDEDecoder_8cpp_source}{TALPIDEDecoder.\+cpp}}.
+
+\Hypertarget{classTALPIDEDecoder_a98f3383b9b4abbf05c4a02358257c38c}\label{classTALPIDEDecoder_a98f3383b9b4abbf05c4a02358257c38c} 
+\index{TALPIDEDecoder@{TALPIDEDecoder}!bitwise\_or@{bitwise\_or}}
+\index{bitwise\_or@{bitwise\_or}!TALPIDEDecoder@{TALPIDEDecoder}}
+\doxysubsubsection{\texorpdfstring{bitwise\_or()}{bitwise\_or()}}
+{\footnotesize\ttfamily int TALPIDEDecoder\+::bitwise\+\_\+or (\begin{DoxyParamCaption}\item[{int}]{v1,  }\item[{int}]{v2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEDecoder_8cpp_source_l00132}{132}} of file \mbox{\hyperlink{TALPIDEDecoder_8cpp_source}{TALPIDEDecoder.\+cpp}}.
+
+\Hypertarget{classTALPIDEDecoder_a0ae2fef6f3e7403bbcd6f1446c1db407}\label{classTALPIDEDecoder_a0ae2fef6f3e7403bbcd6f1446c1db407} 
+\index{TALPIDEDecoder@{TALPIDEDecoder}!bitwise\_xor@{bitwise\_xor}}
+\index{bitwise\_xor@{bitwise\_xor}!TALPIDEDecoder@{TALPIDEDecoder}}
+\doxysubsubsection{\texorpdfstring{bitwise\_xor()}{bitwise\_xor()}}
+{\footnotesize\ttfamily int TALPIDEDecoder\+::bitwise\+\_\+xor (\begin{DoxyParamCaption}\item[{int}]{v1,  }\item[{int}]{v2 }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEDecoder_8cpp_source_l00145}{145}} of file \mbox{\hyperlink{TALPIDEDecoder_8cpp_source}{TALPIDEDecoder.\+cpp}}.
+
+\Hypertarget{classTALPIDEDecoder_a02e1d72c3f5db413f5cefd20ed20af52}\label{classTALPIDEDecoder_a02e1d72c3f5db413f5cefd20ed20af52} 
+\index{TALPIDEDecoder@{TALPIDEDecoder}!decode@{decode}}
+\index{decode@{decode}!TALPIDEDecoder@{TALPIDEDecoder}}
+\doxysubsubsection{\texorpdfstring{decode()}{decode()}}
+{\footnotesize\ttfamily void TALPIDEDecoder\+::decode (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEDecoder_8cpp_source_l00009}{9}} of file \mbox{\hyperlink{TALPIDEDecoder_8cpp_source}{TALPIDEDecoder.\+cpp}}.
+
+\Hypertarget{classTALPIDEDecoder_ac6795c4c4a9e192941bca8f1d5c1242e}\label{classTALPIDEDecoder_ac6795c4c4a9e192941bca8f1d5c1242e} 
+\index{TALPIDEDecoder@{TALPIDEDecoder}!getData@{getData}}
+\index{getData@{getData}!TALPIDEDecoder@{TALPIDEDecoder}}
+\doxysubsubsection{\texorpdfstring{getData()}{getData()}}
+{\footnotesize\ttfamily std\+::vector$<$ std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}} $>$ $>$ TALPIDEDecoder\+::get\+Data (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEDecoder_8cpp_source_l00016}{16}} of file \mbox{\hyperlink{TALPIDEDecoder_8cpp_source}{TALPIDEDecoder.\+cpp}}.
+
+\Hypertarget{classTALPIDEDecoder_a22d4838e2d2406522608b36fe92b1ee3}\label{classTALPIDEDecoder_a22d4838e2d2406522608b36fe92b1ee3} 
+\index{TALPIDEDecoder@{TALPIDEDecoder}!headerTest@{headerTest}}
+\index{headerTest@{headerTest}!TALPIDEDecoder@{TALPIDEDecoder}}
+\doxysubsubsection{\texorpdfstring{headerTest()}{headerTest()}}
+{\footnotesize\ttfamily void TALPIDEDecoder\+::header\+Test (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEDecoder_8cpp_source_l00104}{104}} of file \mbox{\hyperlink{TALPIDEDecoder_8cpp_source}{TALPIDEDecoder.\+cpp}}.
+
+\Hypertarget{classTALPIDEDecoder_a4dea3956f18939712aadd479f100b437}\label{classTALPIDEDecoder_a4dea3956f18939712aadd479f100b437} 
+\index{TALPIDEDecoder@{TALPIDEDecoder}!hex\_to\_dec@{hex\_to\_dec}}
+\index{hex\_to\_dec@{hex\_to\_dec}!TALPIDEDecoder@{TALPIDEDecoder}}
+\doxysubsubsection{\texorpdfstring{hex\_to\_dec()}{hex\_to\_dec()}}
+{\footnotesize\ttfamily long int TALPIDEDecoder\+::hex\+\_\+to\+\_\+dec (\begin{DoxyParamCaption}\item[{const uint8\+\_\+t \texorpdfstring{$\ast$}{*}}]{data,  }\item[{const int \&}]{digits }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEDecoder_8cpp_source_l00111}{111}} of file \mbox{\hyperlink{TALPIDEDecoder_8cpp_source}{TALPIDEDecoder.\+cpp}}.
+
+\Hypertarget{classTALPIDEDecoder_a23a09830f85d09249de6268f480ea7dc}\label{classTALPIDEDecoder_a23a09830f85d09249de6268f480ea7dc} 
+\index{TALPIDEDecoder@{TALPIDEDecoder}!inputEvent@{inputEvent}}
+\index{inputEvent@{inputEvent}!TALPIDEDecoder@{TALPIDEDecoder}}
+\doxysubsubsection{\texorpdfstring{inputEvent()}{inputEvent()}}
+{\footnotesize\ttfamily void TALPIDEDecoder\+::input\+Event (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEDecoder_8cpp_source_l00020}{20}} of file \mbox{\hyperlink{TALPIDEDecoder_8cpp_source}{TALPIDEDecoder.\+cpp}}.
+
+\Hypertarget{classTALPIDEDecoder_abc643abbbb2791a97190b458a2c3b33f}\label{classTALPIDEDecoder_abc643abbbb2791a97190b458a2c3b33f} 
+\index{TALPIDEDecoder@{TALPIDEDecoder}!isDone@{isDone}}
+\index{isDone@{isDone}!TALPIDEDecoder@{TALPIDEDecoder}}
+\doxysubsubsection{\texorpdfstring{isDone()}{isDone()}}
+{\footnotesize\ttfamily bool TALPIDEDecoder\+::is\+Done (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEDecoder_8cpp_source_l00158}{158}} of file \mbox{\hyperlink{TALPIDEDecoder_8cpp_source}{TALPIDEDecoder.\+cpp}}.
+
+\Hypertarget{classTALPIDEDecoder_ae52a377de96f60cd3f4d5ef9c14fcafb}\label{classTALPIDEDecoder_ae52a377de96f60cd3f4d5ef9c14fcafb} 
+\index{TALPIDEDecoder@{TALPIDEDecoder}!preTest@{preTest}}
+\index{preTest@{preTest}!TALPIDEDecoder@{TALPIDEDecoder}}
+\doxysubsubsection{\texorpdfstring{preTest()}{preTest()}}
+{\footnotesize\ttfamily void TALPIDEDecoder\+::pre\+Test (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEDecoder_8cpp_source_l00088}{88}} of file \mbox{\hyperlink{TALPIDEDecoder_8cpp_source}{TALPIDEDecoder.\+cpp}}.
+
+\Hypertarget{classTALPIDEDecoder_a86ba89c3a7497239819d26065f6f81e7}\label{classTALPIDEDecoder_a86ba89c3a7497239819d26065f6f81e7} 
+\index{TALPIDEDecoder@{TALPIDEDecoder}!strayTest@{strayTest}}
+\index{strayTest@{strayTest}!TALPIDEDecoder@{TALPIDEDecoder}}
+\doxysubsubsection{\texorpdfstring{strayTest()}{strayTest()}}
+{\footnotesize\ttfamily bool TALPIDEDecoder\+::stray\+Test (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEDecoder_8cpp_source_l00095}{95}} of file \mbox{\hyperlink{TALPIDEDecoder_8cpp_source}{TALPIDEDecoder.\+cpp}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classTALPIDEDecoder_ae92179bc78d1f2187cbd4961c24cbbb0}\label{classTALPIDEDecoder_ae92179bc78d1f2187cbd4961c24cbbb0} 
+\index{TALPIDEDecoder@{TALPIDEDecoder}!alpides@{alpides}}
+\index{alpides@{alpides}!TALPIDEDecoder@{TALPIDEDecoder}}
+\doxysubsubsection{\texorpdfstring{alpides}{alpides}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::unique\+\_\+ptr$<$\mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}}$>$ $>$ TALPIDEDecoder\+::alpides\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEDecoder_8h_source_l00020}{20}} of file \mbox{\hyperlink{TALPIDEDecoder_8h_source}{TALPIDEDecoder.\+h}}.
+
+\Hypertarget{classTALPIDEDecoder_a08472c7ccabdc5fceb095e424587e01b}\label{classTALPIDEDecoder_a08472c7ccabdc5fceb095e424587e01b} 
+\index{TALPIDEDecoder@{TALPIDEDecoder}!index\_@{index\_}}
+\index{index\_@{index\_}!TALPIDEDecoder@{TALPIDEDecoder}}
+\doxysubsubsection{\texorpdfstring{index\_}{index\_}}
+{\footnotesize\ttfamily int TALPIDEDecoder\+::index\+\_\+ = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TALPIDEDecoder_8h_source_l00021}{21}} of file \mbox{\hyperlink{TALPIDEDecoder_8h_source}{TALPIDEDecoder.\+h}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/ychoi/\+ATOM/alpide/daq/inc/\mbox{\hyperlink{TALPIDEDecoder_8h}{TALPIDEDecoder.\+h}}\item 
+/home/ychoi/\+ATOM/alpide/daq/src/\mbox{\hyperlink{TALPIDEDecoder_8cpp}{TALPIDEDecoder.\+cpp}}\end{DoxyCompactItemize}

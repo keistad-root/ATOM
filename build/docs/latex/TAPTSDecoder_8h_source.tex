@@ -1,0 +1,51 @@
+\doxysection{TAPTSDecoder.\+h}
+\hypertarget{TAPTSDecoder_8h_source}{}\label{TAPTSDecoder_8h_source}\index{/home/ychoi/ATOM/apts/inc/TAPTSDecoder.h@{/home/ychoi/ATOM/apts/inc/TAPTSDecoder.h}}
+\mbox{\hyperlink{TAPTSDecoder_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ \_\_TAPTSDECODER\_\_}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ \_\_TAPTSDECODER\_\_}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00004}00004\ \textcolor{preprocessor}{\#ifdef\ \_\_TAPTSDECODER\_HEADER\_\_}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{TAPTSEvent_8h}{TAPTSEvent.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00006}00006\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include<vector>}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00009}00009\ \textcolor{preprocessor}{\#include<array>}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include<string>}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include<cmath>}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00013}00013\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{TDecoder_8h}{TDecoder.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00015}00015\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classTAPTSEvent}{TAPTSEvent}};}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00017}\mbox{\hyperlink{classTAPTSDecoder}{00017}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classTAPTSDecoder}{TAPTSDecoder}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classTDecoder}{TDecoder}}\ \{}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00018}00018\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00019}\mbox{\hyperlink{classTAPTSDecoder_a03e4702c3532a35267b1ba3e073e3a28}{00019}}\ \ \ \ \ std::vector<TAPTSEvent*>\ \mbox{\hyperlink{classTAPTSDecoder_a03e4702c3532a35267b1ba3e073e3a28}{aptss}};}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00020}\mbox{\hyperlink{classTAPTSDecoder_aadc7d9fe6b3da7248b359ec6b6fe2ae7}{00020}}\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classTAPTSDecoder_aadc7d9fe6b3da7248b359ec6b6fe2ae7}{mux\_}}\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00021}\mbox{\hyperlink{classTAPTSDecoder_a9e1427bc3043d8e7e6bc1e78429ccd79}{00021}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTAPTSDecoder_a9e1427bc3043d8e7e6bc1e78429ccd79}{iEvent\_}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00022}\mbox{\hyperlink{classTAPTSDecoder_ab90571894692a43957f0d0289fe95378}{00022}}\ \ \ \ \ std::array<int,\ 16>\ \mbox{\hyperlink{classTAPTSDecoder_ab90571894692a43957f0d0289fe95378}{mapping}};}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00023}\mbox{\hyperlink{classTAPTSDecoder_acd34b0ab08ad297b5bba9acfe2d38dd1}{00023}}\ \ \ \ \ std::array<uint8\_t,\ 4>\ \mbox{\hyperlink{classTAPTSDecoder_acd34b0ab08ad297b5bba9acfe2d38dd1}{expected\_header}}\ =\ \{0xAA,\ 0xAA,\ 0xAA,\ 0xAA\};}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00024}\mbox{\hyperlink{classTAPTSDecoder_a0009ace80a45ed5adf9c16a67211ba13}{00024}}\ \ \ \ \ std::array<uint8\_t,\ 4>\ \mbox{\hyperlink{classTAPTSDecoder_a0009ace80a45ed5adf9c16a67211ba13}{expected\_footer}}\ =\ \{0xBB,\ 0xBB,\ 0xBB,\ 0xBB\};}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00026}\mbox{\hyperlink{classTAPTSDecoder_ab63b0be2ec2110a4a0f703ba3f563ba3}{00026}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTAPTSDecoder_ab63b0be2ec2110a4a0f703ba3f563ba3}{nFrame\_}};}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00027}\mbox{\hyperlink{classTAPTSDecoder_ad73b32c63ad6268f825ca32af487a6e0}{00027}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTAPTSDecoder_ad73b32c63ad6268f825ca32af487a6e0}{index\_}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00028}\mbox{\hyperlink{classTAPTSDecoder_a7853f4d0bb0036ada205dce3817698b5}{00028}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTAPTSDecoder_a7853f4d0bb0036ada205dce3817698b5}{lenEvent\_}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00030}00030\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00031}00031\ \ \ \ \ \mbox{\hyperlink{classTAPTSDecoder}{TAPTSDecoder}}(\textcolor{keyword}{const}\ std::filesystem::path\&\ binaryPath);}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00032}00032\ \ \ \ \ \mbox{\hyperlink{classTAPTSDecoder}{TAPTSDecoder}}(\textcolor{keyword}{const}\ std::string\&\ binaryPath);}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00033}00033\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAPTSDecoder_a1215ba49dcf1a58702c442fc3ce884b1}{decode}}();}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00034}00034\ \ \ \ \ std::vector<TAPTSEvent*>\ \mbox{\hyperlink{classTAPTSDecoder_ad345f95aef04a320fcb27fc097eec695}{getData}}();}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00035}00035\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00036}00036\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAPTSDecoder_a54bf988e5a0134ad2d14030a609d89dd}{inputEvent}}();}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00037}00037\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAPTSDecoder_aec1c8d59ee9e6cab59807e997b2898f9}{preTest}}();\ \textcolor{comment}{//\ do\ range,\ header,\ missing\ test\ and\ calculate\ data\ length\ of\ Event.}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00038}00038\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAPTSDecoder_a1624512ef467ddc774d1e5ba951ca126}{rangeTest}}();\ \textcolor{comment}{//\ Test\ whether\ the\ index\ number\ is\ overflowed\ or\ not.}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00039}00039\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAPTSDecoder_a065891a376865e14adb0ab8660eb0bfa}{headerTest}}();\ \textcolor{comment}{//\ Test\ whether\ an\ event\ is\ normal\ or\ not.\ The\ first\ 4\ num\ should\ be\ 0xAA.}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00040}00040\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAPTSDecoder_ac0162d565fb8315e3a5f2d0e1ad79b91}{missingTest}}();\ \textcolor{comment}{//\ Test\ whether\ the\ data\ is\ overflowed\ or\ not.}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00041}00041\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTAPTSDecoder_acf2ffb21ca868c39f527aadfa7ea7506}{getEventLength}}();\ \textcolor{comment}{//\ Calculate\ the\ data\ length\ of\ an\ event.}}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00042}00042\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTAPTSDecoder_a386c0648429b956954926992d2f64a77}{postTest}}();}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00043}00043\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classTAPTSDecoder_a47e9254b565f9608fcf0363b4f0c10c2}{isDone}}();}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00044}00044\ \};}
+\DoxyCodeLine{\Hypertarget{TAPTSDecoder_8h_source_l00045}00045\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

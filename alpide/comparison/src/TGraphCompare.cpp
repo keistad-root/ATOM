@@ -1,7 +1,7 @@
 #define __TGRAPHCOMPARE_HEADER__
 #include "TGraphCompare.h"
 
-TH1D* TGraphCompare::getClustersizeHistogram(std::string_view pathInRoot, std::string operation) {
+TH1D* TGraphCompare::getClustersizeHistogram(std::string pathInRoot, std::string operation) {
 	std::vector<std::string> stringSet;
 
 	size_t start = 0, end = 0;

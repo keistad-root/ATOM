@@ -1,0 +1,109 @@
+\doxysection{TThreshold\+Analyser.\+cpp}
+\hypertarget{TThresholdAnalyser_8cpp_source}{}\label{TThresholdAnalyser_8cpp_source}\index{/home/ychoi/ATOM/alpide/analysis/src/TThresholdAnalyser.cpp@{/home/ychoi/ATOM/alpide/analysis/src/TThresholdAnalyser.cpp}}
+\mbox{\hyperlink{TThresholdAnalyser_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00001}\mbox{\hyperlink{TThresholdAnalyser_8cpp_a720492236a53e678ea13c4cc7b4b982b}{00001}}\ \textcolor{preprocessor}{\#define\ \_\_TTHRESHOLDANALYSER\_HEADER\_\_}}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00003}00003\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{TThresholdAnalyser_8h}{TThresholdAnalyser.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00004}00004\ }
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00005}\mbox{\hyperlink{classTThresholdAnalyser_a0514be2713987bd1b10f9f2f6e9d5027}{00005}}\ \mbox{\hyperlink{classTThresholdAnalyser_a0514be2713987bd1b10f9f2f6e9d5027}{TThresholdAnalyser::TThresholdAnalyser}}()\ \{\ \}}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00007}\mbox{\hyperlink{classTThresholdAnalyser_a09873d664e61f47082f86fe376e92edd}{00007}}\ \mbox{\hyperlink{classTThresholdAnalyser_a0514be2713987bd1b10f9f2f6e9d5027}{TThresholdAnalyser::TThresholdAnalyser}}(std::ifstream\&\ file)\ \{}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00008}00008\ \ \ \ \ \mbox{\hyperlink{classTThresholdAnalyser_aa7417a79500a511089c499e887bb219a}{openFile}}(file);}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00009}00009\ \}}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00011}\mbox{\hyperlink{classTThresholdAnalyser_afff5911fc5940a4e9e02be8160e61c99}{00011}}\ \mbox{\hyperlink{classTThresholdAnalyser_afff5911fc5940a4e9e02be8160e61c99}{TThresholdAnalyser::\string~TThresholdAnalyser}}()\ \{}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00012}00012\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}The\ threshold\ analyser\ is\ terminated"{}}\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00013}00013\ \}}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00015}\mbox{\hyperlink{classTThresholdAnalyser_aa7417a79500a511089c499e887bb219a}{00015}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTThresholdAnalyser_aa7417a79500a511089c499e887bb219a}{TThresholdAnalyser::openFile}}(std::ifstream\&\ file)\ \{}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00016}00016\ \ \ \ \ std::string\ line;}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00017}00017\ \ \ \ \ std::array<Int\_t,\ 50>\ dacs;}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00018}00018\ \ \ \ \ std::streampos\ originalPos\ =\ file.tellg();}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00019}00019\ \ \ \ \ \textcolor{keywordtype}{int}\ numLines\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00020}00020\ \ \ \ \ \textcolor{keywordtype}{char}\ ch;}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00021}00021\ \ \ \ \ \textcolor{keywordflow}{while}\ (\ file.get(ch)\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00022}00022\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ ch\ ==\ \textcolor{charliteral}{'\(\backslash\)n'}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00023}00023\ \ \ \ \ \ \ \ \ \ \ \ \ ++numLines;}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00024}00024\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00025}00025\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00026}00026\ \ \ \ \ file.clear();}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00027}00027\ \ \ \ \ file.seekg(originalPos);}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00028}00028\ \ \ \ \ \mbox{\hyperlink{classProgressBar}{ProgressBar}}\ bar(numLines\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00029}00029\ \ \ \ \ \textcolor{keywordflow}{while}\ (\ file\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00030}00030\ \ \ \ \ \ \ \ \ bar.\mbox{\hyperlink{classProgressBar_a5d9bc9175bf342ac00f2de8d27984cde}{printProgress}}();}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00031}00031\ \ \ \ \ \ \ \ \ getline(file,\ line);}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00032}00032\ \ \ \ \ \ \ \ \ std::stringstream\ values(line);}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ x,\ y,\ iDac,\ dac;}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00034}00034\ \ \ \ \ \ \ \ \ values\ >>\ y\ >>\ x\ >>\ iDac\ >>\ dac;}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00035}00035\ \ \ \ \ \ \ \ \ dacs[iDac]\ =\ dac;}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ iDac\ ==\ 49\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00037}00037\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTThreshold}{TThreshold}}*\ temp(\textcolor{keyword}{new}\ \mbox{\hyperlink{classTThreshold}{TThreshold}}(x,\ y,\ dacs));}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00038}00038\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTThresholdAnalyser_ada3d9c999ea41a6fb7a8843354cb8ef2}{mThresholds}}.push\_back(temp);}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00039}00039\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00040}00040\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00041}00041\ \}}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00042}00042\ }
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00043}\mbox{\hyperlink{classTThresholdAnalyser_a3c641782928e077dddd5258a0383de5c}{00043}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTThresholdAnalyser_a3c641782928e077dddd5258a0383de5c}{TThresholdAnalyser::refineData}}()\ \{}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00044}00044\ \ \ \ \ \mbox{\hyperlink{classTThresholdAnalyser_a2c12e53cca97999337b5cd4544ef4ccf}{mThresholdDistribution}}\ =\ \textcolor{keyword}{new}\ TH1D(\textcolor{stringliteral}{"{}thrDist"{}},\ \textcolor{stringliteral}{"{}Threshold\ Distribution"{}},\ 500,\ 0,\ 50);}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00045}00045\ \ \ \ \ \mbox{\hyperlink{classTThresholdAnalyser_a7decebf4eab010aa5bdcc8dde652018e}{mErrorDistribution}}\ =\ \textcolor{keyword}{new}\ TH1D(\textcolor{stringliteral}{"{}errDist"{}},\ \textcolor{stringliteral}{"{}Error\ Distribution"{}},\ 300,\ 0,\ 30);}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00046}00046\ \ \ \ \ \mbox{\hyperlink{classTThresholdAnalyser_a52ec3b9cabb1c46bc6bfd01c3aa27c36}{mThresholdmap}}\ =\ \textcolor{keyword}{new}\ TH2D(\textcolor{stringliteral}{"{}thrmap"{}},\ \textcolor{stringliteral}{"{}Threshold\ map"{}},\ 1024,\ -\/0.5,\ 1023.5,\ 512,\ -\/0.5,\ 511.5);}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00047}00047\ \ \ \ \ \mbox{\hyperlink{classTThresholdAnalyser_a2ec19c150f9c970a716cf4b5d415e4d1}{mChi2NdfDistribution}}\ =\ \textcolor{keyword}{new}\ TH1D(\textcolor{stringliteral}{"{}chi2"{}},\ \textcolor{stringliteral}{"{}Chi2\ and\ NDoF"{}},\ 200,\ 0,\ 200);}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00048}00048\ \ \ \ \ \textcolor{keywordtype}{int}\ nHigh\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00049}00049\ \ \ \ \ \textcolor{keywordtype}{int}\ nLow\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00050}00050\ \ \ \ \ \textcolor{keywordtype}{int}\ nUnDefined\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00051}00051\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classTThreshold}{TThreshold}}*\ threshold\ :\ \mbox{\hyperlink{classTThresholdAnalyser_ada3d9c999ea41a6fb7a8843354cb8ef2}{mThresholds}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00052}00052\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ threshold-\/>getCondition()\ ==\ \mbox{\hyperlink{TThreshold_8h_ac58dc33986e4e8feba2dc439203a0afaaa2fcfe974304655be08f6faf0a192278}{ThrCondition::good}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTThresholdAnalyser_a2c12e53cca97999337b5cd4544ef4ccf}{mThresholdDistribution}}-\/>Fill(threshold-\/>getThreshold());}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTThresholdAnalyser_a7decebf4eab010aa5bdcc8dde652018e}{mErrorDistribution}}-\/>Fill(threshold-\/>getError());}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTThresholdAnalyser_a52ec3b9cabb1c46bc6bfd01c3aa27c36}{mThresholdmap}}-\/>SetBinContent(threshold-\/>getX(),\ threshold-\/>getY(),\ threshold-\/>getThreshold());}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTThresholdAnalyser_a2ec19c150f9c970a716cf4b5d415e4d1}{mChi2NdfDistribution}}-\/>Fill(threshold-\/>getQualityFactor());}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ threshold-\/>getCondition()\ ==\ \mbox{\hyperlink{TThreshold_8h_ac58dc33986e4e8feba2dc439203a0afaa35cecdceced94338297812315ccf4240}{ThrCondition::bad\_too\_high}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ nHigh++;}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTThresholdAnalyser_a52ec3b9cabb1c46bc6bfd01c3aa27c36}{mThresholdmap}}-\/>SetBinContent(threshold-\/>getX(),\ threshold-\/>getY(),\ 50);}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00060}00060\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ threshold-\/>getCondition()\ ==\ \mbox{\hyperlink{TThreshold_8h_ac58dc33986e4e8feba2dc439203a0afaa88997650433d31b05fa9dba4f355c9db}{ThrCondition::bad\_too\_low}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ nLow++;}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTThresholdAnalyser_a52ec3b9cabb1c46bc6bfd01c3aa27c36}{mThresholdmap}}-\/>SetBinContent(threshold-\/>getX(),\ threshold-\/>getY(),\ 0);}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00063}00063\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\ threshold-\/>getCondition()\ ==\ \mbox{\hyperlink{TThreshold_8h_ac58dc33986e4e8feba2dc439203a0afaa0ea6665864964c1a09a88a150247749d}{ThrCondition::bad\_undefine}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ nUnDefined++;}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00065}00065\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00066}00066\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00067}00067\ \ \ \ \ std::cout\ <<\ \mbox{\hyperlink{classTThresholdAnalyser_a2c12e53cca97999337b5cd4544ef4ccf}{mThresholdDistribution}}-\/>GetMean()\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00068}00068\ \ \ \ \ std::cout\ <<\ \mbox{\hyperlink{classTThresholdAnalyser_a2c12e53cca97999337b5cd4544ef4ccf}{mThresholdDistribution}}-\/>GetStdDev()\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00069}00069\ \ \ \ \ std::cout\ <<\ \mbox{\hyperlink{classTThresholdAnalyser_a7decebf4eab010aa5bdcc8dde652018e}{mErrorDistribution}}-\/>GetMean()\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00070}00070\ \ \ \ \ std::cout\ <<\ \mbox{\hyperlink{classTThresholdAnalyser_a7decebf4eab010aa5bdcc8dde652018e}{mErrorDistribution}}-\/>GetStdDev()\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00071}00071\ \ \ \ \ std::cout\ <<\ \mbox{\hyperlink{classTThresholdAnalyser_a2c12e53cca97999337b5cd4544ef4ccf}{mThresholdDistribution}}-\/>GetEntries()\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00072}00072\ \ \ \ \ std::cout\ <<\ nLow\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00073}00073\ \ \ \ \ std::cout\ <<\ nHigh\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00074}00074\ \ \ \ \ std::cout\ <<\ nUnDefined\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00075}00075\ \}}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00076}00076\ }
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00077}\mbox{\hyperlink{classTThresholdAnalyser_aa745cdda9df92b6e5cdc98a80144ac3a}{00077}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTThresholdAnalyser_aa745cdda9df92b6e5cdc98a80144ac3a}{TThresholdAnalyser::saveThresholdDistribution}}(std::string\_view\ title)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00078}00078\ \ \ \ \ TCanvas*\ can\ =\ \textcolor{keyword}{new}\ TCanvas(\textcolor{stringliteral}{"{}thrDist"{}},\ \textcolor{stringliteral}{"{}Threshold\ Distribution;\ Threshold\ [\$500\ \(\backslash\)times\ e\string^-\/\$];\ Entry"{}},\ 1000,\ 500);}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00079}00079\ \ \ \ \ \mbox{\hyperlink{classTThresholdAnalyser_a2c12e53cca97999337b5cd4544ef4ccf}{mThresholdDistribution}}-\/>Draw();}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00080}00080\ \ \ \ \ can-\/>SaveAs(\textcolor{keyword}{static\_cast<}\textcolor{keyword}{const\ }TString\textcolor{keyword}{>}(title));}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00081}00081\ \}}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00082}00082\ }
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00083}\mbox{\hyperlink{classTThresholdAnalyser_aac9175699738ff27c1fca68df32aa0a9}{00083}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTThresholdAnalyser_aac9175699738ff27c1fca68df32aa0a9}{TThresholdAnalyser::saveErrorDistribution}}(std::string\_view\ title)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00084}00084\ \ \ \ \ TCanvas*\ can\ =\ \textcolor{keyword}{new}\ TCanvas(\textcolor{stringliteral}{"{}errDist"{}},\ \textcolor{stringliteral}{"{}Error\ Distribution;Threshold\ [\$e\string^-\/\$];\ Entry"{}},\ 1000,\ 500);}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00085}00085\ \ \ \ \ \mbox{\hyperlink{classTThresholdAnalyser_a7decebf4eab010aa5bdcc8dde652018e}{mErrorDistribution}}-\/>Draw();}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00086}00086\ \ \ \ \ can-\/>SaveAs(\textcolor{keyword}{static\_cast<}\textcolor{keyword}{const\ }TString\textcolor{keyword}{>}(title));}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00087}00087\ \}}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00088}00088\ }
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00089}\mbox{\hyperlink{classTThresholdAnalyser_a41631058cb0c4dcf56243c854e063f90}{00089}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTThresholdAnalyser_a41631058cb0c4dcf56243c854e063f90}{TThresholdAnalyser::saveThresholdmap}}(std::string\_view\ title)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00090}00090\ \ \ \ \ TCanvas*\ can(\textcolor{keyword}{new}\ TCanvas(\textcolor{stringliteral}{"{}thrmap"{}},\ \textcolor{stringliteral}{"{}"{}},\ 1000,\ 500));}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00091}00091\ \ \ \ \ \mbox{\hyperlink{classTThresholdAnalyser_a52ec3b9cabb1c46bc6bfd01c3aa27c36}{mThresholdmap}}-\/>SetTitle(\textcolor{stringliteral}{"{}Threshold\ Distribution;\ rows;\ coloums"{}});}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00092}00092\ \ \ \ \ \mbox{\hyperlink{classTThresholdAnalyser_a52ec3b9cabb1c46bc6bfd01c3aa27c36}{mThresholdmap}}-\/>SetMinimum(0);}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00093}00093\ \ \ \ \ \mbox{\hyperlink{classTThresholdAnalyser_a52ec3b9cabb1c46bc6bfd01c3aa27c36}{mThresholdmap}}-\/>SetMaximum(50);}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00094}00094\ \ \ \ \ \mbox{\hyperlink{classTThresholdAnalyser_a52ec3b9cabb1c46bc6bfd01c3aa27c36}{mThresholdmap}}-\/>SetStats(0);}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00095}00095\ \ \ \ \ \mbox{\hyperlink{classTThresholdAnalyser_a52ec3b9cabb1c46bc6bfd01c3aa27c36}{mThresholdmap}}-\/>Draw(\textcolor{stringliteral}{"{}COLZ0"{}});}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00096}00096\ \ \ \ \ can-\/>SaveAs(\textcolor{keyword}{static\_cast<}\textcolor{keyword}{const\ }TString\textcolor{keyword}{>}(title));}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00097}00097\ \}}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00098}00098\ }
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00099}\mbox{\hyperlink{classTThresholdAnalyser_aa194fe5244f22697476939161b282aa2}{00099}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTThresholdAnalyser_aa194fe5244f22697476939161b282aa2}{TThresholdAnalyser::saveQualityDistribution}}(std::string\_view\ title)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00100}00100\ \ \ \ \ TCanvas*\ can\ =\ \textcolor{keyword}{new}\ TCanvas(\textcolor{stringliteral}{"{}chi2"{}},\ \textcolor{stringliteral}{"{}Fit\ quality\ Distribution;\ Chi2/NDoF;\ entry"{}},\ 1000,\ 500);}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00101}00101\ \ \ \ \ \mbox{\hyperlink{classTThresholdAnalyser_a2ec19c150f9c970a716cf4b5d415e4d1}{mChi2NdfDistribution}}-\/>Draw();}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00102}00102\ \ \ \ \ can-\/>SaveAs(\textcolor{keyword}{static\_cast<}\textcolor{keyword}{const\ }TString\textcolor{keyword}{>}(title));}
+\DoxyCodeLine{\Hypertarget{TThresholdAnalyser_8cpp_source_l00103}00103\ \}}
+
+\end{DoxyCode}

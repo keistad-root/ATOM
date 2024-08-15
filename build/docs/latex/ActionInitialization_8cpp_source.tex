@@ -1,0 +1,40 @@
+\doxysection{Action\+Initialization.\+cpp}
+\hypertarget{ActionInitialization_8cpp_source}{}\label{ActionInitialization_8cpp_source}\index{/home/ychoi/ATOM/geant4/main/src/ActionInitialization.cpp@{/home/ychoi/ATOM/geant4/main/src/ActionInitialization.cpp}}
+\mbox{\hyperlink{ActionInitialization_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00001}\mbox{\hyperlink{ActionInitialization_8cpp_a06c352145632779ed8ccbc820e13205f}{00001}}\ \textcolor{preprocessor}{\#define\ \_\_ACTIONINITIALIZATION\_HEADER\_\_}}
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00002}00002\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{ActionInitialization_8h}{ActionInitialization.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00004}\mbox{\hyperlink{classActionInitialization_ad7c1e53093b731f00b91e643e50b7d94}{00004}}\ \mbox{\hyperlink{classActionInitialization_ad7c1e53093b731f00b91e643e50b7d94}{ActionInitialization::ActionInitialization}}()\ :\ G4VUserActionInitialization()\ \{}
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00005}00005\ \ \ \ \ G4cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[1;35m"{}}\ <<\ \textcolor{stringliteral}{"{}ActionInitializer"{}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[0m"{}}\ <<\ \textcolor{stringliteral}{"{}\ is\ armed"{}}\ <<\ G4endl;}
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00006}00006\ \}}
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00008}\mbox{\hyperlink{classActionInitialization_acaf37c7dc69ff697782dccd6b41e73a1}{00008}}\ \mbox{\hyperlink{classActionInitialization_acaf37c7dc69ff697782dccd6b41e73a1}{ActionInitialization::\string~ActionInitialization}}()\ \{}
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00009}00009\ \ \ \ \ G4cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[1;35m"{}}\ <<\ \textcolor{stringliteral}{"{}ActionInitializer"{}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[0m"{}}\ <<\ \textcolor{stringliteral}{"{}\ is\ terminated"{}}\ <<\ G4endl;}
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00010}00010\ \}}
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00012}\mbox{\hyperlink{classActionInitialization_a9b8f6328b1b2e3ba39a1c230774cab66}{00012}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classActionInitialization_a9b8f6328b1b2e3ba39a1c230774cab66}{ActionInitialization::Build}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00013}00013\ \ \ \ \ G4cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[1;35m"{}}\ <<\ \textcolor{stringliteral}{"{}ActionInitializer"{}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[0m"{}}\ <<\ \textcolor{stringliteral}{"{}\ boots"{}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[1;36m"{}}\ <<\ \textcolor{stringliteral}{"{}\ Primary\ Generator\ Action"{}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[0m"{}}\ <<\ G4endl;}
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00014}00014\ \ \ \ \ SetUserAction(\textcolor{keyword}{new}\ \mbox{\hyperlink{classPrimaryGeneratorAction}{PrimaryGeneratorAction}});}
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00015}00015\ \ \ \ \ G4cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[1;35m"{}}\ <<\ \textcolor{stringliteral}{"{}ActionInitializer"{}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[0m"{}}\ <<\ \textcolor{stringliteral}{"{}\ boots"{}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[1;36m"{}}\ <<\ \textcolor{stringliteral}{"{}\ Run\ Action"{}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[0m"{}}\ <<\ G4endl;}
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00016}00016\ \ \ \ \ \mbox{\hyperlink{classRunAction}{RunAction}}*\ runAction\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classRunAction}{RunAction}};}
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00017}00017\ \ \ \ \ SetUserAction(runAction);}
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00018}00018\ }
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00019}00019\ \ \ \ \ G4cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[1;35m"{}}\ <<\ \textcolor{stringliteral}{"{}ActionInitializer"{}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[0m"{}}\ <<\ \textcolor{stringliteral}{"{}\ boots"{}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[1;36m"{}}\ <<\ \textcolor{stringliteral}{"{}\ Event\ Action"{}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[0m"{}}\ <<\ G4endl;}
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00020}00020\ \ \ \ \ \mbox{\hyperlink{classEventAction}{EventAction}}*\ eventAction\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classEventAction}{EventAction}}(runAction);}
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00021}00021\ \ \ \ \ SetUserAction(eventAction);}
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00023}00023\ \ \ \ \ G4cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[1;35m"{}}\ <<\ \textcolor{stringliteral}{"{}ActionInitializer"{}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[0m"{}}\ <<\ \textcolor{stringliteral}{"{}\ boots"{}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[1;36m"{}}\ <<\ \textcolor{stringliteral}{"{}\ Stepping\ Action"{}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[0m"{}}\ <<\ G4endl;}
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00024}00024\ \ \ \ \ SetUserAction(\textcolor{keyword}{new}\ \mbox{\hyperlink{classSteppingAction}{SteppingAction}}(eventAction));}
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00026}00026\ \ \ \ \ G4cout\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[1;35m"{}}\ <<\ \textcolor{stringliteral}{"{}ActionInitializer"{}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[0m"{}}\ <<\ \textcolor{stringliteral}{"{}\ boots"{}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[1;36m"{}}\ <<\ \textcolor{stringliteral}{"{}\ Tracking\ Action"{}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[0m"{}}\ <<\ G4endl;}
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00027}00027\ \ \ \ \ SetUserAction(\textcolor{keyword}{new}\ \mbox{\hyperlink{classTrackingAction}{TrackingAction}});}
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00028}00028\ \}}
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00030}\mbox{\hyperlink{classActionInitialization_a48c24b5a340ef3e8a69f44f9b6bf02be}{00030}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classActionInitialization_a48c24b5a340ef3e8a69f44f9b6bf02be}{ActionInitialization::BuildForMaster}}()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00031}00031\ \ \ \ \ G4cout\ <<\ \textcolor{stringliteral}{"{}ActionInitialization::BuildForMaster()"{}}\ <<\ G4endl;}
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00032}00032\ \ \ \ \ \mbox{\hyperlink{classRunAction}{RunAction}}*\ runAction\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classRunAction}{RunAction}};}
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00033}00033\ \ \ \ \ SetUserAction(runAction);}
+\DoxyCodeLine{\Hypertarget{ActionInitialization_8cpp_source_l00034}00034\ \}}
+
+\end{DoxyCode}

@@ -1,0 +1,45 @@
+\doxysection{TALPIDEDecoder.\+h}
+\hypertarget{TALPIDEDecoder_8h_source}{}\label{TALPIDEDecoder_8h_source}\index{/home/ychoi/ATOM/alpide/daq/inc/TALPIDEDecoder.h@{/home/ychoi/ATOM/alpide/daq/inc/TALPIDEDecoder.h}}
+\mbox{\hyperlink{TALPIDEDecoder_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ \_\_TALPIDEDECODER\_\_}}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ \_\_TALPIDEDECODER\_\_}}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00004}00004\ \textcolor{preprocessor}{\#ifdef\ \_\_TALPIDEDECODER\_HEADER\_\_}}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include<array>}}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00006}00006\ }
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{TALPIDEEvent_8h}{TALPIDEEvent.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00008}00008\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include<vector>}}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00011}00011\ \textcolor{preprocessor}{\#include<filesystem>}}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00012}00012\ \textcolor{preprocessor}{\#include<cmath>}}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00014}00014\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{TDecoder_8h}{TDecoder.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00015}00015\ }
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00016}00016\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}};}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00017}00017\ }
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00018}\mbox{\hyperlink{classTALPIDEDecoder}{00018}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classTALPIDEDecoder}{TALPIDEDecoder}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classTDecoder}{TDecoder}}\ \{}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00019}00019\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00020}\mbox{\hyperlink{classTALPIDEDecoder_ae92179bc78d1f2187cbd4961c24cbbb0}{00020}}\ \ \ \ \ std::vector<std::unique\_ptr<TALPIDEEvent>>\ \mbox{\hyperlink{classTALPIDEDecoder_ae92179bc78d1f2187cbd4961c24cbbb0}{alpides}};}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00021}\mbox{\hyperlink{classTALPIDEDecoder_a08472c7ccabdc5fceb095e424587e01b}{00021}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTALPIDEDecoder_a08472c7ccabdc5fceb095e424587e01b}{index\_}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00022}00022\ }
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00023}00023\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00024}00024\ \ \ \ \ \mbox{\hyperlink{classTALPIDEDecoder}{TALPIDEDecoder}}(\textcolor{keyword}{const}\ std::filesystem::path\&\ binaryPath);}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00025}00025\ \ \ \ \ \mbox{\hyperlink{classTALPIDEDecoder}{TALPIDEDecoder}}(\textcolor{keyword}{const}\ std::string\&\ binaryPath);}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00026}00026\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTALPIDEDecoder_a02e1d72c3f5db413f5cefd20ed20af52}{decode}}();}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00027}00027\ \ \ \ \ std::vector<std::unique\_ptr<TALPIDEEvent>>\ \mbox{\hyperlink{classTALPIDEDecoder_ac6795c4c4a9e192941bca8f1d5c1242e}{getData}}();}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00028}00028\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00029}00029\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTALPIDEDecoder_a23a09830f85d09249de6268f480ea7dc}{inputEvent}}();}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00030}00030\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classTALPIDEDecoder_abc643abbbb2791a97190b458a2c3b33f}{isDone}}();}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00031}00031\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTALPIDEDecoder_ae52a377de96f60cd3f4d5ef9c14fcafb}{preTest}}();}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00032}00032\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{classTALPIDEDecoder_a86ba89c3a7497239819d26065f6f81e7}{strayTest}}();}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00033}00033\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTALPIDEDecoder_a22d4838e2d2406522608b36fe92b1ee3}{headerTest}}();}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00034}00034\ \ \ \ \ \textcolor{keywordtype}{long}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTALPIDEDecoder_a4dea3956f18939712aadd479f100b437}{hex\_to\_dec}}(\textcolor{keyword}{const}\ uint8\_t*\ data,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\&\ digits);}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00035}00035\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTALPIDEDecoder_a7648f16adf32a005083817c45bf2bbd1}{bitwise\_and}}(\textcolor{keywordtype}{int}\ v1,\ \textcolor{keywordtype}{int}\ v2);}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00036}00036\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTALPIDEDecoder_a98f3383b9b4abbf05c4a02358257c38c}{bitwise\_or}}(\textcolor{keywordtype}{int}\ v1,\ \textcolor{keywordtype}{int}\ v2);}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00037}00037\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTALPIDEDecoder_a0ae2fef6f3e7403bbcd6f1446c1db407}{bitwise\_xor}}(\textcolor{keywordtype}{int}\ v1,\ \textcolor{keywordtype}{int}\ v2);}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00038}00038\ \};}
+\DoxyCodeLine{\Hypertarget{TALPIDEDecoder_8h_source_l00039}00039\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

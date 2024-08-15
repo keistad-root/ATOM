@@ -1,0 +1,658 @@
+\doxysection{TCluster Class Reference}
+\hypertarget{classTCluster}{}\label{classTCluster}\index{TCluster@{TCluster}}
+
+
+{\ttfamily \#include $<$TCluster.\+h$>$}
+
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \{ \mbox{\hyperlink{classTCluster_a52f0c06deca6c9b58939607653a28023a651383a76c0f557e2464c88044e9a387}{k\+Not\+Deleted}} = 0x02000000
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classTCluster_aff0e758a6ee4249eb0115b0806570a93}{TCluster}} ()
+\item 
+\mbox{\hyperlink{classTCluster_a13cc987c5ff2129929aef4e11fcc9d99}{TCluster}} (int event, int time)
+\item 
+\mbox{\hyperlink{classTCluster_ac56e6b9e6f757c6491d52d072f9759b5}{TCluster}} (const \mbox{\hyperlink{classTCluster}{TCluster}} \&copy)
+\item 
+\mbox{\hyperlink{classTCluster}{TCluster}} \& \mbox{\hyperlink{classTCluster_a0687e1e1a3f81feb3bf7dc76ce8d94ff}{operator=}} (const \mbox{\hyperlink{classTCluster}{TCluster}} \&copy)
+\item 
+\mbox{\hyperlink{classTCluster_a417a53e76a99de16b15bad0953fd2b0e}{TCluster}} (\mbox{\hyperlink{classTCluster}{TCluster}} \&\&move)
+\item 
+\mbox{\hyperlink{classTCluster}{TCluster}} \& \mbox{\hyperlink{classTCluster_a1c8793517502fe4cf83b0275eb4a4514}{operator=}} (\mbox{\hyperlink{classTCluster}{TCluster}} \&\&move)
+\item 
+\mbox{\hyperlink{classTCluster_aac329ca2d7a76d8c8fa80d68f8e8f23a}{\texorpdfstring{$\sim$}{\string~}\+TCluster}} ()
+\item 
+void \mbox{\hyperlink{classTCluster_a1f9c6f7c4ce30d0809c9e874e86c99dd}{Add\+Pixel}} (const std\+::pair$<$ int, int $>$ \&pixel)
+\item 
+void \mbox{\hyperlink{classTCluster_addb5a575839505e06a498447b8842abf}{Add\+Cluster}} (const \mbox{\hyperlink{classTCluster}{TCluster}} \&cluster)
+\item 
+bool \mbox{\hyperlink{classTCluster_ad5826ca32e5b25654dfdebd7dff7ea32}{is\+Neighbour}} (const std\+::pair$<$ int, int $>$ \&pixel) const
+\item 
+bool \mbox{\hyperlink{classTCluster_a54aaf7377cb46bee4a442ed78cb2de92}{is\+Neighbour}} (const \mbox{\hyperlink{classTCluster}{TCluster}} \&cluster) const
+\item 
+bool \mbox{\hyperlink{classTCluster_a6d0192928631950a9c95a00a184f7f2e}{is\+Contain}} (const std\+::pair$<$ int, int $>$ \&pixel) const
+\item 
+bool \mbox{\hyperlink{classTCluster_a7a9da2e118aa0b379139ac17cce78334}{is\+Contain}} (const \mbox{\hyperlink{classTCluster}{TCluster}} \&cluster) const
+\item 
+const int \mbox{\hyperlink{classTCluster_a3bc29d5067f2d89bc1d4379cb6246f38}{get\+Distance}} (const std\+::pair$<$ int, int $>$ \&pixel1, const std\+::pair$<$ int, int $>$ \&pixel2) const
+\item 
+void \mbox{\hyperlink{classTCluster_abed781852492ec1795a6a6764cb4f09a}{cal\+Members}} ()
+\item 
+void \mbox{\hyperlink{classTCluster_a9a9c8b7b4d896a29f1b388e78f0f6257}{cal\+Min\+Max}} ()
+\item 
+void \mbox{\hyperlink{classTCluster_a4a08c41d7636d91a127cf34a7f061f0d}{cal\+Center}} ()
+\item 
+void \mbox{\hyperlink{classTCluster_af4502229099509ff3fb5e6d1bdb7145f}{cal\+Long\+Radius}} ()
+\item 
+void \mbox{\hyperlink{classTCluster_af6f12f08784459d0b9720e06a0a63576}{cal\+Size}} ()
+\item 
+const std\+::pair$<$ double, double $>$ \mbox{\hyperlink{classTCluster_abdf8d94aade92b0566609b0ffe4e3a80}{get\+Center}} () const
+\item 
+const double \mbox{\hyperlink{classTCluster_abac556eaa38a2619a26c1f6748e34ec8}{get\+Long\+Radius}} () const
+\item 
+const int \mbox{\hyperlink{classTCluster_afc9c8267e7c599bf00bf822627df0900}{get\+Size}} () const
+\item 
+void \mbox{\hyperlink{classTCluster_a9d1a65eb79af2178f97104310f7cbbac}{set\+Event}} (const int event)
+\item 
+void \mbox{\hyperlink{classTCluster_a1c1cf1169c6c7de65f1fac67cd6e8169}{set\+Time\+Stamp}} (const int time)
+\item 
+void \mbox{\hyperlink{classTCluster_a81eada076fed6324f6a74f83b217b214}{set\+MinX}} (const int minX)
+\item 
+void \mbox{\hyperlink{classTCluster_ac4085728415481e05d3ead93adfaeec4}{set\+MinY}} (const int minY)
+\item 
+void \mbox{\hyperlink{classTCluster_a1be6e0acb9bbde70d5911f08ffb3970f}{set\+MaxX}} (const int maxX)
+\item 
+void \mbox{\hyperlink{classTCluster_a7749c1ef34254388b85ad10f25c66438}{set\+MaxY}} (const int maxY)
+\item 
+const std\+::vector$<$ std\+::pair$<$ int, int $>$ $>$ \mbox{\hyperlink{classTCluster_a397170b559cf79ff5470c2a8e73f9feb}{get\+Pixels}} () const
+\item 
+const int \mbox{\hyperlink{classTCluster_a0070ece4cbd7495f106dda80a03a3ade}{get\+Event}} () const
+\item 
+const int \mbox{\hyperlink{classTCluster_adb5d71e052be47fc089a080d480ca8d9}{get\+Time\+Stamp}} () const
+\item 
+const int \mbox{\hyperlink{classTCluster_a41eaea4310c8d20ce933331963b9f39f}{get\+MinX}} () const
+\item 
+const int \mbox{\hyperlink{classTCluster_a66b209b60e71862503fb17bd9576c82e}{get\+MinY}} () const
+\item 
+const int \mbox{\hyperlink{classTCluster_a8313b3a3bdc38bb7f1be4e3fa18de26e}{get\+MaxX}} () const
+\item 
+const int \mbox{\hyperlink{classTCluster_a5139ba2f95a86e61a82857f398a83eea}{get\+MaxY}} () const
+\item 
+bool \mbox{\hyperlink{classTCluster_a45bfaabe3e78b94f035c002424cd1ac3}{operator==}} (const \mbox{\hyperlink{classTCluster}{TCluster}} \&cluster) const
+\item 
+bool \mbox{\hyperlink{classTCluster_a30c759a03ee0861efd6484310cdaede3}{operator!=}} (const \mbox{\hyperlink{classTCluster}{TCluster}} \&cluster) const
+\item 
+bool \mbox{\hyperlink{classTCluster_a3082edb138149f3445afb671d08ee835}{Is\+Destructed}} () const
+\item 
+bool \mbox{\hyperlink{classTCluster_ab831447d27823fa35eb574b4b67457c5}{Test\+Bit}} (unsigned int f) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{classTCluster_af22e10fc45cc916e7c4429eb4f3434d4}{m\+Event}}
+\item 
+int \mbox{\hyperlink{classTCluster_ab8072405cb23e94f6d50ab471ed896e1}{m\+Time}}
+\item 
+std\+::vector$<$ std\+::pair$<$ int, int $>$ $>$ \mbox{\hyperlink{classTCluster_af6514b0da528c942c5f488a4c24add4e}{m\+Pixels}}
+\item 
+int \mbox{\hyperlink{classTCluster_a9f0c100e2971aa7fec8081109a6192ba}{m\+MinX}} = 1024
+\item 
+int \mbox{\hyperlink{classTCluster_a779e15d577eae78da599c0ca7022a10e}{m\+MinY}} = 512
+\item 
+int \mbox{\hyperlink{classTCluster_a9e340b2f8bc7c75234850c873197ae64}{m\+MaxX}} = 0
+\item 
+int \mbox{\hyperlink{classTCluster_a8650a4a4969956a25494179b6556b26b}{m\+MaxY}} = 0
+\item 
+std\+::pair$<$ double, double $>$ \mbox{\hyperlink{classTCluster_aa6ab3c16b3da70b6376bf601139b2338}{center}}
+\item 
+double \mbox{\hyperlink{classTCluster_af295cbe8d0523c4250b35de27b121da5}{m\+Long\+Radius}}
+\item 
+int \mbox{\hyperlink{classTCluster_a08d45f89484fea87d5bd585ba0ab78e2}{size}} = 0
+\item 
+unsigned int \mbox{\hyperlink{classTCluster_a6b8086e4189c2862c449fa33f3297eca}{f\+Bits}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{TCluster_8h_source_l00022}{22}} of file \mbox{\hyperlink{TCluster_8h_source}{TCluster.\+h}}.
+
+
+
+\doxysubsection{Member Enumeration Documentation}
+\Hypertarget{classTCluster_a52f0c06deca6c9b58939607653a28023}\label{classTCluster_a52f0c06deca6c9b58939607653a28023} 
+\doxysubsubsection{\texorpdfstring{anonymous enum}{anonymous enum}}
+{\footnotesize\ttfamily anonymous enum}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kNotDeleted@{kNotDeleted}!TCluster@{TCluster}}\index{TCluster@{TCluster}!kNotDeleted@{kNotDeleted}}}\Hypertarget{classTCluster_a52f0c06deca6c9b58939607653a28023a651383a76c0f557e2464c88044e9a387}\label{classTCluster_a52f0c06deca6c9b58939607653a28023a651383a76c0f557e2464c88044e9a387} 
+k\+Not\+Deleted&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{TCluster_8h_source_l00097}{97}} of file \mbox{\hyperlink{TCluster_8h_source}{TCluster.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classTCluster_aff0e758a6ee4249eb0115b0806570a93}\label{classTCluster_aff0e758a6ee4249eb0115b0806570a93} 
+\index{TCluster@{TCluster}!TCluster@{TCluster}}
+\index{TCluster@{TCluster}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{TCluster()}{TCluster()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily TCluster\+::\+TCluster (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00004}{4}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_a13cc987c5ff2129929aef4e11fcc9d99}\label{classTCluster_a13cc987c5ff2129929aef4e11fcc9d99} 
+\index{TCluster@{TCluster}!TCluster@{TCluster}}
+\index{TCluster@{TCluster}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{TCluster()}{TCluster()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily TCluster\+::\+TCluster (\begin{DoxyParamCaption}\item[{int}]{event,  }\item[{int}]{time }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00006}{6}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_ac56e6b9e6f757c6491d52d072f9759b5}\label{classTCluster_ac56e6b9e6f757c6491d52d072f9759b5} 
+\index{TCluster@{TCluster}!TCluster@{TCluster}}
+\index{TCluster@{TCluster}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{TCluster()}{TCluster()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily TCluster\+::\+TCluster (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classTCluster}{TCluster}} \&}]{copy }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00008}{8}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_a417a53e76a99de16b15bad0953fd2b0e}\label{classTCluster_a417a53e76a99de16b15bad0953fd2b0e} 
+\index{TCluster@{TCluster}!TCluster@{TCluster}}
+\index{TCluster@{TCluster}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{TCluster()}{TCluster()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily TCluster\+::\+TCluster (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classTCluster}{TCluster}} \&\&}]{move }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00024}{24}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_aac329ca2d7a76d8c8fa80d68f8e8f23a}\label{classTCluster_aac329ca2d7a76d8c8fa80d68f8e8f23a} 
+\index{TCluster@{TCluster}!````~TCluster@{\texorpdfstring{$\sim$}{\string~}TCluster}}
+\index{````~TCluster@{\texorpdfstring{$\sim$}{\string~}TCluster}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}TCluster()}{\string~TCluster()}}
+{\footnotesize\ttfamily TCluster\+::\texorpdfstring{$\sim$}{\string~}\+TCluster (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00037}{37}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classTCluster_addb5a575839505e06a498447b8842abf}\label{classTCluster_addb5a575839505e06a498447b8842abf} 
+\index{TCluster@{TCluster}!AddCluster@{AddCluster}}
+\index{AddCluster@{AddCluster}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{AddCluster()}{AddCluster()}}
+{\footnotesize\ttfamily void TCluster\+::\+Add\+Cluster (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classTCluster}{TCluster}} \&}]{cluster }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00044}{44}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_a1f9c6f7c4ce30d0809c9e874e86c99dd}\label{classTCluster_a1f9c6f7c4ce30d0809c9e874e86c99dd} 
+\index{TCluster@{TCluster}!AddPixel@{AddPixel}}
+\index{AddPixel@{AddPixel}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{AddPixel()}{AddPixel()}}
+{\footnotesize\ttfamily void TCluster\+::\+Add\+Pixel (\begin{DoxyParamCaption}\item[{const std\+::pair$<$ int, int $>$ \&}]{pixel }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00039}{39}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_a4a08c41d7636d91a127cf34a7f061f0d}\label{classTCluster_a4a08c41d7636d91a127cf34a7f061f0d} 
+\index{TCluster@{TCluster}!calCenter@{calCenter}}
+\index{calCenter@{calCenter}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{calCenter()}{calCenter()}}
+{\footnotesize\ttfamily void TCluster\+::cal\+Center (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00111}{111}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_af4502229099509ff3fb5e6d1bdb7145f}\label{classTCluster_af4502229099509ff3fb5e6d1bdb7145f} 
+\index{TCluster@{TCluster}!calLongRadius@{calLongRadius}}
+\index{calLongRadius@{calLongRadius}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{calLongRadius()}{calLongRadius()}}
+{\footnotesize\ttfamily void TCluster\+::cal\+Long\+Radius (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00126}{126}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_abed781852492ec1795a6a6764cb4f09a}\label{classTCluster_abed781852492ec1795a6a6764cb4f09a} 
+\index{TCluster@{TCluster}!calMembers@{calMembers}}
+\index{calMembers@{calMembers}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{calMembers()}{calMembers()}}
+{\footnotesize\ttfamily void TCluster\+::cal\+Members (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00092}{92}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_a9a9c8b7b4d896a29f1b388e78f0f6257}\label{classTCluster_a9a9c8b7b4d896a29f1b388e78f0f6257} 
+\index{TCluster@{TCluster}!calMinMax@{calMinMax}}
+\index{calMinMax@{calMinMax}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{calMinMax()}{calMinMax()}}
+{\footnotesize\ttfamily void TCluster\+::cal\+Min\+Max (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00102}{102}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_af6f12f08784459d0b9720e06a0a63576}\label{classTCluster_af6f12f08784459d0b9720e06a0a63576} 
+\index{TCluster@{TCluster}!calSize@{calSize}}
+\index{calSize@{calSize}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{calSize()}{calSize()}}
+{\footnotesize\ttfamily void TCluster\+::cal\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00122}{122}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_abdf8d94aade92b0566609b0ffe4e3a80}\label{classTCluster_abdf8d94aade92b0566609b0ffe4e3a80} 
+\index{TCluster@{TCluster}!getCenter@{getCenter}}
+\index{getCenter@{getCenter}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{getCenter()}{getCenter()}}
+{\footnotesize\ttfamily const std\+::pair$<$ double, double $>$ TCluster\+::get\+Center (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00135}{135}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_a3bc29d5067f2d89bc1d4379cb6246f38}\label{classTCluster_a3bc29d5067f2d89bc1d4379cb6246f38} 
+\index{TCluster@{TCluster}!getDistance@{getDistance}}
+\index{getDistance@{getDistance}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{getDistance()}{getDistance()}}
+{\footnotesize\ttfamily const int TCluster\+::get\+Distance (\begin{DoxyParamCaption}\item[{const std\+::pair$<$ int, int $>$ \&}]{pixel1,  }\item[{const std\+::pair$<$ int, int $>$ \&}]{pixel2 }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00088}{88}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_a0070ece4cbd7495f106dda80a03a3ade}\label{classTCluster_a0070ece4cbd7495f106dda80a03a3ade} 
+\index{TCluster@{TCluster}!getEvent@{getEvent}}
+\index{getEvent@{getEvent}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{getEvent()}{getEvent()}}
+{\footnotesize\ttfamily const int TCluster\+::get\+Event (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00157}{157}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_abac556eaa38a2619a26c1f6748e34ec8}\label{classTCluster_abac556eaa38a2619a26c1f6748e34ec8} 
+\index{TCluster@{TCluster}!getLongRadius@{getLongRadius}}
+\index{getLongRadius@{getLongRadius}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{getLongRadius()}{getLongRadius()}}
+{\footnotesize\ttfamily const double TCluster\+::get\+Long\+Radius (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00143}{143}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_a8313b3a3bdc38bb7f1be4e3fa18de26e}\label{classTCluster_a8313b3a3bdc38bb7f1be4e3fa18de26e} 
+\index{TCluster@{TCluster}!getMaxX@{getMaxX}}
+\index{getMaxX@{getMaxX}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{getMaxX()}{getMaxX()}}
+{\footnotesize\ttfamily const int TCluster\+::get\+MaxX (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00161}{161}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_a5139ba2f95a86e61a82857f398a83eea}\label{classTCluster_a5139ba2f95a86e61a82857f398a83eea} 
+\index{TCluster@{TCluster}!getMaxY@{getMaxY}}
+\index{getMaxY@{getMaxY}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{getMaxY()}{getMaxY()}}
+{\footnotesize\ttfamily const int TCluster\+::get\+MaxY (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00162}{162}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_a41eaea4310c8d20ce933331963b9f39f}\label{classTCluster_a41eaea4310c8d20ce933331963b9f39f} 
+\index{TCluster@{TCluster}!getMinX@{getMinX}}
+\index{getMinX@{getMinX}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{getMinX()}{getMinX()}}
+{\footnotesize\ttfamily const int TCluster\+::get\+MinX (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00159}{159}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_a66b209b60e71862503fb17bd9576c82e}\label{classTCluster_a66b209b60e71862503fb17bd9576c82e} 
+\index{TCluster@{TCluster}!getMinY@{getMinY}}
+\index{getMinY@{getMinY}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{getMinY()}{getMinY()}}
+{\footnotesize\ttfamily const int TCluster\+::get\+MinY (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00160}{160}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_a397170b559cf79ff5470c2a8e73f9feb}\label{classTCluster_a397170b559cf79ff5470c2a8e73f9feb} 
+\index{TCluster@{TCluster}!getPixels@{getPixels}}
+\index{getPixels@{getPixels}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{getPixels()}{getPixels()}}
+{\footnotesize\ttfamily const std\+::vector$<$ std\+::pair$<$ int, int $>$ $>$ TCluster\+::get\+Pixels (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00156}{156}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_afc9c8267e7c599bf00bf822627df0900}\label{classTCluster_afc9c8267e7c599bf00bf822627df0900} 
+\index{TCluster@{TCluster}!getSize@{getSize}}
+\index{getSize@{getSize}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{getSize()}{getSize()}}
+{\footnotesize\ttfamily const int TCluster\+::get\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00139}{139}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_adb5d71e052be47fc089a080d480ca8d9}\label{classTCluster_adb5d71e052be47fc089a080d480ca8d9} 
+\index{TCluster@{TCluster}!getTimeStamp@{getTimeStamp}}
+\index{getTimeStamp@{getTimeStamp}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{getTimeStamp()}{getTimeStamp()}}
+{\footnotesize\ttfamily const int TCluster\+::get\+Time\+Stamp (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00158}{158}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_a6d0192928631950a9c95a00a184f7f2e}\label{classTCluster_a6d0192928631950a9c95a00a184f7f2e} 
+\index{TCluster@{TCluster}!isContain@{isContain}}
+\index{isContain@{isContain}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{isContain()}{isContain()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily bool TCluster\+::is\+Contain (\begin{DoxyParamCaption}\item[{const std\+::pair$<$ int, int $>$ \&}]{pixel }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00071}{71}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_a7a9da2e118aa0b379139ac17cce78334}\label{classTCluster_a7a9da2e118aa0b379139ac17cce78334} 
+\index{TCluster@{TCluster}!isContain@{isContain}}
+\index{isContain@{isContain}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{isContain()}{isContain()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool TCluster\+::is\+Contain (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classTCluster}{TCluster}} \&}]{cluster }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00079}{79}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_a3082edb138149f3445afb671d08ee835}\label{classTCluster_a3082edb138149f3445afb671d08ee835} 
+\index{TCluster@{TCluster}!IsDestructed@{IsDestructed}}
+\index{IsDestructed@{IsDestructed}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{IsDestructed()}{IsDestructed()}}
+{\footnotesize\ttfamily bool TCluster\+::\+Is\+Destructed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8h_source_l00100}{100}} of file \mbox{\hyperlink{TCluster_8h_source}{TCluster.\+h}}.
+
+\Hypertarget{classTCluster_ad5826ca32e5b25654dfdebd7dff7ea32}\label{classTCluster_ad5826ca32e5b25654dfdebd7dff7ea32} 
+\index{TCluster@{TCluster}!isNeighbour@{isNeighbour}}
+\index{isNeighbour@{isNeighbour}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{isNeighbour()}{isNeighbour()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily bool TCluster\+::is\+Neighbour (\begin{DoxyParamCaption}\item[{const std\+::pair$<$ int, int $>$ \&}]{pixel }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00051}{51}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_a54aaf7377cb46bee4a442ed78cb2de92}\label{classTCluster_a54aaf7377cb46bee4a442ed78cb2de92} 
+\index{TCluster@{TCluster}!isNeighbour@{isNeighbour}}
+\index{isNeighbour@{isNeighbour}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{isNeighbour()}{isNeighbour()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily bool TCluster\+::is\+Neighbour (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classTCluster}{TCluster}} \&}]{cluster }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00062}{62}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_a30c759a03ee0861efd6484310cdaede3}\label{classTCluster_a30c759a03ee0861efd6484310cdaede3} 
+\index{TCluster@{TCluster}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{operator"!=()}{operator!=()}}
+{\footnotesize\ttfamily bool TCluster\+::operator!= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classTCluster}{TCluster}} \&}]{cluster }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{TClusterOperator_8cpp_source_l00017}{17}} of file \mbox{\hyperlink{TClusterOperator_8cpp_source}{TCluster\+Operator.\+cpp}}.
+
+\Hypertarget{classTCluster_a0687e1e1a3f81feb3bf7dc76ce8d94ff}\label{classTCluster_a0687e1e1a3f81feb3bf7dc76ce8d94ff} 
+\index{TCluster@{TCluster}!operator=@{operator=}}
+\index{operator=@{operator=}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classTCluster}{TCluster}} \& TCluster\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classTCluster}{TCluster}} \&}]{copy }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00012}{12}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_a1c8793517502fe4cf83b0275eb4a4514}\label{classTCluster_a1c8793517502fe4cf83b0275eb4a4514} 
+\index{TCluster@{TCluster}!operator=@{operator=}}
+\index{operator=@{operator=}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classTCluster}{TCluster}} \& TCluster\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classTCluster}{TCluster}} \&\&}]{move }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00026}{26}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_a45bfaabe3e78b94f035c002424cd1ac3}\label{classTCluster_a45bfaabe3e78b94f035c002424cd1ac3} 
+\index{TCluster@{TCluster}!operator==@{operator==}}
+\index{operator==@{operator==}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily bool TCluster\+::operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classTCluster}{TCluster}} \&}]{cluster }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{TClusterOperator_8cpp_source_l00003}{3}} of file \mbox{\hyperlink{TClusterOperator_8cpp_source}{TCluster\+Operator.\+cpp}}.
+
+\Hypertarget{classTCluster_a9d1a65eb79af2178f97104310f7cbbac}\label{classTCluster_a9d1a65eb79af2178f97104310f7cbbac} 
+\index{TCluster@{TCluster}!setEvent@{setEvent}}
+\index{setEvent@{setEvent}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{setEvent()}{setEvent()}}
+{\footnotesize\ttfamily void TCluster\+::set\+Event (\begin{DoxyParamCaption}\item[{const int}]{event }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00148}{148}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_a1be6e0acb9bbde70d5911f08ffb3970f}\label{classTCluster_a1be6e0acb9bbde70d5911f08ffb3970f} 
+\index{TCluster@{TCluster}!setMaxX@{setMaxX}}
+\index{setMaxX@{setMaxX}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{setMaxX()}{setMaxX()}}
+{\footnotesize\ttfamily void TCluster\+::set\+MaxX (\begin{DoxyParamCaption}\item[{const int}]{maxX }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00152}{152}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_a7749c1ef34254388b85ad10f25c66438}\label{classTCluster_a7749c1ef34254388b85ad10f25c66438} 
+\index{TCluster@{TCluster}!setMaxY@{setMaxY}}
+\index{setMaxY@{setMaxY}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{setMaxY()}{setMaxY()}}
+{\footnotesize\ttfamily void TCluster\+::set\+MaxY (\begin{DoxyParamCaption}\item[{const int}]{maxY }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00153}{153}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_a81eada076fed6324f6a74f83b217b214}\label{classTCluster_a81eada076fed6324f6a74f83b217b214} 
+\index{TCluster@{TCluster}!setMinX@{setMinX}}
+\index{setMinX@{setMinX}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{setMinX()}{setMinX()}}
+{\footnotesize\ttfamily void TCluster\+::set\+MinX (\begin{DoxyParamCaption}\item[{const int}]{minX }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00150}{150}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_ac4085728415481e05d3ead93adfaeec4}\label{classTCluster_ac4085728415481e05d3ead93adfaeec4} 
+\index{TCluster@{TCluster}!setMinY@{setMinY}}
+\index{setMinY@{setMinY}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{setMinY()}{setMinY()}}
+{\footnotesize\ttfamily void TCluster\+::set\+MinY (\begin{DoxyParamCaption}\item[{const int}]{minY }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00151}{151}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_a1c1cf1169c6c7de65f1fac67cd6e8169}\label{classTCluster_a1c1cf1169c6c7de65f1fac67cd6e8169} 
+\index{TCluster@{TCluster}!setTimeStamp@{setTimeStamp}}
+\index{setTimeStamp@{setTimeStamp}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{setTimeStamp()}{setTimeStamp()}}
+{\footnotesize\ttfamily void TCluster\+::set\+Time\+Stamp (\begin{DoxyParamCaption}\item[{const int}]{time }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8cpp_source_l00149}{149}} of file \mbox{\hyperlink{TCluster_8cpp_source}{TCluster.\+cpp}}.
+
+\Hypertarget{classTCluster_ab831447d27823fa35eb574b4b67457c5}\label{classTCluster_ab831447d27823fa35eb574b4b67457c5} 
+\index{TCluster@{TCluster}!TestBit@{TestBit}}
+\index{TestBit@{TestBit}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{TestBit()}{TestBit()}}
+{\footnotesize\ttfamily bool TCluster\+::\+Test\+Bit (\begin{DoxyParamCaption}\item[{unsigned int}]{f }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8h_source_l00101}{101}} of file \mbox{\hyperlink{TCluster_8h_source}{TCluster.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classTCluster_aa6ab3c16b3da70b6376bf601139b2338}\label{classTCluster_aa6ab3c16b3da70b6376bf601139b2338} 
+\index{TCluster@{TCluster}!center@{center}}
+\index{center@{center}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{center}{center}}
+{\footnotesize\ttfamily std\+::pair$<$double, double$>$ TCluster\+::center\hspace{0.3cm}{\ttfamily [private]}}
+
+cluster centre value. The average of x and y values. 
+
+Definition at line \mbox{\hyperlink{TCluster_8h_source_l00030}{30}} of file \mbox{\hyperlink{TCluster_8h_source}{TCluster.\+h}}.
+
+\Hypertarget{classTCluster_a6b8086e4189c2862c449fa33f3297eca}\label{classTCluster_a6b8086e4189c2862c449fa33f3297eca} 
+\index{TCluster@{TCluster}!fBits@{fBits}}
+\index{fBits@{fBits}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{fBits}{fBits}}
+{\footnotesize\ttfamily unsigned int TCluster\+::f\+Bits\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8h_source_l00095}{95}} of file \mbox{\hyperlink{TCluster_8h_source}{TCluster.\+h}}.
+
+\Hypertarget{classTCluster_af22e10fc45cc916e7c4429eb4f3434d4}\label{classTCluster_af22e10fc45cc916e7c4429eb4f3434d4} 
+\index{TCluster@{TCluster}!mEvent@{mEvent}}
+\index{mEvent@{mEvent}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{mEvent}{mEvent}}
+{\footnotesize\ttfamily int TCluster\+::m\+Event\hspace{0.3cm}{\ttfamily [private]}}
+
+Number of event to which this cluster belongs 
+
+Definition at line \mbox{\hyperlink{TCluster_8h_source_l00024}{24}} of file \mbox{\hyperlink{TCluster_8h_source}{TCluster.\+h}}.
+
+\Hypertarget{classTCluster_af295cbe8d0523c4250b35de27b121da5}\label{classTCluster_af295cbe8d0523c4250b35de27b121da5} 
+\index{TCluster@{TCluster}!mLongRadius@{mLongRadius}}
+\index{mLongRadius@{mLongRadius}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{mLongRadius}{mLongRadius}}
+{\footnotesize\ttfamily double TCluster\+::m\+Long\+Radius\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8h_source_l00031}{31}} of file \mbox{\hyperlink{TCluster_8h_source}{TCluster.\+h}}.
+
+\Hypertarget{classTCluster_a9e340b2f8bc7c75234850c873197ae64}\label{classTCluster_a9e340b2f8bc7c75234850c873197ae64} 
+\index{TCluster@{TCluster}!mMaxX@{mMaxX}}
+\index{mMaxX@{mMaxX}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{mMaxX}{mMaxX}}
+{\footnotesize\ttfamily int TCluster\+::m\+MaxX = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8h_source_l00029}{29}} of file \mbox{\hyperlink{TCluster_8h_source}{TCluster.\+h}}.
+
+\Hypertarget{classTCluster_a8650a4a4969956a25494179b6556b26b}\label{classTCluster_a8650a4a4969956a25494179b6556b26b} 
+\index{TCluster@{TCluster}!mMaxY@{mMaxY}}
+\index{mMaxY@{mMaxY}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{mMaxY}{mMaxY}}
+{\footnotesize\ttfamily int TCluster\+::m\+MaxY = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+Minimum pixel x and y value in cluster 
+
+Definition at line \mbox{\hyperlink{TCluster_8h_source_l00029}{29}} of file \mbox{\hyperlink{TCluster_8h_source}{TCluster.\+h}}.
+
+\Hypertarget{classTCluster_a9f0c100e2971aa7fec8081109a6192ba}\label{classTCluster_a9f0c100e2971aa7fec8081109a6192ba} 
+\index{TCluster@{TCluster}!mMinX@{mMinX}}
+\index{mMinX@{mMinX}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{mMinX}{mMinX}}
+{\footnotesize\ttfamily int TCluster\+::m\+MinX = 1024\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TCluster_8h_source_l00028}{28}} of file \mbox{\hyperlink{TCluster_8h_source}{TCluster.\+h}}.
+
+\Hypertarget{classTCluster_a779e15d577eae78da599c0ca7022a10e}\label{classTCluster_a779e15d577eae78da599c0ca7022a10e} 
+\index{TCluster@{TCluster}!mMinY@{mMinY}}
+\index{mMinY@{mMinY}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{mMinY}{mMinY}}
+{\footnotesize\ttfamily int TCluster\+::m\+MinY = 512\hspace{0.3cm}{\ttfamily [private]}}
+
+Maximum pixel x and y value in cluster 
+
+Definition at line \mbox{\hyperlink{TCluster_8h_source_l00028}{28}} of file \mbox{\hyperlink{TCluster_8h_source}{TCluster.\+h}}.
+
+\Hypertarget{classTCluster_af6514b0da528c942c5f488a4c24add4e}\label{classTCluster_af6514b0da528c942c5f488a4c24add4e} 
+\index{TCluster@{TCluster}!mPixels@{mPixels}}
+\index{mPixels@{mPixels}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{mPixels}{mPixels}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::pair$<$int, int$>$ $>$ TCluster\+::m\+Pixels\hspace{0.3cm}{\ttfamily [private]}}
+
+The bundle of pixels which are composed to this cluster 
+
+Definition at line \mbox{\hyperlink{TCluster_8h_source_l00026}{26}} of file \mbox{\hyperlink{TCluster_8h_source}{TCluster.\+h}}.
+
+\Hypertarget{classTCluster_ab8072405cb23e94f6d50ab471ed896e1}\label{classTCluster_ab8072405cb23e94f6d50ab471ed896e1} 
+\index{TCluster@{TCluster}!mTime@{mTime}}
+\index{mTime@{mTime}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{mTime}{mTime}}
+{\footnotesize\ttfamily int TCluster\+::m\+Time\hspace{0.3cm}{\ttfamily [private]}}
+
+Time stamp of event 
+
+Definition at line \mbox{\hyperlink{TCluster_8h_source_l00025}{25}} of file \mbox{\hyperlink{TCluster_8h_source}{TCluster.\+h}}.
+
+\Hypertarget{classTCluster_a08d45f89484fea87d5bd585ba0ab78e2}\label{classTCluster_a08d45f89484fea87d5bd585ba0ab78e2} 
+\index{TCluster@{TCluster}!size@{size}}
+\index{size@{size}!TCluster@{TCluster}}
+\doxysubsubsection{\texorpdfstring{size}{size}}
+{\footnotesize\ttfamily int TCluster\+::size = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+The number of pixels in cluster 
+
+Definition at line \mbox{\hyperlink{TCluster_8h_source_l00034}{34}} of file \mbox{\hyperlink{TCluster_8h_source}{TCluster.\+h}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/ychoi/\+ATOM/alpide/cluster/inc/\mbox{\hyperlink{TCluster_8h}{TCluster.\+h}}\item 
+/home/ychoi/\+ATOM/alpide/cluster/src/\mbox{\hyperlink{TCluster_8cpp}{TCluster.\+cpp}}\item 
+/home/ychoi/\+ATOM/alpide/cluster/src/\mbox{\hyperlink{TClusterOperator_8cpp}{TCluster\+Operator.\+cpp}}\end{DoxyCompactItemize}

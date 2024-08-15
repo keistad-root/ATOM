@@ -1,0 +1,142 @@
+\doxysection{/home/ychoi/\+ATOM/pycpp/inc/cppargs.h File Reference}
+\hypertarget{cppargs_8h}{}\label{cppargs_8h}\index{/home/ychoi/ATOM/pycpp/inc/cppargs.h@{/home/ychoi/ATOM/pycpp/inc/cppargs.h}}
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$cstdarg$>$}\newline
+{\ttfamily \#include $<$typeinfo$>$}\newline
+{\ttfamily \#include $<$unordered\+\_\+map$>$}\newline
+{\ttfamily \#include $<$sstream$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classHelpMessage}{Help\+Message}}
+\item 
+class \mbox{\hyperlink{classArgument}{Argument}}
+\item 
+class \mbox{\hyperlink{classArgumentParser}{Argument\+Parser}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950b}{Action\+Type}} \{ \newline
+\mbox{\hyperlink{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950babb516226f3df30c332c998da773f56db}{ACTION\+\_\+\+NONE}}
+, \mbox{\hyperlink{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950bae9be5b936e1cdb58f7cf0c1ba8023492}{ACTION\+\_\+\+STORE}}
+, \mbox{\hyperlink{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950ba3bcd5c32a9370a2d5013ef86d074b00b}{ACTION\+\_\+\+STORE\+\_\+\+CONST}}
+, \mbox{\hyperlink{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950ba012d749626788b014103231621675188}{ACTION\+\_\+\+STORE\+\_\+\+TRUE}}
+, \newline
+\mbox{\hyperlink{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950ba1f9bf068ee5f9726f7e9109f566512ed}{ACTION\+\_\+\+STORE\+\_\+\+FALSE}}
+, \mbox{\hyperlink{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950baedcd0f7b83f3512b3c45caa94cfdae43}{ACTION\+\_\+\+APPEND}}
+, \mbox{\hyperlink{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950ba26ee084e22819b710c40465931c3491e}{ACTION\+\_\+\+APPEND\+\_\+\+CONST}}
+, \mbox{\hyperlink{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950babb8998bd21077e8a8e1afd1c8eab5d0d}{ACTION\+\_\+\+COUNT}}
+, \newline
+\mbox{\hyperlink{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950ba158cd75cc85352135c6d25edb2d92ce3}{ACTION\+\_\+\+HELP}}
+, \mbox{\hyperlink{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950baef4a1edbe1c97420b6539fdb529603a9}{ACTION\+\_\+\+VERSION}}
+, \mbox{\hyperlink{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950baf828060ff888d045e2c1c0d6d6334166}{ACTION\+\_\+\+PARSERS}}
+, \mbox{\hyperlink{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950ba0071106a3afc33ba20dd8d17f4317d14}{ACTION\+\_\+\+EXTEND}}
+ \}
+\item 
+enum \mbox{\hyperlink{cppargs_8h_a9a31ac742161b7b8eab5d2757430cca6}{ARGTYPES}} \{ \newline
+\mbox{\hyperlink{cppargs_8h_a9a31ac742161b7b8eab5d2757430cca6afd5a5f51ce25953f3db2c7e93eb7864a}{INT}}
+, \mbox{\hyperlink{cppargs_8h_a9a31ac742161b7b8eab5d2757430cca6a33465d1d419b1074fb259ef444609e92}{DOUBLE}}
+, \mbox{\hyperlink{cppargs_8h_a9a31ac742161b7b8eab5d2757430cca6ae663dbb8f8244e122acb5bd6b2c216e1}{BOOL}}
+, \mbox{\hyperlink{cppargs_8h_a9a31ac742161b7b8eab5d2757430cca6aee847e634a4297b274316de8a8ca9921}{STRING}}
+, \newline
+\mbox{\hyperlink{cppargs_8h_a9a31ac742161b7b8eab5d2757430cca6ac157bdf0b85a40d2619cbc8bc1ae5fe2}{NONE}}
+ \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Enumeration Type Documentation}
+\Hypertarget{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950b}\label{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950b} 
+\index{cppargs.h@{cppargs.h}!ActionType@{ActionType}}
+\index{ActionType@{ActionType}!cppargs.h@{cppargs.h}}
+\doxysubsubsection{\texorpdfstring{ActionType}{ActionType}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950b}{Action\+Type}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACTION\_NONE@{ACTION\_NONE}!cppargs.h@{cppargs.h}}\index{cppargs.h@{cppargs.h}!ACTION\_NONE@{ACTION\_NONE}}}\Hypertarget{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950babb516226f3df30c332c998da773f56db}\label{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950babb516226f3df30c332c998da773f56db} 
+ACTION\+\_\+\+NONE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACTION\_STORE@{ACTION\_STORE}!cppargs.h@{cppargs.h}}\index{cppargs.h@{cppargs.h}!ACTION\_STORE@{ACTION\_STORE}}}\Hypertarget{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950bae9be5b936e1cdb58f7cf0c1ba8023492}\label{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950bae9be5b936e1cdb58f7cf0c1ba8023492} 
+ACTION\+\_\+\+STORE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACTION\_STORE\_CONST@{ACTION\_STORE\_CONST}!cppargs.h@{cppargs.h}}\index{cppargs.h@{cppargs.h}!ACTION\_STORE\_CONST@{ACTION\_STORE\_CONST}}}\Hypertarget{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950ba3bcd5c32a9370a2d5013ef86d074b00b}\label{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950ba3bcd5c32a9370a2d5013ef86d074b00b} 
+ACTION\+\_\+\+STORE\+\_\+\+CONST&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACTION\_STORE\_TRUE@{ACTION\_STORE\_TRUE}!cppargs.h@{cppargs.h}}\index{cppargs.h@{cppargs.h}!ACTION\_STORE\_TRUE@{ACTION\_STORE\_TRUE}}}\Hypertarget{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950ba012d749626788b014103231621675188}\label{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950ba012d749626788b014103231621675188} 
+ACTION\+\_\+\+STORE\+\_\+\+TRUE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACTION\_STORE\_FALSE@{ACTION\_STORE\_FALSE}!cppargs.h@{cppargs.h}}\index{cppargs.h@{cppargs.h}!ACTION\_STORE\_FALSE@{ACTION\_STORE\_FALSE}}}\Hypertarget{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950ba1f9bf068ee5f9726f7e9109f566512ed}\label{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950ba1f9bf068ee5f9726f7e9109f566512ed} 
+ACTION\+\_\+\+STORE\+\_\+\+FALSE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACTION\_APPEND@{ACTION\_APPEND}!cppargs.h@{cppargs.h}}\index{cppargs.h@{cppargs.h}!ACTION\_APPEND@{ACTION\_APPEND}}}\Hypertarget{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950baedcd0f7b83f3512b3c45caa94cfdae43}\label{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950baedcd0f7b83f3512b3c45caa94cfdae43} 
+ACTION\+\_\+\+APPEND&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACTION\_APPEND\_CONST@{ACTION\_APPEND\_CONST}!cppargs.h@{cppargs.h}}\index{cppargs.h@{cppargs.h}!ACTION\_APPEND\_CONST@{ACTION\_APPEND\_CONST}}}\Hypertarget{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950ba26ee084e22819b710c40465931c3491e}\label{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950ba26ee084e22819b710c40465931c3491e} 
+ACTION\+\_\+\+APPEND\+\_\+\+CONST&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACTION\_COUNT@{ACTION\_COUNT}!cppargs.h@{cppargs.h}}\index{cppargs.h@{cppargs.h}!ACTION\_COUNT@{ACTION\_COUNT}}}\Hypertarget{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950babb8998bd21077e8a8e1afd1c8eab5d0d}\label{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950babb8998bd21077e8a8e1afd1c8eab5d0d} 
+ACTION\+\_\+\+COUNT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACTION\_HELP@{ACTION\_HELP}!cppargs.h@{cppargs.h}}\index{cppargs.h@{cppargs.h}!ACTION\_HELP@{ACTION\_HELP}}}\Hypertarget{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950ba158cd75cc85352135c6d25edb2d92ce3}\label{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950ba158cd75cc85352135c6d25edb2d92ce3} 
+ACTION\+\_\+\+HELP&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACTION\_VERSION@{ACTION\_VERSION}!cppargs.h@{cppargs.h}}\index{cppargs.h@{cppargs.h}!ACTION\_VERSION@{ACTION\_VERSION}}}\Hypertarget{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950baef4a1edbe1c97420b6539fdb529603a9}\label{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950baef4a1edbe1c97420b6539fdb529603a9} 
+ACTION\+\_\+\+VERSION&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACTION\_PARSERS@{ACTION\_PARSERS}!cppargs.h@{cppargs.h}}\index{cppargs.h@{cppargs.h}!ACTION\_PARSERS@{ACTION\_PARSERS}}}\Hypertarget{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950baf828060ff888d045e2c1c0d6d6334166}\label{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950baf828060ff888d045e2c1c0d6d6334166} 
+ACTION\+\_\+\+PARSERS&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{ACTION\_EXTEND@{ACTION\_EXTEND}!cppargs.h@{cppargs.h}}\index{cppargs.h@{cppargs.h}!ACTION\_EXTEND@{ACTION\_EXTEND}}}\Hypertarget{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950ba0071106a3afc33ba20dd8d17f4317d14}\label{cppargs_8h_a21d5e8f8cdaa838586b31007df0a950ba0071106a3afc33ba20dd8d17f4317d14} 
+ACTION\+\_\+\+EXTEND&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{cppargs_8h_source_l00012}{12}} of file \mbox{\hyperlink{cppargs_8h_source}{cppargs.\+h}}.
+
+\Hypertarget{cppargs_8h_a9a31ac742161b7b8eab5d2757430cca6}\label{cppargs_8h_a9a31ac742161b7b8eab5d2757430cca6} 
+\index{cppargs.h@{cppargs.h}!ARGTYPES@{ARGTYPES}}
+\index{ARGTYPES@{ARGTYPES}!cppargs.h@{cppargs.h}}
+\doxysubsubsection{\texorpdfstring{ARGTYPES}{ARGTYPES}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{cppargs_8h_a9a31ac742161b7b8eab5d2757430cca6}{ARGTYPES}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{INT@{INT}!cppargs.h@{cppargs.h}}\index{cppargs.h@{cppargs.h}!INT@{INT}}}\Hypertarget{cppargs_8h_a9a31ac742161b7b8eab5d2757430cca6afd5a5f51ce25953f3db2c7e93eb7864a}\label{cppargs_8h_a9a31ac742161b7b8eab5d2757430cca6afd5a5f51ce25953f3db2c7e93eb7864a} 
+INT&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{DOUBLE@{DOUBLE}!cppargs.h@{cppargs.h}}\index{cppargs.h@{cppargs.h}!DOUBLE@{DOUBLE}}}\Hypertarget{cppargs_8h_a9a31ac742161b7b8eab5d2757430cca6a33465d1d419b1074fb259ef444609e92}\label{cppargs_8h_a9a31ac742161b7b8eab5d2757430cca6a33465d1d419b1074fb259ef444609e92} 
+DOUBLE&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{BOOL@{BOOL}!cppargs.h@{cppargs.h}}\index{cppargs.h@{cppargs.h}!BOOL@{BOOL}}}\Hypertarget{cppargs_8h_a9a31ac742161b7b8eab5d2757430cca6ae663dbb8f8244e122acb5bd6b2c216e1}\label{cppargs_8h_a9a31ac742161b7b8eab5d2757430cca6ae663dbb8f8244e122acb5bd6b2c216e1} 
+BOOL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{STRING@{STRING}!cppargs.h@{cppargs.h}}\index{cppargs.h@{cppargs.h}!STRING@{STRING}}}\Hypertarget{cppargs_8h_a9a31ac742161b7b8eab5d2757430cca6aee847e634a4297b274316de8a8ca9921}\label{cppargs_8h_a9a31ac742161b7b8eab5d2757430cca6aee847e634a4297b274316de8a8ca9921} 
+STRING&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{NONE@{NONE}!cppargs.h@{cppargs.h}}\index{cppargs.h@{cppargs.h}!NONE@{NONE}}}\Hypertarget{cppargs_8h_a9a31ac742161b7b8eab5d2757430cca6ac157bdf0b85a40d2619cbc8bc1ae5fe2}\label{cppargs_8h_a9a31ac742161b7b8eab5d2757430cca6ac157bdf0b85a40d2619cbc8bc1ae5fe2} 
+NONE&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{cppargs_8h_source_l00037}{37}} of file \mbox{\hyperlink{cppargs_8h_source}{cppargs.\+h}}.
+

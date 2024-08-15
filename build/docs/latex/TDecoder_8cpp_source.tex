@@ -1,0 +1,37 @@
+\doxysection{TDecoder.\+cpp}
+\hypertarget{TDecoder_8cpp_source}{}\label{TDecoder_8cpp_source}\index{/home/ychoi/ATOM/chip/src/TDecoder.cpp@{/home/ychoi/ATOM/chip/src/TDecoder.cpp}}
+\mbox{\hyperlink{TDecoder_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00001}00001\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{TDecoder_8h}{TDecoder.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00002}00002\ }
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00003}\mbox{\hyperlink{classTDecoder_aed3b385682cb7f5a596443d19349f338}{00003}}\ \mbox{\hyperlink{classTDecoder_aed3b385682cb7f5a596443d19349f338}{TDecoder::TDecoder}}(\textcolor{keyword}{const}\ std::filesystem::path\&\ path)\ \{}
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00004}00004\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ !std::filesystem::exists(path)\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00005}00005\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}File\ "{}}\ <<\ path\ <<\ \textcolor{stringliteral}{"{}\ cannot\ be\ found."{}}\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00006}00006\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00007}00007\ \ \ \ \ \mbox{\hyperlink{classTDecoder_af0fa2eb339532a1f0e6f86953c0d8de0}{binaryFile\_}}\ =\ std::ifstream(path,\ std::ios::binary);}
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00008}00008\ \}}
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00010}\mbox{\hyperlink{classTDecoder_a0f74e770926a5135a4ffaeec2f787448}{00010}}\ \mbox{\hyperlink{classTDecoder_aed3b385682cb7f5a596443d19349f338}{TDecoder::TDecoder}}(\textcolor{keyword}{const}\ std::string\&\ path)\ \{}
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00011}00011\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ !std::filesystem::exists(path)\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00012}00012\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}File\ "{}}\ <<\ path\ <<\ \textcolor{stringliteral}{"{}\ cannot\ be\ found."{}}\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00013}00013\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00014}00014\ \ \ \ \ \mbox{\hyperlink{classTDecoder_af0fa2eb339532a1f0e6f86953c0d8de0}{binaryFile\_}}\ =\ std::ifstream(path,\ std::ios::binary);}
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00015}00015\ \}}
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00017}\mbox{\hyperlink{classTDecoder_abe96491c7cfb7925ff062a2d0f9cbec9}{00017}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTDecoder_abe96491c7cfb7925ff062a2d0f9cbec9}{TDecoder::readFile}}()\ \{}
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00018}00018\ \ \ \ \ \textcolor{keywordtype}{char}\ buf[\textcolor{keyword}{sizeof}(uint8\_t)];}
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00019}00019\ \ \ \ \ \textcolor{keywordflow}{while}\ (\ \mbox{\hyperlink{classTDecoder_af0fa2eb339532a1f0e6f86953c0d8de0}{binaryFile\_}}.read(buf,\ \textcolor{keyword}{sizeof}(buf))\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00020}00020\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTDecoder_a709d543f246fc2d5e0e33f3b8ce23283}{binaryData\_}}.push\_back(\textcolor{keyword}{static\_cast<}uint8\_t\textcolor{keyword}{>}(*buf));}
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00021}00021\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00022}00022\ \ \ \ \ \mbox{\hyperlink{classTDecoder_aa712cd9140d83db8143e77b2b1c13185}{dataLength\_}}\ =\ \mbox{\hyperlink{classTDecoder_a709d543f246fc2d5e0e33f3b8ce23283}{binaryData\_}}.size();}
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00023}00023\ \}}
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00025}\mbox{\hyperlink{classTDecoder_a0d8b4e84d32b4f339c747802c57a39ed}{00025}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTDecoder_a0d8b4e84d32b4f339c747802c57a39ed}{TDecoder::getDataLength}}()\ \{}
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00026}00026\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classTDecoder_aa712cd9140d83db8143e77b2b1c13185}{dataLength\_}};}
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00027}00027\ \}}
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00028}00028\ }
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00029}\mbox{\hyperlink{classTDecoder_a763d701c171878671a32f28815fd97ea}{00029}}\ std::vector<uint8\_t>\&\ \mbox{\hyperlink{classTDecoder_a763d701c171878671a32f28815fd97ea}{TDecoder::getBinaryData}}()\ \{}
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00030}00030\ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classTDecoder_a709d543f246fc2d5e0e33f3b8ce23283}{binaryData\_}};}
+\DoxyCodeLine{\Hypertarget{TDecoder_8cpp_source_l00031}00031\ \}}
+
+\end{DoxyCode}

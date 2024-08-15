@@ -1,0 +1,67 @@
+\doxysection{TMerge.\+h}
+\hypertarget{TMerge_8h_source}{}\label{TMerge_8h_source}\index{/home/ychoi/ATOM/alpide/comparison/inc/TMerge.h@{/home/ychoi/ATOM/alpide/comparison/inc/TMerge.h}}
+\mbox{\hyperlink{TMerge_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00012}00012\ \textcolor{preprocessor}{\#ifndef\ \_\_TMERGE\_\_}}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00013}00013\ \textcolor{preprocessor}{\#define\ \_\_TMERGE\_\_}}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00014}00014\ }
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00015}00015\ \textcolor{preprocessor}{\#ifdef\ \_\_TMERGE\_HEADER\_\_}}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00016}00016\ \textcolor{preprocessor}{\#include\ "{}TFile.h"{}}}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00017}00017\ \textcolor{preprocessor}{\#include\ "{}TTree.h"{}}}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00018}00018\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{cpptqdm_8h}{cpptqdm.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00019}00019\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00021}00021\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00022}00022\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00024}00024\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{TFileFormat_8h}{TFileFormat.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00025}00025\ }
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00026}00026\ \textcolor{keyword}{class\ }TFile;}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00028}\mbox{\hyperlink{classMergeFileOpen}{00028}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classMergeFileOpen}{MergeFileOpen}}\ :\ \textcolor{keyword}{public}\ std::exception\ \{}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00029}00029\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00030}\mbox{\hyperlink{classMergeFileOpen_af2cabf405bd1dde7c310f9321a0cbd2d}{00030}}\ \ \ \ \ std::string\ \mbox{\hyperlink{classMergeFileOpen_af2cabf405bd1dde7c310f9321a0cbd2d}{message}};}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00031}00031\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00032}\mbox{\hyperlink{classMergeFileOpen_a1dff31115db9079adff10372d7f395b1}{00032}}\ \ \ \ \ \mbox{\hyperlink{classMergeFileOpen_a1dff31115db9079adff10372d7f395b1}{MergeFileOpen}}(std::string\_view\ fileName)\ \{}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00033}00033\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMergeFileOpen_af2cabf405bd1dde7c310f9321a0cbd2d}{message}}\ =\ \textcolor{keyword}{static\_cast<}std::string\textcolor{keyword}{>}(fileName)\ +\ \textcolor{stringliteral}{"{}\ cannot\ open"{}};}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00034}00034\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00035}\mbox{\hyperlink{classMergeFileOpen_add2d9270ad54e4563930f5e667f88fb2}{00035}}\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{classMergeFileOpen_add2d9270ad54e4563930f5e667f88fb2}{what}}()\ \textcolor{keyword}{const}\ throw()\ \{}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00036}00036\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classMergeFileOpen_af2cabf405bd1dde7c310f9321a0cbd2d}{message}}.c\_str();}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00037}00037\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00038}00038\ \};}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00039}00039\ }
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00040}\mbox{\hyperlink{classMergeTreeOpen}{00040}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classMergeTreeOpen}{MergeTreeOpen}}\ :\ \textcolor{keyword}{public}\ std::exception\ \{}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00041}00041\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00042}\mbox{\hyperlink{classMergeTreeOpen_acaf19e3f1ed67103279fa9bf4f759a3e}{00042}}\ \ \ \ \ std::string\ \mbox{\hyperlink{classMergeTreeOpen_acaf19e3f1ed67103279fa9bf4f759a3e}{message}};}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00043}00043\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00044}\mbox{\hyperlink{classMergeTreeOpen_a00975733dbb78bce65c320c70c9f9cfe}{00044}}\ \ \ \ \ \mbox{\hyperlink{classMergeTreeOpen_a00975733dbb78bce65c320c70c9f9cfe}{MergeTreeOpen}}(std::string\_view\ fileName)\ \{}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00045}00045\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classMergeTreeOpen_acaf19e3f1ed67103279fa9bf4f759a3e}{message}}\ =\ \textcolor{stringliteral}{"{}Tree\ of\ "{}}\ +\ \textcolor{keyword}{static\_cast<}std::string\textcolor{keyword}{>}(fileName)\ +\ \textcolor{stringliteral}{"{}\ cannot\ be\ accessed"{}};}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00046}00046\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00047}\mbox{\hyperlink{classMergeTreeOpen_a7d05c3908b1b5e677b59b3f26c91356c}{00047}}\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}*\ \mbox{\hyperlink{classMergeTreeOpen_a7d05c3908b1b5e677b59b3f26c91356c}{what}}()\ \textcolor{keyword}{const}\ throw()\ \{}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00048}00048\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classMergeTreeOpen_acaf19e3f1ed67103279fa9bf4f759a3e}{message}}.c\_str();}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00049}00049\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00050}00050\ \};}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00051}00051\ }
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00052}\mbox{\hyperlink{classTMerge}{00052}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classTMerge}{TMerge}}\ \{}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00053}00053\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00054}\mbox{\hyperlink{classTMerge_a49a21a7ee37918b7f74951508cab21ec}{00054}}\ \ \ \ \ std::string\ \mbox{\hyperlink{classTMerge_a49a21a7ee37918b7f74951508cab21ec}{mOutputFileName}};}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00055}\mbox{\hyperlink{classTMerge_a3f6ceb5a0ec0fa0508e3e7a58159e115}{00055}}\ \ \ \ \ std::vector<std::string>\ \mbox{\hyperlink{classTMerge_a3f6ceb5a0ec0fa0508e3e7a58159e115}{mInputFileNames}};}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00056}00056\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00057}00057\ \ \ \ \ \mbox{\hyperlink{classTMerge}{TMerge}}(std::string\_view\ outputFileName,\ \textcolor{keyword}{const}\ std::vector<std::string>\&\ inputFileNames);}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00058}00058\ \};}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00059}00059\ }
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00060}\mbox{\hyperlink{classTMergeExperimentROOT}{00060}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classTMergeExperimentROOT}{TMergeExperimentROOT}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classTMerge}{TMerge}}\ \{}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00061}00061\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00062}\mbox{\hyperlink{classTMergeExperimentROOT_a3c1fc3ce2e5d404d3104799fa70db0a4}{00062}}\ \ \ \ \ TFile*\ \mbox{\hyperlink{classTMergeExperimentROOT_a3c1fc3ce2e5d404d3104799fa70db0a4}{mOutputFile}};}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00063}\mbox{\hyperlink{classTMergeExperimentROOT_ae84efb2c879e47c2dacea2b595de87b7}{00063}}\ \ \ \ \ \mbox{\hyperlink{structTInputRoot}{TInputRoot}}\ \mbox{\hyperlink{classTMergeExperimentROOT_ae84efb2c879e47c2dacea2b595de87b7}{mInputValue}};}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00064}\mbox{\hyperlink{classTMergeExperimentROOT_a2debc043c7fed217cc1ad2af1efb6820}{00064}}\ \ \ \ \ \mbox{\hyperlink{structTInputRoot}{TInputRoot}}\ \mbox{\hyperlink{classTMergeExperimentROOT_a2debc043c7fed217cc1ad2af1efb6820}{mOutputValue}};}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00065}00065\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00066}00066\ \ \ \ \ \mbox{\hyperlink{classTMergeExperimentROOT}{TMergeExperimentROOT}}(std::string\_view\ outputFileName,\ \textcolor{keyword}{const}\ std::vector<std::string>\&\ inputFileNames);}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00067}00067\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTMergeExperimentROOT_ac99cf9367e5c2985663dc0f9d509d9c6}{mergeFile}}();}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00068}00068\ \ \ \ \ \mbox{\hyperlink{classTMergeExperimentROOT_a27096d96eb601f9814f54a0808fce907}{\string~TMergeExperimentROOT}}();}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00069}00069\ \};}
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00070}00070\ }
+\DoxyCodeLine{\Hypertarget{TMerge_8h_source_l00071}00071\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

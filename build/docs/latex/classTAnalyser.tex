@@ -1,0 +1,978 @@
+\doxysection{TAnalyser Class Reference}
+\hypertarget{classTAnalyser}{}\label{classTAnalyser}\index{TAnalyser@{TAnalyser}}
+
+
+For ROOT and config file when analysis.  
+
+
+
+
+{\ttfamily \#include $<$TAnalyser.\+h$>$}
+
+Inheritance diagram for TAnalyser\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classTAnalyser}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+enum \{ \mbox{\hyperlink{classTAnalyser_a5600c6f458a3a9cba82013ce1d575bc6aef44f7d2e9011f243a3c9ff0506316e0}{k\+Not\+Deleted}} = 0x02000000
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classTAnalyser_a91e4958d15f3fd696031327753249629}{TAnalyser}} (TFile \texorpdfstring{$\ast$}{*}input\+File, std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{classTExperimentData}{TExperiment\+Data}} \texorpdfstring{$\ast$}{*} $>$ exp\+Data)
+\begin{DoxyCompactList}\small\item\em Construct a new \doxylink{classTAnalyser_a91e4958d15f3fd696031327753249629}{TAnalyser\+::\+TAnalyser} object. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classTAnalyser_ad76c276929dba3ab865ad31184768241}{TAnalyser}} (const \mbox{\hyperlink{classCppConfigFile}{Cpp\+Config\+File}} \&config\+File)
+\item 
+\mbox{\hyperlink{classTAnalyser_a233a02507d96d20b0ec465118c157620}{\texorpdfstring{$\sim$}{\string~}\+TAnalyser}} ()
+\begin{DoxyCompactList}\small\item\em Destroy the \doxylink{classTAnalyser_a91e4958d15f3fd696031327753249629}{TAnalyser\+::\+TAnalyser} object. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classTAnalyser_a8fb9c8fb0be3b6eefea204f29296ac55}{set\+Config}} ()
+\item 
+void \mbox{\hyperlink{classTAnalyser_ad9141c1ccc83cb14aca3cfcca133ba16}{store\+Events}} ()
+\begin{DoxyCompactList}\small\item\em Extract event from TTree. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classTAnalyser_a5912a3b92a44d1fdfc97505f5118db1c}{get\+Hitmaps}} ()
+\item 
+void \mbox{\hyperlink{classTAnalyser_ab4f67cb7cf2a9cfdfecf5a7dd365926e}{do\+Masking}} ()
+\item 
+void \mbox{\hyperlink{classTAnalyser_a4398c447e7676f1d8582d2ae16cd457b}{open\+Output\+Graph\+File}} (std\+::string\+\_\+view file\+Name)
+\begin{DoxyCompactList}\small\item\em Open ROOT file to save results graph. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classTAnalyser_ae9d568f19496bd4e44193da4fb5ab572}{set\+Exp\+Setting\+Legend}} ()
+\item 
+void \mbox{\hyperlink{classTAnalyser_a305a29e96d708674de8b5061c8485e60}{get\+Origin\+Hitmap}} ()
+\item 
+void \mbox{\hyperlink{classTAnalyser_aec693cd488973d63d8f88aa12855363e}{get\+Hitmap\+Masked\+Hitmap}} ()
+\item 
+void \mbox{\hyperlink{classTAnalyser_a53d999586b991103b7f99127336f6327}{get\+Hitmap\+Masked\+Noisemap}} ()
+\item 
+void \mbox{\hyperlink{classTAnalyser_a33bf1091cd73cf1bc513dd245cad5990}{do\+Divide\+By\+Size}} (std\+::string\+\_\+view type\+Name)
+\item 
+TH2D \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classTAnalyser_af4ab2d9c5b2786d02f2f025ac16ca83e}{get\+Hit\+Plot}} (const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \&config, const std\+::vector$<$ \mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}} \texorpdfstring{$\ast$}{*} $>$ \&events)
+\item 
+void \mbox{\hyperlink{classTAnalyser_a930313c2e15537873e9c9d802b6612fc}{save\+Hitmap}} (std\+::string type\+Name, const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \&config)
+\item 
+TH2D \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classTAnalyser_a7978c30c9906403983665a018953e0a2}{get\+Cluster\+Plot}} (const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \&config, const std\+::vector$<$ \mbox{\hyperlink{classTCluster}{TCluster}} \texorpdfstring{$\ast$}{*} $>$ \&clusters)
+\begin{DoxyCompactList}\small\item\em Generalized function to draw clustermap. \end{DoxyCompactList}\item 
+TH1D \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classTAnalyser_ab95af92066e02b12498005e6dc26142b}{get\+Clustersize\+Plot}} (const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \&config, const std\+::vector$<$ \mbox{\hyperlink{classTCluster}{TCluster}} \texorpdfstring{$\ast$}{*} $>$ \&clusters)
+\item 
+void \mbox{\hyperlink{classTAnalyser_ad10d20ae30012577be878f69694c71e7}{set\+Cluster\+Data\+With\+Shape}} (const std\+::vector$<$ int $>$ \&cluster\+Size\+Range)
+\item 
+void \mbox{\hyperlink{classTAnalyser_a8c2643bdcda0c7028c398f33ea9f24c2}{save\+Clustermap}} (std\+::string type\+Name, const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \&config)
+\item 
+void \mbox{\hyperlink{classTAnalyser_aede935525cc437e4637c3717cfa40463}{save\+Clustersize}} (std\+::string type\+Name, const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \&config)
+\item 
+std\+::vector$<$ int $>$ \mbox{\hyperlink{classTAnalyser_aed56a18db3dbba303f571fb1815b8068}{get\+Cluster\+Size\+Range}} (const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \&private\+Property)
+\item 
+void \mbox{\hyperlink{classTAnalyser_ae3b9be084183f64e06fccf034777a478}{do\+Shaping}} (std\+::string\+\_\+view type\+Name, const std\+::vector$<$ int $>$ \&cluster\+Size\+Range)
+\begin{DoxyCompactList}\small\item\em Store clusters to objects of \doxylink{classTClusterShape}{TCluster\+Shape} for extracting shape informations. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classTAnalyser_a71369b3fdf4718b3697cc05e05c8e58b}{save\+Individual\+Shapes}} (std\+::string\+\_\+view type\+Name, const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} config)
+\begin{DoxyCompactList}\small\item\em Drawing individual shapes. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classTAnalyser_a825ad32ae180e5c57f9190793e0296ef}{save\+Same\+Size\+Infos}} (std\+::string\+\_\+view type\+Name, const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} config)
+\begin{DoxyCompactList}\small\item\em Drawing information for classifying multi-\/cluster. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classTAnalyser_aace5dbb624191f44a7efc4575f52f9ae}{save\+Same\+Size\+Shapes}} (std\+::string\+\_\+view type\+Name, const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} config)
+\item 
+void \mbox{\hyperlink{classTAnalyser_aed30fc7bfed2c963e15a9d7453efc04b}{save\+Total\+Shapes}} (std\+::string\+\_\+view type\+Name, const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} config)
+\item 
+void \mbox{\hyperlink{classTAnalyser_a16992d9499462338766f9a2331353e3b}{save\+Same\+Size\+Shape\+Entry}} (std\+::string\+\_\+view type\+Name, const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} config)
+\item 
+void \mbox{\hyperlink{classTAnalyser_a41584d2d58304b327bdd959e74726ccd}{save\+Total\+Shape\+Entry}} (std\+::string\+\_\+view type\+Name, const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} config)
+\item 
+bool \mbox{\hyperlink{classTAnalyser_adfb640919a31e47581b7d4654b2a1c6b}{Is\+Destructed}} () const
+\item 
+bool \mbox{\hyperlink{classTAnalyser_a1b99ba13444c77d674853aba00246dc0}{Test\+Bit}} (\mbox{\hyperlink{TAnalyser_8h_a7c1bc4939263cb6c0f48e434d77ac258}{UInt\+\_\+t}} f) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+TFile \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classTAnalyser_af094380b37465491dfa113aef0fef925}{m\+Output\+File}} = nullptr
+\item 
+bool \mbox{\hyperlink{classTAnalyser_a1197df526d191b24a8d6eb78274a222f}{m\+Is\+Output\+Graph}} = false
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, TH2D \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classTAnalyser_a100c8527a7bc1ace5983506de106161e}{m\+Hitmaps}}
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, TH2D \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classTAnalyser_a8131406096a3246453b1e6e4a72d67c2}{m\+Clustermaps}}
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, TH1D \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classTAnalyser_af2c29a16d4843508dd938776ccaabda8}{m\+Clustersizes}}
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, std\+::unordered\+\_\+map$<$ int, std\+::vector$<$ \mbox{\hyperlink{classTCluster}{TCluster}} \texorpdfstring{$\ast$}{*} $>$ $>$ $>$ \mbox{\hyperlink{classTAnalyser_a731f1b8742c1593f74d723c51b3658e5}{m\+Cluster\+Data\+With\+Shape}}
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, TDirectory \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classTAnalyser_a01d6af58f412a14847fd377ef87309ae}{m\+Directory\+Set}}
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{classTExperimentData}{TExperiment\+Data}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classTAnalyser_a5c369bcacb87bfc3fb0bb5366cef837e}{m\+Exp\+Data}}
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{classTClusterDivideData}{TCluster\+Divide\+Data}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classTAnalyser_af8e6f63a3e0890ea9168d7d4779f9a97}{m\+Divide\+Data}}
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, std\+::vector$<$ \mbox{\hyperlink{classTClusterShape}{TCluster\+Shape}} \texorpdfstring{$\ast$}{*} $>$ $>$ \mbox{\hyperlink{classTAnalyser_ad9f1097135aa4be3a02162e6d42a4fea}{m\+Cluster\+Shape\+Set}}
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, int $>$ \mbox{\hyperlink{classTAnalyser_a06ee2773a1f93137cd57a2bd1b2267a3}{m\+NTotal\+Shape\+Set}}
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, int $>$ \mbox{\hyperlink{classTAnalyser_a4973b527c677e448b0d48811d7bccafe}{m\+Max\+Mode\+Set}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+TFile \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classTAnalyser_af3bd9146298a40a576e007cd0d8353e8}{m\+Input\+File}} = nullptr
+\item 
+TTree \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classTAnalyser_af743b72d21720f6fb424c2583ef37b04}{m\+Tree}} = nullptr
+\item 
+\mbox{\hyperlink{structTInputRoot}{TInput\+Root}} \mbox{\hyperlink{classTAnalyser_a218163ec966ad17412a97f168ee2b90d}{m\+Input}}
+\item 
+std\+::filesystem\+::path \mbox{\hyperlink{classTAnalyser_a56c417bf0f32ee1c7c39ccc2268e77ed}{m\+Output\+Path}}
+\item 
+\mbox{\hyperlink{classCppConfigFile}{Cpp\+Config\+File}} \mbox{\hyperlink{classTAnalyser_a26a74d44814993fdaac02c7c850ef770}{m\+Config\+File}}
+\item 
+\mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \mbox{\hyperlink{classTAnalyser_aaecd3e877174394d9dd04e5f16f20cc4}{m\+File\+Config}}
+\item 
+\mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \mbox{\hyperlink{classTAnalyser_aeb479cfd7dae5524b6b9134593d41d3a}{m\+Masking\+Config}}
+\item 
+\mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \mbox{\hyperlink{classTAnalyser_a4d4469293ffd888b770c3ecd5d46377d}{m\+Basic\+Analysis\+Config}}
+\item 
+\mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \mbox{\hyperlink{classTAnalyser_a5f37f9a916ef6b81aed57ddfa1077592}{m\+Setting\+Config}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classTAnalyser_a48047456b887b29e47fd764620e7876b}{m\+Origin\+Events}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classTAnalyser_a41e14d9f2312de57de48dd41cb099c42}{m\+Time\+Stamp\+Cut\+Events}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classTAnalyser_ab707858bff9722194fc587ed9873b9f8}{m\+Hitmap\+Masked\+Events}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}} \texorpdfstring{$\ast$}{*} $>$ \mbox{\hyperlink{classTAnalyser_a43d89ecab652ffd0e9519e027a136b5c}{m\+Hitmap\+Masked\+Noises}}
+\item 
+std\+::vector$<$ int $>$ \mbox{\hyperlink{classTAnalyser_adbd7a5ab4f61b24b27c949233fa69820}{n\+Pixel\+Per\+Frame}}
+\item 
+bool \mbox{\hyperlink{classTAnalyser_aa0f81656b14cb55a1a5aef77708de096}{is\+Time\+Stamp\+Cut}} = false
+\item 
+bool \mbox{\hyperlink{classTAnalyser_a7cb2e4a3c016ba42746edddb5fd0bd6d}{is\+Hitmap\+Cut}} = false
+\item 
+bool \mbox{\hyperlink{classTAnalyser_a5c6df77a3aceb5cb9f28556fb441a073}{is\+Pixel\+Per\+Time\+Stamp\+Map}} = false
+\item 
+int \mbox{\hyperlink{classTAnalyser_ab3d19912031b63586ceb8cd43b465e97}{m\+Time\+Stamp\+Cut}} = 0
+\item 
+int \mbox{\hyperlink{classTAnalyser_ae1e1ecc81caea21b5a3661ecce83fc2c}{m\+Hitmap\+Cut}} = 0
+\item 
+TH1D \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classTAnalyser_a119034a7c9acb25e2f12cbba4a3ac3b4}{m\+Pixel\+Per\+Time\+Stamp\+Map}}
+\item 
+TH2D \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classTAnalyser_a2a8bb7bac0eeec9c721059956aaa5371}{m\+Origin\+Hitmap}}
+\item 
+TH2D \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classTAnalyser_aedcb52d15f10c30c632074e44bbc981f}{m\+Hitmap\+Masked\+Hitmap}}
+\item 
+TH2D \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classTAnalyser_a121b60128b62cbd0af891b1e784c77cd}{m\+Hitmap\+Masked\+Noisemap}}
+\item 
+TPave\+Text \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{classTAnalyser_a84ca5f2e2365dacc2c40977348a89bfa}{m\+Exp\+Setting\+Legend}}
+\item 
+\mbox{\hyperlink{TAnalyser_8h_a7c1bc4939263cb6c0f48e434d77ac258}{UInt\+\_\+t}} \mbox{\hyperlink{classTAnalyser_ae7d23176d74e4a26067c5ef6bcfc2879}{f\+Bits}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+For ROOT and config file when analysis. 
+
+It sotre ROOT file and Config file. It provide open and access such kind files. It is made for being mother class of Analysis class. \begin{DoxyWarning}{Warning}
+
+\end{DoxyWarning}
+\begin{DoxyRefDesc}{Bug}
+\item[\mbox{\hyperlink{bug__bug000001}{Bug}}]\end{DoxyRefDesc}
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000001}{Todo}}]Add template for plots. Map, distribution, etc. \end{DoxyRefDesc}
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00080}{80}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+
+
+\doxysubsection{Member Enumeration Documentation}
+\Hypertarget{classTAnalyser_a5600c6f458a3a9cba82013ce1d575bc6}\label{classTAnalyser_a5600c6f458a3a9cba82013ce1d575bc6} 
+\doxysubsubsection{\texorpdfstring{anonymous enum}{anonymous enum}}
+{\footnotesize\ttfamily anonymous enum}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{kNotDeleted@{kNotDeleted}!TAnalyser@{TAnalyser}}\index{TAnalyser@{TAnalyser}!kNotDeleted@{kNotDeleted}}}\Hypertarget{classTAnalyser_a5600c6f458a3a9cba82013ce1d575bc6aef44f7d2e9011f243a3c9ff0506316e0}\label{classTAnalyser_a5600c6f458a3a9cba82013ce1d575bc6aef44f7d2e9011f243a3c9ff0506316e0} 
+k\+Not\+Deleted&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00172}{172}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classTAnalyser_a91e4958d15f3fd696031327753249629}\label{classTAnalyser_a91e4958d15f3fd696031327753249629} 
+\index{TAnalyser@{TAnalyser}!TAnalyser@{TAnalyser}}
+\index{TAnalyser@{TAnalyser}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{TAnalyser()}{TAnalyser()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily TAnalyser\+::\+TAnalyser (\begin{DoxyParamCaption}\item[{TFile \texorpdfstring{$\ast$}{*}}]{input\+File,  }\item[{std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{classTExperimentData}{TExperiment\+Data}} \texorpdfstring{$\ast$}{*} $>$}]{exp\+Data }\end{DoxyParamCaption})}
+
+
+
+Construct a new \doxylink{classTAnalyser_a91e4958d15f3fd696031327753249629}{TAnalyser\+::\+TAnalyser} object. 
+
+It opens raw root file and \textquotesingle{}hit\textquotesingle{} tree. And it matches branch name and address. 
+\begin{DoxyParams}{Parameters}
+{\em input\+File} & \\
+\hline
+{\em exp\+Data} & \\
+\hline
+\end{DoxyParams}
+Getting File path
+
+It prints out the constructor message. It outputs the file name.
+
+\textquotesingle{}hit\textquotesingle{} tree is opened. And the branches are matched to each variables.
+
+Definition at line \mbox{\hyperlink{TAnalyser_8cpp_source_l00011}{11}} of file \mbox{\hyperlink{TAnalyser_8cpp_source}{TAnalyser.\+cpp}}.
+
+\Hypertarget{classTAnalyser_ad76c276929dba3ab865ad31184768241}\label{classTAnalyser_ad76c276929dba3ab865ad31184768241} 
+\index{TAnalyser@{TAnalyser}!TAnalyser@{TAnalyser}}
+\index{TAnalyser@{TAnalyser}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{TAnalyser()}{TAnalyser()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily TAnalyser\+::\+TAnalyser (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classCppConfigFile}{Cpp\+Config\+File}} \&}]{config\+File }\end{DoxyParamCaption})}
+
+It prints out the constructor message. It outputs the file name.
+
+Definition at line \mbox{\hyperlink{TAnalyser_8cpp_source_l00025}{25}} of file \mbox{\hyperlink{TAnalyser_8cpp_source}{TAnalyser.\+cpp}}.
+
+\Hypertarget{classTAnalyser_a233a02507d96d20b0ec465118c157620}\label{classTAnalyser_a233a02507d96d20b0ec465118c157620} 
+\index{TAnalyser@{TAnalyser}!````~TAnalyser@{\texorpdfstring{$\sim$}{\string~}TAnalyser}}
+\index{````~TAnalyser@{\texorpdfstring{$\sim$}{\string~}TAnalyser}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}TAnalyser()}{\string~TAnalyser()}}
+{\footnotesize\ttfamily TAnalyser\+::\texorpdfstring{$\sim$}{\string~}\+TAnalyser (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Destroy the \doxylink{classTAnalyser_a91e4958d15f3fd696031327753249629}{TAnalyser\+::\+TAnalyser} object. 
+
+\begin{DoxyRefDesc}{Todo}
+\item[\mbox{\hyperlink{todo__todo000002}{Todo}}]The desctructors are commented out. It should be set. \end{DoxyRefDesc}
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8cpp_source_l00044}{44}} of file \mbox{\hyperlink{TAnalyser_8cpp_source}{TAnalyser.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classTAnalyser_a33bf1091cd73cf1bc513dd245cad5990}\label{classTAnalyser_a33bf1091cd73cf1bc513dd245cad5990} 
+\index{TAnalyser@{TAnalyser}!doDivideBySize@{doDivideBySize}}
+\index{doDivideBySize@{doDivideBySize}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{doDivideBySize()}{doDivideBySize()}}
+{\footnotesize\ttfamily void TAnalyser\+::do\+Divide\+By\+Size (\begin{DoxyParamCaption}\item[{std\+::string\+\_\+view}]{type\+Name }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8cpp_source_l00356}{356}} of file \mbox{\hyperlink{TAnalyser_8cpp_source}{TAnalyser.\+cpp}}.
+
+\Hypertarget{classTAnalyser_ab4f67cb7cf2a9cfdfecf5a7dd365926e}\label{classTAnalyser_ab4f67cb7cf2a9cfdfecf5a7dd365926e} 
+\index{TAnalyser@{TAnalyser}!doMasking@{doMasking}}
+\index{doMasking@{doMasking}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{doMasking()}{doMasking()}}
+{\footnotesize\ttfamily void TAnalyser\+::do\+Masking (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8cpp_source_l00166}{166}} of file \mbox{\hyperlink{TAnalyser_8cpp_source}{TAnalyser.\+cpp}}.
+
+\Hypertarget{classTAnalyser_ae3b9be084183f64e06fccf034777a478}\label{classTAnalyser_ae3b9be084183f64e06fccf034777a478} 
+\index{TAnalyser@{TAnalyser}!doShaping@{doShaping}}
+\index{doShaping@{doShaping}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{doShaping()}{doShaping()}}
+{\footnotesize\ttfamily void TAnalyser\+::do\+Shaping (\begin{DoxyParamCaption}\item[{std\+::string\+\_\+view}]{type\+Name,  }\item[{const std\+::vector$<$ int $>$ \&}]{cluster\+Size\+Range }\end{DoxyParamCaption})}
+
+
+
+Store clusters to objects of \doxylink{classTClusterShape}{TCluster\+Shape} for extracting shape informations. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type\+Name} & \\
+\hline
+{\em cluster\+Size\+Range} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8cpp_source_l00582}{582}} of file \mbox{\hyperlink{TAnalyser_8cpp_source}{TAnalyser.\+cpp}}.
+
+\Hypertarget{classTAnalyser_a7978c30c9906403983665a018953e0a2}\label{classTAnalyser_a7978c30c9906403983665a018953e0a2} 
+\index{TAnalyser@{TAnalyser}!getClusterPlot@{getClusterPlot}}
+\index{getClusterPlot@{getClusterPlot}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{getClusterPlot()}{getClusterPlot()}}
+{\footnotesize\ttfamily TH2D \texorpdfstring{$\ast$}{*} TAnalyser\+::get\+Cluster\+Plot (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \&}]{config,  }\item[{const std\+::vector$<$ \mbox{\hyperlink{classTCluster}{TCluster}} \texorpdfstring{$\ast$}{*} $>$ \&}]{clusters }\end{DoxyParamCaption})}
+
+
+
+Generalized function to draw clustermap. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em config} & Draw configuration for map title, directory and filename \\
+\hline
+{\em clusters} & Dataset to draw \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+const TH2\texorpdfstring{$\ast$}{*} 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8cpp_source_l00369}{369}} of file \mbox{\hyperlink{TAnalyser_8cpp_source}{TAnalyser.\+cpp}}.
+
+\Hypertarget{classTAnalyser_ab95af92066e02b12498005e6dc26142b}\label{classTAnalyser_ab95af92066e02b12498005e6dc26142b} 
+\index{TAnalyser@{TAnalyser}!getClustersizePlot@{getClustersizePlot}}
+\index{getClustersizePlot@{getClustersizePlot}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{getClustersizePlot()}{getClustersizePlot()}}
+{\footnotesize\ttfamily TH1D \texorpdfstring{$\ast$}{*} TAnalyser\+::get\+Clustersize\+Plot (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \&}]{config,  }\item[{const std\+::vector$<$ \mbox{\hyperlink{classTCluster}{TCluster}} \texorpdfstring{$\ast$}{*} $>$ \&}]{clusters }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em config} & \\
+\hline
+{\em clusters} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+TH1\+D\texorpdfstring{$\ast$}{*} 
+\end{DoxyReturn}
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8cpp_source_l00447}{447}} of file \mbox{\hyperlink{TAnalyser_8cpp_source}{TAnalyser.\+cpp}}.
+
+\Hypertarget{classTAnalyser_aed56a18db3dbba303f571fb1815b8068}\label{classTAnalyser_aed56a18db3dbba303f571fb1815b8068} 
+\index{TAnalyser@{TAnalyser}!getClusterSizeRange@{getClusterSizeRange}}
+\index{getClusterSizeRange@{getClusterSizeRange}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{getClusterSizeRange()}{getClusterSizeRange()}}
+{\footnotesize\ttfamily std\+::vector$<$ int $>$ TAnalyser\+::get\+Cluster\+Size\+Range (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \&}]{private\+Property }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8cpp_source_l00555}{555}} of file \mbox{\hyperlink{TAnalyser_8cpp_source}{TAnalyser.\+cpp}}.
+
+\Hypertarget{classTAnalyser_aec693cd488973d63d8f88aa12855363e}\label{classTAnalyser_aec693cd488973d63d8f88aa12855363e} 
+\index{TAnalyser@{TAnalyser}!getHitmapMaskedHitmap@{getHitmapMaskedHitmap}}
+\index{getHitmapMaskedHitmap@{getHitmapMaskedHitmap}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{getHitmapMaskedHitmap()}{getHitmapMaskedHitmap()}}
+{\footnotesize\ttfamily void TAnalyser\+::get\+Hitmap\+Masked\+Hitmap (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8cpp_source_l00244}{244}} of file \mbox{\hyperlink{TAnalyser_8cpp_source}{TAnalyser.\+cpp}}.
+
+\Hypertarget{classTAnalyser_a53d999586b991103b7f99127336f6327}\label{classTAnalyser_a53d999586b991103b7f99127336f6327} 
+\index{TAnalyser@{TAnalyser}!getHitmapMaskedNoisemap@{getHitmapMaskedNoisemap}}
+\index{getHitmapMaskedNoisemap@{getHitmapMaskedNoisemap}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{getHitmapMaskedNoisemap()}{getHitmapMaskedNoisemap()}}
+{\footnotesize\ttfamily void TAnalyser\+::get\+Hitmap\+Masked\+Noisemap (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8cpp_source_l00287}{287}} of file \mbox{\hyperlink{TAnalyser_8cpp_source}{TAnalyser.\+cpp}}.
+
+\Hypertarget{classTAnalyser_a5912a3b92a44d1fdfc97505f5118db1c}\label{classTAnalyser_a5912a3b92a44d1fdfc97505f5118db1c} 
+\index{TAnalyser@{TAnalyser}!getHitmaps@{getHitmaps}}
+\index{getHitmaps@{getHitmaps}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{getHitmaps()}{getHitmaps()}}
+{\footnotesize\ttfamily void TAnalyser\+::get\+Hitmaps (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8cpp_source_l00131}{131}} of file \mbox{\hyperlink{TAnalyser_8cpp_source}{TAnalyser.\+cpp}}.
+
+\Hypertarget{classTAnalyser_af4ab2d9c5b2786d02f2f025ac16ca83e}\label{classTAnalyser_af4ab2d9c5b2786d02f2f025ac16ca83e} 
+\index{TAnalyser@{TAnalyser}!getHitPlot@{getHitPlot}}
+\index{getHitPlot@{getHitPlot}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{getHitPlot()}{getHitPlot()}}
+{\footnotesize\ttfamily TH2D \texorpdfstring{$\ast$}{*} TAnalyser\+::get\+Hit\+Plot (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \&}]{config,  }\item[{const std\+::vector$<$ \mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}} \texorpdfstring{$\ast$}{*} $>$ \&}]{events }\end{DoxyParamCaption})}
+
+\Hypertarget{classTAnalyser_a305a29e96d708674de8b5061c8485e60}\label{classTAnalyser_a305a29e96d708674de8b5061c8485e60} 
+\index{TAnalyser@{TAnalyser}!getOriginHitmap@{getOriginHitmap}}
+\index{getOriginHitmap@{getOriginHitmap}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{getOriginHitmap()}{getOriginHitmap()}}
+{\footnotesize\ttfamily void TAnalyser\+::get\+Origin\+Hitmap (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8cpp_source_l00202}{202}} of file \mbox{\hyperlink{TAnalyser_8cpp_source}{TAnalyser.\+cpp}}.
+
+\Hypertarget{classTAnalyser_adfb640919a31e47581b7d4654b2a1c6b}\label{classTAnalyser_adfb640919a31e47581b7d4654b2a1c6b} 
+\index{TAnalyser@{TAnalyser}!IsDestructed@{IsDestructed}}
+\index{IsDestructed@{IsDestructed}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{IsDestructed()}{IsDestructed()}}
+{\footnotesize\ttfamily bool TAnalyser\+::\+Is\+Destructed (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00175}{175}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_a4398c447e7676f1d8582d2ae16cd457b}\label{classTAnalyser_a4398c447e7676f1d8582d2ae16cd457b} 
+\index{TAnalyser@{TAnalyser}!openOutputGraphFile@{openOutputGraphFile}}
+\index{openOutputGraphFile@{openOutputGraphFile}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{openOutputGraphFile()}{openOutputGraphFile()}}
+{\footnotesize\ttfamily void TAnalyser\+::open\+Output\+Graph\+File (\begin{DoxyParamCaption}\item[{std\+::string\+\_\+view}]{file\+Name }\end{DoxyParamCaption})}
+
+
+
+Open ROOT file to save results graph. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & \\
+\hline
+\end{DoxyParams}
+Open output file
+
+Set control variable
+
+Definition at line \mbox{\hyperlink{TAnalyser_8cpp_source_l00075}{75}} of file \mbox{\hyperlink{TAnalyser_8cpp_source}{TAnalyser.\+cpp}}.
+
+\Hypertarget{classTAnalyser_a8c2643bdcda0c7028c398f33ea9f24c2}\label{classTAnalyser_a8c2643bdcda0c7028c398f33ea9f24c2} 
+\index{TAnalyser@{TAnalyser}!saveClustermap@{saveClustermap}}
+\index{saveClustermap@{saveClustermap}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{saveClustermap()}{saveClustermap()}}
+{\footnotesize\ttfamily void TAnalyser\+::save\+Clustermap (\begin{DoxyParamCaption}\item[{std\+::string}]{type\+Name,  }\item[{const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \&}]{config }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8cpp_source_l00521}{521}} of file \mbox{\hyperlink{TAnalyser_8cpp_source}{TAnalyser.\+cpp}}.
+
+\Hypertarget{classTAnalyser_aede935525cc437e4637c3717cfa40463}\label{classTAnalyser_aede935525cc437e4637c3717cfa40463} 
+\index{TAnalyser@{TAnalyser}!saveClustersize@{saveClustersize}}
+\index{saveClustersize@{saveClustersize}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{saveClustersize()}{saveClustersize()}}
+{\footnotesize\ttfamily void TAnalyser\+::save\+Clustersize (\begin{DoxyParamCaption}\item[{std\+::string}]{type\+Name,  }\item[{const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \&}]{config }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8cpp_source_l00535}{535}} of file \mbox{\hyperlink{TAnalyser_8cpp_source}{TAnalyser.\+cpp}}.
+
+\Hypertarget{classTAnalyser_a930313c2e15537873e9c9d802b6612fc}\label{classTAnalyser_a930313c2e15537873e9c9d802b6612fc} 
+\index{TAnalyser@{TAnalyser}!saveHitmap@{saveHitmap}}
+\index{saveHitmap@{saveHitmap}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{saveHitmap()}{saveHitmap()}}
+{\footnotesize\ttfamily void TAnalyser\+::save\+Hitmap (\begin{DoxyParamCaption}\item[{std\+::string}]{type\+Name,  }\item[{const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \&}]{config }\end{DoxyParamCaption})}
+
+\Hypertarget{classTAnalyser_a71369b3fdf4718b3697cc05e05c8e58b}\label{classTAnalyser_a71369b3fdf4718b3697cc05e05c8e58b} 
+\index{TAnalyser@{TAnalyser}!saveIndividualShapes@{saveIndividualShapes}}
+\index{saveIndividualShapes@{saveIndividualShapes}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{saveIndividualShapes()}{saveIndividualShapes()}}
+{\footnotesize\ttfamily void TAnalyser\+::save\+Individual\+Shapes (\begin{DoxyParamCaption}\item[{std\+::string\+\_\+view}]{type\+Name,  }\item[{const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}}}]{config }\end{DoxyParamCaption})}
+
+
+
+Drawing individual shapes. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type\+Name} & \\
+\hline
+{\em config} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8cpp_source_l00615}{615}} of file \mbox{\hyperlink{TAnalyser_8cpp_source}{TAnalyser.\+cpp}}.
+
+\Hypertarget{classTAnalyser_a825ad32ae180e5c57f9190793e0296ef}\label{classTAnalyser_a825ad32ae180e5c57f9190793e0296ef} 
+\index{TAnalyser@{TAnalyser}!saveSameSizeInfos@{saveSameSizeInfos}}
+\index{saveSameSizeInfos@{saveSameSizeInfos}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{saveSameSizeInfos()}{saveSameSizeInfos()}}
+{\footnotesize\ttfamily void TAnalyser\+::save\+Same\+Size\+Infos (\begin{DoxyParamCaption}\item[{std\+::string\+\_\+view}]{type\+Name,  }\item[{const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}}}]{config }\end{DoxyParamCaption})}
+
+
+
+Drawing information for classifying multi-\/cluster. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type\+Name} & \\
+\hline
+{\em config} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8cpp_source_l00769}{769}} of file \mbox{\hyperlink{TAnalyser_8cpp_source}{TAnalyser.\+cpp}}.
+
+\Hypertarget{classTAnalyser_a16992d9499462338766f9a2331353e3b}\label{classTAnalyser_a16992d9499462338766f9a2331353e3b} 
+\index{TAnalyser@{TAnalyser}!saveSameSizeShapeEntry@{saveSameSizeShapeEntry}}
+\index{saveSameSizeShapeEntry@{saveSameSizeShapeEntry}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{saveSameSizeShapeEntry()}{saveSameSizeShapeEntry()}}
+{\footnotesize\ttfamily void TAnalyser\+::save\+Same\+Size\+Shape\+Entry (\begin{DoxyParamCaption}\item[{std\+::string\+\_\+view}]{type\+Name,  }\item[{const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}}}]{config }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8cpp_source_l01130}{1130}} of file \mbox{\hyperlink{TAnalyser_8cpp_source}{TAnalyser.\+cpp}}.
+
+\Hypertarget{classTAnalyser_aace5dbb624191f44a7efc4575f52f9ae}\label{classTAnalyser_aace5dbb624191f44a7efc4575f52f9ae} 
+\index{TAnalyser@{TAnalyser}!saveSameSizeShapes@{saveSameSizeShapes}}
+\index{saveSameSizeShapes@{saveSameSizeShapes}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{saveSameSizeShapes()}{saveSameSizeShapes()}}
+{\footnotesize\ttfamily void TAnalyser\+::save\+Same\+Size\+Shapes (\begin{DoxyParamCaption}\item[{std\+::string\+\_\+view}]{type\+Name,  }\item[{const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}}}]{config }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8cpp_source_l00903}{903}} of file \mbox{\hyperlink{TAnalyser_8cpp_source}{TAnalyser.\+cpp}}.
+
+\Hypertarget{classTAnalyser_a41584d2d58304b327bdd959e74726ccd}\label{classTAnalyser_a41584d2d58304b327bdd959e74726ccd} 
+\index{TAnalyser@{TAnalyser}!saveTotalShapeEntry@{saveTotalShapeEntry}}
+\index{saveTotalShapeEntry@{saveTotalShapeEntry}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{saveTotalShapeEntry()}{saveTotalShapeEntry()}}
+{\footnotesize\ttfamily void TAnalyser\+::save\+Total\+Shape\+Entry (\begin{DoxyParamCaption}\item[{std\+::string\+\_\+view}]{type\+Name,  }\item[{const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}}}]{config }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8cpp_source_l01170}{1170}} of file \mbox{\hyperlink{TAnalyser_8cpp_source}{TAnalyser.\+cpp}}.
+
+\Hypertarget{classTAnalyser_aed30fc7bfed2c963e15a9d7453efc04b}\label{classTAnalyser_aed30fc7bfed2c963e15a9d7453efc04b} 
+\index{TAnalyser@{TAnalyser}!saveTotalShapes@{saveTotalShapes}}
+\index{saveTotalShapes@{saveTotalShapes}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{saveTotalShapes()}{saveTotalShapes()}}
+{\footnotesize\ttfamily void TAnalyser\+::save\+Total\+Shapes (\begin{DoxyParamCaption}\item[{std\+::string\+\_\+view}]{type\+Name,  }\item[{const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}}}]{config }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8cpp_source_l01018}{1018}} of file \mbox{\hyperlink{TAnalyser_8cpp_source}{TAnalyser.\+cpp}}.
+
+\Hypertarget{classTAnalyser_ad10d20ae30012577be878f69694c71e7}\label{classTAnalyser_ad10d20ae30012577be878f69694c71e7} 
+\index{TAnalyser@{TAnalyser}!setClusterDataWithShape@{setClusterDataWithShape}}
+\index{setClusterDataWithShape@{setClusterDataWithShape}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{setClusterDataWithShape()}{setClusterDataWithShape()}}
+{\footnotesize\ttfamily void TAnalyser\+::set\+Cluster\+Data\+With\+Shape (\begin{DoxyParamCaption}\item[{const std\+::vector$<$ int $>$ \&}]{cluster\+Size\+Range }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8cpp_source_l00549}{549}} of file \mbox{\hyperlink{TAnalyser_8cpp_source}{TAnalyser.\+cpp}}.
+
+\Hypertarget{classTAnalyser_a8fb9c8fb0be3b6eefea204f29296ac55}\label{classTAnalyser_a8fb9c8fb0be3b6eefea204f29296ac55} 
+\index{TAnalyser@{TAnalyser}!setConfig@{setConfig}}
+\index{setConfig@{setConfig}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{setConfig()}{setConfig()}}
+{\footnotesize\ttfamily void TAnalyser\+::set\+Config (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8cpp_source_l00048}{48}} of file \mbox{\hyperlink{TAnalyser_8cpp_source}{TAnalyser.\+cpp}}.
+
+\Hypertarget{classTAnalyser_ae9d568f19496bd4e44193da4fb5ab572}\label{classTAnalyser_ae9d568f19496bd4e44193da4fb5ab572} 
+\index{TAnalyser@{TAnalyser}!setExpSettingLegend@{setExpSettingLegend}}
+\index{setExpSettingLegend@{setExpSettingLegend}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{setExpSettingLegend()}{setExpSettingLegend()}}
+{\footnotesize\ttfamily void TAnalyser\+::set\+Exp\+Setting\+Legend (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8cpp_source_l00192}{192}} of file \mbox{\hyperlink{TAnalyser_8cpp_source}{TAnalyser.\+cpp}}.
+
+\Hypertarget{classTAnalyser_ad9141c1ccc83cb14aca3cfcca133ba16}\label{classTAnalyser_ad9141c1ccc83cb14aca3cfcca133ba16} 
+\index{TAnalyser@{TAnalyser}!storeEvents@{storeEvents}}
+\index{storeEvents@{storeEvents}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{storeEvents()}{storeEvents()}}
+{\footnotesize\ttfamily void TAnalyser\+::store\+Events (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Extract event from TTree. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em config} & \\
+\hline
+\end{DoxyParams}
+Store initial event to \textquotesingle{}\doxylink{classTALPIDEEvent}{TALPIDEEvent}\textquotesingle{} array.
+
+Variable for storing previous time.
+
+Open progress bar
+
+Definition at line \mbox{\hyperlink{TAnalyser_8cpp_source_l00085}{85}} of file \mbox{\hyperlink{TAnalyser_8cpp_source}{TAnalyser.\+cpp}}.
+
+\Hypertarget{classTAnalyser_a1b99ba13444c77d674853aba00246dc0}\label{classTAnalyser_a1b99ba13444c77d674853aba00246dc0} 
+\index{TAnalyser@{TAnalyser}!TestBit@{TestBit}}
+\index{TestBit@{TestBit}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{TestBit()}{TestBit()}}
+{\footnotesize\ttfamily bool TAnalyser\+::\+Test\+Bit (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{TAnalyser_8h_a7c1bc4939263cb6c0f48e434d77ac258}{UInt\+\_\+t}}}]{f }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00176}{176}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classTAnalyser_ae7d23176d74e4a26067c5ef6bcfc2879}\label{classTAnalyser_ae7d23176d74e4a26067c5ef6bcfc2879} 
+\index{TAnalyser@{TAnalyser}!fBits@{fBits}}
+\index{fBits@{fBits}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{fBits}{fBits}}
+{\footnotesize\ttfamily \mbox{\hyperlink{TAnalyser_8h_a7c1bc4939263cb6c0f48e434d77ac258}{UInt\+\_\+t}} TAnalyser\+::f\+Bits\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00170}{170}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_a7cb2e4a3c016ba42746edddb5fd0bd6d}\label{classTAnalyser_a7cb2e4a3c016ba42746edddb5fd0bd6d} 
+\index{TAnalyser@{TAnalyser}!isHitmapCut@{isHitmapCut}}
+\index{isHitmapCut@{isHitmapCut}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{isHitmapCut}{isHitmapCut}}
+{\footnotesize\ttfamily bool TAnalyser\+::is\+Hitmap\+Cut = false\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00101}{101}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_a5c6df77a3aceb5cb9f28556fb441a073}\label{classTAnalyser_a5c6df77a3aceb5cb9f28556fb441a073} 
+\index{TAnalyser@{TAnalyser}!isPixelPerTimeStampMap@{isPixelPerTimeStampMap}}
+\index{isPixelPerTimeStampMap@{isPixelPerTimeStampMap}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{isPixelPerTimeStampMap}{isPixelPerTimeStampMap}}
+{\footnotesize\ttfamily bool TAnalyser\+::is\+Pixel\+Per\+Time\+Stamp\+Map = false\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00102}{102}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_aa0f81656b14cb55a1a5aef77708de096}\label{classTAnalyser_aa0f81656b14cb55a1a5aef77708de096} 
+\index{TAnalyser@{TAnalyser}!isTimeStampCut@{isTimeStampCut}}
+\index{isTimeStampCut@{isTimeStampCut}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{isTimeStampCut}{isTimeStampCut}}
+{\footnotesize\ttfamily bool TAnalyser\+::is\+Time\+Stamp\+Cut = false\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00100}{100}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_a4d4469293ffd888b770c3ecd5d46377d}\label{classTAnalyser_a4d4469293ffd888b770c3ecd5d46377d} 
+\index{TAnalyser@{TAnalyser}!mBasicAnalysisConfig@{mBasicAnalysisConfig}}
+\index{mBasicAnalysisConfig@{mBasicAnalysisConfig}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mBasicAnalysisConfig}{mBasicAnalysisConfig}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} TAnalyser\+::m\+Basic\+Analysis\+Config\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00091}{91}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_a731f1b8742c1593f74d723c51b3658e5}\label{classTAnalyser_a731f1b8742c1593f74d723c51b3658e5} 
+\index{TAnalyser@{TAnalyser}!mClusterDataWithShape@{mClusterDataWithShape}}
+\index{mClusterDataWithShape@{mClusterDataWithShape}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mClusterDataWithShape}{mClusterDataWithShape}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+map$<$std\+::string, std\+::unordered\+\_\+map$<$int, std\+::vector$<$\mbox{\hyperlink{classTCluster}{TCluster}}\texorpdfstring{$\ast$}{*}$>$ $>$ $>$ TAnalyser\+::m\+Cluster\+Data\+With\+Shape\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00118}{118}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_a8131406096a3246453b1e6e4a72d67c2}\label{classTAnalyser_a8131406096a3246453b1e6e4a72d67c2} 
+\index{TAnalyser@{TAnalyser}!mClustermaps@{mClustermaps}}
+\index{mClustermaps@{mClustermaps}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mClustermaps}{mClustermaps}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+map$<$std\+::string, TH2D\texorpdfstring{$\ast$}{*}$>$ TAnalyser\+::m\+Clustermaps\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00116}{116}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_ad9f1097135aa4be3a02162e6d42a4fea}\label{classTAnalyser_ad9f1097135aa4be3a02162e6d42a4fea} 
+\index{TAnalyser@{TAnalyser}!mClusterShapeSet@{mClusterShapeSet}}
+\index{mClusterShapeSet@{mClusterShapeSet}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mClusterShapeSet}{mClusterShapeSet}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+map$<$std\+::string, std\+::vector$<$\mbox{\hyperlink{classTClusterShape}{TCluster\+Shape}}\texorpdfstring{$\ast$}{*}$>$ $>$ TAnalyser\+::m\+Cluster\+Shape\+Set\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00122}{122}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_af2c29a16d4843508dd938776ccaabda8}\label{classTAnalyser_af2c29a16d4843508dd938776ccaabda8} 
+\index{TAnalyser@{TAnalyser}!mClustersizes@{mClustersizes}}
+\index{mClustersizes@{mClustersizes}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mClustersizes}{mClustersizes}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+map$<$std\+::string, TH1D\texorpdfstring{$\ast$}{*}$>$ TAnalyser\+::m\+Clustersizes\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00117}{117}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_a26a74d44814993fdaac02c7c850ef770}\label{classTAnalyser_a26a74d44814993fdaac02c7c850ef770} 
+\index{TAnalyser@{TAnalyser}!mConfigFile@{mConfigFile}}
+\index{mConfigFile@{mConfigFile}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mConfigFile}{mConfigFile}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCppConfigFile}{Cpp\+Config\+File}} TAnalyser\+::m\+Config\+File\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00088}{88}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_a01d6af58f412a14847fd377ef87309ae}\label{classTAnalyser_a01d6af58f412a14847fd377ef87309ae} 
+\index{TAnalyser@{TAnalyser}!mDirectorySet@{mDirectorySet}}
+\index{mDirectorySet@{mDirectorySet}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mDirectorySet}{mDirectorySet}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+map$<$std\+::string, TDirectory\texorpdfstring{$\ast$}{*}$>$ TAnalyser\+::m\+Directory\+Set\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00119}{119}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_af8e6f63a3e0890ea9168d7d4779f9a97}\label{classTAnalyser_af8e6f63a3e0890ea9168d7d4779f9a97} 
+\index{TAnalyser@{TAnalyser}!mDivideData@{mDivideData}}
+\index{mDivideData@{mDivideData}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mDivideData}{mDivideData}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+map$<$std\+::string, \mbox{\hyperlink{classTClusterDivideData}{TCluster\+Divide\+Data}}\texorpdfstring{$\ast$}{*}$>$ TAnalyser\+::m\+Divide\+Data\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00121}{121}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_a5c369bcacb87bfc3fb0bb5366cef837e}\label{classTAnalyser_a5c369bcacb87bfc3fb0bb5366cef837e} 
+\index{TAnalyser@{TAnalyser}!mExpData@{mExpData}}
+\index{mExpData@{mExpData}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mExpData}{mExpData}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+map$<$std\+::string, \mbox{\hyperlink{classTExperimentData}{TExperiment\+Data}}\texorpdfstring{$\ast$}{*}$>$ TAnalyser\+::m\+Exp\+Data\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00120}{120}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_a84ca5f2e2365dacc2c40977348a89bfa}\label{classTAnalyser_a84ca5f2e2365dacc2c40977348a89bfa} 
+\index{TAnalyser@{TAnalyser}!mExpSettingLegend@{mExpSettingLegend}}
+\index{mExpSettingLegend@{mExpSettingLegend}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mExpSettingLegend}{mExpSettingLegend}}
+{\footnotesize\ttfamily TPave\+Text\texorpdfstring{$\ast$}{*} TAnalyser\+::m\+Exp\+Setting\+Legend\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00110}{110}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_aaecd3e877174394d9dd04e5f16f20cc4}\label{classTAnalyser_aaecd3e877174394d9dd04e5f16f20cc4} 
+\index{TAnalyser@{TAnalyser}!mFileConfig@{mFileConfig}}
+\index{mFileConfig@{mFileConfig}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mFileConfig}{mFileConfig}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} TAnalyser\+::m\+File\+Config\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00089}{89}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_ae1e1ecc81caea21b5a3661ecce83fc2c}\label{classTAnalyser_ae1e1ecc81caea21b5a3661ecce83fc2c} 
+\index{TAnalyser@{TAnalyser}!mHitmapCut@{mHitmapCut}}
+\index{mHitmapCut@{mHitmapCut}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mHitmapCut}{mHitmapCut}}
+{\footnotesize\ttfamily int TAnalyser\+::m\+Hitmap\+Cut = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00104}{104}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_ab707858bff9722194fc587ed9873b9f8}\label{classTAnalyser_ab707858bff9722194fc587ed9873b9f8} 
+\index{TAnalyser@{TAnalyser}!mHitmapMaskedEvents@{mHitmapMaskedEvents}}
+\index{mHitmapMaskedEvents@{mHitmapMaskedEvents}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mHitmapMaskedEvents}{mHitmapMaskedEvents}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}}\texorpdfstring{$\ast$}{*}$>$ TAnalyser\+::m\+Hitmap\+Masked\+Events\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00096}{96}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_aedcb52d15f10c30c632074e44bbc981f}\label{classTAnalyser_aedcb52d15f10c30c632074e44bbc981f} 
+\index{TAnalyser@{TAnalyser}!mHitmapMaskedHitmap@{mHitmapMaskedHitmap}}
+\index{mHitmapMaskedHitmap@{mHitmapMaskedHitmap}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mHitmapMaskedHitmap}{mHitmapMaskedHitmap}}
+{\footnotesize\ttfamily TH2D\texorpdfstring{$\ast$}{*} TAnalyser\+::m\+Hitmap\+Masked\+Hitmap\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00108}{108}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_a121b60128b62cbd0af891b1e784c77cd}\label{classTAnalyser_a121b60128b62cbd0af891b1e784c77cd} 
+\index{TAnalyser@{TAnalyser}!mHitmapMaskedNoisemap@{mHitmapMaskedNoisemap}}
+\index{mHitmapMaskedNoisemap@{mHitmapMaskedNoisemap}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mHitmapMaskedNoisemap}{mHitmapMaskedNoisemap}}
+{\footnotesize\ttfamily TH2D\texorpdfstring{$\ast$}{*} TAnalyser\+::m\+Hitmap\+Masked\+Noisemap\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00109}{109}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_a43d89ecab652ffd0e9519e027a136b5c}\label{classTAnalyser_a43d89ecab652ffd0e9519e027a136b5c} 
+\index{TAnalyser@{TAnalyser}!mHitmapMaskedNoises@{mHitmapMaskedNoises}}
+\index{mHitmapMaskedNoises@{mHitmapMaskedNoises}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mHitmapMaskedNoises}{mHitmapMaskedNoises}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}}\texorpdfstring{$\ast$}{*}$>$ TAnalyser\+::m\+Hitmap\+Masked\+Noises\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00097}{97}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_a100c8527a7bc1ace5983506de106161e}\label{classTAnalyser_a100c8527a7bc1ace5983506de106161e} 
+\index{TAnalyser@{TAnalyser}!mHitmaps@{mHitmaps}}
+\index{mHitmaps@{mHitmaps}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mHitmaps}{mHitmaps}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+map$<$std\+::string, TH2D\texorpdfstring{$\ast$}{*}$>$ TAnalyser\+::m\+Hitmaps\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00115}{115}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_a218163ec966ad17412a97f168ee2b90d}\label{classTAnalyser_a218163ec966ad17412a97f168ee2b90d} 
+\index{TAnalyser@{TAnalyser}!mInput@{mInput}}
+\index{mInput@{mInput}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mInput}{mInput}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structTInputRoot}{TInput\+Root}} TAnalyser\+::m\+Input\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00084}{84}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_af3bd9146298a40a576e007cd0d8353e8}\label{classTAnalyser_af3bd9146298a40a576e007cd0d8353e8} 
+\index{TAnalyser@{TAnalyser}!mInputFile@{mInputFile}}
+\index{mInputFile@{mInputFile}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mInputFile}{mInputFile}}
+{\footnotesize\ttfamily TFile\texorpdfstring{$\ast$}{*} TAnalyser\+::m\+Input\+File = nullptr\hspace{0.3cm}{\ttfamily [private]}}
+
+Input file with ROOT extension. 
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00082}{82}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_a1197df526d191b24a8d6eb78274a222f}\label{classTAnalyser_a1197df526d191b24a8d6eb78274a222f} 
+\index{TAnalyser@{TAnalyser}!mIsOutputGraph@{mIsOutputGraph}}
+\index{mIsOutputGraph@{mIsOutputGraph}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mIsOutputGraph}{mIsOutputGraph}}
+{\footnotesize\ttfamily bool TAnalyser\+::m\+Is\+Output\+Graph = false\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00114}{114}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_aeb479cfd7dae5524b6b9134593d41d3a}\label{classTAnalyser_aeb479cfd7dae5524b6b9134593d41d3a} 
+\index{TAnalyser@{TAnalyser}!mMaskingConfig@{mMaskingConfig}}
+\index{mMaskingConfig@{mMaskingConfig}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mMaskingConfig}{mMaskingConfig}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} TAnalyser\+::m\+Masking\+Config\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00090}{90}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_a4973b527c677e448b0d48811d7bccafe}\label{classTAnalyser_a4973b527c677e448b0d48811d7bccafe} 
+\index{TAnalyser@{TAnalyser}!mMaxModeSet@{mMaxModeSet}}
+\index{mMaxModeSet@{mMaxModeSet}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mMaxModeSet}{mMaxModeSet}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+map$<$std\+::string, int$>$ TAnalyser\+::m\+Max\+Mode\+Set\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00124}{124}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_a06ee2773a1f93137cd57a2bd1b2267a3}\label{classTAnalyser_a06ee2773a1f93137cd57a2bd1b2267a3} 
+\index{TAnalyser@{TAnalyser}!mNTotalShapeSet@{mNTotalShapeSet}}
+\index{mNTotalShapeSet@{mNTotalShapeSet}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mNTotalShapeSet}{mNTotalShapeSet}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+map$<$std\+::string, int$>$ TAnalyser\+::m\+NTotal\+Shape\+Set\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00123}{123}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_a48047456b887b29e47fd764620e7876b}\label{classTAnalyser_a48047456b887b29e47fd764620e7876b} 
+\index{TAnalyser@{TAnalyser}!mOriginEvents@{mOriginEvents}}
+\index{mOriginEvents@{mOriginEvents}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mOriginEvents}{mOriginEvents}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}}\texorpdfstring{$\ast$}{*}$>$ TAnalyser\+::m\+Origin\+Events\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00094}{94}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_a2a8bb7bac0eeec9c721059956aaa5371}\label{classTAnalyser_a2a8bb7bac0eeec9c721059956aaa5371} 
+\index{TAnalyser@{TAnalyser}!mOriginHitmap@{mOriginHitmap}}
+\index{mOriginHitmap@{mOriginHitmap}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mOriginHitmap}{mOriginHitmap}}
+{\footnotesize\ttfamily TH2D\texorpdfstring{$\ast$}{*} TAnalyser\+::m\+Origin\+Hitmap\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00107}{107}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_af094380b37465491dfa113aef0fef925}\label{classTAnalyser_af094380b37465491dfa113aef0fef925} 
+\index{TAnalyser@{TAnalyser}!mOutputFile@{mOutputFile}}
+\index{mOutputFile@{mOutputFile}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mOutputFile}{mOutputFile}}
+{\footnotesize\ttfamily TFile\texorpdfstring{$\ast$}{*} TAnalyser\+::m\+Output\+File = nullptr\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00113}{113}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_a56c417bf0f32ee1c7c39ccc2268e77ed}\label{classTAnalyser_a56c417bf0f32ee1c7c39ccc2268e77ed} 
+\index{TAnalyser@{TAnalyser}!mOutputPath@{mOutputPath}}
+\index{mOutputPath@{mOutputPath}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mOutputPath}{mOutputPath}}
+{\footnotesize\ttfamily std\+::filesystem\+::path TAnalyser\+::m\+Output\+Path\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00086}{86}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_a119034a7c9acb25e2f12cbba4a3ac3b4}\label{classTAnalyser_a119034a7c9acb25e2f12cbba4a3ac3b4} 
+\index{TAnalyser@{TAnalyser}!mPixelPerTimeStampMap@{mPixelPerTimeStampMap}}
+\index{mPixelPerTimeStampMap@{mPixelPerTimeStampMap}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mPixelPerTimeStampMap}{mPixelPerTimeStampMap}}
+{\footnotesize\ttfamily TH1D\texorpdfstring{$\ast$}{*} TAnalyser\+::m\+Pixel\+Per\+Time\+Stamp\+Map\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00106}{106}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_a5f37f9a916ef6b81aed57ddfa1077592}\label{classTAnalyser_a5f37f9a916ef6b81aed57ddfa1077592} 
+\index{TAnalyser@{TAnalyser}!mSettingConfig@{mSettingConfig}}
+\index{mSettingConfig@{mSettingConfig}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mSettingConfig}{mSettingConfig}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} TAnalyser\+::m\+Setting\+Config\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00092}{92}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_ab3d19912031b63586ceb8cd43b465e97}\label{classTAnalyser_ab3d19912031b63586ceb8cd43b465e97} 
+\index{TAnalyser@{TAnalyser}!mTimeStampCut@{mTimeStampCut}}
+\index{mTimeStampCut@{mTimeStampCut}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mTimeStampCut}{mTimeStampCut}}
+{\footnotesize\ttfamily int TAnalyser\+::m\+Time\+Stamp\+Cut = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00103}{103}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_a41e14d9f2312de57de48dd41cb099c42}\label{classTAnalyser_a41e14d9f2312de57de48dd41cb099c42} 
+\index{TAnalyser@{TAnalyser}!mTimeStampCutEvents@{mTimeStampCutEvents}}
+\index{mTimeStampCutEvents@{mTimeStampCutEvents}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mTimeStampCutEvents}{mTimeStampCutEvents}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{classTALPIDEEvent}{TALPIDEEvent}}\texorpdfstring{$\ast$}{*}$>$ TAnalyser\+::m\+Time\+Stamp\+Cut\+Events\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00095}{95}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_af743b72d21720f6fb424c2583ef37b04}\label{classTAnalyser_af743b72d21720f6fb424c2583ef37b04} 
+\index{TAnalyser@{TAnalyser}!mTree@{mTree}}
+\index{mTree@{mTree}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{mTree}{mTree}}
+{\footnotesize\ttfamily TTree\texorpdfstring{$\ast$}{*} TAnalyser\+::m\+Tree = nullptr\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00083}{83}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+\Hypertarget{classTAnalyser_adbd7a5ab4f61b24b27c949233fa69820}\label{classTAnalyser_adbd7a5ab4f61b24b27c949233fa69820} 
+\index{TAnalyser@{TAnalyser}!nPixelPerFrame@{nPixelPerFrame}}
+\index{nPixelPerFrame@{nPixelPerFrame}!TAnalyser@{TAnalyser}}
+\doxysubsubsection{\texorpdfstring{nPixelPerFrame}{nPixelPerFrame}}
+{\footnotesize\ttfamily std\+::vector$<$int$>$ TAnalyser\+::n\+Pixel\+Per\+Frame\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TAnalyser_8h_source_l00098}{98}} of file \mbox{\hyperlink{TAnalyser_8h_source}{TAnalyser.\+h}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/ychoi/\+ATOM/alpide/analysis/inc/\mbox{\hyperlink{TAnalyser_8h}{TAnalyser.\+h}}\item 
+/home/ychoi/\+ATOM/alpide/analysis/src/\mbox{\hyperlink{TAnalyser_8cpp}{TAnalyser.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,312 @@
+\doxysection{Cpp\+Config\+Dictionary Class Reference}
+\hypertarget{classCppConfigDictionary}{}\label{classCppConfigDictionary}\index{CppConfigDictionary@{CppConfigDictionary}}
+
+
+{\ttfamily \#include $<$Cpp\+Config\+Dictionary.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classCppConfigDictionary_a0a0cf2ebe508cac483be2581d4bed68e}{Cpp\+Config\+Dictionary}} ()
+\item 
+\mbox{\hyperlink{classCppConfigDictionary_a99400a58b9e3576466645cfc3693a8ab}{Cpp\+Config\+Dictionary}} (const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \&copy)
+\item 
+\mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \& \mbox{\hyperlink{classCppConfigDictionary_a4b732fcf30faf7ed113cc8fa4170db73}{operator=}} (const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \&copy)
+\item 
+\mbox{\hyperlink{classCppConfigDictionary_ae611ba539f98b544478c2ca9e7f86d29}{Cpp\+Config\+Dictionary}} (\mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \&\&move)
+\item 
+\mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \& \mbox{\hyperlink{classCppConfigDictionary_a7ad8c697d02c1721fdf6e58beebc5311}{operator=}} (\mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \&\&move)
+\item 
+\mbox{\hyperlink{classCppConfigDictionary_adcdfac923f3e0a10cf4e1b5807cb1eb3}{Cpp\+Config\+Dictionary}} (std\+::string\+\_\+view config\+Name)
+\item 
+void \mbox{\hyperlink{classCppConfigDictionary_a0d6f15f4d9b94d97fc204007a62eb74d}{add\+Dictionary}} (std\+::string\+\_\+view key, std\+::string\+\_\+view value)
+\item 
+void \mbox{\hyperlink{classCppConfigDictionary_abbb1c4b8d46b3e6b3c045b45382ec46a}{add\+Sub\+Config\+Dictionary}} (const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \&sub\+Config\+Dictionary)
+\item 
+const bool \mbox{\hyperlink{classCppConfigDictionary_a1ab483f98a2a411b93b616bc8d65b83d}{has\+Key}} (std\+::string\+\_\+view key) const
+\item 
+const std\+::string \& \mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}} (const std\+::string \&key) const
+\item 
+const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \& \mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{get\+Sub\+Config}} (std\+::string\+\_\+view key) const
+\item 
+const std\+::vector$<$ \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} $>$ \mbox{\hyperlink{classCppConfigDictionary_a90502cc74f89c01049cafe5740ba8a1a}{get\+Sub\+Config\+Set}} () const
+\item 
+const std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{classCppConfigDictionary_a5654c5a804deedb4e22c70a402c977cb}{get\+Value\+List}} () const
+\item 
+const std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{classCppConfigDictionary_a7f43d48d4517958ad36388bed5245069}{get\+Key\+List}} () const
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, std\+::string $>$ \mbox{\hyperlink{classCppConfigDictionary_aa1ea2bb1bbeb847143bc0b0e877a5b35}{get\+Dictionary}} ()
+\item 
+const std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} $>$ \mbox{\hyperlink{classCppConfigDictionary_ab310b82038ceea3c2cdcd37ab728712c}{get\+Sub\+Config\+Set\+With\+Name}} () const
+\item 
+std\+::string\+\_\+view \mbox{\hyperlink{classCppConfigDictionary_aa8f9eec2a680937bad0118dcb957fd5b}{get\+Config\+Name}} () const
+\item 
+\mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \& \mbox{\hyperlink{classCppConfigDictionary_a97f7a28e57ebfcda253af9f8465fd245}{operator+}} (const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \&copy)
+\item 
+\mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \& \mbox{\hyperlink{classCppConfigDictionary_a3dfab3030e6809060623d436535e0037}{operator+=}} (const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \&copy)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string \mbox{\hyperlink{classCppConfigDictionary_ac7c1d7d41e1e2a5ddbd495298d0e929f}{m\+Config\+Name}}
+\item 
+std\+::unordered\+\_\+map$<$ std\+::string, std\+::string $>$ \mbox{\hyperlink{classCppConfigDictionary_aa8522e489057c7d4c52f035f7e66c214}{m\+Dictionary}}
+\item 
+std\+::vector$<$ \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} $>$ \mbox{\hyperlink{classCppConfigDictionary_a67601eacff750917aadb219750427dae}{m\+Sub\+Config\+Dictionary}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+std\+::ostream \& \mbox{\hyperlink{classCppConfigDictionary_a4c53482eaf2e1f069d969ecc71c9e544}{operator$<$$<$}} (std\+::ostream \&os, const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \&copy)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{CppConfigDictionary_8h_source_l00012}{12}} of file \mbox{\hyperlink{CppConfigDictionary_8h_source}{Cpp\+Config\+Dictionary.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classCppConfigDictionary_a0a0cf2ebe508cac483be2581d4bed68e}\label{classCppConfigDictionary_a0a0cf2ebe508cac483be2581d4bed68e} 
+\index{CppConfigDictionary@{CppConfigDictionary}!CppConfigDictionary@{CppConfigDictionary}}
+\index{CppConfigDictionary@{CppConfigDictionary}!CppConfigDictionary@{CppConfigDictionary}}
+\doxysubsubsection{\texorpdfstring{CppConfigDictionary()}{CppConfigDictionary()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily Cpp\+Config\+Dictionary\+::\+Cpp\+Config\+Dictionary (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+\Hypertarget{classCppConfigDictionary_a99400a58b9e3576466645cfc3693a8ab}\label{classCppConfigDictionary_a99400a58b9e3576466645cfc3693a8ab} 
+\index{CppConfigDictionary@{CppConfigDictionary}!CppConfigDictionary@{CppConfigDictionary}}
+\index{CppConfigDictionary@{CppConfigDictionary}!CppConfigDictionary@{CppConfigDictionary}}
+\doxysubsubsection{\texorpdfstring{CppConfigDictionary()}{CppConfigDictionary()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily Cpp\+Config\+Dictionary\+::\+Cpp\+Config\+Dictionary (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \&}]{copy }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{CppConfigDictionary_8cpp_source_l00007}{7}} of file \mbox{\hyperlink{CppConfigDictionary_8cpp_source}{Cpp\+Config\+Dictionary.\+cpp}}.
+
+\Hypertarget{classCppConfigDictionary_ae611ba539f98b544478c2ca9e7f86d29}\label{classCppConfigDictionary_ae611ba539f98b544478c2ca9e7f86d29} 
+\index{CppConfigDictionary@{CppConfigDictionary}!CppConfigDictionary@{CppConfigDictionary}}
+\index{CppConfigDictionary@{CppConfigDictionary}!CppConfigDictionary@{CppConfigDictionary}}
+\doxysubsubsection{\texorpdfstring{CppConfigDictionary()}{CppConfigDictionary()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily Cpp\+Config\+Dictionary\+::\+Cpp\+Config\+Dictionary (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \&\&}]{move }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{CppConfigDictionary_8cpp_source_l00017}{17}} of file \mbox{\hyperlink{CppConfigDictionary_8cpp_source}{Cpp\+Config\+Dictionary.\+cpp}}.
+
+\Hypertarget{classCppConfigDictionary_adcdfac923f3e0a10cf4e1b5807cb1eb3}\label{classCppConfigDictionary_adcdfac923f3e0a10cf4e1b5807cb1eb3} 
+\index{CppConfigDictionary@{CppConfigDictionary}!CppConfigDictionary@{CppConfigDictionary}}
+\index{CppConfigDictionary@{CppConfigDictionary}!CppConfigDictionary@{CppConfigDictionary}}
+\doxysubsubsection{\texorpdfstring{CppConfigDictionary()}{CppConfigDictionary()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily Cpp\+Config\+Dictionary\+::\+Cpp\+Config\+Dictionary (\begin{DoxyParamCaption}\item[{std\+::string\+\_\+view}]{config\+Name }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{CppConfigDictionary_8cpp_source_l00005}{5}} of file \mbox{\hyperlink{CppConfigDictionary_8cpp_source}{Cpp\+Config\+Dictionary.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classCppConfigDictionary_a0d6f15f4d9b94d97fc204007a62eb74d}\label{classCppConfigDictionary_a0d6f15f4d9b94d97fc204007a62eb74d} 
+\index{CppConfigDictionary@{CppConfigDictionary}!addDictionary@{addDictionary}}
+\index{addDictionary@{addDictionary}!CppConfigDictionary@{CppConfigDictionary}}
+\doxysubsubsection{\texorpdfstring{addDictionary()}{addDictionary()}}
+{\footnotesize\ttfamily void Cpp\+Config\+Dictionary\+::add\+Dictionary (\begin{DoxyParamCaption}\item[{std\+::string\+\_\+view}]{key,  }\item[{std\+::string\+\_\+view}]{value }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{CppConfigDictionary_8cpp_source_l00032}{32}} of file \mbox{\hyperlink{CppConfigDictionary_8cpp_source}{Cpp\+Config\+Dictionary.\+cpp}}.
+
+\Hypertarget{classCppConfigDictionary_abbb1c4b8d46b3e6b3c045b45382ec46a}\label{classCppConfigDictionary_abbb1c4b8d46b3e6b3c045b45382ec46a} 
+\index{CppConfigDictionary@{CppConfigDictionary}!addSubConfigDictionary@{addSubConfigDictionary}}
+\index{addSubConfigDictionary@{addSubConfigDictionary}!CppConfigDictionary@{CppConfigDictionary}}
+\doxysubsubsection{\texorpdfstring{addSubConfigDictionary()}{addSubConfigDictionary()}}
+{\footnotesize\ttfamily void Cpp\+Config\+Dictionary\+::add\+Sub\+Config\+Dictionary (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \&}]{sub\+Config\+Dictionary }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{CppConfigDictionary_8cpp_source_l00036}{36}} of file \mbox{\hyperlink{CppConfigDictionary_8cpp_source}{Cpp\+Config\+Dictionary.\+cpp}}.
+
+\Hypertarget{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}\label{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021} 
+\index{CppConfigDictionary@{CppConfigDictionary}!find@{find}}
+\index{find@{find}!CppConfigDictionary@{CppConfigDictionary}}
+\doxysubsubsection{\texorpdfstring{find()}{find()}}
+{\footnotesize\ttfamily const std\+::string \& Cpp\+Config\+Dictionary\+::find (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{key }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{CppConfigDictionary_8cpp_source_l00053}{53}} of file \mbox{\hyperlink{CppConfigDictionary_8cpp_source}{Cpp\+Config\+Dictionary.\+cpp}}.
+
+\Hypertarget{classCppConfigDictionary_aa8f9eec2a680937bad0118dcb957fd5b}\label{classCppConfigDictionary_aa8f9eec2a680937bad0118dcb957fd5b} 
+\index{CppConfigDictionary@{CppConfigDictionary}!getConfigName@{getConfigName}}
+\index{getConfigName@{getConfigName}!CppConfigDictionary@{CppConfigDictionary}}
+\doxysubsubsection{\texorpdfstring{getConfigName()}{getConfigName()}}
+{\footnotesize\ttfamily std\+::string\+\_\+view Cpp\+Config\+Dictionary\+::get\+Config\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{CppConfigDictionary_8cpp_source_l00069}{69}} of file \mbox{\hyperlink{CppConfigDictionary_8cpp_source}{Cpp\+Config\+Dictionary.\+cpp}}.
+
+\Hypertarget{classCppConfigDictionary_aa1ea2bb1bbeb847143bc0b0e877a5b35}\label{classCppConfigDictionary_aa1ea2bb1bbeb847143bc0b0e877a5b35} 
+\index{CppConfigDictionary@{CppConfigDictionary}!getDictionary@{getDictionary}}
+\index{getDictionary@{getDictionary}!CppConfigDictionary@{CppConfigDictionary}}
+\doxysubsubsection{\texorpdfstring{getDictionary()}{getDictionary()}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+map$<$ std\+::string, std\+::string $>$ Cpp\+Config\+Dictionary\+::get\+Dictionary (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{CppConfigDictionary_8cpp_source_l00106}{106}} of file \mbox{\hyperlink{CppConfigDictionary_8cpp_source}{Cpp\+Config\+Dictionary.\+cpp}}.
+
+\Hypertarget{classCppConfigDictionary_a7f43d48d4517958ad36388bed5245069}\label{classCppConfigDictionary_a7f43d48d4517958ad36388bed5245069} 
+\index{CppConfigDictionary@{CppConfigDictionary}!getKeyList@{getKeyList}}
+\index{getKeyList@{getKeyList}!CppConfigDictionary@{CppConfigDictionary}}
+\doxysubsubsection{\texorpdfstring{getKeyList()}{getKeyList()}}
+{\footnotesize\ttfamily const std\+::vector$<$ std\+::string $>$ Cpp\+Config\+Dictionary\+::get\+Key\+List (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{CppConfigDictionary_8cpp_source_l00091}{91}} of file \mbox{\hyperlink{CppConfigDictionary_8cpp_source}{Cpp\+Config\+Dictionary.\+cpp}}.
+
+\Hypertarget{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}\label{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a} 
+\index{CppConfigDictionary@{CppConfigDictionary}!getSubConfig@{getSubConfig}}
+\index{getSubConfig@{getSubConfig}!CppConfigDictionary@{CppConfigDictionary}}
+\doxysubsubsection{\texorpdfstring{getSubConfig()}{getSubConfig()}}
+{\footnotesize\ttfamily const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \& Cpp\+Config\+Dictionary\+::get\+Sub\+Config (\begin{DoxyParamCaption}\item[{std\+::string\+\_\+view}]{key }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{CppConfigDictionary_8cpp_source_l00110}{110}} of file \mbox{\hyperlink{CppConfigDictionary_8cpp_source}{Cpp\+Config\+Dictionary.\+cpp}}.
+
+\Hypertarget{classCppConfigDictionary_a90502cc74f89c01049cafe5740ba8a1a}\label{classCppConfigDictionary_a90502cc74f89c01049cafe5740ba8a1a} 
+\index{CppConfigDictionary@{CppConfigDictionary}!getSubConfigSet@{getSubConfigSet}}
+\index{getSubConfigSet@{getSubConfigSet}!CppConfigDictionary@{CppConfigDictionary}}
+\doxysubsubsection{\texorpdfstring{getSubConfigSet()}{getSubConfigSet()}}
+{\footnotesize\ttfamily const std\+::vector$<$ \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} $>$ Cpp\+Config\+Dictionary\+::get\+Sub\+Config\+Set (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{CppConfigDictionary_8cpp_source_l00157}{157}} of file \mbox{\hyperlink{CppConfigDictionary_8cpp_source}{Cpp\+Config\+Dictionary.\+cpp}}.
+
+\Hypertarget{classCppConfigDictionary_ab310b82038ceea3c2cdcd37ab728712c}\label{classCppConfigDictionary_ab310b82038ceea3c2cdcd37ab728712c} 
+\index{CppConfigDictionary@{CppConfigDictionary}!getSubConfigSetWithName@{getSubConfigSetWithName}}
+\index{getSubConfigSetWithName@{getSubConfigSetWithName}!CppConfigDictionary@{CppConfigDictionary}}
+\doxysubsubsection{\texorpdfstring{getSubConfigSetWithName()}{getSubConfigSetWithName()}}
+{\footnotesize\ttfamily const std\+::unordered\+\_\+map$<$ std\+::string, \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} $>$ Cpp\+Config\+Dictionary\+::get\+Sub\+Config\+Set\+With\+Name (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{CppConfigDictionary_8cpp_source_l00161}{161}} of file \mbox{\hyperlink{CppConfigDictionary_8cpp_source}{Cpp\+Config\+Dictionary.\+cpp}}.
+
+\Hypertarget{classCppConfigDictionary_a5654c5a804deedb4e22c70a402c977cb}\label{classCppConfigDictionary_a5654c5a804deedb4e22c70a402c977cb} 
+\index{CppConfigDictionary@{CppConfigDictionary}!getValueList@{getValueList}}
+\index{getValueList@{getValueList}!CppConfigDictionary@{CppConfigDictionary}}
+\doxysubsubsection{\texorpdfstring{getValueList()}{getValueList()}}
+{\footnotesize\ttfamily const std\+::vector$<$ std\+::string $>$ Cpp\+Config\+Dictionary\+::get\+Value\+List (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{CppConfigDictionary_8cpp_source_l00125}{125}} of file \mbox{\hyperlink{CppConfigDictionary_8cpp_source}{Cpp\+Config\+Dictionary.\+cpp}}.
+
+\Hypertarget{classCppConfigDictionary_a1ab483f98a2a411b93b616bc8d65b83d}\label{classCppConfigDictionary_a1ab483f98a2a411b93b616bc8d65b83d} 
+\index{CppConfigDictionary@{CppConfigDictionary}!hasKey@{hasKey}}
+\index{hasKey@{hasKey}!CppConfigDictionary@{CppConfigDictionary}}
+\doxysubsubsection{\texorpdfstring{hasKey()}{hasKey()}}
+{\footnotesize\ttfamily const bool Cpp\+Config\+Dictionary\+::has\+Key (\begin{DoxyParamCaption}\item[{std\+::string\+\_\+view}]{key }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{CppConfigDictionary_8cpp_source_l00040}{40}} of file \mbox{\hyperlink{CppConfigDictionary_8cpp_source}{Cpp\+Config\+Dictionary.\+cpp}}.
+
+\Hypertarget{classCppConfigDictionary_a97f7a28e57ebfcda253af9f8465fd245}\label{classCppConfigDictionary_a97f7a28e57ebfcda253af9f8465fd245} 
+\index{CppConfigDictionary@{CppConfigDictionary}!operator+@{operator+}}
+\index{operator+@{operator+}!CppConfigDictionary@{CppConfigDictionary}}
+\doxysubsubsection{\texorpdfstring{operator+()}{operator+()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \& Cpp\+Config\+Dictionary\+::operator+ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \&}]{copy }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{CppConfigDictionary_8cpp_source_l00135}{135}} of file \mbox{\hyperlink{CppConfigDictionary_8cpp_source}{Cpp\+Config\+Dictionary.\+cpp}}.
+
+\Hypertarget{classCppConfigDictionary_a3dfab3030e6809060623d436535e0037}\label{classCppConfigDictionary_a3dfab3030e6809060623d436535e0037} 
+\index{CppConfigDictionary@{CppConfigDictionary}!operator+=@{operator+=}}
+\index{operator+=@{operator+=}!CppConfigDictionary@{CppConfigDictionary}}
+\doxysubsubsection{\texorpdfstring{operator+=()}{operator+=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \& Cpp\+Config\+Dictionary\+::operator+= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \&}]{copy }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{CppConfigDictionary_8cpp_source_l00146}{146}} of file \mbox{\hyperlink{CppConfigDictionary_8cpp_source}{Cpp\+Config\+Dictionary.\+cpp}}.
+
+\Hypertarget{classCppConfigDictionary_a4b732fcf30faf7ed113cc8fa4170db73}\label{classCppConfigDictionary_a4b732fcf30faf7ed113cc8fa4170db73} 
+\index{CppConfigDictionary@{CppConfigDictionary}!operator=@{operator=}}
+\index{operator=@{operator=}!CppConfigDictionary@{CppConfigDictionary}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \& Cpp\+Config\+Dictionary\+::operator= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \&}]{copy }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{CppConfigDictionary_8cpp_source_l00010}{10}} of file \mbox{\hyperlink{CppConfigDictionary_8cpp_source}{Cpp\+Config\+Dictionary.\+cpp}}.
+
+\Hypertarget{classCppConfigDictionary_a7ad8c697d02c1721fdf6e58beebc5311}\label{classCppConfigDictionary_a7ad8c697d02c1721fdf6e58beebc5311} 
+\index{CppConfigDictionary@{CppConfigDictionary}!operator=@{operator=}}
+\index{operator=@{operator=}!CppConfigDictionary@{CppConfigDictionary}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \& Cpp\+Config\+Dictionary\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \&\&}]{move }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{CppConfigDictionary_8cpp_source_l00020}{20}} of file \mbox{\hyperlink{CppConfigDictionary_8cpp_source}{Cpp\+Config\+Dictionary.\+cpp}}.
+
+
+
+\doxysubsection{Friends And Related Symbol Documentation}
+\Hypertarget{classCppConfigDictionary_a4c53482eaf2e1f069d969ecc71c9e544}\label{classCppConfigDictionary_a4c53482eaf2e1f069d969ecc71c9e544} 
+\index{CppConfigDictionary@{CppConfigDictionary}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!CppConfigDictionary@{CppConfigDictionary}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$}{operator<<}}
+{\footnotesize\ttfamily std\+::ostream \& operator$<$$<$ (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{os,  }\item[{const \mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}} \&}]{copy }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Definition at line \mbox{\hyperlink{CppConfigDictionary_8cpp_source_l00073}{73}} of file \mbox{\hyperlink{CppConfigDictionary_8cpp_source}{Cpp\+Config\+Dictionary.\+cpp}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classCppConfigDictionary_ac7c1d7d41e1e2a5ddbd495298d0e929f}\label{classCppConfigDictionary_ac7c1d7d41e1e2a5ddbd495298d0e929f} 
+\index{CppConfigDictionary@{CppConfigDictionary}!mConfigName@{mConfigName}}
+\index{mConfigName@{mConfigName}!CppConfigDictionary@{CppConfigDictionary}}
+\doxysubsubsection{\texorpdfstring{mConfigName}{mConfigName}}
+{\footnotesize\ttfamily std\+::string Cpp\+Config\+Dictionary\+::m\+Config\+Name\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{CppConfigDictionary_8h_source_l00013}{13}} of file \mbox{\hyperlink{CppConfigDictionary_8h_source}{Cpp\+Config\+Dictionary.\+h}}.
+
+\Hypertarget{classCppConfigDictionary_aa8522e489057c7d4c52f035f7e66c214}\label{classCppConfigDictionary_aa8522e489057c7d4c52f035f7e66c214} 
+\index{CppConfigDictionary@{CppConfigDictionary}!mDictionary@{mDictionary}}
+\index{mDictionary@{mDictionary}!CppConfigDictionary@{CppConfigDictionary}}
+\doxysubsubsection{\texorpdfstring{mDictionary}{mDictionary}}
+{\footnotesize\ttfamily std\+::unordered\+\_\+map$<$std\+::string, std\+::string$>$ Cpp\+Config\+Dictionary\+::m\+Dictionary\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{CppConfigDictionary_8h_source_l00014}{14}} of file \mbox{\hyperlink{CppConfigDictionary_8h_source}{Cpp\+Config\+Dictionary.\+h}}.
+
+\Hypertarget{classCppConfigDictionary_a67601eacff750917aadb219750427dae}\label{classCppConfigDictionary_a67601eacff750917aadb219750427dae} 
+\index{CppConfigDictionary@{CppConfigDictionary}!mSubConfigDictionary@{mSubConfigDictionary}}
+\index{mSubConfigDictionary@{mSubConfigDictionary}!CppConfigDictionary@{CppConfigDictionary}}
+\doxysubsubsection{\texorpdfstring{mSubConfigDictionary}{mSubConfigDictionary}}
+{\footnotesize\ttfamily std\+::vector$<$\mbox{\hyperlink{classCppConfigDictionary}{Cpp\+Config\+Dictionary}}$>$ Cpp\+Config\+Dictionary\+::m\+Sub\+Config\+Dictionary\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{CppConfigDictionary_8h_source_l00015}{15}} of file \mbox{\hyperlink{CppConfigDictionary_8h_source}{Cpp\+Config\+Dictionary.\+h}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/ychoi/\+ATOM/pycpp/config/inc/\mbox{\hyperlink{CppConfigDictionary_8h}{Cpp\+Config\+Dictionary.\+h}}\item 
+/home/ychoi/\+ATOM/pycpp/config/src/\mbox{\hyperlink{CppConfigDictionary_8cpp}{Cpp\+Config\+Dictionary.\+cpp}}\end{DoxyCompactItemize}

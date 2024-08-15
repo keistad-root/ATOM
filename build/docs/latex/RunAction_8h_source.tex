@@ -1,0 +1,34 @@
+\doxysection{Run\+Action.\+h}
+\hypertarget{RunAction_8h_source}{}\label{RunAction_8h_source}\index{/home/ychoi/ATOM/geant4/main/inc/RunAction.h@{/home/ychoi/ATOM/geant4/main/inc/RunAction.h}}
+\mbox{\hyperlink{RunAction_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{RunAction_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ \_\_RUNACTION\_\_}}
+\DoxyCodeLine{\Hypertarget{RunAction_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ \_\_RUNACTION\_\_}}
+\DoxyCodeLine{\Hypertarget{RunAction_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{RunAction_8h_source_l00004}00004\ \textcolor{preprocessor}{\#ifdef\ \_\_RUNACTION\_HEADER\_\_}}
+\DoxyCodeLine{\Hypertarget{RunAction_8h_source_l00005}00005\ \textcolor{preprocessor}{\#include\ "{}G4ios.hh"{}}}
+\DoxyCodeLine{\Hypertarget{RunAction_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}G4Run.hh"{}}}
+\DoxyCodeLine{\Hypertarget{RunAction_8h_source_l00007}00007\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{AnalysisManager_8h}{AnalysisManager.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{RunAction_8h_source_l00008}00008\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{RunAction_8h_source_l00009}00009\ }
+\DoxyCodeLine{\Hypertarget{RunAction_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include\ "{}G4UserRunAction.hh"{}}}
+\DoxyCodeLine{\Hypertarget{RunAction_8h_source_l00011}00011\ \textcolor{comment}{//\ \#include\ "{}G4Run.hh"{}}}
+\DoxyCodeLine{\Hypertarget{RunAction_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{RunAction_8h_source_l00013}00013\ \textcolor{comment}{//\ \#include\ "{}PrimaryGeneratorAction.h"{}}}
+\DoxyCodeLine{\Hypertarget{RunAction_8h_source_l00014}00014\ \textcolor{comment}{//\ \#include\ "{}AnalysisManager.h"{}}}
+\DoxyCodeLine{\Hypertarget{RunAction_8h_source_l00015}00015\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classAnalysisManager}{AnalysisManager}};}
+\DoxyCodeLine{\Hypertarget{RunAction_8h_source_l00016}00016\ }
+\DoxyCodeLine{\Hypertarget{RunAction_8h_source_l00017}\mbox{\hyperlink{classRunAction}{00017}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classRunAction}{RunAction}}\ :\ \textcolor{keyword}{public}\ G4UserRunAction\ \{}
+\DoxyCodeLine{\Hypertarget{RunAction_8h_source_l00018}00018\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{RunAction_8h_source_l00019}00019\ \ \ \ \ \mbox{\hyperlink{classRunAction_a535a70dd2811b2212753372dcb5a2f50}{RunAction}}();}
+\DoxyCodeLine{\Hypertarget{RunAction_8h_source_l00020}00020\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classRunAction_a6c584eb414c62a6238d5ea9a55601e1c}{\string~RunAction}}();}
+\DoxyCodeLine{\Hypertarget{RunAction_8h_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{RunAction_8h_source_l00022}00022\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classRunAction_a14b3433a6875194c4adfe1c222884f0d}{BeginOfRunAction}}(\textcolor{keyword}{const}\ G4Run*);}
+\DoxyCodeLine{\Hypertarget{RunAction_8h_source_l00023}00023\ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classRunAction_a49e3c5db63358317c3babca100163bd9}{EndOfRunAction}}(\textcolor{keyword}{const}\ G4Run*);}
+\DoxyCodeLine{\Hypertarget{RunAction_8h_source_l00024}00024\ }
+\DoxyCodeLine{\Hypertarget{RunAction_8h_source_l00025}\mbox{\hyperlink{classRunAction_af36f766b0478b14675c1db7a6134b716}{00025}}\ \ \ \ \ \mbox{\hyperlink{classAnalysisManager}{AnalysisManager}}*\ \mbox{\hyperlink{classRunAction_af36f766b0478b14675c1db7a6134b716}{fAnalysisManager}};}
+\DoxyCodeLine{\Hypertarget{RunAction_8h_source_l00026}00026\ \};}
+\DoxyCodeLine{\Hypertarget{RunAction_8h_source_l00027}00027\ }
+\DoxyCodeLine{\Hypertarget{RunAction_8h_source_l00028}00028\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

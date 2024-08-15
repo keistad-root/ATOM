@@ -1,0 +1,373 @@
+\doxysection{Unit Class Reference}
+\hypertarget{classUnit}{}\label{classUnit}\index{Unit@{Unit}}
+
+
+{\ttfamily \#include $<$cpp\+Unit.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classUnit_a8e46f663a95736c8002d85ab271a7581}{Unit}} ()
+\item 
+\mbox{\hyperlink{classUnit_ac7ab9b21c00dbd5b883497f1ed4d2d9c}{Unit}} (std\+::string\+\_\+view unit)
+\item 
+void \mbox{\hyperlink{classUnit_af5c145159dd8b8f1f85af13c622c1c8c}{set\+Unit}} (std\+::string\+\_\+view unit)
+\item 
+bool \mbox{\hyperlink{classUnit_a8cf502c8042b9b167b1bda89aad2a48c}{operator==}} (const \mbox{\hyperlink{classUnit}{Unit}} \&ref) const
+\item 
+bool \mbox{\hyperlink{classUnit_acd4fa7b11f08954248bc92bac54cc93a}{operator!=}} (const \mbox{\hyperlink{classUnit}{Unit}} \&ref) const
+\item 
+\mbox{\hyperlink{classUnit}{Unit}} \mbox{\hyperlink{classUnit_a61e7a830b5d2883e857d5421f55a38e6}{operator\texorpdfstring{$\ast$}{*}}} (const \mbox{\hyperlink{classUnit}{Unit}} \&ref) const
+\item 
+\mbox{\hyperlink{classUnit}{Unit}} \mbox{\hyperlink{classUnit_a3864991d4632378bc3200d0e2b8634cc}{operator\texorpdfstring{$\ast$}{*}=}} (const \mbox{\hyperlink{classUnit}{Unit}} \&ref)
+\item 
+\mbox{\hyperlink{classUnit}{Unit}} \mbox{\hyperlink{classUnit_ac6ebb81c15637f3e4d2cef67e146100a}{operator/}} (const \mbox{\hyperlink{classUnit}{Unit}} \&ref) const
+\item 
+\mbox{\hyperlink{classUnit}{Unit}} \mbox{\hyperlink{classUnit_a32dc9eafa5ee64d483bca44e332e48ee}{operator/=}} (const \mbox{\hyperlink{classUnit}{Unit}} \&ref)
+\item 
+const int \mbox{\hyperlink{classUnit_a40f34010133c74232cc2bde14e0e1edf}{get\+Digit}} () const
+\item 
+const std\+::array$<$ int, 7 $>$ \& \mbox{\hyperlink{classUnit_acbe872bdb10853432e84e89920b015a0}{get\+Unit\+Count}} () const
+\item 
+const std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{classUnit_a72b1c0205d776c413f05ba049d04e3f0}{get\+Non\+Basic\+Units}} () const
+\item 
+const std\+::string \mbox{\hyperlink{classUnit_abe45a5d962341b33833decda5f5c9780}{get\+Unit}} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{classUnit_a95d103b74b3b62a1c0bdb8e3d6652b5e}{set\+User\+Unit}} (std\+::string\+\_\+view new\+Unit, std\+::string\+\_\+view new\+Si\+Unit)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{classUnit_afc7980a21ffc442eddb64f56dbf0175e}{seperate}} (std\+::vector$<$ std\+::string $>$ \&store, std\+::string\+\_\+view unit)
+\item 
+bool \mbox{\hyperlink{classUnit_a8825896f8aefd941a80e82c3b6cfeebb}{vanish\+Slash}} (std\+::vector$<$ std\+::string $>$ \&store)
+\item 
+bool \mbox{\hyperlink{classUnit_a29690342bb56e101aed9ad261db29b96}{remove\+Prefix}} (std\+::vector$<$ std\+::string $>$ \&store)
+\item 
+void \mbox{\hyperlink{classUnit_a8d9ef22c7d77d5b8dd790951e5b38468}{set\+Unit\+Count}} (std\+::string unit, int power)
+\item 
+void \mbox{\hyperlink{classUnit_a68e3968d4060788d8bf0c89fff93505c}{plus\+Count}} (std\+::array$<$ int, 7 $>$ nums)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{classUnit_a828eac4bde5bc828b54c47f3df85c8ab}{m\+Digit}}
+\item 
+std\+::array$<$ int, 7 $>$ \mbox{\hyperlink{classUnit_a094a32247f9ee138725c4cad195077e8}{unit\+Count}} = \{0, 0, 0, 0, 0, 0, 0\}
+\item 
+std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{classUnit_a14fdf5dc207b1a62f9bf4cc5fef6fb4c}{non\+Basic\+Unit}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static std\+::vector$<$ std\+::pair$<$ std\+::string, std\+::array$<$ int, 7 $>$ $>$ $>$ \mbox{\hyperlink{classUnit_adb965cf6eccd7f5845751eb79962cf91}{user\+Units}} = \{ \}
+\item 
+static std\+::vector$<$ std\+::string $>$ \mbox{\hyperlink{classUnit_a6283c6d53580992776f31a1efb41572d}{except\+Prefix\+List}} = \{"{}m"{}, "{}mol"{}, "{}cd"{}\}
+\item 
+static bool \mbox{\hyperlink{classUnit_a7cb7783b0b0c02cec4ec744c916ec4e9}{is\+User\+Unit}} = false
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+std\+::ostream \& \mbox{\hyperlink{classUnit_a0e4605da77911fff74fc588f80fc1f6a}{operator$<$$<$}} (std\+::ostream \&os, \mbox{\hyperlink{classUnit}{Unit}} \&ref)
+\item 
+std\+::ostream \& \mbox{\hyperlink{classUnit_a6a5e7d4e19cbc6948c79df10f43aaf91}{operator$<$$<$}} (std\+::ostream \&os, const \mbox{\hyperlink{classUnit}{Unit}} \&ref)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{cppUnit_8h_source_l00016}{16}} of file \mbox{\hyperlink{cppUnit_8h_source}{cpp\+Unit.\+h}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{classUnit_a8e46f663a95736c8002d85ab271a7581}\label{classUnit_a8e46f663a95736c8002d85ab271a7581} 
+\index{Unit@{Unit}!Unit@{Unit}}
+\index{Unit@{Unit}!Unit@{Unit}}
+\doxysubsubsection{\texorpdfstring{Unit()}{Unit()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Unit\+::\+Unit (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{cppUnit_8cpp_source_l00003}{3}} of file \mbox{\hyperlink{cppUnit_8cpp_source}{cpp\+Unit.\+cpp}}.
+
+\Hypertarget{classUnit_ac7ab9b21c00dbd5b883497f1ed4d2d9c}\label{classUnit_ac7ab9b21c00dbd5b883497f1ed4d2d9c} 
+\index{Unit@{Unit}!Unit@{Unit}}
+\index{Unit@{Unit}!Unit@{Unit}}
+\doxysubsubsection{\texorpdfstring{Unit()}{Unit()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Unit\+::\+Unit (\begin{DoxyParamCaption}\item[{std\+::string\+\_\+view}]{unit }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{cppUnit_8cpp_source_l00005}{5}} of file \mbox{\hyperlink{cppUnit_8cpp_source}{cpp\+Unit.\+cpp}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classUnit_a40f34010133c74232cc2bde14e0e1edf}\label{classUnit_a40f34010133c74232cc2bde14e0e1edf} 
+\index{Unit@{Unit}!getDigit@{getDigit}}
+\index{getDigit@{getDigit}!Unit@{Unit}}
+\doxysubsubsection{\texorpdfstring{getDigit()}{getDigit()}}
+{\footnotesize\ttfamily const int Unit\+::get\+Digit (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{cppUnit_8cpp_source_l00255}{255}} of file \mbox{\hyperlink{cppUnit_8cpp_source}{cpp\+Unit.\+cpp}}.
+
+\Hypertarget{classUnit_a72b1c0205d776c413f05ba049d04e3f0}\label{classUnit_a72b1c0205d776c413f05ba049d04e3f0} 
+\index{Unit@{Unit}!getNonBasicUnits@{getNonBasicUnits}}
+\index{getNonBasicUnits@{getNonBasicUnits}!Unit@{Unit}}
+\doxysubsubsection{\texorpdfstring{getNonBasicUnits()}{getNonBasicUnits()}}
+{\footnotesize\ttfamily const std\+::vector$<$ std\+::string $>$ Unit\+::get\+Non\+Basic\+Units (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{cppUnit_8cpp_source_l00263}{263}} of file \mbox{\hyperlink{cppUnit_8cpp_source}{cpp\+Unit.\+cpp}}.
+
+\Hypertarget{classUnit_abe45a5d962341b33833decda5f5c9780}\label{classUnit_abe45a5d962341b33833decda5f5c9780} 
+\index{Unit@{Unit}!getUnit@{getUnit}}
+\index{getUnit@{getUnit}!Unit@{Unit}}
+\doxysubsubsection{\texorpdfstring{getUnit()}{getUnit()}}
+{\footnotesize\ttfamily const std\+::string Unit\+::get\+Unit (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{cppUnit_8cpp_source_l00267}{267}} of file \mbox{\hyperlink{cppUnit_8cpp_source}{cpp\+Unit.\+cpp}}.
+
+\Hypertarget{classUnit_acbe872bdb10853432e84e89920b015a0}\label{classUnit_acbe872bdb10853432e84e89920b015a0} 
+\index{Unit@{Unit}!getUnitCount@{getUnitCount}}
+\index{getUnitCount@{getUnitCount}!Unit@{Unit}}
+\doxysubsubsection{\texorpdfstring{getUnitCount()}{getUnitCount()}}
+{\footnotesize\ttfamily const std\+::array$<$ int, 7 $>$ \& Unit\+::get\+Unit\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{cppUnit_8cpp_source_l00259}{259}} of file \mbox{\hyperlink{cppUnit_8cpp_source}{cpp\+Unit.\+cpp}}.
+
+\Hypertarget{classUnit_acd4fa7b11f08954248bc92bac54cc93a}\label{classUnit_acd4fa7b11f08954248bc92bac54cc93a} 
+\index{Unit@{Unit}!operator"!=@{operator"!=}}
+\index{operator"!=@{operator"!=}!Unit@{Unit}}
+\doxysubsubsection{\texorpdfstring{operator"!=()}{operator!=()}}
+{\footnotesize\ttfamily bool Unit\+::operator!= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classUnit}{Unit}} \&}]{ref }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{cppUnit_8cpp_source_l00183}{183}} of file \mbox{\hyperlink{cppUnit_8cpp_source}{cpp\+Unit.\+cpp}}.
+
+\Hypertarget{classUnit_a61e7a830b5d2883e857d5421f55a38e6}\label{classUnit_a61e7a830b5d2883e857d5421f55a38e6} 
+\index{Unit@{Unit}!operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}}
+\index{operator\texorpdfstring{$\ast$}{*}@{operator\texorpdfstring{$\ast$}{*}}!Unit@{Unit}}
+\doxysubsubsection{\texorpdfstring{operator\texorpdfstring{$\ast$}{*}()}{operator*()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classUnit}{Unit}} Unit\+::operator\texorpdfstring{$\ast$}{*} (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classUnit}{Unit}} \&}]{ref }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{cppUnit_8cpp_source_l00187}{187}} of file \mbox{\hyperlink{cppUnit_8cpp_source}{cpp\+Unit.\+cpp}}.
+
+\Hypertarget{classUnit_a3864991d4632378bc3200d0e2b8634cc}\label{classUnit_a3864991d4632378bc3200d0e2b8634cc} 
+\index{Unit@{Unit}!operator\texorpdfstring{$\ast$}{*}=@{operator\texorpdfstring{$\ast$}{*}=}}
+\index{operator\texorpdfstring{$\ast$}{*}=@{operator\texorpdfstring{$\ast$}{*}=}!Unit@{Unit}}
+\doxysubsubsection{\texorpdfstring{operator\texorpdfstring{$\ast$}{*}=()}{operator*=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classUnit}{Unit}} Unit\+::operator\texorpdfstring{$\ast$}{*}= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classUnit}{Unit}} \&}]{ref }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{cppUnit_8cpp_source_l00193}{193}} of file \mbox{\hyperlink{cppUnit_8cpp_source}{cpp\+Unit.\+cpp}}.
+
+\Hypertarget{classUnit_ac6ebb81c15637f3e4d2cef67e146100a}\label{classUnit_ac6ebb81c15637f3e4d2cef67e146100a} 
+\index{Unit@{Unit}!operator/@{operator/}}
+\index{operator/@{operator/}!Unit@{Unit}}
+\doxysubsubsection{\texorpdfstring{operator/()}{operator/()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classUnit}{Unit}} Unit\+::operator/ (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classUnit}{Unit}} \&}]{ref }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{cppUnit_8cpp_source_l00206}{206}} of file \mbox{\hyperlink{cppUnit_8cpp_source}{cpp\+Unit.\+cpp}}.
+
+\Hypertarget{classUnit_a32dc9eafa5ee64d483bca44e332e48ee}\label{classUnit_a32dc9eafa5ee64d483bca44e332e48ee} 
+\index{Unit@{Unit}!operator/=@{operator/=}}
+\index{operator/=@{operator/=}!Unit@{Unit}}
+\doxysubsubsection{\texorpdfstring{operator/=()}{operator/=()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classUnit}{Unit}} Unit\+::operator/= (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classUnit}{Unit}} \&}]{ref }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{cppUnit_8cpp_source_l00212}{212}} of file \mbox{\hyperlink{cppUnit_8cpp_source}{cpp\+Unit.\+cpp}}.
+
+\Hypertarget{classUnit_a8cf502c8042b9b167b1bda89aad2a48c}\label{classUnit_a8cf502c8042b9b167b1bda89aad2a48c} 
+\index{Unit@{Unit}!operator==@{operator==}}
+\index{operator==@{operator==}!Unit@{Unit}}
+\doxysubsubsection{\texorpdfstring{operator==()}{operator==()}}
+{\footnotesize\ttfamily bool Unit\+::operator== (\begin{DoxyParamCaption}\item[{const \mbox{\hyperlink{classUnit}{Unit}} \&}]{ref }\end{DoxyParamCaption}) const}
+
+
+
+Definition at line \mbox{\hyperlink{cppUnit_8cpp_source_l00179}{179}} of file \mbox{\hyperlink{cppUnit_8cpp_source}{cpp\+Unit.\+cpp}}.
+
+\Hypertarget{classUnit_a68e3968d4060788d8bf0c89fff93505c}\label{classUnit_a68e3968d4060788d8bf0c89fff93505c} 
+\index{Unit@{Unit}!plusCount@{plusCount}}
+\index{plusCount@{plusCount}!Unit@{Unit}}
+\doxysubsubsection{\texorpdfstring{plusCount()}{plusCount()}}
+{\footnotesize\ttfamily void Unit\+::plus\+Count (\begin{DoxyParamCaption}\item[{std\+::array$<$ int, 7 $>$}]{nums }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{cppUnit_8cpp_source_l00169}{169}} of file \mbox{\hyperlink{cppUnit_8cpp_source}{cpp\+Unit.\+cpp}}.
+
+\Hypertarget{classUnit_a29690342bb56e101aed9ad261db29b96}\label{classUnit_a29690342bb56e101aed9ad261db29b96} 
+\index{Unit@{Unit}!removePrefix@{removePrefix}}
+\index{removePrefix@{removePrefix}!Unit@{Unit}}
+\doxysubsubsection{\texorpdfstring{removePrefix()}{removePrefix()}}
+{\footnotesize\ttfamily bool Unit\+::remove\+Prefix (\begin{DoxyParamCaption}\item[{std\+::vector$<$ std\+::string $>$ \&}]{store }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{cppUnit_8cpp_source_l00122}{122}} of file \mbox{\hyperlink{cppUnit_8cpp_source}{cpp\+Unit.\+cpp}}.
+
+\Hypertarget{classUnit_afc7980a21ffc442eddb64f56dbf0175e}\label{classUnit_afc7980a21ffc442eddb64f56dbf0175e} 
+\index{Unit@{Unit}!seperate@{seperate}}
+\index{seperate@{seperate}!Unit@{Unit}}
+\doxysubsubsection{\texorpdfstring{seperate()}{seperate()}}
+{\footnotesize\ttfamily bool Unit\+::seperate (\begin{DoxyParamCaption}\item[{std\+::vector$<$ std\+::string $>$ \&}]{store,  }\item[{std\+::string\+\_\+view}]{unit }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{cppUnit_8cpp_source_l00064}{64}} of file \mbox{\hyperlink{cppUnit_8cpp_source}{cpp\+Unit.\+cpp}}.
+
+\Hypertarget{classUnit_af5c145159dd8b8f1f85af13c622c1c8c}\label{classUnit_af5c145159dd8b8f1f85af13c622c1c8c} 
+\index{Unit@{Unit}!setUnit@{setUnit}}
+\index{setUnit@{setUnit}!Unit@{Unit}}
+\doxysubsubsection{\texorpdfstring{setUnit()}{setUnit()}}
+{\footnotesize\ttfamily void Unit\+::set\+Unit (\begin{DoxyParamCaption}\item[{std\+::string\+\_\+view}]{unit }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{cppUnit_8cpp_source_l00050}{50}} of file \mbox{\hyperlink{cppUnit_8cpp_source}{cpp\+Unit.\+cpp}}.
+
+\Hypertarget{classUnit_a8d9ef22c7d77d5b8dd790951e5b38468}\label{classUnit_a8d9ef22c7d77d5b8dd790951e5b38468} 
+\index{Unit@{Unit}!setUnitCount@{setUnitCount}}
+\index{setUnitCount@{setUnitCount}!Unit@{Unit}}
+\doxysubsubsection{\texorpdfstring{setUnitCount()}{setUnitCount()}}
+{\footnotesize\ttfamily void Unit\+::set\+Unit\+Count (\begin{DoxyParamCaption}\item[{std\+::string}]{unit,  }\item[{int}]{power }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{cppUnit_8cpp_source_l00143}{143}} of file \mbox{\hyperlink{cppUnit_8cpp_source}{cpp\+Unit.\+cpp}}.
+
+\Hypertarget{classUnit_a95d103b74b3b62a1c0bdb8e3d6652b5e}\label{classUnit_a95d103b74b3b62a1c0bdb8e3d6652b5e} 
+\index{Unit@{Unit}!setUserUnit@{setUserUnit}}
+\index{setUserUnit@{setUserUnit}!Unit@{Unit}}
+\doxysubsubsection{\texorpdfstring{setUserUnit()}{setUserUnit()}}
+{\footnotesize\ttfamily void Unit\+::set\+User\+Unit (\begin{DoxyParamCaption}\item[{std\+::string\+\_\+view}]{new\+Unit,  }\item[{std\+::string\+\_\+view}]{new\+Si\+Unit }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
+Definition at line \mbox{\hyperlink{cppUnit_8cpp_source_l00014}{14}} of file \mbox{\hyperlink{cppUnit_8cpp_source}{cpp\+Unit.\+cpp}}.
+
+\Hypertarget{classUnit_a8825896f8aefd941a80e82c3b6cfeebb}\label{classUnit_a8825896f8aefd941a80e82c3b6cfeebb} 
+\index{Unit@{Unit}!vanishSlash@{vanishSlash}}
+\index{vanishSlash@{vanishSlash}!Unit@{Unit}}
+\doxysubsubsection{\texorpdfstring{vanishSlash()}{vanishSlash()}}
+{\footnotesize\ttfamily bool Unit\+::vanish\+Slash (\begin{DoxyParamCaption}\item[{std\+::vector$<$ std\+::string $>$ \&}]{store }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{cppUnit_8cpp_source_l00102}{102}} of file \mbox{\hyperlink{cppUnit_8cpp_source}{cpp\+Unit.\+cpp}}.
+
+
+
+\doxysubsection{Friends And Related Symbol Documentation}
+\Hypertarget{classUnit_a6a5e7d4e19cbc6948c79df10f43aaf91}\label{classUnit_a6a5e7d4e19cbc6948c79df10f43aaf91} 
+\index{Unit@{Unit}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!Unit@{Unit}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$}{operator<<}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily std\+::ostream \& operator$<$$<$ (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{os,  }\item[{const \mbox{\hyperlink{classUnit}{Unit}} \&}]{ref }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Definition at line \mbox{\hyperlink{cppUnit_8cpp_source_l00240}{240}} of file \mbox{\hyperlink{cppUnit_8cpp_source}{cpp\+Unit.\+cpp}}.
+
+\Hypertarget{classUnit_a0e4605da77911fff74fc588f80fc1f6a}\label{classUnit_a0e4605da77911fff74fc588f80fc1f6a} 
+\index{Unit@{Unit}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!Unit@{Unit}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$}{operator<<}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily std\+::ostream \& operator$<$$<$ (\begin{DoxyParamCaption}\item[{std\+::ostream \&}]{os,  }\item[{\mbox{\hyperlink{classUnit}{Unit}} \&}]{ref }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+Definition at line \mbox{\hyperlink{cppUnit_8cpp_source_l00225}{225}} of file \mbox{\hyperlink{cppUnit_8cpp_source}{cpp\+Unit.\+cpp}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classUnit_a6283c6d53580992776f31a1efb41572d}\label{classUnit_a6283c6d53580992776f31a1efb41572d} 
+\index{Unit@{Unit}!exceptPrefixList@{exceptPrefixList}}
+\index{exceptPrefixList@{exceptPrefixList}!Unit@{Unit}}
+\doxysubsubsection{\texorpdfstring{exceptPrefixList}{exceptPrefixList}}
+{\footnotesize\ttfamily std\+::vector$<$ std\+::string $>$ Unit\+::except\+Prefix\+List = \{"{}m"{}, "{}mol"{}, "{}cd"{}\}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{cppUnit_8h_source_l00011}{11}} of file \mbox{\hyperlink{cppUnit_8h_source}{cpp\+Unit.\+h}}.
+
+\Hypertarget{classUnit_a7cb7783b0b0c02cec4ec744c916ec4e9}\label{classUnit_a7cb7783b0b0c02cec4ec744c916ec4e9} 
+\index{Unit@{Unit}!isUserUnit@{isUserUnit}}
+\index{isUserUnit@{isUserUnit}!Unit@{Unit}}
+\doxysubsubsection{\texorpdfstring{isUserUnit}{isUserUnit}}
+{\footnotesize\ttfamily bool Unit\+::is\+User\+Unit = false\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{cppUnit_8h_source_l00023}{23}} of file \mbox{\hyperlink{cppUnit_8h_source}{cpp\+Unit.\+h}}.
+
+\Hypertarget{classUnit_a828eac4bde5bc828b54c47f3df85c8ab}\label{classUnit_a828eac4bde5bc828b54c47f3df85c8ab} 
+\index{Unit@{Unit}!mDigit@{mDigit}}
+\index{mDigit@{mDigit}!Unit@{Unit}}
+\doxysubsubsection{\texorpdfstring{mDigit}{mDigit}}
+{\footnotesize\ttfamily int Unit\+::m\+Digit\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{cppUnit_8h_source_l00018}{18}} of file \mbox{\hyperlink{cppUnit_8h_source}{cpp\+Unit.\+h}}.
+
+\Hypertarget{classUnit_a14fdf5dc207b1a62f9bf4cc5fef6fb4c}\label{classUnit_a14fdf5dc207b1a62f9bf4cc5fef6fb4c} 
+\index{Unit@{Unit}!nonBasicUnit@{nonBasicUnit}}
+\index{nonBasicUnit@{nonBasicUnit}!Unit@{Unit}}
+\doxysubsubsection{\texorpdfstring{nonBasicUnit}{nonBasicUnit}}
+{\footnotesize\ttfamily std\+::vector$<$std\+::string$>$ Unit\+::non\+Basic\+Unit\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{cppUnit_8h_source_l00020}{20}} of file \mbox{\hyperlink{cppUnit_8h_source}{cpp\+Unit.\+h}}.
+
+\Hypertarget{classUnit_a094a32247f9ee138725c4cad195077e8}\label{classUnit_a094a32247f9ee138725c4cad195077e8} 
+\index{Unit@{Unit}!unitCount@{unitCount}}
+\index{unitCount@{unitCount}!Unit@{Unit}}
+\doxysubsubsection{\texorpdfstring{unitCount}{unitCount}}
+{\footnotesize\ttfamily std\+::array$<$int, 7$>$ Unit\+::unit\+Count = \{0, 0, 0, 0, 0, 0, 0\}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{cppUnit_8h_source_l00019}{19}} of file \mbox{\hyperlink{cppUnit_8h_source}{cpp\+Unit.\+h}}.
+
+\Hypertarget{classUnit_adb965cf6eccd7f5845751eb79962cf91}\label{classUnit_adb965cf6eccd7f5845751eb79962cf91} 
+\index{Unit@{Unit}!userUnits@{userUnits}}
+\index{userUnits@{userUnits}!Unit@{Unit}}
+\doxysubsubsection{\texorpdfstring{userUnits}{userUnits}}
+{\footnotesize\ttfamily std\+::vector$<$ std\+::pair$<$ std\+::string, std\+::array$<$ int, 7 $>$ $>$ $>$ Unit\+::user\+Units = \{ \}\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{cppUnit_8h_source_l00010}{10}} of file \mbox{\hyperlink{cppUnit_8h_source}{cpp\+Unit.\+h}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/ychoi/\+ATOM/pycpp/inc/\mbox{\hyperlink{cppUnit_8h}{cpp\+Unit.\+h}}\item 
+/home/ychoi/\+ATOM/pycpp/src/\mbox{\hyperlink{cppUnit_8cpp}{cpp\+Unit.\+cpp}}\end{DoxyCompactItemize}

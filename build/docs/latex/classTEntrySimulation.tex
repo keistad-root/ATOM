@@ -1,0 +1,139 @@
+\doxysection{TEntry\+Simulation Class Reference}
+\hypertarget{classTEntrySimulation}{}\label{classTEntrySimulation}\index{TEntrySimulation@{TEntrySimulation}}
+
+
+{\ttfamily \#include $<$TEntry\+Simulation.\+h$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classTEntrySimulation_ae721e5b23c708b3246f4764d1d83df5d}{set\+Init\+Geometry}} (double disk\+Radius, double upper\+Disk\+CoordZ, double lower\+Disk\+CoordZ, double detector\+Width, double detector\+Height, double detector\+CoordZ)
+\item 
+void \mbox{\hyperlink{classTEntrySimulation_a2742fb98c7123f786c8c2dbadce5a434}{set\+Source}} (double source\+Radius)
+\item 
+void \mbox{\hyperlink{classTEntrySimulation_af29bcf040cc3aac21fb26849a17eee3a}{set\+Collimator}} (double disk\+Radius, double upper\+Disk\+CoordZ, double lower\+Disk\+CoordZ)
+\item 
+void \mbox{\hyperlink{classTEntrySimulation_a7d8d578577851b35a21162ccc002144a}{set\+Detector}} (double detector\+Width, double detector\+Height, double detector\+CoordX, double detector\+CoordY, double detector\+CoordZ)
+\item 
+double \mbox{\hyperlink{classTEntrySimulation_a0c81228a8e0ee6ec10d86c90b9e45618}{do\+Count}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{structTDisk}{TDisk}} \mbox{\hyperlink{classTEntrySimulation_adc79e25b55b78c6c0c86931e37555fe3}{source}}
+\item 
+\mbox{\hyperlink{structTDisk}{TDisk}} \mbox{\hyperlink{classTEntrySimulation_a76af22b65d2823873786de25161fc67f}{upper\+Disk}}
+\item 
+\mbox{\hyperlink{structTDisk}{TDisk}} \mbox{\hyperlink{classTEntrySimulation_a79db97efc460813e8679c201eea51613}{lower\+Disk}}
+\item 
+\mbox{\hyperlink{structTDetector}{TDetector}} \mbox{\hyperlink{classTEntrySimulation_a0d95db77e56b7bcd9c225aa93dbe843c}{detector}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+
+
+Definition at line \mbox{\hyperlink{TEntrySimulation_8h_source_l00035}{35}} of file \mbox{\hyperlink{TEntrySimulation_8h_source}{TEntry\+Simulation.\+h}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classTEntrySimulation_a0c81228a8e0ee6ec10d86c90b9e45618}\label{classTEntrySimulation_a0c81228a8e0ee6ec10d86c90b9e45618} 
+\index{TEntrySimulation@{TEntrySimulation}!doCount@{doCount}}
+\index{doCount@{doCount}!TEntrySimulation@{TEntrySimulation}}
+\doxysubsubsection{\texorpdfstring{doCount()}{doCount()}}
+{\footnotesize\ttfamily double TEntry\+Simulation\+::do\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TEntrySimulation_8cpp_source_l00033}{33}} of file \mbox{\hyperlink{TEntrySimulation_8cpp_source}{TEntry\+Simulation.\+cpp}}.
+
+\Hypertarget{classTEntrySimulation_af29bcf040cc3aac21fb26849a17eee3a}\label{classTEntrySimulation_af29bcf040cc3aac21fb26849a17eee3a} 
+\index{TEntrySimulation@{TEntrySimulation}!setCollimator@{setCollimator}}
+\index{setCollimator@{setCollimator}!TEntrySimulation@{TEntrySimulation}}
+\doxysubsubsection{\texorpdfstring{setCollimator()}{setCollimator()}}
+{\footnotesize\ttfamily void TEntry\+Simulation\+::set\+Collimator (\begin{DoxyParamCaption}\item[{double}]{disk\+Radius,  }\item[{double}]{upper\+Disk\+CoordZ,  }\item[{double}]{lower\+Disk\+CoordZ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TEntrySimulation_8cpp_source_l00018}{18}} of file \mbox{\hyperlink{TEntrySimulation_8cpp_source}{TEntry\+Simulation.\+cpp}}.
+
+\Hypertarget{classTEntrySimulation_a7d8d578577851b35a21162ccc002144a}\label{classTEntrySimulation_a7d8d578577851b35a21162ccc002144a} 
+\index{TEntrySimulation@{TEntrySimulation}!setDetector@{setDetector}}
+\index{setDetector@{setDetector}!TEntrySimulation@{TEntrySimulation}}
+\doxysubsubsection{\texorpdfstring{setDetector()}{setDetector()}}
+{\footnotesize\ttfamily void TEntry\+Simulation\+::set\+Detector (\begin{DoxyParamCaption}\item[{double}]{detector\+Width,  }\item[{double}]{detector\+Height,  }\item[{double}]{detector\+CoordX,  }\item[{double}]{detector\+CoordY,  }\item[{double}]{detector\+CoordZ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TEntrySimulation_8cpp_source_l00025}{25}} of file \mbox{\hyperlink{TEntrySimulation_8cpp_source}{TEntry\+Simulation.\+cpp}}.
+
+\Hypertarget{classTEntrySimulation_ae721e5b23c708b3246f4764d1d83df5d}\label{classTEntrySimulation_ae721e5b23c708b3246f4764d1d83df5d} 
+\index{TEntrySimulation@{TEntrySimulation}!setInitGeometry@{setInitGeometry}}
+\index{setInitGeometry@{setInitGeometry}!TEntrySimulation@{TEntrySimulation}}
+\doxysubsubsection{\texorpdfstring{setInitGeometry()}{setInitGeometry()}}
+{\footnotesize\ttfamily void TEntry\+Simulation\+::set\+Init\+Geometry (\begin{DoxyParamCaption}\item[{double}]{disk\+Radius,  }\item[{double}]{upper\+Disk\+CoordZ,  }\item[{double}]{lower\+Disk\+CoordZ,  }\item[{double}]{detector\+Width,  }\item[{double}]{detector\+Height,  }\item[{double}]{detector\+CoordZ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TEntrySimulation_8cpp_source_l00003}{3}} of file \mbox{\hyperlink{TEntrySimulation_8cpp_source}{TEntry\+Simulation.\+cpp}}.
+
+\Hypertarget{classTEntrySimulation_a2742fb98c7123f786c8c2dbadce5a434}\label{classTEntrySimulation_a2742fb98c7123f786c8c2dbadce5a434} 
+\index{TEntrySimulation@{TEntrySimulation}!setSource@{setSource}}
+\index{setSource@{setSource}!TEntrySimulation@{TEntrySimulation}}
+\doxysubsubsection{\texorpdfstring{setSource()}{setSource()}}
+{\footnotesize\ttfamily void TEntry\+Simulation\+::set\+Source (\begin{DoxyParamCaption}\item[{double}]{source\+Radius }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{TEntrySimulation_8cpp_source_l00013}{13}} of file \mbox{\hyperlink{TEntrySimulation_8cpp_source}{TEntry\+Simulation.\+cpp}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{classTEntrySimulation_a0d95db77e56b7bcd9c225aa93dbe843c}\label{classTEntrySimulation_a0d95db77e56b7bcd9c225aa93dbe843c} 
+\index{TEntrySimulation@{TEntrySimulation}!detector@{detector}}
+\index{detector@{detector}!TEntrySimulation@{TEntrySimulation}}
+\doxysubsubsection{\texorpdfstring{detector}{detector}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structTDetector}{TDetector}} TEntry\+Simulation\+::detector\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TEntrySimulation_8h_source_l00040}{40}} of file \mbox{\hyperlink{TEntrySimulation_8h_source}{TEntry\+Simulation.\+h}}.
+
+\Hypertarget{classTEntrySimulation_a79db97efc460813e8679c201eea51613}\label{classTEntrySimulation_a79db97efc460813e8679c201eea51613} 
+\index{TEntrySimulation@{TEntrySimulation}!lowerDisk@{lowerDisk}}
+\index{lowerDisk@{lowerDisk}!TEntrySimulation@{TEntrySimulation}}
+\doxysubsubsection{\texorpdfstring{lowerDisk}{lowerDisk}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structTDisk}{TDisk}} TEntry\+Simulation\+::lower\+Disk\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TEntrySimulation_8h_source_l00039}{39}} of file \mbox{\hyperlink{TEntrySimulation_8h_source}{TEntry\+Simulation.\+h}}.
+
+\Hypertarget{classTEntrySimulation_adc79e25b55b78c6c0c86931e37555fe3}\label{classTEntrySimulation_adc79e25b55b78c6c0c86931e37555fe3} 
+\index{TEntrySimulation@{TEntrySimulation}!source@{source}}
+\index{source@{source}!TEntrySimulation@{TEntrySimulation}}
+\doxysubsubsection{\texorpdfstring{source}{source}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structTDisk}{TDisk}} TEntry\+Simulation\+::source\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TEntrySimulation_8h_source_l00037}{37}} of file \mbox{\hyperlink{TEntrySimulation_8h_source}{TEntry\+Simulation.\+h}}.
+
+\Hypertarget{classTEntrySimulation_a76af22b65d2823873786de25161fc67f}\label{classTEntrySimulation_a76af22b65d2823873786de25161fc67f} 
+\index{TEntrySimulation@{TEntrySimulation}!upperDisk@{upperDisk}}
+\index{upperDisk@{upperDisk}!TEntrySimulation@{TEntrySimulation}}
+\doxysubsubsection{\texorpdfstring{upperDisk}{upperDisk}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structTDisk}{TDisk}} TEntry\+Simulation\+::upper\+Disk\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \mbox{\hyperlink{TEntrySimulation_8h_source_l00038}{38}} of file \mbox{\hyperlink{TEntrySimulation_8h_source}{TEntry\+Simulation.\+h}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/ychoi/\+ATOM/simulation/inc/\mbox{\hyperlink{TEntrySimulation_8h}{TEntry\+Simulation.\+h}}\item 
+/home/ychoi/\+ATOM/simulation/src/\mbox{\hyperlink{TEntrySimulation_8cpp}{TEntry\+Simulation.\+cpp}}\end{DoxyCompactItemize}

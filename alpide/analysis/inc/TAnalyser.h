@@ -17,11 +17,8 @@
 
 #include "TFile.h"
 #include "TTree.h"
-#include "TBranch.h"
-#include "TH1D.h"
-#include "TH1I.h"
-#include "TH2D.h"
-#include "TError.h"
+#include "TH1.h"
+#include "TH2.h"
 #include "TPaveText.h"
 #include "TDirectory.h"
 #include "TCanvas.h"
@@ -29,6 +26,7 @@
 #include "TGraph.h"
 #include "TF1.h"
 #include "TLegend.h"
+#include "TH1IUser.h"
 
 #include "cpptqdm.h"
 #include "CppConfigFile.h"
@@ -39,10 +37,13 @@
 #include "TCluster.h"
 #include "TClusterDivideData.h"
 #include "TClusterShape.h"
+#include "TClusterization.h"
 #endif
 
 #include<string>
 #include<filesystem>
+#include<unordered_map>
+#include<vector>
 #include "TFileFormat.h"
 
 class TFile;
@@ -77,61 +78,80 @@ typedef unsigned int UInt_t;
 class TAnalyser {
 private:
 	TFile* mInputFile = nullptr; /**< Input file with ROOT extension. */
-	TTree* mTree;
+	TTree* mTree = nullptr;
 	TInputRoot mInput;
 
+	std::filesystem::path mOutputPath;
 
-protected:
-	TFile* mOutputFile = nullptr;
-	bool mIsOutputGraph = false;
+	CppConfigFile mConfigFile;
+	CppConfigDictionary mFileConfig;
+	CppConfigDictionary mMaskingConfig;
+	CppConfigDictionary mBasicAnalysisConfig;
+	CppConfigDictionary mSettingConfig;
+
+	std::vector<TALPIDEEvent*> mOriginEventSet;
+	std::vector<TCluster*> mOriginClusterSet;
+	// Cut methods: TS(TimeStamp), HH(High Hits), HC(High Clusters)
+	// Adjusting Only Time Stamp Cut
+	std::vector<TALPIDEEvent*> mTSCutEventSet;
+	std::vector<TALPIDEEvent*> mTSCutNoiseEventSet;
+	std::vector<TCluster*> mTSCutClusterSet;
+	std::vector<TCluster*> mTSCutNoiseClusterSet;
+	// Adjusting Only High Hit Cut
+	// std::vector< TALPIDEEvent*> mTS
+	std::vector<TALPIDEEvent*> mHHCutEventSet;
+	std::vector<TALPIDEEvent*> mHHCutNoiseEventSet;
+	std::vector<TCluster*> mHHCutClusterSet;
+	std::vector<TCluster*> mHHCutNoiseClusterSet;
+	std::vector<TCluster*> mHHHCCutClusterSet;
+	std::vector<TCluster*> mHHHCCutNoiseClusterSet;
+
+	std::vector<int> nPixelPerFrame;
+
+	bool isTimeStampCut = false;
+	bool isHitmapCut = false;
+	bool isHighClusterCut = false;
+	bool isPixelPerTimeStampMap = false;
+	int mTimeStampCut = 0;
+	int mHitmapCut = 0;
+	int mHighClusterCut = 0;
+
 	TPaveText* mExpSettingLegend;
-	std::unordered_map<std::string, TH2D*> mHitmaps;
-	std::unordered_map<std::string, TH2D*> mClustermaps;
-	std::unordered_map<std::string, TH1D*> mClustersizes;
-	std::unordered_map<std::string, std::unordered_map<int, std::vector<TCluster*>>> mClusterDataWithShape;
-	std::unordered_map<std::string, TDirectory*> mDirectorySet;
-	std::unordered_map<std::string, TExperimentData*> mExpData;
-	std::unordered_map<std::string, TClusterDivideData*> mDivideData;
-	std::unordered_map<std::string, std::vector<TClusterShape*>> mClusterShapeSet;
-	std::unordered_map<std::string, int> mNTotalShapeSet;
-	std::unordered_map<std::string, int> mMaxModeSet;
+
+	TH1D* mPixelPerTimeStampMap;
+	TH2D* mOriginHitmap;
+	TH2D* mHitmapMaskedHitmap;
+	TH2D* mHitmapMaskedNoisemap;
+
+	TH2D* mOriginClustermap;
+	TH2D* mHHCutClustermap;
+	TH2D* mHHHCCutClustermap;
+
 public:
-	TAnalyser() = default;
-	TAnalyser(TFile* inputFile, std::unordered_map<std::string, TExperimentData*> expData);
+	TAnalyser(const CppConfigFile& configFile);
 	~TAnalyser();
 
-	TTree* openTree(std::string treeName);
-	void storeEvents(CppConfigDictionary settingConfig);
-	void doMasking(int mMaskOver);
+	void setConfig();
+	void storeEvents();
+	void getHitmaps();
+
+	void doMasking();
+	void HCMasking();
 	void openOutputGraphFile(std::string_view fileName);
-	void openDirectory(std::string_view typeName);
 
 	// void setSavePath(const std::filesystem::path& savePath);
-	void setExpSettingLegend(CppConfigDictionary settingConfig);
+	void setExpSettingLegend();
 
-	void doDivideBySize(std::string_view typeName);
+	void getOriginHitmap();
+	void getHitmapMaskedHitmap();
+	void getHitmapMaskedNoisemap();
 
-	TExperimentData* getAnEventSet(std::string_view typeName) const;
+	void clusterize();
 
-	TH2D* getHitPlot(const CppConfigDictionary& config, const std::vector<TALPIDEEvent*>& events);
-
-	void saveHitmap(std::string typeName, const CppConfigDictionary& config);
-
-	TH2D* getClusterPlot(const CppConfigDictionary& config, const std::vector<TCluster*>& clusters);
-	TH1D* getClustersizePlot(const CppConfigDictionary& config, const std::vector<TCluster*>& clusters);
-	void setClusterDataWithShape(const std::vector<int>& clusterSizeRange);
-
-	void saveClustermap(std::string typeName, const CppConfigDictionary& config);
-	void saveClustersize(std::string typeName, const CppConfigDictionary& config);
-	std::vector<int> getClusterSizeRange(const CppConfigDictionary& privateProperty);
-
-	void doShaping(std::string_view typeName, const std::vector<int>& clusterSizeRange);
-	void saveIndividualShapes(std::string_view typeName, const CppConfigDictionary config);
-	void saveSameSizeInfos(std::string_view typeName, const CppConfigDictionary config);
-	void saveSameSizeShapes(std::string_view typeName, const CppConfigDictionary config);
-	void saveTotalShapes(std::string_view typeName, const CppConfigDictionary config);
-	void saveSameSizeShapeEntry(std::string_view typeName, const CppConfigDictionary config);
-	void saveTotalShapeEntry(std::string_view typeName, const CppConfigDictionary config);
+	void getClustermaps();
+	void getOriginClustermap();
+	void getHHCutClustermap();
+	void getHHHCCutClustermap();
 
 private:
 	UInt_t fBits;

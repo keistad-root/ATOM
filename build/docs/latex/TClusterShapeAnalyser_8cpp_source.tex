@@ -1,0 +1,662 @@
+\doxysection{TCluster\+Shape\+Analyser.\+cpp}
+\hypertarget{TClusterShapeAnalyser_8cpp_source}{}\label{TClusterShapeAnalyser_8cpp_source}\index{/home/ychoi/ATOM/trashcan/TClusterShapeAnalyser.cpp@{/home/ychoi/ATOM/trashcan/TClusterShapeAnalyser.cpp}}
+\mbox{\hyperlink{TClusterShapeAnalyser_8cpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00001}00001\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00011}\mbox{\hyperlink{TClusterShapeAnalyser_8cpp_a4a1b9a8ab923141d1aab10623a9d8668}{00011}}\ \textcolor{preprocessor}{\#define\ \_\_TCLUSTERSHAPEANALYSER\_HEADER\_\_}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00012}00012\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{TClusterShapeAnalyser_8h}{TClusterShapeAnalyser.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00013}00013\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00019}\mbox{\hyperlink{classTClusterShapeAnalyser_a110f22db12ca5dd1b3b403ad4cfbebf7}{00019}}\ \mbox{\hyperlink{classTClusterShapeAnalyser_a110f22db12ca5dd1b3b403ad4cfbebf7}{TClusterShapeAnalyser::TClusterShapeAnalyser}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classTClusterAnalyser}{TClusterAnalyser}}\&\ analyser)\ :\ \mbox{\hyperlink{classTClusterAnalyser}{TClusterAnalyser}}(analyser),\ fBits(kNotDeleted)\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00020}00020\ \ \ \ \ \textcolor{comment}{//\ Print\ out\ a\ log}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00021}00021\ \ \ \ \ std::clog\ <<\ \textcolor{stringliteral}{"{}TClusterShapeAnalyser\ object\ is\ armed."{}}\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00022}00022\ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00023}00023\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00028}\mbox{\hyperlink{classTClusterShapeAnalyser_a414df8cfe4d699e309b9f7c7d8e68ceb}{00028}}\ \mbox{\hyperlink{classTClusterShapeAnalyser_a414df8cfe4d699e309b9f7c7d8e68ceb}{TClusterShapeAnalyser::\string~TClusterShapeAnalyser}}()\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00029}00029\ \ \ \ \ \textcolor{comment}{//\ Destroy\ objects\ of\ TClusterShape\ if\ it\ isn't\ destructed.}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00030}00030\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ key\ :\ \mbox{\hyperlink{classTClusterShapeAnalyser_aeb613df3d83d141adf5ed9089054038f}{mClusterShapeSet}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00031}00031\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{auto}\&\ ele\ :\ key.second\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00032}00032\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ !ele-\/>IsDestructed()\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00033}00033\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ ele;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00034}00034\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00035}00035\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00036}00036\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00037}00037\ \ \ \ \ \textcolor{comment}{//\ Print\ out\ a\ log}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00038}00038\ \ \ \ \ std::clog\ <<\ \textcolor{stringliteral}{"{}TClusterShapeAnalyser\ object\ is\ terminated."{}}\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00039}00039\ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00040}00040\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00047}\mbox{\hyperlink{classTClusterShapeAnalyser_a5c0e5e7559d9df5338017d280a15cdcf}{00047}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTClusterShapeAnalyser_a5c0e5e7559d9df5338017d280a15cdcf}{TClusterShapeAnalyser::doShaping}}(std::string\_view\ typeName,\ \textcolor{keyword}{const}\ std::vector<int>\&\ clusterSizeRange)\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00048}00048\ \ \ \ \ \textcolor{comment}{//\ The\ number\ of\ total\ shape\ and\ the\ maximum\ number\ of\ shapes\ of\ each\ cluster\ sizes.}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00049}00049\ \ \ \ \ \textcolor{keywordtype}{int}\ nTotalShape\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00050}00050\ \ \ \ \ \textcolor{keywordtype}{int}\ maxMode\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00051}00051\ \ \ \ \ \textcolor{comment}{//\ The\ array\ of\ objects\ of\ TClusterShape\ class.}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00052}00052\ \ \ \ \ std::vector<TClusterShape*>\ clusterShapes;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00053}00053\ \ \ \ \ \textcolor{comment}{//\ This\ stores\ and\ extracts\ clusters\ shape\ informations.}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00054}00054\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ clusterSize\ :\ clusterSizeRange\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00055}00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ \mbox{\hyperlink{classTAnalyser_af2c29a16d4843508dd938776ccaabda8}{mClustersizes}}.find(std::string(typeName))-\/>second-\/>GetBinContent(clusterSize)\ !=\ 0\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00056}00056\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ This\ gets\ cluster\ bunch\ from\ TClusterDivideData\ object\ which\ classifies\ clusters\ by\ their\ size.}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<TCluster*>\ divideData\ =\ \mbox{\hyperlink{classTAnalyser_af8e6f63a3e0890ea9168d7d4779f9a97}{mDivideData}}.find(std::string(typeName))-\/>second-\/>getClusterOfSize(clusterSize);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ This\ inserts\ cluster\ size\ information\ and\ clusters\ to\ TClusterShape\ objects.}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTClusterShape}{TClusterShape}}*\ clusterShape\ =\ \textcolor{keyword}{new}\ \mbox{\hyperlink{classTClusterShape}{TClusterShape}}(clusterSize,\ divideData);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ This\ extracts\ shape\ informations.}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ clusterShape-\/>\mbox{\hyperlink{classTClusterShape_a8f9122608ad8f9a1184a4ec1cc5eb65c}{identifyShapes}}();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ This\ sorts\ shapes\ according\ to\ its\ size\ of\ long\ axis.}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ clusterShape-\/>\mbox{\hyperlink{classTClusterShape_ae06f2f873cccf6036d05c1210122fed8}{sortShapes}}();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ }}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ clusterShapes.push\_back(clusterShape);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ nTotalShape\ +=\ clusterShape-\/>\mbox{\hyperlink{classTClusterShape_a3f7435d77a2f88921915ce794cb08299}{getClusterShapeInfos}}().size();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00067}00067\ \ \ \ \ \ \ \ \ \ \ \ \ maxMode\ =\ std::max(maxMode,\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(clusterShape-\/>\mbox{\hyperlink{classTClusterShape_a3f7435d77a2f88921915ce794cb08299}{getClusterShapeInfos}}().size()));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00068}00068\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00069}00069\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00070}00070\ \ \ \ \ \mbox{\hyperlink{classTClusterShapeAnalyser_aeb613df3d83d141adf5ed9089054038f}{mClusterShapeSet}}.insert\_or\_assign(std::string(typeName),\ clusterShapes);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00071}00071\ \ \ \ \ \mbox{\hyperlink{classTClusterShapeAnalyser_a61731ba613a43ba49d5fc3c2b6921bcd}{mNTotalShapeSet}}.insert\_or\_assign(std::string(typeName),\ nTotalShape);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00072}00072\ \ \ \ \ \mbox{\hyperlink{classTClusterShapeAnalyser_afd61dd0faa095ab14317298095dd71b4}{mMaxModeSet}}.insert\_or\_assign(std::string(typeName),\ maxMode);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00073}00073\ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00080}\mbox{\hyperlink{classTClusterShapeAnalyser_ab4d62bf343df59bd74d645a834220aa4}{00080}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTClusterShapeAnalyser_ab4d62bf343df59bd74d645a834220aa4}{TClusterShapeAnalyser::saveIndividualShapes}}(std::string\_view\ typeName,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\ config)\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00081}00081\ \ \ \ \ \textcolor{comment}{//\ Print\ log\ message}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00082}00082\ \ \ \ \ std::clog\ <<\ \textcolor{stringliteral}{"{}Generating\ "{}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[1;32m"{}}\ <<\ \textcolor{stringliteral}{"{}individual\ shapes"{}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[1;0m"{}}\ <<\ \textcolor{stringliteral}{"{}..."{}}\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00084}00084\ \ \ \ \ \textcolor{comment}{//\ Get\ the\ total\ number\ of\ shapes\ for\ progress\ bar.}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00085}00085\ \ \ \ \ \textcolor{keywordtype}{int}\ nTotalShape\ =\ \mbox{\hyperlink{classTClusterShapeAnalyser_a61731ba613a43ba49d5fc3c2b6921bcd}{mNTotalShapeSet}}.find(std::string(typeName))-\/>second;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00086}00086\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00087}00087\ \ \ \ \ \textcolor{comment}{//\ Get\ save\ path\ from\ config\ file.}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00088}00088\ \ \ \ \ std::filesystem::path\ filePath(config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}output\_path"{}}));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00089}00089\ \ \ \ \ filePath\ /=\ config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}subdirectory"{}});}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00090}00090\ \ \ \ \ std::filesystem::create\_directories(filePath);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00092}00092\ \ \ \ \ \textcolor{comment}{//\ Init\ progress\ bar}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00093}00093\ \ \ \ \ \mbox{\hyperlink{classProgressBar}{ProgressBar}}\ pBar(nTotalShape);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00094}00094\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00095}00095\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classTClusterShape}{TClusterShape}}*\ clusterShape\ :\ \mbox{\hyperlink{classTClusterShapeAnalyser_aeb613df3d83d141adf5ed9089054038f}{mClusterShapeSet}}.find(std::string(typeName))-\/>second\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00096}00096\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ clusterSize\ =\ clusterShape-\/>getClusterSize();\ \textcolor{comment}{//\ The\ cluster\ size\ of\ shape\ set.}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00097}00097\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ iClusterShape\ =\ 0;\ \textcolor{comment}{//\ The\ i-\/th\ cluster\ shape}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00098}00098\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTShapeInfo}{TShapeInfo}}\&\ shapeInfo\ :\ clusterShape-\/>getClusterShapeInfos()\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00099}00099\ \ \ \ \ \ \ \ \ \ \ \ \ pBar.\mbox{\hyperlink{classProgressBar_a5d9bc9175bf342ac00f2de8d27984cde}{printProgress}}();\ \textcolor{comment}{//\ Print\ progress\ bar.}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00100}00100\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00101}00101\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ shapeWidth\ =\ shapeInfo.mClusterMatrix-\/>getNRow();\ \textcolor{comment}{//\ Shape\ width\ of\ matrix}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00102}00102\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ shapeHeight\ =\ shapeInfo.mClusterMatrix-\/>getNColumn();\ \textcolor{comment}{//\ Shape\ height\ of\ matrix}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00103}00103\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00104}00104\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Initialize\ canvas}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00105}00105\ \ \ \ \ \ \ \ \ \ \ \ \ TCanvas*\ canvas\ =\ \textcolor{keyword}{new}\ TCanvas(Form(\textcolor{stringliteral}{"{}\%d\_\%d.png"{}},\ clusterSize,\ iClusterShape),\ \textcolor{stringliteral}{"{}"{}},\ (shapeWidth\ +\ 2)\ *\ 500,\ (shapeHeight\ +\ 2)\ *\ 500);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00106}00106\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Set\ canvas\ margin}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00107}00107\ \ \ \ \ \ \ \ \ \ \ \ \ canvas-\/>SetMargin(0.,\ 0.,\ 0.,\ 0.);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00108}00108\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Draw\ shape\ on\ canvas}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00109}00109\ \ \ \ \ \ \ \ \ \ \ \ \ shapeInfo.mClusterMap-\/>Draw();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00110}00110\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Fill\ colour}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00111}00111\ \ \ \ \ \ \ \ \ \ \ \ \ shapeInfo.mClusterMap-\/>SetDrawOption(\textcolor{stringliteral}{"{}COLZ"{}});}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00112}00112\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Remove\ histogram\ axis}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00113}00113\ \ \ \ \ \ \ \ \ \ \ \ \ shapeInfo.mClusterMap-\/>GetXaxis()-\/>SetAxisColor(0);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00114}00114\ \ \ \ \ \ \ \ \ \ \ \ \ shapeInfo.mClusterMap-\/>GetYaxis()-\/>SetAxisColor(0);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00115}00115\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00116}00116\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Fill\ line\ for\ seperating\ pixels}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ TLine*\ line\ =\ \textcolor{keyword}{new}\ TLine();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ line-\/>SetLineColorAlpha(kRed,\ 6.\ /\ 8);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ i\ =\ 1;\ i\ <=\ shapeInfo.mClusterMap-\/>GetNbinsX();\ ++i\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ j\ =\ 1;\ j\ <=\ shapeInfo.mClusterMap-\/>GetNbinsY();\ ++j\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ shapeInfo.mClusterMap-\/>GetBinContent(i,\ j)\ >\ 0\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ xlow\ =\ shapeInfo.mClusterMap-\/>GetXaxis()-\/>GetBinLowEdge(i);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ xup\ =\ shapeInfo.mClusterMap-\/>GetXaxis()-\/>GetBinUpEdge(i);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ ylow\ =\ shapeInfo.mClusterMap-\/>GetYaxis()-\/>GetBinLowEdge(j);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ yup\ =\ shapeInfo.mClusterMap-\/>GetYaxis()-\/>GetBinUpEdge(j);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00126}00126\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line-\/>DrawLine(xlow,\ ylow,\ xup,\ ylow);\ \textcolor{comment}{//\ Bottom}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00127}00127\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line-\/>DrawLine(xlow,\ yup,\ xup,\ yup);\ \textcolor{comment}{//\ Top}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00128}00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line-\/>DrawLine(xlow,\ ylow,\ xlow,\ yup);\ \textcolor{comment}{//\ Left}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00129}00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line-\/>DrawLine(xup,\ ylow,\ xup,\ yup);\ \textcolor{comment}{//\ Right}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00130}00130\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00131}00131\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00132}00132\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00133}00133\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00134}00134\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Set\ title\ of\ shape}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00135}00135\ \ \ \ \ \ \ \ \ \ \ \ \ TText*\ title\ =\ \textcolor{keyword}{new}\ TText(.5,\ 1.\ -\/\ .5\ /\ (shapeHeight\ +\ 2),\ Form(\textcolor{stringliteral}{"{}\%d-\/th\ Cluster\ Shape\ of\ Cluster\ Size\ \%d"{}},\ iClusterShape,\ clusterSize));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00136}00136\ \ \ \ \ \ \ \ \ \ \ \ \ title-\/>SetTextAlign(23);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00137}00137\ \ \ \ \ \ \ \ \ \ \ \ \ title-\/>SetNDC();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00138}00138\ \ \ \ \ \ \ \ \ \ \ \ \ title-\/>Draw();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00139}00139\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00140}00140\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Save\ shape\ figure}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00141}00141\ \ \ \ \ \ \ \ \ \ \ \ \ std::filesystem::path\ file\ =\ filePath\ /\ (config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}filename"{}})\ +\ \textcolor{stringliteral}{"{}\_"{}}\ +\ std::to\_string(clusterSize)\ +\ \textcolor{stringliteral}{"{}\_"{}}\ +\ std::to\_string(iClusterShape));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00142}00142\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ config.\mbox{\hyperlink{classCppConfigDictionary_a1ab483f98a2a411b93b616bc8d65b83d}{hasKey}}(\textcolor{stringliteral}{"{}extension"{}})\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00143}00143\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ file.replace\_extension(config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}extension"{}}));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00144}00144\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00145}00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ file.replace\_extension(\textcolor{stringliteral}{"{}png"{}});}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00146}00146\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00147}00147\ \ \ \ \ \ \ \ \ \ \ \ \ canvas-\/>SaveAs(\textcolor{keyword}{static\_cast<}TString\textcolor{keyword}{>}(file));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00148}00148\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00149}00149\ \ \ \ \ \ \ \ \ \ \ \ \ iClusterShape++;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00150}00150\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00151}00151\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ title;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00152}00152\ \ \ \ \ \ \ \ \ \ \ \ \ title\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00153}00153\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ line;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00154}00154\ \ \ \ \ \ \ \ \ \ \ \ \ line\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00155}00155\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ canvas;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ canvas\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00157}00157\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00158}00158\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00159}00159\ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00160}00160\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00161}\mbox{\hyperlink{TClusterShapeAnalyser_8cpp_a0d97ca7cc2df36382ed2be89214f639d}{00161}}\ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{TClusterShapeAnalyser_8cpp_a0d97ca7cc2df36382ed2be89214f639d}{calNIncludePixel}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classTMatrix2D}{TMatrix2D<int>}}*\ matrix)\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00162}00162\ \ \ \ \ \textcolor{keywordtype}{int}\ centreX\ =\ 0,\ centreY\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00163}00163\ \ \ \ \ \textcolor{keywordtype}{int}\ clusterSize\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00164}00164\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ pixelX\ =\ 0;\ pixelX\ <\ matrix-\/>\mbox{\hyperlink{classTMatrix2D_a00d5214662bfcadbe24e329f40336d98}{getNRow}}();\ pixelX++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00165}00165\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ pixelY\ =\ 0;\ pixelY\ <\ matrix-\/>\mbox{\hyperlink{classTMatrix2D_a5507bb716a8b92dad6f9124c1c617438}{getNColumn}}();\ pixelY++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00166}00166\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ matrix-\/>\mbox{\hyperlink{classTMatrix2D_a89d1b68d49e0e4c63e7a97f57ed5f7b3}{getElement}}(pixelX,\ pixelY)\ ==\ 1\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00167}00167\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ centreX\ +=\ pixelX\ *\ 2;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00168}00168\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ centreY\ +=\ pixelY\ *\ 2;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00169}00169\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ clusterSize++;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00170}00170\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00171}00171\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00172}00172\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00173}00173\ \ \ \ \ \textcolor{keywordtype}{int}\ radiusSquare\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00174}00174\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ pixelX\ =\ 0;\ pixelX\ <\ matrix-\/>\mbox{\hyperlink{classTMatrix2D_a00d5214662bfcadbe24e329f40336d98}{getNRow}}();\ pixelX++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00175}00175\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ pixelY\ =\ 0;\ pixelY\ <\ matrix-\/>\mbox{\hyperlink{classTMatrix2D_a5507bb716a8b92dad6f9124c1c617438}{getNColumn}}();\ pixelY++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00176}00176\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ matrix-\/>\mbox{\hyperlink{classTMatrix2D_a89d1b68d49e0e4c63e7a97f57ed5f7b3}{getElement}}(pixelX,\ pixelY)\ ==\ 1\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00177}00177\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ distance\ =\ pow(abs(2\ *\ pixelX\ *\ clusterSize\ -\/\ centreX)\ +\ clusterSize,\ 2)\ +\ pow(abs(2\ *\ pixelY\ *\ clusterSize\ -\/\ centreY)\ +\ clusterSize,\ 2);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00178}00178\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ radiusSquare\ =\ std::max(radiusSquare,\ distance);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00179}00179\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00180}00180\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00181}00181\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00182}00182\ \ \ \ \ \textcolor{keywordtype}{int}\ count\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00183}00183\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ x\ =\ floor((centreX\ -\/\ sqrt(radiusSquare))\ /\ (2\ *\ clusterSize));\ x\ <\ ceil((centreX\ +\ sqrt(radiusSquare))\ /\ (2\ *\ clusterSize))\ +\ 1;\ x++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00184}00184\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ y\ =\ floor((centreY\ -\/\ sqrt(radiusSquare))\ /\ (2\ *\ clusterSize));\ y\ <\ ceil((centreY\ +\ sqrt(radiusSquare))\ /\ (2\ *\ clusterSize))\ +\ 1;\ y++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00185}00185\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(std::pow(abs(2\ *\ x\ *\ clusterSize\ -\/\ centreX)\ +\ clusterSize,\ 2))\ +\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(std::pow(abs(2\ *\ y\ *\ clusterSize\ -\/\ centreY)\ +\ clusterSize,\ 2))\ <=\ radiusSquare\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00186}00186\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ count++;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00187}00187\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00188}00188\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00189}00189\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00190}00190\ \ \ \ \ \textcolor{keywordflow}{return}\ count;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00191}00191\ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00192}00192\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00193}\mbox{\hyperlink{TClusterShapeAnalyser_8cpp_ab78b2b3cc7f7ea12da72e652cd7f263b}{00193}}\ \textcolor{keywordtype}{double}\ \mbox{\hyperlink{TClusterShapeAnalyser_8cpp_ab78b2b3cc7f7ea12da72e652cd7f263b}{calRatioOfRadius}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classTMatrix2D}{TMatrix2D<int>}}*\ matrix)\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00194}00194\ \ \ \ \ \textcolor{keywordtype}{int}\ centreX\ =\ 0,\ centreY\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00195}00195\ \ \ \ \ \textcolor{keywordtype}{int}\ clusterSize\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00196}00196\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ pixelX\ =\ 0;\ pixelX\ <\ matrix-\/>\mbox{\hyperlink{classTMatrix2D_a00d5214662bfcadbe24e329f40336d98}{getNRow}}();\ pixelX++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00197}00197\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ pixelY\ =\ 0;\ pixelY\ <\ matrix-\/>\mbox{\hyperlink{classTMatrix2D_a5507bb716a8b92dad6f9124c1c617438}{getNColumn}}();\ pixelY++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00198}00198\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ matrix-\/>\mbox{\hyperlink{classTMatrix2D_a89d1b68d49e0e4c63e7a97f57ed5f7b3}{getElement}}(pixelX,\ pixelY)\ ==\ 1\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00199}00199\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ centreX\ +=\ pixelX\ *\ 2;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00200}00200\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ centreY\ +=\ pixelY\ *\ 2;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00201}00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ clusterSize++;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00202}00202\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00203}00203\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00204}00204\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00205}00205\ \ \ \ \ \textcolor{keywordtype}{int}\ longRadiusSquare\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00206}00206\ \ \ \ \ \textcolor{keywordtype}{int}\ shortRadiusSquare\ =\ 100000000;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00207}00207\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ pixelX\ =\ 0;\ pixelX\ <\ matrix-\/>\mbox{\hyperlink{classTMatrix2D_a00d5214662bfcadbe24e329f40336d98}{getNRow}}();\ pixelX++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00208}00208\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ pixelY\ =\ 0;\ pixelY\ <\ matrix-\/>\mbox{\hyperlink{classTMatrix2D_a5507bb716a8b92dad6f9124c1c617438}{getNColumn}}();\ pixelY++\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00209}00209\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ hasValue\ =\ matrix-\/>\mbox{\hyperlink{classTMatrix2D_a89d1b68d49e0e4c63e7a97f57ed5f7b3}{getElement}}(pixelX,\ pixelY)\ ==\ 1;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00210}00210\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isWorldBorder\ =\ pixelX\ ==\ 0\ ||\ pixelY\ ==\ 0\ ||\ pixelX\ ==\ matrix-\/>\mbox{\hyperlink{classTMatrix2D_a00d5214662bfcadbe24e329f40336d98}{getNRow}}()\ -\/\ 1\ ||\ pixelY\ ==\ matrix-\/>\mbox{\hyperlink{classTMatrix2D_a5507bb716a8b92dad6f9124c1c617438}{getNColumn}}()\ -\/\ 1;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00211}00211\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isBorder\ =\ isWorldBorder\ ?\ true\ :\ matrix-\/>\mbox{\hyperlink{classTMatrix2D_a89d1b68d49e0e4c63e7a97f57ed5f7b3}{getElement}}(pixelX\ -\/\ 1,\ pixelY)\ ==\ 0\ ||\ matrix-\/>\mbox{\hyperlink{classTMatrix2D_a89d1b68d49e0e4c63e7a97f57ed5f7b3}{getElement}}(pixelX,\ pixelY\ -\/\ 1)\ ==\ 0\ ||\ matrix-\/>\mbox{\hyperlink{classTMatrix2D_a89d1b68d49e0e4c63e7a97f57ed5f7b3}{getElement}}(pixelX\ +\ 1,\ pixelY)\ ==\ 0\ ||\ matrix-\/>\mbox{\hyperlink{classTMatrix2D_a89d1b68d49e0e4c63e7a97f57ed5f7b3}{getElement}}(pixelX,\ pixelY\ +\ 1)\ ==\ 0;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00212}00212\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ hasValue\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00213}00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ distance\ =\ pow(2\ *\ pixelX\ *\ clusterSize\ -\/\ centreX,\ 2)\ +\ pow(2\ *\ pixelY\ *\ clusterSize\ -\/\ centreY,\ 2);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00214}00214\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ longRadiusSquare\ =\ std::max(longRadiusSquare,\ distance);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00215}00215\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00216}00216\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ (hasValue\ \&\&\ isWorldBorder)\ ||\ (hasValue\ \&\&\ !isWorldBorder\ \&\&\ isBorder)\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00217}00217\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ distance\ =\ pow(2\ *\ pixelX\ *\ clusterSize\ -\/\ centreX,\ 2)\ +\ pow(2\ *\ pixelY\ *\ clusterSize\ -\/\ centreY,\ 2);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00218}00218\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ shortRadiusSquare\ =\ std::min(shortRadiusSquare,\ distance);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00219}00219\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00220}00220\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00221}00221\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00222}00222\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ matrix-\/>\mbox{\hyperlink{classTMatrix2D_a00d5214662bfcadbe24e329f40336d98}{getNRow}}()\ ==\ 1\ ||\ matrix-\/>\mbox{\hyperlink{classTMatrix2D_a5507bb716a8b92dad6f9124c1c617438}{getNColumn}}()\ ==\ 1\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00223}00223\ \ \ \ \ \ \ \ \ shortRadiusSquare\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00224}00224\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00225}00225\ \ \ \ \ \textcolor{keywordflow}{return}\ sqrt(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(shortRadiusSquare)\ /\ longRadiusSquare);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00226}00226\ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00227}00227\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00234}\mbox{\hyperlink{classTClusterShapeAnalyser_a2c2e358307005af176fd1e6519dae1f4}{00234}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTClusterShapeAnalyser_a2c2e358307005af176fd1e6519dae1f4}{TClusterShapeAnalyser::saveSameSizeInfos}}(std::string\_view\ typeName,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\ config)\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00235}00235\ \ \ \ \ \textcolor{comment}{//\ Print\ out\ a\ log}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00236}00236\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Generating\ "{}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[1;32m"{}}\ <<\ \textcolor{stringliteral}{"{}Informations\ of\ shapes\ with\ same\ size"{}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[1;0m"{}}\ <<\ \textcolor{stringliteral}{"{}..."{}}\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00237}00237\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00238}00238\ \ \ \ \ \textcolor{comment}{//\ Settting\ output\ file\ path}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00239}00239\ \ \ \ \ std::filesystem::path\ filePath(config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}output\_path"{}}));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00240}00240\ \ \ \ \ filePath\ /=\ config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}subdirectory"{}});}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00241}00241\ \ \ \ \ \textcolor{comment}{//\ The\ creation\ of\ directories\ of\ output\ path}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00242}00242\ \ \ \ \ std::filesystem::create\_directories(filePath);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00243}00243\ \ \ \ \ \textcolor{comment}{//\ Call\ configs.\ First\ element\ is\ config\ name\ and\ second\ one\ is\ config\ values.}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00244}00244\ \ \ \ \ std::unordered\_map<std::string,\ CppConfigDictionary>\ plotConfigList\ =\ config.\mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{getSubConfig}}(\textcolor{stringliteral}{"{}ratio\_distribution"{}}).\mbox{\hyperlink{classCppConfigDictionary_ab310b82038ceea3c2cdcd37ab728712c}{getSubConfigSetWithName}}();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00245}00245\ \ \ \ \ \textcolor{comment}{//\ Call\ histograms\ }}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00246}00246\ \ \ \ \ std::unordered\_map<std::string,\ TH1D*>\ distributionSet;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00247}00247\ \ \ \ \ \textcolor{comment}{//\ Set\ the\ information\ of\ histograms\ from\ config\ file}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00248}00248\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ plotConfig\ :\ plotConfigList\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00249}00249\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Plot\ name\ is\ config\ name.\ It\ isn't\ value\ of\ "{}name"{}\ key.}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00250}00250\ \ \ \ \ \ \ \ \ std::string\ plotName\ =\ plotConfig.second.find(\textcolor{stringliteral}{"{}name"{}});}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00251}00251\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Set\ plot\ title\ and\ x,\ y\ label.}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00252}00252\ \ \ \ \ \ \ \ \ TString\ plotTitle\ =\ plotConfig.second.hasKey(\textcolor{stringliteral}{"{}title"{}})\ ?\ plotConfig.second.find(\textcolor{stringliteral}{"{}title"{}})\ :\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00253}00253\ \ \ \ \ \ \ \ \ TString\ plotXTitle\ =\ plotConfig.second.hasKey(\textcolor{stringliteral}{"{}x\_title"{}})\ ?\ plotConfig.second.find(\textcolor{stringliteral}{"{}x\_title"{}})\ :\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00254}00254\ \ \ \ \ \ \ \ \ TString\ plotYTitle\ =\ plotConfig.second.hasKey(\textcolor{stringliteral}{"{}y\_title"{}})\ ?\ plotConfig.second.find(\textcolor{stringliteral}{"{}y\_title"{}})\ :\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00255}00255\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Set\ number\ of\ bin\ and\ min\ and\ max\ of\ x-\/direction\ range.}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00256}00256\ \ \ \ \ \ \ \ \ Int\_t\ plotNBin\ =\ plotConfig.second.hasKey(\textcolor{stringliteral}{"{}n\_bin"{}})\ ?\ stoi(plotConfig.second.find(\textcolor{stringliteral}{"{}n\_bin"{}}))\ :\ 100;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00257}00257\ \ \ \ \ \ \ \ \ Float\_t\ plotXMin\ =\ plotConfig.second.hasKey(\textcolor{stringliteral}{"{}x\_min"{}})\ ?\ stof(plotConfig.second.find(\textcolor{stringliteral}{"{}x\_min"{}}))\ :\ 0.;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00258}00258\ \ \ \ \ \ \ \ \ Float\_t\ plotXMax\ =\ plotConfig.second.hasKey(\textcolor{stringliteral}{"{}x\_max"{}})\ ?\ stof(plotConfig.second.find(\textcolor{stringliteral}{"{}x\_max"{}}))\ :\ 1.;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00259}00259\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00260}00260\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Add\ histograms\ to\ map.}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00261}00261\ \ \ \ \ \ \ \ \ distributionSet.insert\_or\_assign(plotConfig.first,\ \textcolor{keyword}{new}\ TH1D(\textcolor{keyword}{static\_cast<}TString\textcolor{keyword}{>}(plotName),\ plotTitle\ +\ \textcolor{stringliteral}{"{};\ "{}}\ +\ plotXTitle\ +\ \textcolor{stringliteral}{"{};\ "{}}\ +\ plotYTitle,\ plotNBin,\ plotXMin,\ plotXMax));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00262}00262\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00263}00263\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00264}00264\ \ \ \ \ \mbox{\hyperlink{classProgressBar}{ProgressBar}}\ pBar(\mbox{\hyperlink{classTClusterShapeAnalyser_a61731ba613a43ba49d5fc3c2b6921bcd}{mNTotalShapeSet}}.find(std::string(typeName))-\/>second);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00265}00265\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classTClusterShape}{TClusterShape}}*\ clusterShape\ :\ \mbox{\hyperlink{classTClusterShapeAnalyser_aeb613df3d83d141adf5ed9089054038f}{mClusterShapeSet}}.find(std::string(typeName))-\/>second\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00266}00266\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Get\ cluster\ size.}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00267}00267\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ clusterSize\ =\ clusterShape-\/>getClusterSize();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00268}00268\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ clusterSize\ <\ stoi(config.\mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{getSubConfig}}(\textcolor{stringliteral}{"{}ratio\_distribution"{}}).\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}cluster\_size\_oi\_min"{}}))\ ||\ clusterSize\ >\ stoi(config.\mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{getSubConfig}}(\textcolor{stringliteral}{"{}ratio\_distribution"{}}).\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}cluster\_size\_oi\_max"{}}))\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00269}00269\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00270}00270\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00271}00271\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Initialize\ canvas.}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00272}00272\ \ \ \ \ \ \ \ \ TCanvas*\ canvas\ =\ \textcolor{keyword}{new}\ TCanvas(Form(\textcolor{stringliteral}{"{}shapeEntry\%d"{}},\ clusterSize),\ \textcolor{stringliteral}{"{}shapeEntry"{}},\ 2500,\ 1000);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00273}00273\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ int\ binNum\ =\ clusterShape-\/>getClusterShapeInfos().size();}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00274}00274\ \ \ \ \ \ \ \ \ TGraph*\ areaRatioGraph\ =\ \textcolor{keyword}{new}\ TGraph();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00275}00275\ \ \ \ \ \ \ \ \ TGraph*\ radiusRatioGraph\ =\ \textcolor{keyword}{new}\ TGraph();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00276}00276\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00277}00277\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ iShape\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00278}00278\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTShapeInfo}{TShapeInfo}}\&\ shapeInfo\ :\ clusterShape-\/>getClusterShapeInfos()\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00279}00279\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ pBar.printProgress();}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00280}00280\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ plotConfig\ :\ plotConfigList\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00281}00281\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ plotConfig.second.find(\textcolor{stringliteral}{"{}name"{}})\ ==\ \textcolor{stringliteral}{"{}area\_ratio"{}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00282}00282\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ distributionSet.find(plotConfig.first)-\/>second-\/>Fill(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(clusterSize)\ /\ \mbox{\hyperlink{TAnalyser_8cpp_a0d97ca7cc2df36382ed2be89214f639d}{calNIncludePixel}}(shapeInfo.mClusterMatrix));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00283}00283\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00284}00284\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ plotConfig.second.find(\textcolor{stringliteral}{"{}name"{}})\ ==\ \textcolor{stringliteral}{"{}area\_ratio\_with\_entry"{}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00285}00285\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ distributionSet.find(plotConfig.first)-\/>second-\/>Fill(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(clusterSize)\ /\ \mbox{\hyperlink{TAnalyser_8cpp_a0d97ca7cc2df36382ed2be89214f639d}{calNIncludePixel}}(shapeInfo.mClusterMatrix),\ shapeInfo.mEntry);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00286}00286\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00287}00287\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ plotConfig.second.find(\textcolor{stringliteral}{"{}name"{}})\ ==\ \textcolor{stringliteral}{"{}radius\_ratio"{}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00288}00288\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ distributionSet.find(plotConfig.first)-\/>second-\/>Fill(\mbox{\hyperlink{TAnalyser_8cpp_ab78b2b3cc7f7ea12da72e652cd7f263b}{calRatioOfRadius}}(shapeInfo.mClusterMatrix));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00289}00289\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00290}00290\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ plotConfig.second.find(\textcolor{stringliteral}{"{}name"{}})\ ==\ \textcolor{stringliteral}{"{}radius\_ratio\_with\_entry"{}}\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00291}00291\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ distributionSet.find(plotConfig.first)-\/>second-\/>Fill(\mbox{\hyperlink{TAnalyser_8cpp_ab78b2b3cc7f7ea12da72e652cd7f263b}{calRatioOfRadius}}(shapeInfo.mClusterMatrix),\ shapeInfo.mEntry);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00292}00292\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00293}00293\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00294}00294\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00295}00295\ \ \ \ \ \ \ \ \ \ \ \ \ areaRatioGraph-\/>SetPoint(iShape,\ iShape,\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(clusterSize)\ /\ \mbox{\hyperlink{TAnalyser_8cpp_a0d97ca7cc2df36382ed2be89214f639d}{calNIncludePixel}}(shapeInfo.mClusterMatrix));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00296}00296\ \ \ \ \ \ \ \ \ \ \ \ \ radiusRatioGraph-\/>SetPoint(iShape,\ iShape,\ \mbox{\hyperlink{TAnalyser_8cpp_ab78b2b3cc7f7ea12da72e652cd7f263b}{calRatioOfRadius}}(shapeInfo.mClusterMatrix));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00297}00297\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ std::cout\ <<\ clusterSize\ <<\ "{}\(\backslash\)t"{}\ <<\ iShape\ <<\ "{}\(\backslash\)t"{}\ <<\ static\_cast<double>(clusterSize)\ /\ calNIncludePixel(shapeInfo.mClusterMatrix)\ <<\ "{}\(\backslash\)t"{}\ <<\ calRatioOfRadius(shapeInfo.mClusterMatrix)\ <<\ "{}\(\backslash\)t"{}\ <<\ shapeInfo.mEntry\ <<\ std::endl;}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00298}00298\ \ \ \ \ \ \ \ \ \ \ \ \ iShape++;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00299}00299\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00300}00300\ \ \ \ \ \ \ \ \ TF1*\ line1\ =\ \textcolor{keyword}{new}\ TF1(\textcolor{stringliteral}{"{}line1"{}},\ \textcolor{stringliteral}{"{}0.8"{}},\ 0,\ iShape);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00301}00301\ \ \ \ \ \ \ \ \ TF1*\ line2\ =\ \textcolor{keyword}{new}\ TF1(\textcolor{stringliteral}{"{}line2"{}},\ \textcolor{stringliteral}{"{}0.5"{}},\ 0,\ iShape);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00302}00302\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00303}00303\ \ \ \ \ \ \ \ \ areaRatioGraph-\/>SetTitle(Form(\textcolor{stringliteral}{"{}Informations\ for\ cluster\ shapes\ in\ cluster\ size\ \%d"{}},\ clusterSize));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00304}00304\ \ \ \ \ \ \ \ \ areaRatioGraph-\/>GetXaxis()-\/>SetTitle(\textcolor{stringliteral}{"{}i-\/th\ cluster\ shape"{}});}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00305}00305\ \ \ \ \ \ \ \ \ areaRatioGraph-\/>GetXaxis()-\/>SetTitleOffset(1.4);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00306}00306\ \ \ \ \ \ \ \ \ areaRatioGraph-\/>GetXaxis()-\/>SetLabelOffset(0.003);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00307}00307\ \ \ \ \ \ \ \ \ areaRatioGraph-\/>GetYaxis()-\/>SetTitle(\textcolor{stringliteral}{"{}Ratio"{}});}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00308}00308\ \ \ \ \ \ \ \ \ areaRatioGraph-\/>GetYaxis()-\/>SetTitleOffset(0.7);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00309}00309\ \ \ \ \ \ \ \ \ areaRatioGraph-\/>SetMarkerStyle(45);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00310}00310\ \ \ \ \ \ \ \ \ areaRatioGraph-\/>SetMarkerSize(4);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00311}00311\ \ \ \ \ \ \ \ \ areaRatioGraph-\/>SetMarkerColor(kRed);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00312}00312\ \ \ \ \ \ \ \ \ areaRatioGraph-\/>SetMaximum(1);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00313}00313\ \ \ \ \ \ \ \ \ areaRatioGraph-\/>SetMinimum(0);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00314}00314\ \ \ \ \ \ \ \ \ areaRatioGraph-\/>Draw(\textcolor{stringliteral}{"{}AP"{}});}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00315}00315\ \ \ \ \ \ \ \ \ radiusRatioGraph-\/>SetMarkerStyle(41);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00316}00316\ \ \ \ \ \ \ \ \ radiusRatioGraph-\/>SetMarkerSize(4);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00317}00317\ \ \ \ \ \ \ \ \ radiusRatioGraph-\/>SetMarkerColor(kBlue);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00318}00318\ \ \ \ \ \ \ \ \ radiusRatioGraph-\/>Draw(\textcolor{stringliteral}{"{}P"{}});}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00319}00319\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTAnalyser_a84ca5f2e2365dacc2c40977348a89bfa}{mExpSettingLegend}}-\/>Draw(\textcolor{stringliteral}{"{}SAME"{}});}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00320}00320\ \ \ \ \ \ \ \ \ line1-\/>SetLineColor(kPink\ +\ 2);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00321}00321\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ line1-\/>Draw("{}SAME"{});}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00322}00322\ \ \ \ \ \ \ \ \ line2-\/>SetLineColor(kCyan\ -\/\ 7);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00323}00323\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ line2-\/>Draw("{}SAME"{});}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00324}00324\ \ \ \ \ \ \ \ \ TLegend*\ legend\ =\ \textcolor{keyword}{new}\ TLegend(.78,\ .7,\ .98,\ .92);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00325}00325\ \ \ \ \ \ \ \ \ legend-\/>SetHeader(\textcolor{stringliteral}{"{}Ratios"{}},\ \textcolor{stringliteral}{"{}c"{}});}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00326}00326\ \ \ \ \ \ \ \ \ legend-\/>AddEntry(areaRatioGraph,\ \textcolor{stringliteral}{"{}Pixels\ /\ Full\ pixels"{}},\ \textcolor{stringliteral}{"{}p"{}});}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00327}00327\ \ \ \ \ \ \ \ \ legend-\/>AddEntry(radiusRatioGraph,\ \textcolor{stringliteral}{"{}Short\ radius\ /\ Long\ radius"{}},\ \textcolor{stringliteral}{"{}p"{}});}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00328}00328\ \ \ \ \ \ \ \ \ legend-\/>Draw();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00329}00329\ \ \ \ \ \ \ \ \ canvas-\/>SetMargin(.07,\ .28,\ .12,\ .08);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00330}00330\ \ \ \ \ \ \ \ \ std::filesystem::path\ file\ =\ filePath;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00331}00331\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00332}00332\ \ \ \ \ \ \ \ \ file\ /=\ config.\mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{getSubConfig}}(\textcolor{stringliteral}{"{}graphs"{}}).\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}filename"{}})\ +\ \textcolor{stringliteral}{"{}\_"{}}\ +\ std::to\_string(clusterSize);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00333}00333\ \ \ \ \ \ \ \ \ file.replace\_extension(config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}extension"{}}));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00334}00334\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00335}00335\ \ \ \ \ \ \ \ \ canvas-\/>SaveAs(\textcolor{keyword}{static\_cast<}TString\textcolor{keyword}{>}(file));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00336}00336\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00337}00337\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ line1;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00338}00338\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ line2;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00339}00339\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ areaRatioGraph;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00340}00340\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ radiusRatioGraph;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00341}00341\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ canvas;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00342}00342\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00343}00343\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00344}00344\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \textcolor{keyword}{auto}\&\ plotConfig\ :\ plotConfigList\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00345}00345\ \ \ \ \ \ \ \ \ TString\ canvasName\ =\ \textcolor{stringliteral}{"{}can"{}}\ +\ plotConfig.first;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00346}00346\ \ \ \ \ \ \ \ \ Int\_t\ canvasWidth\ =\ plotConfig.second.hasKey(\textcolor{stringliteral}{"{}canvas\_width"{}})\ ?\ stoi(plotConfig.second.find(\textcolor{stringliteral}{"{}canvas\_width"{}}))\ :\ 500;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00347}00347\ \ \ \ \ \ \ \ \ Int\_t\ canvasHeight\ =\ plotConfig.second.hasKey(\textcolor{stringliteral}{"{}canvas\_height"{}})\ ?\ stoi(plotConfig.second.find(\textcolor{stringliteral}{"{}canvas\_height"{}}))\ :\ 500;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00348}00348\ \ \ \ \ \ \ \ \ TCanvas*\ canvas\ =\ \textcolor{keyword}{new}\ TCanvas(canvasName,\ \textcolor{stringliteral}{"{}"{}},\ canvasWidth,\ canvasHeight);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00349}00349\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00350}00350\ \ \ \ \ \ \ \ \ distributionSet.find(plotConfig.first)-\/>second-\/>SetStats(0);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00351}00351\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00352}00352\ \ \ \ \ \ \ \ \ Int\_t\ y\_min\ =\ plotConfig.second.hasKey(\textcolor{stringliteral}{"{}y\_min"{}})\ ?\ stoi(plotConfig.second.find(\textcolor{stringliteral}{"{}y\_min"{}}))\ :\ 0;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00353}00353\ \ \ \ \ \ \ \ \ Int\_t\ y\_max\ =\ plotConfig.second.hasKey(\textcolor{stringliteral}{"{}y\_max"{}})\ ?\ stoi(plotConfig.second.find(\textcolor{stringliteral}{"{}y\_max"{}}))\ :\ 1000;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00354}00354\ \ \ \ \ \ \ \ \ distributionSet.find(plotConfig.first)-\/>second-\/>SetMinimum(y\_min);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00355}00355\ \ \ \ \ \ \ \ \ distributionSet.find(plotConfig.first)-\/>second-\/>SetMaximum(y\_max);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00356}00356\ \ \ \ \ \ \ \ \ distributionSet.find(plotConfig.first)-\/>second-\/>Draw();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00357}00357\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00358}00358\ \ \ \ \ \ \ \ \ std::filesystem::path\ file\ =\ filePath;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00359}00359\ \ \ \ \ \ \ \ \ file\ /=\ plotConfig.second.find(\textcolor{stringliteral}{"{}filename"{}});}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00360}00360\ \ \ \ \ \ \ \ \ file.replace\_extension(config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}extension"{}}));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00361}00361\ \ \ \ \ \ \ \ \ canvas-\/>SaveAs(\textcolor{keyword}{static\_cast<}TString\textcolor{keyword}{>}(file));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00362}00362\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00363}00363\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ canvas;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00364}00364\ \ \ \ \ \ \ \ \ canvas\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00365}00365\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00366}00366\ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00367}00367\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00368}\mbox{\hyperlink{classTClusterShapeAnalyser_a429a9d805db798900c1934bee586d3c3}{00368}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTClusterShapeAnalyser_a429a9d805db798900c1934bee586d3c3}{TClusterShapeAnalyser::saveSameSizeShapes}}(std::string\_view\ typeName,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\ config)\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00369}00369\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Generating\ "{}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[1;32m"{}}\ <<\ \textcolor{stringliteral}{"{}Shapes\ with\ same\ sized"{}}\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)033[1;0m"{}}\ <<\ \textcolor{stringliteral}{"{}..."{}}\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00370}00370\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00371}00371\ \ \ \ \ std::filesystem::path\ filePath(config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}output\_path"{}}));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00372}00372\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ config.\mbox{\hyperlink{classCppConfigDictionary_a1ab483f98a2a411b93b616bc8d65b83d}{hasKey}}(\textcolor{stringliteral}{"{}subdirectory"{}})\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00373}00373\ \ \ \ \ \ \ \ \ filePath\ /=\ config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}subdirectory"{}});}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00374}00374\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00375}00375\ \ \ \ \ std::filesystem::create\_directories(filePath);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00376}00376\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00377}00377\ \ \ \ \ \textcolor{keywordtype}{int}\ nTotalShape\ =\ \mbox{\hyperlink{classTClusterShapeAnalyser_a61731ba613a43ba49d5fc3c2b6921bcd}{mNTotalShapeSet}}.find(std::string(typeName))-\/>second;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00378}00378\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00379}00379\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ nominalWidth\ =\ 200;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00380}00380\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ nominalHeader\ =\ 100;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00381}00381\ \ \ \ \ \textcolor{keyword}{const}\ \textcolor{keywordtype}{int}\ nPlotInRow\ =\ 10;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00382}00382\ \ \ \ \ \textcolor{keywordtype}{int}\ plotsWidth\ =\ nPlotInRow\ *\ nominalWidth;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00383}00383\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00384}00384\ \ \ \ \ \mbox{\hyperlink{classProgressBar}{ProgressBar}}\ pBar(nTotalShape);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00385}00385\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classTClusterShape}{TClusterShape}}*\ clusterShape\ :\ \mbox{\hyperlink{classTClusterShapeAnalyser_aeb613df3d83d141adf5ed9089054038f}{mClusterShapeSet}}.find(std::string(typeName))-\/>second\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00386}00386\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ clusterSize\ =\ clusterShape-\/>getClusterSize();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00387}00387\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ nClusterShape\ =\ clusterShape-\/>getClusterShapeInfos().size();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00388}00388\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00389}00389\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ plotsHeight\ =\ (floor((nClusterShape\ -\/\ 1.)\ /\ 10.)\ +\ 1.)\ *\ nominalWidth;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00390}00390\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00391}00391\ \ \ \ \ \ \ \ \ TCanvas*\ canvas\ =\ \textcolor{keyword}{new}\ TCanvas(Form(\textcolor{stringliteral}{"{}shapes\%d"{}},\ clusterSize),\ \textcolor{stringliteral}{"{}"{}},\ plotsWidth,\ plotsHeight\ +\ nominalHeader);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00392}00392\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00393}00393\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ iClusterShape\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00394}00394\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00395}00395\ \ \ \ \ \ \ \ \ std::vector<TPad*>\ padSet;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00396}00396\ \ \ \ \ \ \ \ \ std::vector<TLine*>\ lineSet;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00397}00397\ \ \ \ \ \ \ \ \ std::vector<TText*>\ textSet;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00398}00398\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00399}00399\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTShapeInfo}{TShapeInfo}}\&\ shapeInfo\ :\ clusterShape-\/>getClusterShapeInfos()\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00400}00400\ \ \ \ \ \ \ \ \ \ \ \ \ pBar.\mbox{\hyperlink{classProgressBar_a5d9bc9175bf342ac00f2de8d27984cde}{printProgress}}();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00401}00401\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00402}00402\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ width\ =\ shapeInfo.mClusterMatrix-\/>getNRow()\ +\ 2;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00403}00403\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ height\ =\ shapeInfo.mClusterMatrix-\/>getNColumn()\ +\ 2;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00404}00404\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00405}00405\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ padCenterX\ =\ (1.\ /\ nPlotInRow)\ *\ (.5\ +\ (iClusterShape\ \%\ 10));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00406}00406\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ padCenterY\ =\ (\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(plotsHeight)\ /\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(plotsHeight\ +\ nominalHeader))\ /\ ((floor((nClusterShape\ -\/\ 1)\ /\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(nPlotInRow)))\ +\ 1.)\ *\ .5\ *\ (2.\ *\ (floor((nClusterShape\ -\/\ 1)\ /\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(nPlotInRow))\ -\/\ floor(iClusterShape\ /\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(nPlotInRow)))\ +\ 1.);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00407}00407\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00408}00408\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ padWidth\ =\ (1.\ /\ (2.\ *\ nPlotInRow));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00409}00409\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ padHeight\ =\ (\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(plotsHeight)\ /\ (plotsHeight\ +\ nominalHeader))\ /\ (2.\ *\ ((floor(\textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(nClusterShape)\ /\ nPlotInRow)\ +\ 1.)));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00410}00410\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00411}00411\ \ \ \ \ \ \ \ \ \ \ \ \ TPad*\ pad\ =\ \textcolor{keyword}{new}\ TPad(Form(\textcolor{stringliteral}{"{}pad\%d"{}},\ iClusterShape),\ \textcolor{stringliteral}{"{}"{}},\ padCenterX\ -\/\ padWidth,\ padCenterY\ -\/\ padHeight,\ padCenterX\ +\ padWidth,\ padCenterY\ +\ padHeight);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00412}00412\ \ \ \ \ \ \ \ \ \ \ \ \ pad-\/>SetMargin(0.,\ 0.,\ .5\ *\ (1.\ -\/\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(height)\ /\ width),\ .5\ *\ (1.\ -\/\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{double}\textcolor{keyword}{>}(height)\ /\ width));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00413}00413\ \ \ \ \ \ \ \ \ \ \ \ \ pad-\/>Draw();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00414}00414\ \ \ \ \ \ \ \ \ \ \ \ \ pad-\/>cd();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00415}00415\ \ \ \ \ \ \ \ \ \ \ \ \ shapeInfo.mClusterMap-\/>SetDrawOption(\textcolor{stringliteral}{"{}COL"{}});}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00416}00416\ \ \ \ \ \ \ \ \ \ \ \ \ shapeInfo.mClusterMap-\/>GetXaxis()-\/>SetAxisColor(0);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00417}00417\ \ \ \ \ \ \ \ \ \ \ \ \ shapeInfo.mClusterMap-\/>GetYaxis()-\/>SetAxisColor(0);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00418}00418\ \ \ \ \ \ \ \ \ \ \ \ \ shapeInfo.mClusterMap-\/>Draw(\textcolor{stringliteral}{"{}col"{}});}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00419}00419\ \ \ \ \ \ \ \ \ \ \ \ \ pad-\/>SetFrameLineWidth(0);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00420}00420\ \ \ \ \ \ \ \ \ \ \ \ \ padSet.push\_back(pad);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00421}00421\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00422}00422\ \ \ \ \ \ \ \ \ \ \ \ \ TLine*\ line\ =\ \textcolor{keyword}{new}\ TLine();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00423}00423\ \ \ \ \ \ \ \ \ \ \ \ \ line-\/>SetLineColorAlpha(kRed,\ 6.\ /\ 8);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00424}00424\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ i\ =\ 1;\ i\ <=\ shapeInfo.mClusterMap-\/>GetNbinsX();\ ++i\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00425}00425\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ j\ =\ 1;\ j\ <=\ shapeInfo.mClusterMap-\/>GetNbinsY();\ ++j\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00426}00426\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ shapeInfo.mClusterMap-\/>GetBinContent(i,\ j)\ >\ 0\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00427}00427\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ xlow\ =\ shapeInfo.mClusterMap-\/>GetXaxis()-\/>GetBinLowEdge(i);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00428}00428\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ xup\ =\ shapeInfo.mClusterMap-\/>GetXaxis()-\/>GetBinUpEdge(i);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00429}00429\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ ylow\ =\ shapeInfo.mClusterMap-\/>GetYaxis()-\/>GetBinLowEdge(j);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00430}00430\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ yup\ =\ shapeInfo.mClusterMap-\/>GetYaxis()-\/>GetBinUpEdge(j);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00431}00431\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line-\/>DrawLine(xlow,\ ylow,\ xup,\ ylow);\ \textcolor{comment}{//\ Bottom}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00432}00432\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line-\/>DrawLine(xlow,\ yup,\ xup,\ yup);\ \textcolor{comment}{//\ Top}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00433}00433\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line-\/>DrawLine(xlow,\ ylow,\ xlow,\ yup);\ \textcolor{comment}{//\ Left}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00434}00434\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line-\/>DrawLine(xup,\ ylow,\ xup,\ yup);\ \textcolor{comment}{//\ Right}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00435}00435\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00436}00436\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00437}00437\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00438}00438\ \ \ \ \ \ \ \ \ \ \ \ \ lineSet.push\_back(line);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00439}00439\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00440}00440\ \ \ \ \ \ \ \ \ \ \ \ \ TText*\ numberingText\ =\ \textcolor{keyword}{new}\ TText(padCenterX,\ padCenterY,\ Form(\textcolor{stringliteral}{"{}\%d"{}},\ iClusterShape));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00441}00441\ \ \ \ \ \ \ \ \ \ \ \ \ numberingText-\/>SetNDC();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00442}00442\ \ \ \ \ \ \ \ \ \ \ \ \ numberingText-\/>SetTextAlign(22);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00443}00443\ \ \ \ \ \ \ \ \ \ \ \ \ numberingText-\/>SetTextSize(.3\ *\ nominalWidth\ /\ (plotsHeight\ +\ nominalHeader));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00444}00444\ \ \ \ \ \ \ \ \ \ \ \ \ numberingText-\/>SetTextColorAlpha(kBlack,\ 5.\ /\ 8.);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00445}00445\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00446}00446\ \ \ \ \ \ \ \ \ \ \ \ \ canvas-\/>cd();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00447}00447\ \ \ \ \ \ \ \ \ \ \ \ \ numberingText-\/>Draw();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00448}00448\ \ \ \ \ \ \ \ \ \ \ \ \ textSet.push\_back(numberingText);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00449}00449\ \ \ \ \ \ \ \ \ \ \ \ \ iClusterShape++;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00450}00450\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00451}00451\ \ \ \ \ \ \ \ \ TText*\ titleText\ =\ \textcolor{keyword}{new}\ TText(.5,\ 1.\ -\/\ .5\ *\ nominalHeader\ /\ (nominalHeader\ +\ plotsHeight),\ Form(\textcolor{stringliteral}{"{}Cluster\ shapes\ with\ cluster\ size\ \%d"{}},\ clusterSize));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00452}00452\ \ \ \ \ \ \ \ \ titleText-\/>SetTextSize(.5\ *\ nominalHeader\ /\ (plotsHeight\ +\ nominalHeader));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00453}00453\ \ \ \ \ \ \ \ \ titleText-\/>SetTextAlign(22);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00454}00454\ \ \ \ \ \ \ \ \ titleText-\/>SetNDC();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00455}00455\ \ \ \ \ \ \ \ \ titleText-\/>Draw();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00456}00456\ \ \ \ \ \ \ \ \ std::filesystem::path\ file\ =\ filePath\ /\ (config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}filename"{}})\ +\ \textcolor{stringliteral}{"{}\_"{}}\ +\ std::to\_string(clusterSize));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00457}00457\ \ \ \ \ \ \ \ \ file.replace\_extension(config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}extension"{}}));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00458}00458\ \ \ \ \ \ \ \ \ canvas-\/>SaveAs(\textcolor{keyword}{static\_cast<}TString\textcolor{keyword}{>}(file));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00459}00459\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00460}00460\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ titleText;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00461}00461\ \ \ \ \ \ \ \ \ titleText\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00462}00462\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00463}00463\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ TPad*\ pad\ :\ padSet\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00464}00464\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ pad;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00465}00465\ \ \ \ \ \ \ \ \ \ \ \ \ pad\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00466}00466\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00467}00467\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00468}00468\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ TLine*\ line\ :\ lineSet\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00469}00469\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ line;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00470}00470\ \ \ \ \ \ \ \ \ \ \ \ \ line\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00471}00471\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00472}00472\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00473}00473\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ TText*\ text\ :\ textSet\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00474}00474\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ text;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00475}00475\ \ \ \ \ \ \ \ \ \ \ \ \ text\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00476}00476\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00477}00477\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00478}00478\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ canvas;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00479}00479\ \ \ \ \ \ \ \ \ canvas\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00480}00480\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00481}00481\ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00482}00482\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00483}\mbox{\hyperlink{classTClusterShapeAnalyser_a47dc8f0b6015e183b74dd15c58eeebf6}{00483}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTClusterShapeAnalyser_a47dc8f0b6015e183b74dd15c58eeebf6}{TClusterShapeAnalyser::saveTotalShapes}}(std::string\_view\ typeName,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\ config)\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00484}00484\ \ \ \ \ \textcolor{comment}{//\ Print\ log}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00485}00485\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Generating\ \(\backslash\)033[1;32mTotal\ shapes\(\backslash\)033[1;0m..."{}}\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00486}00486\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00487}00487\ \ \ \ \ std::filesystem::path\ filePath(config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}output\_path"{}}));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00488}00488\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ config.\mbox{\hyperlink{classCppConfigDictionary_a1ab483f98a2a411b93b616bc8d65b83d}{hasKey}}(\textcolor{stringliteral}{"{}subdirectory"{}})\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00489}00489\ \ \ \ \ \ \ \ \ filePath\ /=\ config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}subdirectory"{}});}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00490}00490\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00491}00491\ \ \ \ \ std::filesystem::create\_directories(filePath);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00492}00492\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00493}00493\ \ \ \ \ \textcolor{keywordtype}{int}\ nWidth\ =\ \mbox{\hyperlink{classTClusterShapeAnalyser_afd61dd0faa095ab14317298095dd71b4}{mMaxModeSet}}.find(std::string(typeName))-\/>second;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00494}00494\ \ \ \ \ \textcolor{keywordtype}{int}\ nHeight\ =\ \mbox{\hyperlink{classTClusterShapeAnalyser_aeb613df3d83d141adf5ed9089054038f}{mClusterShapeSet}}.find(std::string(typeName))-\/>second.size();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00495}00495\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00496}00496\ \ \ \ \ \textcolor{keywordtype}{int}\ nominalWidth\ =\ 100;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00497}00497\ \ \ \ \ \textcolor{keywordtype}{int}\ nominalHeader\ =\ 100;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00498}00498\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00499}00499\ \ \ \ \ \textcolor{keywordtype}{int}\ plotsWidth\ =\ nWidth\ *\ nominalWidth;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00500}00500\ \ \ \ \ \textcolor{keywordtype}{int}\ plotsHeight\ =\ nHeight\ *\ nominalWidth;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00501}00501\ \ \ \ \ TCanvas*\ canvas\ =\ \textcolor{keyword}{new}\ TCanvas(\textcolor{stringliteral}{"{}tShape"{}},\ \textcolor{stringliteral}{"{}cluster\ shape"{}},\ plotsWidth\ +\ nominalHeader,\ plotsHeight\ +\ nominalHeader);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00502}00502\ \ \ \ \ \textcolor{keywordtype}{int}\ iClusterSize\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00503}00503\ \ \ \ \ std::vector<TPad*>\ padSet;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00504}00504\ \ \ \ \ std::vector<TLine*>\ lineSet;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00505}00505\ \ \ \ \ std::vector<TText*>\ textSet;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00506}00506\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00507}00507\ \ \ \ \ \mbox{\hyperlink{classProgressBar}{ProgressBar}}\ pBar(\mbox{\hyperlink{classTClusterShapeAnalyser_a61731ba613a43ba49d5fc3c2b6921bcd}{mNTotalShapeSet}}.find(std::string(typeName))-\/>second);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00508}00508\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classTClusterShape}{TClusterShape}}*\ clusterShape\ :\ \mbox{\hyperlink{classTClusterShapeAnalyser_aeb613df3d83d141adf5ed9089054038f}{mClusterShapeSet}}.find(std::string(typeName))-\/>second\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00509}00509\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ clusterSize\ =\ clusterShape-\/>getClusterSize();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00510}00510\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ iClusterShape\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00511}00511\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTShapeInfo}{TShapeInfo}}\&\ shapeInfo\ :\ clusterShape-\/>getClusterShapeInfos()\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00512}00512\ \ \ \ \ \ \ \ \ \ \ \ \ pBar.\mbox{\hyperlink{classProgressBar_a5d9bc9175bf342ac00f2de8d27984cde}{printProgress}}();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00513}00513\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ width\ =\ shapeInfo.mClusterMap-\/>GetNbinsX();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00514}00514\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ height\ =\ shapeInfo.mClusterMap-\/>GetNbinsY();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00515}00515\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00516}00516\ \ \ \ \ \ \ \ \ \ \ \ \ TPad*\ pad\ =\ \textcolor{keyword}{new}\ TPad(Form(\textcolor{stringliteral}{"{}pad\%d\_\%d"{}},\ iClusterSize,\ iClusterShape),\ \textcolor{stringliteral}{"{}pad"{}},\ (\textcolor{keywordtype}{double})\ nominalHeader\ /\ (plotsWidth\ +\ nominalHeader)\ +\ ((\textcolor{keywordtype}{double})\ plotsWidth\ /\ (plotsWidth\ +\ nominalHeader))\ *\ ((\textcolor{keywordtype}{double})\ iClusterShape\ /\ nWidth),\ ((\textcolor{keywordtype}{double})\ plotsHeight\ /\ (plotsHeight\ +\ nominalHeader))\ *\ (((\textcolor{keywordtype}{double})\ nHeight\ -\/\ iClusterSize\ -\/\ 1)\ /\ nHeight),\ (\textcolor{keywordtype}{double})\ nominalHeader\ /\ (plotsWidth\ +\ nominalHeader)\ +\ ((\textcolor{keywordtype}{double})\ plotsWidth\ /\ (plotsWidth\ +\ nominalHeader))\ *\ (\textcolor{keywordtype}{double})\ (iClusterShape\ +\ 1)\ /\ nWidth,\ ((\textcolor{keywordtype}{double})\ plotsHeight\ /\ (plotsHeight\ +\ nominalHeader))\ *\ (((\textcolor{keywordtype}{double})\ nHeight\ -\/\ iClusterSize)\ /\ nHeight),\ -\/1,\ 1);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00517}00517\ \ \ \ \ \ \ \ \ \ \ \ \ padSet.push\_back(pad);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00518}00518\ \ \ \ \ \ \ \ \ \ \ \ \ pad-\/>Draw();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00519}00519\ \ \ \ \ \ \ \ \ \ \ \ \ pad-\/>cd();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00520}00520\ \ \ \ \ \ \ \ \ \ \ \ \ pad-\/>SetMargin(0.,\ 0.,\ .5\ *\ (1.\ -\/\ (\textcolor{keywordtype}{double})\ height\ /\ width),\ .5\ *\ (1.\ -\/\ (\textcolor{keywordtype}{double})\ height\ /\ width));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00521}00521\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00522}00522\ \ \ \ \ \ \ \ \ \ \ \ \ shapeInfo.mClusterMap-\/>Draw();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00523}00523\ \ \ \ \ \ \ \ \ \ \ \ \ shapeInfo.mClusterMap-\/>SetDrawOption(\textcolor{stringliteral}{"{}COL"{}});}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00524}00524\ \ \ \ \ \ \ \ \ \ \ \ \ shapeInfo.mClusterMap-\/>GetXaxis()-\/>SetAxisColor(0);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00525}00525\ \ \ \ \ \ \ \ \ \ \ \ \ shapeInfo.mClusterMap-\/>GetYaxis()-\/>SetAxisColor(0);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00526}00526\ \ \ \ \ \ \ \ \ \ \ \ \ TLine*\ line\ =\ \textcolor{keyword}{new}\ TLine();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00527}00527\ \ \ \ \ \ \ \ \ \ \ \ \ lineSet.push\_back(line);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00528}00528\ \ \ \ \ \ \ \ \ \ \ \ \ line-\/>SetLineColorAlpha(kRed,\ 6.\ /\ 8);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00529}00529\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ i\ =\ 1;\ i\ <=\ shapeInfo.mClusterMap-\/>GetNbinsX();\ ++i\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00530}00530\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ j\ =\ 1;\ j\ <=\ shapeInfo.mClusterMap-\/>GetNbinsY();\ ++j\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00531}00531\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (\ shapeInfo.mClusterMap-\/>GetBinContent(i,\ j)\ >\ 0\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00532}00532\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ xlow\ =\ shapeInfo.mClusterMap-\/>GetXaxis()-\/>GetBinLowEdge(i);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00533}00533\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ xup\ =\ shapeInfo.mClusterMap-\/>GetXaxis()-\/>GetBinUpEdge(i);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00534}00534\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ ylow\ =\ shapeInfo.mClusterMap-\/>GetYaxis()-\/>GetBinLowEdge(j);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00535}00535\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ yup\ =\ shapeInfo.mClusterMap-\/>GetYaxis()-\/>GetBinUpEdge(j);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00536}00536\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line-\/>DrawLine(xlow,\ ylow,\ xup,\ ylow);\ \textcolor{comment}{//\ Bottom}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00537}00537\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line-\/>DrawLine(xlow,\ yup,\ xup,\ yup);\ \textcolor{comment}{//\ Top}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00538}00538\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line-\/>DrawLine(xlow,\ ylow,\ xlow,\ yup);\ \textcolor{comment}{//\ Left}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00539}00539\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ line-\/>DrawLine(xup,\ ylow,\ xup,\ yup);\ \textcolor{comment}{//\ Right}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00540}00540\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00541}00541\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00542}00542\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00543}00543\ \ \ \ \ \ \ \ \ \ \ \ \ pad-\/>SetFrameLineWidth(0);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00544}00544\ \ \ \ \ \ \ \ \ \ \ \ \ canvas-\/>cd();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00545}00545\ \ \ \ \ \ \ \ \ \ \ \ \ TText*\ numberingText\ =\ \textcolor{keyword}{new}\ TText((\textcolor{keywordtype}{double})\ nominalHeader\ /\ (plotsWidth\ +\ nominalHeader)\ +\ ((\textcolor{keywordtype}{double})\ plotsWidth\ /\ (plotsWidth\ +\ nominalHeader))\ *\ (((\textcolor{keywordtype}{double})\ iClusterShape\ +\ .5)\ /\ nWidth),\ ((\textcolor{keywordtype}{double})\ plotsHeight\ /\ (plotsHeight\ +\ nominalHeader))\ *\ (((\textcolor{keywordtype}{double})\ nHeight\ -\/\ iClusterSize)\ /\ nHeight),\ Form(\textcolor{stringliteral}{"{}\%d"{}},\ shapeInfo.mEntry));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00546}00546\ \ \ \ \ \ \ \ \ \ \ \ \ textSet.push\_back(numberingText);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00547}00547\ \ \ \ \ \ \ \ \ \ \ \ \ numberingText-\/>SetNDC();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00548}00548\ \ \ \ \ \ \ \ \ \ \ \ \ numberingText-\/>SetTextAlign(22);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00549}00549\ \ \ \ \ \ \ \ \ \ \ \ \ numberingText-\/>SetTextSize(.4\ *\ nominalWidth\ /\ (plotsHeight\ +\ nominalHeader));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00550}00550\ \ \ \ \ \ \ \ \ \ \ \ \ numberingText-\/>SetTextColor(kBlack);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00551}00551\ \ \ \ \ \ \ \ \ \ \ \ \ numberingText-\/>Draw();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00552}00552\ \ \ \ \ \ \ \ \ \ \ \ \ iClusterShape++;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00553}00553\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00554}00554\ \ \ \ \ \ \ \ \ TText*\ sizeText\ =\ \textcolor{keyword}{new}\ TText((\textcolor{keywordtype}{double})\ nominalHeader\ *\ .5\ /\ (nominalHeader\ +\ plotsWidth),\ ((\textcolor{keywordtype}{double})\ plotsHeight\ /\ (plotsHeight\ +\ nominalHeader))\ *\ (((\textcolor{keywordtype}{double})\ nHeight\ -\/\ iClusterSize\ -\/\ .5)\ /\ nHeight),\ Form(\textcolor{stringliteral}{"{}\%d"{}},\ clusterSize));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00555}00555\ \ \ \ \ \ \ \ \ textSet.push\_back(sizeText);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00556}00556\ \ \ \ \ \ \ \ \ sizeText-\/>SetNDC();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00557}00557\ \ \ \ \ \ \ \ \ sizeText-\/>SetTextAlign(22);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00558}00558\ \ \ \ \ \ \ \ \ sizeText-\/>SetTextSize(.6\ *\ nominalWidth\ /\ (plotsHeight\ +\ nominalHeader));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00559}00559\ \ \ \ \ \ \ \ \ sizeText-\/>SetTextColor(kBlack);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00560}00560\ \ \ \ \ \ \ \ \ sizeText-\/>Draw();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00561}00561\ \ \ \ \ \ \ \ \ iClusterSize++;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00562}00562\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00563}00563\ \ \ \ \ TText*\ titleText\ =\ \textcolor{keyword}{new}\ TText(.5,\ 1.\ -\/\ .5\ *\ nominalHeader\ /\ (nominalHeader\ +\ plotsHeight),\ \textcolor{keyword}{static\_cast<}TString\textcolor{keyword}{>}(\textcolor{stringliteral}{"{}Total\ Cluster\ Shapes"{}}));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00564}00564\ \ \ \ \ titleText-\/>SetTextSize(.8\ *\ nominalHeader\ /\ (plotsHeight\ +\ nominalHeader));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00565}00565\ \ \ \ \ titleText-\/>SetTextAlign(22);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00566}00566\ \ \ \ \ titleText-\/>SetNDC();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00567}00567\ \ \ \ \ titleText-\/>Draw();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00568}00568\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00569}00569\ \ \ \ \ std::filesystem::path\ file\ =\ filePath\ /\ config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}filename"{}});}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00570}00570\ \ \ \ \ file.replace\_extension(config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}extension"{}}));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00571}00571\ \ \ \ \ canvas-\/>SaveAs(\textcolor{keyword}{static\_cast<}TString\textcolor{keyword}{>}(file));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00572}00572\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00573}00573\ \ \ \ \ \textcolor{keyword}{delete}\ titleText;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00574}00574\ \ \ \ \ titleText\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00575}00575\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00576}00576\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ TPad*\ pad\ :\ padSet\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00577}00577\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ pad;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00578}00578\ \ \ \ \ \ \ \ \ pad\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00579}00579\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00580}00580\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00581}00581\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ TLine*\ line\ :\ lineSet\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00582}00582\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ line;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00583}00583\ \ \ \ \ \ \ \ \ line\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00584}00584\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00585}00585\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00586}00586\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ TText*\ text\ :\ textSet\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00587}00587\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ text;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00588}00588\ \ \ \ \ \ \ \ \ text\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00589}00589\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00590}00590\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00591}00591\ \ \ \ \ \textcolor{keyword}{delete}\ canvas;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00592}00592\ \ \ \ \ canvas\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00593}00593\ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00594}00594\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00595}\mbox{\hyperlink{classTClusterShapeAnalyser_aee84887e17483b9b7feaee4114c8443b}{00595}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTClusterShapeAnalyser_aee84887e17483b9b7feaee4114c8443b}{TClusterShapeAnalyser::saveSameSizeShapeEntry}}(std::string\_view\ typeName,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\ config)\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00596}00596\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Generating\ \(\backslash\)033[1;32mEntry\ of\ shapes\ with\ same\ size\(\backslash\)033[1;0m..."{}}\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00597}00597\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00598}00598\ \ \ \ \ std::filesystem::path\ filePath(config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}output\_path"{}}));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00599}00599\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ config.\mbox{\hyperlink{classCppConfigDictionary_a1ab483f98a2a411b93b616bc8d65b83d}{hasKey}}(\textcolor{stringliteral}{"{}subdirectory"{}})\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00600}00600\ \ \ \ \ \ \ \ \ filePath\ /=\ config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}subdirectory"{}});}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00601}00601\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00602}00602\ \ \ \ \ std::filesystem::create\_directories(filePath);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00603}00603\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00604}00604\ \ \ \ \ \mbox{\hyperlink{classProgressBar}{ProgressBar}}\ pBar(\mbox{\hyperlink{classTClusterShapeAnalyser_a61731ba613a43ba49d5fc3c2b6921bcd}{mNTotalShapeSet}}.find(std::string(typeName))-\/>second);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00605}00605\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classTClusterShape}{TClusterShape}}*\ clusterShape\ :\ \mbox{\hyperlink{classTClusterShapeAnalyser_aeb613df3d83d141adf5ed9089054038f}{mClusterShapeSet}}.find(std::string(typeName))-\/>second\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00606}00606\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ clusterSize\ =\ clusterShape-\/>getClusterSize();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00607}00607\ \ \ \ \ \ \ \ \ TCanvas*\ canvas\ =\ \textcolor{keyword}{new}\ TCanvas(Form(\textcolor{stringliteral}{"{}shapeEntry\%d"{}},\ clusterSize),\ \textcolor{stringliteral}{"{}shapeEntry"{}},\ 2500,\ 1000);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00608}00608\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ binNum\ =\ clusterShape-\/>getClusterShapeInfos().size();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00609}00609\ \ \ \ \ \ \ \ \ TH1D*\ distribution\ =\ \textcolor{keyword}{new}\ TH1D(Form(\textcolor{stringliteral}{"{}shapeEntry\%d"{}},\ clusterSize),\ Form(\textcolor{keyword}{static\_cast<}TString\textcolor{keyword}{>}(\textcolor{stringliteral}{"{}Shape\ Entry\ with\ cluster\ size\ \%d"{}}),\ clusterSize),\ binNum,\ -\/.5,\ binNum\ -\/\ .5);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00610}00610\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ iShape\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00611}00611\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTShapeInfo}{TShapeInfo}}\&\ shapeInfo\ :\ clusterShape-\/>getClusterShapeInfos()\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00612}00612\ \ \ \ \ \ \ \ \ \ \ \ \ pBar.\mbox{\hyperlink{classProgressBar_a5d9bc9175bf342ac00f2de8d27984cde}{printProgress}}();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00613}00613\ \ \ \ \ \ \ \ \ \ \ \ \ distribution-\/>Fill(iShape,\ shapeInfo.mEntry);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00614}00614\ \ \ \ \ \ \ \ \ \ \ \ \ iShape++;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00615}00615\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00616}00616\ \ \ \ \ \ \ \ \ distribution-\/>GetXaxis()-\/>SetNdivisions(10,\ 10,\ 0,\ \textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00617}00617\ \ \ \ \ \ \ \ \ distribution-\/>GetXaxis()-\/>SetTitle(\textcolor{stringliteral}{"{}i-\/th\ cluster\ size"{}});}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00618}00618\ \ \ \ \ \ \ \ \ distribution-\/>GetXaxis()-\/>SetTitleOffset(1.4);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00619}00619\ \ \ \ \ \ \ \ \ distribution-\/>GetXaxis()-\/>SetLabelOffset(0.003);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00620}00620\ \ \ \ \ \ \ \ \ distribution-\/>GetYaxis()-\/>SetTitle(\textcolor{stringliteral}{"{}Entry"{}});}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00621}00621\ \ \ \ \ \ \ \ \ distribution-\/>GetYaxis()-\/>SetTitleOffset(0.7);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00622}00622\ \ \ \ \ \ \ \ \ distribution-\/>Draw(\textcolor{stringliteral}{"{}HIST"{}});}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00623}00623\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classTAnalyser_a84ca5f2e2365dacc2c40977348a89bfa}{mExpSettingLegend}}-\/>Draw(\textcolor{stringliteral}{"{}SAME"{}});}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00624}00624\ \ \ \ \ \ \ \ \ canvas-\/>SetMargin(.07,\ .28,\ .12,\ .08);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00625}00625\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00626}00626\ \ \ \ \ \ \ \ \ std::filesystem::path\ file\ =\ filePath\ /\ (config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}filename"{}})\ +\ \textcolor{stringliteral}{"{}\_"{}}\ +\ std::to\_string(clusterSize));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00627}00627\ \ \ \ \ \ \ \ \ file.replace\_extension(config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}extension"{}}));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00628}00628\ \ \ \ \ \ \ \ \ canvas-\/>SaveAs(\textcolor{keyword}{static\_cast<}TString\textcolor{keyword}{>}(file));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00629}00629\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00630}00630\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ distribution;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00631}00631\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ canvas;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00632}00632\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00633}00633\ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00634}00634\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00635}\mbox{\hyperlink{classTClusterShapeAnalyser_a2698ca5cd261ce94635f8ebc5d1f43d3}{00635}}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTClusterShapeAnalyser_a2698ca5cd261ce94635f8ebc5d1f43d3}{TClusterShapeAnalyser::saveTotalShapeEntry}}(std::string\_view\ typeName,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\ config)\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00636}00636\ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}Generating\ \(\backslash\)033[1;32mEntry\ of\ total\ shapes\(\backslash\)033[1;0m..."{}}\ <<\ std::endl;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00637}00637\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00638}00638\ \ \ \ \ std::filesystem::path\ filePath(config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}output\_path"{}}));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00639}00639\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ config.\mbox{\hyperlink{classCppConfigDictionary_a1ab483f98a2a411b93b616bc8d65b83d}{hasKey}}(\textcolor{stringliteral}{"{}subdirectory"{}})\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00640}00640\ \ \ \ \ \ \ \ \ filePath\ /=\ config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}subdirectory"{}});}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00641}00641\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00642}00642\ \ \ \ \ std::filesystem::create\_directories(filePath);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00643}00643\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00644}00644\ \ \ \ \ \textcolor{keywordtype}{int}\ nXbin\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00645}00645\ \ \ \ \ \textcolor{keywordtype}{int}\ nYbin\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00646}00646\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classTClusterShape}{TClusterShape}}*\ clusterShape\ :\ \mbox{\hyperlink{classTClusterShapeAnalyser_aeb613df3d83d141adf5ed9089054038f}{mClusterShapeSet}}.find(std::string(typeName))-\/>second\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00647}00647\ \ \ \ \ \ \ \ \ nYbin\ =\ std::max(nYbin,\ \textcolor{keyword}{static\_cast<}\textcolor{keywordtype}{int}\textcolor{keyword}{>}(clusterShape-\/>getClusterShapeInfos().size()));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00648}00648\ \ \ \ \ \ \ \ \ nXbin\ =\ std::max(nXbin,\ clusterShape-\/>getClusterSize());}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00649}00649\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00650}00650\ \ \ \ \ TCanvas*\ canvas\ =\ \textcolor{keyword}{new}\ TCanvas(\textcolor{stringliteral}{"{}shapeEntryTotal"{}},\ \textcolor{stringliteral}{"{}shape\ entry"{}},\ 2500,\ 1000);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00651}00651\ \ \ \ \ TH2D*\ distribution\ =\ \textcolor{keyword}{new}\ TH2D(\textcolor{stringliteral}{"{}shapeEntryTotal"{}},\ \textcolor{keyword}{static\_cast<}TString\textcolor{keyword}{>}(config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}plot\_titles"{}})),\ nXbin,\ -\/nXbin\ -\/\ .5,\ -\/.5,\ nYbin,\ -\/nYbin\ +\ .5,\ .5);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00652}00652\ \ \ \ \ \mbox{\hyperlink{classProgressBar}{ProgressBar}}\ pBar(\mbox{\hyperlink{classTClusterShapeAnalyser_a61731ba613a43ba49d5fc3c2b6921bcd}{mNTotalShapeSet}}.find(std::string(typeName))-\/>second);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00653}00653\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classTClusterShape}{TClusterShape}}*\ clusterShape\ :\ \mbox{\hyperlink{classTClusterShapeAnalyser_aeb613df3d83d141adf5ed9089054038f}{mClusterShapeSet}}.find(std::string(typeName))-\/>second\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00654}00654\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ clusterSize\ =\ clusterShape-\/>getClusterSize();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00655}00655\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ iShape\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00656}00656\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structTShapeInfo}{TShapeInfo}}\ shapeInfo\ :\ clusterShape-\/>getClusterShapeInfos()\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00657}00657\ \ \ \ \ \ \ \ \ \ \ \ \ pBar.\mbox{\hyperlink{classProgressBar_a5d9bc9175bf342ac00f2de8d27984cde}{printProgress}}();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00658}00658\ \ \ \ \ \ \ \ \ \ \ \ \ distribution-\/>Fill(-\/clusterSize,\ -\/iShape,\ shapeInfo.mEntry);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00659}00659\ \ \ \ \ \ \ \ \ \ \ \ \ iShape++;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00660}00660\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00661}00661\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00662}00662\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ iXbin\ =\ 1;\ iXbin\ <\ distribution-\/>GetNbinsX();\ ++iXbin\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00663}00663\ \ \ \ \ \ \ \ \ distribution-\/>GetXaxis()-\/>SetBinLabel(iXbin,\ Form(\textcolor{stringliteral}{"{}\%g"{}},\ floor(-\/1\ *\ distribution-\/>GetXaxis()-\/>GetBinLowEdge(iXbin))));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00664}00664\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00665}00665\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00666}00666\ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keywordtype}{int}\ iYbin\ =\ 1;\ iYbin\ <\ distribution-\/>GetNbinsY();\ ++(++iYbin)\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00667}00667\ \ \ \ \ \ \ \ \ distribution-\/>GetYaxis()-\/>SetBinLabel(iYbin,\ Form(\textcolor{stringliteral}{"{}\%g"{}},\ floor(-\/1\ *\ distribution-\/>GetYaxis()-\/>GetBinLowEdge(iYbin))));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00668}00668\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00669}00669\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00670}00670\ \ \ \ \ distribution-\/>SetStats(0);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00671}00671\ \ \ \ \ \textcolor{keywordflow}{if}\ (\ config.\mbox{\hyperlink{classCppConfigDictionary_a1ab483f98a2a411b93b616bc8d65b83d}{hasKey}}(\textcolor{stringliteral}{"{}options"{}})\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00672}00672\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\ \textcolor{keyword}{const}\ std::string\&\ optionName\ :\ config.\mbox{\hyperlink{classCppConfigDictionary_a5529b4fbe3b9b68a7d032fd254d4dc0a}{getSubConfig}}(\textcolor{stringliteral}{"{}options"{}}).\mbox{\hyperlink{classCppConfigDictionary_a5654c5a804deedb4e22c70a402c977cb}{getValueList}}()\ )\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00673}00673\ \ \ \ \ \ \ \ \ \ \ \ \ distribution-\/>Draw(\textcolor{keyword}{static\_cast<}TString\textcolor{keyword}{>}(optionName));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00674}00674\ \ \ \ \ \ \ \ \ \ \ \ \ canvas-\/>SetPhi(10);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00675}00675\ \ \ \ \ \ \ \ \ \ \ \ \ canvas-\/>SetTheta(25);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00676}00676\ \ \ \ \ \ \ \ \ \ \ \ \ canvas-\/>SetLogz();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00677}00677\ \ \ \ \ \ \ \ \ \ \ \ \ std::filesystem::path\ file\ =\ filePath;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00678}00678\ \ \ \ \ \ \ \ \ \ \ \ \ file\ /=\ (config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}filename"{}})\ +\ \textcolor{stringliteral}{"{}\_"{}}\ +\ optionName);}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00679}00679\ \ \ \ \ \ \ \ \ \ \ \ \ file.replace\_extension(config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}extension"{}}));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00680}00680\ \ \ \ \ \ \ \ \ \ \ \ \ canvas-\/>SaveAs(\textcolor{keyword}{static\_cast<}TString\textcolor{keyword}{>}(file));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00681}00681\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00682}00682\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00683}00683\ \ \ \ \ \ \ \ \ distribution-\/>Draw();}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00684}00684\ \ \ \ \ \ \ \ \ std::filesystem::path\ file\ =\ filePath;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00685}00685\ \ \ \ \ \ \ \ \ file\ /=\ config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}filename"{}});}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00686}00686\ \ \ \ \ \ \ \ \ file.replace\_extension(config.\mbox{\hyperlink{classCppConfigDictionary_a4b0040a825a2a397220b27717db39021}{find}}(\textcolor{stringliteral}{"{}extension"{}}));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00687}00687\ \ \ \ \ \ \ \ \ canvas-\/>SaveAs(\textcolor{keyword}{static\_cast<}TString\textcolor{keyword}{>}(file));}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00688}00688\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00689}00689\ }
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00690}00690\ \ \ \ \ \textcolor{keyword}{delete}\ distribution;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00691}00691\ \ \ \ \ \textcolor{keyword}{delete}\ canvas;}
+\DoxyCodeLine{\Hypertarget{TClusterShapeAnalyser_8cpp_source_l00692}00692\ \}}
+
+\end{DoxyCode}

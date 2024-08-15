@@ -1,0 +1,37 @@
+\doxysection{TH1\+User.\+h}
+\hypertarget{TH1User_8h_source}{}\label{TH1User_8h_source}\index{/home/ychoi/ATOM/drawing\_tool/inc/TH1User.h@{/home/ychoi/ATOM/drawing\_tool/inc/TH1User.h}}
+\mbox{\hyperlink{TH1User_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00001}00001\ \textcolor{preprocessor}{\#ifndef\ \_\_TH1USER\_\_}}
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00002}00002\ \textcolor{preprocessor}{\#define\ \_\_TH1USER\_\_}}
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00003}00003\ }
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00004}00004\ \textcolor{preprocessor}{\#include\ "{}TH1.h"{}}}
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00006}00006\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{CppConfigFile_8h}{CppConfigFile.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00007}00007\ }
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00008}00008\ \textcolor{preprocessor}{\#include<vector>}}
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00009}00009\ \textcolor{comment}{//\ \#include<pair>}}
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00010}00010\ \textcolor{preprocessor}{\#include<filesystem>}}
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00011}00011\ }
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00012}00012\ }
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00013}\mbox{\hyperlink{classTH1IUser}{00013}}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classTH1IUser}{TH1IUser}}\ :\ \textcolor{keyword}{public}\ TH1I\ \{}
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00014}00014\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00015}\mbox{\hyperlink{classTH1IUser_ace1d5715d6c51decd3f93992aa8ea3a2}{00015}}\ \ \ \ \ std::vector<std::pair<std::string,\ std::vector<int>>>\ \mbox{\hyperlink{classTH1IUser_ace1d5715d6c51decd3f93992aa8ea3a2}{dataList}};}
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00016}\mbox{\hyperlink{classTH1IUser_a3316b7ac68dbee6467c32ffcd47a30b1}{00016}}\ \ \ \ \ std::vector<std::pair<std::string,\ TH1I*>>\ \mbox{\hyperlink{classTH1IUser_a3316b7ac68dbee6467c32ffcd47a30b1}{histList}};}
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00017}\mbox{\hyperlink{classTH1IUser_a28a7b7022e519e5c266c3b929c91476d}{00017}}\ \ \ \ \ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\ \mbox{\hyperlink{classTH1IUser_a28a7b7022e519e5c266c3b929c91476d}{mConfig}};}
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00018}\mbox{\hyperlink{classTH1IUser_a3d6945964b230a32acdf507e392ca40f}{00018}}\ \ \ \ \ TString\ \mbox{\hyperlink{classTH1IUser_a3d6945964b230a32acdf507e392ca40f}{mFilePath}}\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00019}\mbox{\hyperlink{classTH1IUser_a1624c7c65e14c5b83a270c50036a67ba}{00019}}\ \ \ \ \ TString\ \mbox{\hyperlink{classTH1IUser_a1624c7c65e14c5b83a270c50036a67ba}{mTitle}}\ =\ \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00020}00020\ }
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00021}\mbox{\hyperlink{classTH1IUser_ac6090a94aa0727b514526612b63973a7}{00021}}\ \ \ \ \ \textcolor{keywordtype}{int}\ \mbox{\hyperlink{classTH1IUser_ac6090a94aa0727b514526612b63973a7}{iHist}}\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00022}00022\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00023}00023\ \ \ \ \ \mbox{\hyperlink{classTH1IUser}{TH1IUser}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classCppConfigDictionary}{CppConfigDictionary}}\&\ config,\ \textcolor{keyword}{const}\ std::vector<std::pair<std::string,\ std::vector<int>>>\&\ data);}
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00024}00024\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00025}00025\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTH1IUser_afc86d1e25a8822c7789df7e7de35d72f}{getFilePath}}();}
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00026}00026\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTH1IUser_a4e4e7cbf345c048c330de4d903ed2584}{getTitle}}();}
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00027}00027\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classTH1IUser_a97720141ac93b51ad07c031d6ecab1ae}{fillData}}();}
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00028}00028\ \};}
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00029}00029\ }
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00030}00030\ }
+\DoxyCodeLine{\Hypertarget{TH1User_8h_source_l00031}00031\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}
