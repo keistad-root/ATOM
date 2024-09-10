@@ -13,7 +13,6 @@
 #define __TANALYSER__
 
 #ifdef __TANALYSER_HEADERS__
-#include <iostream>
 
 #include "TFile.h"
 #include "TTree.h"
@@ -29,7 +28,8 @@
 #include "TH1IUser.h"
 
 #include "cpptqdm.h"
-#include "CppConfigFile.h"
+
+#include "Constants.h"
 
 #include "TExperimentData.h"
 #include "TMatrix2D.h"
@@ -41,10 +41,14 @@
 #endif
 
 #include<string>
+#include<fstream>
+#include<iostream>
 #include<filesystem>
 #include<unordered_map>
 #include<vector>
+#include<array>
 #include "TFileFormat.h"
+#include "CppConfigFile.h"
 
 class TFile;
 class TTree;
@@ -78,6 +82,7 @@ typedef unsigned int UInt_t;
 class TAnalyser {
 private:
 	TFile* mInputFile = nullptr; /**< Input file with ROOT extension. */
+	TFile* mGraphFile = nullptr;
 	TTree* mTree = nullptr;
 	TInputRoot mInput;
 
@@ -89,6 +94,7 @@ private:
 	CppConfigDictionary mBasicAnalysisConfig;
 	CppConfigDictionary mSettingConfig;
 
+	std::vector<std::pair<int, int>> mMaskedPixelSet;
 	std::vector<TALPIDEEvent*> mOriginEventSet;
 	std::vector<TCluster*> mOriginClusterSet;
 	// Cut methods: TS(TimeStamp), HH(High Hits), HC(High Clusters)
@@ -106,12 +112,18 @@ private:
 	std::vector<TCluster*> mHHHCCutClusterSet;
 	std::vector<TCluster*> mHHHCCutNoiseClusterSet;
 
+
+	std::array<int, 4> roiSet;
 	std::vector<int> nPixelPerFrame;
 
+	bool isGraphFile = false;
 	bool isTimeStampCut = false;
+	bool isROICut = false;
 	bool isHitmapCut = false;
 	bool isHighClusterCut = false;
 	bool isPixelPerTimeStampMap = false;
+	bool isPedestalPrint = false;
+	bool isExpSetting = false;
 	int mTimeStampCut = 0;
 	int mHitmapCut = 0;
 	int mHighClusterCut = 0;
@@ -127,6 +139,10 @@ private:
 	TH2D* mHHCutClustermap;
 	TH2D* mHHHCCutClustermap;
 
+	TH1D* mOriginClustersize;
+	TH1D* mHHCutClustersize;
+	TH1D* mHHHCCutClustersize;
+
 public:
 	TAnalyser(const CppConfigFile& configFile);
 	~TAnalyser();
@@ -135,6 +151,8 @@ public:
 	void storeEvents();
 	void getHitmaps();
 
+	void setROI();
+	void originMasking();
 	void doMasking();
 	void HCMasking();
 	void openOutputGraphFile(std::string_view fileName);
@@ -148,10 +166,14 @@ public:
 
 	void clusterize();
 
-	void getClustermaps();
+	void getClusterinfos();
 	void getOriginClustermap();
 	void getHHCutClustermap();
 	void getHHHCCutClustermap();
+
+	void getOriginClustersize();
+	void getHHCutClustersize();
+	void getHHHCCutClustersize();
 
 private:
 	UInt_t fBits;

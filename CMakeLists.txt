@@ -1,5 +1,5 @@
 # Set cmake minimum required version
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 
 # Set project name
 project(ATOM)
@@ -49,12 +49,12 @@ set(CMAKE_CXX_STANDARD 17)
 if(ROOT_cxx17_FOUND)
   set(CMAKE_CXX_STANDARD 17)
   set(CMAKE_CXX_STANDARD_REQUIRED ON)
-elseif(ROOT_cxx14_FOUND)
-  set(CMAKE_CXX_STANDARD 14)
-  set(CMAKE_CXX_STANDARD_REQUIRED ON)
-elseif(ROOT_cxx11_FOUND)
-  set(CMAKE_CXX_STANDARD 11)
-  set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# elseif(ROOT_cxx14_FOUND)
+#   set(CMAKE_CXX_STANDARD 14)
+#   set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# elseif(ROOT_cxx11_FOUND)
+#   set(CMAKE_CXX_STANDARD 11)
+#   set(CMAKE_CXX_STANDARD_REQUIRED ON)
 endif()
 message(STATUS "Using C++${CMAKE_CXX_STANDARD}")
 
@@ -107,10 +107,10 @@ message(STATUS "Geant4 Include Directory: ${Geant4_INCLUDE_DIR}")
 message(STATUS "Garfield Include Directory: ${Garfield_INCLUDE_DIR}")
 
 # Find header files and source files and store it as variable
-file(GLOB_RECURSE HEADERS RELATIVE ${PROJECT_SOURCE_DIR} alpide/*/inc/* apts/inc/* chip/inc/* pycpp/inc/* pycpp/config/inc/* simulation/inc/* drawing_tool/inc/*)
-# file(GLOB_RECURSE HEADERS RELATIVE ${PROJECT_SOURCE_DIR} alpide/*/inc/* apts/inc/* chip/inc/* geant4/*/inc/* pycpp/inc/* pycpp/config/inc/* simulation/inc/* drawing_tool/inc/*)
-file(GLOB_RECURSE SOURCES RELATIVE ${PROJECT_SOURCE_DIR} alpide/*/src/* apts/src/* chip/src/* pycpp/src/* pycpp/config/src/* simulation/src/* drawing_tool/src/*)
-# file(GLOB_RECURSE SOURCES RELATIVE ${PROJECT_SOURCE_DIR} alpide/*/src/* apts/src/* chip/src/* geant4/*/src/* pycpp/src/* pycpp/config/src/* simulation/src/* drawing_tool/src/*)
+# file(GLOB_RECURSE HEADERS RELATIVE ${PROJECT_SOURCE_DIR} alpide/*/inc/* apts/inc/* chip/inc/* pycpp/inc/* pycpp/config/inc/* simulation/inc/* drawing_tool/inc/*)
+file(GLOB_RECURSE HEADERS RELATIVE ${PROJECT_SOURCE_DIR} alpide/*/inc/* apts/inc/* chip/inc/* geant4/*/inc/* pycpp/inc/* pycpp/config/inc/* simulation/inc/* drawing_tool/inc/*)
+# file(GLOB_RECURSE SOURCES RELATIVE ${PROJECT_SOURCE_DIR} alpide/*/src/* apts/src/* chip/src/* pycpp/src/* pycpp/config/src/* simulation/src/* drawing_tool/src/*)
+file(GLOB_RECURSE SOURCES RELATIVE ${PROJECT_SOURCE_DIR} alpide/*/src/* apts/src/* chip/src/* geant4/*/src/* pycpp/src/* pycpp/config/src/* simulation/src/* drawing_tool/src/*)
 
 message(${HEADERS})
 # file(GLOB_RECURSE HEADERS "${PROJECT_SOURCE_DIR}/include/*.h")
@@ -126,6 +126,7 @@ foreach(HEADER_PATH ${HEADERS})
 endforeach()
 
 # Add ROOT and Geant4 include files
+include(${Geant4_USE_FILE})
 include_directories(${Geant4_INCLUDE_DIRS})
 include_directories(${ROOT_INCLUDE_DIRS})
 include_directories(${Garfield_INCLUDE_DIRS})
@@ -136,4 +137,5 @@ add_subdirectory(exe)
 # Make data directory to deal with input and output data
 # file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/data)
 # file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/output)
-# file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/config)
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/config)
+file(COPY ${CMAKE_SOURCE_DIR}/config DESTINATION ${CMAKE_BINARY_DIR})

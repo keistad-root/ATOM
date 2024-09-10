@@ -11,6 +11,7 @@ RunAction::~RunAction() {
 }
 
 void RunAction::BeginOfRunAction(const G4Run* run) {
+	mRunStart = clock();
 	G4int nRun = run->GetNumberOfEventToBeProcessed();
 	G4cout << "\033[1;32m" << "Run #" << run->GetRunID() << "\033[0m" << ">> " << "\033[1;32m" << nRun << "\033[0m";
 }
@@ -18,4 +19,6 @@ void RunAction::BeginOfRunAction(const G4Run* run) {
 void RunAction::EndOfRunAction(const G4Run* run) {
 	AnalysisManager* analysisManager = AnalysisManager::Instance();
 	analysisManager->RecordingRun(run);
+	mRunFinish = clock();
+	std::cout << "Time taken: " << static_cast<double>(mRunFinish - mRunStart) / CLOCKS_PER_SEC << "s" << std::endl;
 }

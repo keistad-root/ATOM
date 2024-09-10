@@ -9,6 +9,7 @@
 #endif
 
 #include<array>
+#include<filesystem>
 #include<algorithm>
 
 class TGraph;
@@ -34,34 +35,23 @@ private:
 
 	std::unique_ptr<TGraph> thresholdGraph;
 	std::unique_ptr<TF1> fitFunction;
+	std::vector<int> mLocalMaximum;
 public:
 	//Constructor
 	TThreshold();
-	TThreshold(int x, int y);
-	TThreshold(const std::array<int, 2>& coordinate);
 	TThreshold(int x, int y, const std::array<int, 50>& dacs);
-	TThreshold(const std::array<int, 2>& coodrdinate, const std::array<int, 50>& dacs);
-	TThreshold(int x, int y, std::array<int, 50>&& dacs);
-	TThreshold(const std::array<int, 2>& coodrdinate, std::array<int, 50>&& dacs);
-	//Copy Constructor
-	TThreshold(const TThreshold& copy);
-	//Copy Assignment
-	TThreshold& operator=(const TThreshold& copy);
-	//Move Constructor
-	TThreshold(TThreshold&& move);
-	//Move Assignment
-	TThreshold& operator=(TThreshold&& move);
-	//Destructor
 	~TThreshold();
 
 	ThrCondition calculateThreshold();
-	void savePlot();
+	const void savePlot(const std::string& savePath) const;
 
+	void findLocalMaximum();
 	const double getX() const;
 	const double getY() const;
 	const double getThreshold() const;
 	const double getError() const;
 	const double getQualityFactor() const;
+	const int getNLocalMaximumPoint() const;
 
 	const ThrCondition getCondition() const;
 };

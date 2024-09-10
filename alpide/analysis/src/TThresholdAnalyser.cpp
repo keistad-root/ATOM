@@ -1,103 +1,110 @@
-#define __TTHRESHOLDANALYSER_HEADER__
-
 #include "TThresholdAnalyser.h"
 
-TThresholdAnalyser::TThresholdAnalyser() { }
+TThresholdAnalyser::TThresholdAnalyser(const CppConfigFile& config) {
+	std::clog << "The threshold analyser is armed" << std::endl;
+	mConfig = config;
+	CppConfigDictionary fileConfig = mConfig.getConfig("File");
+	std::filesystem::path datPath = fileConfig.find("dat_file");
+	std::filesystem::path cfgPath = fileConfig.find("cfg_file");
 
-TThresholdAnalyser::TThresholdAnalyser(std::ifstream& file) {
-	openFile(file);
+	mDataPath = fileConfig.find("output_file");
+	std::filesystem::create_directories(mDataPath.parent_path());
+
+	chipID = TObjString(static_cast<TString>(fileConfig.find("chip_id")));
+
+	mFile = std::ifstream(datPath);
+	mCfgFile = std::ifstream(cfgPath);
+
+	mThresholdFile = new TFile(static_cast<TString>(mDataPath), "RECREATE");
+	chipID.Write();
+	setConfig();
 }
 
+
 TThresholdAnalyser::~TThresholdAnalyser() {
+	mThresholdFile->Close();
 	std::cout << "The threshold analyser is terminated" << std::endl;
 }
 
-void TThresholdAnalyser::openFile(std::ifstream& file) {
+void TThresholdAnalyser::getThreshold() {
 	std::string line;
 	std::array<Int_t, 50> dacs;
-	std::streampos originalPos = file.tellg();
+	std::streampos originalPos = mFile.tellg();
+
 	int numLines = 0;
 	char ch;
-	while ( file.get(ch) ) {
+	while ( mFile.get(ch) ) {
 		if ( ch == '\n' ) {
 			++numLines;
 		}
 	}
-	file.clear();
-	file.seekg(originalPos);
+	mFile.clear();
+	mFile.seekg(originalPos);
 	ProgressBar bar(numLines + 1);
-	while ( file ) {
+
+	while ( mFile ) {
 		bar.printProgress();
-		getline(file, line);
+		getline(mFile, line);
 		std::stringstream values(line);
-		int x, y, iDac, dac;
-		values >> y >> x >> iDac >> dac;
+		int maskStage, pixelInRegion, iDac, dac;
+		values >> maskStage >> pixelInRegion >> iDac >> dac;
 		dacs[iDac] = dac;
 		if ( iDac == 49 ) {
+			int x = 2 * maskStage + (pixelInRegion % 2);
+			int y = floor(pixelInRegion / 2);
 			TThreshold* temp(new TThreshold(x, y, dacs));
 			mThresholds.push_back(temp);
 		}
 	}
 }
 
-void TThresholdAnalyser::refineData() {
-	mThresholdDistribution = new TH1D("thrDist", "Threshold Distribution", 500, 0, 50);
-	mErrorDistribution = new TH1D("errDist", "Error Distribution", 300, 0, 30);
-	mThresholdmap = new TH2D("thrmap", "Threshold map", 1024, -0.5, 1023.5, 512, -0.5, 511.5);
-	mChi2NdfDistribution = new TH1D("chi2", "Chi2 and NDoF", 200, 0, 200);
-	int nHigh = 0;
-	int nLow = 0;
-	int nUnDefined = 0;
-	for ( const TThreshold* threshold : mThresholds ) {
-		if ( threshold->getCondition() == ThrCondition::good ) {
-			mThresholdDistribution->Fill(threshold->getThreshold());
-			mErrorDistribution->Fill(threshold->getError());
-			mThresholdmap->SetBinContent(threshold->getX(), threshold->getY(), threshold->getThreshold());
-			mChi2NdfDistribution->Fill(threshold->getQualityFactor());
-		} else if ( threshold->getCondition() == ThrCondition::bad_too_high ) {
-			nHigh++;
-			mThresholdmap->SetBinContent(threshold->getX(), threshold->getY(), 50);
-		} else if ( threshold->getCondition() == ThrCondition::bad_too_low ) {
-			nLow++;
-			mThresholdmap->SetBinContent(threshold->getX(), threshold->getY(), 0);
-		} else if ( threshold->getCondition() == ThrCondition::bad_undefine ) {
-			nUnDefined++;
+void TThresholdAnalyser::setConfig() {
+	std::string line;
+	while ( mCfgFile ) {
+		std::getline(mCfgFile, line);
+		if ( line != "" ) {
+			std::stringstream values(line);
+			std::string key, value;
+			values >> key >> value;
+			mSetting.insert_or_assign(key, stoi(value));
 		}
 	}
-	std::cout << mThresholdDistribution->GetMean() << std::endl;
-	std::cout << mThresholdDistribution->GetStdDev() << std::endl;
-	std::cout << mErrorDistribution->GetMean() << std::endl;
-	std::cout << mErrorDistribution->GetStdDev() << std::endl;
-	std::cout << mThresholdDistribution->GetEntries() << std::endl;
-	std::cout << nLow << std::endl;
-	std::cout << nHigh << std::endl;
-	std::cout << nUnDefined << std::endl;
+	TTree* configTree = new TTree("config", "Configuration");
+	TString configName;
+	Int_t configValue;
+	configTree->Branch("name", &configName);
+	configTree->Branch("value", &configValue);
+
+	for ( const auto& setting : mSetting ) {
+		configName = setting.first;
+		configValue = setting.second;
+		configTree->Fill();
+	}
+	mThresholdFile->cd();
+	configTree->Write();
 }
 
-void TThresholdAnalyser::saveThresholdDistribution(std::string_view title) const {
-	TCanvas* can = new TCanvas("thrDist", "Threshold Distribution; Threshold [$500 \times e^-$]; Entry", 1000, 500);
-	mThresholdDistribution->Draw();
-	can->SaveAs(static_cast<const TString>(title));
-}
+void TThresholdAnalyser::saveThresholdData() {
+	TTree* thresholdTree = new TTree("threshold", "Threshold Data");
+	Int_t x, y;
+	Double_t threshold, noise, qualityFactor;
 
-void TThresholdAnalyser::saveErrorDistribution(std::string_view title) const {
-	TCanvas* can = new TCanvas("errDist", "Error Distribution;Threshold [$e^-$]; Entry", 1000, 500);
-	mErrorDistribution->Draw();
-	can->SaveAs(static_cast<const TString>(title));
-}
+	thresholdTree->Branch("x", &x);
+	thresholdTree->Branch("y", &y);
+	thresholdTree->Branch("threshold", &threshold);
+	thresholdTree->Branch("noise", &noise);
+	thresholdTree->Branch("q_factor", &qualityFactor);
 
-void TThresholdAnalyser::saveThresholdmap(std::string_view title) const {
-	TCanvas* can(new TCanvas("thrmap", "", 1000, 500));
-	mThresholdmap->SetTitle("Threshold Distribution; rows; coloums");
-	mThresholdmap->SetMinimum(0);
-	mThresholdmap->SetMaximum(50);
-	mThresholdmap->SetStats(0);
-	mThresholdmap->Draw("COLZ0");
-	can->SaveAs(static_cast<const TString>(title));
-}
-
-void TThresholdAnalyser::saveQualityDistribution(std::string_view title) const {
-	TCanvas* can = new TCanvas("chi2", "Fit quality Distribution; Chi2/NDoF; entry", 1000, 500);
-	mChi2NdfDistribution->Draw();
-	can->SaveAs(static_cast<const TString>(title));
+	for ( const TThreshold* thr : mThresholds ) {
+		if ( thr->getCondition() == ThrCondition::good ) {
+			x = thr->getX();
+			y = thr->getY();
+			threshold = thr->getThreshold();
+			noise = thr->getError();
+			qualityFactor = thr->getQualityFactor();
+			thresholdTree->Fill();
+		}
+	}
+	mThresholdFile->cd();
+	thresholdTree->Write();
 }

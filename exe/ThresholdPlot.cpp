@@ -1,8 +1,5 @@
-#include<iostream>
-#include<string>
+#include "TThresholdPlotter.h"
 
-#include "TThresholdAnalyser.h"
-#include "CppConfigFile.h"
 #include "cppargs.h"
 
 ArgumentParser set_parse(int argc, char** argv) {
@@ -19,8 +16,18 @@ int main(int argc, char** argv) {
 	std::string configPath = parser.get_value<std::string>("config");
 	CppConfigFile config(configPath);
 
-	TThresholdAnalyser analyser(config);
-	analyser.getThreshold();
-	analyser.saveThresholdData();
+	TThresholdPlotter plotter(config);
+	plotter.InitPlot();
+	plotter.FillPlot();
+
+	plotter.saveThresholdDistribution();
+	plotter.saveNoiseDistribution();
+	plotter.saveQualityDistribution();
+	plotter.saveThresholdMap();
+	plotter.saveNoiseMap();
+	plotter.saveQualityMap();
+
+	plotter.saveGraphFile();
+
 	return 0;
 }

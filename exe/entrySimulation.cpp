@@ -71,11 +71,11 @@ int main(int argc, char** argv) {
 	}
 
 
-	TAdvancedEntrySimulation* simulation = new TAdvancedEntrySimulation(.5);
+	TAdvancedEntrySimulation* simulation = new TAdvancedEntrySimulation(.25);
 	simulation->setSource(sourceRadius);
 	simulation->setDetector({detectorCoordX, detectorCoordY, -(S2CDistance + C2DDistance + collimatorLength)}, detectorX, detectorY);
 	simulation->setCollimator({0., 0., -S2CDistance}, collimatorRadius, {0., 0., -(S2CDistance + collimatorLength)}, collimatorRadius);
-	simulation->extractTrack(180);
+	simulation->extractTrack(360);
 
 	// TGraph* graph = new TGraph();
 	std::vector<std::pair<std::string, std::vector<std::array<double, 2>>>> ratio;
@@ -119,7 +119,7 @@ int main(int argc, char** argv) {
 			entryRatioGraph.push_back(new TGraph());
 			for ( const std::array<double, 2>&point : ratioSet.second ) {
 				// entryRatioGraph.back()->AddPoint(point[0], point[1] * totalActivity);
-				entryRatioGraph.back()->AddPoint(point[0], point[1] / 0.255375);
+				entryRatioGraph.back()->AddPoint(point[0], point[1] * 420200 / 0.099267);
 			}
 			int nGraph = graphConfig.getSubConfig("graphs").getSubConfigSet().size();
 			for ( int iGraph = 0; iGraph < nGraph; iGraph++ ) {
@@ -148,7 +148,6 @@ int main(int argc, char** argv) {
 		// Set output path and create directories if it isn't.
 		std::filesystem::path outputPath = fileConfig.find("output_path");
 		std::filesystem::create_directories(outputPath);
-
 		graph1->Save(outputPath);
 
 	}

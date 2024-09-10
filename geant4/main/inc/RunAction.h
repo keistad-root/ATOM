@@ -8,6 +8,7 @@
 #endif
 
 #include "G4UserRunAction.hh"
+#include<time.h>
 // #include "G4Run.hh"
 
 // #include "PrimaryGeneratorAction.h"
@@ -15,6 +16,8 @@
 class AnalysisManager;
 
 class RunAction : public G4UserRunAction {
+private:
+	clock_t mRunStart, mRunFinish;
 public:
 	RunAction();
 	virtual ~RunAction();

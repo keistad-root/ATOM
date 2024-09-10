@@ -16,6 +16,9 @@
 #include "cppUnit.h"
 #include "cppTimer.h"
 
+#include<iostream>
+#include<sstream>
+
 ArgumentParser set_parse(int argc, char** argv) {
 	ArgumentParser parser = ArgumentParser(argc, argv).setDescription("Draw plots for analysis data");
 	parser.add_argument("--config").add_minor_argument("-c").help("Config file for controling simulation").set_default("").add_finish();
@@ -24,14 +27,15 @@ ArgumentParser set_parse(int argc, char** argv) {
 }
 
 void DetectorConstruct(DetectorConstruction* detectorConstructor, const CppConfigDictionary& config) {
-	double airPressure = Quantity(config.find("air_pressure")).getNum("bar");
+	// double airPressure = Quantity(config.find("air_pressure")).getNum("bar");
+	double airPressure = stod(config.find("air_pressure"));
 	detectorConstructor->SetWorld(airPressure);
 
-	double hallDiameter = Quantity(config.find("hall_diameter")).getNum("mm");
+	double hallDiameter = stod(config.find("hole_diameter"));
 	std::string standType = config.find("stand_type");
 	detectorConstructor->SetStand(standType, hallDiameter);
 
-	double shieldWidth = Quantity(config.find("shield_width")).getNum("mm");
+	double shieldWidth = stod(config.find("shield_width"));
 	if ( !(shieldWidth < 0.001) ) {
 		detectorConstructor->SetShield(shieldWidth);
 	}
@@ -39,7 +43,7 @@ void DetectorConstruct(DetectorConstruction* detectorConstructor, const CppConfi
 	std::string alpideType = config.find("alpide_type");
 	detectorConstructor->SetALPIDE(alpideType);
 
-	double distance = Quantity(config.find("distance")).getNum("mm");
+	double distance = stod(config.find("distance"));
 	detectorConstructor->Construct(standType, distance);
 }
 
@@ -56,7 +60,7 @@ void SetParticleSource(G4SingleParticleSource* particleGun, const CppConfigDicti
 	particleGun->GetAngDist()->SetAngDistType("iso"); // /gps/ang/type iso
 	particleGun->GetEneDist()->SetEnergyDisType("Mono");
 	particleGun->GetEneDist()->ApplyEnergyWeight(false); // /gps/ene/type Mono
-	double distance = Quantity(config.find("distance")).getNum("mm");
+	double distance = stod(config.find("distance"));
 	particleGun->GetPosDist()->SetCentreCoords(G4ThreeVector(0., distance, 0.)); // /gps/pos/centre 0. 2. 0.
 }
 
@@ -81,7 +85,6 @@ int main(int argc, char** argv) {
 	DetectorConstruction* detectorConstructor = new DetectorConstruction();
 	DetectorConstruct(detectorConstructor, config.getConfig("Geometry"));
 	runManager->SetUserInitialization(detectorConstructor);
-
 	// Set physics
 	G4VModularPhysicsList* QBBCList = new QBBC(0);
 	G4VUserPhysicsList* physicsList = QBBCList;
@@ -98,12 +101,11 @@ int main(int argc, char** argv) {
 	SetParticleSource(particleGun, config.getConfig("Source"));
 
 	runManager->Initialize();
-
 	std::ifstream distFile(config.getConfig("Energy").find("alpha_energy_distribution"));
 	std::string line;
 	getline(distFile, line);
 	while ( getline(distFile, line) ) {
-		std::stringstream sstr(line, ',');
+		std::stringstream sstr(line);
 		std::string energyStr;
 		std::string intensityStr;
 		std::getline(sstr, energyStr, ',');

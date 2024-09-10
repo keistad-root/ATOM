@@ -30,11 +30,12 @@ int main(int argc, char** argv) {
 	controller.setConfig();
 
 	TAnalyser* mAnalyser = new TAnalyser(controller.getConfig());
+	mAnalyser->originMasking();
 	mAnalyser->storeEvents();
 	mAnalyser->setExpSettingLegend();
 	mAnalyser->getHitmaps();
 	mAnalyser->clusterize();
-	mAnalyser->getClustermaps();
+	mAnalyser->getClusterinfos();
 
 
 	// controller.openInputFile();

@@ -10,6 +10,12 @@ TAnalyser::TAnalyser(const CppConfigFile& configFile) : mConfigFile(configFile) 
 
 	mInputFile = new TFile(static_cast<TString>(std::string(inputPath)));
 
+	if ( mFileConfig.hasKey("output_graph") ) {
+		std::filesystem::path graphPath = mFileConfig.find("output_graph");
+		mGraphFile = new TFile(static_cast<TString>(graphPath), "RECREATE");
+		isGraphFile = true;
+	}
+
 	mTree = static_cast<TTree*>(mInputFile->Get("hit"));
 	mTree->SetBranchAddress("ChipID", &mInput.chipid);
 	mTree->SetBranchAddress("TimeStamp", &mInput.timeStamp);
@@ -23,6 +29,16 @@ TAnalyser::TAnalyser(const CppConfigFile& configFile) : mConfigFile(configFile) 
 */
 TAnalyser::~TAnalyser() {
 	std::clog << "TAnalyser object is terminated" << std::endl;
+	mGraphFile->Close();
+}
+
+void TAnalyser::originMasking() {
+	for ( const std::string& key : mMaskingConfig.getSubConfig("masked_pixel").getKeyList() ) {
+		std::string maskedPixelStr = mMaskingConfig.getSubConfig("masked_pixel").find(key);
+		int maskedX = stoi(maskedPixelStr.substr(0, maskedPixelStr.find(' ')));
+		int maskedY = stoi(maskedPixelStr.substr(maskedPixelStr.find(' ') + 1));
+		mMaskedPixelSet.push_back({maskedX, maskedY});
+	}
 }
 
 void TAnalyser::setConfig() {
@@ -35,8 +51,19 @@ void TAnalyser::setConfig() {
 		mTimeStampCut = stoi(mMaskingConfig.find("time_stamp_cut"));
 	}
 
+	if ( mMaskingConfig.hasKey("roi") ) {
+		isROICut = true;
+		setROI();
+	} else {
+		roiSet = {0, 1024, 0, 512};
+	}
+
 	if ( mMaskingConfig.hasKey("n_pix_per_timestamp_map") ) {
 		isPixelPerTimeStampMap = true;
+	}
+
+	if ( mMaskingConfig.hasKey("pedestal_print") ) {
+		isPedestalPrint = true;
 	}
 
 	if ( mMaskingConfig.hasKey("hitmap_cut") ) {
@@ -52,6 +79,13 @@ void TAnalyser::setConfig() {
 
 	mOutputPath = mFileConfig.hasKey("output_path") ? mFileConfig.find("output_path") : "";
 }
+
+void TAnalyser::setROI() {
+	std::istringstream roiStr(mMaskingConfig.find("roi"));
+	roiStr >> roiSet[0] >> roiSet[1] >> roiSet[2] >> roiSet[3];
+	// while(std::getline(roiStr, ))
+}
+
 
 // /**
 //  * @brief Open ROOT file to save results graph.
@@ -85,7 +119,20 @@ void TAnalyser::storeEvents() {
 	for ( int entry = 0; entry < mTree->GetEntries(); entry++ ) {
 		mTree->GetEntry(entry);
 		if ( mInput.timeStamp == preTime ) {
-			mOriginEventSet.back()->pushData({mInput.x, mInput.y});
+			bool passed = true;
+			if ( mInput.x < roiSet[0] || mInput.x > roiSet[1] || mInput.y < roiSet[2] || mInput.y > roiSet[3] ) {
+				passed = false;
+			} else {
+				for ( const std::pair<int, int>& maskedPixel : mMaskedPixelSet ) {
+					if ( (mInput.x == maskedPixel.first && mInput.y == maskedPixel.second) ) {
+						passed = false;
+						break;
+					}
+				}
+			}
+			if ( passed ) {
+				mOriginEventSet.back()->pushData({mInput.x, mInput.y});
+			}
 		} else {
 			mOriginEventSet.back()->removeDuplication();
 			mOriginEventSet.back()->sortPixel();
@@ -101,7 +148,20 @@ void TAnalyser::storeEvents() {
 			mOriginEventSet.push_back(new TALPIDEEvent());
 			mOriginEventSet.back()->setEvent(preEvt + 1);
 			mOriginEventSet.back()->setTime(mInput.timeStamp);
-			mOriginEventSet.back()->pushData({mInput.x, mInput.y});
+			bool passed = true;
+			if ( mInput.x < roiSet[0] || mInput.x > roiSet[1] || mInput.y < roiSet[2] || mInput.y > roiSet[3] ) {
+				passed = false;
+			} else {
+				for ( const std::pair<int, int>& maskedPixel : mMaskedPixelSet ) {
+					if ( (mInput.x == maskedPixel.first && mInput.y == maskedPixel.second) ) {
+						passed = false;
+						break;
+					}
+				}
+			}
+			if ( passed ) {
+				mOriginEventSet.back()->pushData({mInput.x, mInput.y});
+			}
 			preTime = mInput.timeStamp;
 			preEvt++;
 		}
@@ -116,50 +176,23 @@ void TAnalyser::storeEvents() {
 	}
 }
 
-void TAnalyser::getHitmaps() {
-	Int_t rawBins = 1024;
-	Int_t rawMin = 0;
-	Int_t rawMax = 1024;
-	Int_t columnBins = 512;
-	Int_t columnMin = 0;
-	Int_t columnMax = 512;
-
-	mOriginHitmap = new TH2D("oh", "Origin Hitmap", rawBins, rawMin, rawMax, columnBins, columnMin, columnMax);
-	for ( const TALPIDEEvent* event : mOriginEventSet ) {
-		for ( const std::pair<int, int>& pixel : event->getData() ) {
-			mOriginHitmap->Fill(pixel.first, pixel.second);
-		}
-	}
-	mHitmapMaskedNoisemap = new TH2D("hmnh", "", rawBins, rawMin, rawMax, columnBins, columnMin, columnMax);
-	mHitmapMaskedHitmap = new TH2D("hmh", "", rawBins, rawMin, rawMax, columnBins, columnMin, columnMax);
-
-	doMasking();
-
-	for ( const TALPIDEEvent* event : mHHCutEventSet ) {
-		for ( const std::pair<int, int>& pixel : event->getData() ) {
-			mHitmapMaskedHitmap->Fill(pixel.first, pixel.second);
-		}
-	}
-
-	for ( const TALPIDEEvent* event : mHHCutNoiseEventSet ) {
-		for ( const std::pair<int, int>& pixel : event->getData() ) {
-			mHitmapMaskedNoisemap->Fill(pixel.first, pixel.second);
-		}
-	}
-	if ( mConfigFile.hasConfig("Origin_Hitmap") ) getOriginHitmap();
-	if ( mConfigFile.hasConfig("High_Hit_Cut_Hitmap") ) getHitmapMaskedHitmap();
-	if ( mConfigFile.hasConfig("Hit_Masked_Noisemap") ) getHitmapMaskedNoisemap();
-}
-
 void TAnalyser::doMasking() {
 	TMatrix2D<int> matrix(1025, 513);
+	int i = 0;
+	std::ofstream noiseFile("Noise.txt");
 	for ( int x = 0; x < 1025; x++ ) {
 		for ( int y = 0; y < 513; y++ ) {
 			if ( mOriginHitmap->GetBinContent(x, y) > mHitmapCut ) {
 				matrix.setElement(x - 1, y - 1, 1);
+				if ( isPedestalPrint ) {
+					noiseFile << "pixel" << i << " = " << x - 1 << " " << y - 1 << std::endl;
+					// std::cout << "pixel" << i << " = " << x - 1 << " " << y - 1 << std::endl;
+				}
+				i++;
 			}
 		}
 	}
+	noiseFile.close();
 	for ( const TALPIDEEvent* event : mOriginEventSet ) {
 		mHHCutEventSet.push_back(new TALPIDEEvent());
 		mHHCutEventSet.back()->setEvent(event->getEvent());
@@ -178,140 +211,15 @@ void TAnalyser::doMasking() {
 }
 
 void TAnalyser::setExpSettingLegend() {
-	mExpSettingLegend = new TPaveText(.78, .1, .981, .65, "NDC");
-	for ( const std::string& setting : mSettingConfig.getKeyList() ) {
-		mExpSettingLegend->AddText(static_cast<TString>(setting + "= " + mSettingConfig.find(setting)));
+	if ( isExpSetting ) {
+		mExpSettingLegend = new TPaveText(.78, .1, .981, .65, "NDC");
+		for ( const std::string& setting : mSettingConfig.getKeyList() ) {
+			mExpSettingLegend->AddText(static_cast<TString>(setting + "= " + mSettingConfig.find(setting)));
+		}
+
+		mExpSettingLegend->SetTextAlign(11);
+		mExpSettingLegend->SetTextFont(42);
 	}
-
-	mExpSettingLegend->SetTextAlign(11);
-	mExpSettingLegend->SetTextFont(42);
-}
-
-void TAnalyser::getOriginHitmap() {
-	CppConfigDictionary mOriginHitmapConfig = mConfigFile.getConfig("Origin_Hitmap");
-
-	std::string plotTitle = mOriginHitmapConfig.hasKey("title") ? mOriginHitmapConfig.find("title") : "";
-	mOriginHitmap->SetTitle(static_cast<TString>(plotTitle));
-
-	Int_t canWidth = mOriginHitmapConfig.hasKey("canvas_width") ? stoi(mOriginHitmapConfig.find("canvas_width")) : 2500;
-	Int_t canHeight = mOriginHitmapConfig.hasKey("canvas_height") ? stoi(mOriginHitmapConfig.find("canvas_height")) : 1000;
-	TCanvas* canvas = new TCanvas("ohc", "", canWidth, canHeight);
-
-	Double_t leftMargin = mOriginHitmapConfig.hasKey("left_margin") ? stod(mOriginHitmapConfig.find("left_margin")) : .7;
-	Double_t rightMargin = mOriginHitmapConfig.hasKey("right_margin") ? stod(mOriginHitmapConfig.find("right_margin")) : .35;
-	Double_t topMargin = mOriginHitmapConfig.hasKey("top_margin") ? stod(mOriginHitmapConfig.find("top_margin")) : .08;
-	Double_t bottomMargin = mOriginHitmapConfig.hasKey("bottom_margin") ? stod(mOriginHitmapConfig.find("bottom_margin")) : .12;
-	canvas->SetMargin(leftMargin, rightMargin, bottomMargin, topMargin);
-
-	Double_t xTitleOffset = mOriginHitmapConfig.hasKey("x_title_offset") ? stod(mOriginHitmapConfig.find("x_title_offset")) : 1.4;
-	Double_t xLabelOffset = mOriginHitmapConfig.hasKey("x_label_offset") ? stod(mOriginHitmapConfig.find("x_label_offset")) : 0.003;
-	Double_t yTitleOffset = mOriginHitmapConfig.hasKey("y_title_offset") ? stod(mOriginHitmapConfig.find("y_title_offset")) : 1.;
-	Double_t yLabelOffset = mOriginHitmapConfig.hasKey("y_label_offset") ? stod(mOriginHitmapConfig.find("y_label_offset")) : 0.;
-	mOriginHitmap->GetXaxis()->SetTitleOffset(xTitleOffset);
-	mOriginHitmap->GetXaxis()->SetLabelOffset(xLabelOffset);
-	mOriginHitmap->GetYaxis()->SetTitleOffset(yTitleOffset);
-	mOriginHitmap->GetYaxis()->SetLabelOffset(yLabelOffset);
-
-	std::string originHitmapFileName = mOriginHitmapConfig.hasKey("filename") ? mOriginHitmapConfig.find("filename") : "origin_hitmap.png";
-	std::filesystem::path tempPath = (mOutputPath / originHitmapFileName);
-	std::filesystem::create_directories(tempPath.parent_path());
-	std::filesystem::path colzPath = (tempPath.parent_path() / (tempPath.stem().string() + "_colz")).replace_extension(tempPath.extension());
-	mOriginHitmap->Draw("COLZ");
-	mExpSettingLegend->Draw("SAME");
-	canvas->SaveAs(static_cast<TString>(colzPath));
-
-	std::filesystem::path legoPath = (tempPath.parent_path() / (tempPath.stem().string() + "_lego")).replace_extension(tempPath.extension());
-	mOriginHitmap->Draw("LEGO0");
-	mExpSettingLegend->Draw("SAME");
-	canvas->SaveAs(static_cast<TString>(legoPath));
-
-	delete canvas;
-	canvas = nullptr;
-}
-
-void TAnalyser::getHitmapMaskedHitmap() {
-	CppConfigDictionary config = mConfigFile.getConfig("High_Hit_Cut_Hitmap");
-
-	std::string plotTitle = config.hasKey("title") ? config.find("title") : "";
-	mHitmapMaskedHitmap->SetTitle(static_cast<TString>(plotTitle));
-
-	Int_t canWidth = config.hasKey("canvas_width") ? stoi(config.find("canvas_width")) : 2500;
-	Int_t canHeight = config.hasKey("canvas_height") ? stoi(config.find("canvas_height")) : 1000;
-	TCanvas* canvas = new TCanvas("ohc", "", canWidth, canHeight);
-
-	Double_t leftMargin = config.hasKey("left_margin") ? stod(config.find("left_margin")) : .7;
-	Double_t rightMargin = config.hasKey("right_margin") ? stod(config.find("right_margin")) : .35;
-	Double_t topMargin = config.hasKey("top_margin") ? stod(config.find("top_margin")) : .08;
-	Double_t bottomMargin = config.hasKey("bottom_margin") ? stod(config.find("bottom_margin")) : .12;
-	canvas->SetMargin(leftMargin, rightMargin, bottomMargin, topMargin);
-
-	Double_t xTitleOffset = config.hasKey("x_title_offset") ? stod(config.find("x_title_offset")) : 1.4;
-	Double_t xLabelOffset = config.hasKey("x_label_offset") ? stod(config.find("x_label_offset")) : 0.003;
-	Double_t yTitleOffset = config.hasKey("y_title_offset") ? stod(config.find("y_title_offset")) : 1.;
-	Double_t yLabelOffset = config.hasKey("y_label_offset") ? stod(config.find("y_label_offset")) : 0.;
-	mHitmapMaskedHitmap->GetXaxis()->SetTitleOffset(xTitleOffset);
-	mHitmapMaskedHitmap->GetXaxis()->SetLabelOffset(xLabelOffset);
-	mHitmapMaskedHitmap->GetYaxis()->SetTitleOffset(yTitleOffset);
-	mHitmapMaskedHitmap->GetYaxis()->SetLabelOffset(yLabelOffset);
-
-	std::string originHitmapFileName = config.hasKey("filename") ? config.find("filename") : "hit_masked_hitmap.png";
-	std::filesystem::path tempPath = (mOutputPath / originHitmapFileName);
-	std::filesystem::create_directories(tempPath.parent_path());
-	std::filesystem::path colzPath = (tempPath.parent_path() / (tempPath.stem().string() + "_colz")).replace_extension(tempPath.extension());
-	mHitmapMaskedHitmap->Draw("COLZ");
-	mExpSettingLegend->Draw("SAME");
-	canvas->SaveAs(static_cast<TString>(colzPath));
-
-	std::filesystem::path legoPath = (tempPath.parent_path() / (tempPath.stem().string() + "_lego")).replace_extension(tempPath.extension());
-	mHitmapMaskedHitmap->Draw("LEGO0");
-	mExpSettingLegend->Draw("SAME");
-	canvas->SaveAs(static_cast<TString>(legoPath));
-
-	delete canvas;
-	canvas = nullptr;
-}
-
-
-void TAnalyser::getHitmapMaskedNoisemap() {
-	CppConfigDictionary config = mConfigFile.getConfig("High_Hit_Cut_Noise_Hitmap");
-
-	std::string plotTitle = config.hasKey("title") ? config.find("title") : "";
-	mHitmapMaskedNoisemap->SetTitle(static_cast<TString>(plotTitle));
-
-	Int_t canWidth = config.hasKey("canvas_width") ? stoi(config.find("canvas_width")) : 2500;
-	Int_t canHeight = config.hasKey("canvas_height") ? stoi(config.find("canvas_height")) : 1000;
-	TCanvas* canvas = new TCanvas("ohc", "", canWidth, canHeight);
-
-	Double_t leftMargin = config.hasKey("left_margin") ? stod(config.find("left_margin")) : .7;
-	Double_t rightMargin = config.hasKey("right_margin") ? stod(config.find("right_margin")) : .35;
-	Double_t topMargin = config.hasKey("top_margin") ? stod(config.find("top_margin")) : .08;
-	Double_t bottomMargin = config.hasKey("bottom_margin") ? stod(config.find("bottom_margin")) : .12;
-	canvas->SetMargin(leftMargin, rightMargin, bottomMargin, topMargin);
-
-	Double_t xTitleOffset = config.hasKey("x_title_offset") ? stod(config.find("x_title_offset")) : 1.4;
-	Double_t xLabelOffset = config.hasKey("x_label_offset") ? stod(config.find("x_label_offset")) : 0.003;
-	Double_t yTitleOffset = config.hasKey("y_title_offset") ? stod(config.find("y_title_offset")) : 1.;
-	Double_t yLabelOffset = config.hasKey("y_label_offset") ? stod(config.find("y_label_offset")) : 0.;
-	mHitmapMaskedNoisemap->GetXaxis()->SetTitleOffset(xTitleOffset);
-	mHitmapMaskedNoisemap->GetXaxis()->SetLabelOffset(xLabelOffset);
-	mHitmapMaskedNoisemap->GetYaxis()->SetTitleOffset(yTitleOffset);
-	mHitmapMaskedNoisemap->GetYaxis()->SetLabelOffset(yLabelOffset);
-
-	std::string originHitmapFileName = config.hasKey("filename") ? config.find("filename") : "hit_masked_hitmap.png";
-	std::filesystem::path tempPath = (mOutputPath / originHitmapFileName);
-	std::filesystem::create_directories(tempPath.parent_path());
-	std::filesystem::path colzPath = (tempPath.parent_path() / (tempPath.stem().string() + "_colz")).replace_extension(tempPath.extension());
-	mHitmapMaskedNoisemap->Draw("COLZ");
-	mExpSettingLegend->Draw("SAME");
-	canvas->SaveAs(static_cast<TString>(colzPath));
-
-	std::filesystem::path legoPath = (tempPath.parent_path() / (tempPath.stem().string() + "_lego")).replace_extension(tempPath.extension());
-	mHitmapMaskedNoisemap->Draw("LEGO0");
-	mExpSettingLegend->Draw("SAME");
-	canvas->SaveAs(static_cast<TString>(legoPath));
-
-	delete canvas;
-	canvas = nullptr;
 }
 
 void TAnalyser::clusterize() {
@@ -332,13 +240,13 @@ void TAnalyser::clusterize() {
 	HHCutClusterizer.clusterize();
 	mHHCutClusterSet = HHCutClusterizer.getClusters();
 
-	// // Get Clusters of High Hit cut noises.
+	// // // Get Clusters of High Hit cut noises.
 	// TClusterization HHCutNoiseClusterizer(mHHCutNoiseEventSet);
 	// HHCutNoiseClusterizer.clusterize();
 	// mHHCutNoiseClusterSet = HHCutNoiseClusterizer.getClusters();
 }
 
-void TAnalyser::getClustermaps() {
+void TAnalyser::getClusterinfos() {
 	Int_t rawBins = 1024;
 	Int_t rawMin = 0;
 	Int_t rawMax = 1024;
@@ -346,31 +254,39 @@ void TAnalyser::getClustermaps() {
 	Int_t columnMin = 0;
 	Int_t columnMax = 512;
 
-	mOriginClustermap = new TH2D("oc", "Origin Hitmap", rawBins, rawMin, rawMax, columnBins, columnMin, columnMax);
+	mOriginClustermap = new TH2D("originClustermap", "Origin Hitmap", rawBins, rawMin, rawMax, columnBins, columnMin, columnMax);
+	mOriginClustersize = new TH1D("originClustersize", "", 120.5, 0, 120.5);
 	for ( const TCluster* cluster : mOriginClusterSet ) {
 		const std::pair<double, double> center = cluster->getCenter();
 		mOriginClustermap->Fill(center.first, center.second);
+		mOriginClustersize->Fill(cluster->getSize());
 	}
 
-	mHHCutClustermap = new TH2D("hhcc", "", rawBins, rawMin, rawMax, columnBins, columnMin, columnMax);
+	mHHCutClustermap = new TH2D("highHitCutClustermap", "", rawBins, rawMin, rawMax, columnBins, columnMin, columnMax);
+	mHHCutClustersize = new TH1D("highHitCutClustersize", "", 120.5, 0, 120.5);
 	for ( const TCluster* cluster : mHHCutClusterSet ) {
 		const std::pair<double, double> center = cluster->getCenter();
 		mHHCutClustermap->Fill(center.first, center.second);
+		mHHCutClustersize->Fill(cluster->getSize());
 	}
 
 	getOriginClustermap();
+	getOriginClustersize();
 	getHHCutClustermap();
+	getHHCutClustersize();
 
 	if ( isHighClusterCut ) {
 		HCMasking();
-		mHHHCCutClustermap = new TH2D("hhhccc", "", rawBins, rawMin, rawMax, columnBins, columnMin, columnMax);
+		mHHHCCutClustermap = new TH2D("highHitNClusterCutClustermap", "", rawBins, rawMin, rawMax, columnBins, columnMin, columnMax);
+		mHHHCCutClustersize = new TH1D("highHitNClusterCutClustersize", "", 120, 0.5, 120.5);
 		for ( const TCluster* cluster : mHHHCCutClusterSet ) {
 			const std::pair<double, double> center = cluster->getCenter();
 			mHHHCCutClustermap->Fill(center.first, center.second);
+			mHHHCCutClustersize->Fill(cluster->getSize());
 		}
 		getHHHCCutClustermap();
+		getHHHCCutClustersize();
 	}
-
 }
 
 void TAnalyser::HCMasking() {
@@ -389,141 +305,6 @@ void TAnalyser::HCMasking() {
 		}
 	}
 }
-
-void TAnalyser::getOriginClustermap() {
-	CppConfigDictionary config = mConfigFile.getConfig("Origin_Clustermap");
-
-	std::string plotTitle = config.hasKey("title") ? config.find("title") : "";
-	mOriginClustermap->SetTitle(static_cast<TString>(plotTitle));
-
-	Int_t canWidth = config.hasKey("canvas_width") ? stoi(config.find("canvas_width")) : 2500;
-	Int_t canHeight = config.hasKey("canvas_height") ? stoi(config.find("canvas_height")) : 1000;
-	TCanvas* canvas = new TCanvas("occ", "", canWidth, canHeight);
-
-	Double_t leftMargin = config.hasKey("left_margin") ? stod(config.find("left_margin")) : .7;
-	Double_t rightMargin = config.hasKey("right_margin") ? stod(config.find("right_margin")) : .35;
-	Double_t topMargin = config.hasKey("top_margin") ? stod(config.find("top_margin")) : .08;
-	Double_t bottomMargin = config.hasKey("bottom_margin") ? stod(config.find("bottom_margin")) : .12;
-	canvas->SetMargin(leftMargin, rightMargin, bottomMargin, topMargin);
-
-	Double_t xTitleOffset = config.hasKey("x_title_offset") ? stod(config.find("x_title_offset")) : 1.4;
-	Double_t xLabelOffset = config.hasKey("x_label_offset") ? stod(config.find("x_label_offset")) : 0.003;
-	Double_t yTitleOffset = config.hasKey("y_title_offset") ? stod(config.find("y_title_offset")) : 1.;
-	Double_t yLabelOffset = config.hasKey("y_label_offset") ? stod(config.find("y_label_offset")) : 0.;
-	mOriginClustermap->GetXaxis()->SetTitleOffset(xTitleOffset);
-	mOriginClustermap->GetXaxis()->SetLabelOffset(xLabelOffset);
-	mOriginClustermap->GetYaxis()->SetTitleOffset(yTitleOffset);
-	mOriginClustermap->GetYaxis()->SetLabelOffset(yLabelOffset);
-
-	std::string originHitmapFileName = config.hasKey("filename") ? config.find("filename") : "origin_hitmap.png";
-	std::filesystem::path tempPath = (mOutputPath / originHitmapFileName);
-	std::filesystem::create_directories(tempPath.parent_path());
-	std::filesystem::path colzPath = (tempPath.parent_path() / (tempPath.stem().string() + "_colz")).replace_extension(tempPath.extension());
-	mOriginClustermap->Draw("COLZ");
-	mExpSettingLegend->Draw("SAME");
-	canvas->SaveAs(static_cast<TString>(colzPath));
-
-	std::filesystem::path legoPath = (tempPath.parent_path() / (tempPath.stem().string() + "_lego")).replace_extension(tempPath.extension());
-	mOriginClustermap->Draw("LEGO0");
-	mExpSettingLegend->Draw("SAME");
-	canvas->SaveAs(static_cast<TString>(legoPath));
-
-	delete canvas;
-	canvas = nullptr;
-}
-
-void TAnalyser::getHHCutClustermap() {
-	CppConfigDictionary config = mConfigFile.getConfig("High_Hit_Cut_Clustermap");
-
-	std::string plotTitle = config.hasKey("title") ? config.find("title") : "";
-	mHHCutClustermap->SetTitle(static_cast<TString>(plotTitle));
-
-	Int_t canWidth = config.hasKey("canvas_width") ? stoi(config.find("canvas_width")) : 2500;
-	Int_t canHeight = config.hasKey("canvas_height") ? stoi(config.find("canvas_height")) : 1000;
-	TCanvas* canvas = new TCanvas("occ", "", canWidth, canHeight);
-
-	Double_t leftMargin = config.hasKey("left_margin") ? stod(config.find("left_margin")) : .7;
-	Double_t rightMargin = config.hasKey("right_margin") ? stod(config.find("right_margin")) : .35;
-	Double_t topMargin = config.hasKey("top_margin") ? stod(config.find("top_margin")) : .08;
-	Double_t bottomMargin = config.hasKey("bottom_margin") ? stod(config.find("bottom_margin")) : .12;
-	canvas->SetMargin(leftMargin, rightMargin, bottomMargin, topMargin);
-
-	Double_t xTitleOffset = config.hasKey("x_title_offset") ? stod(config.find("x_title_offset")) : 1.4;
-	Double_t xLabelOffset = config.hasKey("x_label_offset") ? stod(config.find("x_label_offset")) : 0.003;
-	Double_t yTitleOffset = config.hasKey("y_title_offset") ? stod(config.find("y_title_offset")) : 1.;
-	Double_t yLabelOffset = config.hasKey("y_label_offset") ? stod(config.find("y_label_offset")) : 0.;
-	mHHCutClustermap->GetXaxis()->SetTitleOffset(xTitleOffset);
-	mHHCutClustermap->GetXaxis()->SetLabelOffset(xLabelOffset);
-	mHHCutClustermap->GetYaxis()->SetTitleOffset(yTitleOffset);
-	mHHCutClustermap->GetYaxis()->SetLabelOffset(yLabelOffset);
-
-	std::string originHitmapFileName = config.hasKey("filename") ? config.find("filename") : "origin_hitmap.png";
-	std::filesystem::path tempPath = (mOutputPath / originHitmapFileName);
-	std::filesystem::create_directories(tempPath.parent_path());
-	std::filesystem::path colzPath = (tempPath.parent_path() / (tempPath.stem().string() + "_colz")).replace_extension(tempPath.extension());
-	mHHCutClustermap->Draw("COLZ");
-	mExpSettingLegend->Draw("SAME");
-	canvas->SaveAs(static_cast<TString>(colzPath));
-
-	std::filesystem::path legoPath = (tempPath.parent_path() / (tempPath.stem().string() + "_lego")).replace_extension(tempPath.extension());
-	mHHCutClustermap->Draw("LEGO0");
-	mExpSettingLegend->Draw("SAME");
-	canvas->SaveAs(static_cast<TString>(legoPath));
-
-	delete canvas;
-	canvas = nullptr;
-}
-
-void TAnalyser::getHHHCCutClustermap() {
-	CppConfigDictionary config = mConfigFile.getConfig("High_Hit_N_Cluster_Cut_Clustermap");
-
-	std::string plotTitle = config.hasKey("title") ? config.find("title") : "";
-	mHHHCCutClustermap->SetTitle(static_cast<TString>(plotTitle));
-
-	Int_t canWidth = config.hasKey("canvas_width") ? stoi(config.find("canvas_width")) : 2500;
-	Int_t canHeight = config.hasKey("canvas_height") ? stoi(config.find("canvas_height")) : 1000;
-	TCanvas* canvas = new TCanvas("hhhcc", "", canWidth, canHeight);
-
-	Double_t leftMargin = config.hasKey("left_margin") ? stod(config.find("left_margin")) : .7;
-	Double_t rightMargin = config.hasKey("right_margin") ? stod(config.find("right_margin")) : .35;
-	Double_t topMargin = config.hasKey("top_margin") ? stod(config.find("top_margin")) : .08;
-	Double_t bottomMargin = config.hasKey("bottom_margin") ? stod(config.find("bottom_margin")) : .12;
-	canvas->SetMargin(leftMargin, rightMargin, bottomMargin, topMargin);
-
-	Double_t xTitleOffset = config.hasKey("x_title_offset") ? stod(config.find("x_title_offset")) : 1.4;
-	Double_t xLabelOffset = config.hasKey("x_label_offset") ? stod(config.find("x_label_offset")) : 0.003;
-	Double_t yTitleOffset = config.hasKey("y_title_offset") ? stod(config.find("y_title_offset")) : 1.;
-	Double_t yLabelOffset = config.hasKey("y_label_offset") ? stod(config.find("y_label_offset")) : 0.;
-	mHHHCCutClustermap->GetXaxis()->SetTitleOffset(xTitleOffset);
-	mHHHCCutClustermap->GetXaxis()->SetLabelOffset(xLabelOffset);
-	mHHHCCutClustermap->GetYaxis()->SetTitleOffset(yTitleOffset);
-	mHHHCCutClustermap->GetYaxis()->SetLabelOffset(yLabelOffset);
-	mHHHCCutClustermap->RebinX(4);
-	mHHHCCutClustermap->RebinY(4);
-
-	std::string originHitmapFileName = config.hasKey("filename") ? config.find("filename") : "origin_hitmap.png";
-	std::filesystem::path tempPath = (mOutputPath / originHitmapFileName);
-	std::filesystem::create_directories(tempPath.parent_path());
-	std::filesystem::path colzPath = (tempPath.parent_path() / (tempPath.stem().string() + "_colz")).replace_extension(tempPath.extension());
-	mHHHCCutClustermap->Draw("COLZ");
-	mExpSettingLegend->Draw("SAME");
-	canvas->SaveAs(static_cast<TString>(colzPath));
-
-	std::filesystem::path legoPath = (tempPath.parent_path() / (tempPath.stem().string() + "_lego")).replace_extension(tempPath.extension());
-	mHHHCCutClustermap->Draw("LEGO0");
-	mExpSettingLegend->Draw("SAME");
-	canvas->SaveAs(static_cast<TString>(legoPath));
-
-	delete canvas;
-	canvas = nullptr;
-}
-
-
-
-
-
-
-
 
 
 

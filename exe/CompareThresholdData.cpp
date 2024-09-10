@@ -1,8 +1,5 @@
-#include<iostream>
-#include<string>
+#include "TThresholdCompare.h"
 
-#include "TThresholdAnalyser.h"
-#include "CppConfigFile.h"
 #include "cppargs.h"
 
 ArgumentParser set_parse(int argc, char** argv) {
@@ -12,15 +9,15 @@ ArgumentParser set_parse(int argc, char** argv) {
 	return parser;
 }
 
-
 int main(int argc, char** argv) {
 	ArgumentParser parser = set_parse(argc, argv);
-
 	std::string configPath = parser.get_value<std::string>("config");
 	CppConfigFile config(configPath);
 
-	TThresholdAnalyser analyser(config);
-	analyser.getThreshold();
-	analyser.saveThresholdData();
+	TThresholdCompare thrCompare(config);
+	thrCompare.getFile();
+	thrCompare.mergeThreshold();
+	thrCompare.mergeError();
+
 	return 0;
 }

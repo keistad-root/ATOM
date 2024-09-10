@@ -11,52 +11,46 @@
 #ifndef __TTHRESHOLDANALYSER__
 #define __TTHRESHOLDANALYSER__
 
-#ifdef __TTHRESHOLDANALYSER_HEADER__
-#include <iostream>
-#include <sstream>
-
-#include "RtypesCore.h"
-#include "TH1D.h"
-#include "TH2D.h"
-#include "TCanvas.h"
-
-#include "cpptqdm.h"
-
-#include "TThreshold.h"
-#endif
-
+ // Basic header
+#include<iostream>
+#include<sstream>
 #include<vector>
-#include <fstream>
- // #include "TThreshold.h"
- // #include "cpptqdm.h"
-class TThreshold;
-class TH1;
-class TH2;
+#include<array>
+#include<fstream>
+#include<unordered_map>
+
+// ROOT header
+#include "TFile.h"
+#include "TTree.h"
+#include "TObjString.h"
+
+// User header
+#include "cpptqdm.h"
+#include "TThreshold.h"
+#include "CppConfigFile.h"
 
 class TThresholdAnalyser {
 private:
 	std::ifstream mFile; /** Dat file */
-	int mVcasn, mIthr; /**< vcasn and ithr value. They are key values for determine threshold */
+	std::ifstream mCfgFile;
+	TObjString chipID;
+
+	std::filesystem::path mDataPath;
+	TFile* mThresholdFile;
+
+	CppConfigFile mConfig;
+
+	std::unordered_map<std::string, int> mSetting;
 
 	std::vector<TThreshold*> mThresholds; /**< The array in which the informations about threshold of ALPIDE are stored */
-
-	TH1* mThresholdDistribution; /**< Threshold value distribution plot*/
-	TH1* mErrorDistribution; /**< Error value distribution plot*/
-	TH2* mThresholdmap; /**< Thresholdmap*/
-	TH1* mChi2NdfDistribution; /** Fitting quality distribution ( Chi2 / Ndof ) */
 public:
-	TThresholdAnalyser();
-	TThresholdAnalyser(std::ifstream& file);
+	TThresholdAnalyser(const CppConfigFile& mConfig);
 	~TThresholdAnalyser();
 
-	void openFile(std::ifstream& file);
+	void getThreshold();
+	void setConfig();
 
-	void refineData();
-
-	void saveThresholdDistribution(std::string_view title) const;
-	void saveErrorDistribution(std::string_view title) const;
-	void saveThresholdmap(std::string_view title) const;
-	void saveQualityDistribution(std::string_view title) const;
+	void saveThresholdData();
 };
 
 #endif

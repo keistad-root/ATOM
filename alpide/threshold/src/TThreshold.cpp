@@ -3,51 +3,9 @@
 
 TThreshold::TThreshold() { }
 
-TThreshold::TThreshold(int x, int y) : mX(x), mY(y) { }
-
-TThreshold::TThreshold(const std::array<int, 2>& coordinate) : mX(coordinate[0]), mY(coordinate[1]) { }
-
 TThreshold::TThreshold(int x, int y, const std::array<int, 50>& dacs) : mX(x), mY(y) {
 	std::copy(std::begin(dacs), std::end(dacs), std::begin(mDacs));
 	mCondition = calculateThreshold();
-}
-
-TThreshold::TThreshold(const std::array<int, 2>& coordinate, const std::array<int, 50>& dacs) : mX(coordinate[0]), mY(coordinate[1]) {
-	std::copy(std::begin(dacs), std::end(dacs), std::begin(mDacs));
-}
-
-TThreshold::TThreshold(int x, int y, std::array<int, 50>&& dacs) : mX(x), mY(y) {
-	std::move(std::begin(dacs), std::end(dacs), std::begin(mDacs));
-}
-
-TThreshold::TThreshold(const std::array<int, 2>& coordinate, std::array<int, 50>&& dacs) : mX(coordinate[0]), mY(coordinate[1]) {
-	std::move(std::begin(dacs), std::end(dacs), std::begin(mDacs));
-}
-
-TThreshold::TThreshold(const TThreshold& copy) : mX(copy.mX), mY(copy.mY), mThr(copy.mThr), mErr(copy.mErr) {
-	std::copy(std::begin(copy.mDacs), std::end(copy.mDacs), std::begin(mDacs));
-}
-
-TThreshold& TThreshold::operator=(const TThreshold& copy) {
-	mX = copy.mX;
-	mY = copy.mY;
-	std::copy(std::begin(copy.mDacs), std::end(copy.mDacs), std::begin(mDacs));
-	mThr = copy.mThr;
-	mErr = copy.mErr;
-	return *this;
-}
-
-TThreshold::TThreshold(TThreshold&& move) : mX(move.mX), mY(move.mY), mThr(move.mThr), mErr(move.mErr) {
-	std::move(std::begin(move.mDacs), std::end(move.mDacs), std::begin(mDacs));
-}
-
-TThreshold& TThreshold::operator=(TThreshold&& move) {
-	mX = move.mX;
-	mY = move.mY;
-	std::move(std::begin(move.mDacs), std::end(move.mDacs), std::begin(mDacs));
-	mThr = move.mThr;
-	mErr = move.mErr;
-	return *this;
 }
 
 TThreshold::~TThreshold() { }
@@ -69,7 +27,9 @@ ThrCondition TThreshold::calculateThreshold() {
 		bool quality = false;
 		int count = 0;
 		while ( !quality ) {
-			fitFunction->SetParameters(20, 10 * count + 10, 10, 25);
+			fitFunction->SetParameters(25, 10 * count + 10, 10, 25);
+			fitFunction->SetParLimits(0, 24.99, 25.11);
+			fitFunction->SetParLimits(3, 24.99, 25.11);
 			thresholdGraph->Fit("fitFunction", "q");
 			mThr = fitFunction->GetParameter(1);
 			mErr = fitFunction->GetParameter(2);
@@ -90,13 +50,32 @@ ThrCondition TThreshold::calculateThreshold() {
 			return ThrCondition::bad_undefine;
 		}
 	}
+
+	findLocalMaximum();
 }
 
-void TThreshold::savePlot() {
+const void TThreshold::savePlot(const std::string& path) const {
 	std::unique_ptr<TCanvas> can(new TCanvas("can", "can", 500, 500));
-	thresholdGraph->SetTitle(static_cast<TString>("Threshold Graph at " + std::to_string(mX) + ", " + std::to_string(mY) + "; ADC[$500 \times e^-$]; DAC[# of Fire]"));
+	thresholdGraph->SetTitle(static_cast<TString>("Threshold Graph at " + std::to_string(mX) + ", " + std::to_string(mY) + "; ADC; DAC"));
 	thresholdGraph->Draw();
-	// can->SaveAs(static_cast<TString>("data/" + std::to_string(mX) + "_" + std::to_string(mY) + ".png"));
+	std::filesystem::path savePath = path;
+	std::filesystem::create_directories(savePath);
+	savePath /= (std::to_string(mX) + "_" + std::to_string(mY) + ".png");
+	can->SaveAs(static_cast<TString>(savePath));
+}
+
+void TThreshold::findLocalMaximum() {
+	int adc = 0;
+	int preDac = 0;
+	int prePreDac = 0;
+	for ( const int dac : mDacs ) {
+		if ( dac < preDac && prePreDac < preDac ) {
+			mLocalMaximum.push_back(adc);
+		}
+		prePreDac = preDac;
+		preDac = dac;
+		adc++;
+	}
 }
 
 const double TThreshold::getX() const {
@@ -121,4 +100,8 @@ const double TThreshold::getQualityFactor() const {
 
 const ThrCondition TThreshold::getCondition() const {
 	return mCondition;
+}
+
+const int TThreshold::getNLocalMaximumPoint() const {
+	return mLocalMaximum.size();
 }

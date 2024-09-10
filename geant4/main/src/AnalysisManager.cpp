@@ -49,19 +49,19 @@ void AnalysisManager::setEventTree() {
 
 void AnalysisManager::setTrackTree() {
 	mTrackTree = new TTree("trackTree", "Tree for recording track informations");
-	mTrackTree->Branch("Track Local ID", &trackTuple.trackLocalID, "trackLocalID/I");
+	// mTrackTree->Branch("Track Local ID", &trackTuple.trackLocalID, "trackLocalID/I");
 	mTrackTree->Branch("Track Global ID", &trackTuple.trackGlobalID, "trackGlobalID/I");
-	mTrackTree->Branch("Referenced Event Global ID", &trackTuple.eventGlobalID, "eventGlobalID/I");
-	mTrackTree->Branch("Parent Local ID", &trackTuple.trackParentLocalID, "trackParentLocalID/I");
+	// mTrackTree->Branch("Referenced Event Global ID", &trackTuple.eventGlobalID, "eventGlobalID/I");
+	// mTrackTree->Branch("Parent Local ID", &trackTuple.trackParentLocalID, "trackParentLocalID/I");
 	mTrackTree->Branch("Number of Steps", &trackTuple.nSteps, "nSteps/I");
 	mTrackTree->Branch("Particle Name", &trackTuple.particleName, "particleName");
 	mTrackTree->Branch("Process Name", &trackTuple.processName, "processName");
-	mTrackTree->Branch("Generating Volume Name", &trackTuple.volumeName, "volumeName");
-	mTrackTree->Branch("Generating Time", &trackTuple.genTime, "genTime/D");
+	// mTrackTree->Branch("Generating Volume Name", &trackTuple.volumeName, "volumeName");
+	// mTrackTree->Branch("Generating Time", &trackTuple.genTime, "genTime/D");
 	mTrackTree->Branch("Generating Position X", &trackTuple.genPosition[0], "genPositionX/D");
 	mTrackTree->Branch("Generating Position Y", &trackTuple.genPosition[1], "genPositionY/D");
 	mTrackTree->Branch("Generating Position Z", &trackTuple.genPosition[2], "genPositionZ/D");
-	mTrackTree->Branch("Generating Kinetic Energy", &trackTuple.genKineteicEnergy, "genKineteicEnergy/D");
+	// mTrackTree->Branch("Generating Kinetic Energy", &trackTuple.genKineteicEnergy, "genKineteicEnergy/D");
 	mTrackTree->Branch("Generating Momentum X", &trackTuple.genMomentum[0], "genMomentumX/D");
 	mTrackTree->Branch("Generating Momentum Y", &trackTuple.genMomentum[1], "genMomentumY/D");
 	mTrackTree->Branch("Generating Momentum Z", &trackTuple.genMomentum[2], "genMomentumZ/D");
@@ -70,17 +70,17 @@ void AnalysisManager::setTrackTree() {
 void AnalysisManager::setStepTree() {
 	mStepTree = new TTree("stepTree", "Tree for recording step information");
 	mStepTree->Branch("Step Global ID", &stepTuple.stepGlobalID, "stepGlobalID/I");
-	mStepTree->Branch("Referenced Track Global ID", &stepTuple.trackGlobalID, "trackGlobalID/I");
-	mStepTree->Branch("Volume Name", &stepTuple.volumeName, "volumeName");
+	// mStepTree->Branch("Referenced Track Global ID", &stepTuple.trackGlobalID, "trackGlobalID/I");
+	// mStepTree->Branch("Volume Name", &stepTuple.volumeName, "volumeName");
 	mStepTree->Branch("Time", &stepTuple.time, "time/D");
 	mStepTree->Branch("Position X", &stepTuple.position[0], "time/D");
 	mStepTree->Branch("Position Y", &stepTuple.position[1], "time/D");
 	mStepTree->Branch("Position Z", &stepTuple.position[2], "time/D");
-	mStepTree->Branch("Kinetic Energy", &stepTuple.kineticEnergy, "time/D");
+	// mStepTree->Branch("Kinetic Energy", &stepTuple.kineticEnergy, "time/D");
 	mStepTree->Branch("Momentum X", &stepTuple.momentum[0], "time/D");
 	mStepTree->Branch("Momentum Y", &stepTuple.momentum[1], "time/D");
 	mStepTree->Branch("Momentum Z", &stepTuple.momentum[2], "time/D");
-	mStepTree->Branch("Delta Energy", &stepTuple.deltaEnergy, "time/D");
+	// mStepTree->Branch("Delta Energy", &stepTuple.deltaEnergy, "time/D");
 	mStepTree->Branch("Total Deposit Energy", &stepTuple.totalDepositEnergy, "time/D");
 	mStepTree->Branch("Non Ionizing Deposit Energy", &stepTuple.nonIonizingEnergyLoss, "time/D");
 }
