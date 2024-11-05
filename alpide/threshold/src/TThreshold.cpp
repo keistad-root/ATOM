@@ -60,7 +60,8 @@ const void TThreshold::savePlot(const std::string& path) const {
 	thresholdGraph->Draw();
 	std::filesystem::path savePath = path;
 	std::filesystem::create_directories(savePath);
-	savePath /= (std::to_string(mX) + "_" + std::to_string(mY) + ".png");
+	savePath /= (std::to_string(mX) + "_" + std::to_string(mY) + "+" + std::to_string(mQualityFactor)
+				 + ".png");
 	can->SaveAs(static_cast<TString>(savePath));
 }
 

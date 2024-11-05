@@ -103,6 +103,9 @@ void TThresholdAnalyser::saveThresholdData() {
 			noise = thr->getError();
 			qualityFactor = thr->getQualityFactor();
 			thresholdTree->Fill();
+			// if ( qualityFactor > 10 ) {
+			// 	thr->savePlot(mDataPath.parent_path());
+			// }
 		}
 	}
 	mThresholdFile->cd();

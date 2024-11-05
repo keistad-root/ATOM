@@ -25,8 +25,6 @@ endif()
 
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
 
-include(AtomBuildOptions)
-
 # Find ROOT package
 find_package(ROOT)
 find_package(ROOT REQUIRED COMPONENTS Core Tree TreePlayer Gpad Hist Physics)
@@ -49,12 +47,12 @@ set(CMAKE_CXX_STANDARD 17)
 if(ROOT_cxx17_FOUND)
   set(CMAKE_CXX_STANDARD 17)
   set(CMAKE_CXX_STANDARD_REQUIRED ON)
-# elseif(ROOT_cxx14_FOUND)
-#   set(CMAKE_CXX_STANDARD 14)
-#   set(CMAKE_CXX_STANDARD_REQUIRED ON)
-# elseif(ROOT_cxx11_FOUND)
-#   set(CMAKE_CXX_STANDARD 11)
-#   set(CMAKE_CXX_STANDARD_REQUIRED ON)
+elseif(ROOT_cxx14_FOUND)
+  set(CMAKE_CXX_STANDARD 14)
+  set(CMAKE_CXX_STANDARD_REQUIRED ON)
+elseif(ROOT_cxx11_FOUND)
+  set(CMAKE_CXX_STANDARD 11)
+  set(CMAKE_CXX_STANDARD_REQUIRED ON)
 endif()
 message(STATUS "Using C++${CMAKE_CXX_STANDARD}")
 
@@ -67,6 +65,10 @@ add_compile_options("-Wno-uninitialized")
 
 add_compile_options("-O1")
 add_compile_options("-g")
+
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    add_compile_options(-Wno-c11-extensions)
+endif()
 
 # Set for doxygen for documentation
 option(BUILD_DOC "Build documentation" ON)
@@ -93,7 +95,11 @@ if (BUILD_DOC)
 	endif (DOXYGEN_FOUND)
 endif (BUILD_DOC)
 
+find_package( OpenCV REQUIRED )
+include_directories( ${OpenCV_INCLUDE_DIRS} )
+message("OpenCV_INCLUDE_DIRS: ${OpenCV_INCLUDE_DIRS}")
 	# Check for build in the source directory
+
 if (CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
   message(STATUS "Building in source tree")
   set(BUILDINSOURCE true)
@@ -106,11 +112,54 @@ message(STATUS "ROOT Include Directory: ${ROOT_INCLUDE_DIRS}")
 message(STATUS "Geant4 Include Directory: ${Geant4_INCLUDE_DIR}")
 message(STATUS "Garfield Include Directory: ${Garfield_INCLUDE_DIR}")
 
+
 # Find header files and source files and store it as variable
-# file(GLOB_RECURSE HEADERS RELATIVE ${PROJECT_SOURCE_DIR} alpide/*/inc/* apts/inc/* chip/inc/* pycpp/inc/* pycpp/config/inc/* simulation/inc/* drawing_tool/inc/*)
-file(GLOB_RECURSE HEADERS RELATIVE ${PROJECT_SOURCE_DIR} alpide/*/inc/* apts/inc/* chip/inc/* geant4/*/inc/* pycpp/inc/* pycpp/config/inc/* simulation/inc/* drawing_tool/inc/*)
-# file(GLOB_RECURSE SOURCES RELATIVE ${PROJECT_SOURCE_DIR} alpide/*/src/* apts/src/* chip/src/* pycpp/src/* pycpp/config/src/* simulation/src/* drawing_tool/src/*)
-file(GLOB_RECURSE SOURCES RELATIVE ${PROJECT_SOURCE_DIR} alpide/*/src/* apts/src/* chip/src/* geant4/*/src/* pycpp/src/* pycpp/config/src/* simulation/src/* drawing_tool/src/*)
+
+
+
+
+
+file(GLOB_RECURSE HEADERS RELATIVE
+	${PROJECT_SOURCE_DIR} 	alpide/analysis/inc/*
+							alpide/cluster/inc/*
+							alpide/comparison/inc/*
+							alpide/daq/inc/*
+							alpide/plot/inc/*
+							alpide/threshold/inc/*
+							apts/inc/*
+							chip/inc/*
+							drawing_tool/inc/*
+							simulation/entry/*
+							simulation/geant4/*
+							tool/config/inc/*
+							tool/parser/inc/*
+							tool/progress/inc/*
+							tool/tool/inc/*
+							apts/inc/*)
+
+file(GLOB_RECURSE SOURCES RELATIVE 
+	${PROJECT_SOURCE_DIR} 	alpide/analysis/src/*
+							alpide/cluster/src/*
+							alpide/comparison/src/*
+							alpide/daq/src/*
+							alpide/plot/src/*
+							alpide/threshold/src/*
+							apts/src/*
+							chip/src/*
+							drawing_tool/src/*
+							simulation/entry/*
+							simulation/geant4/*
+							tool/config/src/*
+							tool/parser/src/*
+							tool/progress/src/*
+							tool/tool/src/*
+							apts/src/*)
+
+
+
+# alpide/*/inc/* apts/inc/* chip/inc/* geant4/*/inc/* pycpp/inc/* pycpp/config/inc/* simulation/inc/* drawing_tool/inc/*
+# file(GLOB_RECURSE SOURCES RELATIVE ${PROJECT_SOURCE_DIR} alpide/*/src/* apts/src/* chip/src/* pycpp/src/* pycpp/config/src/* simulation/src/* drawing_tool/src/*
+# file(GLOB_RECURSE SOURCES RELATIVE ${PROJECT_SOURCE_DIR} alpide/*/src/* apts/src/* chip/src/* geant4/*/src/* pycpp/src/* pycpp/config/src/* simulation/src/* drawing_tool/src/*
 
 message(${HEADERS})
 # file(GLOB_RECURSE HEADERS "${PROJECT_SOURCE_DIR}/include/*.h")
@@ -138,4 +187,3 @@ add_subdirectory(exe)
 # file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/data)
 # file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/output)
 file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/config)
-file(COPY ${CMAKE_SOURCE_DIR}/config DESTINATION ${CMAKE_BINARY_DIR})

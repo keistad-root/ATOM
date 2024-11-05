@@ -86,7 +86,7 @@ bool TCluster::isContain(const TCluster& cluster) const {
 }
 
 const int TCluster::getDistance(const std::pair<int, int>& pixel1, const std::pair<int, int>& pixel2) const {
-	return abs(pixel1.first - pixel2.first) + abs(pixel1.second - pixel2.second);
+	return std::abs(pixel1.first - pixel2.first) + std::abs(pixel1.second - pixel2.second);
 }
 
 void TCluster::calMembers() {
@@ -126,7 +126,7 @@ void TCluster::calSize() {
 void TCluster::calLongRadius() {
 	double maxDistance = 0.;
 	for ( const std::pair<int, int>& pixel : mPixels ) {
-		double distance = pow(abs(pixel.first - center.first) + .5, 2) + pow(abs(pixel.second - center.second) + .5, 2);
+		double distance = pow(std::abs(pixel.first - center.first) + .5, 2) + pow(std::abs(pixel.second - center.second) + .5, 2);
 		maxDistance = std::max(maxDistance, distance);
 	}
 	mLongRadius = sqrt(maxDistance);

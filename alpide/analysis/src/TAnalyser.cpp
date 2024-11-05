@@ -255,7 +255,7 @@ void TAnalyser::getClusterinfos() {
 	Int_t columnMax = 512;
 
 	mOriginClustermap = new TH2D("originClustermap", "Origin Hitmap", rawBins, rawMin, rawMax, columnBins, columnMin, columnMax);
-	mOriginClustersize = new TH1D("originClustersize", "", 120.5, 0, 120.5);
+	mOriginClustersize = new TH1D("originClustersize", "", 120, 0.5, 120.5);
 	for ( const TCluster* cluster : mOriginClusterSet ) {
 		const std::pair<double, double> center = cluster->getCenter();
 		mOriginClustermap->Fill(center.first, center.second);
@@ -263,7 +263,7 @@ void TAnalyser::getClusterinfos() {
 	}
 
 	mHHCutClustermap = new TH2D("highHitCutClustermap", "", rawBins, rawMin, rawMax, columnBins, columnMin, columnMax);
-	mHHCutClustersize = new TH1D("highHitCutClustersize", "", 120.5, 0, 120.5);
+	mHHCutClustersize = new TH1D("highHitCutClustersize", "", 120, 0.5, 120.5);
 	for ( const TCluster* cluster : mHHCutClusterSet ) {
 		const std::pair<double, double> center = cluster->getCenter();
 		mHHCutClustermap->Fill(center.first, center.second);
@@ -677,7 +677,7 @@ void TAnalyser::HCMasking() {
 // 	for ( int pixelX = 0; pixelX < matrix->getNRow(); pixelX++ ) {
 // 		for ( int pixelY = 0; pixelY < matrix->getNColumn(); pixelY++ ) {
 // 			if ( matrix->getElement(pixelX, pixelY) == 1 ) {
-// 				int distance = pow(abs(2 * pixelX * clusterSize - centreX) + clusterSize, 2) + pow(abs(2 * pixelY * clusterSize - centreY) + clusterSize, 2);
+// 				int distance = pow(std::abs(2 * pixelX * clusterSize - centreX) + clusterSize, 2) + pow(std::abs(2 * pixelY * clusterSize - centreY) + clusterSize, 2);
 // 				radiusSquare = std::max(radiusSquare, distance);
 // 			}
 // 		}
@@ -685,7 +685,7 @@ void TAnalyser::HCMasking() {
 // 	int count = 0;
 // 	for ( int x = floor((centreX - sqrt(radiusSquare)) / (2 * clusterSize)); x < ceil((centreX + sqrt(radiusSquare)) / (2 * clusterSize)) + 1; x++ ) {
 // 		for ( int y = floor((centreY - sqrt(radiusSquare)) / (2 * clusterSize)); y < ceil((centreY + sqrt(radiusSquare)) / (2 * clusterSize)) + 1; y++ ) {
-// 			if ( static_cast<int>(std::pow(abs(2 * x * clusterSize - centreX) + clusterSize, 2)) + static_cast<int>(std::pow(abs(2 * y * clusterSize - centreY) + clusterSize, 2)) <= radiusSquare ) {
+// 			if ( static_cast<int>(std::pow(std::abs(2 * x * clusterSize - centreX) + clusterSize, 2)) + static_cast<int>(std::pow(std::abs(2 * y * clusterSize - centreY) + clusterSize, 2)) <= radiusSquare ) {
 // 				count++;
 // 			}
 // 		}

@@ -143,8 +143,8 @@ void TGraphCompare::TCompareClusterSize(std::string_view typeName, const CppConf
 		TString legendTitle = plotConfigList.find(distribution.first)->second.find("legend_title");
 		TString strEntry = Form("%.2f", round(nEntry * 100) / 100.);
 		if ( plotConfigList.find(distribution.first)->second.hasKey("scale_error_max") ) {
-			TString strEntryPlus = Form("%.2f", abs(round(nEntry * (stof(plotConfigList.find(distribution.first)->second.find("scale_error_max")) - 1) * 100) / 100.));
-			TString strEntryMinus = Form("%.2f", abs(round(nEntry * (1 - stof(plotConfigList.find(distribution.first)->second.find("scale_error_min"))) * 100) / 100.));
+			TString strEntryPlus = Form("%.2f", static_cast<double>(std::abs(round(nEntry * (stof(plotConfigList.find(distribution.first)->second.find("scale_error_max")) - 1) * 100) / 100.)));
+			TString strEntryMinus = Form("%.2f", static_cast<double>(std::abs(round(nEntry * (1 - stof(plotConfigList.find(distribution.first)->second.find("scale_error_min"))) * 100) / 100.)));
 			legend->AddEntry(distribution.second, legendTitle + "(" + strEntry + "+" + strEntryPlus + "-" + strEntryMinus + " in " + std::to_string(csMin) + " ~ " + std::to_string(csMax) + ")", "l");
 		} else {
 			Float_t scaleFactor = stof(plotConfigList.find(distribution.first)->second.find("scale"));

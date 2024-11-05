@@ -1,41 +1,51 @@
-#include "ExperimentAnalysis.hpp"
+#include <iostream>
+#include <fstream>
+#include <filesystem>
 
-class ExeControlPanel {
-private:
-	ArgumentParser mParser;
-	CppConfigFile mConfig;
-public:
-	ExeControlPanel(int argc, char** argv);
-	void setConfig();
-	const CppConfigFile& getConfig() const;
-};
+#include "CppConfigFile.h"
+#include "TAnalyser.h"
+#include "TExperimentData.h"
+#include "cppargs.h"
+#include "TClusterDivideData.h"
+#include "TClusterization.h"
 
-ExeControlPanel::ExeControlPanel(int argc, char** argv) : mParser(argc, argv) {
-	mParser.setDescription("Draw plots for analysis data");
-	mParser.add_argument("config").help("Config File").set_default("default").add_finish();
-	mParser.parse_args();
-}
+#include "TCanvas.h"
+#include "TFile.h"
 
-void ExeControlPanel::setConfig() {
-	std::string configPath = mParser.get_value<std::string>("config");
-	mConfig = CppConfigFile(configPath);
-}
+#include "TDataAnalyser.h"
 
-const CppConfigFile& ExeControlPanel::getConfig() const {
-	return mConfig;
+ArgumentParser set_parse(int argc, char** argv) {
+	ArgumentParser parser = ArgumentParser(argc, argv).setDescription("Draw experiment information of an ALPIDE");
+	parser.add_argument("config").help("Config File").set_default("default").add_finish();
+	parser.parse_args();
+	return parser;
 }
 
 int main(int argc, char** argv) {
-	ExeControlPanel controller(argc, argv);
-	controller.setConfig();
+	ArgumentParser parser = set_parse(argc, argv);
+	std::string configPath = parser.get_value<std::string>("config");
+	CppConfigFile* config = new CppConfigFile(configPath);
 
-	TAnalyser* mAnalyser = new TAnalyser(controller.getConfig());
-	mAnalyser->originMasking();
-	mAnalyser->storeEvents();
-	mAnalyser->setExpSettingLegend();
-	mAnalyser->getHitmaps();
-	mAnalyser->clusterize();
-	mAnalyser->getClusterinfos();
+	TDataAnalyser* analyser = new TDataAnalyser(config);
+	analyser->extractEvent();
+	analyser->excludeHotPixel();
+	analyser->extractCluster();
+	analyser->saveEvent();
+	analyser->saveCluster();
+	analyser->extractHotPixel();
+
+	delete analyser;
+
+
+
+
+	// TAnalyser* mAnalyser = new TAnalyser(controller.getConfig());
+	// mAnalyser->originMasking();
+	// mAnalyser->storeEvents();
+	// mAnalyser->setExpSettingLegend();
+	// mAnalyser->getHitmaps();
+	// mAnalyser->clusterize();
+	// mAnalyser->getClusterinfos();
 
 
 	// controller.openInputFile();
@@ -50,8 +60,8 @@ int main(int argc, char** argv) {
 	// clusterAnalyser.saveHitmapByClustersize(*config->getConfig("Clustermap"));
 
 
-	delete mAnalyser;
-	mAnalyser = nullptr;
+// 	delete mAnalyser;
+// mAnalyser = nullptr;
 
 	return 0;
 }

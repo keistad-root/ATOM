@@ -3,39 +3,6 @@
 
 TALPIDEEvent::TALPIDEEvent() : TEvent(), fBits(kNotDeleted) { }
 
-TALPIDEEvent::TALPIDEEvent(const TALPIDEEvent& copy) : iTime(copy.iTime), fBits(copy.fBits) {
-	setEvent(copy.getEvent());
-	data.assign(copy.data.begin(), copy.data.end());
-}
-
-TALPIDEEvent& TALPIDEEvent::operator=(const TALPIDEEvent& copy) {
-	setEvent(copy.getEvent());
-	fBits = copy.fBits;
-	iTime = copy.iTime;
-	data.assign(copy.data.begin(), copy.data.end());
-	return *this;
-}
-
-TALPIDEEvent::TALPIDEEvent(TALPIDEEvent&& move) : iTime(move.iTime), fBits(move.fBits) {
-	setEvent(move.getEvent());
-	data.assign(move.data.begin(), move.data.end());
-	move.fBits = 0;
-	move.setEvent(0);
-	move.iTime = 0;
-	move.data.clear();
-}
-
-TALPIDEEvent& TALPIDEEvent::operator=(TALPIDEEvent&& move) {
-	setEvent(move.getEvent());
-	fBits = move.fBits;
-	iTime = move.iTime;
-	data.assign(move.data.begin(), move.data.end());
-	move.setEvent(0);
-	move.fBits = 0;
-	move.iTime = 0;
-	move.data.clear();
-	return *this;
-}
 
 void TALPIDEEvent::setTime(const long int time) {
 	iTime = time;
@@ -52,7 +19,6 @@ const long int TALPIDEEvent::getTime() const {
 const std::vector<std::pair<int, int>>& TALPIDEEvent::getData() const {
 	return data;
 }
-
 void TALPIDEEvent::removePixel(const std::pair<int, int>& coordinate) {
 	data.erase(std::find(data.begin(), data.end(), coordinate));
 }

@@ -12,17 +12,14 @@
 #include "TEvent.h"
 
 class TALPIDEEvent : public TEvent {
+public:
+	TALPIDEEvent();
+
 private:
 	long int iTime;
 	std::vector<std::pair<int, int>> data;
 
 public:
-	TALPIDEEvent();
-	TALPIDEEvent(const TALPIDEEvent& copy);
-	TALPIDEEvent& operator=(const TALPIDEEvent& copy);
-	TALPIDEEvent(TALPIDEEvent&& move);
-	TALPIDEEvent& operator=(TALPIDEEvent&& move);
-
 	// Setter
 	void setTime(const long int time);
 

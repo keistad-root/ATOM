@@ -174,7 +174,7 @@ int calNIncludePixel(const TMatrix2D<int>* matrix) {
 	for ( int pixelX = 0; pixelX < matrix->getNRow(); pixelX++ ) {
 		for ( int pixelY = 0; pixelY < matrix->getNColumn(); pixelY++ ) {
 			if ( matrix->getElement(pixelX, pixelY) == 1 ) {
-				int distance = pow(abs(2 * pixelX * clusterSize - centreX) + clusterSize, 2) + pow(abs(2 * pixelY * clusterSize - centreY) + clusterSize, 2);
+				int distance = pow(std::abs(2 * pixelX * clusterSize - centreX) + clusterSize, 2) + pow(std::abs(2 * pixelY * clusterSize - centreY) + clusterSize, 2);
 				radiusSquare = std::max(radiusSquare, distance);
 			}
 		}
@@ -182,7 +182,7 @@ int calNIncludePixel(const TMatrix2D<int>* matrix) {
 	int count = 0;
 	for ( int x = floor((centreX - sqrt(radiusSquare)) / (2 * clusterSize)); x < ceil((centreX + sqrt(radiusSquare)) / (2 * clusterSize)) + 1; x++ ) {
 		for ( int y = floor((centreY - sqrt(radiusSquare)) / (2 * clusterSize)); y < ceil((centreY + sqrt(radiusSquare)) / (2 * clusterSize)) + 1; y++ ) {
-			if ( static_cast<int>(std::pow(abs(2 * x * clusterSize - centreX) + clusterSize, 2)) + static_cast<int>(std::pow(abs(2 * y * clusterSize - centreY) + clusterSize, 2)) <= radiusSquare ) {
+			if ( static_cast<int>(std::pow(std::abs(2 * x * clusterSize - centreX) + clusterSize, 2)) + static_cast<int>(std::pow(std::abs(2 * y * clusterSize - centreY) + clusterSize, 2)) <= radiusSquare ) {
 				count++;
 			}
 		}

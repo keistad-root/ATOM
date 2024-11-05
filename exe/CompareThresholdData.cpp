@@ -18,6 +18,12 @@ int main(int argc, char** argv) {
 	thrCompare.getFile();
 	thrCompare.mergeThreshold();
 	thrCompare.mergeError();
+	thrCompare.mergeQuality();
+	thrCompare.compareThresholdValue();
+	thrCompare.compareNoiseValue();
+	thrCompare.compareQualityValue();
+	thrCompare.compareEntry();
+	thrCompare.compareStdDev();
 
 	return 0;
 }

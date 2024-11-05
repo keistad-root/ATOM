@@ -1,16 +1,18 @@
 #include "TEntrySimulation_v2.h"
 
-#include "TGraph.h"
-#include "TCanvas.h"
-#include "TMath.h"
-#include "TF1.h"
-#include "TColor.h"
-#include "TLegend.h"
-#include "TMultiGraph.h"
+#include<array>
+#include<vector>
+
 #include "cppargs.h"
 #include "CppConfigFile.h"
-#include "TGraphErrors.h"
-#include "TGraphUser.h"
+#include "TMathUser.h"
+#include "TGraph.h"
+#include "TH2.h"
+#include "TSimulSource.h"
+#include "TSimulDetector.h"
+#include "TSimulCollimator.h"
+#include "TTrack.h"
+#include "TCanvas.h"
 
 ArgumentParser set_parse(int argc, char** argv) {
 	ArgumentParser parser = ArgumentParser(argc, argv).setDescription("Simulation for entry research");
@@ -19,137 +21,95 @@ ArgumentParser set_parse(int argc, char** argv) {
 	return parser;
 }
 
+TSimulSource* setSource(const CppConfigDictionary& config) {
+	double x = 0., y = 0., z = 0.;
+	double radius = config.hasKey("source_radius") ? stod(config.find("source_radius")) : 2.5;
+	int step = config.hasKey("source_step") ? stoi(config.find("source_step")) : 1;
+
+	TSimulSource* source = new TSimulSource(x, y, z, radius, step);
+	source->extractCoordinate();
+
+	return source;
+}
+
+TSimulDetector* setDetector(const CppConfigDictionary& config) {
+	double x = config.hasKey("x") ? stod(config.find("x")) : 0.;
+	double y = config.hasKey("y") ? stod(config.find("y")) : 0.;
+	double z = config.hasKey("z") ? stod(config.find("z")) : 0.;
+	double width = 30., height = 15.;
+
+	TSimulDetector* detector = new TSimulDetector(x, y, z, width, height);
+	return detector;
+}
+
+TSimulCollimator* setCollimator(const CppConfigDictionary& config) {
+	double uX = config.hasKey("upper_x") ? stod(config.find("upper_x")) : 0.;
+	double uY = config.hasKey("upper_y") ? stod(config.find("upper_y")) : 0.;
+	double uZ = config.hasKey("upper_z") ? stod(config.find("upper_z")) : 0.;
+	double uRadius;
+	if ( config.hasKey("upper_radius") ) {
+		uRadius = stod(config.find("upper_radius"));
+	} else if ( config.hasKey("upper_area") ) {
+		uRadius = sqrt(stod(config.find("upper_area")) / TMath::Pi());
+	} else {
+		uRadius = 0.;
+	}
+
+	double lX = config.hasKey("lower_x") ? stod(config.find("lower_x")) : 0.;
+	double lY = config.hasKey("lower_y") ? stod(config.find("lower_y")) : 0.;
+	double lZ = config.hasKey("lower_z") ? stod(config.find("lower_z")) : 0.;
+	double lRadius;
+	if ( config.hasKey("lower_radius") ) {
+		lRadius = stod(config.find("lower_radius"));
+	} else if ( config.hasKey("lower_area") ) {
+		lRadius = sqrt(stod(config.find("lower_area")) / TMath::Pi());
+	} else {
+		lRadius = 0.;
+	}
+
+	TSimulCollimator* collimator = new TSimulCollimator(uX, uY, uZ, uRadius, lX, lY, lZ, lRadius);
+	return collimator;
+}
+
+
+
 int main(int argc, char** argv) {
-	// Call setting configs from config file.
 	ArgumentParser parser = set_parse(argc, argv);
 	std::string configPath = parser.get_value<std::string>("config");
 	CppConfigFile config(configPath);
-	CppConfigDictionary fileConfig = config.getConfig("File");
-	CppConfigDictionary environmentConfig = config.getConfig("Environment");
-	CppConfigDictionary graphConfig = config.getConfig("Graph");
-
-	// Set source radius
-	double sourceRadius = 2.5;
-	if ( environmentConfig.hasKey("source_radius") ) {
-		sourceRadius = stod(environmentConfig.find("source_radius"));
-	}
-
-	//Set detector paramters
-	double detectorX = 30.;
-	double detectorY = 15.;
-	double S2CDistance = .5;
-	double C2DDistance = 3.;
-	double collimatorLength = 1.;
-	double detectorCoordX = 0.;
-	double detectorCoordY = 0.;
-	if ( environmentConfig.hasKey("detector_x") ) {
-		detectorX = stod(environmentConfig.find("detector_x"));
-	}
-	if ( environmentConfig.hasKey("detector_y") ) {
-		detectorY = stod(environmentConfig.find("detector_y"));
-	}
-	if ( environmentConfig.hasKey("source_to_collimator") ) {
-		S2CDistance = stod(environmentConfig.find("source_to_collimator"));
-	}
-	if ( environmentConfig.hasKey("collimator_to_detector") ) {
-		C2DDistance = stod(environmentConfig.find("collimator_to_detector"));
-	}
-	if ( environmentConfig.hasKey("collimator_length") ) {
-		collimatorLength = stod(environmentConfig.find("collimator_length"));
-	}
-	if ( environmentConfig.hasKey("detector_coord_x") ) {
-		detectorCoordX = stod(environmentConfig.find("detector_coord_x"));
-	}
-	if ( environmentConfig.hasKey("detector_coord_y") ) {
-		detectorCoordY = stod(environmentConfig.find("detector_coord_y"));
-	}
-
-	// Set collimator paramters
-	double collimatorRadius = 1.5;
-	if ( environmentConfig.hasKey("collimator_radius") ) {
-		collimatorRadius = stod(environmentConfig.find("collimator_radius"));
-	}
 
 
-	TAdvancedEntrySimulation* simulation = new TAdvancedEntrySimulation(.25);
-	simulation->setSource(sourceRadius);
-	simulation->setDetector({detectorCoordX, detectorCoordY, -(S2CDistance + C2DDistance + collimatorLength)}, detectorX, detectorY);
-	simulation->setCollimator({0., 0., -S2CDistance}, collimatorRadius, {0., 0., -(S2CDistance + collimatorLength)}, collimatorRadius);
-	simulation->extractTrack(360);
+	TSimulSource* source = setSource(config.getConfig("Source"));
+	TSimulDetector* detector = setDetector(config.getConfig("Detector"));
+	TSimulCollimator* collimator = setCollimator(config.getConfig("Collimator"));
 
-	// TGraph* graph = new TGraph();
-	std::vector<std::pair<std::string, std::vector<std::array<double, 2>>>> ratio;
-	double divideCriteria = 0.;
-	if ( graphConfig.find("type") == "comprehensive_point" ) {
-		int nGraph = graphConfig.getSubConfig("graphs").getSubConfigSet().size();
-		int previousLength = 0;
-		for ( int iGraph = 0; iGraph < nGraph; iGraph++ ) {
-			std::vector<std::array<double, 2>> tempRatio;
-			double length = stod(graphConfig.getSubConfig("graphs").getSubConfigSet()[iGraph].find("length"));
-			std::string widthStr = graphConfig.getSubConfig("graphs").getSubConfigSet()[iGraph].find("width");
-			double min = stod(widthStr.substr(0, widthStr.find(':')));
-			widthStr = widthStr.substr(widthStr.find(':') + 1);
-			double max = stod(widthStr.substr(0, widthStr.find(':')));
-			widthStr = widthStr.substr(widthStr.find(':') + 1);
-			double gap = stod(widthStr.substr(0, widthStr.find(':')));
-			std::cout << "Collimator Length = " << length << std::endl;
-			for ( double width = min; width < max; width += gap ) {
-				simulation->setDetector({detectorCoordX, detectorCoordY, -(S2CDistance + C2DDistance + length)}, detectorX, detectorY);
-				simulation->setCollimator({0., 0., -S2CDistance}, sqrt(width / TMath::Pi()), {0., 0., -(S2CDistance + length)}, sqrt(width / TMath::Pi()));
-				if ( previousLength != length ) {
-					simulation->extractTrack(360);
+	std::vector<TTrack*> trackSet;
+
+	CppConfigDictionary envConfig = config.getConfig("Environment");
+	int thetaStep = envConfig.hasKey("theta_step") ? stoi(envConfig.find("theta_step")) : 18.;
+	int phiStep = envConfig.hasKey("phi_step") ? stoi(envConfig.find("phi_step")) : 36.;
+
+	int nSourcePoint = source->getSourceCoordinate().size();
+	double factor = (TMath::Pi() / thetaStep) * (2 * TMath::Pi() / phiStep) * (1. / nSourcePoint) / (2 * TMath::Pi());
+	double ratio = 0.;
+	for ( int i = 0; i < nSourcePoint; i++ ) {
+		int x = source->getSourceCoordinate()[i].first;
+		int y = source->getSourceCoordinate()[i].second;
+
+		for ( int iTheta = ((thetaStep / 2) + 1); iTheta < thetaStep + 1; iTheta++ ) {
+			double theta = iTheta * TMath::Pi() / thetaStep;
+			for ( int iPhi = 0; iPhi < phiStep + 1; iPhi++ ) {
+				double phi = iPhi * (2 * TMath::Pi()) / phiStep;
+				TTrack* track = new TTrack(x, y, 0, theta, phi);
+				if ( collimator->isInclude(track) && detector->isInclude(track) ) {
+					double weight = sin(theta) * factor;
+					ratio += weight;
 				}
-				double entryRatio = simulation->calculateEntry();
-				tempRatio.push_back({width, entryRatio});
-				if ( width > 34.9 && width < 35.1 && length > 0.9 && length < 1.1 ) {
-					divideCriteria = entryRatio;
-				}
-				std::cout << length << "\t" << width << "\t" << entryRatio << std::endl;
-
-				previousLength = static_cast<int>(length * 10);
-			}
-			ratio.push_back({std::string(graphConfig.getSubConfig("graphs").getSubConfigSet()[iGraph].getConfigName()), tempRatio});
-		}
-		std::vector<TGraph*> entryRatioGraph;
-
-		double totalActivity = stod(environmentConfig.find("source_becquerel")) * stod(environmentConfig.find("time"));
-
-		TGraphUser* graph1 = new TGraphUser(graphConfig.getSubConfig("entryRatio"));
-		for ( const std::pair<std::string, std::vector<std::array<double, 2>>>&ratioSet : ratio ) {
-			entryRatioGraph.push_back(new TGraph());
-			for ( const std::array<double, 2>&point : ratioSet.second ) {
-				// entryRatioGraph.back()->AddPoint(point[0], point[1] * totalActivity);
-				entryRatioGraph.back()->AddPoint(point[0], point[1] * 420200 / 0.099267);
-			}
-			int nGraph = graphConfig.getSubConfig("graphs").getSubConfigSet().size();
-			for ( int iGraph = 0; iGraph < nGraph; iGraph++ ) {
-				if ( graphConfig.getSubConfig("graphs").getSubConfigSet()[iGraph].getConfigName() == ratioSet.first ) {
-					graph1->AddGraph(entryRatioGraph.back(), graphConfig.getSubConfig("graphs").getSubConfigSet()[iGraph]);
-				}
+				delete track;
 			}
 		}
-
-		for ( const CppConfigDictionary& expData : graphConfig.getSubConfig("exp_data").getSubConfigSet() ) {
-			TGraphErrors* eGraph = new TGraphErrors();
-			int i = 0;
-			for ( const CppConfigDictionary& point : expData.getSubConfig("point").getSubConfigSet() ) {
-				Double_t width = stod(point.find("width"));
-				Double_t width_error = stod(point.find("width_error"));
-				Double_t value = stod(point.find("value"));
-				Double_t error = stod(point.find("error"));
-				eGraph->SetPoint(i, width, value);
-				eGraph->SetPointError(i, width_error, error);
-				i++;
-			}
-			graph1->AddGraph(eGraph, expData);
-		}
-
-
-		// Set output path and create directories if it isn't.
-		std::filesystem::path outputPath = fileConfig.find("output_path");
-		std::filesystem::create_directories(outputPath);
-		graph1->Save(outputPath);
-
 	}
+	std::cout << ratio << std::endl;
+
 	return 0;
 }

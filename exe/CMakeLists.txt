@@ -1,15 +1,23 @@
 # Set the exe file set
 set(TEST_EXE
-    ExperimentAnalysis
+    # ExperimentAnalysis
     ThresholdAnalysis
-    # GarfieldSimulation
-    Merge
-    CompareExperimentData
+	ThresholdPlot
 	CompareThresholdData
+
+    ThrPede
+
+	# GarfieldSimulation
+    Merge
+	DataMasking
+	ExperimentPlotter
+	CompareExperimentData
     entrySimulation
 	simulation
     SimulationAnalysis
-	ThresholdPlot
+	photo
+	
+	test
 )
 # for now put the executables in the build root for compatibility with existing scripts
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
@@ -22,4 +30,5 @@ foreach(exe ${TEST_EXE})
     endforeach()
     # target_link_libraries(${exe} myProject ROOT::Core ROOT::Gpad ROOT::Hist ROOT::Tree)
     target_link_libraries(${exe} myProject ${Geant4_LIBRARIES} ROOT::Core ROOT::Gpad ROOT::Hist ROOT::Tree Garfield::Garfield)
+    target_link_libraries(${exe} ${OpenCV_LIBS})
 endforeach()
