@@ -11,21 +11,36 @@
 #include "TStyle.h"
 
 #include "TCollimator.h"
+#include "cppargs.h"
+
+
+ArgumentParser set_parse(int argc, char** argv) {
+	ArgumentParser parser = ArgumentParser(argc, argv).setDescription("Draw plots for analysis data");
+	parser.add_argument("config").help("Config file").set_default("default").add_finish();
+	parser.parse_args();
+	return parser;
+}
 
 
 int main(int argc, char** argv) {
 
-	std::string directory = "Data/photo";
+	ArgumentParser parser = set_parse(argc, argv);
 
-	TCollimator* collimator = new TCollimator("Data/photo/L1phi4.jpeg");
+	CppConfigFile* config = new CppConfigFile(parser.get_value<std::string>("config"));
 
-	// collimator->getComponent();
-	// collimator->saveComponent("Data/");
+	TCollimator* collimator = new TCollimator(config);
+
+	collimator->getComponent();
+	collimator->saveComponent();
 
 	// collimator->getBox();
 	// collimator->drawBox();
 	collimator->getHole();
 	collimator->drawHole();
+	collimator->getRuler();
+	collimator->drawRuler();
+	collimator->getArea();
+	collimator->drawRow(925);
 	// collimator->drawTotal();
 
 	// JPEGTool tool("Data/photo/L20phi7.jpeg");

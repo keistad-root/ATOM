@@ -1,6 +1,6 @@
 import os
 
-output_file = open('build/Data/threshold.csv', 'w')
+output_file = open('Data/threshold.csv', 'w')
 
 file_list = os.listdir('/mnt/raw/cluster_size/threshold/')
 number = 0
@@ -9,9 +9,9 @@ output_file.write('Number, RawPath, ConfigPath, DataPath, OutputPath, GraphPath\
 
 raw_path = '/mnt/raw/cluster_size/threshold/'
 config_path = '/mnt/raw/cluster_size/threshold/'
-data_path = '/mnt/homes/ychoi/PIDproject/entry_test/preprocessed/threshold/'
-proprecessed_path = '/mnt/homes/ychoi/PIDproject/entry_test/plots/threshold/'
-graph_path = '/mnt/homes/ychoi/PIDproject/entry_test/graph/threshold/'
+data_path = '/mnt/homes/ychoi/entry_test/raw/'
+proprecessed_path = '/mnt/homes/ychoi/entry_test/threshold_plot/'
+graph_path = '/mnt/homes/ychoi/entry_test/threshold/'
 
 
 for file in file_list:

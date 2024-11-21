@@ -120,40 +120,40 @@ message(STATUS "Garfield Include Directory: ${Garfield_INCLUDE_DIR}")
 
 
 file(GLOB_RECURSE HEADERS RELATIVE
-	${PROJECT_SOURCE_DIR} 	alpide/analysis/inc/*
-							alpide/cluster/inc/*
-							alpide/comparison/inc/*
-							alpide/daq/inc/*
-							alpide/plot/inc/*
-							alpide/threshold/inc/*
-							apts/inc/*
-							chip/inc/*
-							drawing_tool/inc/*
-							simulation/entry/*
-							simulation/geant4/*
-							tool/config/inc/*
-							tool/parser/inc/*
-							tool/progress/inc/*
-							tool/tool/inc/*
-							apts/inc/*)
+	${PROJECT_SOURCE_DIR} 	module/alpide/analysis/inc/*
+							module/alpide/cluster/inc/*
+							module/alpide/comparison/inc/*
+							module/alpide/daq/inc/*
+							module/alpide/plot/inc/*
+							module/alpide/threshold/inc/*
+							module/apts/inc/*
+							module/chip/inc/*
+							module/drawing_tool/inc/*
+							module/simulation/entry/*
+							module/simulation/geant4/*
+							module/tool/config/inc/*
+							module/tool/parser/inc/*
+							module/tool/progress/inc/*
+							module/tool/tool/inc/*
+							module/apts/inc/*)
 
 file(GLOB_RECURSE SOURCES RELATIVE 
-	${PROJECT_SOURCE_DIR} 	alpide/analysis/src/*
-							alpide/cluster/src/*
-							alpide/comparison/src/*
-							alpide/daq/src/*
-							alpide/plot/src/*
-							alpide/threshold/src/*
-							apts/src/*
-							chip/src/*
-							drawing_tool/src/*
-							simulation/entry/*
-							simulation/geant4/*
-							tool/config/src/*
-							tool/parser/src/*
-							tool/progress/src/*
-							tool/tool/src/*
-							apts/src/*)
+	${PROJECT_SOURCE_DIR} 	module/alpide/analysis/src/*
+							module/alpide/cluster/src/*
+							module/alpide/comparison/src/*
+							module/alpide/daq/src/*
+							module/alpide/plot/src/*
+							module/alpide/threshold/src/*
+							module/apts/src/*
+							module/chip/src/*
+							module/drawing_tool/src/*
+							module/simulation/entry/*
+							module/simulation/geant4/*
+							module/tool/config/src/*
+							module/tool/parser/src/*
+							module/tool/progress/src/*
+							module/tool/tool/src/*
+							module/apts/src/*)
 
 
 

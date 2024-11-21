@@ -4,20 +4,17 @@ set(TEST_EXE
     ThresholdAnalysis
 	ThresholdPlot
 	CompareThresholdData
-
+	ExperimentComparison
     ThrPede
 
 	# GarfieldSimulation
     Merge
-	DataMasking
-	ExperimentPlotter
-	CompareExperimentData
+	ExperimentMasking
+	ExperimentPloting
     entrySimulation
 	simulation
     SimulationAnalysis
 	photo
-	
-	test
 )
 # for now put the executables in the build root for compatibility with existing scripts
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
