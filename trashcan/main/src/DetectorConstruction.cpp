@@ -61,9 +61,9 @@ G4VPhysicalVolume* DetectorConstruction::Construct(G4String standType, G4double 
 void DetectorConstruction::SetWorld(G4double air_pressure) {
 	material->setWorldMaterial(air_pressure);
 
-	G4double worldX = 100.;
-	G4double worldY = 100.;
-	G4double worldZ = 50.;
+	G4double worldX = 300.;
+	G4double worldY = 300.;
+	G4double worldZ = 500.;
 
 	G4Box* solidWorld = new G4Box("World", .5 * worldX * mm, .5 * worldY * mm, .5 * worldZ * mm);
 
