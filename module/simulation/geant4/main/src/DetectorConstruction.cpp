@@ -16,6 +16,10 @@ DetectorConstruction::~DetectorConstruction() {
 }
 
 G4VPhysicalVolume* DetectorConstruction::Construct() {
+	G4bool checkOverlaps = true;
+	if ( WorldLogical != nullptr ) {
+		WorldPhysical = new G4PVPlacement(0, G4ThreeVector(), WorldLogical, "World", 0, false, 0, checkOverlaps);
+	}
 	return WorldPhysical;
 }
 
@@ -56,7 +60,13 @@ G4VPhysicalVolume* DetectorConstruction::Construct(G4String standType, G4double 
 
 void DetectorConstruction::SetWorld(G4double air_pressure) {
 	material->setWorldMaterial(air_pressure);
-	G4Box* solidWorld = new G4Box("World", .5 * 300. * mm, .5 * 300. * mm, .5 * 150. * mm);
+
+	G4double worldX = 100.;
+	G4double worldY = 100.;
+	G4double worldZ = 50.;
+
+	G4Box* solidWorld = new G4Box("World", .5 * worldX * mm, .5 * worldY * mm, .5 * worldZ * mm);
+
 	WorldLogical = new G4LogicalVolume(solidWorld, material->getWorldMaterial(), "World");
 }
 

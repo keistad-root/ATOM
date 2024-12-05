@@ -16,6 +16,7 @@ bool TSimulCollimator::isInclude(TTrack* track) {
 	bool lower = pow(lXY[0] - mLowerCenter[0], 2) + pow(lXY[1] - mLowerCenter[1], 2) < pow(mLowerRadius, 2);
 
 	if ( upper && lower ) {
+		// if ( upper ) {
 		return true;
 	} else {
 		return false;

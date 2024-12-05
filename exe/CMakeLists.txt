@@ -6,7 +6,8 @@ set(TEST_EXE
 	CompareThresholdData
 	ExperimentComparison
     ThrPede
-
+	CompareCollimatorArea
+	CompareEntry
 	# GarfieldSimulation
     Merge
 	ExperimentMasking

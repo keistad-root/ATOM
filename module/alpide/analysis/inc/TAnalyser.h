@@ -12,8 +12,6 @@
 #ifndef __TANALYSER__
 #define __TANALYSER__
 
-#ifdef __TANALYSER_HEADERS__
-
 #include "TFile.h"
 #include "TTree.h"
 #include "TH1.h"
@@ -25,7 +23,7 @@
 #include "TGraph.h"
 #include "TF1.h"
 #include "TLegend.h"
-#include "TH1IUser.h"
+#include "TH1User.h"
 
 #include "cpptqdm.h"
 
@@ -38,7 +36,6 @@
 #include "TClusterDivideData.h"
 #include "TClusterShape.h"
 #include "TClusterization.h"
-#endif
 
 #include<string>
 #include<fstream>
@@ -50,41 +47,25 @@
 #include "TFileFormat.h"
 #include "CppConfigFile.h"
 
-class TFile;
-class TTree;
-class TH2D;
-class TH1D;
-class TPaveText;
-
-class Configurable;
-
-// struct TInputRoot;
-class TALPIDEEvent;
-class TExperimentData;
-class TClusterDivideData;
-class TClusterShape;
-class TDirectory;
-
-class CppConfigDictionary;
-class TCluster;
-typedef unsigned int UInt_t;
-
-/**
- * @class TAnalyser
- * @brief For ROOT and config file when analysis
- * @details It sotre ROOT file and Config file.
- * It provide open and access such kind files.
- * It is made for being mother class of Analysis class.
- * @warning
- * @bug
- * @todo Add template for plots. Map, distribution, etc.
- */
+ /**
+  * @class TAnalyser
+  * @brief For ROOT and config file when analysis
+  * @details It stores ROOT file and Config file.
+  * It provides open and access such kind files.
+  * It is made for being mother class of Analysis class.
+  */
 class TAnalyser {
 private:
-	TFile* mInputFile = nullptr; /**< Input file with ROOT extension. */
-	TFile* mGraphFile = nullptr;
-	TTree* mTree = nullptr;
+	TFile* mInputFile;
+	TFile* mGraphFile;
+	TTree* mTree;
 	TInputRoot mInput;
+
+
+	// TFile* mInputFile = nullptr; /**< Input file with ROOT extension. */
+	// TFile* mGraphFile = nullptr;
+	// TTree* mTree = nullptr;
+	// TInputRoot mInput;
 
 	std::filesystem::path mOutputPath;
 

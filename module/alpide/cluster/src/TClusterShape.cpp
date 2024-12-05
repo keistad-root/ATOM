@@ -1,7 +1,5 @@
 #define __TCLUSTERSHAPE_HEADER__
 #include "TClusterShape.h"
-
-
 /**
  * @brief Construct a new TClusterShape::TClusterShape object
  * @details It takes cluster set and cluster size for analysing here.
@@ -33,11 +31,10 @@ TClusterShape::TClusterShape(const std::vector<TCluster*> clusters) {
 }
 
 TClusterShape::~TClusterShape() {
-	for ( TShapeInfo shapeInfo : mClusterShapeInfos ) {
-		delete shapeInfo.mClusterMap;
-		delete shapeInfo.mClusterMatrix;
-
-	}
+	// for ( TShapeInfo shapeInfo : mClusterShapeInfos ) {
+	// 	delete shapeInfo.mClusterMap;
+	// 	delete shapeInfo.mClusterMatrix;
+	// }
 }
 
 /**

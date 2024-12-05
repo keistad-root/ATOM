@@ -8,6 +8,8 @@ TCollimatorHole::TCollimatorHole(const std::array<int, 4>& boundaries, const int
 }
 
 void TCollimatorHole::getHole(const cv::Mat& image) {
+	int maxSize = 0;
+	int minSize = 0;
 	for ( int y = mBoundaries[2]; y < mBoundaries[3]; y++ ) {
 		for ( int x = mBoundaries[0]; x < mBoundaries[1]; x++ ) {
 			cv::Vec3b pixel = image.at<cv::Vec3b>(y, x);
@@ -16,110 +18,37 @@ void TCollimatorHole::getHole(const cv::Mat& image) {
 			int dBlue = pixel[2] > mThreshold ? 1 : 0;
 
 			if ( dRed + dGreen + dBlue > 0 ) {
-				mHole->SetBinContent(x - mBoundaries[0], y - mBoundaries[2], 3);
+				mHole->SetBinContent(x - mBoundaries[0], y - mBoundaries[2], 1);
+				maxSize++;
+			}
+			if ( dRed + dGreen + dBlue > 2 ) {
+				mHole->SetBinContent(x - mBoundaries[0], y - mBoundaries[2], 2);
+				minSize++;
 			}
 		}
 	}
+	mSize = (maxSize + minSize) / 2;
+	mError = (maxSize - minSize) / 2;
 }
 
-std::array<int, 3> TCollimatorHole::getBoundaryNumber() {
-	std::vector<std::array<int, 2>> mBound;
-	for ( int y = 1; y < mHole->GetNbinsX() - 1; y++ ) {
-		for ( int x = 1; x < mHole->GetNbinsY() - 1; x++ ) {
-			if ( mHole->GetBinContent(x, y) == 3 ) {
-				if ( mHole->GetBinContent(x - 1, y) == 0 ) {
-					mHole->SetBinContent(x, y, 2);
-					continue;
-				} else if ( mHole->GetBinContent(x + 1, y) == 0 ) {
-					mHole->SetBinContent(x, y, 2);
-					continue;
-				} else if ( mHole->GetBinContent(x, y - 1) == 0 ) {
-					mHole->SetBinContent(x, y, 2);
-					continue;
-				} else if ( mHole->GetBinContent(x, y + 1) == 0 ) {
-					mHole->SetBinContent(x, y, 2);
-					continue;
-				} else if ( mHole->GetBinContent(x + 1, y - 1) == 0 ) {
-					mHole->SetBinContent(x, y, 2);
-					continue;
-				} else if ( mHole->GetBinContent(x + 1, y + 1) == 0 ) {
-					mHole->SetBinContent(x, y, 2);
-					continue;
-				} else if ( mHole->GetBinContent(x - 1, y - 1) == 0 ) {
-					mHole->SetBinContent(x, y, 2);
-					continue;
-				} else if ( mHole->GetBinContent(x - 1, y + 1) == 0 ) {
-					mHole->SetBinContent(x, y, 2);
-					continue;
-				}
-			}
-		}
-	}
-	for ( int y = 1; y < mHole->GetNbinsX() - 1; y++ ) {
-		for ( int x = 1; x < mHole->GetNbinsY() - 1; x++ ) {
-			if ( mHole->GetBinContent(x, y) == 0 ) {
-				if ( mHole->GetBinContent(x - 1, y) == 2 ) {
-					mHole->SetBinContent(x, y, 1);
-					continue;
-				} else if ( mHole->GetBinContent(x + 1, y) == 2 ) {
-					mHole->SetBinContent(x, y, 1);
-					continue;
-				} else if ( mHole->GetBinContent(x, y - 1) == 2 ) {
-					mHole->SetBinContent(x, y, 1);
-					continue;
-				} else if ( mHole->GetBinContent(x, y + 1) == 2 ) {
-					mHole->SetBinContent(x, y, 1);
-					continue;
-				} else if ( mHole->GetBinContent(x + 1, y - 1) == 2 ) {
-					mHole->SetBinContent(x, y, 1);
-					continue;
-				} else if ( mHole->GetBinContent(x + 1, y + 1) == 2 ) {
-					mHole->SetBinContent(x, y, 1);
-					continue;
-				} else if ( mHole->GetBinContent(x - 1, y - 1) == 2 ) {
-					mHole->SetBinContent(x, y, 1);
-					continue;
-				} else if ( mHole->GetBinContent(x - 1, y + 1) == 2 ) {
-					mHole->SetBinContent(x, y, 1);
-					continue;
-				}
-			}
-		}
-	}
-	int nInnerBound = 0;
-	int nOuterBound = 0;
-	int nSize = 0;
-
-	for ( int y = 0; y < mHole->GetNbinsX(); y++ ) {
-		for ( int x = 0; x < mHole->GetNbinsY(); x++ ) {
-			if ( mHole->GetBinContent(x, y) == 3 ) {
-				nSize++;
-			}
-			if ( mHole->GetBinContent(x, y) == 2 ) {
-				nSize++;
-				nInnerBound++;
-			}
-			if ( mHole->GetBinContent(x, y) == 1 ) {
-				nOuterBound++;
-			}
-		}
-	}
-
-	return {nSize, nInnerBound, nOuterBound};
+const std::array<int, 2> TCollimatorHole::getSize() const {
+	return {mSize, mError};
 }
-
 
 void TCollimatorHole::drawHole(std::filesystem::path savePath) {
 	int canvasWidth = static_cast<int>((mBoundaries[1] - mBoundaries[0]) * 12.5);
 	int canvasHeight = static_cast<int>((mBoundaries[3] - mBoundaries[2]) * 12.5);
 
-	// TGraph* holeGraph = new TGraph();
 	gStyle->SetOptStat(0);
 	TCanvas* canvas = new TCanvas("holeCanvas", "", canvasWidth, canvasHeight);
 	mHole->SetTitle("Hole; Column; Row");
 	mHole->Draw("COLZ");
 	canvas->SaveAs(static_cast<TString>(std::string(savePath)));
 }
+
+
+
+
 
 TCollimatorRuler::TCollimatorRuler(const std::array<int, 2>& boundaries, const int threshold) {
 	mBoundaries = boundaries;
@@ -129,25 +58,7 @@ TCollimatorRuler::TCollimatorRuler(const std::array<int, 2>& boundaries, const i
 void TCollimatorRuler::getRuler(const cv::Mat& image) {
 	bool inLine = false;
 	bool outLine = true;
-	mRuler = new TH2I("ruler", "Ruler ; Column; Row", image.cols, 0, image.cols, image.rows, 0, image.rows);
-
-	// TGraph* graph = new TGraph();
-
-	// for ( int x = 0; x < image.cols; x++ ) {
-	// 	int red = 0;
-	// 	int green = 0;
-	// 	int blue = 0;
-	// 	for ( int y = mBoundaries[0]; y < mBoundaries[1]; y++ ) {
-	// 		cv::Vec3b pixel = image.at<cv::Vec3b>(y, x);
-	// 		red += pixel[0];
-	// 		green += pixel[1];
-	// 		blue += pixel[2];
-	// 	}
-	// 	graph->SetPoint(x, x, red);
-	// }
-	// TCanvas* canvas = new TCanvas("sumCanvas", "", 1500, 1000);
-	// graph->Draw("AL");
-	// canvas->SaveAs("Data/temp.png");
+	mRuler = new TH2I("ruler", "Ruler ; Column; Row", image.cols, 0, image.cols, mBoundaries[1] - mBoundaries[0], mBoundaries[0], mBoundaries[1]);
 
 	for ( int y = mBoundaries[0]; y < mBoundaries[1]; y++ ) {
 		for ( int x = 0; x < image.cols; x++ ) {
@@ -156,14 +67,8 @@ void TCollimatorRuler::getRuler(const cv::Mat& image) {
 			int dGreen = pixel[1] < mThreshold ? 1 : 0;
 			int dBlue = pixel[2] < mThreshold ? 1 : 0;
 
-			if ( (dRed + dGreen + dBlue > 1) && outLine ) {
+			if ( dRed + dGreen + dBlue > 2 ) {
 				mRuler->Fill(x, y);
-				inLine = true;
-				outLine = false;
-			}
-			if ( (dRed + dGreen + dBlue < 1) && inLine ) {
-				inLine = false;
-				outLine = true;
 			}
 		}
 	}
@@ -173,13 +78,13 @@ void TCollimatorRuler::setDistanceCut(std::array<int, 2> distanceCut) {
 	mDistanceCut = distanceCut;
 }
 
-void TCollimatorRuler::drawRuler(std::filesystem::path savePath) {
-	int canvasWidth = static_cast<int>(mRuler->GetNbinsX() * 12.5);
-	int canvasHeight = static_cast<int>(mRuler->GetNbinsY() * 12.5);
+void TCollimatorRuler::setScaleCut(std::array<int, 2> scaleCut) {
+	mScaleCut = scaleCut;
+}
 
-	// TGraph* holeGraph = new TGraph();
+void TCollimatorRuler::drawRuler(std::filesystem::path savePath) {
 	gStyle->SetOptStat(0);
-	TCanvas* canvas = new TCanvas("rulerCanvas", "", canvasWidth, canvasHeight);
+	TCanvas* canvas = new TCanvas("rulerCanvas", "", 1000, 800);
 	mRuler->SetTitle("Hole; Column; Row");
 	mRuler->Draw("COLZ");
 	canvas->SetGrid();
@@ -189,43 +94,119 @@ void TCollimatorRuler::drawRuler(std::filesystem::path savePath) {
 std::array<double, 2> TCollimatorRuler::getInterval() {
 	double interval;
 	double stdev;
-	int nInterval = 0;
-	int nAnormal = 0;
+
+	bool onScale = false;
+
+	std::vector<int> leftInterval;
+	std::vector<int> rightInterval;
+	std::vector<int> centerInterval;
+
+	TH1I* scale = new TH1I("scale", "", 30, 0, 30);
+
 	for ( int y = mBoundaries[0]; y < mBoundaries[1]; y++ ) {
-		int rulerX = 0;
+		int xInit = 0;
+		int xEnd = 0;
+
+		int preLeftX = 0;
+		int preRightX = 0;
+		double preCenterX = 0;
+
 		for ( int x = 0; x < mRuler->GetNbinsX(); x++ ) {
-			if ( mRuler->GetBinContent(x, y) == 1 ) {
-				int distance = x - rulerX;
-				if ( rulerX != 0 && distance < mDistanceCut[1] && distance > mDistanceCut[0] ) {
-					stdev += std::pow(distance, 2);
-					interval += distance;
-					nInterval++;
-				} else if ( rulerX != 0 ) {
-					nAnormal++;
+			if ( mRuler->GetBinContent(x, y - mBoundaries[0]) == 1 && onScale == false ) {
+				onScale = true;
+				xInit = x;
+			}
+			if ( mRuler->GetBinContent(x, y - mBoundaries[0]) == 0 && onScale == true ) {
+				onScale = false;
+				xEnd = x;
+				scale->Fill(xEnd - xInit);
+				if ( xEnd - xInit >= mScaleCut[0] && xEnd - xInit <= mScaleCut[1] ) {
+					if ( preLeftX != 0 ) {
+						leftInterval.push_back(xInit - preLeftX);
+					}
+					if ( preRightX != 0 ) {
+						rightInterval.push_back(xEnd - preRightX);
+					}
+					if ( preCenterX != 0 ) {
+						centerInterval.push_back(.5 * (xEnd + xInit) - preCenterX);
+					}
+
+					preLeftX = xInit;
+					preRightX = xEnd;
+					preCenterX = .5 * (xEnd + xInit);
 				}
-				rulerX = x;
 			}
 		}
 	}
-	interval /= nInterval;
-	stdev /= nInterval;
-	stdev -= pow(interval, 2);
 
-	std::cout << static_cast<double>(nAnormal) / (nInterval + nAnormal) << std::endl;
+	TCanvas* scaleCanvas = new TCanvas("scaleCanvas", "", 1000, 800);
+	scale->Draw();
+	scaleCanvas->SaveAs("Data/scale.png");
+
+	TH1I* left = new TH1I("left", "", 100, 0, 100);
+	TH1I* right = new TH1I("right", "", 100, 0, 100);
+	TH1I* center = new TH1I("center", "", 100, 0, 100);
+
+	double leftIntervalMean = 0;
+	double rightIntervalMean = 0;
+	double centerIntervalMean = 0;
+
+	double leftIntervalStdev = 0;
+	double rightIntervalStdev = 0;
+	double centerIntervalStdev = 0;
+
+	int nLeftInterval = 0;
+	int nRightInterval = 0;
+	int nCenterInterval = 0;
+
+	for ( int i = 0; i < leftInterval.size(); i++ ) {
+		if ( leftInterval[i] > mDistanceCut[0] && leftInterval[i] < mDistanceCut[1] ) {
+			leftIntervalMean += leftInterval[i];
+			leftIntervalStdev += std::pow(leftInterval[i], 2);
+			nLeftInterval++;
+		}
+		left->Fill(leftInterval[i]);
+	}
+	for ( int i = 0; i < rightInterval.size(); i++ ) {
+		if ( rightInterval[i] > mDistanceCut[0] && rightInterval[i] < mDistanceCut[1] ) {
+			rightIntervalMean += rightInterval[i];
+			rightIntervalStdev += std::pow(rightInterval[i], 2);
+			nRightInterval++;
+		}
+		right->Fill(rightInterval[i]);
+	}
+	for ( int i = 0; i < centerInterval.size(); i++ ) {
+		if ( centerInterval[i] > mDistanceCut[0] && centerInterval[i] < mDistanceCut[1] ) {
+			centerIntervalMean += centerInterval[i];
+			centerIntervalStdev += std::pow(centerInterval[i], 2);
+			nCenterInterval++;
+		}
+		center->Fill(centerInterval[i]);
+	}
+
+	leftIntervalMean /= nLeftInterval;
+	rightIntervalMean /= nRightInterval;
+	centerIntervalMean /= nCenterInterval;
+
+	leftIntervalStdev /= nLeftInterval;
+	rightIntervalStdev /= nRightInterval;
+	centerIntervalStdev /= nCenterInterval;
+
+	leftIntervalStdev -= std::pow(leftIntervalMean, 2);
+	rightIntervalStdev -= std::pow(rightIntervalMean, 2);
+	centerIntervalStdev -= std::pow(centerIntervalMean, 2);
+
+	interval = (leftIntervalMean + rightIntervalMean + centerIntervalMean) / 3;
+	stdev = std::sqrt(leftIntervalStdev + rightIntervalStdev + centerIntervalStdev) / 3;
+
+	TCanvas* canvas = new TCanvas("intervalCanvas", "", 1000, 800);
+	left->Draw();
+	right->Draw("SAME");
+	center->Draw("SAME");
+	canvas->SaveAs("Data/interval.png");
 
 	return {interval, std::sqrt(stdev)};
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 TCollimator::TCollimator(const std::string file) : JPEGTool(file) { }
@@ -255,6 +236,11 @@ TCollimator::TCollimator(CppConfigFile* config) : JPEGTool(config->getConfig("Fi
 	std::copy_n(tempCut.begin(), 2, distanceCut.begin());
 
 	mRuler->setDistanceCut(distanceCut);
+
+	std::array<int, 2> scaleCut;
+	std::vector<int> tempScale = TPlotter::getIntegerSetFromString(rulerConfig.find("scale_cut"));
+	std::copy_n(tempScale.begin(), 2, scaleCut.begin());
+	mRuler->setScaleCut(scaleCut);
 }
 
 TCollimator::~TCollimator() {
@@ -327,11 +313,11 @@ void TCollimator::drawRuler() {
 }
 
 void TCollimator::getArea() {
-	std::array<int, 3> hole = mHole->getBoundaryNumber();
+	std::array<int, 2> hole = mHole->getSize();
 	std::array<double, 2> ruler = mRuler->getInterval();
 
 	double pixelLength = 1. / ruler[0];
-	double pixelLengthStdev = ruler[1] / std::pow(ruler[0], 2);
+	double pixelLengthStdev = 1. * ruler[1] / std::pow(ruler[0], 2);
 
 	double pixelArea = std::pow(pixelLength, 2);
 	double pixelAreaStdev = pixelLength * 2 * pixelLengthStdev;
@@ -343,8 +329,6 @@ void TCollimator::getArea() {
 	std::array<double, 2> upper = getEffectiveNumber(holeArea, holeAreaUpperStdev);
 	std::array<double, 2> lower = getEffectiveNumber(holeArea, holeAreaLowerStdev);
 
-	std::cout << "The pixel area is " << getEffectiveNumber(pixelArea, pixelAreaStdev)[0] << " +- " << getEffectiveNumber(pixelArea, pixelAreaStdev)[1] << std::endl;
-	std::cout << "The pixel of collimator hole is " << getEffectiveNumber(hole[0], hole[1])[0] << " +- " << getEffectiveNumber(hole[0], hole[1])[1] << std::endl;
 	std::cout << "The Area of collimator hole is " << upper[0] << " +- " << upper[1] << std::endl;
 }
 

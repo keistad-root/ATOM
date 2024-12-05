@@ -22,8 +22,11 @@ int main(int argc, char** argv) {
 	analyse->excludeHotPixel();
 	analyse->extractCluster();
 	analyse->extractHotPixel();
+	analyse->extractShape();
 	analyse->saveEvent();
 	analyse->saveCluster();
+	analyse->saveShape();
+
 
 	delete analyse;
 }

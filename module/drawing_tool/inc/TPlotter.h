@@ -22,9 +22,13 @@
 #include "TH1.h"
 #include "TH2.h"
 #include "TCanvas.h"
+#include "TLegend.h"
 #include "CppConfigFile.h"
 #include "TColourUser.h"
 #include "TStyle.h"
+#include "TMultiGraph.h"
+#include "TGraph.h"
+
 
 const int CANVAS_WIDTH = 2000;
 const int CANVAS_HEIGHT = 1000;
@@ -39,11 +43,29 @@ private:
 	std::filesystem::path mOutputPath;
 
 public:
+	template <typename T> void setAttribute(T* plot, const CppConfigDictionary& config);
+
+	template <typename T> void setLineStyle(T* plot, const CppConfigDictionary& config);
+	template <typename T> void setLineColour(T* plot, const CppConfigDictionary& config);
+	template <typename T> void setLineWidth(T* plot, const CppConfigDictionary& config);
+	template <typename T> void setMarkerStyle(T* plot, const CppConfigDictionary& config);
+	template <typename T> void setMarkerColour(T* plot, const CppConfigDictionary& config);
+	template <typename T> void setMarkerSize(T* plot, const CppConfigDictionary& config);
+
+	template <typename T> void drawPlot(TCanvas* canvas, T* plot, TString drawType = "SAME");
+	void setCanvasAttribute(TCanvas* canvas, const CppConfigDictionary& config);
+
+
+
+
 	void savePlot(TCanvas* canvas, TH1* plot, const CppConfigDictionary& config);
 	void savePlot(TCanvas* canvas, TH1* plot, const std::string& configName);
 	void savePlot(TCanvas* canvas, TH2* plot, const std::string& configName);
-	void savePlot(TH1* plot, const std::string& configName);
-	void savePlot(TH2* plot, const std::string& configName);
+	void savePlot(TCanvas* canvas, TMultiGraph* plot, const CppConfigDictionary& config);
+	// void savePlot(TH1* plot, const std::string& configName);
+	// void savePlot(TH2* plot, const std::string& configName);
+
+	void addLegend(TCanvas* canvas, TLegend*& legend, const CppConfigDictionary& config);
 
 	static const std::vector<int> getIntegerSetFromString(const std::string& rangeStr);
 	static const std::vector<double> getDoubleSetFromString(const std::string& rangeStr);
@@ -63,14 +85,67 @@ public:
 	template <typename T> void setYRange(T* hist, const CppConfigDictionary& config);
 	template <typename T> void setZRange(T* hist, const CppConfigDictionary& config);
 
-	template <typename T> void setLineColour(T* hist, const CppConfigDictionary& config);
+
+
 
 	template <typename T> void setTitle(T* hist, const CppConfigDictionary& config);
 
 	// Canvas property
 	void setMargin(TCanvas* hist, const CppConfigDictionary& config);
+	void saveLegend(TCanvas* canvas, TLegend* legend);
 	void saveCanvas(TCanvas* canvas, std::filesystem::path path, const CppConfigDictionary& config);
 };
+
+template <typename T> void TPlotter::setAttribute(T* plot, const CppConfigDictionary& config) {
+	setLineStyle(plot, config);
+	setLineColour(plot, config);
+	setLineWidth(plot, config);
+	setMarkerStyle(plot, config);
+	setMarkerColour(plot, config);
+	setMarkerSize(plot, config);
+}
+
+template <typename T> void TPlotter::setLineStyle(T* hist, const CppConfigDictionary& config) {
+	if ( config.hasKey("line_style") ) {
+		hist->SetLineStyle(stoi(config.find("line_style")));
+	}
+}
+
+template <typename T> void TPlotter::setLineColour(T* hist, const CppConfigDictionary& config) {
+	if ( config.hasKey("line_colour") ) {
+		hist->SetLineColor(TColourUser::getColour(config.find("line_colour")));
+	}
+}
+
+template <typename T> void TPlotter::setLineWidth(T* hist, const CppConfigDictionary& config) {
+	if ( config.hasKey("line_width") ) {
+		hist->SetLineWidth(stoi(config.find("line_width")));
+	}
+}
+
+template <typename T> void TPlotter::setMarkerStyle(T* hist, const CppConfigDictionary& config) {
+	if ( config.hasKey("marker_style") ) {
+		hist->SetMarkerStyle(stoi(config.find("marker_style")));
+	}
+}
+
+template <typename T> void TPlotter::setMarkerColour(T* hist, const CppConfigDictionary& config) {
+	if ( config.hasKey("marker_colour") ) {
+		hist->SetMarkerColor(TColourUser::getColour(config.find("marker_colour")));
+	}
+}
+
+template <typename T> void TPlotter::setMarkerSize(T* hist, const CppConfigDictionary& config) {
+	if ( config.hasKey("marker_size") ) {
+		hist->SetMarkerSize(stoi(config.find("marker_size")));
+	}
+}
+
+template <typename T> void TPlotter::drawPlot(TCanvas* canvas, T* plot, TString drawType) {
+	canvas->cd();
+	plot->Draw(drawType);
+}
+
 
 template <typename T>
 void TPlotter::setXBin(T* hist, const CppConfigDictionary& config) {
@@ -137,18 +212,16 @@ void TPlotter::setZRange(T* hist, const CppConfigDictionary& config) {
 }
 
 template <typename T>
-void TPlotter::setTitle(T* hist, const CppConfigDictionary& config) {
+void TPlotter::setTitle(T* plot, const CppConfigDictionary& config) {
 	if ( config.hasKey("title") ) {
 		TString title = getTitle(config.find("title"));
-		hist->SetTitle(title);
+		plot->SetTitle(title);
+	}
+	if ( config.hasKey("title_offset") ) {
+		std::vector<double> offset = getDoubleSetFromString(config.find("title_offset"));
+		plot->GetXaxis()->SetTitleOffset(offset[0]);
+		plot->GetYaxis()->SetTitleOffset(offset[1]);
 	}
 }
-
-template <typename T> void TPlotter::setLineColour(T* hist, const CppConfigDictionary& config) {
-	if ( config.hasKey("line_colour") ) {
-		hist->SetLineColor(getColour(config.find("line_colour")));
-	}
-}
-
 
 #endif

@@ -34,6 +34,7 @@ enum StandType {
 	beta_screen,
 	alpha_new_no_screen,
 	alpha_new_screen,
+	final_collimator,
 	none
 };
 

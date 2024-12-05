@@ -28,6 +28,7 @@ public:
 	~TThresholdPlotter();
 private:
 	const CppConfigFile* mConfig;
+	std::filesystem::path mOutputPath;
 
 	TFile* mThresholdFile;
 	TH1D* mThrDist, * mNoiseDist, * mQualityDist;

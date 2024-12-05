@@ -122,6 +122,26 @@ void TDataAnalyser::extractCluster() {
 	mClusterSet = cluster.getClusters();
 }
 
+void TDataAnalyser::extractShape() {
+	std::sort(mClusterSet.begin(), mClusterSet.end(), [ ](const TCluster* a, const TCluster* b) { return a->getSize() < b->getSize(); });
+	int nClusterSize = 0;
+	std::map<int, std::vector<TCluster*>> clusterSet;
+	for ( TCluster* cluster : mClusterSet ) {
+		if ( clusterSet.find(cluster->getSize()) == clusterSet.end() ) {
+			clusterSet.insert_or_assign(cluster->getSize(), std::vector<TCluster*>{cluster});
+		} else {
+			clusterSet.find(cluster->getSize())->second.push_back(cluster);
+		}
+	}
+	for ( const auto& cluster : clusterSet ) {
+		TClusterShape* shape = new TClusterShape(cluster.first, cluster.second);
+		shape->identifyShapes();
+		shape->sortShapes();
+		mShapeSet.push_back(shape);
+	}
+
+}
+
 void TDataAnalyser::saveEvent() {
 	TTree* hitTree = new TTree("hit", "hit");
 
@@ -166,4 +186,27 @@ void TDataAnalyser::saveCluster() {
 
 	mOutputFile->cd();
 	clusterTree->Write();
+}
+
+void TDataAnalyser::saveShape() {
+	TTree* shapeTree = new TTree("shape", "shape");
+
+	UInt_t clusterSize;
+	UInt_t nShape;
+	TH2I* pixelMap = new TH2I();
+
+	shapeTree->Branch("ClusterSize", &clusterSize, "ClusterSize/I");
+	shapeTree->Branch("NShape", &nShape, "NShape/I");
+	shapeTree->Branch("PixelMap", "TH2I", &pixelMap);
+
+	for ( TClusterShape* shape : mShapeSet ) {
+		for ( const TShapeInfo& info : shape->getClusterShapeInfos() ) {
+			clusterSize = info.mPresidentCluster->getSize();
+			nShape = info.mEntry;
+			pixelMap = info.mClusterMap;
+			shapeTree->Fill();
+		}
+	}
+	mOutputFile->cd();
+	shapeTree->Write();
 }

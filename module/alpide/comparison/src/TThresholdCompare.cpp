@@ -27,7 +27,6 @@ TThresholdCompare::TThresholdCompare(CppConfigFile& config) {
 	mQualityValConfig = config.getConfig("QualityValue");
 	mEntryConfig = config.getConfig("Entry");
 	mStdevConfig = config.getConfig("Stdev");
-	defineColour();
 }
 
 void TThresholdCompare::getFile() {
@@ -58,7 +57,7 @@ void TThresholdCompare::mergeThreshold() {
 	for ( const std::tuple<CppConfigDictionary, TFile*, TH1D*, TH1D*, TH1D*>& dataSet : mThresholdSet ) {
 		CppConfigDictionary tConfig = std::get<0>(dataSet);
 		TH1D* tThreshold = std::get<2>(dataSet);
-		Int_t lineColour = tConfig.hasKey("line_colour") ? getColour(tConfig.find("line_colour")) : kWhite;
+		Int_t lineColour = tConfig.hasKey("line_colour") ? TColourUser::getColour(tConfig.find("line_colour")) : kWhite;
 		tThreshold->SetLineColor(lineColour);
 		Int_t lineWidth = tConfig.hasKey("line_width") ? stod(tConfig.find("line_width")) : 1;
 		Int_t lineStyle = tConfig.hasKey("line_style") ? stoi(tConfig.find("line_style")) : 1;
@@ -98,10 +97,10 @@ void TThresholdCompare::mergeError() {
 	for ( const std::tuple<CppConfigDictionary, TFile*, TH1D*, TH1D*, TH1D*>& dataSet : mThresholdSet ) {
 		CppConfigDictionary tConfig = std::get<0>(dataSet);
 		TH1D* tError = std::get<3>(dataSet);
-		Int_t lineColour = tConfig.hasKey("line_colour") ? getColour(tConfig.find("line_colour")) : kWhite;
+		Int_t lineColour = tConfig.hasKey("line_colour") ? TColourUser::getColour(tConfig.find("line_colour")) : kWhite;
 		tError->SetLineColor(lineColour);
 		Int_t lineWidth = tConfig.hasKey("line_width") ? stod(tConfig.find("line_width")) : 1;
-		Int_t lineStyle = tConfig.hasKey("line_style") ? getColour(tConfig.find("line_style")) : 1;
+		Int_t lineStyle = tConfig.hasKey("line_style") ? TColourUser::getColour(tConfig.find("line_style")) : 1;
 		tError->SetLineWidth(lineWidth);
 		tError->SetLineStyle(lineStyle);
 		tError->SetStats(0);
@@ -138,7 +137,7 @@ void TThresholdCompare::mergeQuality() {
 	for ( const std::tuple<CppConfigDictionary, TFile*, TH1D*, TH1D*, TH1D*>& dataSet : mThresholdSet ) {
 		CppConfigDictionary tConfig = std::get<0>(dataSet);
 		TH1D* tQuality = std::get<4>(dataSet);
-		Int_t lineColour = tConfig.hasKey("line_colour") ? getColour(tConfig.find("line_colour")) : kWhite;
+		Int_t lineColour = tConfig.hasKey("line_colour") ? TColourUser::getColour(tConfig.find("line_colour")) : kWhite;
 		tQuality->SetLineColor(lineColour);
 		Int_t lineWidth = tConfig.hasKey("line_width") ? stod(tConfig.find("line_width")) : 1;
 		Int_t lineStyle = tConfig.hasKey("line_style") ? stoi(tConfig.find("line_style")) : 1;
@@ -177,16 +176,16 @@ void TThresholdCompare::compareThresholdValue() {
 		thrValGraph->SetPointError(iGraph, 0, tThreshold->GetStdDev());
 		iGraph++;
 	}
-	Int_t lineColour = mThresholdValConfig.hasKey("line_colour") ? getColour(mThresholdValConfig.find("line_colour")) : kWhite;
+	Int_t lineColour = mThresholdValConfig.hasKey("line_colour") ? TColourUser::getColour(mThresholdValConfig.find("line_colour")) : kWhite;
 	Int_t lineWidth = mThresholdValConfig.hasKey("line_width") ? stod(mThresholdValConfig.find("line_width")) : 1;
-	Int_t lineStyle = mThresholdValConfig.hasKey("line_style") ? getColour(mThresholdValConfig.find("line_style")) : 1;
+	Int_t lineStyle = mThresholdValConfig.hasKey("line_style") ? TColourUser::getColour(mThresholdValConfig.find("line_style")) : 1;
 	thrValGraph->SetLineStyle(lineStyle);
 	thrValGraph->SetLineColor(lineColour);
 	thrValGraph->SetLineWidth(lineWidth);
 
-	Int_t markerColour = mThresholdValConfig.hasKey("marker_colour") ? getColour(mThresholdValConfig.find("marker_colour")) : kWhite;
+	Int_t markerColour = mThresholdValConfig.hasKey("marker_colour") ? TColourUser::getColour(mThresholdValConfig.find("marker_colour")) : kWhite;
 	Int_t markerWidth = mThresholdValConfig.hasKey("marker_size") ? stod(mThresholdValConfig.find("marker_size")) : 1;
-	Int_t markerStyle = mThresholdValConfig.hasKey("marker_style") ? getColour(mThresholdValConfig.find("marker_style")) : 1;
+	Int_t markerStyle = mThresholdValConfig.hasKey("marker_style") ? TColourUser::getColour(mThresholdValConfig.find("marker_style")) : 1;
 	thrValGraph->SetMarkerStyle(markerStyle);
 	thrValGraph->SetMarkerSize(markerWidth);
 	thrValGraph->SetMarkerColor(markerColour);
@@ -244,16 +243,16 @@ void TThresholdCompare::compareNoiseValue() {
 		noiseValGraph->SetPointError(iGraph, 0, tNoise->GetStdDev());
 		iGraph++;
 	}
-	Int_t lineColour = mNoiseValConfig.hasKey("line_colour") ? getColour(mNoiseValConfig.find("line_colour")) : kWhite;
+	Int_t lineColour = mNoiseValConfig.hasKey("line_colour") ? TColourUser::getColour(mNoiseValConfig.find("line_colour")) : kWhite;
 	Int_t lineWidth = mNoiseValConfig.hasKey("line_width") ? stod(mNoiseValConfig.find("line_width")) : 1;
-	Int_t lineStyle = mNoiseValConfig.hasKey("line_style") ? getColour(mNoiseValConfig.find("line_style")) : 1;
+	Int_t lineStyle = mNoiseValConfig.hasKey("line_style") ? TColourUser::getColour(mNoiseValConfig.find("line_style")) : 1;
 	noiseValGraph->SetLineStyle(lineStyle);
 	noiseValGraph->SetLineColor(lineColour);
 	noiseValGraph->SetLineWidth(lineWidth);
 
-	Int_t markerColour = mNoiseValConfig.hasKey("marker_colour") ? getColour(mNoiseValConfig.find("marker_colour")) : kWhite;
+	Int_t markerColour = mNoiseValConfig.hasKey("marker_colour") ? TColourUser::getColour(mNoiseValConfig.find("marker_colour")) : kWhite;
 	Int_t markerWidth = mNoiseValConfig.hasKey("marker_size") ? stod(mNoiseValConfig.find("marker_size")) : 1;
-	Int_t markerStyle = mNoiseValConfig.hasKey("marker_style") ? getColour(mNoiseValConfig.find("marker_style")) : 1;
+	Int_t markerStyle = mNoiseValConfig.hasKey("marker_style") ? TColourUser::getColour(mNoiseValConfig.find("marker_style")) : 1;
 	noiseValGraph->SetMarkerStyle(markerStyle);
 	noiseValGraph->SetMarkerSize(markerWidth);
 	noiseValGraph->SetMarkerColor(markerColour);
@@ -311,16 +310,16 @@ void TThresholdCompare::compareQualityValue() {
 		qualityValGraph->SetPointError(iGraph, 0, tNoise->GetStdDev());
 		iGraph++;
 	}
-	Int_t lineColour = mQualityValConfig.hasKey("line_colour") ? getColour(mQualityValConfig.find("line_colour")) : kWhite;
+	Int_t lineColour = mQualityValConfig.hasKey("line_colour") ? TColourUser::getColour(mQualityValConfig.find("line_colour")) : kWhite;
 	Int_t lineWidth = mQualityValConfig.hasKey("line_width") ? stod(mQualityValConfig.find("line_width")) : 1;
-	Int_t lineStyle = mQualityValConfig.hasKey("line_style") ? getColour(mQualityValConfig.find("line_style")) : 1;
+	Int_t lineStyle = mQualityValConfig.hasKey("line_style") ? TColourUser::getColour(mQualityValConfig.find("line_style")) : 1;
 	qualityValGraph->SetLineStyle(lineStyle);
 	qualityValGraph->SetLineColor(lineColour);
 	qualityValGraph->SetLineWidth(lineWidth);
 
-	Int_t markerColour = mQualityValConfig.hasKey("marker_colour") ? getColour(mQualityValConfig.find("marker_colour")) : kWhite;
+	Int_t markerColour = mQualityValConfig.hasKey("marker_colour") ? TColourUser::getColour(mQualityValConfig.find("marker_colour")) : kWhite;
 	Int_t markerWidth = mQualityValConfig.hasKey("marker_size") ? stod(mQualityValConfig.find("marker_size")) : 1;
-	Int_t markerStyle = mQualityValConfig.hasKey("marker_style") ? getColour(mQualityValConfig.find("marker_style")) : 1;
+	Int_t markerStyle = mQualityValConfig.hasKey("marker_style") ? TColourUser::getColour(mQualityValConfig.find("marker_style")) : 1;
 	qualityValGraph->SetMarkerStyle(markerStyle);
 	qualityValGraph->SetMarkerSize(markerWidth);
 	qualityValGraph->SetMarkerColor(markerColour);
@@ -380,16 +379,16 @@ void TThresholdCompare::compareEntry() {
 		thrValGraph->SetPointError(iGraph, 0, 0);
 		iGraph++;
 	}
-	Int_t lineColour = mEntryConfig.hasKey("line_colour") ? getColour(mEntryConfig.find("line_colour")) : kWhite;
+	Int_t lineColour = mEntryConfig.hasKey("line_colour") ? TColourUser::getColour(mEntryConfig.find("line_colour")) : kWhite;
 	Int_t lineWidth = mEntryConfig.hasKey("line_width") ? stod(mEntryConfig.find("line_width")) : 1;
-	Int_t lineStyle = mEntryConfig.hasKey("line_style") ? getColour(mEntryConfig.find("line_style")) : 1;
+	Int_t lineStyle = mEntryConfig.hasKey("line_style") ? TColourUser::getColour(mEntryConfig.find("line_style")) : 1;
 	thrValGraph->SetLineStyle(lineStyle);
 	thrValGraph->SetLineColor(lineColour);
 	thrValGraph->SetLineWidth(lineWidth);
 
-	Int_t markerColour = mEntryConfig.hasKey("marker_colour") ? getColour(mEntryConfig.find("marker_colour")) : kWhite;
+	Int_t markerColour = mEntryConfig.hasKey("marker_colour") ? TColourUser::getColour(mEntryConfig.find("marker_colour")) : kWhite;
 	Int_t markerWidth = mEntryConfig.hasKey("marker_size") ? stod(mEntryConfig.find("marker_size")) : 1;
-	Int_t markerStyle = mEntryConfig.hasKey("marker_style") ? getColour(mEntryConfig.find("marker_style")) : 1;
+	Int_t markerStyle = mEntryConfig.hasKey("marker_style") ? TColourUser::getColour(mEntryConfig.find("marker_style")) : 1;
 	thrValGraph->SetMarkerStyle(markerStyle);
 	thrValGraph->SetMarkerSize(markerWidth);
 	thrValGraph->SetMarkerColor(markerColour);
@@ -424,16 +423,16 @@ void TThresholdCompare::compareStdDev() {
 		thrValGraph->SetPointError(iGraph, 0, 0);
 		iGraph++;
 	}
-	Int_t lineColour = mStdevConfig.hasKey("line_colour") ? getColour(mStdevConfig.find("line_colour")) : kWhite;
+	Int_t lineColour = mStdevConfig.hasKey("line_colour") ? TColourUser::getColour(mStdevConfig.find("line_colour")) : kWhite;
 	Int_t lineWidth = mStdevConfig.hasKey("line_width") ? stoi(mStdevConfig.find("line_width")) : 1;
-	Int_t lineStyle = mStdevConfig.hasKey("line_style") ? getColour(mStdevConfig.find("line_style")) : 1;
+	Int_t lineStyle = mStdevConfig.hasKey("line_style") ? TColourUser::getColour(mStdevConfig.find("line_style")) : 1;
 	thrValGraph->SetLineStyle(lineStyle);
 	thrValGraph->SetLineColor(lineColour);
 	thrValGraph->SetLineWidth(lineWidth);
 
-	Int_t markerColour = mStdevConfig.hasKey("marker_colour") ? getColour(mStdevConfig.find("marker_colour")) : kWhite;
+	Int_t markerColour = mStdevConfig.hasKey("marker_colour") ? TColourUser::getColour(mStdevConfig.find("marker_colour")) : kWhite;
 	Int_t markerWidth = mStdevConfig.hasKey("marker_size") ? stoi(mStdevConfig.find("marker_size")) : 1;
-	Int_t markerStyle = mStdevConfig.hasKey("marker_style") ? getColour(mStdevConfig.find("marker_style")) : 1;
+	Int_t markerStyle = mStdevConfig.hasKey("marker_style") ? TColourUser::getColour(mStdevConfig.find("marker_style")) : 1;
 	thrValGraph->SetMarkerStyle(markerStyle);
 	thrValGraph->SetMarkerSize(markerWidth);
 	thrValGraph->SetMarkerColor(markerColour);

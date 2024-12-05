@@ -20,10 +20,13 @@ private:
 	int mThreshold;
 	TH2I* mHole;
 
+	int mSize = 0;
+	int mError = 0;
+
 public:
 	void getHole(const cv::Mat& image);
 	void drawHole(std::filesystem::path savePath);
-	std::array<int, 3> getBoundaryNumber();
+	const std::array<int, 2> getSize() const;
 };
 
 class TCollimatorRuler {
@@ -32,12 +35,14 @@ public:
 private:
 	std::array<int, 2> mBoundaries;
 	int mThreshold;
+	std::array<int, 2> mScaleCut;
 	std::array<int, 2> mDistanceCut;
 	TH2I* mRuler;
 public:
 	void getRuler(const cv::Mat& image);
 	void drawRuler(std::filesystem::path savePath);
 	void setDistanceCut(std::array<int, 2> distanceCut);
+	void setScaleCut(std::array<int, 2> scaleCut);
 	std::array<double, 2> getInterval();
 };
 

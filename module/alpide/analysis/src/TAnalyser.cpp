@@ -6,9 +6,8 @@ TAnalyser::TAnalyser(const CppConfigFile& configFile) : mConfigFile(configFile) 
 	setConfig();
 
 	std::filesystem::path inputPath = mFileConfig.find("input_file");
-	std::clog << "TAnalyser object for \033[1;32m" << inputPath.stem() << "\033[0m is armed" << std::endl; /** It prints out the constructor message. It outputs the file name. */
 
-	mInputFile = new TFile(static_cast<TString>(std::string(inputPath)));
+	mInputFile = new TFile(static_cast<TString>(inputPath));
 
 	if ( mFileConfig.hasKey("output_graph") ) {
 		std::filesystem::path graphPath = mFileConfig.find("output_graph");

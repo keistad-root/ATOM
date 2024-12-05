@@ -7,9 +7,9 @@ TCompareClustersize::TCompareClustersize(const CppConfigFile* config) : TPlotter
 		const std::string& path = fileList.find(file);
 		mGraphFileSet.insert_or_assign(file, getClustersize(path));
 	}
-
-
 	mPlotDictionary = config->getConfig("Clustersize").getSubConfig("plots").getSubConfigSet();
+	mRegionDictionary = config->getConfig("Regions");
+	setGraphSet();
 }
 
 TH1D* TCompareClustersize::getClustersize(const std::string& filePath) {
@@ -44,9 +44,7 @@ TH1D* TCompareClustersize::subtractClustersize(const std::string& graph1, const 
 	return returnGraph;
 }
 
-
-void TCompareClustersize::drawClustersize() {
-	TCanvas* canvas = new TCanvas("canvas", "", 1500, 1000);
+void TCompareClustersize::setGraphSet() {
 	for ( const CppConfigDictionary& plot : mPlotDictionary ) {
 		TH1D* drawHist;
 		if ( plot.find("hist").find('-') != std::string::npos ) {
@@ -57,20 +55,71 @@ void TCompareClustersize::drawClustersize() {
 			std::string graph1 = plot.find("hist");
 			drawHist = mGraphFileSet.find(graph1)->second;
 		}
-		int sum = 0;
-		for ( int i = 10; i < 21; i++ ) {
-			sum += drawHist->GetBinContent(i);
-		}
+		mGraphSet.push_back({plot, drawHist});
 		if ( plot.hasKey("ratio") ) {
 			drawHist->Scale(stod(plot.find("ratio")));
-			std::cout << sum * stod(plot.find("ratio")) << "\t\t" << sqrt(sum) * stod(plot.find("ratio")) << std::endl;
-		} else {
-			std::cout << sum << "\t\t" << sqrt(sum) << std::endl;
-
 		}
-		savePlot(canvas, drawHist, plot);
+	}
+}
 
+void TCompareClustersize::drawClustersize() {
+	TCanvas* canvas = new TCanvas("canvas", "", 1500, 1000);
+	TLegend* legend;
+	addLegend(canvas, legend, getMainConfig()->getConfig("Clustersize"));
+	for ( const auto& plot : mGraphSet ) {
+		setAttribute(plot.second, plot.first);
+		drawPlot(canvas, plot.second, "SAME HISTE");
+		legend->AddEntry(plot.second, static_cast<TString>(plot.first.find("legend")));
+	}
+	setCanvasAttribute(canvas, getMainConfig()->getConfig("Clustersize"));
+	saveLegend(canvas, legend);
+	saveCanvas(canvas, getOutputPath(), getMainConfig()->getConfig("Clustersize"));
+}
+
+void TCompareClustersize::drawRegion() {
+	std::vector<CppConfigDictionary> regionConfig = mRegionDictionary.getSubConfig("region").getSubConfigSet();
+	int nRegion = regionConfig.size();
+
+	std::vector<std::pair<int, int>> regionList;
+	std::vector<TGraphErrors*> entryGraph;
+
+	for ( int i = 0; i < nRegion; i++ ) {
+		entryGraph.push_back(new TGraphErrors());
+		std::string region = regionConfig[i].find("range");
+		std::vector<int> range = getIntegerSetFromString(region);
+
+		regionList.push_back(std::make_pair(range[0], range[1]));
 	}
 
-	saveCanvas(canvas, getOutputPath(), getMainConfig()->getConfig("Clustersize"));
+	for ( const auto& graph : mGraphSet ) {
+		TH1D* drawHist = graph.second;
+		std::vector<double> entrySet;
+		double area = graph.first.hasKey("area") ? stod(graph.first.find("area")) : 1;
+		double areaError = graph.first.hasKey("area_error") ? stod(graph.first.find("area_error")) : 0;
+		double ratio = graph.first.hasKey("ratio") ? stod(graph.first.find("ratio")) : 1;
+		for ( int i = 0; i < nRegion; i++ ) {
+			double entry = 0;
+			for ( int j = regionList[i].first; j < regionList[i].second + 1; j++ ) {
+				entry += drawHist->GetBinContent(j + 1);
+			}
+			entryGraph[i]->SetPoint(entryGraph[i]->GetN(), area, entry);
+			entryGraph[i]->SetPointError(entryGraph[i]->GetN() - 1, areaError, std::sqrt(entry / ratio) * ratio);
+			entrySet.push_back(entry);
+		}
+	}
+
+	TMultiGraph* mg = new TMultiGraph();
+	TCanvas* canvas = new TCanvas("region", "", 1500, 1000);
+	TLegend* legend;
+	addLegend(canvas, legend, mRegionDictionary);
+	for ( int i = 0; i < nRegion; i++ ) {
+		setAttribute(entryGraph[i], regionConfig[i]);
+		legend->AddEntry(entryGraph[i], static_cast<TString>(regionConfig[i].find("legend")));
+		mg->Add(entryGraph[i]);
+	}
+
+	drawPlot(canvas, mg, "AP");
+	setCanvasAttribute(canvas, mRegionDictionary);
+	saveLegend(canvas, legend);
+	saveCanvas(canvas, getOutputPath(), mRegionDictionary);
 }

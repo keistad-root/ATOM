@@ -102,15 +102,21 @@ void TThresholdPlotter::FillPlot() {
 }
 
 void TThresholdPlotter::savePlots() {
-	if ( isThrDist ) savePlot(mThrDist, "ThresholdDistribution");
-	if ( isNoiseDist ) savePlot(mNoiseDist, "NoiseDistribution");
-	if ( isQualityDist ) savePlot(mQualityDist, "QualityDistribution");
-	if ( isThrMap ) savePlot(mThrMap, "ThresholdMap");
-	if ( isNoiseMap ) savePlot(mNoiseMap, "NoiseMap");
-	if ( isQualityMap ) savePlot(mQualityMap, "QualityMap");
-	if ( isThrNoiCorr ) savePlot(mThrNoi, "ThresholdNoiseCorrelation");
-	if ( isThrQuaCorr ) savePlot(mThrQua, "ThresholdQualityCorrelation");
-	if ( isNoiQuaCorr ) savePlot(mNoiQua, "NoiseQualityCorrelation");
+	if ( isThrDist ) {
+		TCanvas* canvas = new TCanvas("thrDistCanvas", "");
+		savePlot(canvas, mThrDist, "ThresholdDistribution");
+		saveCanvas(canvas, mOutputPath, mConfig->getConfig("Hitmap"));
+		delete canvas;
+		canvas = nullptr;
+	}
+	// if ( isNoiseDist ) savePlot(mNoiseDist, "NoiseDistribution");
+	// if ( isQualityDist ) savePlot(mQualityDist, "QualityDistribution");
+	// if ( isThrMap ) savePlot(mThrMap, "ThresholdMap");
+	// if ( isNoiseMap ) savePlot(mNoiseMap, "NoiseMap");
+	// if ( isQualityMap ) savePlot(mQualityMap, "QualityMap");
+	// if ( isThrNoiCorr ) savePlot(mThrNoi, "ThresholdNoiseCorrelation");
+	// if ( isThrQuaCorr ) savePlot(mThrQua, "ThresholdQualityCorrelation");
+	// if ( isNoiQuaCorr ) savePlot(mNoiQua, "NoiseQualityCorrelation");
 }
 
 

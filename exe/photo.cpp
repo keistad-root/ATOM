@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
 	TCollimator* collimator = new TCollimator(config);
 
 	collimator->getComponent();
-	collimator->saveComponent();
+	// collimator->saveComponent();
 
 	// collimator->getBox();
 	// collimator->drawBox();
@@ -40,7 +40,7 @@ int main(int argc, char** argv) {
 	collimator->getRuler();
 	collimator->drawRuler();
 	collimator->getArea();
-	collimator->drawRow(925);
+	collimator->drawRow(775);
 	// collimator->drawTotal();
 
 	// JPEGTool tool("Data/photo/L20phi7.jpeg");

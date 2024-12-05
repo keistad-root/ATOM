@@ -13,13 +13,11 @@ message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
 # require C++11-capable compiler
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS "4.9")
-    message(WARNING "Compiler with incomplete C++11 support detected: functionality limited")
     set(OLD_CXX true)
   endif()
 endif()
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
-  message("clang, undefined dynamic_lookup")
   set(CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS "${CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS} -undefined dynamic_lookup")
 endif()
 
@@ -45,13 +43,10 @@ endif()
 # set C++ standard ensuring compatibility with ROOT
 set(CMAKE_CXX_STANDARD 17)
 if(ROOT_cxx17_FOUND)
-  set(CMAKE_CXX_STANDARD 17)
   set(CMAKE_CXX_STANDARD_REQUIRED ON)
 elseif(ROOT_cxx14_FOUND)
-  set(CMAKE_CXX_STANDARD 14)
   set(CMAKE_CXX_STANDARD_REQUIRED ON)
 elseif(ROOT_cxx11_FOUND)
-  set(CMAKE_CXX_STANDARD 11)
   set(CMAKE_CXX_STANDARD_REQUIRED ON)
 endif()
 message(STATUS "Using C++${CMAKE_CXX_STANDARD}")
@@ -74,34 +69,14 @@ endif()
 option(BUILD_DOC "Build documentation" ON)
 
 if (BUILD_DOC)
-	find_package(Doxygen)
-	if (DOXYGEN_FOUND)
-		# set input and output files
-		set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/docs/Doxyfile.in)
-		set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
-
-		# request to configure the file
-		configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
-		message("Doxygen build started")
-
-		# note the option ALL which allows to build the docs together with the application
-		add_custom_target( doc_doxygen ALL
-			COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
-			WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-			COMMENT "Generating API documentation with Doxygen"
-			VERBATIM )
-	else (DOXYGEN_FOUND)
-	message("Doxygen need to be installed to generate the doxygen documentation")
-	endif (DOXYGEN_FOUND)
+  # Doxygen 설정 추가
 endif (BUILD_DOC)
 
-find_package( OpenCV REQUIRED )
-include_directories( ${OpenCV_INCLUDE_DIRS} )
+find_package(OpenCV REQUIRED)
+include_directories(${OpenCV_INCLUDE_DIRS})
 message("OpenCV_INCLUDE_DIRS: ${OpenCV_INCLUDE_DIRS}")
-	# Check for build in the source directory
 
 if (CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
-  message(STATUS "Building in source tree")
   set(BUILDINSOURCE true)
 endif()
 
@@ -112,58 +87,9 @@ message(STATUS "ROOT Include Directory: ${ROOT_INCLUDE_DIRS}")
 message(STATUS "Geant4 Include Directory: ${Geant4_INCLUDE_DIR}")
 message(STATUS "Garfield Include Directory: ${Garfield_INCLUDE_DIR}")
 
-
 # Find header files and source files and store it as variable
-
-
-
-
-
-file(GLOB_RECURSE HEADERS RELATIVE
-	${PROJECT_SOURCE_DIR} 	module/alpide/analysis/inc/*
-							module/alpide/cluster/inc/*
-							module/alpide/comparison/inc/*
-							module/alpide/daq/inc/*
-							module/alpide/plot/inc/*
-							module/alpide/threshold/inc/*
-							module/apts/inc/*
-							module/chip/inc/*
-							module/drawing_tool/inc/*
-							module/simulation/entry/*
-							module/simulation/geant4/*
-							module/tool/config/inc/*
-							module/tool/parser/inc/*
-							module/tool/progress/inc/*
-							module/tool/tool/inc/*
-							module/apts/inc/*)
-
-file(GLOB_RECURSE SOURCES RELATIVE 
-	${PROJECT_SOURCE_DIR} 	module/alpide/analysis/src/*
-							module/alpide/cluster/src/*
-							module/alpide/comparison/src/*
-							module/alpide/daq/src/*
-							module/alpide/plot/src/*
-							module/alpide/threshold/src/*
-							module/apts/src/*
-							module/chip/src/*
-							module/drawing_tool/src/*
-							module/simulation/entry/*
-							module/simulation/geant4/*
-							module/tool/config/src/*
-							module/tool/parser/src/*
-							module/tool/progress/src/*
-							module/tool/tool/src/*
-							module/apts/src/*)
-
-
-
-# alpide/*/inc/* apts/inc/* chip/inc/* geant4/*/inc/* pycpp/inc/* pycpp/config/inc/* simulation/inc/* drawing_tool/inc/*
-# file(GLOB_RECURSE SOURCES RELATIVE ${PROJECT_SOURCE_DIR} alpide/*/src/* apts/src/* chip/src/* pycpp/src/* pycpp/config/src/* simulation/src/* drawing_tool/src/*
-# file(GLOB_RECURSE SOURCES RELATIVE ${PROJECT_SOURCE_DIR} alpide/*/src/* apts/src/* chip/src/* geant4/*/src/* pycpp/src/* pycpp/config/src/* simulation/src/* drawing_tool/src/*
-
-message(${HEADERS})
-# file(GLOB_RECURSE HEADERS "${PROJECT_SOURCE_DIR}/include/*.h")
-# file(GLOB_RECURSE SOURCES "${PROJECT_SOURCE_DIR}/src/*.cpp")
+file(GLOB_RECURSE HEADERS RELATIVE ${CMAKE_SOURCE_DIR} "module/**/*.h")
+file(GLOB_RECURSE SOURCES RELATIVE ${CMAKE_SOURCE_DIR} "module/**/*.cpp")
 
 # Add header and source files to library
 add_library(myProject SHARED ${SOURCES})

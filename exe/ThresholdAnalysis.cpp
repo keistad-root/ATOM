@@ -4,7 +4,8 @@
 #include "TThresholdAnalyser.h"
 #include "CppConfigFile.h"
 #include "cppargs.h"
-#include "TCSV.h"
+#include<csv.h>
+// #include "TCSV.h"
 
 ArgumentParser set_parse(int argc, char** argv) {
 	ArgumentParser parser = ArgumentParser(argc, argv).setDescription("Draw threshold information of an ALPIDE");
@@ -22,19 +23,20 @@ int main(int argc, char** argv) {
 	CppConfigFile config(configPath);
 
 	std::string csvPath = parser.get_value<std::string>("csv");
-	TCSV csv(csvPath);
+	io::CSVReader<6> csv(csvPath);
+	csv.read_header(io::ignore_extra_column, "Number", "RawPath", "ConfigPath", "DataPath", "OutputPath", "GraphPath");
+	int expNum;
+	std::string rawPath, cPath, dataPath, outputPath, graphPath;
 
-	std::vector<std::string> numSet = csv.getColumn("Number");
-
-	std::string expStr = std::to_string(parser.get_value<int>("exp"));
-	expStr.insert(0, 6 - expStr.size(), '0');
-
-	int csvNum = find(numSet.begin(), numSet.end(), expStr) - numSet.begin();
-
-	std::vector<std::string> line = csv.getRow(csvNum);
-	config.modifyConfig("File").addDictionary("dat_file", line[1]);
-	config.modifyConfig("File").addDictionary("cfg_file", line[2]);
-	config.modifyConfig("File").addDictionary("output_file", line[3]);
+	int eNum = parser.get_value<int>("exp");
+	while ( csv.read_row(expNum, rawPath, cPath, dataPath, outputPath, graphPath) ) {
+		if ( expNum == eNum ) {
+			config.modifyConfig("File").addDictionary("dat_file", rawPath);
+			config.modifyConfig("File").addDictionary("cfg_file", cPath);
+			config.modifyConfig("File").addDictionary("output_file", dataPath);
+			break;
+		}
+	}
 
 	TThresholdAnalyser analyser(config);
 	analyser.getThreshold();

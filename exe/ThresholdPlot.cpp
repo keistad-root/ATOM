@@ -1,8 +1,9 @@
 #include "TThresholdPlotter.h"
 
-#include "TCSV.h"
+#include<csv.h>
 
 #include "cppargs.h"
+#include "CppConfigFile.h"
 
 ArgumentParser set_parse(int argc, char** argv) {
 	ArgumentParser parser = ArgumentParser(argc, argv).setDescription("Draw threshold information of an ALPIDE");
@@ -21,19 +22,20 @@ int main(int argc, char** argv) {
 	CppConfigFile* config = new CppConfigFile(configPath);
 
 	std::string csvPath = parser.get_value<std::string>("csv");
-	TCSV csv(csvPath);
+	io::CSVReader<6> csv(csvPath);
+	csv.read_header(io::ignore_extra_column, "Number", "RawPath", "ConfigPath", "DataPath", "OutputPath", "GraphPath");
+	int expNum;
+	std::string rawPath, cPath, dataPath, outputPath, graphPath;
 
-	std::vector<std::string> numSet = csv.getColumn("Number");
-
-	std::string expStr = std::to_string(parser.get_value<int>("exp"));
-	expStr.insert(0, 6 - expStr.size(), '0');
-
-	int csvNum = find(numSet.begin(), numSet.end(), expStr) - numSet.begin();
-
-	std::vector<std::string> line = csv.getRow(csvNum);
-	config->modifyConfig("File").addDictionary("data_file", line[3]);
-	config->modifyConfig("File").addDictionary("output_directory", line[4]);
-	config->modifyConfig("File").addDictionary("graph_file", line[5]);
+	int eNum = parser.get_value<int>("exp");
+	while ( csv.read_row(expNum, rawPath, cPath, dataPath, outputPath, graphPath) ) {
+		if ( expNum == eNum ) {
+			config->modifyConfig("File").addDictionary("data_file", dataPath);
+			config->modifyConfig("File").addDictionary("output_directory", outputPath);
+			config->modifyConfig("File").addDictionary("graph_file", graphPath);
+			break;
+		}
+	}
 
 	TThresholdPlotter plotter(config);
 	plotter.InitPlot();

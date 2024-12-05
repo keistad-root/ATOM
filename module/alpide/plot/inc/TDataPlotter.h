@@ -8,11 +8,15 @@
 #include "TH2D.h"
 #include "TH1D.h"
 #include "TStyle.h"
+#include "TLine.h"
+#include "TPad.h"
+#include "TText.h"
 
 // User header
 #include "TALPIDEEvent.h"
 #include "TPlotter.h"
 #include "CppConfigFile.h"
+#include "TClusterShape.h"
 
 const int ALPIDECOLUMN = 1024;
 const int ALPIDEROW = 512;
@@ -38,11 +42,17 @@ private:
 	TH1D* mClusterTime;
 	TH1D* mClustersize;
 
+	std::vector<std::pair<TH2I*, int>> mShapeSet;
+
 	bool isHitmap = false, isClustermap = false, isClustersize = false;
 public:
 	void InitPlot();
 	void FillHitInfo();
 	void FillClusterInfo();
+	void FillShapeInfo();
+
+	void saveTotalShape();
+	void saveTop10Shape();
 
 	void savePlots();
 };

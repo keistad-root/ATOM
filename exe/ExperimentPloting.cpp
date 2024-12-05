@@ -21,7 +21,9 @@ int main(int argc, char** argv) {
 	plot->InitPlot();
 	plot->FillHitInfo();
 	plot->FillClusterInfo();
+	plot->FillShapeInfo();
 	plot->savePlots();
-
+	// plot->saveTotalShape();
+	plot->saveTop10Shape();
 	delete plot;
 }
