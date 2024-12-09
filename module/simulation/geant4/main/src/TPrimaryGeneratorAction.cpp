@@ -10,6 +10,9 @@ TPrimaryGeneratorAction::~TPrimaryGeneratorAction() {
 
 void TPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
 	fParticleGun->GeneratePrimaryVertex(anEvent);
+
+	TAnalysisManager* analysisManager = TAnalysisManager::Instance();
+	analysisManager->recordInit(anEvent);
 }
 
 const G4GeneralParticleSource* TPrimaryGeneratorAction::GetParticleGun() const {

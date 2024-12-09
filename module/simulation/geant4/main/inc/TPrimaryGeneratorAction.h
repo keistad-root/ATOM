@@ -3,6 +3,7 @@
 
 #include "G4VUserPrimaryGeneratorAction.hh"
 #include "G4GeneralParticleSource.hh"
+#include "TAnalysisManager.h"
 
 class G4GeneralParticleSource;
 

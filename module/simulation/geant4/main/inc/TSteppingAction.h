@@ -3,6 +3,8 @@
 
 #include "G4UserSteppingAction.hh"
 
+#include "TDetectorConstruction.h"
+
 #include "TEventAction.h"
 
 class TSteppingAction : public G4UserSteppingAction {
@@ -12,6 +14,11 @@ public:
 private:
 	TEventAction* fEventAction = nullptr;
 
+	G4LogicalVolume* mALPIDEMetalLogical = nullptr;
+	G4LogicalVolume* mALPIDEEpitaxialLogical = nullptr;
+	G4LogicalVolume* mALPIDESubstrateLogical = nullptr;
+
+	bool inALPIDE = false;
 public:
 	void UserSteppingAction(const G4Step*) override;
 

@@ -2,40 +2,29 @@
 
 #include "TFile.h"
 
-#include "TGeantAnalyser.h"
+#include "TGeantAnalysis.h"
 #include "cppargs.h"
+#include "CppConfigFile.h"
 
-ArgumentParser set_parse(int argc, char** argv) {
-	ArgumentParser parser = ArgumentParser(argc, argv).setDescription("Draw plots for simulation");
-	parser.add_argument("simulFile").metavar("FILENAME").help("simulation file").add_finish();
-	parser.add_argument("--output").help("output path").set_default("default").add_finish();
+ArgumentParser setParse(int argc, char** argv) {
+	ArgumentParser parser = ArgumentParser(argc, argv).setDescription("Geant4 Simulation");
+	parser.add_argument("config").help("Config File").set_default("default").add_finish();
 	parser.parse_args();
+
 	return parser;
 }
 
 int main(int argc, char** argv) {
-	ArgumentParser parser = set_parse(argc, argv);
-	std::filesystem::path input(parser.get_value<std::string>("simulFile"));
-	std::filesystem::path path;
 
-	if ( parser.get_value<std::string>("output") == "default" ) {
-		path = std::filesystem::absolute(input.parent_path());
-	} else {
-		path = parser.get_value<std::string>("output");
-	}
+	ArgumentParser parser = setParse(argc, argv);
+	std::string configPath = parser.get_value<std::string>("config");
+	CppConfigFile config(configPath);
 
-	std::filesystem::path stem = input.stem();
-	TFile* file = new TFile(static_cast<TString>((input.replace_extension(".root")).string()), "READ");
-	path.append(stem.string());
-	std::filesystem::create_directory(path);
-	TGeantAnalyser drawer(std::move(file));
-	drawer.refineData();
-	std::filesystem::path energyLossFile = "energy_loss_" + stem.string();
-	drawer.saveEnergyLossDistribution((path / energyLossFile.replace_extension(".png")).string());
-	std::filesystem::path clustermapFile = "clustermap_" + stem.string();
-	drawer.saveClustermap((path / clustermapFile.replace_extension(".png")).string());
-	std::filesystem::path doubleClusterFile = "Doubled_cluster_frequencymap_" + stem.string();
-	drawer.saveDoubleClusterFrequencymap((path / doubleClusterFile.replace_extension(".png")).string());
+	TGeantAnalysis* analysis = new TGeantAnalysis(config);
+
+	analysis->readInit();
+	analysis->readALPIDE();
+	analysis->readIncident();
 
 	return 0;
 }

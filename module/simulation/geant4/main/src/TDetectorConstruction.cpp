@@ -1,24 +1,43 @@
 #include "TDetectorConstruction.h"
 
+const G4double AIR_DENSITY = 1.2929e-03 * g / cm3;
+const G4double N_DENSITY = 14.01 * g / mole;
+const G4double O_DENSITY = 16.00 * g / mole;
+
+TDetectorConstruction::TDetectorConstruction(const CppConfigDictionary& config) : G4VUserDetectorConstruction() {
+	mAirPressure = stod(config.find("air_pressure")) * 0.001;
+	mCollimatorLength = stod(config.find("collimator_length")) * mm;
+	mCollimatorHoleDiameter = 2 * sqrt(stod(config.find("collimator_area")) / CLHEP::pi) * mm;
+	if ( config.hasKey("screen") && config.find("screen") == "true" ) {
+		mScreenBoolean = true;
+	} else if ( config.hasKey("screen") && config.find("screen") == "false" ) {
+		mScreenBoolean = false;
+	} else {
+		mScreenBoolean = true;
+	}
+}
+
 G4VPhysicalVolume* TDetectorConstruction::Construct() {
 	getWorld();
-	// getALPIDE();
-
-	// G4Transform3D t3d = G4Transform3D();
-	// mALPIDE->MakeImprint(mWorldLogical, t3d);
+	getALPIDE();
+	getCollimator();
+	getScreen();
 
 	return mWorld;
 }
 
 void TDetectorConstruction::getWorld() {
-	G4double worldX = 300 * mm;
-	G4double worldY = 300 * mm;
-	G4double worldZ = 300 * mm;
+	G4double worldX = 50 * mm;
+	G4double worldY = 50 * mm;
+	G4double worldZ = 100 * mm;
 
 	G4Box* solidWorld = new G4Box("World", .5 * worldX, .5 * worldY, .5 * worldZ);
 
-	G4double airPressure = 7.5 * 0.001 * bar;
-	G4Material* worldMaterial = new G4Material("Air", 1.29 * mg / cm3, 2, kStateGas, airPressure, 293.15 * kelvin);
+	G4Material* worldMaterial = new G4Material("worldMateiral", mAirPressure * AIR_DENSITY, 2);
+	G4Element* elN = new G4Element("Nitrogen", "N", 7, N_DENSITY);
+	G4Element* elO = new G4Element("Oxygen", "O", 8, O_DENSITY);
+	worldMaterial->AddElement(elN, .7);
+	worldMaterial->AddElement(elO, .3);
 
 	mWorldLogical = new G4LogicalVolume(solidWorld, worldMaterial, "World");
 
@@ -38,17 +57,17 @@ void TDetectorConstruction::getALPIDE() {
 
 	G4Material* alpideMaterial = new G4Material("Silicon", 14, 28.085 * g / mole, 2.33 * g / cm3);
 
-	G4LogicalVolume* alpideMetalLogical = new G4LogicalVolume(solidALPIDEMetal, alpideMaterial, "ALPIDEMetal");
+	alpideMetalLogical = new G4LogicalVolume(solidALPIDEMetal, alpideMaterial, "ALPIDEMetal");
 	alpideMetalLogical->SetVisAttributes(G4VisAttributes(G4Colour::Yellow()));
-	alpideMetalLogical->SetUserLimits(new G4UserLimits(1 * um, 1 * um));
+	// alpideMetalLogical->SetUserLimits(new G4UserLimits(1 * um, 1 * um));
 
-	G4LogicalVolume* alpideEpitaxialLogical = new G4LogicalVolume(solidALPIDEEpitaxial, alpideMaterial, "ALPIDEEpitaxial");
+	alpideEpitaxialLogical = new G4LogicalVolume(solidALPIDEEpitaxial, alpideMaterial, "ALPIDEEpitaxial");
 	alpideEpitaxialLogical->SetVisAttributes(G4VisAttributes(G4Colour::Yellow()));
-	alpideEpitaxialLogical->SetUserLimits(new G4UserLimits(1 * um, 1 * um));
+	// alpideEpitaxialLogical->SetUserLimits(new G4UserLimits(1 * um, 1 * um));
 
-	G4LogicalVolume* alpideSubstrateLogical = new G4LogicalVolume(solidALPIDESubstrate, alpideMaterial, "ALPIDESubstrate");
+	alpideSubstrateLogical = new G4LogicalVolume(solidALPIDESubstrate, alpideMaterial, "ALPIDESubstrate");
 	alpideSubstrateLogical->SetVisAttributes(G4VisAttributes(G4Colour::Yellow()));
-	alpideSubstrateLogical->SetUserLimits(new G4UserLimits(1 * um, 1 * um));
+	// alpideSubstrateLogical->SetUserLimits(new G4UserLimits(1 * um, 1 * um));
 
 	mALPIDE = new G4AssemblyVolume();
 	G4RotationMatrix* alpideRotation = new G4RotationMatrix(0.0 * deg, 0.0 * deg, 0.0 * deg);
@@ -60,4 +79,57 @@ void TDetectorConstruction::getALPIDE() {
 
 	G4ThreeVector alpideSubstrateVector = G4ThreeVector(0, 0, -alpideMetalZ - alpideEpitaxialZ - .5 * alpideSubstrateZ);
 	mALPIDE->AddPlacedVolume(alpideSubstrateLogical, alpideSubstrateVector, alpideRotation);
+
+	G4Transform3D t3d = G4Transform3D();
+	mALPIDE->MakeImprint(mWorldLogical, t3d);
+}
+
+void TDetectorConstruction::getCollimator() {
+	G4double collimatorBoxX = 15. * mm;
+	G4double collimatorBoxY = 15. * mm;
+	G4double collimatorSourceHeight = 5. * mm;
+	G4double collimatorSourceDiameter = 13. * mm;
+
+	G4Box* solidCollimatorBox = new G4Box("CollimatorBox", .5 * collimatorBoxX, .5 * collimatorBoxY, .5 * (mCollimatorLength + collimatorSourceHeight));
+
+	G4Tubs* solidCollimatorSource = new G4Tubs("CollimatorSource", 0, .5 * collimatorSourceDiameter, .5 * collimatorSourceHeight, 0, 360 * deg);
+
+	G4Tubs* solidCollimatorHole = new G4Tubs("CollimatorHole", 0, .5 * mCollimatorHoleDiameter, .5 * (mCollimatorLength + collimatorSourceHeight), 0, 360 * deg);
+
+	G4VSolid* temp = new G4SubtractionSolid("temp", solidCollimatorBox, solidCollimatorSource, 0, G4ThreeVector(0, 0, .5 * mCollimatorLength));
+	G4VSolid* solidCollimator = new G4SubtractionSolid("Collimator", temp, solidCollimatorHole, 0, G4ThreeVector(0, 0, 0));
+
+	G4Element* elC = new G4Element("Carbon", "C", 6, 12.011 * g / mole);
+	G4Element* elH = new G4Element("Hydrogen", "H", 1, 1.008 * g / mole);
+	G4Element* elO = new G4Element("Oxygen", "O", 8, 16.00 * g / mole);
+
+	G4Material* collimatorMaterial = new G4Material("CollimatorMaterial", 0.3 * 1.210 * g / cm3, 3);
+	collimatorMaterial->AddElement(elC, 3);
+	collimatorMaterial->AddElement(elH, 4);
+	collimatorMaterial->AddElement(elO, 2);
+
+	mCollimatorLogical = new G4LogicalVolume(solidCollimator, collimatorMaterial, "Collimator");
+
+	mCollimator = new G4PVPlacement(0, G4ThreeVector(0, 0, 2. * mm + .5 * (mCollimatorLength + collimatorSourceHeight)), mCollimatorLogical, "Collimator", mWorldLogical, false, 0, true);
+}
+
+void TDetectorConstruction::getScreen() {
+	G4double screenX = 15. * mm;
+	G4double screenY = 15. * mm;
+	G4double screenZ = 100 * um;
+
+	G4Box* solidScreen = new G4Box("Screen", .5 * screenX, .5 * screenY, .5 * screenZ);
+
+	G4Element* elAl = new G4Element("Aluminium", "Al", 13, 26.982 * g / mole);
+
+	G4Material* screenMaterial = new G4Material("ScreenMaterial", 2.7 * g / cm3, 1);
+	screenMaterial->AddElement(elAl, 1);
+
+	mScreenLogical = new G4LogicalVolume(solidScreen, screenMaterial, "Screen");
+
+	mScreenLogical->SetVisAttributes(G4VisAttributes(G4Colour::Grey()));
+
+	if ( mScreenBoolean ) {
+		mScreen = new G4PVPlacement(0, G4ThreeVector(0, 0, 2. * mm - .5 * screenZ), mScreenLogical, "Screen", mWorldLogical, false, 0, true);
+	}
 }

@@ -57,6 +57,7 @@ add_compile_options("-Wpedantic")
 add_compile_options("-Wno-unused-variable")
 add_compile_options("-Wunused-variable")
 add_compile_options("-Wno-uninitialized")
+add_compile_options(-Wno-attributes)
 
 add_compile_options("-O1")
 add_compile_options("-g")
