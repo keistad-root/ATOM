@@ -51,77 +51,163 @@ CppConfigFile& CppConfigFile::operator=(CppConfigFile&& copy) {
  *
  * @param configFile
 */
+// void CppConfigFile::addConfig(std::string_view configFile) {
+// 	// Open config file
+// 	std::ifstream conf{std::string(configFile)};
+
+// 	// The reading line
+// 	std::string line;
+// 	// The key 
+// 	std::string key;
+// 	// The value is stored as std::string form
+// 	std::string value;
+
+// 	// Read config file line by line
+// 	std::vector<std::string> valueArray;
+// 	bool isFirst = true;
+// 	while ( getline(conf, line) ) {
+// 		// Remove comment out part
+// 		std::string result;
+// 		bool escapeNext = false;
+
+// 		for ( char c : line ) {
+// 			if ( escapeNext ) {
+// 				if ( c == '#' ) {
+// 					result += '#';
+// 				} else {
+// 					result += '\\';
+// 					result += c;
+// 				}
+// 				escapeNext = false;
+// 			} else {
+// 				if ( c == '\\' ) {
+// 					escapeNext = true;
+// 				} else {
+// 					result += c;
+// 				}
+// 			}
+// 		}
+
+// 		if ( escapeNext ) {
+// 			result += '\\'; // Add trailing backslash if input ends with a backslash
+// 		}
+// 		line = result;
+// 		line.erase(remove(line.begin(), line.end(), '\t'), line.end());
+// 		if ( line[0] == '#' ) {
+// 			line = "";
+// 		}
+// 		if ( line.find('=') != std::string::npos ) {
+// 			line.erase(remove(line.begin(), line.begin() + line.find('='), ' '), line.begin() + line.find('='));
+// 		} else {
+// 			line.erase(remove(line.begin(), line.end(), ' '), line.end());
+// 		}
+// 		if ( line == "" ) { // Pass the blank line
+// 			continue;
+// 		} else if ( line.find('[') != std::string::npos && (line[line.find('[') - 1] != '\\') ) { // The line started with '[' is considered as Configurable name
+// 			if ( !isFirst ) {
+// 				mConfigs.push_back(getConfigFromArray(key, valueArray));
+// 				valueArray.clear();
+// 			} else {
+// 				isFirst = false;
+// 			}
+// 			key = line.substr(line.find('[') + 1, line.find(']') - 1);
+// 			// Make new configurable  
+// 		} else {
+// 			valueArray.push_back(line);
+// 		}
+// 	}
+// 	if ( valueArray.size() != 0 ) {
+// 		mConfigs.push_back(getConfigFromArray(key, valueArray));
+// 	}
+// }
+
+void CppConfigFile::addConfig(std::string_view configTitle, const std::vector<std::string>& configArray) {
+	mConfigs.push_back(getConfigFromArray(configTitle, configArray));
+}
+
 void CppConfigFile::addConfig(std::string_view configFile) {
-	// Open config file
 	std::ifstream conf{std::string(configFile)};
-
-	// The reading line
-	std::string line;
-	// The key 
-	std::string key;
-	// The value is stored as std::string form
-	std::string value;
-
-	// Read config file line by line
+	std::string line, key;
 	std::vector<std::string> valueArray;
 	bool isFirst = true;
-	while ( getline(conf, line) ) {
-		// Remove comment out part
-		std::string result;
-		bool escapeNext = false;
 
-		for ( char c : line ) {
-			if ( escapeNext ) {
-				if ( c == '#' ) {
-					result += '#';
-				} else {
-					result += '\\';
-					result += c;
-				}
-				escapeNext = false;
-			} else {
-				if ( c == '\\' ) {
-					escapeNext = true;
-				} else {
-					result += c;
-				}
-			}
-		}
-		if ( escapeNext ) {
-			result += '\\'; // Add trailing backslash if input ends with a backslash
-		}
-		line = result;
-		line.erase(remove(line.begin(), line.end(), '\t'), line.end());
-		if ( line[0] == '#' ) {
-			line = "";
-		}
-		if ( line.find('=') != std::string::npos ) {
-			line.erase(remove(line.begin(), line.begin() + line.find('='), ' '), line.begin() + line.find('='));
-		} else {
-			line.erase(remove(line.begin(), line.end(), ' '), line.end());
-		}
-		if ( line == "" ) { // Pass the blank line
-			continue;
-		} else if ( line.find('[') != std::string::npos && (line[line.find('[') - 1] != '\\') ) { // The line started with '[' is considered as Configurable name
+	while ( getline(conf, line) ) {
+		line = removeCommentsAndWhitespace(line);
+		if ( line.empty() ) continue;
+
+		if ( isConfigurableName(line) ) {
 			if ( !isFirst ) {
 				mConfigs.push_back(getConfigFromArray(key, valueArray));
 				valueArray.clear();
 			} else {
 				isFirst = false;
 			}
-			key = line.substr(line.find('[') + 1, line.find(']') - 1);
-			// Make new configurable  
+			key = extractConfigurableName(line);
 		} else {
 			valueArray.push_back(line);
 		}
 	}
-	if ( valueArray.size() != 0 ) {
+
+	if ( !valueArray.empty() ) {
 		mConfigs.push_back(getConfigFromArray(key, valueArray));
 	}
 }
 
-void CppConfigFile::addConfig(std::string_view configTitle, const std::vector<std::string>& configArray) {
-	mConfigs.push_back(getConfigFromArray(configTitle, configArray));
+std::string CppConfigFile::removeCommentsAndWhitespace(const std::string& line) {
+	std::string result;
+	bool escapeNext = false;
+	bool inQuotes = false;
+
+	for ( char c : line ) {
+		if ( escapeNext ) {
+			result += c;
+			escapeNext = false;
+		} else {
+			if ( c == '\\' ) {
+				escapeNext = true;
+				result += c;
+			} else if ( c == '"' ) {
+				inQuotes = !inQuotes;
+				result += c;
+			} else if ( !inQuotes && c == '#' ) {
+				break; // Ignore the rest of the line after a comment
+			} else {
+				result += c;
+			}
+		}
+	}
+
+	result.erase(remove(result.begin(), result.end(), '\t'), result.end());
+	if ( !inQuotes && !result.empty() && result[0] == '#' ) {
+		result.clear();
+	}
+
+	size_t equalPos = result.find('=');
+	if ( equalPos != std::string::npos ) {
+		result.erase(remove(result.begin(), result.begin() + equalPos, ' '), result.begin() + equalPos);
+	} else {
+		result.erase(remove(result.begin(), result.end(), ' '), result.end());
+	}
+
+	return result;
+}
+
+bool CppConfigFile::isConfigurableName(const std::string& line) {
+	bool inQuotes = false;
+	for ( char c : line ) {
+		if ( c == '"' ) {
+			inQuotes = !inQuotes;
+		} else if ( c == '[' && !inQuotes ) {
+			return true;
+		}
+	}
+	return false;
+}
+
+std::string CppConfigFile::extractConfigurableName(const std::string& line) {
+	size_t start = line.find('[') + 1;
+	size_t end = line.find(']');
+	return line.substr(start, end - start);
 }
 
 

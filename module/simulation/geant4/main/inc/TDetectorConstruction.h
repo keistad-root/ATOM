@@ -14,6 +14,8 @@
 #include "G4Colour.hh"
 #include "G4UserLimits.hh"
 #include "G4SubtractionSolid.hh"
+#include "G4ParticleTable.hh"
+#include "G4EmCalculator.hh"
 
 #include "CppConfigFile.h"
 
@@ -29,9 +31,9 @@ private:
 	G4VPhysicalVolume* mScreen = nullptr;
 
 	G4LogicalVolume* mWorldLogical = nullptr;
-	G4LogicalVolume* alpideMetalLogical = nullptr;
-	G4LogicalVolume* alpideEpitaxialLogical = nullptr;
-	G4LogicalVolume* alpideSubstrateLogical = nullptr;
+	G4LogicalVolume* mAlpideMetalLogical = nullptr;
+	G4LogicalVolume* mAlpideEpitaxialLogical = nullptr;
+	G4LogicalVolume* mAlpideSubstrateLogical = nullptr;
 	G4LogicalVolume* mCollimatorLogical = nullptr;
 	G4LogicalVolume* mScreenLogical = nullptr;
 
@@ -47,9 +49,12 @@ public:
 	void getCollimator();
 	void getScreen();
 
-	G4LogicalVolume* getALPIDEMetal() const { return alpideMetalLogical; }
-	G4LogicalVolume* getALPIDEEpitaxial() const { return alpideEpitaxialLogical; }
-	G4LogicalVolume* getALPIDESubstrate() const { return alpideSubstrateLogical; }
+	G4LogicalVolume* getALPIDEMetalLogical() const { return mAlpideMetalLogical; }
+	G4LogicalVolume* getALPIDEEpitaxialLogical() const { return mAlpideEpitaxialLogical; }
+	G4LogicalVolume* getALPIDESubstrateLogical() const { return mAlpideSubstrateLogical; }
+	G4LogicalVolume* getCollimatorLogical() const { return mCollimatorLogical; }
+	G4LogicalVolume* getScreenLogical() const { return mScreenLogical; }
+	G4LogicalVolume* getWorldLogical() const { return mWorldLogical; }
 };
 
 #endif

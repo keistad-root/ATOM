@@ -6,6 +6,7 @@
 #include <sstream>
 #include <unordered_map>
 #include <vector>
+#include <array>
 
 #include "CppConfigError.h"
 

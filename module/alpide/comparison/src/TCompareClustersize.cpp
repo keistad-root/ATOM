@@ -105,6 +105,7 @@ void TCompareClustersize::drawRegion() {
 			entryGraph[i]->SetPoint(entryGraph[i]->GetN(), area, entry);
 			entryGraph[i]->SetPointError(entryGraph[i]->GetN() - 1, areaError, std::sqrt(entry / ratio) * ratio);
 			entrySet.push_back(entry);
+			std::cout << "Region " << regionList[i].first << "," << regionList[i].second << " : " << entry << std::endl;
 		}
 	}
 

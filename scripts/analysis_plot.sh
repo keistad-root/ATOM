@@ -1,0 +1,48 @@
+#!/bin/sh
+
+dir = $pwd
+cd /home/ychoi/ATOM/build/
+
+./ExperimentAnalysisPlot 1mm_nocollimator_alphagamma
+./ExperimentAnalysisPlot 1mm_2phi_alphagamma
+./ExperimentAnalysisPlot 1mm_3phi_alphagamma
+./ExperimentAnalysisPlot 1mm_4phi_alphagamma
+./ExperimentAnalysisPlot 1mm_7phi_alphagamma
+./ExperimentAnalysisPlot 1mm_nocollimator_gamma
+./ExperimentAnalysisPlot 1mm_2phi_gamma
+./ExperimentAnalysisPlot 1mm_3phi_gamma
+./ExperimentAnalysisPlot 1mm_4phi_gamma
+./ExperimentAnalysisPlot 1mm_7phi_gamma
+./ExperimentAnalysisPlot 3mm_nocollimator_alphagamma
+./ExperimentAnalysisPlot 3mm_2phi_alphagamma
+./ExperimentAnalysisPlot 3mm_3phi_alphagamma
+./ExperimentAnalysisPlot 3mm_4phi_alphagamma
+./ExperimentAnalysisPlot 3mm_7phi_alphagamma
+./ExperimentAnalysisPlot 3mm_nocollimator_gamma
+./ExperimentAnalysisPlot 3mm_2phi_gamma
+./ExperimentAnalysisPlot 3mm_3phi_gamma
+./ExperimentAnalysisPlot 3mm_4phi_gamma
+./ExperimentAnalysisPlot 3mm_7phi_gamma
+./ExperimentAnalysisPlot 7mm_nocollimator_alphagamma
+./ExperimentAnalysisPlot 7mm_2phi_alphagamma
+./ExperimentAnalysisPlot 7mm_3phi_alphagamma
+./ExperimentAnalysisPlot 7mm_4phi_alphagamma
+./ExperimentAnalysisPlot 7mm_7phi_alphagamma
+./ExperimentAnalysisPlot 7mm_nocollimator_gamma
+./ExperimentAnalysisPlot 7mm_2phi_gamma
+./ExperimentAnalysisPlot 7mm_3phi_gamma
+./ExperimentAnalysisPlot 7mm_4phi_gamma
+./ExperimentAnalysisPlot 7mm_7phi_gamma
+./ExperimentAnalysisPlot 20mm_nocollimator_alphagamma
+./ExperimentAnalysisPlot 20mm_2phi_alphagamma
+./ExperimentAnalysisPlot 20mm_3phi_alphagamma
+./ExperimentAnalysisPlot 20mm_4phi_alphagamma
+./ExperimentAnalysisPlot 20mm_7phi_alphagamma
+./ExperimentAnalysisPlot 20mm_nocollimator_gamma
+./ExperimentAnalysisPlot 20mm_2phi_gamma
+./ExperimentAnalysisPlot 20mm_3phi_gamma
+./ExperimentAnalysisPlot 20mm_4phi_gamma
+./ExperimentAnalysisPlot 20mm_7phi_gamma
+
+
+cd $dir

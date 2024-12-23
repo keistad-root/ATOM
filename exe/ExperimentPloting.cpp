@@ -23,7 +23,8 @@ int main(int argc, char** argv) {
 	plot->FillClusterInfo();
 	plot->FillShapeInfo();
 	plot->savePlots();
-	// plot->saveTotalShape();
-	plot->saveTop10Shape();
+	if ( config.hasConfig("TotalShape") ) plot->saveTotalShape();
+	if ( config.hasConfig("Top10Shape") ) plot->saveTop10Shape();
+	if ( config.hasConfig("ClusterSizeWithTime") ) plot->saveClusterSizeWithTime();
 	delete plot;
 }

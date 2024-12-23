@@ -1,0 +1,2 @@
+tag, output_directory, name, y_range, plot_list
+1mm_alpha, /mnt/homes/ychoi/entry_test/result/, clustersize_1mm_alpha, 5E-01 2E+05, 1mm_nocollimator_alpha 1mm_phi2_alpha 1mm_phi3_alpha 1mm_phi4_alpha 1mm_phi7_alpha

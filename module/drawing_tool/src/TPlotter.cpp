@@ -14,14 +14,40 @@ TPlotter::TPlotter(const CppConfigFile* config) : mConfig(config) {
 	}
 }
 
+void TPlotter::initHist(TH1* hist, const CppConfigDictionary& config) {
+	std::vector<double> set = {1, 0, 1};
+	if ( config.hasKey("bins") ) {
+		set = getDoubleSetFromString(config.find("bins"));
+	}
+	hist->SetBins(static_cast<int>(set[0]), set[1], set[2]);
+}
+void TPlotter::initHist(TH2* hist, const CppConfigDictionary& config) {
+	std::vector<double> set = {1, 0, 1, 1, 0, 1};
+	if ( config.hasKey("bins") ) {
+		set = getDoubleSetFromString(config.find("bins"));
+	}
+	hist->SetBins(static_cast<int>(set[0]), set[1], set[2], static_cast<int>(set[3]), set[4], set[5]);
+}
+
+
 void TPlotter::savePlot(TCanvas* canvas, TH1* plot, const CppConfigDictionary& config) {
 	setTitle(plot, config);
-	// setBins(plot, config);
 	setXRange(plot, config);
 	setYRange(plot, config);
-	setLineColour(plot, config);
+	setAttribute(plot, config);
 
 	plot->Draw("SAME HIST");
+	setMargin(canvas, config);
+}
+
+void TPlotter::savePlot(TCanvas* canvas, TH2* plot, const CppConfigDictionary& config) {
+	setTitle(plot, config);
+	setXRange(plot, config);
+	setYRange(plot, config);
+	setZRange(plot, config);
+	setAttribute(plot, config);
+
+	drawPlot(canvas, plot, "COLZ");
 	setMargin(canvas, config);
 }
 
@@ -39,7 +65,7 @@ void TPlotter::savePlot(TCanvas* canvas, TH1* plot, const std::string& configNam
 	setTitle(plot, mConfig->getConfig(configName));
 	setXRange(plot, mConfig->getConfig(configName));
 	setYRange(plot, mConfig->getConfig(configName));
-	setLineColour(plot, mConfig->getConfig(configName));
+	setAttribute(plot, mConfig->getConfig(configName));
 
 	plot->Draw("COLZ0");
 	setMargin(canvas, mConfig->getConfig(configName));
@@ -207,8 +233,6 @@ void TPlotter::setCanvasAttribute(TCanvas* canvas, const CppConfigDictionary& co
 	}
 }
 
-
-
 void TPlotter::saveCanvas(TCanvas* canvas, std::filesystem::path path, const CppConfigDictionary& config) {
 	if ( config.hasKey("logx") && config.find("logx") == "true" ) {
 		canvas->SetLogx();
@@ -216,8 +240,15 @@ void TPlotter::saveCanvas(TCanvas* canvas, std::filesystem::path path, const Cpp
 	if ( config.hasKey("logy") && config.find("logy") == "true" ) {
 		canvas->SetLogy();
 	}
+	if ( config.hasKey("logz") && config.find("logz") == "true" ) {
+		canvas->SetLogz();
+	}
 	if ( config.hasKey("grid") && config.find("grid") == "true" ) {
 		canvas->SetGrid();
+	}
+	if ( config.hasKey("canvas_size") ) {
+		std::vector<double> size = getDoubleSetFromString(config.find("canvas_size"));
+		canvas->SetCanvasSize(size[0], size[1]);
 	}
 	std::string name = config.hasKey("name") ? config.find("name") : "filename";
 	std::string extension = config.hasKey("extension") ? config.find("extension") : EXTENSION;

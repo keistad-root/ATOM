@@ -1,0 +1,41 @@
+num, output_file, collimator_length, collimator_area, screen
+1, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_1mm_2phi_alpha_noscreen.root, 1., 0.97, false
+2, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_1mm_3phi_alpha_noscreen.root, 1., 4.6, false
+3, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_1mm_4phi_alpha_noscreen.root, 1., 10.5, false
+4, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_1mm_7phi_alpha_noscreen.root, 1., 36, false
+5, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_1mm_2phi_alpha_screen.root, 1., 0.97, true
+6, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_1mm_3phi_alpha_screen.root, 1., 4.6, true
+7, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_1mm_4phi_alpha_screen.root, 1., 10.5, true
+8, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_1mm_7phi_alpha_screen.root, 1., 36, true
+9, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_3mm_2phi_alpha_noscreen.root,3., 1.09, false
+10, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_3mm_3phi_alpha_noscreen.root,3., 5.5, false
+11, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_3mm_4phi_alpha_noscreen.root,3., 10.4, false
+12, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_3mm_7phi_alpha_noscreen.root,3., 34.9, false
+13, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_3mm_2phi_alpha_screen.root,3., 1.09, true
+14, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_3mm_3phi_alpha_screen.root,3., 5.5, true
+15, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_3mm_4phi_alpha_screen.root,3., 10.4, true
+16, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_3mm_7phi_alpha_screen.root,3., 34.9, true
+17, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_7mm_2phi_alpha_noscreen.root,7., 0.62, false
+18, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_7mm_3phi_alpha_noscreen.root,7., 6.1, false
+19, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_7mm_4phi_alpha_noscreen.root,7., 10.3, false
+20, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_7mm_7phi_alpha_noscreen.root,7., 34.6, false
+21, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_7mm_2phi_alpha_screen.root,7., 0.62, true
+22, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_7mm_3phi_alpha_screen.root,7., 6.1, true
+23, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_7mm_4phi_alpha_screen.root,7., 10.3, true
+24, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_7mm_7phi_alpha_screen.root,7., 34.6, true
+25, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_20mm_2phi_alpha_noscreen.root,20., 1.17, false
+26, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_20mm_3phi_alpha_noscreen.root,20., 6.33, false
+27, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_20mm_4phi_alpha_noscreen.root,20., 9.4, false
+28, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_20mm_7phi_alpha_noscreen.root,20., 35.5, false
+29, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_20mm_2phi_alpha_screen.root,20., 1.17, true
+30, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_20mm_3phi_alpha_screen.root,20., 6.33, true
+31, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_20mm_4phi_alpha_screen.root,20., 9.4, true
+32, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_20mm_7phi_alpha_screen.root,20., 35.5, true
+33, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_1mm_nocollimator_noscreen.root, 1., 95.03, false
+34, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_1mm_nocollimator_screen.root, 1., 95.03, true
+35, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_3mm_nocollimator_noscreen.root, 3., 95.03, false
+36, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_3mm_nocollimator_screen.root, 3., 95.03, true
+37, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_7mm_nocollimator_noscreen.root, 7., 95.03, false
+38, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_7mm_nocollimator_screen.root, 7., 95.03, true
+39, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_20mm_nocollimator_noscreen.root, 20., 95.03, false
+40, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_20mm_nocollimator_screen.root, 20., 95.03, true

@@ -1,25 +1,35 @@
+#include <csv.h>
+#include <string>
 
 #include "cppargs.h"
 #include "CppConfigFile.h"
 
 #include "TDataAnalyser.h"
 
-ArgumentParser set_parse(int argc, char** argv) {
-	ArgumentParser parser = ArgumentParser(argc, argv).setDescription("Draw threshold information of an ALPIDE");
-	parser.add_argument("config").help("Config File").set_default("default").add_finish();
-	parser.parse_args();
-	return parser;
+CppConfigFile setEnvironment(std::string configTag) {
+	CppConfigFile config("/home/ychoi/ATOM/config/experiment/masking.conf");
+	io::CSVReader<6> csv("/home/ychoi/ATOM/config/experiment/masking.csv");
+	csv.read_header(io::ignore_extra_column, "tag", "input_file", "output_file", "mask_file", "hot_pixel_file", "hit_cut");
+
+	std::string tag, inputFile, outputFile, maskFile, hotPixelFile, hitCut;
+	for ( int i = 0; csv.read_row(tag, inputFile, outputFile, maskFile, hotPixelFile, hitCut); i++ ) {
+		if ( tag == configTag ) {
+			config.modifyConfig("File").addDictionary("input_file", inputFile);
+			config.modifyConfig("File").addDictionary("output_file", outputFile);
+			config.modifyConfig("File").addDictionary("mask_file", maskFile);
+			config.modifyConfig("File").addDictionary("hot_pixel_file", hotPixelFile);
+			config.modifyConfig("Masking").addDictionary("hit_cut", hitCut);
+		}
+	}
+	return config;
 }
 
 int main(int argc, char** argv) {
-	ArgumentParser parser = set_parse(argc, argv);
-
-	std::string configPath = parser.get_value<std::string>("config");
-	CppConfigFile config(configPath);
+	CppConfigFile config = setEnvironment(argv[1]);
 
 	TDataAnalyser* analyse = new TDataAnalyser(&config);
 	analyse->extractEvent();
-	analyse->excludeHotPixel();
+	// analyse->excludeHotPixel();
 	analyse->extractCluster();
 	analyse->extractHotPixel();
 	analyse->extractShape();

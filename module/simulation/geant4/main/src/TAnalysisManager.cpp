@@ -6,7 +6,9 @@ TAnalysisManager::TAnalysisManager() {
 	mInstance = this;
 }
 
-TAnalysisManager::~TAnalysisManager() { }
+TAnalysisManager::~TAnalysisManager() {
+	close();
+}
 
 TAnalysisManager* TAnalysisManager::Instance() {
 	if ( mInstance == 0 ) {
@@ -17,87 +19,256 @@ TAnalysisManager* TAnalysisManager::Instance() {
 
 void TAnalysisManager::open(const G4String& name) {
 	mFile = new TFile(name, "RECREATE");
-	mInitTree = new TTree("initTree", "Tree for recording initial informations");
+	mTrackTree = new TTree("trackTree", "Track Information");
+	mTrackTree->SetAutoSave(1LL * 1024 * 1024 * 1024);
 
-	mInitTree->Branch("Particle Name", &initTuple.particleName, "InitParticleName[]/C");
-	mInitTree->Branch("X", &initTuple.x, "InitX/D");
-	mInitTree->Branch("Y", &initTuple.y, "InitY/D");
-	mInitTree->Branch("Z", &initTuple.z, "InitZ/D");
-	mInitTree->Branch("PX", &initTuple.px, "InitPX/D");
-	mInitTree->Branch("PY", &initTuple.py, "InitPY/D");
-	mInitTree->Branch("PZ", &initTuple.pz, "InitPZ/D");
+	mTrackTree->Branch("eventID", &mTrackTuple.eventID);
+	mTrackTree->Branch("trackID", &mTrackTuple.trackID);
+	mTrackTree->Branch("parentID", &mTrackTuple.parentID);
+	mTrackTree->Branch("particleID", &mTrackTuple.particleID);
+	mTrackTree->Branch("initX", &mTrackTuple.initX);
+	mTrackTree->Branch("initY", &mTrackTuple.initY);
+	mTrackTree->Branch("initZ", &mTrackTuple.initZ);
+	mTrackTree->Branch("initPX", &mTrackTuple.initPX);
+	mTrackTree->Branch("initPY", &mTrackTuple.initPY);
+	mTrackTree->Branch("initPZ", &mTrackTuple.initPZ);
+	mTrackTree->Branch("initKineticEnergy", &mTrackTuple.initKineticEnergy);
+	mTrackTree->Branch("initVolumeID", &mTrackTuple.initVolumeID);
+	mTrackTree->Branch("finalX", &mTrackTuple.finalX);
+	mTrackTree->Branch("finalY", &mTrackTuple.finalY);
+	mTrackTree->Branch("finalZ", &mTrackTuple.finalZ);
+	mTrackTree->Branch("finalPX", &mTrackTuple.finalPX);
+	mTrackTree->Branch("finalPY", &mTrackTuple.finalPY);
+	mTrackTree->Branch("finalPZ", &mTrackTuple.finalPZ);
+	mTrackTree->Branch("finalKineticEnergy", &mTrackTuple.finalKineticEnergy);
+	mTrackTree->Branch("finalVolumeID", &mTrackTuple.finalVolumeID);
 
-	mALPIDETree = new TTree("alpideTree", "Tree for recording ALPIDE informations");
-	mALPIDETree->Branch("DepositEnergyMetal", &alpideTuple.depositEnergyMetal, "DepositEnergyMetal/D");
-	mALPIDETree->Branch("DepositEnergyEpitaxial", &alpideTuple.depositEnergyEpitaxial, "DepositEnergyEpitaxial/D");
-	mALPIDETree->Branch("DepositEnergySubstrate", &alpideTuple.depositEnergySubstrate, "DepositEnergySubstrate/D");
-
-	mIncidnetTree = new TTree("incidentTree", "Tree for recording incident informations");
-	mIncidnetTree->Branch("Particle ID", &incidentTuple.particleID, "IncidentParticleID/I");
-	mIncidnetTree->Branch("X", &incidentTuple.x, "IncidentX/D");
-	mIncidnetTree->Branch("Y", &incidentTuple.y, "IncidentY/D");
-	mIncidnetTree->Branch("Z", &incidentTuple.z, "IncidentZ/D");
-	mIncidnetTree->Branch("PX", &incidentTuple.px, "IncidentPX/D");
-	mIncidnetTree->Branch("PY", &incidentTuple.py, "IncidentPY/D");
-	mIncidnetTree->Branch("PZ", &incidentTuple.pz, "IncidentPZ/D");
+	mIncidentTree = new TTree("incidentTree", "Incident Information");
+	mIncidentTree->SetAutoSave(1LL * 1024 * 1024 * 1024);
+	mIncidentTree->Branch("eventID", &mIncidentTuple.eventID);
+	mIncidentTree->Branch("trackID", &mIncidentTuple.trackID);
+	mIncidentTree->Branch("depositEnergyMetal", &mIncidentTuple.depositEnergy[0]);
+	mIncidentTree->Branch("depositEnergyEpitaxial", &mIncidentTuple.depositEnergy[1]);
+	mIncidentTree->Branch("depositEnergySubstrate", &mIncidentTuple.depositEnergy[2]);
+	mIncidentTree->Branch("x", &mIncidentTuple.position[0]);
+	mIncidentTree->Branch("y", &mIncidentTuple.position[1]);
+	mIncidentTree->Branch("z", &mIncidentTuple.position[2]);
+	mIncidentTree->Branch("px", &mIncidentTuple.momentum[0]);
+	mIncidentTree->Branch("py", &mIncidentTuple.momentum[1]);
+	mIncidentTree->Branch("pz", &mIncidentTuple.momentum[2]);
+	mIncidentTree->Branch("kineticEnergy", &mIncidentTuple.kineticEnergy);
+	mIncidentTree->Branch("globalTime", &mIncidentTuple.globalTime);
+	mIncidentTree->Branch("localTime", &mIncidentTuple.localTime);
 }
 
-void TAnalysisManager::recordInit(const G4Event* event) {
-	initTuple.particleName = event->GetPrimaryVertex(0)->GetPrimary(0)->GetParticleDefinition()->GetParticleName();
-	initTuple.x = event->GetPrimaryVertex(0)->GetX0();
-	initTuple.y = event->GetPrimaryVertex(0)->GetY0();
-	initTuple.z = event->GetPrimaryVertex(0)->GetZ0();
-	initTuple.px = event->GetPrimaryVertex(0)->GetPrimary(0)->GetPx();
-	initTuple.py = event->GetPrimaryVertex(0)->GetPrimary(0)->GetPy();
-	initTuple.pz = event->GetPrimaryVertex(0)->GetPrimary(0)->GetPz();
-
-	mInitTree->Fill();
-	mInitTree->AutoSave();
-}
-
-void TAnalysisManager::recordALPIDE(G4bool metal, G4bool epitaxial, G4bool substrate, G4double metalDepositEnergy, G4double epitaxialDepositEnergy, G4double substrateDepositEnergy) {
-	if ( metal ) {
-		alpideTuple.nParticleMetal++;
-		alpideTuple.depositEnergyMetal = metalDepositEnergy;
-	}
-	if ( epitaxial ) {
-		alpideTuple.nParticleEpitaxial++;
-		alpideTuple.depositEnergyEpitaxial = epitaxialDepositEnergy;
-	}
-	if ( substrate ) {
-		alpideTuple.nParticleSubstrate++;
-		alpideTuple.depositEnergySubstrate = substrateDepositEnergy;
-	}
-	mALPIDETree->Fill();
-	mALPIDETree->AutoSave();
-}
-
-void TAnalysisManager::recordIncident(const G4Step* step) {
-
-	TString particleName = step->GetTrack()->GetParticleDefinition()->GetParticleName();
-	if ( particleName == "alpha" ) {
-		incidentTuple.particleID = 1;
-	} else if ( particleName == "e-" ) {
-		incidentTuple.particleID = 2;
+Int_t TAnalysisManager::getParticleID(const G4String& particleID) {
+	if ( particleID == "alpha" ) {
+		return PARTICLE::alpha;
+	} else if ( particleID == "e-" ) {
+		return PARTICLE::electron;
+	} else if ( particleID == "gamma" ) {
+		return PARTICLE::gamma1;
+	} else if ( particleID == "proton" ) {
+		return PARTICLE::proton;
+	} else if ( particleID == "neutron" ) {
+		return PARTICLE::neutron;
+	} else if ( particleID == "C12" ) {
+		return PARTICLE::carbon12;
+	} else if ( particleID == "C13" ) {
+		return PARTICLE::carbon13;
+	} else if ( particleID == "N14" ) {
+		return PARTICLE::neutron;
+	} else if ( particleID == "O16" ) {
+		return PARTICLE::oxygen16;
+	} else if ( particleID == "O18" ) {
+		return PARTICLE::oxygen18;
+	} else if ( particleID == "Si28" ) {
+		return PARTICLE::silicon;
 	} else {
-		incidentTuple.particleID = 0;
-		std::cout << particleName << " " << step->GetTrack()->GetVertexPosition() << std::endl;
+		return PARTICLE::unknown;
 	}
-	incidentTuple.x = step->GetPreStepPoint()->GetPosition().x() / mm;
-	incidentTuple.y = step->GetPreStepPoint()->GetPosition().y() / mm;
-	incidentTuple.z = step->GetPreStepPoint()->GetPosition().z() / mm;
-	incidentTuple.px = step->GetPreStepPoint()->GetMomentum().x() / MeV;
-	incidentTuple.py = step->GetPreStepPoint()->GetMomentum().y() / MeV;
-	incidentTuple.pz = step->GetPreStepPoint()->GetMomentum().z() / MeV;
+}
 
-	mIncidnetTree->Fill();
-	mIncidnetTree->AutoSave();
+Int_t TAnalysisManager::getVolumeID(const G4LogicalVolume* volume) {
+	if ( volume == mALPIDEMetalLogical ) {
+		return 1;
+	} else if ( volume == mALPIDEEpitaxialLogical ) {
+		return 2;
+	} else if ( volume == mALPIDESubstrateLogical ) {
+		return 3;
+	} else if ( volume == mCollimatorLogical ) {
+		return 4;
+	} else if ( volume == mScreenLogical ) {
+		return 5;
+	} else if ( volume == mWorldLogical ) {
+		return 6;
+	} else {
+		return 0;
+	}
 }
 
 void TAnalysisManager::close() {
 	mFile->cd();
-	mInitTree->Write();
-	mALPIDETree->Write();
-	mIncidnetTree->Write();
+	mTrackTree->Write();
+	mIncidentTree->Write();
 	mFile->Close();
+}
+
+void TAnalysisManager::doBeginOfRun(const G4Run* run) {
+	mProgressBar = new ProgressBar(static_cast<int>(run->GetNumberOfEventToBeProcessed()));
+}
+
+void TAnalysisManager::doEndOfRun(const G4Run* run) {
+	delete mProgressBar;
+	mProgressBar = nullptr;
+
+	std::cout << "Unknown particles: ";
+	for ( const std::string& particle : mUnknownParticleList ) {
+		std::cout << particle << " ";
+	}
+	std::cout << std::endl;
+}
+
+void TAnalysisManager::doBeginOfEvent(const G4Event* event) {
+	mProgressBar->printProgress();
+	mTrackTuple.eventID = event->GetEventID();
+}
+
+void TAnalysisManager::doEndOfEvent(const G4Event* event) { }
+
+void TAnalysisManager::doPreTracking(const G4Track* track) {
+	Int_t eventID = mTrackTuple.eventID;
+	mTrackTuple.init();
+	mIncidentTuple.init();
+
+	mTrackTuple.eventID = eventID;
+	mTrackTuple.trackID = track->GetTrackID();
+	mTrackTuple.parentID = track->GetParentID();
+	mTrackTuple.particleID = getParticleID(track->GetDefinition()->GetParticleName());
+	if ( mTrackTuple.particleID == 0 ) {
+		if ( std::find(mUnknownParticleList.begin(), mUnknownParticleList.end(), track->GetDefinition()->GetParticleName()) == mUnknownParticleList.end() ) {
+			mUnknownParticleList.push_back(track->GetDefinition()->GetParticleName());
+		}
+	}
+	isInALPIDE = false;
+	isInEpitaxial = false;
+	isInSubstrate = false;
+}
+
+void TAnalysisManager::doPostTracking(const G4Track* track) {
+	const TDetectorConstruction* detectorConstruction = static_cast<const TDetectorConstruction*>(G4RunManager::GetRunManager()->GetUserDetectorConstruction());
+	if ( mALPIDEMetalLogical == nullptr ) {
+		mALPIDEMetalLogical = detectorConstruction->getALPIDEMetalLogical();
+	}
+	if ( mALPIDEEpitaxialLogical == nullptr ) {
+		mALPIDEEpitaxialLogical = detectorConstruction->getALPIDEEpitaxialLogical();
+	}
+	if ( mALPIDESubstrateLogical == nullptr ) {
+		mALPIDESubstrateLogical = detectorConstruction->getALPIDESubstrateLogical();
+	}
+	if ( mCollimatorLogical == nullptr ) {
+		mCollimatorLogical = detectorConstruction->getCollimatorLogical();
+	}
+	if ( mScreenLogical == nullptr ) {
+		mScreenLogical = detectorConstruction->getScreenLogical();
+	}
+	if ( mWorldLogical == nullptr ) {
+		mWorldLogical = detectorConstruction->getWorldLogical();
+	}
+
+	G4ThreeVector vertexPosition = track->GetVertexPosition();
+	mTrackTuple.initX = vertexPosition.x();
+	mTrackTuple.initY = vertexPosition.y();
+	mTrackTuple.initZ = vertexPosition.z();
+
+	G4ThreeVector vertexMomentum = track->GetVertexMomentumDirection();
+	mTrackTuple.initPX = vertexMomentum.x();
+	mTrackTuple.initPY = vertexMomentum.y();
+	mTrackTuple.initPZ = vertexMomentum.z();
+
+	mTrackTuple.initKineticEnergy = track->GetVertexKineticEnergy();
+	mTrackTuple.initVolumeID = getVolumeID(track->GetOriginTouchableHandle()->GetVolume()->GetLogicalVolume());
+
+	G4ThreeVector finalPosition = track->GetPosition();
+	mTrackTuple.finalX = finalPosition.x();
+	mTrackTuple.finalY = finalPosition.y();
+	mTrackTuple.finalZ = finalPosition.z();
+
+	G4ThreeVector finalMomentum = track->GetMomentumDirection();
+	mTrackTuple.finalPX = finalMomentum.x();
+	mTrackTuple.finalPY = finalMomentum.y();
+	mTrackTuple.finalPZ = finalMomentum.z();
+
+	mTrackTuple.finalKineticEnergy = track->GetKineticEnergy();
+
+	mTrackTuple.finalVolumeID = getVolumeID(track->GetVolume()->GetLogicalVolume());
+
+	mTrackTree->Fill();
+	if ( isInALPIDE ) {
+		mIncidentTree->Fill();
+	}
+}
+
+void TAnalysisManager::doStepPhase(const G4Step* step) {
+	G4LogicalVolume* currentVolume = step->GetPreStepPoint()->GetTouchableHandle()->GetVolume()->GetLogicalVolume();
+	G4int volumeID = getVolumeID(currentVolume);
+
+	const TDetectorConstruction* detectorConstruction = static_cast<const TDetectorConstruction*>(G4RunManager::GetRunManager()->GetUserDetectorConstruction());
+	if ( mALPIDEMetalLogical == nullptr ) {
+		mALPIDEMetalLogical = detectorConstruction->getALPIDEMetalLogical();
+	}
+	if ( mALPIDEEpitaxialLogical == nullptr ) {
+		mALPIDEEpitaxialLogical = detectorConstruction->getALPIDEEpitaxialLogical();
+	}
+	if ( mALPIDESubstrateLogical == nullptr ) {
+		mALPIDESubstrateLogical = detectorConstruction->getALPIDESubstrateLogical();
+	}
+	if ( mCollimatorLogical == nullptr ) {
+		mCollimatorLogical = detectorConstruction->getCollimatorLogical();
+	}
+	if ( mScreenLogical == nullptr ) {
+		mScreenLogical = detectorConstruction->getScreenLogical();
+	}
+	if ( mWorldLogical == nullptr ) {
+		mWorldLogical = detectorConstruction->getWorldLogical();
+	}
+
+	if ( currentVolume == mALPIDEMetalLogical && step->IsFirstStepInVolume() && getVolumeID(step->GetTrack()->GetOriginTouchableHandle()->GetVolume()->GetLogicalVolume()) > 3 ) {
+		G4LogicalVolume* postVolume = step->GetPostStepPoint()->GetTouchableHandle()->GetVolume()->GetLogicalVolume();
+		if ( postVolume != mWorldLogical && postVolume != mScreenLogical && postVolume != mCollimatorLogical ) {
+			isInALPIDE = true;
+			mIncidentTuple.eventID = mTrackTuple.eventID;
+			mIncidentTuple.trackID = step->GetTrack()->GetTrackID();
+			mIncidentTuple.position[0] = step->GetPreStepPoint()->GetPosition().x();
+			mIncidentTuple.position[1] = step->GetPreStepPoint()->GetPosition().y();
+			mIncidentTuple.position[2] = step->GetPreStepPoint()->GetPosition().z();
+			mIncidentTuple.momentum[0] = step->GetPreStepPoint()->GetMomentum().x();
+			mIncidentTuple.momentum[1] = step->GetPreStepPoint()->GetMomentum().y();
+			mIncidentTuple.momentum[2] = step->GetPreStepPoint()->GetMomentum().z();
+			mIncidentTuple.globalTime = step->GetPreStepPoint()->GetGlobalTime();
+			mIncidentTuple.localTime = step->GetPreStepPoint()->GetLocalTime();
+			mIncidentTuple.kineticEnergy = step->GetPreStepPoint()->GetKineticEnergy();
+			mIncidentTuple.depositEnergy[0] = 0;
+		}
+	}
+
+	if ( isInALPIDE ) {
+		if ( currentVolume == mALPIDEMetalLogical ) {
+			mIncidentTuple.depositEnergy[0] += step->GetTotalEnergyDeposit();
+		}
+		if ( currentVolume == mALPIDEEpitaxialLogical ) {
+			if ( !isInEpitaxial ) {
+				mIncidentTuple.depositEnergy[1] = 0;
+				isInEpitaxial = true;
+			}
+			mIncidentTuple.depositEnergy[1] += step->GetTotalEnergyDeposit();
+		}
+		if ( currentVolume == mALPIDESubstrateLogical ) {
+			if ( !isInSubstrate ) {
+				mIncidentTuple.depositEnergy[2] = 0;
+				isInSubstrate = true;
+			}
+			mIncidentTuple.depositEnergy[2] += step->GetTotalEnergyDeposit();
+		}
+	}
 }

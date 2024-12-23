@@ -17,6 +17,7 @@
 class CppConfigFile {
 private:
 	std::vector<CppConfigDictionary> mConfigs;
+	std::array<char, 6> mFunctions = {'{', '}', '=', '"', '[', ']'};
 public:
 	CppConfigFile();
 	CppConfigFile(std::string_view configFile);
@@ -33,6 +34,9 @@ public:
 	const CppConfigDictionary& getConfig(std::string_view configTitle) const;
 	const bool hasConfig(std::string_view configTitle) const;
 	friend std::ostream& operator<<(std::ostream& os, const CppConfigFile& copy);
+	std::string removeCommentsAndWhitespace(const std::string& line);
+	bool isConfigurableName(const std::string& line);
+	std::string extractConfigurableName(const std::string& line);
 };
 
 

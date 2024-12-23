@@ -3,19 +3,22 @@
 TEventAction::TEventAction(TRunAction* runAction) : G4UserEventAction(), fRunAction(runAction) { }
 
 void TEventAction::BeginOfEventAction(const G4Event* event) {
-
+	TAnalysisManager* analysisManager = TAnalysisManager::Instance();
+	analysisManager->doBeginOfEvent(event);
 }
 
-void TEventAction::EndOfEventAction(const G4Event*) {
+void TEventAction::EndOfEventAction(const G4Event* event) {
 	TAnalysisManager* analysisManager = TAnalysisManager::Instance();
-	analysisManager->recordALPIDE(mMetal, mEpitaxial, mSubstrate, mDepositMetal, mDepositEpitaxial, mDepositSubstrate);
+	analysisManager->doEndOfEvent(event);
 
-	mMetal = false;
-	mEpitaxial = false;
-	mSubstrate = false;
+	// analysisManager->recordALPIDE(mMetal, mEpitaxial, mSubstrate, mDepositMetal, mDepositEpitaxial, mDepositSubstrate);
 
-	mDepositMetal = 0.;
-	mDepositEpitaxial = 0.;
-	mDepositSubstrate = 0.;
+	// mMetal = false;
+	// mEpitaxial = false;
+	// mSubstrate = false;
+
+	// mDepositMetal = 0.;
+	// mDepositEpitaxial = 0.;
+	// mDepositSubstrate = 0.;
 
 }

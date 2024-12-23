@@ -57,31 +57,36 @@ void TDetectorConstruction::getALPIDE() {
 
 	G4Material* alpideMaterial = new G4Material("Silicon", 14, 28.085 * g / mole, 2.33 * g / cm3);
 
-	alpideMetalLogical = new G4LogicalVolume(solidALPIDEMetal, alpideMaterial, "ALPIDEMetal");
-	alpideMetalLogical->SetVisAttributes(G4VisAttributes(G4Colour::Yellow()));
-	// alpideMetalLogical->SetUserLimits(new G4UserLimits(1 * um, 1 * um));
+	mAlpideMetalLogical = new G4LogicalVolume(solidALPIDEMetal, alpideMaterial, "ALPIDEMetal");
+	mAlpideMetalLogical->SetVisAttributes(G4VisAttributes(G4Colour::Yellow()));
 
-	alpideEpitaxialLogical = new G4LogicalVolume(solidALPIDEEpitaxial, alpideMaterial, "ALPIDEEpitaxial");
-	alpideEpitaxialLogical->SetVisAttributes(G4VisAttributes(G4Colour::Yellow()));
-	// alpideEpitaxialLogical->SetUserLimits(new G4UserLimits(1 * um, 1 * um));
+	mAlpideEpitaxialLogical = new G4LogicalVolume(solidALPIDEEpitaxial, alpideMaterial, "ALPIDEEpitaxial");
+	mAlpideEpitaxialLogical->SetVisAttributes(G4VisAttributes(G4Colour::Yellow()));
 
-	alpideSubstrateLogical = new G4LogicalVolume(solidALPIDESubstrate, alpideMaterial, "ALPIDESubstrate");
-	alpideSubstrateLogical->SetVisAttributes(G4VisAttributes(G4Colour::Yellow()));
-	// alpideSubstrateLogical->SetUserLimits(new G4UserLimits(1 * um, 1 * um));
+	mAlpideSubstrateLogical = new G4LogicalVolume(solidALPIDESubstrate, alpideMaterial, "ALPIDESubstrate");
+	mAlpideSubstrateLogical->SetVisAttributes(G4VisAttributes(G4Colour::Yellow()));
 
 	mALPIDE = new G4AssemblyVolume();
 	G4RotationMatrix* alpideRotation = new G4RotationMatrix(0.0 * deg, 0.0 * deg, 0.0 * deg);
 	G4ThreeVector alpideMetalVector = G4ThreeVector(0, 0, -.5 * alpideMetalZ);
-	mALPIDE->AddPlacedVolume(alpideMetalLogical, alpideMetalVector, alpideRotation);
+	mALPIDE->AddPlacedVolume(mAlpideMetalLogical, alpideMetalVector, alpideRotation);
 
 	G4ThreeVector alpideEpitaxialVector = G4ThreeVector(0, 0, -alpideMetalZ - .5 * alpideEpitaxialZ);
-	mALPIDE->AddPlacedVolume(alpideEpitaxialLogical, alpideEpitaxialVector, alpideRotation);
+	mALPIDE->AddPlacedVolume(mAlpideEpitaxialLogical, alpideEpitaxialVector, alpideRotation);
 
 	G4ThreeVector alpideSubstrateVector = G4ThreeVector(0, 0, -alpideMetalZ - alpideEpitaxialZ - .5 * alpideSubstrateZ);
-	mALPIDE->AddPlacedVolume(alpideSubstrateLogical, alpideSubstrateVector, alpideRotation);
+	mALPIDE->AddPlacedVolume(mAlpideSubstrateLogical, alpideSubstrateVector, alpideRotation);
 
 	G4Transform3D t3d = G4Transform3D();
 	mALPIDE->MakeImprint(mWorldLogical, t3d);
+
+	G4Region* alpideRegion = new G4Region("ALPIDERegion");
+	mAlpideMetalLogical->SetRegion(alpideRegion);
+	alpideRegion->AddRootLogicalVolume(mAlpideMetalLogical);
+	mAlpideEpitaxialLogical->SetRegion(alpideRegion);
+	alpideRegion->AddRootLogicalVolume(mAlpideEpitaxialLogical);
+	mAlpideSubstrateLogical->SetRegion(alpideRegion);
+	alpideRegion->AddRootLogicalVolume(mAlpideSubstrateLogical);
 }
 
 void TDetectorConstruction::getCollimator() {
@@ -111,6 +116,10 @@ void TDetectorConstruction::getCollimator() {
 	mCollimatorLogical = new G4LogicalVolume(solidCollimator, collimatorMaterial, "Collimator");
 
 	mCollimator = new G4PVPlacement(0, G4ThreeVector(0, 0, 2. * mm + .5 * (mCollimatorLength + collimatorSourceHeight)), mCollimatorLogical, "Collimator", mWorldLogical, false, 0, true);
+
+	G4Region* collimatorRegion = new G4Region("CollimatorRegion");
+	mCollimatorLogical->SetRegion(collimatorRegion);
+	collimatorRegion->AddRootLogicalVolume(mCollimatorLogical);
 }
 
 void TDetectorConstruction::getScreen() {
@@ -132,4 +141,8 @@ void TDetectorConstruction::getScreen() {
 	if ( mScreenBoolean ) {
 		mScreen = new G4PVPlacement(0, G4ThreeVector(0, 0, 2. * mm - .5 * screenZ), mScreenLogical, "Screen", mWorldLogical, false, 0, true);
 	}
+
+	G4Region* screenRegion = new G4Region("ScreenRegion");
+	mScreenLogical->SetRegion(screenRegion);
+	screenRegion->AddRootLogicalVolume(mScreenLogical);
 }

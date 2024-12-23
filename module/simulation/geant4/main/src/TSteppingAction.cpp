@@ -4,32 +4,19 @@ TSteppingAction::TSteppingAction(TEventAction* eventAction) : G4UserSteppingActi
 
 void TSteppingAction::UserSteppingAction(const G4Step* step) {
 	TAnalysisManager* analysisManager = TAnalysisManager::Instance();
-	if ( mALPIDEMetalLogical == nullptr ) {
-		const TDetectorConstruction* detectorConstruction = static_cast<const TDetectorConstruction*>(G4RunManager::GetRunManager()->GetUserDetectorConstruction());
-		mALPIDEMetalLogical = detectorConstruction->getALPIDEMetal();
-		mALPIDEEpitaxialLogical = detectorConstruction->getALPIDEEpitaxial();
-		mALPIDESubstrateLogical = detectorConstruction->getALPIDESubstrate();
+	analysisManager->doStepPhase(step);
+}
+
+G4bool TSteppingAction::isOriginOutALPIDE(const G4Track* track) {
+	G4bool isOut = true;
+	if ( track->GetOriginTouchableHandle()->GetVolume()->GetLogicalVolume() == mALPIDEMetalLogical ) {
+		isOut = false;
+	} else if ( track->GetOriginTouchableHandle()->GetVolume()->GetLogicalVolume() == mALPIDEEpitaxialLogical ) {
+		isOut = false;
+	} else if ( track->GetOriginTouchableHandle()->GetVolume()->GetLogicalVolume() == mALPIDESubstrateLogical ) {
+		isOut = false;
+	} else {
+		isOut = true;
 	}
-	G4Track* track = step->GetTrack();
-	G4LogicalVolume* volume = step->GetPreStepPoint()->GetTouchableHandle()->GetVolume()->GetLogicalVolume();
-	if ( !(track->GetOriginTouchableHandle()->GetVolume()->GetLogicalVolume() == mALPIDEMetalLogical) && !(track->GetOriginTouchableHandle()->GetVolume()->GetLogicalVolume() == mALPIDEEpitaxialLogical) && !(track->GetOriginTouchableHandle()->GetVolume()->GetLogicalVolume() == mALPIDESubstrateLogical) ) {
-		if ( volume == mALPIDEMetalLogical ) {
-			G4double depositEnergy = step->GetTotalEnergyDeposit();
-			fEventAction->addDepositMetal(depositEnergy / MeV);
-			fEventAction->passMetal();
-			if ( step->IsFirstStepInVolume() ) {
-				analysisManager->recordIncident(step);
-			}
-		} else if ( volume == mALPIDEEpitaxialLogical ) {
-			G4double depositEnergy = step->GetTotalEnergyDeposit();
-			fEventAction->addDepositEpitaxial(depositEnergy / MeV);
-			fEventAction->passEpitaxial();
-		} else if ( volume == mALPIDESubstrateLogical ) {
-			G4double depositEnergy = step->GetTotalEnergyDeposit();
-			fEventAction->addDepositSubstrate(depositEnergy / MeV);
-			fEventAction->passSubstrate();
-		} else {
-			inALPIDE = false;
-		}
-	}
+	return isOut;
 }

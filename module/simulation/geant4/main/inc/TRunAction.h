@@ -3,6 +3,7 @@
 
 #include "G4UserRunAction.hh"
 #include "globals.hh"
+#include "TAnalysisManager.h"
 
 class TRunAction : public G4UserRunAction {
 public:

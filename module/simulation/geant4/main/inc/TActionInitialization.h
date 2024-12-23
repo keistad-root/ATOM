@@ -14,8 +14,13 @@ class TActionInitialization : public G4VUserActionInitialization {
 
 public:
 	TActionInitialization() = default;
+	TActionInitialization(const CppConfigFile config);
 	~TActionInitialization() override = default;
 
+private:
+	CppConfigFile mConfig;
+
+public:
 	void BuildForMaster() const override;
 	void Build() const override;
 };

@@ -1,5 +1,7 @@
 #include "TActionInitialization.h"
 
+TActionInitialization::TActionInitialization(const CppConfigFile config) : G4VUserActionInitialization(), mConfig(config) { }
+
 void TActionInitialization::BuildForMaster() const {
 	// In this method, the user can specify the actions that are to be taken by the master thread.
 	TRunAction* runAction = new TRunAction;
@@ -8,7 +10,10 @@ void TActionInitialization::BuildForMaster() const {
 
 void TActionInitialization::Build() const {
 	// In this method, the user can specify the actions that are to be taken by the worker threads.
-	SetUserAction(new TPrimaryGeneratorAction);
+	TPrimaryGeneratorAction* primaryGeneratorAction = new TPrimaryGeneratorAction(mConfig);
+	primaryGeneratorAction->setAlphaEnergy();
+	SetUserAction(primaryGeneratorAction);
+
 
 	TRunAction* runAction = new TRunAction;
 	SetUserAction(runAction);

@@ -17,11 +17,10 @@ private:
 	G4LogicalVolume* mALPIDEMetalLogical = nullptr;
 	G4LogicalVolume* mALPIDEEpitaxialLogical = nullptr;
 	G4LogicalVolume* mALPIDESubstrateLogical = nullptr;
-
-	bool inALPIDE = false;
 public:
 	void UserSteppingAction(const G4Step*) override;
 
+	G4bool isOriginOutALPIDE(const G4Track* track);
 };
 
 #endif

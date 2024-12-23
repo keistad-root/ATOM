@@ -53,6 +53,7 @@ public:
 
 	void saveTotalShape();
 	void saveTop10Shape();
+	void saveClusterSizeWithTime();
 
 	void savePlots();
 };

@@ -147,6 +147,9 @@ void TDataPlotter::saveTotalShape() {
 	int plotsHeight = nHeight * nominalWidth;
 
 	TCanvas* canvas = new TCanvas("tShape", "", plotsWidth + nominalHeader, plotsHeight + nominalHeader);
+	std::vector<TText*> mTextSet;
+	std::vector<TPad*> mPadSet;
+	std::vector<TLine*> mLineSet;
 
 	prevClusterSize = 1;
 	int iClusterSize = 0;
@@ -157,6 +160,7 @@ void TDataPlotter::saveTotalShape() {
 			iClusterSize++;
 			prevClusterSize = shape.first->GetEntries();
 			TText* sizeText = new TText((double) nominalHeader * .5 / (nominalHeader + plotsWidth), ((double) plotsHeight / (plotsHeight + nominalHeader)) * (((double) nHeight - iClusterSize - .5) / nHeight), Form("%d", clusterSize));
+			mTextSet.push_back(sizeText);
 			sizeText->SetNDC();
 			sizeText->SetTextAlign(22);
 			sizeText->SetTextSize(.6 * nominalWidth / (plotsHeight + nominalHeader));
@@ -168,6 +172,7 @@ void TDataPlotter::saveTotalShape() {
 		int height = shape.first->GetNbinsY();
 
 		TPad* pad = new TPad(Form("pad&d_%d", clusterSize, iClusterShape), "", (double) nominalHeader / (plotsWidth + nominalHeader) + ((double) plotsWidth / (plotsWidth + nominalHeader)) * ((double) iClusterShape / nWidth), ((double) plotsHeight / (plotsHeight + nominalHeader)) * (((double) nHeight - iClusterSize - 1) / nHeight), (double) nominalHeader / (plotsWidth + nominalHeader) + ((double) plotsWidth / (plotsWidth + nominalHeader)) * (double) (iClusterShape + 1) / nWidth, ((double) plotsHeight / (plotsHeight + nominalHeader)) * (((double) nHeight - iClusterSize) / nHeight), -1, 1);
+		mPadSet.push_back(pad);
 		pad->Draw();
 		pad->cd();
 		pad->SetMargin(0., 0., .5 * (1. - (double) height / width), .5 * (1. - (double) height / width));
@@ -176,6 +181,7 @@ void TDataPlotter::saveTotalShape() {
 		shape.first->GetXaxis()->SetAxisColor(0);
 		shape.first->GetYaxis()->SetAxisColor(0);
 		TLine* line = new TLine();
+		mLineSet.push_back(line);
 		line->SetLineColorAlpha(kRed, 6. / 8);
 		for ( int i = 1; i <= shape.first->GetNbinsX(); ++i ) {
 			for ( int j = 1; j <= shape.first->GetNbinsY(); ++j ) {
@@ -194,6 +200,7 @@ void TDataPlotter::saveTotalShape() {
 		pad->SetFrameLineWidth(0);
 		canvas->cd();
 		TText* numberingText = new TText((double) nominalHeader / (plotsWidth + nominalHeader) + ((double) plotsWidth / (plotsWidth + nominalHeader)) * (((double) iClusterShape + .5) / nWidth), ((double) plotsHeight / (plotsHeight + nominalHeader)) * (((double) nHeight - iClusterSize) / nHeight), Form("%d", shape.second));
+		mTextSet.push_back(numberingText);
 		numberingText->SetNDC();
 		numberingText->SetTextAlign(22);
 		numberingText->SetTextSize(.4 * nominalWidth / (plotsHeight + nominalHeader));
@@ -203,6 +210,19 @@ void TDataPlotter::saveTotalShape() {
 
 	}
 	saveCanvas(canvas, mOutputPath, mConfig->getConfig("TotalShape"));
+
+	// for ( TText* text : mTextSet ) {
+	// 	delete text;
+	// 	text = nullptr;
+	// }
+	// for ( TPad* pad : mPadSet ) {
+	// 	delete pad;
+	// 	pad = nullptr;
+	// }
+	// for ( TLine* line : mLineSet ) {
+	// 	delete line;
+	// 	line = nullptr;
+	// }
 }
 
 void TDataPlotter::saveTop10Shape() {
@@ -248,4 +268,26 @@ void TDataPlotter::saveTop10Shape() {
 		numberingText->Draw();
 	}
 	saveCanvas(canvas, mOutputPath, mConfig->getConfig("Top10Shape"));
+}
+
+void TDataPlotter::saveClusterSizeWithTime() {
+	TCanvas* canvas = new TCanvas("clusterSizeWithTime", "", 1000, 1000);
+	TH2D* clusterSizeWithTime = new TH2D();
+	initHist(clusterSizeWithTime, mConfig->getConfig("ClusterSizeWithTime"));
+
+	UInt_t timeStamp;
+	UInt_t size;
+
+	TTree* clusterTree = static_cast<TTree*>(mInputFile->Get("cluster"));
+	clusterTree->SetBranchAddress("TimeStamp", &timeStamp);
+	clusterTree->SetBranchAddress("Size", &size);
+
+	for ( int i = 0; i < clusterTree->GetEntries(); i++ ) {
+		clusterTree->GetEntry(i);
+		clusterSizeWithTime->Fill(timeStamp, size);
+	}
+
+	savePlot(canvas, clusterSizeWithTime, "ClusterSizeWithTime");
+
+	saveCanvas(canvas, mOutputPath, mConfig->getConfig("ClusterSizeWithTime"));
 }
