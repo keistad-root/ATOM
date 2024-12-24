@@ -3,6 +3,7 @@ set(TEST_EXE
     # ExperimentAnalysis
     ThresholdAnalysis
 	ThresholdPlot
+
 	CompareThresholdData
 	CompareRegion
 	ExperimentComparison
@@ -11,14 +12,17 @@ set(TEST_EXE
 	CompareEntry
 	# GarfieldSimulation
     Merge
+	
 	ExperimentMasking
 	ExperimentAnalysis
 	ExperimentAnalysisPlot
 	ExperimentPloting
-    entrySimulation
+    
+	entrySimulation
 	G4Simulation
     G4SimulationAnalysis
 	G4DoubleCluster
+	G4SimulationExtract
 	photo
 	temp_incident
 )

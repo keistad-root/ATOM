@@ -37,7 +37,7 @@ void CppConfigDictionary::addSubConfigDictionary(const CppConfigDictionary& subC
 	mSubConfigDictionary.push_back(subConfigDictionary);
 }
 
-const bool CppConfigDictionary::hasKey(std::string_view key) const {
+bool CppConfigDictionary::hasKey(std::string_view key) const {
 	for ( const auto& dict : mSubConfigDictionary ) {
 		if ( dict.getConfigName() == key ) {
 			return true;

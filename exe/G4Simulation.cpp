@@ -17,21 +17,23 @@
 
 CppConfigFile setEnvironment(int exp) {
 	CppConfigFile config("/home/ychoi/ATOM/config/g4simulation/analysis/g4simulation.conf");
-	io::CSVReader<5> csv("/home/ychoi/ATOM/config/g4simulation/analysis/g4simulation.csv");
+	io::CSVReader<6> csv("/home/ychoi/ATOM/config/g4simulation/analysis/g4simulation.csv");
 
-	csv.read_header(io::ignore_extra_column, "num", "output_file", "collimator_length", "collimator_area", "screen");
+	csv.read_header(io::ignore_extra_column, "num", "output_file", "collimator_length", "collimator_area", "screen", "distance_alpide_and_collimator");
 	int num;
 	std::string output_file;
 	std::string collimator_length;
 	std::string collimator_area;
 	std::string screen;
+	std::string distance_alpide_and_collimator;
 
-	while ( csv.read_row(num, output_file, collimator_length, collimator_area, screen) ) {
+	while ( csv.read_row(num, output_file, collimator_length, collimator_area, screen, distance_alpide_and_collimator) ) {
 		if ( num == exp ) {
 			config.modifyConfig("File").addDictionary("output_file", output_file);
 			config.modifyConfig("Environment").addDictionary("collimator_length", collimator_length);
 			config.modifyConfig("Environment").addDictionary("collimator_area", collimator_area);
 			config.modifyConfig("Environment").addDictionary("screen", screen);
+			config.modifyConfig("Environment").addDictionary("distance_alpide_and_collimator", distance_alpide_and_collimator);
 		}
 	}
 

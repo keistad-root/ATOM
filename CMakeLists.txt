@@ -21,6 +21,10 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
   set(CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS "${CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS} -undefined dynamic_lookup")
 endif()
 
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+  add_compile_options(-Wall -Wextra -Wpedantic)
+endif()
+
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
 
 # Find ROOT package
@@ -57,17 +61,17 @@ add_compile_options("-Wpedantic")
 add_compile_options("-Wno-unused-variable")
 add_compile_options("-Wunused-variable")
 add_compile_options("-Wno-uninitialized")
-add_compile_options(-Wno-attributes)
+add_compile_options("-Wno-attributes")
 
-add_compile_options("-O1")
-add_compile_options("-g")
+# add_compile_options("-O1")
+# add_compile_options("-g")
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     add_compile_options(-Wno-c11-extensions)
 endif()
 
 # Set for doxygen for documentation
-option(BUILD_DOC "Build documentation" ON)
+option(BUILD_DOC "Build documentation" OFF)
 
 if (BUILD_DOC)
   # Doxygen 설정 추가

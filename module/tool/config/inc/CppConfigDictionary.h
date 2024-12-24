@@ -25,7 +25,7 @@ public:
 	void addDictionary(std::string_view key, std::string_view value);
 	void addSubConfigDictionary(const CppConfigDictionary& subConfigDictionary);
 
-	const bool hasKey(std::string_view key) const;
+	bool hasKey(std::string_view key) const;
 	const std::string& find(const std::string& key) const;
 	const CppConfigDictionary& getSubConfig(std::string_view key) const;
 	const std::vector<CppConfigDictionary> getSubConfigSet() const;

@@ -137,7 +137,7 @@ public:
 	void add_finish();
 	void parse_args();
 	template<typename T>
-	T get_value(const std::string& valueName);
+	T get_value(const std::string& valueName) const;
 };
 
 #endif

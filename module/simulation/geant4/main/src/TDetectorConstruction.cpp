@@ -8,6 +8,7 @@ TDetectorConstruction::TDetectorConstruction(const CppConfigDictionary& config) 
 	mAirPressure = stod(config.find("air_pressure")) * 0.001;
 	mCollimatorLength = stod(config.find("collimator_length")) * mm;
 	mCollimatorHoleDiameter = 2 * sqrt(stod(config.find("collimator_area")) / CLHEP::pi) * mm;
+	mDistanceBetweenALPIDEAndCollimator = config.hasKey("distance_alpide_and_collimator") ? stod(config.find("distance_alpide_and_collimator")) * mm : 2. * mm;
 	if ( config.hasKey("screen") && config.find("screen") == "true" ) {
 		mScreenBoolean = true;
 	} else if ( config.hasKey("screen") && config.find("screen") == "false" ) {
@@ -115,7 +116,7 @@ void TDetectorConstruction::getCollimator() {
 
 	mCollimatorLogical = new G4LogicalVolume(solidCollimator, collimatorMaterial, "Collimator");
 
-	mCollimator = new G4PVPlacement(0, G4ThreeVector(0, 0, 2. * mm + .5 * (mCollimatorLength + collimatorSourceHeight)), mCollimatorLogical, "Collimator", mWorldLogical, false, 0, true);
+	mCollimator = new G4PVPlacement(0, G4ThreeVector(0, 0, mDistanceBetweenALPIDEAndCollimator + .5 * (mCollimatorLength + collimatorSourceHeight)), mCollimatorLogical, "Collimator", mWorldLogical, false, 0, true);
 
 	G4Region* collimatorRegion = new G4Region("CollimatorRegion");
 	mCollimatorLogical->SetRegion(collimatorRegion);
@@ -139,7 +140,7 @@ void TDetectorConstruction::getScreen() {
 	mScreenLogical->SetVisAttributes(G4VisAttributes(G4Colour::Grey()));
 
 	if ( mScreenBoolean ) {
-		mScreen = new G4PVPlacement(0, G4ThreeVector(0, 0, 2. * mm - .5 * screenZ), mScreenLogical, "Screen", mWorldLogical, false, 0, true);
+		mScreen = new G4PVPlacement(0, G4ThreeVector(0, 0, mDistanceBetweenALPIDEAndCollimator - .5 * screenZ), mScreenLogical, "Screen", mWorldLogical, false, 0, true);
 	}
 
 	G4Region* screenRegion = new G4Region("ScreenRegion");

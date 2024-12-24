@@ -23,6 +23,10 @@ enum ThrCondition {
 };
 
 class TThreshold {
+public:
+	//Constructor
+	TThreshold(int x, int y, const std::array<int, 50>& dacs);
+	~TThreshold();
 private:
 	int mX;
 	int mY;
@@ -35,25 +39,19 @@ private:
 
 	std::unique_ptr<TGraph> thresholdGraph;
 	std::unique_ptr<TF1> fitFunction;
-	std::vector<int> mLocalMaximum;
 public:
-	//Constructor
-	TThreshold();
-	TThreshold(int x, int y, const std::array<int, 50>& dacs);
-	~TThreshold();
-
 	ThrCondition calculateThreshold();
-	const void savePlot(const std::string& savePath) const;
 
-	void findLocalMaximum();
-	const double getX() const;
-	const double getY() const;
-	const double getThreshold() const;
-	const double getError() const;
-	const double getQualityFactor() const;
-	const int getNLocalMaximumPoint() const;
+	double getX() const;
+	double getY() const;
+	double getThreshold() const;
+	double getError() const;
+	double getQualityFactor() const;
 
-	const ThrCondition getCondition() const;
+	ThrCondition getCondition() const;
+
+	const std::unique_ptr<TGraph>& getThresholdGraph() const;
+	const std::unique_ptr<TF1>& getFitFunction() const;
 };
 
 #endif

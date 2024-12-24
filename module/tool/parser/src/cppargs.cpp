@@ -462,11 +462,11 @@ void ArgumentParser::parse_args() {
 }
 
 template<typename T>
-T ArgumentParser::get_value(const std::string& valueName) {
+T ArgumentParser::get_value(const std::string& valueName) const {
 
 }
 template<>
-int ArgumentParser::get_value<int>(const std::string& valueName) {
+int ArgumentParser::get_value<int>(const std::string& valueName) const {
 	bool isexist = false;
 	ARGTYPES returnType = ARGTYPES::NONE;
 	int returnValue;
@@ -498,7 +498,7 @@ int ArgumentParser::get_value<int>(const std::string& valueName) {
 }
 
 template<>
-double ArgumentParser::get_value<double>(const std::string& valueName) {
+double ArgumentParser::get_value<double>(const std::string& valueName) const {
 	bool isexist = false;
 	ARGTYPES returnType = ARGTYPES::NONE;
 	double returnValue;
@@ -530,7 +530,7 @@ double ArgumentParser::get_value<double>(const std::string& valueName) {
 }
 
 template<>
-bool ArgumentParser::get_value<bool>(const std::string& valueName) {
+bool ArgumentParser::get_value<bool>(const std::string& valueName) const {
 	bool isexist = false;
 	ARGTYPES returnType = ARGTYPES::NONE;
 	bool returnValue;
@@ -561,7 +561,7 @@ bool ArgumentParser::get_value<bool>(const std::string& valueName) {
 	return returnValue;
 }
 template<>
-std::string ArgumentParser::get_value<std::string>(const std::string& valueName) {
+std::string ArgumentParser::get_value<std::string>(const std::string& valueName) const {
 	bool isexist = false;
 	ARGTYPES returnType = ARGTYPES::NONE;
 	std::string returnValue;
@@ -593,7 +593,7 @@ std::string ArgumentParser::get_value<std::string>(const std::string& valueName)
 }
 
 template<>
-std::vector<int> ArgumentParser::get_value<std::vector<int>>(const std::string& valueName) {
+std::vector<int> ArgumentParser::get_value<std::vector<int>>(const std::string& valueName) const {
 	bool isexist = false;
 	ARGTYPES returnType = ARGTYPES::NONE;
 	std::vector<int> returnValue;
@@ -630,7 +630,7 @@ std::vector<int> ArgumentParser::get_value<std::vector<int>>(const std::string& 
 }
 
 template<>
-std::vector<double> ArgumentParser::get_value<std::vector<double>>(const std::string& valueName) {
+std::vector<double> ArgumentParser::get_value<std::vector<double>>(const std::string& valueName) const {
 	bool isexist = false;
 	ARGTYPES returnType = ARGTYPES::NONE;
 	std::vector<double> returnValue;
@@ -666,7 +666,7 @@ std::vector<double> ArgumentParser::get_value<std::vector<double>>(const std::st
 }
 
 template<>
-std::vector<bool> ArgumentParser::get_value<std::vector<bool>>(const std::string& valueName) {
+std::vector<bool> ArgumentParser::get_value<std::vector<bool>>(const std::string& valueName) const {
 	bool isexist = false;
 	ARGTYPES returnType = ARGTYPES::NONE;
 	std::vector<bool> returnValue;
@@ -697,7 +697,7 @@ std::vector<bool> ArgumentParser::get_value<std::vector<bool>>(const std::string
 	return returnValue;
 }
 template<>
-std::vector<std::string> ArgumentParser::get_value<std::vector<std::string>>(const std::string& valueName) {
+std::vector<std::string> ArgumentParser::get_value<std::vector<std::string>>(const std::string& valueName) const {
 	bool isexist = false;
 	ARGTYPES returnType = ARGTYPES::NONE;
 	std::vector<std::string> returnValue;

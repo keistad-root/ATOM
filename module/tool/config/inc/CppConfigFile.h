@@ -32,7 +32,7 @@ public:
 	const std::vector<std::string> getConfigurableNameList() const;
 	CppConfigDictionary& modifyConfig(std::string_view configTitle);
 	const CppConfigDictionary& getConfig(std::string_view configTitle) const;
-	const bool hasConfig(std::string_view configTitle) const;
+	bool hasConfig(std::string_view configTitle) const;
 	friend std::ostream& operator<<(std::ostream& os, const CppConfigFile& copy);
 	std::string removeCommentsAndWhitespace(const std::string& line);
 	bool isConfigurableName(const std::string& line);

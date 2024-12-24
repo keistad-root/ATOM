@@ -316,7 +316,7 @@ const CppConfigDictionary& CppConfigFile::getConfig(std::string_view configTitle
 	return *rConfig;
 }
 
-const bool CppConfigFile::hasConfig(std::string_view configTitle) const {
+bool CppConfigFile::hasConfig(std::string_view configTitle) const {
 	bool hasValue = false;
 	for ( auto& config : mConfigs ) {
 		if ( config.getConfigName() == configTitle ) {

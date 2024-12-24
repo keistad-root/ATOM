@@ -49,7 +49,8 @@ void TPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
 	}
 
 	G4double collimatorLength = stod(mConfig.getConfig("Environment").find("collimator_length")) * mm;
-	G4double centerPositionZ = collimatorLength + 2.5 * mm;
+	G4double distanceBetweenALPIDEAndCollimator = mConfig.getConfig("Environment").hasKey("distance_alpide_and_collimator") ? stod(mConfig.getConfig("Environment").find("distance_alpide_and_collimator")) * mm : 2. * mm;
+	G4double centerPositionZ = collimatorLength + distanceBetweenALPIDEAndCollimator + 0.5 * mm;
 	G4double centerPosition[3] = {0, 0, centerPositionZ};
 	G4double radius = stod(mConfig.getConfig("Environment").find("source_radius")) * mm;
 

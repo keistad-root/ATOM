@@ -40,6 +40,7 @@ private:
 	G4double mAirPressure;
 	G4double mCollimatorLength;
 	G4double mCollimatorHoleDiameter;
+	G4double mDistanceBetweenALPIDEAndCollimator;
 	G4bool mScreenBoolean;
 
 public:
