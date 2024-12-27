@@ -1,11 +1,11 @@
 #!/bin/sh
 
-./../build/G4Simulation ~/ATOM/config/g4simulation/$1_7phi_alpha_screen.conf &
-./../build/G4Simulation ~/ATOM/config/g4simulation/$1_7phi_alpha_noscreen.conf &
-./../build/G4Simulation ~/ATOM/config/g4simulation/$1_4phi_alpha_screen.conf &
-./../build/G4Simulation ~/ATOM/config/g4simulation/$1_4phi_alpha_noscreen.conf &
-./../build/G4Simulation ~/ATOM/config/g4simulation/$1_3phi_alpha_screen.conf &
-./../build/G4Simulation ~/ATOM/config/g4simulation/$1_3phi_alpha_noscreen.conf &
-./../build/G4Simulation ~/ATOM/config/g4simulation/$1_2phi_alpha_screen.conf &
-./../build/G4Simulation ~/ATOM/config/g4simulation/$1_2phi_alpha_noscreen.conf &
-wait
+cd ~/ATOM/build
+
+./G4Simulation 3
+./G4Simulation 4
+./G4Simulation 12
+./G4Simulation 33
+./G4Simulation 35
+./G4Simulation 37
+./G4Simulation 39

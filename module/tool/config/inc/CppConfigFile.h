@@ -37,6 +37,7 @@ public:
 	std::string removeCommentsAndWhitespace(const std::string& line);
 	bool isConfigurableName(const std::string& line);
 	std::string extractConfigurableName(const std::string& line);
+	const std::vector<CppConfigDictionary>& getConfigList() const { return mConfigs; }
 };
 
 

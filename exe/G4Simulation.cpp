@@ -17,23 +17,25 @@
 
 CppConfigFile setEnvironment(int exp) {
 	CppConfigFile config("/home/ychoi/ATOM/config/g4simulation/analysis/g4simulation.conf");
-	io::CSVReader<6> csv("/home/ychoi/ATOM/config/g4simulation/analysis/g4simulation.csv");
+	io::CSVReader<7> csv("/home/ychoi/ATOM/config/g4simulation/analysis/g4simulation.csv");
 
-	csv.read_header(io::ignore_extra_column, "num", "output_file", "collimator_length", "collimator_area", "screen", "distance_alpide_and_collimator");
+	csv.read_header(io::ignore_extra_column, "num", "output_file", "collimator_length", "collimator_area", "screen", "distance_alpide_and_collimator", "n_event");
 	int num;
 	std::string output_file;
 	std::string collimator_length;
 	std::string collimator_area;
 	std::string screen;
 	std::string distance_alpide_and_collimator;
+	std::string n_event;
 
-	while ( csv.read_row(num, output_file, collimator_length, collimator_area, screen, distance_alpide_and_collimator) ) {
+	while ( csv.read_row(num, output_file, collimator_length, collimator_area, screen, distance_alpide_and_collimator, n_event) ) {
 		if ( num == exp ) {
 			config.modifyConfig("File").addDictionary("output_file", output_file);
 			config.modifyConfig("Environment").addDictionary("collimator_length", collimator_length);
 			config.modifyConfig("Environment").addDictionary("collimator_area", collimator_area);
 			config.modifyConfig("Environment").addDictionary("screen", screen);
 			config.modifyConfig("Environment").addDictionary("distance_alpide_and_collimator", distance_alpide_and_collimator);
+			config.modifyConfig("Environment").addDictionary("activity", n_event);
 		}
 	}
 
@@ -74,16 +76,21 @@ int main(int argc, char** argv) {
 
 	G4UImanager* UImanager = G4UImanager::GetUIpointer();
 
-	UImanager->ApplyCommand("/run/initialize");
+	G4UIExecutive* ui = new G4UIExecutive(argc, argv);
+	UImanager->ApplyCommand("/control/execute init_vis.mac");
+	ui->SessionStart();
+	delete ui;
 
-	UImanager->ApplyCommand("/control/verbose 1");
-	UImanager->ApplyCommand("/run/verbose 1");
-	UImanager->ApplyCommand("/event/verbose 0");
-	UImanager->ApplyCommand("/tracking/verbose 0");
+	// UImanager->ApplyCommand("/run/initialize");
 
-	G4String activity = config.getConfig("Environment").find("activity");
-	UImanager->ApplyCommand("/run/beamOn " + activity);
-	analysisManager->close();
+	// UImanager->ApplyCommand("/control/verbose 1");
+	// UImanager->ApplyCommand("/run/verbose 1");
+	// UImanager->ApplyCommand("/event/verbose 0");
+	// UImanager->ApplyCommand("/tracking/verbose 0");
+
+	// G4String activity = config.getConfig("Environment").find("activity");
+	// UImanager->ApplyCommand("/run/beamOn " + activity);
+	// analysisManager->close();
 
 	delete visManager;
 	delete runManager;

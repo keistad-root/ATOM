@@ -5,6 +5,7 @@ TGeantExtract::TGeantExtract(const CppConfigDictionary& config) {
 
 	std::string inputFileName = config.find("input_file");
 	mInputFile = std::make_unique<TFile>(static_cast<TString>(inputFileName), "READ");
+	mInputFile->ls();
 	mTrackTree.reset(static_cast<TTree*>(mInputFile->Get("trackTree")));
 	mIncidentTree.reset(static_cast<TTree*>(mInputFile->Get("incidentTree")));
 

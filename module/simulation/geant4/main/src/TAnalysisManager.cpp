@@ -20,7 +20,6 @@ TAnalysisManager* TAnalysisManager::Instance() {
 void TAnalysisManager::open(const G4String& name) {
 	mFile = new TFile(name, "RECREATE");
 	mTrackTree = new TTree("trackTree", "Track Information");
-	mTrackTree->SetAutoSave(1LL * 1024 * 1024 * 1024);
 
 	mTrackTree->Branch("eventID", &mTrackTuple.eventID);
 	mTrackTree->Branch("trackID", &mTrackTuple.trackID);
@@ -44,7 +43,6 @@ void TAnalysisManager::open(const G4String& name) {
 	mTrackTree->Branch("finalVolumeID", &mTrackTuple.finalVolumeID);
 
 	mIncidentTree = new TTree("incidentTree", "Incident Information");
-	mIncidentTree->SetAutoSave(1LL * 1024 * 1024 * 1024);
 	mIncidentTree->Branch("eventID", &mIncidentTuple.eventID);
 	mIncidentTree->Branch("trackID", &mIncidentTuple.trackID);
 	mIncidentTree->Branch("depositEnergyMetal", &mIncidentTuple.depositEnergy[0]);

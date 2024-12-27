@@ -41,6 +41,7 @@ public:
 	void extractTrack();
 	void getPrimaryAnalysisInformation();
 	void getIncidentAnalysisInformation();
+
 };
 
 #endif

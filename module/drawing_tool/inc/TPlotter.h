@@ -37,6 +37,7 @@ const std::string EXTENSION = "png";
 
 class TPlotter {
 public:
+	TPlotter() = default;
 	TPlotter(const CppConfigFile* config);
 private:
 	const CppConfigFile* mConfig;
@@ -54,9 +55,12 @@ public:
 
 	template <typename T> void drawPlot(TCanvas* canvas, T* plot, TString drawType = "SAME");
 	void setCanvasAttribute(TCanvas* canvas, const CppConfigDictionary& config);
+	void setCanvasAttribute(std::unique_ptr<TCanvas>& canvas, const CppConfigDictionary& config);
 
 	void initHist(TH1* hist, const CppConfigDictionary& config);
+	void initHist(std::unique_ptr<TH1D>& hist, const CppConfigDictionary& config);
 	void initHist(TH2* hist, const CppConfigDictionary& config);
+	void initHist(std::unique_ptr<TH2D>& hist, const CppConfigDictionary& config);
 
 
 	void savePlot(TCanvas* canvas, TH1* plot, const CppConfigDictionary& config);

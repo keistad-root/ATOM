@@ -1,0 +1,39 @@
+#!/bin/sh
+
+cd /home/ychoi/ATOM/build
+
+#./G4SimulationExtract 1mm_2phi_noscreen
+#./G4SimulationExtract 1mm_3phi_noscreen
+./G4SimulationExtract 1mm_4phi_noscreen
+./G4SimulationExtract 1mm_7phi_noscreen
+#./G4SimulationExtract 1mm_2phi_screen
+#./G4SimulationExtract 1mm_3phi_screen
+#./G4SimulationExtract 1mm_4phi_screen
+#./G4SimulationExtract 1mm_7phi_screen
+#./G4SimulationExtract 3mm_2phi_noscreen
+#./G4SimulationExtract 3mm_3phi_noscreen
+#./G4SimulationExtract 3mm_4phi_noscreen
+./G4SimulationExtract 3mm_7phi_noscreen
+#./G4SimulationExtract 3mm_2phi_screen
+#./G4SimulationExtract 3mm_3phi_screen
+#./G4SimulationExtract 3mm_4phi_screen
+#./G4SimulationExtract 3mm_7phi_screen
+#./G4SimulationExtract 7mm_2phi_noscreen
+#./G4SimulationExtract 7mm_3phi_noscreen
+#./G4SimulationExtract 7mm_4phi_noscreen
+#./G4SimulationExtract 7mm_7phi_noscreen
+#./G4SimulationExtract 7mm_2phi_screen
+#./G4SimulationExtract 7mm_3phi_screen
+#./G4SimulationExtract 7mm_4phi_screen
+#./G4SimulationExtract 7mm_7phi_screen
+#./G4SimulationExtract 20mm_2phi_noscreen
+#./G4SimulationExtract 20mm_3phi_noscreen
+#./G4SimulationExtract 20mm_4phi_noscreen
+#./G4SimulationExtract 20mm_7phi_noscreen
+#./G4SimulationExtract 20mm_2phi_screen
+#./G4SimulationExtract 20mm_3phi_screen
+#./G4SimulationExtract 20mm_4phi_screen
+#./G4SimulationExtract 20mm_7phi_screen
+./G4SimulationExtract 1mm_nocollimator_noscreen
+./G4SimulationExtract 3mm_nocollimator_noscreen
+./G4SimulationExtract 7mm_nocollimator_noscreen

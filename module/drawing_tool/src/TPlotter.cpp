@@ -21,6 +21,18 @@ void TPlotter::initHist(TH1* hist, const CppConfigDictionary& config) {
 	}
 	hist->SetBins(static_cast<int>(set[0]), set[1], set[2]);
 }
+
+void TPlotter::initHist(std::unique_ptr<TH1D>& hist, const CppConfigDictionary& config) {
+	std::vector<double> set = {1, 0, 1};
+	if ( config.hasKey("bins") ) {
+		set = getDoubleSetFromString(config.find("bins"));
+	}
+	hist->SetBins(static_cast<int>(set[0]), set[1], set[2]);
+	if ( config.hasKey("name") ) {
+		hist->SetName(static_cast<TString>(config.find("name")));
+	}
+}
+
 void TPlotter::initHist(TH2* hist, const CppConfigDictionary& config) {
 	std::vector<double> set = {1, 0, 1, 1, 0, 1};
 	if ( config.hasKey("bins") ) {
@@ -29,6 +41,16 @@ void TPlotter::initHist(TH2* hist, const CppConfigDictionary& config) {
 	hist->SetBins(static_cast<int>(set[0]), set[1], set[2], static_cast<int>(set[3]), set[4], set[5]);
 }
 
+void TPlotter::initHist(std::unique_ptr<TH2D>& hist, const CppConfigDictionary& config) {
+	std::vector<double> set = {1, 0, 1, 1, 0, 1};
+	if ( config.hasKey("bins") ) {
+		set = getDoubleSetFromString(config.find("bins"));
+	}
+	hist->SetBins(static_cast<int>(set[0]), set[1], set[2], static_cast<int>(set[3]), set[4], set[5]);
+	if ( config.hasKey("name") ) {
+		hist->SetName(static_cast<TString>(config.find("name")));
+	}
+}
 
 void TPlotter::savePlot(TCanvas* canvas, TH1* plot, const CppConfigDictionary& config) {
 	setTitle(plot, config);
@@ -195,6 +217,46 @@ void TPlotter::saveLegend(TCanvas* canvas, TLegend* legend) {
 }
 
 void TPlotter::setCanvasAttribute(TCanvas* canvas, const CppConfigDictionary& config) {
+	TObject* firstObject = canvas->GetListOfPrimitives()->At(0);
+	if ( firstObject->InheritsFrom("TH1") ) {
+		TH1* hist = static_cast<TH1*>(firstObject);
+		setTitle(hist, config);
+		setXRange(hist, config);
+		setYRange(hist, config);
+	} else if ( firstObject->InheritsFrom("TH2") ) {
+		TH2* hist = static_cast<TH2*>(firstObject);
+		setTitle(hist, config);
+		setXRange(hist, config);
+		setYRange(hist, config);
+		setZRange(hist, config);
+	} else if ( firstObject->InheritsFrom("TGraph") ) {
+		TGraph* graph = static_cast<TGraph*>(firstObject);
+		setTitle(graph, config);
+		setXRange(graph, config);
+		setYRange(graph, config);
+	} else if ( firstObject->InheritsFrom("TMultiGraph") ) {
+		TMultiGraph* multiGraph = static_cast<TMultiGraph*>(firstObject);
+		setTitle(multiGraph, config);
+		setXRange(multiGraph, config);
+		setYRange(multiGraph, config);
+	}
+	if ( config.hasKey("margin") ) {
+		std::vector<double> marginSet = getDoubleSetFromString(config.find("margin"));
+		canvas->SetMargin(marginSet[0], marginSet[1], marginSet[2], marginSet[3]);
+	}
+	if ( config.hasKey("logx") && config.find("logx") == "true" ) {
+		canvas->SetLogx();
+	}
+	if ( config.hasKey("logy") && config.find("logy") == "true" ) {
+		canvas->SetLogy();
+	}
+	if ( config.hasKey("grid") && config.find("grid") == "true" ) {
+		canvas->SetGrid();
+	}
+}
+
+
+void TPlotter::setCanvasAttribute(std::unique_ptr<TCanvas>& canvas, const CppConfigDictionary& config) {
 	TObject* firstObject = canvas->GetListOfPrimitives()->At(0);
 	if ( firstObject->InheritsFrom("TH1") ) {
 		TH1* hist = static_cast<TH1*>(firstObject);

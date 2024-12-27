@@ -10,6 +10,7 @@ set(TEST_EXE
     ThrPede
 	CompareCollimatorArea
 	CompareEntry
+	ComparisonExperimentSimulation
 	# GarfieldSimulation
     Merge
 	
@@ -23,6 +24,7 @@ set(TEST_EXE
     G4SimulationAnalysis
 	G4DoubleCluster
 	G4SimulationExtract
+	G4SimulationPlot
 	photo
 	temp_incident
 )
