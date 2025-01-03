@@ -40,14 +40,29 @@ void TGeantPlot::saveHistorams(const std::vector<CppConfigDictionary>& configLis
 				std::unique_ptr<TCanvas> canvas = std::make_unique<TCanvas>();
 				savePlot(canvas.get(), hist.get(), config);
 				setCanvasAttribute(canvas, config);
+				if ( key == "IncidentParticle" ) {
+					for ( int i = 0; i < hist->GetNbinsX(); i++ ) {
+						hist->GetXaxis()->SetBinLabel(i + 1., mParticleName[i]);
+					}
+				}
+				if ( key == "IncidentVolume" || key == "AlphaIncidentVolume" || key == "ElectronIncidentVolume" ) {
+					for ( int i = 0; i < hist->GetNbinsX(); i++ ) {
+						hist->GetXaxis()->SetBinLabel(i + 1., mVolumeName[i]);
+					}
+				}
 				saveCanvas(canvas.get(), mOutputDirectory, config);
 			}
 		}
-		// const CppConfigDictionary& config = configList[std::find(configList.begin(), configList.end(), key.data()) - configList.begin()];
-		// std::unique_ptr<TCanvas> canvas = std::make_unique<TCanvas>();
-		// setCanvasAttribute(canvas.get(), config);
-		// savePlot(canvas.get(), hist.get(), config);
-		// saveCanvas(canvas.get(), mOutputDirectory, config);
+	}
+	for ( const auto& [key, hist] : m2DHistograms ) {
+		for ( const CppConfigDictionary& config : configList ) {
+			if ( key == config.getConfigName() ) {
+				std::unique_ptr<TCanvas> canvas = std::make_unique<TCanvas>();
+				savePlot(canvas.get(), hist.get(), config);
+				setCanvasAttribute(canvas, config);
+				saveCanvas(canvas.get(), mOutputDirectory, config);
+			}
+		}
 	}
 }
 

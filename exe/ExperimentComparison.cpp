@@ -3,40 +3,55 @@
 
 #include "cppargs.h"
 
-CppConfigFile setEnvironment(const std::vector<std::string>& plotSet) {
+CppConfigFile setEnvironment(const std::string& tagging) {
 	CppConfigFile config("/home/ychoi/ATOM/config/comparison/comparison.conf");
-	io::CSVReader<2> fileListCSV("/home/ychoi/ATOM/config/comparison/file_list.csv");
 	io::CSVReader<5> comparisonCsv("/home/ychoi/ATOM/config/comparison/comparison_list.csv");
-	io::CSVReader<4> plotListCSV("/home/ychoi/ATOM/config/comparison/plot_list.csv");
 
-	fileListCSV.read_header(io::ignore_extra_column, "tag", "input_file");
-
-	std::string tag;
-	std::string inputFile;
-
-	while ( fileListCSV.read_row(tag, inputFile) ) {
-		config.modifyConfig("FileList").addDictionary(tag, inputFile);
-	}
-
-	comparisonCsv.read_header(io::ignore_extra_column, "tag", "output_directory", "name", "y_range", "plot_list");
+	std::string comparisonListTag;
 	std::string outputDirectory;
 	std::string name;
 	std::string yRange;
 	std::string plotList;
 
+	while ( comparisonCsv.read_row(comparisonListTag, outputDirectory, name, yRange, plotList) ) {
+		if ( comparisonListTag == tagging ) {
+			config.modifyConfig("File").addDictionary("output_directory", outputDirectory);
+			config.modifyConfig("Clustersize").addDictionary("name", name);
+			config.modifyConfig("Clustersize").addDictionary("y_range", yRange);
+			break;
+		}
+	}
 
+	std::stringstream plotListSS(plotList);
+	std::vector<std::string> plotSet;
+	std::string plot;
+	while ( std::getline(plotListSS, plot, ' ') ) {
+		plotSet.push_back(plot);
+	}
 
+	io::CSVReader<2> fileListCSV("/home/ychoi/ATOM/config/comparison/file_list.csv");
+	fileListCSV.read_header(io::ignore_extra_column, "tag", "input_file");
+
+	std::string fileListTag;
+	std::string inputFile;
+
+	while ( fileListCSV.read_row(fileListTag, inputFile) ) {
+		config.modifyConfig("FileList").addDictionary(fileListTag, inputFile);
+	}
+
+	io::CSVReader<4> plotListCSV("/home/ychoi/ATOM/config/comparison/plot_list.csv");
+
+	std::string plotListTag;
 	std::string hist;
 	std::string legend;
 	std::string ratio;
 
-	plotListCSV.read_header(io::ignore_extra_column, "tag", "hist", "legend", "ratio");
 	std::array<std::string, 7> colour = {"red", "blue", "violet", "indigo", "green", "orange", "yellow"};
 	int iColour = 0;
 	CppConfigDictionary plotDictionary("plots");
-	while ( plotListCSV.read_row(tag, hist, legend, ratio) ) {
-		if ( std::find(plotSet.begin(), plotSet.end(), tag) != plotSet.end() ) {
-			CppConfigDictionary temp(tag);
+	while ( plotListCSV.read_row(plotListTag, hist, legend, ratio) ) {
+		if ( std::find(plotSet.begin(), plotSet.end(), plotListTag) != plotSet.end() ) {
+			CppConfigDictionary temp(plotListTag);
 			temp.addDictionary("hist", hist);
 			temp.addDictionary("legend", legend);
 			temp.addDictionary("ratio", ratio);
@@ -52,13 +67,10 @@ CppConfigFile setEnvironment(const std::vector<std::string>& plotSet) {
 
 
 int main(int argc, char** argv) {
-	std::vector<std::string> plotSet;
-	for ( int i = 1; i < argc; i++ ) {
-		plotSet.push_back(argv[i]);
-	}
-	CppConfigFile config = setEnvironment(plotSet);
+	std::string tagging = argv[1];
+	CppConfigFile config = setEnvironment(tagging);
 
-	TCompareClustersize* comparison = new TCompareClustersize(&config);
+	TCompareClustersize* comparison = new TCompareClustersize(config);
 	comparison->drawClustersize();
 	comparison->drawRegion();
 }

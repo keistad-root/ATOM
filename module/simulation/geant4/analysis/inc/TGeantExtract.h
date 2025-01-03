@@ -30,6 +30,9 @@ private:
 	std::unique_ptr<TFile> mIncidentAnalysisOutputFile;
 	std::unique_ptr<TTree> mIncidentAnalysisTree;
 	TIncidentAnalysisTuple mIncidentAnalysisTuple;
+	std::unique_ptr<TFile> mSecondaryAnalysisOutputFile;
+	std::unique_ptr<TTree> mSecondaryAnalysisTree;
+	TSecondaryAnalysisTuple mSecondaryAnalysisTuple;
 
 public:
 	void initTrackTree();
@@ -37,10 +40,12 @@ public:
 
 	void initPrimaryAnalysisTree();
 	void initIncidentAnalysisTree();
+	void initSecondaryAnalysisTree();
 
 	void extractTrack();
 	void getPrimaryAnalysisInformation();
 	void getIncidentAnalysisInformation();
+	void getSecondaryAnalysisInformation();
 
 };
 

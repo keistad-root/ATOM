@@ -35,14 +35,14 @@ void TPhysicsList::SetCuts() {
 	SetCutValue(7.2 * um, "proton");
 
 
-	regName = "ALPIDERegion";
-	region = G4RegionStore::GetInstance()->GetRegion(regName);
-	cuts = new G4ProductionCuts;
-	cuts->SetProductionCut(100 * nm, G4ProductionCuts::GetIndex("gamma"));
-	cuts->SetProductionCut(100 * nm, G4ProductionCuts::GetIndex("e-"));
-	cuts->SetProductionCut(100 * nm, G4ProductionCuts::GetIndex("e+"));
-	cuts->SetProductionCut(100 * nm, G4ProductionCuts::GetIndex("proton"));
-	region->SetProductionCuts(cuts);
+	// regName = "ALPIDERegion";
+	// region = G4RegionStore::GetInstance()->GetRegion(regName);
+	// cuts = new G4ProductionCuts;
+	// cuts->SetProductionCut(100 * nm, G4ProductionCuts::GetIndex("gamma"));
+	// cuts->SetProductionCut(100 * nm, G4ProductionCuts::GetIndex("e-"));
+	// cuts->SetProductionCut(100 * nm, G4ProductionCuts::GetIndex("e+"));
+	// cuts->SetProductionCut(100 * nm, G4ProductionCuts::GetIndex("proton"));
+	// region->SetProductionCuts(cuts);
 
 	regName = "CollimatorRegion";
 	region = G4RegionStore::GetInstance()->GetRegion(regName);

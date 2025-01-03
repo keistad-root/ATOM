@@ -52,5 +52,17 @@ struct TIncidentAnalysisTuple {
 	Double_t finalKineticEnergy;
 };
 
+struct TSecondaryAnalysisTuple {
+	Int_t eventID, trackID;
+	Int_t particleID;
+	Int_t initialVolumeID;
+	Double_t initialPosition[3];
+	Double_t initialMomentum[3];
+	Double_t initialKineticEnergy;
+	Int_t finalVolumeID;
+	Double_t finalPosition[3];
+	Double_t finalMomentum[3];
+	Double_t finalKineticEnergy;
+};
 
 #endif

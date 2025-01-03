@@ -17,8 +17,10 @@
 
 class TCompareClustersize : public TPlotter {
 public:
-	TCompareClustersize(const CppConfigFile* config);
+	TCompareClustersize(const CppConfigFile& config);
 private:
+	CppConfigFile mConfig;
+	std::filesystem::path mOutputPath;
 	std::unordered_map<std::string, TH1D*> mGraphFileSet;
 	std::vector<CppConfigDictionary> mPlotDictionary;
 	std::vector<std::pair<CppConfigDictionary, TH1D*>> mGraphSet;

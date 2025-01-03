@@ -28,17 +28,18 @@
 #include "TStyle.h"
 #include "TMultiGraph.h"
 #include "TGraph.h"
+#include "TGaxis.h"
+#include "TFrame.h"
 
 
 const int CANVAS_WIDTH = 2000;
 const int CANVAS_HEIGHT = 1000;
 
-const std::string EXTENSION = "png";
+const std::string EXTENSION = "pdf";
 
 class TPlotter {
 public:
 	TPlotter() = default;
-	TPlotter(const CppConfigFile* config);
 private:
 	const CppConfigFile* mConfig;
 	std::filesystem::path mOutputPath;
@@ -91,8 +92,7 @@ public:
 	template <typename T> void setYRange(T* hist, const CppConfigDictionary& config);
 	template <typename T> void setZRange(T* hist, const CppConfigDictionary& config);
 
-
-
+	template <typename T> void setRightAxis(T* hist, const CppConfigDictionary& config);
 
 	template <typename T> void setTitle(T* hist, const CppConfigDictionary& config);
 
@@ -229,5 +229,42 @@ void TPlotter::setTitle(T* plot, const CppConfigDictionary& config) {
 		plot->GetYaxis()->SetTitleOffset(offset[1]);
 	}
 }
+
+template <typename T> void TPlotter::setRightAxis(T* hist, const CppConfigDictionary& config) {
+	if ( config.hasKey("right_axis") && config.find("right_axis") == "false" ) {
+	} else {
+		double xmax = hist->GetXaxis()->GetXmax();
+		double ymin = hist->GetMinimum();
+		double ymax = hist->GetMaximum() * 1.05;
+		if ( config.hasKey("y_range") ) {
+			std::vector<double> range = getDoubleSetFromString(config.find("y_range"));
+			ymin = range[0];
+			ymax = range[1];
+		} else if ( config.hasKey("logy") && config.find("logy") == "true" ) {
+			double minNonZero = std::numeric_limits<double>::max();
+			for ( int i = 1; i <= hist->GetNbinsX(); ++i ) {
+				double binContent = hist->GetBinContent(i);
+				if ( binContent > 0 && binContent < minNonZero ) {
+					minNonZero = binContent;
+				}
+			}
+			ymin = minNonZero / 1.5;
+			ymax = hist->GetMaximum() * 1.5;
+			hist->GetYaxis()->SetRangeUser(ymin, ymax);
+		} else {
+			ymin = hist->GetMinimum();
+			ymax = hist->GetMaximum() * 1.1;
+			hist->GetYaxis()->SetRangeUser(ymin, ymax);
+		}
+		TGaxis* axis;
+		if ( config.hasKey("logy") && config.find("logy") == "true" ) {
+			axis = new TGaxis(xmax, ymin, xmax, ymax, ymin, ymax, 510, "+G");
+		} else {
+			axis = new TGaxis(xmax, ymin, xmax, ymax, ymin, ymax, 510, "+L");
+		}
+		axis->Draw();
+	}
+}
+
 
 #endif

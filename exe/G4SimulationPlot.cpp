@@ -37,6 +37,7 @@ int main(int argc, char** argv) {
 	CppConfigFile config = setEnvironment(parser);
 
 	TGeantPlot plot;
+	std::filesystem::create_directories(config.getConfig("File").find("output_directory"));
 	plot.readInputFile(config.getConfig("File").find("input_file"));
 	plot.getHistorams();
 	plot.setOutputDirectory(config.getConfig("File").find("output_directory"));

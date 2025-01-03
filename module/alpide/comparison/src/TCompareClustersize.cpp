@@ -1,14 +1,15 @@
 #include "TCompareClustersize.h"
 
 
-TCompareClustersize::TCompareClustersize(const CppConfigFile* config) : TPlotter(config) {
-	const CppConfigDictionary fileList = config->getConfig("FileList");
+TCompareClustersize::TCompareClustersize(const CppConfigFile& config) : TPlotter(), mConfig(config) {
+	const CppConfigDictionary fileList = mConfig.getConfig("FileList");
 	for ( const std::string& file : fileList.getKeyList() ) {
 		const std::string& path = fileList.find(file);
 		mGraphFileSet.insert_or_assign(file, getClustersize(path));
 	}
-	mPlotDictionary = config->getConfig("Clustersize").getSubConfig("plots").getSubConfigSet();
-	mRegionDictionary = config->getConfig("Regions");
+	mPlotDictionary = mConfig.getConfig("Clustersize").getSubConfig("plots").getSubConfigSet();
+	mRegionDictionary = mConfig.getConfig("Regions");
+	mOutputPath = mConfig.getConfig("File").find("output_directory");
 	setGraphSet();
 }
 
@@ -65,15 +66,15 @@ void TCompareClustersize::setGraphSet() {
 void TCompareClustersize::drawClustersize() {
 	TCanvas* canvas = new TCanvas("canvas", "", 1500, 1000);
 	TLegend* legend;
-	addLegend(canvas, legend, getMainConfig()->getConfig("Clustersize"));
+	addLegend(canvas, legend, mConfig.getConfig("Clustersize"));
 	for ( const auto& plot : mGraphSet ) {
 		setAttribute(plot.second, plot.first);
 		drawPlot(canvas, plot.second, "SAME HISTE");
 		legend->AddEntry(plot.second, static_cast<TString>(plot.first.find("legend")));
 	}
-	setCanvasAttribute(canvas, getMainConfig()->getConfig("Clustersize"));
+	setCanvasAttribute(canvas, mConfig.getConfig("Clustersize"));
 	saveLegend(canvas, legend);
-	saveCanvas(canvas, getOutputPath(), getMainConfig()->getConfig("Clustersize"));
+	saveCanvas(canvas, mOutputPath, mConfig.getConfig("Clustersize"));
 }
 
 void TCompareClustersize::drawRegion() {
@@ -122,5 +123,5 @@ void TCompareClustersize::drawRegion() {
 	drawPlot(canvas, mg, "AP");
 	setCanvasAttribute(canvas, mRegionDictionary);
 	saveLegend(canvas, legend);
-	saveCanvas(canvas, getOutputPath(), mRegionDictionary);
+	saveCanvas(canvas, mOutputPath, mRegionDictionary);
 }

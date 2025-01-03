@@ -1,19 +1,5 @@
 #include "TPlotter.h"
 
-TPlotter::TPlotter(const CppConfigFile* config) : mConfig(config) {
-	// gStyle->SetOptStat(0);
-	try {
-		if ( !mConfig->hasConfig("File") ) throw std::string("File");
-		CppConfigDictionary fileConfig = mConfig->getConfig("File");
-		if ( !fileConfig.hasKey("output_directory") ) throw std::string("output_directory");
-		mOutputPath = fileConfig.find("output_directory");
-		std::filesystem::create_directories(mOutputPath);
-	} catch ( std::string config ) {
-		std::cerr << "Config " << config << " is necessary" << std::endl;
-		exit(1);
-	}
-}
-
 void TPlotter::initHist(TH1* hist, const CppConfigDictionary& config) {
 	std::vector<double> set = {1, 0, 1};
 	if ( config.hasKey("bins") ) {
@@ -250,7 +236,8 @@ void TPlotter::setCanvasAttribute(TCanvas* canvas, const CppConfigDictionary& co
 	if ( config.hasKey("logy") && config.find("logy") == "true" ) {
 		canvas->SetLogy();
 	}
-	if ( config.hasKey("grid") && config.find("grid") == "true" ) {
+	if ( config.hasKey("grid") && config.find("grid") == "false" ) {
+	} else {
 		canvas->SetGrid();
 	}
 }
@@ -263,6 +250,7 @@ void TPlotter::setCanvasAttribute(std::unique_ptr<TCanvas>& canvas, const CppCon
 		setTitle(hist, config);
 		setXRange(hist, config);
 		setYRange(hist, config);
+		setRightAxis(hist, config);
 	} else if ( firstObject->InheritsFrom("TH2") ) {
 		TH2* hist = static_cast<TH2*>(firstObject);
 		setTitle(hist, config);
@@ -290,7 +278,8 @@ void TPlotter::setCanvasAttribute(std::unique_ptr<TCanvas>& canvas, const CppCon
 	if ( config.hasKey("logy") && config.find("logy") == "true" ) {
 		canvas->SetLogy();
 	}
-	if ( config.hasKey("grid") && config.find("grid") == "true" ) {
+	if ( config.hasKey("grid") && config.find("grid") == "false" ) {
+	} else {
 		canvas->SetGrid();
 	}
 }
@@ -305,7 +294,8 @@ void TPlotter::saveCanvas(TCanvas* canvas, std::filesystem::path path, const Cpp
 	if ( config.hasKey("logz") && config.find("logz") == "true" ) {
 		canvas->SetLogz();
 	}
-	if ( config.hasKey("grid") && config.find("grid") == "true" ) {
+	if ( config.hasKey("grid") && config.find("grid") == "false" ) {
+	} else {
 		canvas->SetGrid();
 	}
 	if ( config.hasKey("canvas_size") ) {

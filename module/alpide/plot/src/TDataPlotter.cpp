@@ -1,6 +1,6 @@
 #include "TDataPlotter.h"
 
-TDataPlotter::TDataPlotter(const CppConfigFile* config) : TPlotter(config), mConfig(config) {
+TDataPlotter::TDataPlotter(const CppConfigFile* config) : TPlotter(), mConfig(config) {
 	std::filesystem::path inputPath = mConfig->getConfig("File").find("input_file");
 	mInputFile = new TFile(static_cast<TString>(inputPath));
 

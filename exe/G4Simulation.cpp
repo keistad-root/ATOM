@@ -76,21 +76,21 @@ int main(int argc, char** argv) {
 
 	G4UImanager* UImanager = G4UImanager::GetUIpointer();
 
-	G4UIExecutive* ui = new G4UIExecutive(argc, argv);
-	UImanager->ApplyCommand("/control/execute init_vis.mac");
-	ui->SessionStart();
-	delete ui;
+	// G4UIExecutive* ui = new G4UIExecutive(argc, argv);
+	// UImanager->ApplyCommand("/control/execute init_vis.mac");
+	// ui->SessionStart();
+	// delete ui;
 
-	// UImanager->ApplyCommand("/run/initialize");
+	UImanager->ApplyCommand("/run/initialize");
 
-	// UImanager->ApplyCommand("/control/verbose 1");
-	// UImanager->ApplyCommand("/run/verbose 1");
-	// UImanager->ApplyCommand("/event/verbose 0");
-	// UImanager->ApplyCommand("/tracking/verbose 0");
+	UImanager->ApplyCommand("/control/verbose 1");
+	UImanager->ApplyCommand("/run/verbose 1");
+	UImanager->ApplyCommand("/event/verbose 0");
+	UImanager->ApplyCommand("/tracking/verbose 0");
 
-	// G4String activity = config.getConfig("Environment").find("activity");
-	// UImanager->ApplyCommand("/run/beamOn " + activity);
-	// analysisManager->close();
+	G4String activity = config.getConfig("Environment").find("activity");
+	UImanager->ApplyCommand("/run/beamOn " + activity);
+	analysisManager->close();
 
 	delete visManager;
 	delete runManager;

@@ -11,6 +11,7 @@ set(TEST_EXE
 	CompareCollimatorArea
 	CompareEntry
 	ComparisonExperimentSimulation
+	ComparisonGeant4
 	# GarfieldSimulation
     Merge
 	
@@ -25,6 +26,7 @@ set(TEST_EXE
 	G4DoubleCluster
 	G4SimulationExtract
 	G4SimulationPlot
+	G4SimulationComparison
 	photo
 	temp_incident
 )

@@ -26,13 +26,13 @@ CppConfigFile setEnvironment(const std::string& iTag) {
 
 int main(int argc, char** argv) {
 	TGeantComparison* geantComparison = new TGeantComparison(setEnvironment(argv[1]));
-	geantComparison->drawNAlphaGraph();
-	geantComparison->drawNElectronGraph();
-	geantComparison->drawAlphaElectronRatioGraph();
-	geantComparison->drawNDoubleGraph();
-	geantComparison->drawDoubleSingleRatioGraph();
-	geantComparison->compareDouble();
-	geantComparison->compareElectron();
-	geantComparison->compareAlpha();
+	// geantComparison->drawNAlphaGraph();
+	// geantComparison->drawNElectronGraph();
+	// geantComparison->drawAlphaElectronRatioGraph();
+	// geantComparison->drawNDoubleGraph();
+	// geantComparison->drawDoubleSingleRatioGraph();
+	// geantComparison->compareDouble();
+	// geantComparison->compareElectron();
+	// geantComparison->compareAlpha();
 	return 0;
 }

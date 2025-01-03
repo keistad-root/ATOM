@@ -8,16 +8,17 @@
 
 CppConfigFile setEnvironment(const ArgumentParser& parser) {
 	CppConfigFile config("/home/ychoi/ATOM/config/g4simulation/g4analysis.conf");
-	io::CSVReader<3> csv("/home/ychoi/ATOM/config/g4simulation/g4analysis.csv");
-	csv.read_header(io::ignore_extra_column, "num", "input_file", "output_file");
+	io::CSVReader<4> csv("/home/ychoi/ATOM/config/g4simulation/g4analysis.csv");
+	csv.read_header(io::ignore_extra_column, "num", "input_incident_file", "input_primary_file", "output_file");
 
-	std::string tags, input_file, output_file;
+	std::string tags, input_incident_file, input_primary_file, output_file;
 	double collimatorLength;
 
 	std::string tag = parser.get_value<std::string>("tag");
-	while ( csv.read_row(tags, input_file, output_file) ) {
+	while ( csv.read_row(tags, input_incident_file, input_primary_file, output_file) ) {
 		if ( tag == tags ) {
-			config.modifyConfig("File").addDictionary("input_file", input_file);
+			config.modifyConfig("File").addDictionary("input_incident_file", input_incident_file);
+			config.modifyConfig("File").addDictionary("input_primary_file", input_primary_file);
 			config.modifyConfig("File").addDictionary("output_file", output_file);
 		}
 	}
@@ -37,10 +38,10 @@ int main(int argc, char** argv) {
 	CppConfigFile config = setEnvironment(parser);
 
 	TGeantAnalysis plot;
-	plot.readInputFile(config.getConfig("File").find("input_file"));
+	plot.readIncidentFile(config.getConfig("File").find("input_incident_file"));
+	plot.readPrimaryFile(config.getConfig("File").find("input_primary_file"));
 	plot.setHistograms(config.getConfigList());
 	plot.readTree();
-	plot.fillHistograms();
 	plot.saveFile(config.getConfig("File").find("output_file"));
 
 	return 0;
