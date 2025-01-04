@@ -71,6 +71,14 @@ void TCompareClustersize::drawClustersize() {
 		setAttribute(plot.second, plot.first);
 		drawPlot(canvas, plot.second, "SAME HISTE");
 		legend->AddEntry(plot.second, static_cast<TString>(plot.first.find("legend")));
+		for ( int i = 3; i < 33; i++ ) {
+			double y_total = plot.second->GetBinContent(i) + plot.second->GetBinContent(i + 1) + plot.second->GetBinContent(i + 2);
+			// double y_total = plot.second->GetBinContent(i - 1) + plot.second->GetBinContent(i) + plot.second->GetBinContent(i + 1) + plot.second->GetBinContent(i + 2) + plot.second->GetBinContent(i + 3);
+			double y_value = plot.second->GetBinContent(i + 1);
+			std::cout.precision(3);
+			std::cout << y_value / y_total << "\t";
+		}
+		std::cout << std::endl;
 	}
 	setCanvasAttribute(canvas, mConfig.getConfig("Clustersize"));
 	saveLegend(canvas, legend);

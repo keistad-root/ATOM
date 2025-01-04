@@ -81,5 +81,12 @@ void TGeantPlot::getEntries() {
 			nCS32 += hist->GetBinContent(i + 1);
 		}
 	}
-	std::cout << nCS4 << "\t" << nCS12 << "\t" << nCS32 << std::endl;
+	// std::cout << nCS4 << "\t" << nCS12 << "\t" << nCS32 << std::endl;
+	int maxBin = 0;
+	for ( int i = 1; i <= m1DHistograms["AlphaIncidentAngle"]->GetNbinsX(); i++ ) {
+		if ( m1DHistograms["AlphaIncidentAngle"]->GetBinContent(i) > 1 ) {
+			maxBin = i;
+		}
+	}
+	std::cout << maxBin << std::endl;
 }

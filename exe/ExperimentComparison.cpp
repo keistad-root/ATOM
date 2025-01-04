@@ -21,7 +21,6 @@ CppConfigFile setEnvironment(const std::string& tagging) {
 			break;
 		}
 	}
-
 	std::stringstream plotListSS(plotList);
 	std::vector<std::string> plotSet;
 	std::string plot;
@@ -72,5 +71,5 @@ int main(int argc, char** argv) {
 
 	TCompareClustersize* comparison = new TCompareClustersize(config);
 	comparison->drawClustersize();
-	comparison->drawRegion();
+	// comparison->drawRegion();
 }
