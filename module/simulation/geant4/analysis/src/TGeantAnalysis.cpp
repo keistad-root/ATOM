@@ -86,7 +86,7 @@ void TGeantAnalysis::readTree() {
 		mIncidentTree->GetEntry(i);
 		fillIncidentHistograms();
 
-		if ( mIncidentTuple.particleID == PARTICLE::alpha && mIncidentTuple.depositEnergy[1] > 1.17 ) {
+		if ( mIncidentTuple.particleID == PARTICLE::alpha ) {
 			position.push_back({mIncidentTuple.position[0], mIncidentTuple.position[1]});
 		}
 		if ( preTimeStamp != mIncidentTuple.eventID / 107 ) {

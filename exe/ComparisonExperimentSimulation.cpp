@@ -12,6 +12,8 @@
 #include "TMath.h"
 
 int main(int argc, char** argv) {
+	int drawLength = atoi(argv[1]);
+
 	io::CSVReader<13> expCSV("/home/ychoi/ATOM/Data/experiment_entry.csv");
 	io::CSVReader<9> simCSV("/home/ychoi/ATOM/Data/simulation_entry.csv");
 
@@ -29,7 +31,7 @@ int main(int argc, char** argv) {
 	std::vector<std::tuple<int, double, double, double, double, double, double>> simData;
 
 	while ( expCSV.read_row(collimator, length, width, area, areaError, regionA, regionAError, regionB, regionBError, regionC, regionCError, regionD, regionDError) ) {
-		if ( length == 20 ) {
+		if ( length == drawLength ) {
 			if ( width == 11 ) {
 				expRef = {regionA, regionB, regionC, regionD, regionAError, regionBError, regionCError, regionDError};
 			} else {
@@ -39,11 +41,11 @@ int main(int argc, char** argv) {
 	}
 
 	while ( simCSV.read_row(collimator, length, width, area, areaError, regionA, regionB, regionC, regionD) ) {
-		if ( length == 20 ) {
+		if ( length == drawLength ) {
 			if ( width == 11 ) {
 				simRef = {regionA, regionB, regionC, regionD};
 			} else {
-				simData.push_back(std::make_tuple(width, area, areaError, regionA, regionB, regionC - 2 * regionD, regionD));
+				simData.push_back(std::make_tuple(width, area, areaError, regionA, regionB, regionC, regionD));
 			}
 		}
 	}
@@ -59,7 +61,6 @@ int main(int argc, char** argv) {
 		expGraphRegionA->SetPoint(i, std::get<1>(expData[i]), std::get<3>(expData[i]) / expRef[0]);
 		expGraphRegionA->SetPointError(i, std::get<2>(expData[i]), TMath::Sqrt(TMath::Power(std::get<7>(expData[i]) / expRef[0], 2) + TMath::Power(std::get<3>(expData[i]) * expRef[4] / TMath::Power(expRef[0], 2), 2)));
 		expGraphRegionB->SetPoint(i, std::get<1>(expData[i]), std::get<4>(expData[i]) / expRef[1]);
-		std::cout << TMath::Power(std::get<8>(expData[i]) / expRef[1], 2) << " " << TMath::Power(std::get<4>(expData[i]) * expRef[5] / TMath::Power(expRef[1], 2), 2) << std::endl;
 		expGraphRegionB->SetPointError(i, std::get<2>(expData[i]), TMath::Sqrt(TMath::Power(std::get<8>(expData[i]) / expRef[1], 2) + TMath::Power(std::get<4>(expData[i]) * expRef[5] / TMath::Power(expRef[1], 2), 2)));
 		expGraphRegionC->SetPoint(i, std::get<1>(expData[i]), std::get<5>(expData[i]) / expRef[2]);
 		expGraphRegionC->SetPointError(i, std::get<2>(expData[i]), TMath::Sqrt(TMath::Power(std::get<9>(expData[i]) / expRef[2], 2) + TMath::Power(std::get<5>(expData[i]) * expRef[6] / TMath::Power(expRef[2], 2), 2)));
@@ -99,10 +100,8 @@ int main(int argc, char** argv) {
 
 	TCanvas* canvas = new TCanvas("canvas", "canvas", 1000, 1000);
 
+	mg->SetTitle(static_cast<TString>("Simulation VS. Experiment (L=" + std::to_string(drawLength) + "mm); Width [mm^{2}]; Ratio to Refernce"));
 	mg->GetYaxis()->SetRangeUser(0, 1);
-	mg->SetTitle("Simulation VS. Experiment");
-	mg->GetXaxis()->SetTitle("Width");
-	mg->GetYaxis()->SetTitle("Ratio to Reference");
 	mg->Draw("APL");
 
 	TGraph* simGraphRegionA = new TGraph();
@@ -118,16 +117,22 @@ int main(int argc, char** argv) {
 	}
 
 	TMultiGraph* mgSim = new TMultiGraph();
-	// simGraphRegionA->SetLineColor(kRed);
-	// simGraphRegionA->SetLineWidth(2);
-	// simGraphRegionA->SetLineStyle(9);
-	// legend->AddEntry(simGraphRegionA, "Simulation Region A", "l");
-	// mgSim->Add(simGraphRegionA);
-	// simGraphRegionB->SetLineColor(kBlue);
-	// simGraphRegionB->SetLineWidth(2);
-	// simGraphRegionB->SetLineStyle(9);
-	// legend->AddEntry(simGraphRegionB, "Simulation Region B", "l");
-	// mgSim->Add(simGraphRegionB);
+	simGraphRegionA->SetLineColor(kRed);
+	simGraphRegionA->SetLineWidth(2);
+	simGraphRegionA->SetLineStyle(9);
+	simGraphRegionA->SetMarkerColor(kRed);
+	simGraphRegionA->SetMarkerSize(1.5);
+	simGraphRegionA->SetMarkerStyle(24);
+	legend->AddEntry(simGraphRegionA, "The # of single alpha in metal (Simulation)", "pl");
+	mgSim->Add(simGraphRegionA);
+	simGraphRegionB->SetLineColor(kBlue);
+	simGraphRegionB->SetLineWidth(2);
+	simGraphRegionB->SetLineStyle(9);
+	simGraphRegionB->SetMarkerColor(kBlue);
+	simGraphRegionB->SetMarkerSize(1.5);
+	simGraphRegionB->SetMarkerStyle(24);
+	legend->AddEntry(simGraphRegionB, "The # of electron in metal (Simulation)", "pl");
+	mgSim->Add(simGraphRegionB);
 	simGraphRegionC->SetLineColor(kMagenta);
 	simGraphRegionC->SetLineWidth(2);
 	simGraphRegionC->SetLineStyle(9);
@@ -146,6 +151,7 @@ int main(int argc, char** argv) {
 	mgSim->Add(simGraphRegionD);
 
 	mgSim->Draw("PL");
-	legend->Draw();
-	canvas->SaveAs("20mm_ratio_to_refernce.png");
+	legend->Draw("SAME");
+	canvas->SetLeftMargin(1.1);
+	canvas->SaveAs(static_cast<TString>(std::to_string(drawLength) + "mm_ratio_to_refernce.png"));
 }
