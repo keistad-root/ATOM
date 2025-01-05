@@ -95,7 +95,7 @@ void TGeantAnalysis::readTree() {
 			position.clear();
 		}
 	}
-
+	std::cout << nDouble << std::endl;
 	for ( Int_t i = 0; i < mPrimaryTree->GetEntries(); i++ ) {
 		mPrimaryTree->GetEntry(i);
 		fillPrimaryHistograms();
