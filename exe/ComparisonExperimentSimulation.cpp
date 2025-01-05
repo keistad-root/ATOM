@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
 	std::vector<std::tuple<int, double, double, double, double, double, double>> simData;
 
 	while ( expCSV.read_row(collimator, length, width, area, areaError, regionA, regionAError, regionB, regionBError, regionC, regionCError, regionD, regionDError) ) {
-		if ( length == 1 ) {
+		if ( length == 20 ) {
 			if ( width == 11 ) {
 				expRef = {regionA, regionB, regionC, regionD, regionAError, regionBError, regionCError, regionDError};
 			} else {
@@ -39,7 +39,7 @@ int main(int argc, char** argv) {
 	}
 
 	while ( simCSV.read_row(collimator, length, width, area, areaError, regionA, regionB, regionC, regionD) ) {
-		if ( length == 1 ) {
+		if ( length == 20 ) {
 			if ( width == 11 ) {
 				simRef = {regionA, regionB, regionC, regionD};
 			} else {
@@ -48,7 +48,7 @@ int main(int argc, char** argv) {
 		}
 	}
 
-	TLegend* legend = new TLegend(0.1, 0.6, 0.4, 0.9);
+	TLegend* legend = new TLegend(0.1, 0.6, 0.6, 0.9);
 
 	TGraphErrors* expGraphRegionA = new TGraphErrors();
 	TGraphErrors* expGraphRegionB = new TGraphErrors();
@@ -70,28 +70,39 @@ int main(int argc, char** argv) {
 	TMultiGraph* mg = new TMultiGraph();
 	expGraphRegionA->SetLineColor(kRed);
 	expGraphRegionA->SetLineWidth(2);
-	legend->AddEntry(expGraphRegionA, "Experiment Region A", "l");
+	expGraphRegionA->SetMarkerColor(kRed);
+	expGraphRegionA->SetMarkerStyle(20);
+	expGraphRegionA->SetMarkerSize(1.5);
+	legend->AddEntry(expGraphRegionA, "Experiment Region A", "pl");
 	mg->Add(expGraphRegionA);
 	expGraphRegionB->SetLineColor(kBlue);
 	expGraphRegionB->SetLineWidth(2);
-	legend->AddEntry(expGraphRegionB, "Experiment Region B", "l");
+	expGraphRegionB->SetMarkerColor(kBlue);
+	expGraphRegionB->SetMarkerStyle(20);
+	expGraphRegionB->SetMarkerSize(1.5);
+	legend->AddEntry(expGraphRegionB, "Experiment Region B", "pl");
 	mg->Add(expGraphRegionB);
 	expGraphRegionC->SetLineColor(kMagenta);
 	expGraphRegionC->SetLineWidth(2);
-	legend->AddEntry(expGraphRegionC, "Experiment Region C", "l");
+	expGraphRegionC->SetMarkerColor(kMagenta);
+	expGraphRegionC->SetMarkerStyle(20);
+	expGraphRegionC->SetMarkerSize(1.5);
+	legend->AddEntry(expGraphRegionC, "Experiment Region C", "pl");
 	mg->Add(expGraphRegionC);
-	expGraphRegionD->SetLineColor(kGreen);
+	expGraphRegionD->SetLineColor(kOrange);
 	expGraphRegionD->SetLineWidth(2);
-	legend->AddEntry(expGraphRegionD, "Experiment Region D", "l");
+	expGraphRegionD->SetMarkerColor(kOrange);
+	expGraphRegionD->SetMarkerStyle(20);
+	expGraphRegionD->SetMarkerSize(1.5);
+	legend->AddEntry(expGraphRegionD, "Experiment Region D", "pl");
 	mg->Add(expGraphRegionD);
 
+	TCanvas* canvas = new TCanvas("canvas", "canvas", 1000, 1000);
 
-	mg->SetMaximum(1);
-	mg->SetMinimum(0);
+	mg->GetYaxis()->SetRangeUser(0, 1);
 	mg->SetTitle("Simulation VS. Experiment");
 	mg->GetXaxis()->SetTitle("Width");
 	mg->GetYaxis()->SetTitle("Ratio to Reference");
-	TCanvas* canvas = new TCanvas("canvas", "canvas", 1000, 1000);
 	mg->Draw("APL");
 
 	TGraph* simGraphRegionA = new TGraph();
@@ -99,7 +110,7 @@ int main(int argc, char** argv) {
 	TGraph* simGraphRegionC = new TGraph();
 	TGraph* simGraphRegionD = new TGraph();
 
-	for ( int i = 0; i < expData.size(); i++ ) {
+	for ( int i = 0; i < simData.size(); i++ ) {
 		simGraphRegionA->SetPoint(i, std::get<1>(simData[i]), std::get<3>(simData[i]) / simRef[0]);
 		simGraphRegionB->SetPoint(i, std::get<1>(simData[i]), std::get<4>(simData[i]) / simRef[1]);
 		simGraphRegionC->SetPoint(i, std::get<1>(simData[i]), std::get<5>(simData[i]) / simRef[2]);
@@ -107,28 +118,34 @@ int main(int argc, char** argv) {
 	}
 
 	TMultiGraph* mgSim = new TMultiGraph();
-	simGraphRegionA->SetLineColor(kRed);
-	simGraphRegionA->SetLineWidth(2);
-	simGraphRegionA->SetLineStyle(9);
-	legend->AddEntry(simGraphRegionA, "Simulation Region A", "l");
-	mgSim->Add(simGraphRegionA);
-	simGraphRegionB->SetLineColor(kBlue);
-	simGraphRegionB->SetLineWidth(2);
-	simGraphRegionB->SetLineStyle(9);
-	legend->AddEntry(simGraphRegionB, "Simulation Region B", "l");
-	mgSim->Add(simGraphRegionB);
+	// simGraphRegionA->SetLineColor(kRed);
+	// simGraphRegionA->SetLineWidth(2);
+	// simGraphRegionA->SetLineStyle(9);
+	// legend->AddEntry(simGraphRegionA, "Simulation Region A", "l");
+	// mgSim->Add(simGraphRegionA);
+	// simGraphRegionB->SetLineColor(kBlue);
+	// simGraphRegionB->SetLineWidth(2);
+	// simGraphRegionB->SetLineStyle(9);
+	// legend->AddEntry(simGraphRegionB, "Simulation Region B", "l");
+	// mgSim->Add(simGraphRegionB);
 	simGraphRegionC->SetLineColor(kMagenta);
 	simGraphRegionC->SetLineWidth(2);
 	simGraphRegionC->SetLineStyle(9);
-	legend->AddEntry(simGraphRegionC, "Simulation Region C", "l");
+	simGraphRegionC->SetMarkerColor(kMagenta);
+	simGraphRegionC->SetMarkerSize(1.5);
+	simGraphRegionC->SetMarkerStyle(24);
+	legend->AddEntry(simGraphRegionC, "The # of single alpha in epitaxial (Simulation)", "pl");
 	mgSim->Add(simGraphRegionC);
-	simGraphRegionD->SetLineColor(kGreen);
+	simGraphRegionD->SetLineColor(kOrange);
 	simGraphRegionD->SetLineWidth(2);
 	simGraphRegionD->SetLineStyle(9);
-	legend->AddEntry(simGraphRegionD, "Simulation Region D", "l");
+	simGraphRegionD->SetMarkerColor(kOrange);
+	simGraphRegionD->SetMarkerSize(1.5);
+	simGraphRegionD->SetMarkerStyle(24);
+	legend->AddEntry(simGraphRegionD, "The # of double cluster (Simulation)", "pl");
 	mgSim->Add(simGraphRegionD);
 
 	mgSim->Draw("PL");
 	legend->Draw();
-	canvas->SaveAs("expGraph.png");
+	canvas->SaveAs("20mm_ratio_to_refernce.png");
 }
