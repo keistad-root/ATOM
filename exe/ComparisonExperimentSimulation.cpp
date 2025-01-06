@@ -72,28 +72,28 @@ int main(int argc, char** argv) {
 	expGraphRegionA->SetLineColor(kRed);
 	expGraphRegionA->SetLineWidth(2);
 	expGraphRegionA->SetMarkerColor(kRed);
-	expGraphRegionA->SetMarkerStyle(20);
+	expGraphRegionA->SetMarkerStyle(24);
 	expGraphRegionA->SetMarkerSize(1.5);
 	legend->AddEntry(expGraphRegionA, "Experiment Region A", "pl");
 	mg->Add(expGraphRegionA);
 	expGraphRegionB->SetLineColor(kBlue);
 	expGraphRegionB->SetLineWidth(2);
 	expGraphRegionB->SetMarkerColor(kBlue);
-	expGraphRegionB->SetMarkerStyle(20);
+	expGraphRegionB->SetMarkerStyle(24);
 	expGraphRegionB->SetMarkerSize(1.5);
 	legend->AddEntry(expGraphRegionB, "Experiment Region B", "pl");
 	mg->Add(expGraphRegionB);
 	expGraphRegionC->SetLineColor(kMagenta);
 	expGraphRegionC->SetLineWidth(2);
 	expGraphRegionC->SetMarkerColor(kMagenta);
-	expGraphRegionC->SetMarkerStyle(20);
+	expGraphRegionC->SetMarkerStyle(24);
 	expGraphRegionC->SetMarkerSize(1.5);
 	legend->AddEntry(expGraphRegionC, "Experiment Region C", "pl");
 	mg->Add(expGraphRegionC);
 	expGraphRegionD->SetLineColor(kOrange);
 	expGraphRegionD->SetLineWidth(2);
 	expGraphRegionD->SetMarkerColor(kOrange);
-	expGraphRegionD->SetMarkerStyle(20);
+	expGraphRegionD->SetMarkerStyle(24);
 	expGraphRegionD->SetMarkerSize(1.5);
 	legend->AddEntry(expGraphRegionD, "Experiment Region D", "pl");
 	mg->Add(expGraphRegionD);
@@ -102,7 +102,7 @@ int main(int argc, char** argv) {
 
 	mg->SetTitle(static_cast<TString>("Simulation VS. Experiment (L=" + std::to_string(drawLength) + "mm); Width [mm^{2}]; Ratio to Refernce"));
 	mg->GetYaxis()->SetRangeUser(0, 1);
-	mg->Draw("APL");
+	mg->Draw("AP");
 
 	TGraph* simGraphRegionA = new TGraph();
 	TGraph* simGraphRegionB = new TGraph();
@@ -122,7 +122,7 @@ int main(int argc, char** argv) {
 	simGraphRegionA->SetLineStyle(9);
 	simGraphRegionA->SetMarkerColor(kRed);
 	simGraphRegionA->SetMarkerSize(1.5);
-	simGraphRegionA->SetMarkerStyle(24);
+	simGraphRegionA->SetMarkerStyle(25);
 	legend->AddEntry(simGraphRegionA, "The # of single alpha in metal (Simulation)", "pl");
 	mgSim->Add(simGraphRegionA);
 	simGraphRegionB->SetLineColor(kBlue);
@@ -130,7 +130,7 @@ int main(int argc, char** argv) {
 	simGraphRegionB->SetLineStyle(9);
 	simGraphRegionB->SetMarkerColor(kBlue);
 	simGraphRegionB->SetMarkerSize(1.5);
-	simGraphRegionB->SetMarkerStyle(24);
+	simGraphRegionB->SetMarkerStyle(25);
 	legend->AddEntry(simGraphRegionB, "The # of electron in metal (Simulation)", "pl");
 	mgSim->Add(simGraphRegionB);
 	simGraphRegionC->SetLineColor(kMagenta);
@@ -138,7 +138,7 @@ int main(int argc, char** argv) {
 	simGraphRegionC->SetLineStyle(9);
 	simGraphRegionC->SetMarkerColor(kMagenta);
 	simGraphRegionC->SetMarkerSize(1.5);
-	simGraphRegionC->SetMarkerStyle(24);
+	simGraphRegionC->SetMarkerStyle(25);
 	legend->AddEntry(simGraphRegionC, "The # of single alpha in epitaxial (Simulation)", "pl");
 	mgSim->Add(simGraphRegionC);
 	simGraphRegionD->SetLineColor(kOrange);
@@ -146,11 +146,11 @@ int main(int argc, char** argv) {
 	simGraphRegionD->SetLineStyle(9);
 	simGraphRegionD->SetMarkerColor(kOrange);
 	simGraphRegionD->SetMarkerSize(1.5);
-	simGraphRegionD->SetMarkerStyle(24);
+	simGraphRegionD->SetMarkerStyle(25);
 	legend->AddEntry(simGraphRegionD, "The # of double cluster (Simulation)", "pl");
 	mgSim->Add(simGraphRegionD);
 
-	mgSim->Draw("PL");
+	mgSim->Draw("P");
 	legend->Draw("SAME");
 	canvas->SetLeftMargin(1.1);
 	canvas->SaveAs(static_cast<TString>(std::to_string(drawLength) + "mm_ratio_to_refernce.png"));
