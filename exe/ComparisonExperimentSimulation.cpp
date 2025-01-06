@@ -98,7 +98,7 @@ int main(int argc, char** argv) {
 	legend->AddEntry(expGraphRegionD, "Experiment Region D", "pl");
 	mg->Add(expGraphRegionD);
 
-	TCanvas* canvas = new TCanvas("canvas", "canvas", 1000, 1000);
+	TCanvas* canvas = new TCanvas("canvas", "canvas", 2000, 1000);
 
 	mg->SetTitle(static_cast<TString>("Simulation VS. Experiment (L=" + std::to_string(drawLength) + "mm); Width [mm^{2}]; Ratio to Refernce"));
 	mg->GetYaxis()->SetRangeUser(0, 1);
