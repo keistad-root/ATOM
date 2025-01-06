@@ -35,7 +35,7 @@
 const int CANVAS_WIDTH = 2000;
 const int CANVAS_HEIGHT = 1000;
 
-const std::string EXTENSION = "pdf";
+const std::string EXTENSION = "png";
 
 class TPlotter {
 public:
