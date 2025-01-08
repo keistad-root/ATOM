@@ -155,6 +155,40 @@ void modeLength(int drawLength) {
 	canvas->SaveAs(static_cast<TString>(std::to_string(drawLength) + "mm_ratio_to_refernce.png"));
 }
 
+std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> getSimulationData() {
+	io::CSVReader<9> simCSV("/home/ychoi/ATOM/Data/simulation_entry.csv");
+
+	simCSV.read_header(io::ignore_extra_column, "Collimator", "Length", "Width", "Area", "Area_Error", "Region_A", "Region_B", "Region_C", "Region_D");
+
+	std::string collimator;
+	int length, width;
+	double area, areaError, regionA, regionB, regionC, regionD;
+
+	std::vector<std::tuple<int, int, std::array<double, 4>>> simRefData;
+	std::vector<std::tuple<int, int, std::array<double, 4>>> simData;
+
+	while ( simCSV.read_row(collimator, length, width, area, areaError, regionA, regionB, regionC, regionD) ) {
+		if ( width == 11 ) {
+			simRef = {regionA, regionB, regionC, regionD};
+		} else {
+			simData.push_back(std::make_tuple(length, width, std::array<double, 4>{regionA, regionB, regionC, regionD}, std::array<double, 4>{0, 0, 0, 0}));
+		}
+	}
+
+	for ( auto& expDataEntry : simData ) {
+		for ( auto& expRefDataEntry : simRefData ) {
+			if ( std::get<0>(expDataEntry) == std::get<0>(expRefDataEntry) ) {
+				std::array<double, 4> ratio = {std::get<2>(expDataEntry)[0] / std::get<2>(expRefDataEntry)[0], std::get<2>(expDataEntry)[1] / std::get<2>(expRefDataEntry)[1], std::get<2>(expDataEntry)[2] / std::get<2>(expRefDataEntry)[2], std::get<2>(expDataEntry)[3] / std::get<2>(expRefDataEntry)[3]};
+
+				std::array<double, 4> ratioError = {TMath::Sqrt(TMath::Power(std::get<3>(expDataEntry)[0] / std::get<2>(expRefDataEntry)[0], 2) + TMath::Power(std::get<2>(expDataEntry)[0] * std::get<3>(expRefDataEntry)[0] / TMath::Power(std::get<2>(expRefDataEntry)[0], 2), 2)), TMath::Sqrt(TMath::Power(std::get<3>(expDataEntry)[1] / std::get<2>(expRefDataEntry)[1], 2) + TMath::Power(std::get<2>(expDataEntry)[1] * std::get<3>(expRefDataEntry)[1] / TMath::Power(std::get<2>(expRefDataEntry)[1], 2), 2)), TMath::Sqrt(TMath::Power(std::get<3>(expDataEntry)[2] / std::get<2>(expRefDataEntry)[2], 2) + TMath::Power(std::get<2>(expDataEntry)[2] * std::get<3>(expRefDataEntry)[2] / TMath::Power(std::get<2>(expRefDataEntry)[2], 2), 2)), TMath::Sqrt(TMath::Power(std::get<3>(expDataEntry)[3] / std::get<2>(expRefDataEntry)[3], 2) + TMath::Power(std::get<2>(expDataEntry)[3] * std::get<3>(expRefDataEntry)[3] / TMath::Power(std::get<2>(expRefDataEntry)[3], 2), 2))};
+
+				expRatioData.push_back(std::make_tuple(std::get<0>(expDataEntry), std::get<1>(expDataEntry), ratio, ratioError));
+			}
+		}
+	}
+	return simData;
+}
+
 std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> getExperimentData() {
 	io::CSVReader<63> expCSV("/home/ychoi/ATOM/Data/clustersize_entry.csv");
 
@@ -162,6 +196,7 @@ std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> 
 
 	std::tuple<int, int, std::array<double, 61>> expEntry;
 	std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> expData;
+	std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> expRefData;
 	std::vector<std::array<int, 2>> regionDivide = {{1, 4}, {5, 10}, {11, 32}, {40, 61}};
 	std::array<double, 4> regionEntry = {0, 0, 0, 0};
 	std::array<double, 4> regionEntryError = {0, 0, 0, 0};
@@ -181,7 +216,11 @@ std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> 
 				regionEntry[3] += std::get<2>(expEntry)[i];
 			}
 		}
-		expData.push_back(std::make_tuple(std::get<0>(expEntry), std::get<1>(expEntry), regionEntry, regionEntryError));
+		if ( std::get<1>(expEntry) == 11 ) {
+			expRefData.push_back(std::make_tuple(std::get<0>(expEntry), std::get<1>(expEntry), regionEntry, regionEntryError));
+		} else {
+			expData.push_back(std::make_tuple(std::get<0>(expEntry), std::get<1>(expEntry), regionEntry, regionEntryError));
+		}
 		regionEntry = {0, 0, 0, 0};
 	}
 
@@ -192,30 +231,97 @@ std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> 
 	while ( scaleCSV.read_row(length, width, time, scale) ) {
 		for ( auto& expDataEntry : expData ) {
 			if ( std::get<0>(expDataEntry) == length && std::get<1>(expDataEntry) == width ) {
-				regionEntryError[0] = TMath::Sqrt(std::get<2>(expDataEntry)[0] / scale) * scale;
-				regionEntryError[1] = TMath::Sqrt(std::get<2>(expDataEntry)[1] / scale) * scale;
-				regionEntryError[2] = TMath::Sqrt(std::get<2>(expDataEntry)[2] / scale) * scale;
-				regionEntryError[3] = TMath::Sqrt(std::get<2>(expDataEntry)[3] / scale) * scale;
+				regionEntryError[0] = TMath::Sqrt(TMath::Abs(std::get<2>(expDataEntry)[0] / scale)) * scale;
+				regionEntryError[1] = TMath::Sqrt(TMath::Abs(std::get<2>(expDataEntry)[1] / scale)) * scale;
+				regionEntryError[2] = TMath::Sqrt(TMath::Abs(std::get<2>(expDataEntry)[2] / scale)) * scale;
+				regionEntryError[3] = TMath::Sqrt(TMath::Abs(std::get<2>(expDataEntry)[3] / scale)) * scale;
 				std::get<3>(expDataEntry) = regionEntryError;
 			}
 		}
 	}
-	return expData;
-}
-
-int main(int argc, char** argv) {
-	std::string mode = argv[1];
-
-	std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> expData = getExperimentData();
-
-	TGraphErrors* expGraphLength1[4];
+	std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> expRatioData;
 	for ( auto& expDataEntry : expData ) {
-		if ( std::get<1>(expDataEntry) == 2 ) {
-			expGraphLength1[0]->SetPoint(expGraphLength1[0]->GetN(), std::get<0>(expDataEntry), std::get<2>(expDataEntry)[0]);
-			expGraphLength1[1]->SetPoint(expGraphLength1[1]->GetN(), std::get<0>(expDataEntry), std::get<2>(expDataEntry)[1]);
-			expGraphLength1[2]->SetPoint(expGraphLength1[2]->GetN(), std::get<0>(expDataEntry), std::get<2>(expDataEntry)[2]);
-			expGraphLength1[3]->SetPoint(expGraphLength1[3]->GetN(), std::get<0>(expDataEntry), std::get<2>(expDataEntry)[3]);
+		for ( auto& expRefDataEntry : expRefData ) {
+			if ( std::get<0>(expDataEntry) == std::get<0>(expRefDataEntry) ) {
+				std::array<double, 4> ratio = {std::get<2>(expDataEntry)[0] / std::get<2>(expRefDataEntry)[0], std::get<2>(expDataEntry)[1] / std::get<2>(expRefDataEntry)[1], std::get<2>(expDataEntry)[2] / std::get<2>(expRefDataEntry)[2], std::get<2>(expDataEntry)[3] / std::get<2>(expRefDataEntry)[3]};
+
+				std::array<double, 4> ratioError = {TMath::Sqrt(TMath::Power(std::get<3>(expDataEntry)[0] / std::get<2>(expRefDataEntry)[0], 2) + TMath::Power(std::get<2>(expDataEntry)[0] * std::get<3>(expRefDataEntry)[0] / TMath::Power(std::get<2>(expRefDataEntry)[0], 2), 2)), TMath::Sqrt(TMath::Power(std::get<3>(expDataEntry)[1] / std::get<2>(expRefDataEntry)[1], 2) + TMath::Power(std::get<2>(expDataEntry)[1] * std::get<3>(expRefDataEntry)[1] / TMath::Power(std::get<2>(expRefDataEntry)[1], 2), 2)), TMath::Sqrt(TMath::Power(std::get<3>(expDataEntry)[2] / std::get<2>(expRefDataEntry)[2], 2) + TMath::Power(std::get<2>(expDataEntry)[2] * std::get<3>(expRefDataEntry)[2] / TMath::Power(std::get<2>(expRefDataEntry)[2], 2), 2)), TMath::Sqrt(TMath::Power(std::get<3>(expDataEntry)[3] / std::get<2>(expRefDataEntry)[3], 2) + TMath::Power(std::get<2>(expDataEntry)[3] * std::get<3>(expRefDataEntry)[3] / TMath::Power(std::get<2>(expRefDataEntry)[3], 2), 2))};
+
+				expRatioData.push_back(std::make_tuple(std::get<0>(expDataEntry), std::get<1>(expDataEntry), ratio, ratioError));
+			}
 		}
 	}
+	return expRatioData;
+}
 
+void drawForLength(int drawWidth, std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>>& expData) {
+	TGraphErrors* expGraphPhi2[4] = {new TGraphErrors(), new TGraphErrors(), new TGraphErrors(), new TGraphErrors()};
+
+	for ( auto& expDataEntry : expData ) {
+		if ( std::get<1>(expDataEntry) == drawWidth ) {
+			expGraphPhi2[0]->SetPoint(expGraphPhi2[0]->GetN(), std::get<0>(expDataEntry), std::get<2>(expDataEntry)[0]);
+			expGraphPhi2[0]->SetPointError(expGraphPhi2[0]->GetN() - 1, 0, std::get<3>(expDataEntry)[0]);
+			expGraphPhi2[1]->SetPoint(expGraphPhi2[1]->GetN(), std::get<0>(expDataEntry), std::get<2>(expDataEntry)[1]);
+			expGraphPhi2[1]->SetPointError(expGraphPhi2[1]->GetN() - 1, 0, std::get<3>(expDataEntry)[1]);
+			expGraphPhi2[2]->SetPoint(expGraphPhi2[2]->GetN(), std::get<0>(expDataEntry), std::get<2>(expDataEntry)[2]);
+			expGraphPhi2[2]->SetPointError(expGraphPhi2[2]->GetN() - 1, 0, std::get<3>(expDataEntry)[2]);
+			expGraphPhi2[3]->SetPoint(expGraphPhi2[3]->GetN(), std::get<0>(expDataEntry), std::get<2>(expDataEntry)[3]);
+			if ( std::get<3>(expDataEntry)[3] > 0 ) {
+				expGraphPhi2[3]->SetPointError(expGraphPhi2[3]->GetN() - 1, 0, std::get<3>(expDataEntry)[3]);
+			} else {
+				expGraphPhi2[3]->SetPointError(expGraphPhi2[3]->GetN() - 1, 0, 0.0);
+			}
+		}
+	}
+	TCanvas* canvasPhi = new TCanvas("canvasphi", "", 1000, 1000);
+	TMultiGraph* mgPhi = new TMultiGraph();
+	expGraphPhi2[0]->SetLineColor(kRed);
+	expGraphPhi2[0]->SetLineWidth(2);
+	expGraphPhi2[0]->SetMarkerColor(kRed);
+	expGraphPhi2[0]->SetMarkerStyle(24);
+	expGraphPhi2[0]->SetMarkerSize(2);
+	mgPhi->Add(expGraphPhi2[0]);
+	expGraphPhi2[1]->SetLineColor(kBlue);
+	expGraphPhi2[1]->SetLineWidth(2);
+	expGraphPhi2[1]->SetMarkerColor(kBlue);
+	expGraphPhi2[1]->SetMarkerStyle(24);
+	expGraphPhi2[1]->SetMarkerSize(2);
+	mgPhi->Add(expGraphPhi2[1]);
+	expGraphPhi2[2]->SetLineColor(kMagenta);
+	expGraphPhi2[2]->SetLineWidth(2);
+	expGraphPhi2[2]->SetMarkerColor(kMagenta);
+	expGraphPhi2[2]->SetMarkerStyle(24);
+	expGraphPhi2[2]->SetMarkerSize(2);
+	mgPhi->Add(expGraphPhi2[2]);
+	expGraphPhi2[3]->SetLineColor(kGreen + 3);
+	expGraphPhi2[3]->SetLineWidth(2);
+	expGraphPhi2[3]->SetMarkerColor(kGreen + 3);
+	expGraphPhi2[3]->SetMarkerStyle(24);
+	expGraphPhi2[3]->SetMarkerSize(2);
+	mgPhi->Add(expGraphPhi2[3]);
+	mgPhi->SetTitle(static_cast<TString>("Comparison for " + std::to_string(drawWidth) + "#phi collimators; Length[mm]; Ratio to Reference"));
+	mgPhi->Draw("AP");
+
+	TLegend* legendPhi = new TLegend(0.3, 0.6, 0.7, 0.9);
+	legendPhi->AddEntry(expGraphPhi2[0], "Region A", "p");
+	legendPhi->AddEntry(expGraphPhi2[1], "Region B", "p");
+	legendPhi->AddEntry(expGraphPhi2[2], "Region C", "p");
+	legendPhi->AddEntry(expGraphPhi2[3], "Region D", "p");
+	legendPhi->Draw("SAME");
+
+	canvasPhi->SetLeftMargin(0.12);
+	canvasPhi->SetGrid();
+	canvasPhi->SaveAs(static_cast<TString>("phi" + std::to_string(drawWidth) + "_ratio_to_reference.png"));
+	delete canvasPhi;
+}
+
+int main() {
+	std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> expData = getExperimentData();
+
+	drawForLength(2, expData);
+	drawForLength(3, expData);
+	drawForLength(4, expData);
+	drawForLength(7, expData);
+
+	return 0;
 }
