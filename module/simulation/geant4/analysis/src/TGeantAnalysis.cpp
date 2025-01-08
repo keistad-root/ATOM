@@ -376,6 +376,11 @@ void TGeantAnalysis::fillIncidentHistograms() {
 			if ( key == "ElectronIncidentXY" ) {
 				hist->Fill(mIncidentTuple.position[0], mIncidentTuple.position[1]);
 			}
+			if ( key == "ElctronIncidentXYWithElectrode" ) {
+				if ( TMath::Abs(mIncidentTuple.position[0]) < 5 * 0.028 && TMath::Abs(mIncidentTuple.position[1]) < 5 * 0.028 ) {
+					hist->Fill(mIncidentTuple.position[0], mIncidentTuple.position[1]);
+				}
+			}
 			if ( key == "ElectronCorrelationDepositEnergyTotalAndIncidentAngle" ) {
 				if ( isDeposit ) {
 					hist->Fill(180 - incidentTheta, depositEnergy * 1000);

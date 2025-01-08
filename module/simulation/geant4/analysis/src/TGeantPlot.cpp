@@ -60,7 +60,22 @@ void TGeantPlot::saveHistorams(const std::vector<CppConfigDictionary>& configLis
 				std::unique_ptr<TCanvas> canvas = std::make_unique<TCanvas>();
 				savePlot(canvas.get(), hist.get(), config);
 				setCanvasAttribute(canvas, config);
+				if ( key == "ElctronIncidentXYWithElectrode" ) {
+					TGraph* electrode = new TGraph();
+					for ( int i = 0; i < 10; i++ ) {
+						for ( int j = 0; j < 10; j++ ) {
+							electrode->SetPoint(electrode->GetN(), -0.126 + i * 0.028, -0.126 + j * 0.028);
+						}
+					}
+					electrode->SetMarkerStyle(20);
+					electrode->SetMarkerSize(1);
+					electrode->SetMarkerColor(kRed);
+					electrode->Draw("P");
+					// canvas->SetGrayscale();
+					TColor::InvertPalette();
+				}
 				saveCanvas(canvas.get(), mOutputDirectory, config);
+
 			}
 		}
 	}
