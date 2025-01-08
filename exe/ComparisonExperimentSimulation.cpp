@@ -198,8 +198,8 @@ std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> 
 	std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> expRefData;
 	// std::vector<std::array<int, 2>> regionDivide = {{1, 4}, {5, 10}, {11, 32}, {40, 61}};
 	// std::vector<std::array<int, 2>> regionDivide = {{4, 32}, {5, 10}, {11, 32}, {5, 32}};
-	std::vector<std::array<int, 2>> regionDivide = {{1, 1}, {5, 10}, {11, 32}, {5, 32}};
-	// std::vector<std::array<int, 2>> regionDivide = {{4, 4}, {5, 10}, {11, 32}, {5, 32}};
+	// std::vector<std::array<int, 2>> regionDivide = {{1, 1}, {5, 10}, {11, 32}, {5, 32}};
+	std::vector<std::array<int, 2>> regionDivide = {{4, 4}, {5, 10}, {11, 32}, {5, 32}};
 	std::array<double, 4> regionEntry = {0, 0, 0, 0};
 	std::array<double, 4> regionEntryError = {0, 0, 0, 0};
 
@@ -625,6 +625,70 @@ void drawOnly4(int drawWidth, std::vector<std::tuple<int, int, std::array<double
 	delete canvasPhi;
 }
 
+
+void drawOnly4All(std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>>& expData) {
+	TGraphErrors* expGraphPhi2[4] = {new TGraphErrors(), new TGraphErrors(), new TGraphErrors(), new TGraphErrors()};
+	for ( auto& expDataEntry : expData ) {
+		if ( std::get<1>(expDataEntry) == 2 ) {
+			expGraphPhi2[0]->SetPoint(expGraphPhi2[0]->GetN(), std::get<0>(expDataEntry), std::get<2>(expDataEntry)[0]);
+			expGraphPhi2[0]->SetPointError(expGraphPhi2[0]->GetN() - 1, 0, std::get<3>(expDataEntry)[0]);
+		} else if ( std::get<1>(expDataEntry) == 3 ) {
+			expGraphPhi2[1]->SetPoint(expGraphPhi2[1]->GetN(), std::get<0>(expDataEntry), std::get<2>(expDataEntry)[1]);
+			expGraphPhi2[1]->SetPointError(expGraphPhi2[1]->GetN() - 1, 0, std::get<3>(expDataEntry)[1]);
+		} else if ( std::get<1>(expDataEntry) == 4 ) {
+			expGraphPhi2[2]->SetPoint(expGraphPhi2[2]->GetN(), std::get<0>(expDataEntry), std::get<2>(expDataEntry)[2]);
+			expGraphPhi2[2]->SetPointError(expGraphPhi2[2]->GetN() - 1, 0, std::get<3>(expDataEntry)[2]);
+		} else if ( std::get<1>(expDataEntry) == 7 ) {
+			expGraphPhi2[3]->SetPoint(expGraphPhi2[3]->GetN(), std::get<0>(expDataEntry), std::get<2>(expDataEntry)[3]);
+			expGraphPhi2[3]->SetPointError(expGraphPhi2[3]->GetN() - 1, 0, std::get<3>(expDataEntry)[3]);
+		}
+
+	}
+
+	TCanvas* canvasPhi = new TCanvas("canvasphi", "", 1000, 1000);
+	TMultiGraph* mgPhi = new TMultiGraph();
+	expGraphPhi2[0]->SetLineColor(kRed);
+	expGraphPhi2[0]->SetLineWidth(2);
+	expGraphPhi2[0]->SetMarkerColor(kRed);
+	expGraphPhi2[0]->SetMarkerStyle(24);
+	expGraphPhi2[0]->SetMarkerSize(2);
+	mgPhi->Add(expGraphPhi2[0]);
+	expGraphPhi2[1]->SetLineColor(kBlue);
+	expGraphPhi2[1]->SetLineWidth(2);
+	expGraphPhi2[1]->SetMarkerColor(kBlue);
+	expGraphPhi2[1]->SetMarkerStyle(24);
+	expGraphPhi2[1]->SetMarkerSize(2);
+	mgPhi->Add(expGraphPhi2[1]);
+	expGraphPhi2[2]->SetLineColor(kMagenta);
+	expGraphPhi2[2]->SetLineWidth(2);
+	expGraphPhi2[2]->SetMarkerColor(kMagenta);
+	expGraphPhi2[2]->SetMarkerStyle(24);
+	expGraphPhi2[2]->SetMarkerSize(2);
+	mgPhi->Add(expGraphPhi2[2]);
+	expGraphPhi2[3]->SetLineColor(kGreen + 3);
+	expGraphPhi2[3]->SetLineWidth(2);
+	expGraphPhi2[3]->SetMarkerColor(kGreen + 3);
+	expGraphPhi2[3]->SetMarkerStyle(24);
+	expGraphPhi2[3]->SetMarkerSize(2);
+	mgPhi->Add(expGraphPhi2[3]);
+	mgPhi->SetTitle(static_cast<TString>("Entry of Cluster Size 4; Length [mm]; Ratio to Reference"));
+	mgPhi->Draw("AP");
+
+	TLegend* legendPhi = new TLegend(0.3, 0.6, 0.8, 0.9);
+	legendPhi->AddEntry(expGraphPhi2[0], "Width = 2 mm", "p");
+	legendPhi->AddEntry(expGraphPhi2[1], "Width = 3 mm", "p");
+	legendPhi->AddEntry(expGraphPhi2[2], "Width = 4 mm", "p");
+	legendPhi->AddEntry(expGraphPhi2[3], "Width = 7 mm", "p");
+	legendPhi->Draw("SAME");
+
+	canvasPhi->SetLeftMargin(0.12);
+	canvasPhi->SetGrid();
+	canvasPhi->SaveAs(static_cast<TString>("ratio_to_reference_cluster_size_4.png"));
+	delete canvasPhi;
+}
+
+
+
 int main() {
 	std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> expData = getExperimentData();
 	std::vector<std::tuple<int, int, std::array<double, 4>>> simData = getSimulationData();
@@ -642,12 +706,13 @@ int main() {
 	// drawOnlyA(2, expData, simData);
 	// drawOnlyA(3, expData, simData);
 	// drawOnlyA(4, expData, simData);
-	drawOnlyA(7, expData, simData);
+	// drawOnlyA(7, expData, simData);
 
 	// drawOnly4(2, expData, simData);
 	// drawOnly4(3, expData, simData);
 	// drawOnly4(4, expData, simData);
 	// drawOnly4(7, expData, simData);
+	drawOnly4All(expData);
 
 	return 0;
 }
