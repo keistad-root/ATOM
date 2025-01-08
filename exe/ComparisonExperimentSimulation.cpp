@@ -11,8 +11,7 @@
 #include "TGraphErrors.h"
 #include "TMath.h"
 
-int main(int argc, char** argv) {
-	int drawLength = atoi(argv[1]);
+void modeLength(int drawLength) {
 
 	io::CSVReader<13> expCSV("/home/ychoi/ATOM/Data/experiment_entry.csv");
 	io::CSVReader<9> simCSV("/home/ychoi/ATOM/Data/simulation_entry.csv");
@@ -100,7 +99,7 @@ int main(int argc, char** argv) {
 
 	TCanvas* canvas = new TCanvas("canvas", "canvas", 2000, 1000);
 
-	mg->SetTitle(static_cast<TString>("Simulation VS. Experiment (L=" + std::to_string(drawLength) + "mm); Width [mm^{2}]; Ratio to Refernce"));
+	mg->SetTitle(static_cast<TString>("Simulation VS. Experiment (L=" + std::to_string(drawLength) + "mm); Area [mm^{2}]; Ratio to Refernce"));
 	mg->GetYaxis()->SetRangeUser(0, 1);
 	mg->Draw("AP");
 
@@ -154,4 +153,22 @@ int main(int argc, char** argv) {
 	legend->Draw("SAME");
 	canvas->SetLeftMargin(1.1);
 	canvas->SaveAs(static_cast<TString>(std::to_string(drawLength) + "mm_ratio_to_refernce.png"));
+}
+
+void modeWidth(int drawWidth) {
+
+}
+
+int main(int argc, char** argv) {
+	std::string mode = argv[1];
+	int drawLength = atoi(argv[2]);
+	if ( mode == "length" ) {
+		modeLength(drawLength);
+	}
+	if ( mode == "width" ) {
+		modeWidth(drawLength);
+	}
+
+
+
 }
