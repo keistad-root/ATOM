@@ -196,7 +196,7 @@ std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> 
 	std::tuple<int, int, std::array<double, 61>> expEntry;
 	std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> expData;
 	std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> expRefData;
-	std::vector<std::array<int, 2>> regionDivide = {{1, 4}, {5, 10}, {11, 32}, {40, 61}};
+	std::vector<std::array<int, 2>> regionDivide = {{4, 32}, {5, 10}, {11, 32}, {5, 32}};
 	std::array<double, 4> regionEntry = {0, 0, 0, 0};
 	std::array<double, 4> regionEntryError = {0, 0, 0, 0};
 
@@ -354,14 +354,120 @@ void drawForLength(int drawWidth, std::vector<std::tuple<int, int, std::array<do
 	delete canvasPhi;
 }
 
+void drawOnlyBC(int drawWidth, std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>>& expData, std::vector<std::tuple<int, int, std::array<double, 4>>>& simData) {
+	TGraphErrors* expGraphPhi2[4] = {new TGraphErrors(), new TGraphErrors(), new TGraphErrors(), new TGraphErrors()};
+	TGraph* simGraphPhi[4] = {new TGraph(), new TGraph(), new TGraph(), new TGraph()};
+	for ( auto& expDataEntry : expData ) {
+		if ( std::get<1>(expDataEntry) == drawWidth ) {
+			expGraphPhi2[0]->SetPoint(expGraphPhi2[0]->GetN(), std::get<0>(expDataEntry), std::get<2>(expDataEntry)[0]);
+			expGraphPhi2[0]->SetPointError(expGraphPhi2[0]->GetN() - 1, 0, std::get<3>(expDataEntry)[0]);
+			expGraphPhi2[1]->SetPoint(expGraphPhi2[1]->GetN(), std::get<0>(expDataEntry), std::get<2>(expDataEntry)[1]);
+			expGraphPhi2[1]->SetPointError(expGraphPhi2[1]->GetN() - 1, 0, std::get<3>(expDataEntry)[1]);
+			expGraphPhi2[2]->SetPoint(expGraphPhi2[2]->GetN(), std::get<0>(expDataEntry), std::get<2>(expDataEntry)[2]);
+			expGraphPhi2[2]->SetPointError(expGraphPhi2[2]->GetN() - 1, 0, std::get<3>(expDataEntry)[2]);
+			expGraphPhi2[3]->SetPoint(expGraphPhi2[3]->GetN(), std::get<0>(expDataEntry), std::get<2>(expDataEntry)[3]);
+			expGraphPhi2[3]->SetPointError(expGraphPhi2[3]->GetN() - 1, 0, std::get<3>(expDataEntry)[3]);
+		}
+	}
+	for ( auto& simDataEntry : simData ) {
+		if ( std::get<1>(simDataEntry) == drawWidth ) {
+			// simGraphPhi[0]->SetPoint(simGraphPhi[0]->GetN(), std::get<0>(simDataEntry), std::get<2>(simDataEntry)[0]);
+			// simGraphPhi[1]->SetPoint(simGraphPhi[1]->GetN(), std::get<0>(simDataEntry), std::get<2>(simDataEntry)[1]);
+			simGraphPhi[2]->SetPoint(simGraphPhi[2]->GetN(), std::get<0>(simDataEntry), std::get<2>(simDataEntry)[2]);
+			// simGraphPhi[3]->SetPoint(simGraphPhi[3]->GetN(), std::get<0>(simDataEntry), std::get<2>(simDataEntry)[3]);
+		}
+	}
+
+	TCanvas* canvasPhi = new TCanvas("canvasphi", "", 1000, 1000);
+	TMultiGraph* mgPhi = new TMultiGraph();
+	// expGraphPhi2[0]->SetLineColor(kRed);
+	// expGraphPhi2[0]->SetLineWidth(2);
+	// expGraphPhi2[0]->SetMarkerColor(kRed);
+	// expGraphPhi2[0]->SetMarkerStyle(24);
+	// expGraphPhi2[0]->SetMarkerSize(2);
+	// mgPhi->Add(expGraphPhi2[0]);
+	expGraphPhi2[1]->SetLineColor(kBlue);
+	expGraphPhi2[1]->SetLineWidth(2);
+	expGraphPhi2[1]->SetMarkerColor(kBlue);
+	expGraphPhi2[1]->SetMarkerStyle(24);
+	expGraphPhi2[1]->SetMarkerSize(2);
+	mgPhi->Add(expGraphPhi2[1]);
+	expGraphPhi2[2]->SetLineColor(kMagenta);
+	expGraphPhi2[2]->SetLineWidth(2);
+	expGraphPhi2[2]->SetMarkerColor(kMagenta);
+	expGraphPhi2[2]->SetMarkerStyle(24);
+	expGraphPhi2[2]->SetMarkerSize(2);
+	mgPhi->Add(expGraphPhi2[2]);
+	expGraphPhi2[3]->SetLineColor(kGreen + 3);
+	expGraphPhi2[3]->SetLineWidth(2);
+	expGraphPhi2[3]->SetMarkerColor(kGreen + 3);
+	expGraphPhi2[3]->SetMarkerStyle(24);
+	expGraphPhi2[3]->SetMarkerSize(2);
+	mgPhi->Add(expGraphPhi2[3]);
+	mgPhi->SetTitle(static_cast<TString>("Comparison for " + std::to_string(drawWidth) + "#phi collimators; Length[mm]; Ratio to Reference"));
+	mgPhi->Draw("AP");
+
+	TMultiGraph* mgSimPhi = new TMultiGraph();
+	// simGraphPhi[0]->SetLineColor(kBlue);
+	// simGraphPhi[0]->SetLineWidth(2);
+	// simGraphPhi[0]->SetLineStyle(9);
+	// simGraphPhi[0]->SetMarkerColor(kBlue);
+	// simGraphPhi[0]->SetMarkerSize(2);
+	// simGraphPhi[0]->SetMarkerStyle(21);
+	// mgSimPhi->Add(simGraphPhi[0]);
+	// simGraphPhi[1]->SetLineColor(kRed);
+	// simGraphPhi[1]->SetLineWidth(2);
+	// simGraphPhi[1]->SetLineStyle(9);
+	// simGraphPhi[1]->SetMarkerColor(kRed);
+	// simGraphPhi[1]->SetMarkerSize(2);
+	// simGraphPhi[1]->SetMarkerStyle(21);
+	// mgSimPhi->Add(simGraphPhi[1]);
+	simGraphPhi[2]->SetLineColor(kMagenta);
+	simGraphPhi[2]->SetLineWidth(2);
+	simGraphPhi[2]->SetLineStyle(9);
+	simGraphPhi[2]->SetMarkerColor(kMagenta);
+	simGraphPhi[2]->SetMarkerSize(2);
+	simGraphPhi[2]->SetMarkerStyle(21);
+	mgSimPhi->Add(simGraphPhi[2]);
+	// simGraphPhi[3]->SetLineColor(kGreen + 3);
+	// simGraphPhi[3]->SetLineWidth(2);
+	// simGraphPhi[3]->SetLineStyle(9);
+	// simGraphPhi[3]->SetMarkerColor(kGreen + 3);
+	// simGraphPhi[3]->SetMarkerSize(2);
+	// simGraphPhi[3]->SetMarkerStyle(21);
+	mgSimPhi->Add(simGraphPhi[3]);
+	mgSimPhi->Draw("P");
+
+	TLegend* legendPhi = new TLegend(0.3, 0.6, 0.8, 0.9);
+	// legendPhi->AddEntry(expGraphPhi2[0], "Region B + C + cluster size 4", "p");
+	legendPhi->AddEntry(expGraphPhi2[1], "Region B", "p");
+	legendPhi->AddEntry(expGraphPhi2[2], "Region C", "p");
+	legendPhi->AddEntry(expGraphPhi2[3], "Region B + C", "p");
+	// legendPhi->AddEntry(simGraphPhi[1], "The # of electron in metal (Simulation)", "p");
+	// legendPhi->AddEntry(simGraphPhi[0], "The # of single alpha in metal (Simulation)", "p");
+	legendPhi->AddEntry(simGraphPhi[2], "The # of single alpha in epitaxial (Simulation)", "p");
+	// legendPhi->AddEntry(simGraphPhi[3], "The # of double cluster (Simulation)", "p");
+	legendPhi->Draw("SAME");
+
+	canvasPhi->SetLeftMargin(0.12);
+	canvasPhi->SetGrid();
+	canvasPhi->SaveAs(static_cast<TString>("phi" + std::to_string(drawWidth) + "_ratio_to_reference_BC.png"));
+	delete canvasPhi;
+}
+
 int main() {
 	std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> expData = getExperimentData();
 	std::vector<std::tuple<int, int, std::array<double, 4>>> simData = getSimulationData();
 
-	drawForLength(2, expData, simData);
-	drawForLength(3, expData, simData);
-	drawForLength(4, expData, simData);
-	drawForLength(7, expData, simData);
+	// drawForLength(2, expData, simData);
+	// drawForLength(3, expData, simData);
+	// drawForLength(4, expData, simData);
+	// drawForLength(7, expData, simData);
+
+	drawOnlyBC(2, expData, simData);
+	drawOnlyBC(3, expData, simData);
+	drawOnlyBC(4, expData, simData);
+	drawOnlyBC(7, expData, simData);
 
 	return 0;
 }
