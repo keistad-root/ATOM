@@ -155,7 +155,7 @@ void modeLength(int drawLength) {
 	canvas->SaveAs(static_cast<TString>(std::to_string(drawLength) + "mm_ratio_to_refernce.png"));
 }
 
-void modeWidth(int drawWidth) {
+std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> getExperimentData() {
 	io::CSVReader<63> expCSV("/home/ychoi/ATOM/Data/clustersize_entry.csv");
 
 	expCSV.read_header(io::ignore_extra_column, "length", "width", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61");
@@ -200,21 +200,22 @@ void modeWidth(int drawWidth) {
 			}
 		}
 	}
-	for ( auto& expDataEntry : expData ) {
-		std::cout << std::get<0>(expDataEntry) << " " << std::get<1>(expDataEntry) << " " << std::get<2>(expDataEntry)[0] << " " << std::get<3>(expDataEntry)[0] << " " << std::get<2>(expDataEntry)[1] << " " << std::get<3>(expDataEntry)[1] << " " << std::get<2>(expDataEntry)[2] << " " << std::get<3>(expDataEntry)[2] << " " << std::get<2>(expDataEntry)[3] << std::get<3>(expDataEntry)[3] << " " << std::endl;
-	}
+	return expData;
 }
 
 int main(int argc, char** argv) {
 	std::string mode = argv[1];
-	int drawLength = atoi(argv[2]);
-	if ( mode == "length" ) {
-		modeLength(drawLength);
-	}
-	if ( mode == "width" ) {
-		modeWidth(drawLength);
-	}
 
+	std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> expData = getExperimentData();
 
+	TGraphErrors* expGraphLength1[4];
+	for ( auto& expDataEntry : expData ) {
+		if ( std::get<1>(expDataEntry) == 2 ) {
+			expGraphLength1[0]->SetPoint(expGraphLength1[0]->GetN(), std::get<0>(expDataEntry), std::get<2>(expDataEntry)[0]);
+			expGraphLength1[1]->SetPoint(expGraphLength1[1]->GetN(), std::get<0>(expDataEntry), std::get<2>(expDataEntry)[1]);
+			expGraphLength1[2]->SetPoint(expGraphLength1[2]->GetN(), std::get<0>(expDataEntry), std::get<2>(expDataEntry)[2]);
+			expGraphLength1[3]->SetPoint(expGraphLength1[3]->GetN(), std::get<0>(expDataEntry), std::get<2>(expDataEntry)[3]);
+		}
+	}
 
 }
