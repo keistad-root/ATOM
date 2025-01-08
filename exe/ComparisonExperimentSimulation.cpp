@@ -196,10 +196,10 @@ std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> 
 	std::tuple<int, int, std::array<double, 61>> expEntry;
 	std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> expData;
 	std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> expRefData;
-	// std::vector<std::array<int, 2>> regionDivide = {{1, 4}, {5, 10}, {11, 32}, {40, 61}};
+	std::vector<std::array<int, 2>> regionDivide = {{1, 4}, {5, 10}, {11, 32}, {40, 61}};
 	// std::vector<std::array<int, 2>> regionDivide = {{4, 32}, {5, 10}, {11, 32}, {5, 32}};
 	// std::vector<std::array<int, 2>> regionDivide = {{1, 1}, {5, 10}, {11, 32}, {5, 32}};
-	std::vector<std::array<int, 2>> regionDivide = {{4, 4}, {5, 10}, {11, 32}, {5, 32}};
+	// std::vector<std::array<int, 2>> regionDivide = {{4, 4}, {5, 10}, {11, 32}, {5, 32}};
 	std::array<double, 4> regionEntry = {0, 0, 0, 0};
 	std::array<double, 4> regionEntryError = {0, 0, 0, 0};
 
@@ -671,7 +671,7 @@ void drawOnly4All(std::vector<std::tuple<int, int, std::array<double, 4>, std::a
 	expGraphPhi2[3]->SetMarkerStyle(24);
 	expGraphPhi2[3]->SetMarkerSize(2);
 	mgPhi->Add(expGraphPhi2[3]);
-	mgPhi->SetTitle(static_cast<TString>("Entry of Cluster Size 4; Length [mm]; Ratio to Reference"));
+	mgPhi->SetTitle(static_cast<TString>("Cluster Size 4; Length [mm]; Ratio to Reference"));
 	mgPhi->Draw("AP");
 
 	TLegend* legendPhi = new TLegend(0.3, 0.6, 0.8, 0.9);
@@ -693,10 +693,10 @@ int main() {
 	std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> expData = getExperimentData();
 	std::vector<std::tuple<int, int, std::array<double, 4>>> simData = getSimulationData();
 
-	// drawForLength(2, expData, simData);
-	// drawForLength(3, expData, simData);
-	// drawForLength(4, expData, simData);
-	// drawForLength(7, expData, simData);
+	drawForLength(2, expData, simData);
+	drawForLength(3, expData, simData);
+	drawForLength(4, expData, simData);
+	drawForLength(7, expData, simData);
 
 	// drawOnlyBC(2, expData, simData);
 	// drawOnlyBC(3, expData, simData);
@@ -712,7 +712,7 @@ int main() {
 	// drawOnly4(3, expData, simData);
 	// drawOnly4(4, expData, simData);
 	// drawOnly4(7, expData, simData);
-	drawOnly4All(expData);
+	// drawOnly4All(expData);
 
 	return 0;
 }
