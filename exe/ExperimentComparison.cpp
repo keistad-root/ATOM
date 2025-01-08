@@ -72,4 +72,5 @@ int main(int argc, char** argv) {
 	TCompareClustersize* comparison = new TCompareClustersize(config);
 	comparison->drawClustersize();
 	comparison->drawRegion();
+	comparison->getClusterStr();
 }

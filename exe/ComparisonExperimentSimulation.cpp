@@ -156,7 +156,53 @@ void modeLength(int drawLength) {
 }
 
 void modeWidth(int drawWidth) {
+	io::CSVReader<63> expCSV("/home/ychoi/ATOM/Data/clustersize_entry.csv");
 
+	expCSV.read_header(io::ignore_extra_column, "length", "width", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61");
+
+	std::tuple<int, int, std::array<double, 61>> expEntry;
+	std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> expData;
+	std::vector<std::array<int, 2>> regionDivide = {{1, 4}, {5, 10}, {11, 32}, {40, 61}};
+	std::array<double, 4> regionEntry = {0, 0, 0, 0};
+	std::array<double, 4> regionEntryError = {0, 0, 0, 0};
+
+	while ( expCSV.read_row(std::get<0>(expEntry), std::get<1>(expEntry), std::get<2>(expEntry)[0], std::get<2>(expEntry)[1], std::get<2>(expEntry)[2], std::get<2>(expEntry)[3], std::get<2>(expEntry)[4], std::get<2>(expEntry)[5], std::get<2>(expEntry)[6], std::get<2>(expEntry)[7], std::get<2>(expEntry)[8], std::get<2>(expEntry)[9], std::get<2>(expEntry)[10], std::get<2>(expEntry)[11], std::get<2>(expEntry)[12], std::get<2>(expEntry)[13], std::get<2>(expEntry)[14], std::get<2>(expEntry)[15], std::get<2>(expEntry)[16], std::get<2>(expEntry)[17], std::get<2>(expEntry)[18], std::get<2>(expEntry)[19], std::get<2>(expEntry)[20], std::get<2>(expEntry)[21], std::get<2>(expEntry)[22], std::get<2>(expEntry)[23], std::get<2>(expEntry)[24], std::get<2>(expEntry)[25], std::get<2>(expEntry)[26], std::get<2>(expEntry)[27], std::get<2>(expEntry)[28], std::get<2>(expEntry)[29], std::get<2>(expEntry)[30], std::get<2>(expEntry)[31], std::get<2>(expEntry)[32], std::get<2>(expEntry)[33], std::get<2>(expEntry)[34], std::get<2>(expEntry)[35], std::get<2>(expEntry)[36], std::get<2>(expEntry)[37], std::get<2>(expEntry)[38], std::get<2>(expEntry)[39], std::get<2>(expEntry)[40], std::get<2>(expEntry)[41], std::get<2>(expEntry)[42], std::get<2>(expEntry)[43], std::get<2>(expEntry)[44], std::get<2>(expEntry)[45], std::get<2>(expEntry)[46], std::get<2>(expEntry)[47], std::get<2>(expEntry)[48], std::get<2>(expEntry)[49], std::get<2>(expEntry)[50], std::get<2>(expEntry)[51], std::get<2>(expEntry)[52], std::get<2>(expEntry)[53], std::get<2>(expEntry)[54], std::get<2>(expEntry)[55], std::get<2>(expEntry)[56], std::get<2>(expEntry)[57], std::get<2>(expEntry)[58], std::get<2>(expEntry)[59], std::get<2>(expEntry)[60]) ) {
+		for ( int i = 0; i < std::get<2>(expEntry).size(); i++ ) {
+			if ( i >= regionDivide[0][0] - 1 && i <= regionDivide[0][1] - 1 ) {
+				regionEntry[0] += std::get<2>(expEntry)[i];
+			}
+			if ( i >= regionDivide[1][0] - 1 && i <= regionDivide[1][1] - 1 ) {
+				regionEntry[1] += std::get<2>(expEntry)[i];
+			}
+			if ( i >= regionDivide[2][0] - 1 && i <= regionDivide[2][1] - 1 ) {
+				regionEntry[2] += std::get<2>(expEntry)[i];
+			}
+			if ( i >= regionDivide[3][0] - 1 && i <= regionDivide[3][1] - 1 ) {
+				regionEntry[3] += std::get<2>(expEntry)[i];
+			}
+		}
+		expData.push_back(std::make_tuple(std::get<0>(expEntry), std::get<1>(expEntry), regionEntry, regionEntryError));
+		regionEntry = {0, 0, 0, 0};
+	}
+
+	io::CSVReader<4> scaleCSV("/home/ychoi/ATOM/Data/time_scale.csv");
+	scaleCSV.read_header(io::ignore_extra_column, "length", "width", "time", "scale");
+	int length, width, time;
+	double scale;
+	while ( scaleCSV.read_row(length, width, time, scale) ) {
+		for ( auto& expDataEntry : expData ) {
+			if ( std::get<0>(expDataEntry) == length && std::get<1>(expDataEntry) == width ) {
+				regionEntryError[0] = TMath::Sqrt(std::get<2>(expDataEntry)[0] / scale) * scale;
+				regionEntryError[1] = TMath::Sqrt(std::get<2>(expDataEntry)[1] / scale) * scale;
+				regionEntryError[2] = TMath::Sqrt(std::get<2>(expDataEntry)[2] / scale) * scale;
+				regionEntryError[3] = TMath::Sqrt(std::get<2>(expDataEntry)[3] / scale) * scale;
+				std::get<3>(expDataEntry) = regionEntryError;
+			}
+		}
+	}
+	for ( auto& expDataEntry : expData ) {
+		std::cout << std::get<0>(expDataEntry) << " " << std::get<1>(expDataEntry) << " " << std::get<2>(expDataEntry)[0] << " " << std::get<3>(expDataEntry)[0] << " " << std::get<2>(expDataEntry)[1] << " " << std::get<3>(expDataEntry)[1] << " " << std::get<2>(expDataEntry)[2] << " " << std::get<3>(expDataEntry)[2] << " " << std::get<2>(expDataEntry)[3] << std::get<3>(expDataEntry)[3] << " " << std::endl;
+	}
 }
 
 int main(int argc, char** argv) {

@@ -33,6 +33,7 @@ public:
 	void setGraphSet();
 	void drawClustersize();
 	void drawRegion();
+	void getClusterStr();
 };
 
 #endif

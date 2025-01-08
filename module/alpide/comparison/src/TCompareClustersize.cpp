@@ -133,3 +133,13 @@ void TCompareClustersize::drawRegion() {
 	saveLegend(canvas, legend);
 	saveCanvas(canvas, mOutputPath, mRegionDictionary);
 }
+
+void TCompareClustersize::getClusterStr() {
+	for ( const auto& graph : mGraphSet ) {
+		TH1D* drawHist = graph.second;
+		for ( int i = 1; i < 62; i++ ) {
+			std::cout << drawHist->GetBinContent(i + 1) << ", ";
+		}
+		std::cout << std::endl;
+	}
+}
