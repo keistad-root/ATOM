@@ -198,8 +198,8 @@ std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> 
 	std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> expRefData;
 	// std::vector<std::array<int, 2>> regionDivide = {{1, 4}, {5, 10}, {11, 32}, {40, 61}};
 	// std::vector<std::array<int, 2>> regionDivide = {{4, 32}, {5, 10}, {11, 32}, {5, 32}};
-	// std::vector<std::array<int, 2>> regionDivide = {{1, 1}, {5, 10}, {11, 32}, {5, 32}};
-	std::vector<std::array<int, 2>> regionDivide = {{4, 4}, {5, 10}, {11, 32}, {5, 32}};
+	std::vector<std::array<int, 2>> regionDivide = {{1, 1}, {5, 10}, {11, 32}, {5, 32}};
+	// std::vector<std::array<int, 2>> regionDivide = {{4, 4}, {5, 10}, {11, 32}, {5, 32}};
 	std::array<double, 4> regionEntry = {0, 0, 0, 0};
 	std::array<double, 4> regionEntryError = {0, 0, 0, 0};
 
@@ -510,7 +510,7 @@ void drawOnlyA(int drawWidth, std::vector<std::tuple<int, int, std::array<double
 	// expGraphPhi2[3]->SetMarkerSize(2);
 	// mgPhi->Add(expGraphPhi2[3]);
 	mgPhi->SetTitle(static_cast<TString>("Comparison for " + std::to_string(drawWidth) + "#phi collimators; Length[mm]; Ratio to Reference"));
-	mgPhi->SetMinimum(0.1);
+	mgPhi->SetMinimum(0);
 	mgPhi->SetMaximum(.8);
 	mgPhi->Draw("AP");
 
@@ -642,12 +642,12 @@ int main() {
 	// drawOnlyA(2, expData, simData);
 	// drawOnlyA(3, expData, simData);
 	// drawOnlyA(4, expData, simData);
-	// drawOnlyA(7, expData, simData);
+	drawOnlyA(7, expData, simData);
 
-	drawOnly4(2, expData, simData);
-	drawOnly4(3, expData, simData);
-	drawOnly4(4, expData, simData);
-	drawOnly4(7, expData, simData);
+	// drawOnly4(2, expData, simData);
+	// drawOnly4(3, expData, simData);
+	// drawOnly4(4, expData, simData);
+	// drawOnly4(7, expData, simData);
 
 	return 0;
 }
