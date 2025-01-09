@@ -52,9 +52,9 @@ std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> 
 	std::tuple<int, int, std::array<double, 61>> expEntry;
 	std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> expData;
 	std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> expRefData;
-	std::vector<std::array<int, 2>> regionDivide = {{1, 4}, {5, 10}, {11, 32}, {40, 61}};
+	// std::vector<std::array<int, 2>> regionDivide = {{1, 4}, {5, 10}, {11, 32}, {40, 61}};
 	// std::vector<std::array<int, 2>> regionDivide = {{4, 32}, {5, 10}, {11, 32}, {5, 32}};
-	// std::vector<std::array<int, 2>> regionDivide = {{1, 1}, {5, 10}, {11, 32}, {5, 32}};
+	std::vector<std::array<int, 2>> regionDivide = {{1, 1}, {5, 10}, {11, 32}, {5, 32}};
 	// std::vector<std::array<int, 2>> regionDivide = {{4, 4}, {5, 10}, {11, 32}, {5, 32}};
 	std::array<double, 4> regionEntry = {0, 0, 0, 0};
 	std::array<double, 4> regionEntryError = {0, 0, 0, 0};
@@ -537,7 +537,7 @@ void drawOnly1All(std::vector<std::tuple<int, int, std::array<double, 4>, std::a
 	expGraphPhi2[3]->SetMarkerStyle(24);
 	expGraphPhi2[3]->SetMarkerSize(2);
 	mgPhi->Add(expGraphPhi2[3]);
-	mgPhi->SetTitle(static_cast<TString>("Cluster Size 1 vs. Electrons in Metal Layer; Length [mm]; Ratio to Reference"));
+	mgPhi->SetTitle(static_cast<TString>("Cluster Size 1 vs. Electrons with full energy deposit in metal layer; Length [mm]; Ratio to Reference"));
 	mgPhi->SetMaximum(0.8);
 	mgPhi->Draw("AP");
 
@@ -572,15 +572,16 @@ void drawOnly1All(std::vector<std::tuple<int, int, std::array<double, 4>, std::a
 	mgSimPhi->Add(simGraphPhi[3]);
 	mgSimPhi->Draw("P");
 
-	TLegend* legendPhi = new TLegend(0.3, 0.6, 0.8, 0.9);
-	legendPhi->AddEntry(expGraphPhi2[0], "Experiment: Width = 2 mm", "p");
-	legendPhi->AddEntry(expGraphPhi2[1], "Experiment: Width = 3 mm", "p");
-	legendPhi->AddEntry(expGraphPhi2[2], "Experiment: Width = 4 mm", "p");
-	legendPhi->AddEntry(expGraphPhi2[3], "Experiment: Width = 7 mm", "p");
-	legendPhi->AddEntry(simGraphPhi[0], "Simulation: Width = 2 mm", "p");
-	legendPhi->AddEntry(simGraphPhi[1], "Simulation: Width = 3 mm", "p");
-	legendPhi->AddEntry(simGraphPhi[2], "Simulation: Width = 4 mm", "p");
-	legendPhi->AddEntry(simGraphPhi[3], "Simulation: Width = 7 mm", "p");
+	TLegend* legendPhi = new TLegend(0.5, 0.7, 0.9, 0.9);
+	legendPhi->SetNColumns(2);
+	legendPhi->AddEntry(expGraphPhi2[0], "Data (#phi2)", "p");
+	legendPhi->AddEntry(simGraphPhi[0], "GEANT4 (#phi2)", "p");
+	legendPhi->AddEntry(expGraphPhi2[1], "Data (#phi3)", "p");
+	legendPhi->AddEntry(simGraphPhi[1], "GEANT4 (#phi3)", "p");
+	legendPhi->AddEntry(expGraphPhi2[2], "Data (#phi4)", "p");
+	legendPhi->AddEntry(simGraphPhi[2], "GEANT4 (#phi4)", "p");
+	legendPhi->AddEntry(expGraphPhi2[3], "Data (#phi7)", "p");
+	legendPhi->AddEntry(simGraphPhi[3], "GEANT4 (#phi7)", "p");
 	legendPhi->Draw("SAME");
 
 	canvasPhi->SetLeftMargin(0.12);
@@ -700,13 +701,14 @@ void drawDoubleCluster(std::vector<std::tuple<int, int, std::array<double, 4>, s
 	expGraphPhi2[2]->SetMarkerStyle(24);
 	expGraphPhi2[2]->SetMarkerSize(2);
 	mgPhi->Add(expGraphPhi2[2]);
-	expGraphPhi2[3]->SetLineColor(kGreen + 3);
-	expGraphPhi2[3]->SetLineWidth(2);
-	expGraphPhi2[3]->SetMarkerColor(kGreen + 3);
-	expGraphPhi2[3]->SetMarkerStyle(24);
-	expGraphPhi2[3]->SetMarkerSize(2);
-	mgPhi->Add(expGraphPhi2[3]);
-	mgPhi->SetTitle(static_cast<TString>("Region D vs. Double Cluster in Simulation; Length [mm]; Ratio to Reference"));
+	// expGraphPhi2[3]->SetLineColor(kGreen + 3);
+	// expGraphPhi2[3]->SetLineWidth(2);
+	// expGraphPhi2[3]->SetMarkerColor(kGreen + 3);
+	// expGraphPhi2[3]->SetMarkerStyle(24);
+	// expGraphPhi2[3]->SetMarkerSize(2);
+	// mgPhi->Add(expGraphPhi2[3]);
+	mgPhi->SetTitle(static_cast<TString>("Region D (data) vs. Double Cluster; Length [mm]; Ratio to Reference"));
+	mgPhi->SetMaximum(0.4);
 	mgPhi->Draw("AP");
 
 	TMultiGraph* mgSimPhi = new TMultiGraph();
@@ -731,24 +733,25 @@ void drawDoubleCluster(std::vector<std::tuple<int, int, std::array<double, 4>, s
 	simGraphPhi2[2]->SetMarkerSize(2);
 	simGraphPhi2[2]->SetMarkerStyle(21);
 	mgSimPhi->Add(simGraphPhi2[2]);
-	simGraphPhi2[3]->SetLineColor(kGreen + 3);
-	simGraphPhi2[3]->SetLineWidth(2);
-	simGraphPhi2[3]->SetLineStyle(9);
-	simGraphPhi2[3]->SetMarkerColor(kGreen + 3);
-	simGraphPhi2[3]->SetMarkerSize(2);
-	simGraphPhi2[3]->SetMarkerStyle(21);
-	mgSimPhi->Add(simGraphPhi2[3]);
+	// simGraphPhi2[3]->SetLineColor(kGreen + 3);
+	// simGraphPhi2[3]->SetLineWidth(2);
+	// simGraphPhi2[3]->SetLineStyle(9);
+	// simGraphPhi2[3]->SetMarkerColor(kGreen + 3);
+	// simGraphPhi2[3]->SetMarkerSize(2);
+	// simGraphPhi2[3]->SetMarkerStyle(21);
+	// mgSimPhi->Add(simGraphPhi2[3]);
 	mgSimPhi->Draw("P");
 
-	TLegend* legendPhi = new TLegend(0.4, 0.6, 0.9, 0.9);
-	legendPhi->AddEntry(expGraphPhi2[0], "Experiment: Width = 2 mm", "p");
-	legendPhi->AddEntry(expGraphPhi2[1], "Experiment: Width = 3 mm", "p");
-	legendPhi->AddEntry(expGraphPhi2[2], "Experiment: Width = 4 mm", "p");
-	legendPhi->AddEntry(expGraphPhi2[3], "Experiment: Width = 7 mm", "p");
-	legendPhi->AddEntry(simGraphPhi2[0], "Simulation: Width = 2 mm", "p");
-	legendPhi->AddEntry(simGraphPhi2[1], "Simulation: Width = 3 mm", "p");
-	legendPhi->AddEntry(simGraphPhi2[2], "Simulation: Width = 4 mm", "p");
-	legendPhi->AddEntry(simGraphPhi2[3], "Simulation: Width = 7 mm", "p");
+	TLegend* legendPhi = new TLegend(0.5, 0.7, 0.9, 0.9);
+	legendPhi->SetNColumns(2);
+	legendPhi->AddEntry(expGraphPhi2[0], "Data (#phi2)", "p");
+	legendPhi->AddEntry(simGraphPhi2[0], "GEANT4 (#phi2)", "p");
+	legendPhi->AddEntry(expGraphPhi2[1], "Data (#phi3)", "p");
+	legendPhi->AddEntry(simGraphPhi2[1], "GEANT4 (#phi3)", "p");
+	legendPhi->AddEntry(expGraphPhi2[2], "Data (#phi4)", "p");
+	// legendPhi->AddEntry(expGraphPhi2[3], "Data (#phi7)", "p");
+	legendPhi->AddEntry(simGraphPhi2[2], "GEANT4 (#phi4)", "p");
+	// legendPhi->AddEntry(simGraphPhi2[3], "Geant4 (#phi7)", "p");
 	legendPhi->Draw("SAME");
 
 	canvasPhi->SetLeftMargin(0.12);
@@ -782,8 +785,8 @@ int main() {
 	// drawOnly4(4, expData, simData);
 	// drawOnly4(7, expData, simData);
 	// drawOnly4All(expData);
-	drawDoubleCluster(expData, simData);
-	// drawOnly1All(expData, simData);
+	// drawDoubleCluster(expData, simData);
+	drawOnly1All(expData, simData);
 
 
 	return 0;
