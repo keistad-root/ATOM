@@ -12,6 +12,7 @@ set(TEST_EXE
 	CompareEntry
 	ComparisonExperimentSimulation
 	ComparisonGeant4
+	ComparisonDepositEnergy
 	# GarfieldSimulation
     Merge
 	

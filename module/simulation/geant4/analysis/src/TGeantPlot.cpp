@@ -40,6 +40,7 @@ void TGeantPlot::saveHistorams(const std::vector<CppConfigDictionary>& configLis
 				std::unique_ptr<TCanvas> canvas = std::make_unique<TCanvas>();
 				savePlot(canvas.get(), hist.get(), config);
 				setCanvasAttribute(canvas, config);
+				hist->SetEntries(hist->GetEffectiveEntries());
 				if ( key == "IncidentParticle" ) {
 					for ( int i = 0; i < hist->GetNbinsX(); i++ ) {
 						hist->GetXaxis()->SetBinLabel(i + 1., mParticleName[i]);
