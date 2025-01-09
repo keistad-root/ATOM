@@ -10,6 +10,7 @@
 #include "TLegend.h"
 #include "TGraphErrors.h"
 #include "TMath.h"
+#include "TF1.h"
 
 std::vector<std::tuple<int, int, std::array<double, 4>>> getSimulationData() {
 	io::CSVReader<9> simCSV("/home/ychoi/ATOM/Data/simulation_entry.csv");
@@ -53,8 +54,8 @@ std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> 
 	std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> expData;
 	std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> expRefData;
 	// std::vector<std::array<int, 2>> regionDivide = {{1, 4}, {5, 10}, {11, 32}, {40, 61}};
-	// std::vector<std::array<int, 2>> regionDivide = {{4, 32}, {5, 10}, {11, 32}, {5, 32}};
-	std::vector<std::array<int, 2>> regionDivide = {{1, 1}, {5, 10}, {11, 32}, {5, 32}};
+	std::vector<std::array<int, 2>> regionDivide = {{4, 32}, {5, 10}, {11, 32}, {5, 32}};
+	// std::vector<std::array<int, 2>> regionDivide = {{1, 1}, {5, 10}, {11, 32}, {5, 32}};
 	// std::vector<std::array<int, 2>> regionDivide = {{4, 4}, {5, 10}, {11, 32}, {5, 32}};
 	std::array<double, 4> regionEntry = {0, 0, 0, 0};
 	std::array<double, 4> regionEntryError = {0, 0, 0, 0};
@@ -298,7 +299,7 @@ void drawOnlyBC(int drawWidth, std::vector<std::tuple<int, int, std::array<doubl
 	mgSimPhi->Add(simGraphPhi[3]);
 	mgSimPhi->Draw("P");
 
-	TLegend* legendPhi = new TLegend(0.3, 0.6, 0.9, 0.9);
+	TLegend* legendPhi = new TLegend(0.3, 0.7, 0.9, 0.9);
 	// legendPhi->AddEntry(expGraphPhi2[0], "Region B + C + cluster size 4", "p");
 	legendPhi->AddEntry(expGraphPhi2[1], "Region B", "p");
 	legendPhi->AddEntry(expGraphPhi2[2], "Region C", "p");
@@ -539,6 +540,7 @@ void drawOnly1All(std::vector<std::tuple<int, int, std::array<double, 4>, std::a
 	mgPhi->Add(expGraphPhi2[3]);
 	mgPhi->SetTitle(static_cast<TString>("Cluster Size 1 vs. Electrons with full energy deposit in metal layer; Length [mm]; Ratio to Reference"));
 	mgPhi->SetMaximum(0.8);
+	mgPhi->SetMinimum(0);
 	mgPhi->Draw("AP");
 
 	TMultiGraph* mgSimPhi = new TMultiGraph();
@@ -571,6 +573,20 @@ void drawOnly1All(std::vector<std::tuple<int, int, std::array<double, 4>, std::a
 	simGraphPhi[3]->SetMarkerStyle(21);
 	mgSimPhi->Add(simGraphPhi[3]);
 	mgSimPhi->Draw("P");
+
+	TF1* fitFunc[4] = {new TF1("fitFunc1", "[0] / (x - [1]) + [2]", 0, 20), new TF1("fitFunc2", "[0] / (x - [1]) + [2]", 0, 20), new TF1("fitFunc3", "[0] / (x - [1]) + [2]", 0, 20), new TF1("fitFunc4", "[0] / (x - [1]) + [2]", 0, 20)};
+	simGraphPhi[0]->Fit(fitFunc[0], "R");
+	fitFunc[0]->SetLineColor(kRed);
+	simGraphPhi[1]->Fit(fitFunc[1], "R");
+	fitFunc[1]->SetLineColor(kBlue);
+	simGraphPhi[2]->Fit(fitFunc[2], "R");
+	fitFunc[2]->SetLineColor(kMagenta);
+	simGraphPhi[3]->Fit(fitFunc[3], "R");
+	fitFunc[3]->SetLineColor(kGreen + 3);
+	fitFunc[0]->Draw("SAME");
+	fitFunc[1]->Draw("SAME");
+	fitFunc[2]->Draw("SAME");
+	fitFunc[3]->Draw("SAME");
 
 	TLegend* legendPhi = new TLegend(0.5, 0.7, 0.9, 0.9);
 	legendPhi->SetNColumns(2);
@@ -637,11 +653,11 @@ void drawOnly4All(std::vector<std::tuple<int, int, std::array<double, 4>, std::a
 	mgPhi->SetTitle(static_cast<TString>("Cluster Size 4; Length [mm]; Ratio to Reference"));
 	mgPhi->Draw("AP");
 
-	TLegend* legendPhi = new TLegend(0.4, 0.6, 0.9, 0.9);
-	legendPhi->AddEntry(expGraphPhi2[0], "Experiment: Width = 2 mm", "p");
-	legendPhi->AddEntry(expGraphPhi2[1], "Experiment: Width = 3 mm", "p");
-	legendPhi->AddEntry(expGraphPhi2[2], "Experiment: Width = 4 mm", "p");
-	legendPhi->AddEntry(expGraphPhi2[3], "Experiment: Width = 7 mm", "p");
+	TLegend* legendPhi = new TLegend(0.5, 0.7, 0.9, 0.9);
+	legendPhi->AddEntry(expGraphPhi2[0], "Data (#phi2)", "p");
+	legendPhi->AddEntry(expGraphPhi2[1], "Data (#phi3)", "p");
+	legendPhi->AddEntry(expGraphPhi2[2], "Data (#phi4)", "p");
+	legendPhi->AddEntry(expGraphPhi2[3], "Data (#phi7)", "p");
 	legendPhi->Draw("SAME");
 
 	canvasPhi->SetLeftMargin(0.12);
@@ -770,10 +786,10 @@ int main() {
 	// drawForLength(4, expData, simData);
 	// drawForLength(7, expData, simData);
 
-	// drawOnlyBC(2, expData, simData);
-	// drawOnlyBC(3, expData, simData);
-	// drawOnlyBC(4, expData, simData);
-	// drawOnlyBC(7, expData, simData);
+	drawOnlyBC(2, expData, simData);
+	drawOnlyBC(3, expData, simData);
+	drawOnlyBC(4, expData, simData);
+	drawOnlyBC(7, expData, simData);
 
 	// drawOnlyA(2, expData, simData);
 	// drawOnlyA(3, expData, simData);
@@ -786,7 +802,7 @@ int main() {
 	// drawOnly4(7, expData, simData);
 	// drawOnly4All(expData);
 	// drawDoubleCluster(expData, simData);
-	drawOnly1All(expData, simData);
+	// drawOnly1All(expData, simData);
 
 
 	return 0;
