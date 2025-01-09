@@ -98,22 +98,23 @@ void TDataPlotter::FillShapeInfo() {
 
 void TDataPlotter::savePlots() {
 	if ( isHitmap ) {
+		std::cout << "Hello" << std::endl;
 		TCanvas* canvas = new TCanvas("hitmapCanvas", "", 3000, 1500);
-		savePlot(canvas, mHitmap, "Hitmap");
+		savePlot(canvas, mHitmap, mConfig->getConfig("Hitmap"));
 		saveCanvas(canvas, mOutputPath, mConfig->getConfig("Hitmap"));
 		delete canvas;
 		canvas = nullptr;
 	}
 	if ( isClustermap ) {
 		TCanvas* canvas = new TCanvas("clustermapCanvas", "", 3000, 1500);
-		savePlot(canvas, mClustermap, "Clustermap");
+		savePlot(canvas, mClustermap, mConfig->getConfig("Clustermap"));
 		saveCanvas(canvas, mOutputPath, mConfig->getConfig("Clustermap"));
 		delete canvas;
 		canvas = nullptr;
 	}
 	if ( isClustersize ) {
 		TCanvas* canvas = new TCanvas("clustersizeCanvas", "", 3000, 1500);
-		savePlot(canvas, mClustersize, "Clustersize");
+		savePlot(canvas, mClustersize, mConfig->getConfig("Clustersize"));
 		saveCanvas(canvas, mOutputPath, mConfig->getConfig("Clustersize"));
 		delete canvas;
 		canvas = nullptr;
