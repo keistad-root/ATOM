@@ -4,6 +4,8 @@
 #include "TH1.h"
 #include "TCanvas.h"
 #include "TStyle.h"
+#include "TGraph.h"
+#include "TLegend.h"
 
 void drawPlot(int length) {
 	std::filesystem::path phi2Path = "/mnt/homes/ychoi/entry_test/geant4/plot/incident_plot_" + std::to_string(length) + "mm_2phi_alpha_noscreen.root";
@@ -83,5 +85,51 @@ int main() {
 	drawPlot(3);
 	drawPlot(7);
 	drawPlot(20);
+
+	TGraph* graph[4] = {new TGraph(), new TGraph(), new TGraph(), new TGraph()};
+	graph[0]->SetPoint(0, 1, 0.0093);
+	graph[0]->SetPoint(1, 3, 0);
+	graph[0]->SetPoint(2, 7, 0);
+	graph[0]->SetPoint(3, 20, 0);
+	graph[1]->SetPoint(0, 1, 0.035);
+	graph[1]->SetPoint(1, 3, 0.018);
+	graph[1]->SetPoint(2, 7, 0.25);
+	graph[1]->SetPoint(3, 20, 0.17);
+	graph[2]->SetPoint(0, 1, 0.19);
+	graph[2]->SetPoint(1, 3, 0.039);
+	graph[2]->SetPoint(2, 7, 0.5);
+	graph[2]->SetPoint(3, 20, 0.25);
+	graph[3]->SetPoint(0, 1, 0.55);
+	graph[3]->SetPoint(1, 3, 0.056);
+	graph[3]->SetPoint(2, 20, 0.084);
+	TLegend* legend = new TLegend(0.5, 0.7, 0.7, 0.9);
+	legend->AddEntry(graph[0], "#phi2", "p");
+	legend->AddEntry(graph[1], "#phi3", "p");
+	legend->AddEntry(graph[2], "#phi4", "p");
+	legend->AddEntry(graph[3], "#phi7", "p");
+
+	TCanvas* canvas = new TCanvas("canvas", "", 1000, 1000);
+	graph[0]->SetMarkerColor(kRed);
+	graph[0]->SetMarkerStyle(21);
+	graph[0]->SetMarkerSize(2);
+	graph[0]->SetMaximum(1);
+	graph[0]->Draw("AP");
+	graph[1]->SetMarkerColor(kBlue);
+	graph[1]->SetMarkerStyle(21);
+	graph[1]->SetMarkerSize(2);
+	graph[1]->Draw("P");
+	graph[2]->SetMarkerColor(kMagenta);
+	graph[2]->SetMarkerStyle(21);
+	graph[2]->SetMarkerSize(2);
+	graph[2]->Draw("P");
+	graph[3]->SetMarkerColor(kGreen + 3);
+	graph[3]->SetMarkerStyle(21);
+	graph[3]->SetMarkerSize(2);
+	graph[3]->Draw("P");
+
+	legend->Draw("SAME");
+	canvas->SetGrid();
+	canvas->SaveAs("DepositEnergyRatio.png");
+
 	return 0;
 }
