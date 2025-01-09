@@ -1,60 +1,60 @@
 tag, hist, legend, ratio
-1mm_nocollimator_alphagamma, 1mm_nocollimator_alphagamma, L1 Reference #alpha+#gamma, 1
+1mm_nocollimator_alphagamma, 1mm_nocollimator_alphagamma, L1REF #alpha+#gamma, 1
 1mm_2phi_alphagamma, 1mm_2phi_alphagamma, L1#phi2 #alpha+#gamma, 0.07143
 1mm_3phi_alphagamma, 1mm_3phi_alphagamma, L1#phi3 #alpha+#gamma, 0.35714
 1mm_4phi_alphagamma, 1mm_4phi_alphagamma, L1#phi4 #alpha+#gamma, 0.83333
 1mm_7phi_alphagamma, 1mm_7phi_alphagamma, L1#phi7 #alpha+#gamma, 1
-1mm_nocollimator_alpha, 1mm_nocollimator_alphagamma - 1mm_nocollimator_gamma, L1 Reference #alpha, 1
+1mm_nocollimator_alpha, 1mm_nocollimator_alphagamma - 1mm_nocollimator_gamma, L1REF #alpha, 1
 1mm_2phi_alpha, 1mm_2phi_alphagamma - 1mm_2phi_gamma, L1#phi2 #alpha, 0.07143
 1mm_3phi_alpha, 1mm_3phi_alphagamma - 1mm_3phi_gamma, L1#phi3 #alpha, 0.35714
 1mm_4phi_alpha, 1mm_4phi_alphagamma - 1mm_4phi_gamma, L1#phi4 #alpha, 0.83333
 1mm_7phi_alpha, 1mm_7phi_alphagamma - 1mm_7phi_gamma, L1#phi7 #alpha, 1
-1mm_nocollimator_gamma, 1mm_nocollimator_gamma, L1 Reference #gamma, 1
+1mm_nocollimator_gamma, 1mm_nocollimator_gamma, L1REF #gamma, 1
 1mm_2phi_gamma, 1mm_2phi_gamma, L1#phi2 #gamma, 0.07143
 1mm_3phi_gamma, 1mm_3phi_gamma, L1#phi3 #gamma, 0.35714
 1mm_4phi_gamma, 1mm_4phi_gamma, L1#phi4 #gamma, 0.83333
 1mm_7phi_gamma, 1mm_7phi_gamma, L1#phi7 #gamma, 1
-3mm_nocollimator_alphagamma, 3mm_nocollimator_alphagamma, L3 Reference #alpha+#gamma, 1
+3mm_nocollimator_alphagamma, 3mm_nocollimator_alphagamma, L3REF #alpha+#gamma, 1
 3mm_2phi_alphagamma, 3mm_2phi_alphagamma, L3 #phi2 #alpha+#gamma, 0.05155
 3mm_3phi_alphagamma, 3mm_3phi_alphagamma, L3 #phi3 #alpha+#gamma, 0.4
 3mm_4phi_alphagamma, 3mm_4phi_alphagamma, L3 #phi4 #alpha+#gamma, 0.90909
 3mm_7phi_alphagamma, 3mm_7phi_alphagamma, L3 #phi7 #alpha+#gamma, 1.25
-3mm_nocollimator_alpha, 3mm_nocollimator_alphagamma - 3mm_nocollimator_gamma, L3 Reference #alpha, 1
+3mm_nocollimator_alpha, 3mm_nocollimator_alphagamma - 3mm_nocollimator_gamma, L3REF #alpha, 1
 3mm_2phi_alpha, 3mm_2phi_alphagamma - 3mm_2phi_gamma, L3#phi2 #alpha, 0.05155
 3mm_3phi_alpha, 3mm_3phi_alphagamma - 3mm_3phi_gamma, L3#phi3 #alpha, 0.4
 3mm_4phi_alpha, 3mm_4phi_alphagamma - 3mm_4phi_gamma, L3#phi4 #alpha, 0.90909
 3mm_7phi_alpha, 3mm_7phi_alphagamma - 3mm_7phi_gamma, L3#phi7 #alpha, 1.25
-3mm_nocollimator_gamma, 3mm_nocollimator_gamma, L3 Reference #gamma, 1
+3mm_nocollimator_gamma, 3mm_nocollimator_gamma, L3REF #gamma, 1
 3mm_2phi_gamma, 3mm_2phi_gamma, L3#phi2 #gamma, 0.05155
 3mm_3phi_gamma, 3mm_3phi_gamma, L3#phi3 #gamma, 0.4
 3mm_4phi_gamma, 3mm_4phi_gamma, L3#phi4 #gamma, 0.90909
 3mm_7phi_gamma, 3mm_7phi_gamma, L3#phi7 #gamma, 1.25
-7mm_nocollimator_alphagamma, 7mm_nocollimator_alphagamma, L7 Reference #alpha+#gamma, 1
+7mm_nocollimator_alphagamma, 7mm_nocollimator_alphagamma, L7REF #alpha+#gamma, 1
 7mm_2phi_alphagamma, 7mm_2phi_alphagamma, L7#phi2 #alpha+#gamma, 0.01031
 7mm_3phi_alphagamma, 7mm_3phi_alphagamma, L7#phi3 #alpha+#gamma, 0.16393
 7mm_4phi_alphagamma, 7mm_4phi_alphagamma, L7#phi4 #alpha+#gamma, 0.5
 7mm_7phi_alphagamma, 7mm_7phi_alphagamma, L7#phi7 #alpha+#gamma, 0.52632
-7mm_nocollimator_alpha, 7mm_nocollimator_alphagamma - 7mm_nocollimator_gamma, L7 Reference #alpha, 1
+7mm_nocollimator_alpha, 7mm_nocollimator_alphagamma - 7mm_nocollimator_gamma, L7REF #alpha, 1
 7mm_2phi_alpha, 7mm_2phi_alphagamma - 7mm_2phi_gamma, L7#phi2 #alpha, 0.01031
 7mm_3phi_alpha, 7mm_3phi_alphagamma - 7mm_3phi_gamma, L7#phi3 #alpha, 0.16393
 7mm_4phi_alpha, 7mm_4phi_alphagamma - 7mm_4phi_gamma, L7#phi4 #alpha, 0.5
 7mm_7phi_alpha, 7mm_7phi_alphagamma - 7mm_7phi_gamma, L7#phi7 #alpha, 0.52632
-7mm_nocollimator_gamma, 7mm_nocollimator_gamma, L7 Reference #gamma, 1
+7mm_nocollimator_gamma, 7mm_nocollimator_gamma, L7REF #gamma, 1
 7mm_2phi_gamma, 7mm_2phi_gamma, L7#phi2 #gamma, 0.01031
 7mm_3phi_gamma, 7mm_3phi_gamma, L7#phi3 #gamma, 0.16393
 7mm_4phi_gamma, 7mm_4phi_gamma, L7#phi4 #gamma, 0.5
 7mm_7phi_gamma, 7mm_7phi_gamma, L7#phi7 #gamma, 0.52632
-20mm_nocollimator_alphagamma, 20mm_nocollimator_alphagamma, L20 Reference #alpha+#gamma, 1
+20mm_nocollimator_alphagamma, 20mm_nocollimator_alphagamma, L20REF #alpha+#gamma, 1
 20mm_2phi_alphagamma, 20mm_2phi_alphagamma, L20#phi2 #alpha+#gamma, 0.00662
 20mm_3phi_alphagamma, 20mm_3phi_alphagamma, L20#phi3 #alpha+#gamma, 0.01852
 20mm_4phi_alphagamma, 20mm_4phi_alphagamma, L20#phi4 #alpha+#gamma, 0.16667
 20mm_7phi_alphagamma, 20mm_7phi_alphagamma, L20#phi7 #alpha+#gamma, 0.10989
-20mm_nocollimator_alpha, 20mm_nocollimator_alphagamma - 20mm_nocollimator_gamma, L20 Reference #alpha, 1
+20mm_nocollimator_alpha, 20mm_nocollimator_alphagamma - 20mm_nocollimator_gamma, L20REF #alpha, 1
 20mm_2phi_alpha, 20mm_2phi_alphagamma - 20mm_2phi_gamma, L20#phi2 #alpha, 0.00662
 20mm_3phi_alpha, 20mm_3phi_alphagamma - 20mm_3phi_gamma, L20#phi3 #alpha, 0.01852
 20mm_4phi_alpha, 20mm_4phi_alphagamma - 20mm_4phi_gamma, L20#phi4 #alpha, 0.16667
 20mm_7phi_alpha, 20mm_7phi_alphagamma - 20mm_7phi_gamma, L20#phi7 #alpha, 0.10989
-20mm_nocollimator_gamma, 20mm_nocollimator_gamma, L20 Reference #gamma, 1
+20mm_nocollimator_gamma, 20mm_nocollimator_gamma, L20REF #gamma, 1
 20mm_2phi_gamma, 20mm_2phi_gamma, L20#phi2 #gamma, 0.00662
 20mm_3phi_gamma, 20mm_3phi_gamma, L20#phi3 #gamma, 0.01852
 20mm_4phi_gamma, 20mm_4phi_gamma, L20#phi4 #gamma, 0.16667

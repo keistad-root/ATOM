@@ -264,6 +264,7 @@ void drawOnlyBC(int drawWidth, std::vector<std::tuple<int, int, std::array<doubl
 	expGraphPhi2[3]->SetMarkerSize(2);
 	mgPhi->Add(expGraphPhi2[3]);
 	mgPhi->SetTitle(static_cast<TString>("Comparison for " + std::to_string(drawWidth) + "#phi collimators; Length[mm]; Ratio to Reference"));
+	mgPhi->SetMinimum(0);
 	mgPhi->Draw("AP");
 
 	TMultiGraph* mgSimPhi = new TMultiGraph();
@@ -766,9 +767,9 @@ int main() {
 	// drawForLength(4, expData, simData);
 	// drawForLength(7, expData, simData);
 
-	drawOnlyBC(2, expData, simData);
-	drawOnlyBC(3, expData, simData);
-	drawOnlyBC(4, expData, simData);
+	// drawOnlyBC(2, expData, simData);
+	// drawOnlyBC(3, expData, simData);
+	// drawOnlyBC(4, expData, simData);
 	drawOnlyBC(7, expData, simData);
 
 	// drawOnlyA(2, expData, simData);
