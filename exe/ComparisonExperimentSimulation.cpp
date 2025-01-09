@@ -52,8 +52,8 @@ std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> 
 	std::tuple<int, int, std::array<double, 61>> expEntry;
 	std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> expData;
 	std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> expRefData;
-	// std::vector<std::array<int, 2>> regionDivide = {{1, 4}, {5, 10}, {11, 32}, {40, 61}};
-	std::vector<std::array<int, 2>> regionDivide = {{4, 32}, {5, 10}, {11, 32}, {5, 32}};
+	std::vector<std::array<int, 2>> regionDivide = {{1, 4}, {5, 10}, {11, 32}, {40, 61}};
+	// std::vector<std::array<int, 2>> regionDivide = {{4, 32}, {5, 10}, {11, 32}, {5, 32}};
 	// std::vector<std::array<int, 2>> regionDivide = {{1, 1}, {5, 10}, {11, 32}, {5, 32}};
 	// std::vector<std::array<int, 2>> regionDivide = {{4, 4}, {5, 10}, {11, 32}, {5, 32}};
 	std::array<double, 4> regionEntry = {0, 0, 0, 0};
@@ -264,7 +264,7 @@ void drawOnlyBC(int drawWidth, std::vector<std::tuple<int, int, std::array<doubl
 	expGraphPhi2[3]->SetMarkerSize(2);
 	mgPhi->Add(expGraphPhi2[3]);
 	mgPhi->SetTitle(static_cast<TString>("Comparison for " + std::to_string(drawWidth) + "#phi collimators; Length[mm]; Ratio to Reference"));
-	mgPhi->SetMinimum(0);
+	// mgPhi->SetMinimum(0);
 	mgPhi->Draw("AP");
 
 	TMultiGraph* mgSimPhi = new TMultiGraph();
@@ -300,9 +300,9 @@ void drawOnlyBC(int drawWidth, std::vector<std::tuple<int, int, std::array<doubl
 
 	TLegend* legendPhi = new TLegend(0.3, 0.6, 0.9, 0.9);
 	// legendPhi->AddEntry(expGraphPhi2[0], "Region B + C + cluster size 4", "p");
-	legendPhi->AddEntry(expGraphPhi2[1], "5 #leq Cluster Size #leq 10", "p");
-	legendPhi->AddEntry(expGraphPhi2[2], "11 #leq Cluster Size #leq 32", "p");
-	legendPhi->AddEntry(expGraphPhi2[3], "5 #leq Cluster Size #leq 32", "p");
+	legendPhi->AddEntry(expGraphPhi2[1], "Region B", "p");
+	legendPhi->AddEntry(expGraphPhi2[2], "Region C", "p");
+	legendPhi->AddEntry(expGraphPhi2[3], "Region B + C", "p");
 	// legendPhi->AddEntry(simGraphPhi[1], "The # of electron in metal (Simulation)", "p");
 	// legendPhi->AddEntry(simGraphPhi[0], "The # of single alpha in metal (Simulation)", "p");
 	legendPhi->AddEntry(simGraphPhi[2], "The # of single alpha in epitaxial (Simulation)", "p");
@@ -633,7 +633,7 @@ void drawOnly4All(std::vector<std::tuple<int, int, std::array<double, 4>, std::a
 	expGraphPhi2[3]->SetMarkerStyle(24);
 	expGraphPhi2[3]->SetMarkerSize(2);
 	mgPhi->Add(expGraphPhi2[3]);
-	mgPhi->SetTitle(static_cast<TString>("Cluster Size 4 vs. Electrons in Metal Layer; Length [mm]; Ratio to Reference"));
+	mgPhi->SetTitle(static_cast<TString>("Cluster Size 4; Length [mm]; Ratio to Reference"));
 	mgPhi->Draw("AP");
 
 	TLegend* legendPhi = new TLegend(0.4, 0.6, 0.9, 0.9);
@@ -706,7 +706,7 @@ void drawDoubleCluster(std::vector<std::tuple<int, int, std::array<double, 4>, s
 	expGraphPhi2[3]->SetMarkerStyle(24);
 	expGraphPhi2[3]->SetMarkerSize(2);
 	mgPhi->Add(expGraphPhi2[3]);
-	mgPhi->SetTitle(static_cast<TString>("Cluster size (40 - 61) vs. Double Cluster in Simulation; Length [mm]; Ratio to Reference"));
+	mgPhi->SetTitle(static_cast<TString>("Region D vs. Double Cluster in Simulation; Length [mm]; Ratio to Reference"));
 	mgPhi->Draw("AP");
 
 	TMultiGraph* mgSimPhi = new TMultiGraph();
@@ -770,7 +770,7 @@ int main() {
 	// drawOnlyBC(2, expData, simData);
 	// drawOnlyBC(3, expData, simData);
 	// drawOnlyBC(4, expData, simData);
-	drawOnlyBC(7, expData, simData);
+	// drawOnlyBC(7, expData, simData);
 
 	// drawOnlyA(2, expData, simData);
 	// drawOnlyA(3, expData, simData);
@@ -782,7 +782,7 @@ int main() {
 	// drawOnly4(4, expData, simData);
 	// drawOnly4(7, expData, simData);
 	// drawOnly4All(expData);
-	// drawDoubleCluster(expData, simData);
+	drawDoubleCluster(expData, simData);
 	// drawOnly1All(expData, simData);
 
 

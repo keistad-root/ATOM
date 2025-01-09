@@ -72,7 +72,7 @@ void TGeantPlot::saveHistorams(const std::vector<CppConfigDictionary>& configLis
 					electrode->SetMarkerColor(kRed);
 					electrode->Draw("P");
 					// canvas->SetGrayscale();
-					TColor::InvertPalette();
+					// TColor::InvertPalette();
 				}
 				saveCanvas(canvas.get(), mOutputDirectory, config);
 
