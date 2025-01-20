@@ -39,3 +39,4 @@ tag, input_file, output_directory, collimator_length
 7mm_nocollimator_screen,/mnt/homes/ychoi/entry_test/geant4/plot/incident_plot_7mm_nocollimator_alpha_screen.root,/mnt/homes/ychoi/entry_test/geant4/plot/7mm_nocollimator_alpha_screen,7
 20mm_nocollimator_noscreen,/mnt/homes/ychoi/entry_test/geant4/plot/incident_plot_20mm_nocollimator_alpha_noscreen.root,/mnt/homes/ychoi/entry_test/geant4/plot/20mm_nocollimator_alpha_noscreen,20
 20mm_nocollimator_screen,/mnt/homes/ychoi/entry_test/geant4/plot/incident_plot_20mm_nocollimator_alpha_screen.root,/mnt/homes/ychoi/entry_test/geant4/plot/20mm_nocollimator_alpha_screen,20
+L1F2AX_W082,/mnt/homes/ychoi/entry_test/geant4/systematic/plot/L1F2AX_W082.root,/mnt/homes/ychoi/entry_test/geant4/systematic/plot/L1F2AX_W082,1

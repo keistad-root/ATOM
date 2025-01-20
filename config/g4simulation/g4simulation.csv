@@ -49,6 +49,4 @@ num, output_file, collimator_length, collimator_area, screen, distance_alpide_an
 48, /mnt/homes/ychoi/entry_test/geant4/systematic/SL1F2AX_W103.root,1.,1.03,false,2.,258000
 49, /mnt/homes/ychoi/entry_test/geant4/systematic/SL1F2AX_W106.root,1.,1.06,false,2.,258000
 50, /mnt/homes/ychoi/entry_test/geant4/systematic/SL1F2AX_W109.root,1.,1.09,false,2.,258000
-51, /mnt/homes/ychoi/entry_test/geant4/systematic/SL1F2AX_W112.root,1.,1.12,false,,
-,,,,,,
-,,,,,,
+51, /mnt/homes/ychoi/entry_test/geant4/systematic/SL1F2AX_W112.root,1.,1.12,false,2.,258000

@@ -22,6 +22,7 @@ CppConfigFile setEnvironment(const ArgumentParser& parser) {
 			config.modifyConfig("File").addDictionary("output_file", output_file);
 		}
 	}
+	std::filesystem::create_directories(config.getConfig("File").find("output_file"));
 
 	return config;
 }
