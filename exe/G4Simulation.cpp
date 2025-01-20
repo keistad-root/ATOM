@@ -16,8 +16,8 @@
 #include <csv.h>
 
 CppConfigFile setEnvironment(int exp) {
-	CppConfigFile config("/home/ychoi/ATOM/config/g4simulation/analysis/g4simulation.conf");
-	io::CSVReader<7> csv("/home/ychoi/ATOM/config/g4simulation/analysis/g4simulation.csv");
+	CppConfigFile config("/home/ychoi/ATOM/config/g4simulation/g4simulation.conf");
+	io::CSVReader<7> csv("/home/ychoi/ATOM/config/g4simulation/g4simulation.csv");
 
 	csv.read_header(io::ignore_extra_column, "num", "output_file", "collimator_length", "collimator_area", "screen", "distance_alpide_and_collimator", "n_event");
 	int num;

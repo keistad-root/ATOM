@@ -39,3 +39,16 @@ num, output_file, collimator_length, collimator_area, screen, distance_alpide_an
 38, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_7mm_nocollimator_screen.root,1., 95.03, true,8.,860000
 39, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_20mm_nocollimator_noscreen.root,1., 95.03, false,21.,860000
 40, /mnt/homes/ychoi/entry_test/geant4/geant_simulation_20mm_nocollimator_screen.root,1., 95.03, true,21.,860000
+41, /mnt/homes/ychoi/entry_test/geant4/systematic/SL1F2AX_W082.root,1.,0.82,false,2.,258000
+42, /mnt/homes/ychoi/entry_test/geant4/systematic/SL1F2AX_W085.root,1.,0.85,false,2.,258000
+43, /mnt/homes/ychoi/entry_test/geant4/systematic/SL1F2AX_W088.root,1.,0.88,false,2.,258000
+44, /mnt/homes/ychoi/entry_test/geant4/systematic/SL1F2AX_W091.root,1.,0.91,false,2.,258000
+45, /mnt/homes/ychoi/entry_test/geant4/systematic/SL1F2AX_W094.root,1.,0.94,false,2.,258000
+46, /mnt/homes/ychoi/entry_test/geant4/systematic/SL1F2AX_W097.root,1.,0.97,false,2.,258000
+47, /mnt/homes/ychoi/entry_test/geant4/systematic/SL1F2AX_W100.root,1.,1.00,false,2.,258000
+48, /mnt/homes/ychoi/entry_test/geant4/systematic/SL1F2AX_W103.root,1.,1.03,false,2.,258000
+49, /mnt/homes/ychoi/entry_test/geant4/systematic/SL1F2AX_W106.root,1.,1.06,false,2.,258000
+50, /mnt/homes/ychoi/entry_test/geant4/systematic/SL1F2AX_W109.root,1.,1.09,false,2.,258000
+51, /mnt/homes/ychoi/entry_test/geant4/systematic/SL1F2AX_W112.root,1.,1.12,false,,
+,,,,,,
+,,,,,,
