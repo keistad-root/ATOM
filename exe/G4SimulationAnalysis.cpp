@@ -8,6 +8,7 @@
 
 const std::string CONFIG_PATH = "/home/ychoi/ATOM/config/g4simulation/g4analysis.conf";
 const std::string INFORMATION_PATH = "/home/ychoi/ATOM/config/g4simulation/g4information.csv";
+const std::string DATA_PATH = "/home/ychoi/ATOM/Data/g4data.csv";
 
 const double EVENT_10MIN = 2580000;
 
@@ -53,7 +54,7 @@ void addEntry2CSV(const std::string tag, const std::array<int, 4> entry) {
 		}
 	}
 
-	io::CSVReader<8> csv("/home/ychoi/ATOM/Data/SL1F2AX.csv");
+	io::CSVReader<8> csv(DATA_PATH);
 	csv.read_header(io::ignore_extra_column, "Tag", "Length", "Phi", "Area", "EEM", "EAM", "EAE", "Double");
 
 	std::string csvTag;
@@ -70,7 +71,7 @@ void addEntry2CSV(const std::string tag, const std::array<int, 4> entry) {
 	}
 
 	if ( !isExist ) {
-		std::ofstream file("/home/ychoi/ATOM/Data/SL1F2AX.csv", std::ios::app);
+		std::ofstream file(DATA_PATH, std::ios::app);
 		double timeRatio = EVENT_10MIN / eventNum;
 
 		file << tag << ", " << infoLength << ", " << infoPhi << ", " << infoWidth << ", " << entry[0] * timeRatio << ", " << (entry[1] - 2 * entry[3]) * timeRatio << ", " << (entry[2] - 2 * entry[3]) * timeRatio << ", " << entry[3] * timeRatio << std::endl;
