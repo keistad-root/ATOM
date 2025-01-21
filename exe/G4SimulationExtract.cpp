@@ -6,7 +6,6 @@
 #include<csv.h>
 
 const std::string CONFIG_PATH = "/home/ychoi/ATOM/config/g4simulation/g4extract.conf";
-const std::string FILE_LIST_CSV = "/home/ychoi/ATOM/config/g4simulation/g4extract_list.csv";
 const std::string INFORMATION_PATH = "/home/ychoi/ATOM/config/g4simulation/g4information.csv";
 
 CppConfigFile setEnvironment(const ArgumentParser& parser) {

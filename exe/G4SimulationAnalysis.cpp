@@ -9,6 +9,8 @@
 const std::string CONFIG_PATH = "/home/ychoi/ATOM/config/g4simulation/g4analysis.conf";
 const std::string INFORMATION_PATH = "/home/ychoi/ATOM/config/g4simulation/g4information.csv";
 
+const double EVENT_10MIN = 2580000;
+
 CppConfigFile setEnvironment(const ArgumentParser& parser) {
 	CppConfigFile config(CONFIG_PATH);
 	io::CSVReader<4> infoCSV(INFORMATION_PATH);
@@ -37,14 +39,15 @@ ArgumentParser set_parse(int argc, char** argv) {
 }
 
 void addEntry2CSV(const std::string tag, const std::array<int, 4> entry) {
-	io::CSVReader<4> infoCsv("/home/ychoi/ATOM/config/g4simulation/g4information.csv");
-	infoCsv.read_header(io::ignore_extra_column, "TAG", "LENGTH", "PHI", "WIDTH");
+	io::CSVReader<5> infoCsv("/home/ychoi/ATOM/config/g4simulation/g4information.csv");
+	infoCsv.read_header(io::ignore_extra_column, "TAG", "LENGTH", "PHI", "COLLIMATOR_AREA", "EVENT_NUM");
 
 	std::string infoTag;
 	int infoLength, infoPhi;
 	double infoWidth;
+	int eventNum;
 
-	while ( infoCsv.read_row(infoTag, infoLength, infoPhi, infoWidth) ) {
+	while ( infoCsv.read_row(infoTag, infoLength, infoPhi, infoWidth, eventNum) ) {
 		if ( infoTag == tag ) {
 			break;
 		}
@@ -68,7 +71,9 @@ void addEntry2CSV(const std::string tag, const std::array<int, 4> entry) {
 
 	if ( !isExist ) {
 		std::ofstream file("/home/ychoi/ATOM/Data/SL1F2AX.csv", std::ios::app);
-		file << tag << ", " << infoLength << ", " << infoPhi << ", " << infoWidth << ", " << entry[0] << ", " << entry[1] - 2 * entry[3] << ", " << entry[2] - 2 * entry[3] << ", " << entry[3] << std::endl;
+		double timeRatio = EVENT_10MIN / eventNum;
+
+		file << tag << ", " << infoLength << ", " << infoPhi << ", " << infoWidth << ", " << entry[0] * timeRatio << ", " << (entry[1] - 2 * entry[3]) * timeRatio << ", " << (entry[2] - 2 * entry[3]) * timeRatio << ", " << entry[3] * timeRatio << std::endl;
 		file.close();
 	}
 }
