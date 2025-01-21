@@ -95,11 +95,14 @@ void TGeantAnalysis::readTree() {
 			position.clear();
 		}
 	}
-	std::cout << nDouble << std::endl;
 	for ( Int_t i = 0; i < mPrimaryTree->GetEntries(); i++ ) {
 		mPrimaryTree->GetEntry(i);
 		fillPrimaryHistograms();
 	}
+	mEntry[0] = m1DHistograms["ElectronDepositEnergyMetal"]->GetEffectiveEntries();
+	mEntry[1] = m1DHistograms["AlphaDepositEnergyMetal"]->GetEffectiveEntries();
+	mEntry[2] = m1DHistograms["AlphaDepositEnergyEpitaxial"]->GetEffectiveEntries();
+	mEntry[3] = nDouble;
 }
 
 int TGeantAnalysis::getNDouble(std::vector<std::pair<Double_t, Double_t>> position) {
@@ -416,4 +419,3 @@ void TGeantAnalysis::saveFile(std::filesystem::path outputFilePath) {
 	}
 	outputFile.Close();
 }
-

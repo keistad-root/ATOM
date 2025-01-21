@@ -30,6 +30,7 @@ private:
 	TIncidentAnalysisTuple mIncidentTuple;
 	std::unordered_map<std::string_view, std::unique_ptr<TH1D>> m1DHistograms;
 	std::unordered_map<std::string_view, std::unique_ptr<TH2D>> m2DHistograms;
+	std::array<int, 4> mEntry;
 
 public:
 	void readIncidentFile(std::filesystem::path inputFilePath);
@@ -40,5 +41,6 @@ public:
 	void fillPrimaryHistograms();
 	void saveFile(std::filesystem::path outputFilePath);
 	int getNDouble(std::vector<std::pair<Double_t, Double_t>> position);
+	const std::array<int, 4>& getEntry() const { return mEntry; };
 };
 #endif

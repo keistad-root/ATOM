@@ -1,0 +1,2 @@
+TAG, LENGTH, PHI, WIDTH, SIMULATION_FILE, PRIMARY_FILE, INCIDENT_FILE, SECONDARY_FILE, PLOT_FILE
+L1F2AX_W082, 1, 2, 0.82, /mnt/homes/ychoi/entry_test/geant4/systematic/SL1F2AX_W082.root, /mnt/homes/ychoi/entry_test/geant4/systematic/extracted_data/Primary_SL1F2AX_W082.root, /mnt/homes/ychoi/entry_test/geant4/systematic/extracted_data/Incident_SL1F2AX_W082.root, /mnt/homes/ychoi/entry_test/geant4/systematic/extracted_data/Secondary_SL1F2AX_W082.root, /mnt/homes/ychoi/entry_test/geant4/systematic/plot/SL1F2AX_W082.root
