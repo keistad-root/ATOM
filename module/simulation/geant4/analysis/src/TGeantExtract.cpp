@@ -1,26 +1,24 @@
 #include "TGeantExtract.h"
 
 TGeantExtract::TGeantExtract(const CppConfigDictionary& config) {
-	mOutputPath = config.find("output_directory");
 
 	std::string inputFileName = config.find("input_file");
 	mInputFile = std::make_unique<TFile>(static_cast<TString>(inputFileName), "READ");
 	mTrackTree.reset(static_cast<TTree*>(mInputFile->Get("trackTree")));
 	mIncidentTree.reset(static_cast<TTree*>(mInputFile->Get("incidentTree")));
 
-	std::filesystem::create_directories(mOutputPath);
 	std::string primaryAnalysisOutputFileName = config.find("primary_output_file");
-	std::filesystem::path primaryAnalysisOutputFilePath = mOutputPath / primaryAnalysisOutputFileName;
+	std::filesystem::path primaryAnalysisOutputFilePath = primaryAnalysisOutputFileName;
 	mPrimaryAnalysisOutputFile = std::make_unique<TFile>(static_cast<TString>(primaryAnalysisOutputFilePath), "RECREATE");
 	mPrimaryAnalysisTree = std::make_unique<TTree>("primaryTree", "primaryTree");
 
 	std::string incidentAnalysisOutputFileName = config.find("incident_output_file");
-	std::filesystem::path incidentAnalysisOutputFilePath = mOutputPath / incidentAnalysisOutputFileName;
+	std::filesystem::path incidentAnalysisOutputFilePath = incidentAnalysisOutputFileName;
 	mIncidentAnalysisOutputFile = std::make_unique<TFile>(static_cast<TString>(incidentAnalysisOutputFilePath), "RECREATE");
 	mIncidentAnalysisTree = std::make_unique<TTree>("incidentTree", "incidentTree");
 
 	std::string secondaryAnalysisOutputFileName = config.find("secondary_output_file");
-	std::filesystem::path secondaryAnalysisOutputFilePath = mOutputPath / secondaryAnalysisOutputFileName;
+	std::filesystem::path secondaryAnalysisOutputFilePath = secondaryAnalysisOutputFileName;
 	mSecondaryAnalysisOutputFile = std::make_unique<TFile>(static_cast<TString>(secondaryAnalysisOutputFilePath), "RECREATE");
 	mSecondaryAnalysisTree = std::make_unique<TTree>("secondaryTree", "secondaryTree");
 }

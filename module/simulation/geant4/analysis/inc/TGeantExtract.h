@@ -14,8 +14,6 @@ public:
 	TGeantExtract(const CppConfigDictionary& config);
 	~TGeantExtract();
 private:
-	std::filesystem::path mOutputPath;
-
 	// From input file
 	std::unique_ptr<TFile> mInputFile;
 	std::unique_ptr<TTree> mTrackTree;

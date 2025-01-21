@@ -6,12 +6,15 @@
 #include "cppargs.h"
 #include "CppConfigFile.h"
 
+const std::string CONFIG_PATH = "/home/ychoi/ATOM/config/g4simulation/g4analysis.conf";
+const std::string INFORMATION_PATH = "/home/ychoi/ATOM/config/g4simulation/g4information.csv";
+
 CppConfigFile setEnvironment(const ArgumentParser& parser) {
-	CppConfigFile config("/home/ychoi/ATOM/config/g4simulation/g4analysis.conf");
-	io::CSVReader<4> infoCsv("/home/ychoi/ATOM/config/g4simulation/g4information.csv");
-	infoCsv.read_header(io::ignore_extra_column, "TAG", "INCIDENT_FILE", "PRIMARY_FILE", "PLOT_FILE");
+	CppConfigFile config(CONFIG_PATH);
+	io::CSVReader<4> infoCSV(INFORMATION_PATH);
+	infoCSV.read_header(io::ignore_extra_column, "TAG", "INCIDENT_FILE", "PRIMARY_FILE", "PLOT_FILE");
 	std::string tags, input_incident_file, input_primary_file, output_file;
-	while ( infoCsv.read_row(tags, input_incident_file, input_primary_file, output_file) ) {
+	while ( infoCSV.read_row(tags, input_incident_file, input_primary_file, output_file) ) {
 		if ( parser.get_value<std::string>("tag") == tags ) {
 			config.modifyConfig("File").addDictionary("input_incident_file", input_incident_file);
 			config.modifyConfig("File").addDictionary("input_primary_file", input_primary_file);
@@ -22,7 +25,6 @@ CppConfigFile setEnvironment(const ArgumentParser& parser) {
 	if ( !std::filesystem::exists(outputPath.parent_path()) ) {
 		std::filesystem::create_directories(outputPath.parent_path());
 	}
-
 
 	return config;
 }
