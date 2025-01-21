@@ -86,21 +86,8 @@ void TGeantPlot::getEntries() {
 	std::unique_ptr<TH1D>& hist = m1DHistograms.find("AlphaDepositEnergyEpitaxial")->second;
 	std::unique_ptr<TH1D>& metalAlphaHist = m1DHistograms.find("AlphaDepositEnergyMetal")->second;
 	std::unique_ptr<TH1D>& metalElectronHist = m1DHistograms.find("ElectronDepositEnergyMetal")->second;
-	int nCS4 = 0;
-	int nCS12 = 0;
-	int nCS32 = 0;
-	double energyPerPixel = 3.75 / 32;
-	for ( int i = 0; i < hist->GetNbinsX(); i++ ) {
-		if ( hist->GetBinLowEdge(i + 1) < energyPerPixel * 4 ) {
-			nCS4 += hist->GetBinContent(i + 1);
-		} else if ( hist->GetBinLowEdge(i + 1) < energyPerPixel * 12 ) {
-			nCS12 += hist->GetBinContent(i + 1);
-		} else {
-			nCS32 += hist->GetBinContent(i + 1);
-		}
-	}
+
 	std::cout << metalAlphaHist->GetEffectiveEntries() << "\t" << metalElectronHist->GetEffectiveEntries() << "\t" << hist->GetEffectiveEntries() << std::endl;
-	// std::cout << nCS4 << "\t" << nCS12 << "\t" << nCS32 << std::endl;
 	int maxBin = 0;
 	for ( int i = 1; i <= m1DHistograms["AlphaIncidentAngle"]->GetNbinsX(); i++ ) {
 		if ( m1DHistograms["AlphaIncidentAngle"]->GetBinContent(i) > 1 ) {
