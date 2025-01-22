@@ -54,16 +54,13 @@ void addEntry2CSV(const std::string tag, const std::array<int, 4> entry) {
 		}
 	}
 
-	io::CSVReader<8> csv(DATA_PATH);
-	csv.read_header(io::ignore_extra_column, "Tag", "Length", "Phi", "Area", "EEM", "EAM", "EAE", "Double");
+	io::CSVReader<1> csv(DATA_PATH);
+	csv.read_header(io::ignore_extra_column, "Tag");
 
 	std::string csvTag;
-	int csvLength, csvPhi;
-	double csvArea;
-	int csvEEM, csvEAM, csvEAE, csvDouble;
 
 	bool isExist = false;
-	while ( csv.read_row(csvTag, csvLength, csvPhi, csvArea, csvEEM, csvEAM, csvEAE, csvDouble) ) {
+	while ( csv.read_row(csvTag) ) {
 		if ( csvTag == tag ) {
 			isExist = true;
 			break;

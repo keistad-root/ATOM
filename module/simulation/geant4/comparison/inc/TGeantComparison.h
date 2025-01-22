@@ -12,6 +12,7 @@
 #include "TPlotter.h"
 #include "CppConfigFile.h"
 #include "TF1.h"
+#include "TText.h"
 
 class TGeantComparison : public TPlotter {
 public:

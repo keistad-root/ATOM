@@ -43,13 +43,15 @@ void TGeantComparison::getComparedPlot() {
 
 	std::unique_ptr<TF1> fitFunc = std::make_unique<TF1>("fitFunc", "[0]*x + [1]", 0, 2);
 	graph->Fit(fitFunc.get(), "R");
-	fitFunc->Draw();
 
-	std::unique_ptr<TLegend> legend = std::make_unique<TLegend>(0.7, 0.7, 0.9, 0.9);
+	std::unique_ptr<TText> slopeText = std::make_unique<TText>(.55, .11, TString::Format("Slope: %.2f", fitFunc->GetParameter(0)));
+	slopeText->SetNDC();
+	slopeText->SetTextSize(1. / 16);
 
 	std::unique_ptr<TCanvas> canvas = std::make_unique<TCanvas>();
 	savePlot(canvas, graph, mConfig.getConfig("ComparedPlot"));
 	setCanvasAttribute(canvas.get(), mConfig.getConfig("ComparedPlot"));
+	slopeText->Draw();
 	saveCanvas(canvas.get(), mOutputPath, mConfig.getConfig("ComparedPlot"));
 }
 
