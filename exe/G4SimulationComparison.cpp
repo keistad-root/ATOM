@@ -5,10 +5,11 @@
 
 const std::string CONFIG_FILE = "/home/ychoi/ATOM/config/g4simulation/g4comparison.conf";
 const std::string LIST_FILE = "/home/ychoi/ATOM/config/g4simulation/g4comparison_list.csv";
+const std::string DATA_FILE = "/home/ychoi/ATOM/Data/g4data.csv";
 
 ArgumentParser set_parser(int argc, char** argv) {
 	ArgumentParser parser = ArgumentParser(argc, argv).setDescription("Plot the Geant4 simulation data");
-	parser.add_argument("tagging").help("Tag for the file").set_default("").add_finish();
+	parser.add_argument("tag").help("Tag for the file").set_default("").add_finish();
 	parser.parse_args();
 	return parser;
 }
@@ -29,5 +30,6 @@ int main(int argc, char** argv) {
 	CppConfigFile config = setEnvironment(parser);
 
 	TGeantComparison comparison = TGeantComparison(config);
-	comparison.getDividePlot();
+	comparison.getPlotNormalized();
+	// comparison.getDividePlot();
 }

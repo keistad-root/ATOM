@@ -68,6 +68,16 @@ void TPlotter::savePlot(TCanvas* canvas, TMultiGraph* plot, const CppConfigDicti
 	setMargin(canvas, config);
 }
 
+void TPlotter::savePlot(std::unique_ptr<TCanvas>& canvas, std::unique_ptr<TGraph>& plot, const CppConfigDictionary& config) {
+	setTitle(plot.get(), config);
+	setXRange(plot.get(), config);
+	setYRange(plot.get(), config);
+	setAttribute(plot.get(), config);
+
+	drawPlot(canvas.get(), plot.get(), "APL");
+	setCanvasAttribute(canvas, config);
+	saveCanvas(canvas.get(), mOutputPath, config);
+}
 
 void TPlotter::savePlot(TCanvas* canvas, TH1* plot, const std::string& configName) {
 	setTitle(plot, mConfig->getConfig(configName));

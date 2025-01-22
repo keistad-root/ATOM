@@ -22,7 +22,10 @@ private:
 
 	std::unordered_map<std::string, TFile*> mFileMap;
 public:
+	void getPlotNormalized();
+
 	void getDividePlot();
+
 };
 
 #endif
