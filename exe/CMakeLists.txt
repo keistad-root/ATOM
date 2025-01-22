@@ -28,6 +28,7 @@ set(TEST_EXE
 	G4SimulationExtract
 	G4SimulationPlot
 	G4SimulationComparison
+	G4SimulationSecondData
 	G4Systematic
 	photo
 	temp_incident

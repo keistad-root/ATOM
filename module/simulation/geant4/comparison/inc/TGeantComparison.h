@@ -11,6 +11,7 @@
 #include "TGraphErrors.h"
 #include "TPlotter.h"
 #include "CppConfigFile.h"
+#include "TF1.h"
 
 class TGeantComparison : public TPlotter {
 public:
@@ -23,6 +24,7 @@ private:
 	std::unordered_map<std::string, TFile*> mFileMap;
 public:
 	void getPlotNormalized();
+	void getComparedPlot();
 
 	void getDividePlot();
 

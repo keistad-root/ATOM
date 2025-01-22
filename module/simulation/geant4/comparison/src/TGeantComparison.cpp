@@ -14,6 +14,45 @@ TGeantComparison::TGeantComparison(const CppConfigFile& config) : TPlotter(), mC
 
 TGeantComparison::~TGeantComparison() { }
 
+void TGeantComparison::getComparedPlot() {
+	io::CSVReader<3> dataCSV(mConfig.getConfig("File").find("data_file"));
+
+	std::string xValue = mConfig.getConfig("ComparedPlot").find("x_value");
+	std::string yValue = mConfig.getConfig("ComparedPlot").find("y_value");
+
+	dataCSV.read_header(io::ignore_extra_column, "Tag", xValue, yValue);
+
+	std::vector<std::string> interestSet;
+	std::string interestString = mConfig.getConfig("ComparedPlot").find("interest");
+	std::stringstream interestStream(interestString);
+	std::string interest;
+
+	while ( std::getline(interestStream, interest, ' ') ) {
+		interestSet.push_back(interest);
+	}
+
+	std::string tag;
+	double x, y;
+
+	std::unique_ptr<TGraph> graph = std::make_unique<TGraph>();
+	while ( dataCSV.read_row(tag, x, y) ) {
+		if ( std::find(interestSet.begin(), interestSet.end(), tag) != interestSet.end() ) {
+			graph->SetPoint(graph->GetN(), x, y);
+		}
+	}
+
+	std::unique_ptr<TF1> fitFunc = std::make_unique<TF1>("fitFunc", "[0]*x + [1]", 0, 2);
+	graph->Fit(fitFunc.get(), "R");
+	fitFunc->Draw();
+
+	std::unique_ptr<TLegend> legend = std::make_unique<TLegend>(0.7, 0.7, 0.9, 0.9);
+
+	std::unique_ptr<TCanvas> canvas = std::make_unique<TCanvas>();
+	savePlot(canvas, graph, mConfig.getConfig("ComparedPlot"));
+	setCanvasAttribute(canvas.get(), mConfig.getConfig("ComparedPlot"));
+	saveCanvas(canvas.get(), mOutputPath, mConfig.getConfig("ComparedPlot"));
+}
+
 void TGeantComparison::getPlotNormalized() {
 	io::CSVReader<3> dataCSV(mConfig.getConfig("File").find("data_file"));
 
