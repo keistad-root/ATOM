@@ -30,7 +30,10 @@ int main(int argc, char** argv) {
 	CppConfigFile config = setEnvironment(parser);
 
 	TGeantComparison comparison = TGeantComparison(config);
-	comparison.getComparedPlot();
-	comparison.getPlotNormalized();
+	comparison.getComparedPlot("EEMPlot");
+	comparison.getComparedPlot("EAEPlot");
+	comparison.getComparedPlot("DoublePlot");
+
+	// comparison.getPlotNormalized();
 	// comparison.getDividePlot();
 }

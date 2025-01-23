@@ -14,16 +14,16 @@ TGeantComparison::TGeantComparison(const CppConfigFile& config) : TPlotter(), mC
 
 TGeantComparison::~TGeantComparison() { }
 
-void TGeantComparison::getComparedPlot() {
+void TGeantComparison::getComparedPlot(const std::string& configName) {
 	io::CSVReader<3> dataCSV(mConfig.getConfig("File").find("data_file"));
 
-	std::string xValue = mConfig.getConfig("ComparedPlot").find("x_value");
-	std::string yValue = mConfig.getConfig("ComparedPlot").find("y_value");
+	std::string xValue = mConfig.getConfig(configName).find("x_value");
+	std::string yValue = mConfig.getConfig(configName).find("y_value");
 
 	dataCSV.read_header(io::ignore_extra_column, "Tag", xValue, yValue);
 
 	std::vector<std::string> interestSet;
-	std::string interestString = mConfig.getConfig("ComparedPlot").find("interest");
+	std::string interestString = mConfig.getConfig(configName).find("interest");
 	std::stringstream interestStream(interestString);
 	std::string interest;
 
@@ -41,18 +41,19 @@ void TGeantComparison::getComparedPlot() {
 		}
 	}
 
-	std::unique_ptr<TF1> fitFunc = std::make_unique<TF1>("fitFunc", "[0]*x + [1]", 0, 2);
-	graph->Fit(fitFunc.get(), "R");
+	std::unique_ptr<TF1> fitFunc = std::make_unique<TF1>("fitFunc", "[0]*x + [1]", 9, 12);
+	graph->Fit("fitFunc", "R");
 
 	std::unique_ptr<TText> slopeText = std::make_unique<TText>(.55, .11, TString::Format("Slope: %.2f", fitFunc->GetParameter(0)));
 	slopeText->SetNDC();
 	slopeText->SetTextSize(1. / 16);
 
 	std::unique_ptr<TCanvas> canvas = std::make_unique<TCanvas>();
-	savePlot(canvas, graph, mConfig.getConfig("ComparedPlot"));
-	setCanvasAttribute(canvas.get(), mConfig.getConfig("ComparedPlot"));
+	savePlot(canvas, graph, mConfig.getConfig(configName));
+	setCanvasAttribute(canvas.get(), mConfig.getConfig(configName));
+	fitFunc->Draw("same");
 	slopeText->Draw();
-	saveCanvas(canvas.get(), mOutputPath, mConfig.getConfig("ComparedPlot"));
+	saveCanvas(canvas.get(), mOutputPath, mConfig.getConfig(configName));
 }
 
 void TGeantComparison::getPlotNormalized() {

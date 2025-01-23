@@ -4,23 +4,23 @@
 tmux new-session -d -s g4simulation
 
 # Create 10 additional windows (total 11 windows)
-for i in {1..12}; do
+for i in {1..11}; do
     tmux new-window -t g4simulation
 done
 
 # Send commands to each window
 tmux send-keys -t g4simulation:0 'htop' C-m
-tmux send-keys -t g4simulation:1 './G4Simulation L1F4AX_W0990' C-m
-tmux send-keys -t g4simulation:2 './G4Simulation L1F4AX_W1002' C-m
-tmux send-keys -t g4simulation:3 './G4Simulation L1F4AX_W1014' C-m
-tmux send-keys -t g4simulation:4 './G4Simulation L1F4AX_W1026' C-m
-tmux send-keys -t g4simulation:5 './G4Simulation L1F4AX_W1038' C-m
-tmux send-keys -t g4simulation:6 './G4Simulation L1F4AX_W1050' C-m
-tmux send-keys -t g4simulation:7 './G4Simulation L1F4AX_W1062' C-m
-tmux send-keys -t g4simulation:8 './G4Simulation L1F4AX_W1074' C-m
-tmux send-keys -t g4simulation:9 './G4Simulation L1F4AX_W1086' C-m
-tmux send-keys -t g4simulation:10 './G4Simulation L1F4AX_W1098' C-m
-tmux send-keys -t g4simulation:11 './G4Simulation L1F4AX_W1110' C-m
+tmux send-keys -t g4simulation:1 './G4Simulation L1F4AX_L095' C-m
+tmux send-keys -t g4simulation:2 './G4Simulation L1F4AX_L096' C-m
+tmux send-keys -t g4simulation:3 './G4Simulation L1F4AX_L097' C-m
+tmux send-keys -t g4simulation:4 './G4Simulation L1F4AX_L098' C-m
+tmux send-keys -t g4simulation:5 './G4Simulation L1F4AX_L099' C-m
+tmux send-keys -t g4simulation:6 './G4Simulation L1F4AX_L100' C-m
+tmux send-keys -t g4simulation:7 './G4Simulation L1F4AX_L101' C-m
+tmux send-keys -t g4simulation:8 './G4Simulation L1F4AX_L102' C-m
+tmux send-keys -t g4simulation:9 './G4Simulation L1F4AX_L103' C-m
+tmux send-keys -t g4simulation:10 './G4Simulation L1F4AX_L104' C-m
+tmux send-keys -t g4simulation:11 './G4Simulation L1F4AX_L105' C-m
 
 # Attach to the tmux session
 tmux attach-session -t g4simulation

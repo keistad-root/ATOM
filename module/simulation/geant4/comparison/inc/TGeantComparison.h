@@ -25,7 +25,7 @@ private:
 	std::unordered_map<std::string, TFile*> mFileMap;
 public:
 	void getPlotNormalized();
-	void getComparedPlot();
+	void getComparedPlot(const std::string& configName);
 
 	void getDividePlot();
 
