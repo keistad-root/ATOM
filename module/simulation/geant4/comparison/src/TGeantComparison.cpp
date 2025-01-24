@@ -41,7 +41,7 @@ void TGeantComparison::getComparedPlot(const std::string& configName) {
 		}
 	}
 
-	std::unique_ptr<TF1> fitFunc = std::make_unique<TF1>("fitFunc", "[0]*x + [1]", 9, 12);
+	std::unique_ptr<TF1> fitFunc = std::make_unique<TF1>("fitFunc", "[0]*x + [1]", 0.9, 1.1);
 	graph->Fit("fitFunc", "R");
 
 	std::unique_ptr<TText> slopeText = std::make_unique<TText>(.55, .11, TString::Format("Slope: %.2f", fitFunc->GetParameter(0)));
