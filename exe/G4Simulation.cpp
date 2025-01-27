@@ -88,7 +88,7 @@ int main(int argc, char** argv) {
 	// Define Analysis Manager
 	std::string outputName = config.getConfig("File").find("output_file");
 	TAnalysisManager* analysisManager = new TAnalysisManager();
-	analysisManager->open(outputName);
+	analysisManager->setFileName(outputName);
 
 	// Set physics
 	TPhysicsList* physicsList = new TPhysicsList;

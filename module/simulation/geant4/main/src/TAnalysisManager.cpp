@@ -18,7 +18,13 @@ TAnalysisManager* TAnalysisManager::Instance() {
 }
 
 void TAnalysisManager::open(const G4String& name) {
-	mFile = new TFile(name, "RECREATE");
+	mFileName = name;
+	std::filesystem::path path = (std::string) name;
+	static int fileIndex = 0;
+	G4String newPath = path.parent_path().string() + "/" + static_cast<std::string>(path.stem()) + "_" + std::to_string(fileIndex) + static_cast<std::string>(path.extension());
+	fileIndex++;
+
+	mFile = new TFile(newPath, "RECREATE");
 	mTrackTree = new TTree("trackTree", "Track Information");
 
 	mTrackTree->Branch("eventID", &mTrackTuple.eventID);
@@ -130,6 +136,19 @@ void TAnalysisManager::doEndOfRun(const G4Run* run) {
 void TAnalysisManager::doBeginOfEvent(const G4Event* event) {
 	mProgressBar->printProgress();
 	mTrackTuple.eventID = event->GetEventID();
+	static bool isFirstEvent = true;
+	if ( event->GetEventID() % 2580000 == 0 ) {
+		if ( !isFirstEvent ) {
+			mFile->cd();
+			mTrackTree->Write();
+			mIncidentTree->Write();
+			mFile->Close();
+			open(mFileName);
+		} else {
+			isFirstEvent = false;
+			open(mFileName);
+		}
+	}
 }
 
 void TAnalysisManager::doEndOfEvent(const G4Event* event) { }
@@ -269,4 +288,8 @@ void TAnalysisManager::doStepPhase(const G4Step* step) {
 			mIncidentTuple.depositEnergy[2] += step->GetTotalEnergyDeposit();
 		}
 	}
+}
+
+void TAnalysisManager::setFileName(const G4String& name) {
+	mFileName = name;
 }

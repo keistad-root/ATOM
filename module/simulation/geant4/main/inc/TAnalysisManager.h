@@ -90,6 +90,7 @@ private:
 	trackTuple mTrackTuple;
 	incidentTuple mIncidentTuple;
 
+	G4String mFileName;
 	TFile* mFile = nullptr;
 	TTree* mTrackTree = nullptr;
 	TTree* mIncidentTree = nullptr;
@@ -121,6 +122,8 @@ public:
 	void doPreTracking(const G4Track* track);
 	void doPostTracking(const G4Track* track);
 	void doStepPhase(const G4Step* step);
+
+	void setFileName(const G4String& name);
 
 	Int_t getParticleID(const G4String& particleID);
 	Int_t getVolumeID(const G4LogicalVolume* volumeID);
