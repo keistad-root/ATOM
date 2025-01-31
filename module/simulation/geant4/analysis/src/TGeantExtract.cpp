@@ -3,12 +3,18 @@
 TGeantExtract::TGeantExtract(const CppConfigDictionary& config) {
 	if ( config.find("DIVIDED_NUM") != "1" ) {
 		fileDivideNum = std::stoi(config.find("DIVIDED_NUM"));
-	}
-	std::string inputFileName = config.find("input_file");
-	mInputFile = std::make_unique<TFile>(static_cast<TString>(inputFileName), "READ");
-	mTrackTree.reset(static_cast<TTree*>(mInputFile->Get("trackTree")));
-	mIncidentTree.reset(static_cast<TTree*>(mInputFile->Get("incidentTree")));
 
+		std::filesystem::path inputFilePath = config.find("input_file");
+		std::string inputFileName = inputFilePath.stem().string() + "_0" + inputFilePath.extension().string();
+		mInputFile = std::make_unique<TFile>(static_cast<TString>(inputFileName), "READ");
+		mTrackTree.reset(static_cast<TTree*>(mInputFile->Get("trackTree")));
+		mIncidentTree.reset(static_cast<TTree*>(mInputFile->Get("incidentTree")));
+	} else {
+		std::string inputFileName = config.find("input_file");
+		mInputFile = std::make_unique<TFile>(static_cast<TString>(inputFileName), "READ");
+		mTrackTree.reset(static_cast<TTree*>(mInputFile->Get("trackTree")));
+		mIncidentTree.reset(static_cast<TTree*>(mInputFile->Get("incidentTree"));
+	}
 	std::string primaryAnalysisOutputFileName = config.find("primary_output_file");
 	std::filesystem::path primaryAnalysisOutputFilePath = primaryAnalysisOutputFileName;
 	mPrimaryAnalysisOutputFile = std::make_unique<TFile>(static_cast<TString>(primaryAnalysisOutputFilePath), "RECREATE");
