@@ -32,6 +32,8 @@ private:
 	std::unique_ptr<TTree> mSecondaryAnalysisTree;
 	TSecondaryAnalysisTuple mSecondaryAnalysisTuple;
 
+	int fileDivideNum = 1;
+
 public:
 	void initTrackTree();
 	void initIncidentTree();

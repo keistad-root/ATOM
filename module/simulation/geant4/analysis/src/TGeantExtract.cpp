@@ -1,7 +1,9 @@
 #include "TGeantExtract.h"
 
 TGeantExtract::TGeantExtract(const CppConfigDictionary& config) {
-
+	if ( config.find("DIVIDED_NUM") != "1" ) {
+		fileDivideNum = std::stoi(config.find("DIVIDED_NUM"));
+	}
 	std::string inputFileName = config.find("input_file");
 	mInputFile = std::make_unique<TFile>(static_cast<TString>(inputFileName), "READ");
 	mTrackTree.reset(static_cast<TTree*>(mInputFile->Get("trackTree")));
@@ -17,10 +19,10 @@ TGeantExtract::TGeantExtract(const CppConfigDictionary& config) {
 	mIncidentAnalysisOutputFile = std::make_unique<TFile>(static_cast<TString>(incidentAnalysisOutputFilePath), "RECREATE");
 	mIncidentAnalysisTree = std::make_unique<TTree>("incidentTree", "incidentTree");
 
-	std::string secondaryAnalysisOutputFileName = config.find("secondary_output_file");
-	std::filesystem::path secondaryAnalysisOutputFilePath = secondaryAnalysisOutputFileName;
-	mSecondaryAnalysisOutputFile = std::make_unique<TFile>(static_cast<TString>(secondaryAnalysisOutputFilePath), "RECREATE");
-	mSecondaryAnalysisTree = std::make_unique<TTree>("secondaryTree", "secondaryTree");
+	// std::string secondaryAnalysisOutputFileName = config.find("secondary_output_file");
+	// std::filesystem::path secondaryAnalysisOutputFilePath = secondaryAnalysisOutputFileName;
+	// mSecondaryAnalysisOutputFile = std::make_unique<TFile>(static_cast<TString>(secondaryAnalysisOutputFilePath), "RECREATE");
+	// mSecondaryAnalysisTree = std::make_unique<TTree>("secondaryTree", "secondaryTree");
 }
 
 TGeantExtract::~TGeantExtract() { }
@@ -143,7 +145,7 @@ void TGeantExtract::extractTrack() {
 		if ( mTrackTuple.parentID == 0 ) {
 			getPrimaryAnalysisInformation();
 		} else {
-			getSecondaryAnalysisInformation();
+			// getSecondaryAnalysisInformation();
 		}
 		mIncidentTree->GetEntry(iIncident);
 		if ( mTrackTuple.eventID == mIncidentTuple.eventID && mTrackTuple.trackID == mIncidentTuple.trackID ) {
@@ -164,11 +166,11 @@ void TGeantExtract::extractTrack() {
 	mIncidentAnalysisTree.reset(); // Reset the tree pointer
 	mIncidentAnalysisOutputFile->Close();
 
-	// Write and close secondary analysis output file
-	mSecondaryAnalysisOutputFile->cd();
-	mSecondaryAnalysisTree->Write();
-	mSecondaryAnalysisTree.reset(); // Reset the tree pointer
-	mSecondaryAnalysisOutputFile->Close();
+	// // Write and close secondary analysis output file
+	// mSecondaryAnalysisOutputFile->cd();
+	// mSecondaryAnalysisTree->Write();
+	// mSecondaryAnalysisTree.reset(); // Reset the tree pointer
+	// mSecondaryAnalysisOutputFile->Close();
 }
 
 void TGeantExtract::getPrimaryAnalysisInformation() {
