@@ -2,6 +2,7 @@
 #define __TGEANTEXTRACT__
 
 #include<filesystem>
+#include<memory>
 #include "CppConfigFile.h"
 
 #include "TFile.h"
@@ -26,9 +27,9 @@ private:
 
 	// From input file
 	std::unique_ptr<TFile> mInputFile;
-	std::unique_ptr<TTree> mTrackTree;
+	TTree* mTrackTree;
 	TTrackTuple mTrackTuple;
-	std::unique_ptr<TTree> mIncidentTree;
+	TTree* mIncidentTree;
 	TIncidentTuple mIncidentTuple;
 
 	// For output file

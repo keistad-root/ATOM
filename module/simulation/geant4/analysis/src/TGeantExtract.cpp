@@ -20,7 +20,10 @@ TGeantExtract::TGeantExtract(const CppConfigFile& config) {
 	mIncidentOutputFilePath = fileConfig.find("INCIDENT_OUTPUT_FILE");
 }
 
-TGeantExtract::~TGeantExtract() { }
+TGeantExtract::~TGeantExtract() {
+	delete mTrackTree;
+	delete mIncidentTree;
+}
 
 void TGeantExtract::openInputFile() {
 	static int iFile = 0;
@@ -31,13 +34,10 @@ void TGeantExtract::openInputFile() {
 	} else {
 		inputFilePath = (mInputFileParentPath / mInputFileStem).replace_extension(mInputFileExtension);
 	}
-	mInputFile = std::make_unique<TFile>(inputFilePath, "READ");
-	if ( !mInputFile->IsOpen() ) {
-		std::cerr << "Error: Cannot open the input file" << std::endl;
-	}
+	mInputFile.reset(new TFile(inputFilePath, "READ"));
+	std::cout << mInputFile->GetName() << std::endl;
 	initTrackTree();
 	initIncidentTree();
-	iFile++;
 }
 
 
@@ -119,7 +119,7 @@ void TGeantExtract::extractFromAFile() {
 
 
 void TGeantExtract::initTrackTree() {
-	mTrackTree.reset(static_cast<TTree*>(mInputFile->Get("trackTree")));
+	mTrackTree = static_cast<TTree*>(mInputFile->Get("trackTree"));
 
 	mTrackTree->SetBranchAddress("eventID", &mTrackTuple.eventID);
 	mTrackTree->SetBranchAddress("trackID", &mTrackTuple.trackID);
@@ -144,7 +144,7 @@ void TGeantExtract::initTrackTree() {
 }
 
 void TGeantExtract::initIncidentTree() {
-	mIncidentTree.reset(static_cast<TTree*>(mInputFile->Get("incidentTree")));
+	mIncidentTree = static_cast<TTree*>(mInputFile->Get("incidentTree"));
 
 	mIncidentTree->SetBranchAddress("eventID", &mIncidentTuple.eventID);
 	mIncidentTree->SetBranchAddress("trackID", &mIncidentTuple.trackID);
