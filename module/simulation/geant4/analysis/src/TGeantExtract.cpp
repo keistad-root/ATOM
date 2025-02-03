@@ -22,42 +22,46 @@ TGeantExtract::TGeantExtract(const CppConfigFile& config) {
 
 TGeantExtract::~TGeantExtract() { }
 
-bool TGeantExtract::openOutputFile() {
+void TGeantExtract::openInputFile() {
+	static int iFile = 0;
+	TString inputFilePath;
+	if ( mIsDivide ) {
+		inputFilePath = (mInputFileParentPath / (mInputFileStem + "_" + std::to_string(iFile))).replace_extension(mInputFileExtension);
+		iFile++;
+	} else {
+		inputFilePath = (mInputFileParentPath / mInputFileStem).replace_extension(mInputFileExtension);
+	}
+	mInputFile = std::make_unique<TFile>(inputFilePath, "READ");
+	if ( !mInputFile->IsOpen() ) {
+		std::cerr << "Error: Cannot open the input file" << std::endl;
+	}
+	initTrackTree();
+	initIncidentTree();
+	iFile++;
+}
+
+
+void TGeantExtract::openOutputFile() {
 	mPrimaryAnalysisOutputFile = std::make_unique<TFile>(mPrimaryOutputFilePath.c_str(), "RECREATE");
 	if ( !mPrimaryAnalysisOutputFile->IsOpen() ) {
 		std::cerr << "Error: Cannot open the primary analysis output file" << std::endl;
-		return false;
 	}
 	initPrimaryAnalysisTree();
 
 	mIncidentAnalysisOutputFile = std::make_unique<TFile>(mIncidentOutputFilePath.c_str(), "RECREATE");
 	if ( !mIncidentAnalysisOutputFile->IsOpen() ) {
 		std::cerr << "Error: Cannot open the incident analysis output file" << std::endl;
-		return false;
 	}
 	initIncidentAnalysisTree();
-
-	return true;
 }
 
 void TGeantExtract::extractTrack() {
-	Int_t nEntries = mTrackTree->GetEntries();
-
-	Int_t iIncident = 0;
-	ProgressBar progressBar(static_cast<int>(nEntries));
-	for ( Int_t i = 0; i < nEntries; i++ ) {
-		progressBar.printProgress();
-		mTrackTree->GetEntry(i);
-		if ( mTrackTuple.parentID == 0 ) {
-			getPrimaryAnalysisInformation();
-		} else {
-			// getSecondaryAnalysisInformation();
+	if ( mIsDivide ) {
+		for ( int i = 0; i < mNumFile; i++ ) {
+			extractFromAFile();
 		}
-		mIncidentTree->GetEntry(iIncident);
-		if ( mTrackTuple.eventID == mIncidentTuple.eventID && mTrackTuple.trackID == mIncidentTuple.trackID ) {
-			getIncidentAnalysisInformation();
-			iIncident++;
-		}
+	} else {
+		extractFromAFile();
 	}
 
 	// Write and close primary analysis output file
@@ -73,6 +77,27 @@ void TGeantExtract::extractTrack() {
 	mIncidentAnalysisOutputFile->Close();
 }
 
+void TGeantExtract::extractFromAFile() {
+	static int j = 0;
+	openInputFile();
+	Int_t nEntries = mTrackTree->GetEntries();
+	Int_t iIncident = 0;
+	std::clog << "Extracting the informations from the File (" << j + 1 << " / " << mNumFile << ")" << std::endl;
+	ProgressBar progressBar(static_cast<int>(nEntries));
+	for ( Int_t i = 0; i < nEntries; i++ ) {
+		progressBar.printProgress();
+		mTrackTree->GetEntry(i);
+		if ( mTrackTuple.parentID == 0 ) {
+			getPrimaryAnalysisInformation();
+		}
+		mIncidentTree->GetEntry(iIncident);
+		if ( mTrackTuple.eventID == mIncidentTuple.eventID && mTrackTuple.trackID == mIncidentTuple.trackID ) {
+			getIncidentAnalysisInformation();
+			iIncident++;
+		}
+	}
+	j++;
+}
 
 
 
@@ -94,6 +119,8 @@ void TGeantExtract::extractTrack() {
 
 
 void TGeantExtract::initTrackTree() {
+	mTrackTree.reset(static_cast<TTree*>(mInputFile->Get("trackTree")));
+
 	mTrackTree->SetBranchAddress("eventID", &mTrackTuple.eventID);
 	mTrackTree->SetBranchAddress("trackID", &mTrackTuple.trackID);
 	mTrackTree->SetBranchAddress("parentID", &mTrackTuple.parentID);
@@ -117,6 +144,8 @@ void TGeantExtract::initTrackTree() {
 }
 
 void TGeantExtract::initIncidentTree() {
+	mIncidentTree.reset(static_cast<TTree*>(mInputFile->Get("incidentTree")));
+
 	mIncidentTree->SetBranchAddress("eventID", &mIncidentTuple.eventID);
 	mIncidentTree->SetBranchAddress("trackID", &mIncidentTuple.trackID);
 	mIncidentTree->SetBranchAddress("depositEnergyMetal", &mIncidentTuple.depositEnergy[0]);
@@ -134,6 +163,8 @@ void TGeantExtract::initIncidentTree() {
 }
 
 void TGeantExtract::initPrimaryAnalysisTree() {
+	mPrimaryAnalysisTree = std::make_unique<TTree>("PrimaryAnalysis", "Primary Analysis Tree");
+
 	mPrimaryAnalysisTree->Branch("eventID", &mPrimaryAnalysisTuple.eventID);
 	mPrimaryAnalysisTree->Branch("x", &mPrimaryAnalysisTuple.position[0]);
 	mPrimaryAnalysisTree->Branch("y", &mPrimaryAnalysisTuple.position[1]);
@@ -145,6 +176,8 @@ void TGeantExtract::initPrimaryAnalysisTree() {
 }
 
 void TGeantExtract::initIncidentAnalysisTree() {
+	mIncidentAnalysisTree = std::make_unique<TTree>("IncidentAnalysis", "Incident Analysis Tree");
+
 	mIncidentAnalysisTree->Branch("eventID", &mIncidentAnalysisTuple.eventID);
 	mIncidentAnalysisTree->Branch("trackID", &mIncidentAnalysisTuple.trackID);
 	mIncidentAnalysisTree->Branch("particleID", &mIncidentAnalysisTuple.particleID);
@@ -225,28 +258,4 @@ void TGeantExtract::getIncidentAnalysisInformation() {
 	mIncidentAnalysisTuple.finalKineticEnergy = mTrackTuple.finalKineticEnergy;
 
 	mIncidentAnalysisTree->Fill();
-}
-
-void TGeantExtract::getSecondaryAnalysisInformation() {
-	mSecondaryAnalysisTuple.eventID = mTrackTuple.eventID;
-	mSecondaryAnalysisTuple.trackID = mTrackTuple.trackID;
-	mSecondaryAnalysisTuple.particleID = mTrackTuple.particleID;
-	mSecondaryAnalysisTuple.initialVolumeID = mTrackTuple.initialVolumeID;
-	mSecondaryAnalysisTuple.initialPosition[0] = mTrackTuple.initialPosition[0];
-	mSecondaryAnalysisTuple.initialPosition[1] = mTrackTuple.initialPosition[1];
-	mSecondaryAnalysisTuple.initialPosition[2] = mTrackTuple.initialPosition[2];
-	mSecondaryAnalysisTuple.initialMomentum[0] = mTrackTuple.initialMomentum[0];
-	mSecondaryAnalysisTuple.initialMomentum[1] = mTrackTuple.initialMomentum[1];
-	mSecondaryAnalysisTuple.initialMomentum[2] = mTrackTuple.initialMomentum[2];
-	mSecondaryAnalysisTuple.initialKineticEnergy = mTrackTuple.initialKineticEnergy;
-	mSecondaryAnalysisTuple.finalVolumeID = mTrackTuple.finalVolumeID;
-	mSecondaryAnalysisTuple.finalPosition[0] = mTrackTuple.finalPosition[0];
-	mSecondaryAnalysisTuple.finalPosition[1] = mTrackTuple.finalPosition[1];
-	mSecondaryAnalysisTuple.finalPosition[2] = mTrackTuple.finalPosition[2];
-	mSecondaryAnalysisTuple.finalMomentum[0] = mTrackTuple.finalMomentum[0];
-	mSecondaryAnalysisTuple.finalMomentum[1] = mTrackTuple.finalMomentum[1];
-	mSecondaryAnalysisTuple.finalMomentum[2] = mTrackTuple.finalMomentum[2];
-	mSecondaryAnalysisTuple.finalKineticEnergy = mTrackTuple.finalKineticEnergy;
-
-	mSecondaryAnalysisTree->Fill();
 }

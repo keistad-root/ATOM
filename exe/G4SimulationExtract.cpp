@@ -10,29 +10,24 @@ const std::string INFORMATION_PATH = "/home/ychoi/ATOM/config/g4simulation/g4inf
 
 CppConfigFile setEnvironment(const ArgumentParser& parser) {
 	CppConfigFile config(CONFIG_PATH);
-	io::CSVReader<5> infoCSV(INFORMATION_PATH);
+	io::CSVReader<6> infoCSV(INFORMATION_PATH);
 	infoCSV.read_header(io::ignore_extra_column, "TAG", "SIMULATION_FILE", "PRIMARY_FILE", "INCIDENT_FILE", "SECONDARY_FILE", "DIVIDED_NUM");
 	std::string tags, simulationFile, primaryFile, incidentFile, secondaryFile, dividedNum;
 	while ( infoCSV.read_row(tags, simulationFile, primaryFile, incidentFile, secondaryFile, dividedNum) ) {
 		if ( parser.get_value<std::string>("tag") == tags ) {
-			config.modifyConfig("File").addDictionary("input_file", simulationFile);
-			config.modifyConfig("File").addDictionary("primary_output_file", primaryFile);
-			config.modifyConfig("File").addDictionary("incident_output_file", incidentFile);
-			config.modifyConfig("File").addDictionary("secondary_output_file", secondaryFile);
+			config.modifyConfig("File").addDictionary("INPUT_FILE", simulationFile);
+			config.modifyConfig("File").addDictionary("PRIMARY_OUTPUT_FILE", primaryFile);
+			config.modifyConfig("File").addDictionary("INCIDENT_OUTPUT_FILE", incidentFile);
 			config.modifyConfig("File").addDictionary("DIVIDED_NUM", dividedNum);
 		}
 	}
-	std::filesystem::path primaryOutputPath = config.getConfig("File").find("primary_output_file");
+	std::filesystem::path primaryOutputPath = config.getConfig("File").find("PRIMARY_OUTPUT_FILE");
 	if ( !std::filesystem::exists(primaryOutputPath.parent_path()) ) {
 		std::filesystem::create_directories(primaryOutputPath.parent_path());
 	}
-	std::filesystem::path incidentOutputPath = config.getConfig("File").find("incident_output_file");
+	std::filesystem::path incidentOutputPath = config.getConfig("File").find("INCIDENT_OUTPUT_FILE");
 	if ( !std::filesystem::exists(incidentOutputPath.parent_path()) ) {
 		std::filesystem::create_directories(incidentOutputPath.parent_path());
-	}
-	std::filesystem::path secondaryOutputPath = config.getConfig("File").find("secondary_output_file");
-	if ( !std::filesystem::exists(secondaryOutputPath.parent_path()) ) {
-		std::filesystem::create_directories(secondaryOutputPath.parent_path());
 	}
 
 	return config;
@@ -50,10 +45,6 @@ int main(int argc, char** argv) {
 
 	TGeantExtract extract(config);
 	extract.openOutputFile();
-	extract.initTrackTree();
-	extract.initIncidentTree();
-	extract.initPrimaryAnalysisTree();
-	extract.initIncidentAnalysisTree();
 	extract.extractTrack();
 
 

@@ -40,17 +40,20 @@ private:
 	TIncidentAnalysisTuple mIncidentAnalysisTuple;
 
 public:
-	bool openOutputFile();
+	void openInputFile();
+	void openOutputFile();
+
+	void extractTrack();
+private:
 	void initTrackTree();
 	void initIncidentTree();
 
 	void initPrimaryAnalysisTree();
 	void initIncidentAnalysisTree();
-	void initSecondaryAnalysisTree();
-
-	void extractTrack();
 	void getPrimaryAnalysisInformation();
 	void getIncidentAnalysisInformation();
+
+	void extractFromAFile();
 };
 
 #endif
