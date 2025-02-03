@@ -48,12 +48,12 @@ ArgumentParser set_parse(int argc, char** argv) {
 int main(int argc, char** argv) {
 	CppConfigFile config = setEnvironment(set_parse(argc, argv));
 
-	TGeantExtract extract(config.getConfig("File"));
+	TGeantExtract extract(config);
+	extract.openOutputFile();
 	extract.initTrackTree();
 	extract.initIncidentTree();
 	extract.initPrimaryAnalysisTree();
 	extract.initIncidentAnalysisTree();
-	// extract.initSecondaryAnalysisTree();
 	extract.extractTrack();
 
 

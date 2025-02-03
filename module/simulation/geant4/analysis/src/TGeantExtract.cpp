@@ -1,37 +1,97 @@
 #include "TGeantExtract.h"
 
-TGeantExtract::TGeantExtract(const CppConfigDictionary& config) {
-	if ( config.find("DIVIDED_NUM") != "1" ) {
-		fileDivideNum = std::stoi(config.find("DIVIDED_NUM"));
+TGeantExtract::TGeantExtract(const CppConfigFile& config) {
+	CppConfigDictionary fileConfig = config.getConfig("File");
 
-		std::filesystem::path inputFilePath = config.find("input_file");
-		std::string inputFileName = inputFilePath.stem().string() + "_0" + inputFilePath.extension().string();
-		mInputFile = std::make_unique<TFile>(static_cast<TString>(inputFileName), "READ");
-		mTrackTree.reset(static_cast<TTree*>(mInputFile->Get("trackTree")));
-		mIncidentTree.reset(static_cast<TTree*>(mInputFile->Get("incidentTree")));
+	if ( fileConfig.find("DIVIDED_NUM") != "1" ) {
+		mIsDivide = true;
+		mNumFile = std::stoi(fileConfig.find("DIVIDED_NUM"));
 	} else {
-		std::string inputFileName = config.find("input_file");
-		mInputFile = std::make_unique<TFile>(static_cast<TString>(inputFileName), "READ");
-		mTrackTree.reset(static_cast<TTree*>(mInputFile->Get("trackTree")));
-		mIncidentTree.reset(static_cast<TTree*>(mInputFile->Get("incidentTree")));
+		mIsDivide = false;
+		mNumFile = 1;
 	}
-	std::string primaryAnalysisOutputFileName = config.find("primary_output_file");
-	std::filesystem::path primaryAnalysisOutputFilePath = primaryAnalysisOutputFileName;
-	mPrimaryAnalysisOutputFile = std::make_unique<TFile>(static_cast<TString>(primaryAnalysisOutputFilePath), "RECREATE");
-	mPrimaryAnalysisTree = std::make_unique<TTree>("primaryTree", "primaryTree");
 
-	std::string incidentAnalysisOutputFileName = config.find("incident_output_file");
-	std::filesystem::path incidentAnalysisOutputFilePath = incidentAnalysisOutputFileName;
-	mIncidentAnalysisOutputFile = std::make_unique<TFile>(static_cast<TString>(incidentAnalysisOutputFilePath), "RECREATE");
-	mIncidentAnalysisTree = std::make_unique<TTree>("incidentTree", "incidentTree");
+	std::filesystem::path inputFilePath = fileConfig.find("INPUT_FILE");
+	mInputFileParentPath = inputFilePath.parent_path();
+	mInputFileStem = inputFilePath.stem().string();
+	mInputFileExtension = inputFilePath.extension().string();
 
-	// std::string secondaryAnalysisOutputFileName = config.find("secondary_output_file");
-	// std::filesystem::path secondaryAnalysisOutputFilePath = secondaryAnalysisOutputFileName;
-	// mSecondaryAnalysisOutputFile = std::make_unique<TFile>(static_cast<TString>(secondaryAnalysisOutputFilePath), "RECREATE");
-	// mSecondaryAnalysisTree = std::make_unique<TTree>("secondaryTree", "secondaryTree");
+	mPrimaryOutputFilePath = fileConfig.find("PRIMARY_OUTPUT_FILE");
+	mIncidentOutputFilePath = fileConfig.find("INCIDENT_OUTPUT_FILE");
 }
 
 TGeantExtract::~TGeantExtract() { }
+
+bool TGeantExtract::openOutputFile() {
+	mPrimaryAnalysisOutputFile = std::make_unique<TFile>(mPrimaryOutputFilePath.c_str(), "RECREATE");
+	if ( !mPrimaryAnalysisOutputFile->IsOpen() ) {
+		std::cerr << "Error: Cannot open the primary analysis output file" << std::endl;
+		return false;
+	}
+	initPrimaryAnalysisTree();
+
+	mIncidentAnalysisOutputFile = std::make_unique<TFile>(mIncidentOutputFilePath.c_str(), "RECREATE");
+	if ( !mIncidentAnalysisOutputFile->IsOpen() ) {
+		std::cerr << "Error: Cannot open the incident analysis output file" << std::endl;
+		return false;
+	}
+	initIncidentAnalysisTree();
+
+	return true;
+}
+
+void TGeantExtract::extractTrack() {
+	Int_t nEntries = mTrackTree->GetEntries();
+
+	Int_t iIncident = 0;
+	ProgressBar progressBar(static_cast<int>(nEntries));
+	for ( Int_t i = 0; i < nEntries; i++ ) {
+		progressBar.printProgress();
+		mTrackTree->GetEntry(i);
+		if ( mTrackTuple.parentID == 0 ) {
+			getPrimaryAnalysisInformation();
+		} else {
+			// getSecondaryAnalysisInformation();
+		}
+		mIncidentTree->GetEntry(iIncident);
+		if ( mTrackTuple.eventID == mIncidentTuple.eventID && mTrackTuple.trackID == mIncidentTuple.trackID ) {
+			getIncidentAnalysisInformation();
+			iIncident++;
+		}
+	}
+
+	// Write and close primary analysis output file
+	mPrimaryAnalysisOutputFile->cd();
+	mPrimaryAnalysisTree->Write();
+	mPrimaryAnalysisTree.reset(); // Reset the tree pointer
+	mPrimaryAnalysisOutputFile->Close();
+
+	// Write and close incident analysis output file
+	mIncidentAnalysisOutputFile->cd();
+	mIncidentAnalysisTree->Write();
+	mIncidentAnalysisTree.reset(); // Reset the tree pointer
+	mIncidentAnalysisOutputFile->Close();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void TGeantExtract::initTrackTree() {
 	mTrackTree->SetBranchAddress("eventID", &mTrackTuple.eventID);
@@ -116,67 +176,6 @@ void TGeantExtract::initIncidentAnalysisTree() {
 	mIncidentAnalysisTree->Branch("finalPY", &mIncidentAnalysisTuple.finalMomentum[1]);
 	mIncidentAnalysisTree->Branch("finalPZ", &mIncidentAnalysisTuple.finalMomentum[2]);
 	mIncidentAnalysisTree->Branch("finalKineticEnergy", &mIncidentAnalysisTuple.finalKineticEnergy);
-}
-
-void TGeantExtract::initSecondaryAnalysisTree() {
-	mSecondaryAnalysisTree->Branch("eventID", &mSecondaryAnalysisTuple.eventID);
-	mSecondaryAnalysisTree->Branch("trackID", &mSecondaryAnalysisTuple.trackID);
-	mSecondaryAnalysisTree->Branch("particleID", &mSecondaryAnalysisTuple.particleID);
-	mSecondaryAnalysisTree->Branch("initialVolumeID", &mSecondaryAnalysisTuple.initialVolumeID);
-	mSecondaryAnalysisTree->Branch("initX", &mSecondaryAnalysisTuple.initialPosition[0]);
-	mSecondaryAnalysisTree->Branch("initY", &mSecondaryAnalysisTuple.initialPosition[1]);
-	mSecondaryAnalysisTree->Branch("initZ", &mSecondaryAnalysisTuple.initialPosition[2]);
-	mSecondaryAnalysisTree->Branch("initPX", &mSecondaryAnalysisTuple.initialMomentum[0]);
-	mSecondaryAnalysisTree->Branch("initPY", &mSecondaryAnalysisTuple.initialMomentum[1]);
-	mSecondaryAnalysisTree->Branch("initPZ", &mSecondaryAnalysisTuple.initialMomentum[2]);
-	mSecondaryAnalysisTree->Branch("initKineticEnergy", &mSecondaryAnalysisTuple.initialKineticEnergy);
-	mSecondaryAnalysisTree->Branch("finalVolumeID", &mSecondaryAnalysisTuple.finalVolumeID);
-	mSecondaryAnalysisTree->Branch("finalX", &mSecondaryAnalysisTuple.finalPosition[0]);
-	mSecondaryAnalysisTree->Branch("finalY", &mSecondaryAnalysisTuple.finalPosition[1]);
-	mSecondaryAnalysisTree->Branch("finalZ", &mSecondaryAnalysisTuple.finalPosition[2]);
-	mSecondaryAnalysisTree->Branch("finalPX", &mSecondaryAnalysisTuple.finalMomentum[0]);
-	mSecondaryAnalysisTree->Branch("finalPY", &mSecondaryAnalysisTuple.finalMomentum[1]);
-	mSecondaryAnalysisTree->Branch("finalPZ", &mSecondaryAnalysisTuple.finalMomentum[2]);
-	mSecondaryAnalysisTree->Branch("finalKineticEnergy", &mSecondaryAnalysisTuple.finalKineticEnergy);
-}
-
-void TGeantExtract::extractTrack() {
-	Int_t nEntries = mTrackTree->GetEntries();
-
-	Int_t iIncident = 0;
-	ProgressBar progressBar(static_cast<int>(nEntries));
-	for ( Int_t i = 0; i < nEntries; i++ ) {
-		progressBar.printProgress();
-		mTrackTree->GetEntry(i);
-		if ( mTrackTuple.parentID == 0 ) {
-			getPrimaryAnalysisInformation();
-		} else {
-			// getSecondaryAnalysisInformation();
-		}
-		mIncidentTree->GetEntry(iIncident);
-		if ( mTrackTuple.eventID == mIncidentTuple.eventID && mTrackTuple.trackID == mIncidentTuple.trackID ) {
-			getIncidentAnalysisInformation();
-			iIncident++;
-		}
-	}
-
-	// Write and close primary analysis output file
-	mPrimaryAnalysisOutputFile->cd();
-	mPrimaryAnalysisTree->Write();
-	mPrimaryAnalysisTree.reset(); // Reset the tree pointer
-	mPrimaryAnalysisOutputFile->Close();
-
-	// Write and close incident analysis output file
-	mIncidentAnalysisOutputFile->cd();
-	mIncidentAnalysisTree->Write();
-	mIncidentAnalysisTree.reset(); // Reset the tree pointer
-	mIncidentAnalysisOutputFile->Close();
-
-	// // Write and close secondary analysis output file
-	// mSecondaryAnalysisOutputFile->cd();
-	// mSecondaryAnalysisTree->Write();
-	// mSecondaryAnalysisTree.reset(); // Reset the tree pointer
-	// mSecondaryAnalysisOutputFile->Close();
 }
 
 void TGeantExtract::getPrimaryAnalysisInformation() {
