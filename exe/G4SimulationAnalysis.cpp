@@ -40,15 +40,15 @@ ArgumentParser set_parse(int argc, char** argv) {
 }
 
 void addEntry2CSV(const std::string tag, const std::array<int, 4> entry) {
-	io::CSVReader<5> infoCsv("/home/ychoi/ATOM/config/g4simulation/g4information.csv");
-	infoCsv.read_header(io::ignore_extra_column, "TAG", "LENGTH", "PHI", "COLLIMATOR_AREA", "EVENT_NUM");
+	io::CSVReader<6> infoCsv("/home/ychoi/ATOM/config/g4simulation/g4information.csv");
+	infoCsv.read_header(io::ignore_extra_column, "TAG", "LENGTH", "PHI", "COLLIMATOR_LENGTH", "COLLIMATOR_AREA", "EVENT_NUM");
 
 	std::string infoTag;
 	int infoLength, infoPhi;
-	double infoWidth;
+	double COLLIMATOR_LENGTH, COLLIMATOR_AREA;
 	int eventNum;
 
-	while ( infoCsv.read_row(infoTag, infoLength, infoPhi, infoWidth, eventNum) ) {
+	while ( infoCsv.read_row(infoTag, infoLength, infoPhi, COLLIMATOR_LENGTH, COLLIMATOR_AREA, eventNum) ) {
 		if ( infoTag == tag ) {
 			break;
 		}
@@ -71,7 +71,7 @@ void addEntry2CSV(const std::string tag, const std::array<int, 4> entry) {
 		std::ofstream file(DATA_PATH, std::ios::app);
 		double timeRatio = EVENT_10MIN / eventNum;
 
-		file << tag << ", " << infoLength << ", " << infoPhi << ", " << infoWidth << ", " << entry[0] * timeRatio << ", " << (entry[1] - 2 * entry[3]) * timeRatio << ", " << (entry[2] - 2 * entry[3]) * timeRatio << ", " << entry[3] * timeRatio << std::endl;
+		file << tag << ", " << infoLength << ", " << infoPhi << ", " << COLLIMATOR_LENGTH << ", " << COLLIMATOR_AREA << ", " << entry[0] * timeRatio << ", " << (entry[1] - 2 * entry[3]) * timeRatio << ", " << (entry[2] - 2 * entry[3]) * timeRatio << ", " << entry[3] * timeRatio << std::endl;
 		file.close();
 	}
 }
