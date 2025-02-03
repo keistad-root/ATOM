@@ -8,7 +8,7 @@ TGeantAnalysis::~TGeantAnalysis() { }
 void TGeantAnalysis::readIncidentFile(std::filesystem::path inputFilePath) {
 	TString inputFileName = std::string(inputFilePath);
 	mIncidentFile = std::make_unique<TFile>(inputFileName, "READ");
-	mIncidentTree.reset(static_cast<TTree*>(mIncidentFile->Get("incidentTree")));
+	mIncidentTree.reset(static_cast<TTree*>(mIncidentFile->Get("IncidentAnalysis")));
 
 	mIncidentTree->SetBranchAddress("eventID", &mIncidentTuple.eventID);
 	mIncidentTree->SetBranchAddress("trackID", &mIncidentTuple.trackID);
@@ -46,7 +46,7 @@ void TGeantAnalysis::readIncidentFile(std::filesystem::path inputFilePath) {
 void TGeantAnalysis::readPrimaryFile(std::filesystem::path inputFilePath) {
 	TString inputFileName = std::string(inputFilePath);
 	mPrimaryFile = std::make_unique<TFile>(inputFileName, "READ");
-	mPrimaryTree.reset(static_cast<TTree*>(mPrimaryFile->Get("primaryTree")));
+	mPrimaryTree.reset(static_cast<TTree*>(mPrimaryFile->Get("PrimaryAnalysis")));
 
 	mPrimaryTree->SetBranchAddress("eventID", &mPrimaryTuple.eventID);
 	mPrimaryTree->SetBranchAddress("x", &mPrimaryTuple.position[0]);
