@@ -13,7 +13,7 @@ TGeantExtract::TGeantExtract(const CppConfigDictionary& config) {
 		std::string inputFileName = config.find("input_file");
 		mInputFile = std::make_unique<TFile>(static_cast<TString>(inputFileName), "READ");
 		mTrackTree.reset(static_cast<TTree*>(mInputFile->Get("trackTree")));
-		mIncidentTree.reset(static_cast<TTree*>(mInputFile->Get("incidentTree"));
+		mIncidentTree.reset(static_cast<TTree*>(mInputFile->Get("incidentTree")));
 	}
 	std::string primaryAnalysisOutputFileName = config.find("primary_output_file");
 	std::filesystem::path primaryAnalysisOutputFilePath = primaryAnalysisOutputFileName;
