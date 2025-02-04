@@ -38,7 +38,6 @@ int main() {
 	std::unordered_map<std::string, std::array<double, 60>> alphaError;
 
 	for ( auto [tag, counts] : alphaGammaData ) {
-		std::cout << tag << std::endl;
 		std::array<double, 60> alphaCounts;
 		std::array<double, 60> alphaErrors;
 		std::array<double, 60> gammaCounts = gammaData.find(tag)->second;
