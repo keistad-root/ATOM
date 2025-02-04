@@ -26,7 +26,7 @@ public:
 private:
 	CppConfigFile mConfig;
 	std::unique_ptr<TFile> mInputFile;
-	TFile* mOutputFile;
+	std::unique_ptr<TFile> mOutputFile;
 
 	std::vector<TALPIDEEvent*> mEventSet;
 	std::vector<TCluster*> mClusterSet;

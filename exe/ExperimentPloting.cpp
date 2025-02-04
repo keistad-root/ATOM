@@ -17,7 +17,7 @@ int main(int argc, char** argv) {
 	std::string configPath = parser.get_value<std::string>("config");
 	CppConfigFile config(configPath);
 
-	TDataPlotter* plot = new TDataPlotter(&config);
+	TDataPlotter* plot = new TDataPlotter(config);
 	plot->InitPlot();
 	plot->FillHitInfo();
 	plot->FillClusterInfo();

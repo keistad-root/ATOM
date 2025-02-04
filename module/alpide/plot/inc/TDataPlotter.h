@@ -28,11 +28,11 @@ const int ALPIDEROW = 512;
 
 class TDataPlotter : public TPlotter {
 public:
-	TDataPlotter(const CppConfigFile* config);
+	TDataPlotter(const CppConfigFile& config);
 	~TDataPlotter();
 private:
-	const CppConfigFile* mConfig;
-	TFile* mInputFile;
+	CppConfigFile mConfig;
+	std::unique_ptr<TFile> mInputFile;
 	std::filesystem::path mOutputPath;
 
 	TH2D* mHitmap;
@@ -46,6 +46,8 @@ private:
 
 	bool isHitmap = false, isClustermap = false, isClustersize = false;
 public:
+	void openInputFile();
+
 	void InitPlot();
 	void FillHitInfo();
 	void FillClusterInfo();

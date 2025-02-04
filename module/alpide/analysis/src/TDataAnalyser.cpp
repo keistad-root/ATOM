@@ -14,8 +14,8 @@ void TDataAnalyser::openInputFile() {
 }
 
 void TDataAnalyser::openOutputFile() {
-	std::filesystem::path outputPath = mConfig.getConfig("File").find("output_file");
-	mOutputFile = new TFile(static_cast<TString>(outputPath), "RECREATE");
+	std::filesystem::path outputPath = mConfig.getConfig("CONFIG").find("MASKED_FILE");
+	mOutputFile = std::make_unique<TFile>(static_cast<TString>(outputPath), "RECREATE");
 }
 
 void TDataAnalyser::extractEvent() {
@@ -36,8 +36,9 @@ void TDataAnalyser::extractEvent() {
 	mEventSet.push_back(new TALPIDEEvent());
 	mEventSet.back()->setEvent(0);
 	mEventSet.back()->setTime(static_cast<long int>(0));
-	ProgressBar* pbar = new ProgressBar(nHit);
+	ProgressBar pbar(nHit);
 	for ( int iHit = 0; iHit < nHit; iHit++ ) {
+		pbar.printProgress();
 		inputTree->GetEntry(iHit);
 		if ( timeStamp == preTime ) {
 			mEventSet.back()->pushData({x, y});
@@ -50,7 +51,6 @@ void TDataAnalyser::extractEvent() {
 			preTime = timeStamp;
 			preEvt++;
 		}
-		pbar->printProgress();
 	}
 	mEventSet.back()->removeDuplication();
 	mEventSet.back()->sortPixel();
@@ -64,7 +64,7 @@ void TDataAnalyser::excludeHotPixel() {
 			mMaskingMap[X][Y] = false;
 		}
 	}
-	std::filesystem::path maskingPath = mConfig.getConfig("File").find("mask_file");
+	std::filesystem::path maskingPath = mConfig.getConfig("CONFIG").find("MASK_PIXEL_FILE");
 	std::ifstream maskingFile(maskingPath);
 
 	std::string maskingStr;

@@ -45,13 +45,5 @@ int main(int argc, char** argv) {
 	analyse.openInputFile();
 	analyse.extractEvent();
 	analyse.extractHotPixel();
-
-	// analyse->extractEvent();
-	// // analyse->excludeHotPixel();
-	// analyse->extractCluster();
-	// analyse->extractHotPixel();
-	// analyse->extractShape();
-	// analyse->saveEvent();
-	// analyse->saveCluster();
-	// analyse->saveShape();
 }
+

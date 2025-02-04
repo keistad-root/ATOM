@@ -1,5 +1,5 @@
-#include <csv.h>
-#include <string>
+#include<csv.h>
+#include<string>
 
 #include "cppargs.h"
 #include "CppConfigFile.h"
@@ -9,39 +9,45 @@
 const std::string configPath = "/home/ychoi/ATOM/config/experiment/analysis.conf";
 const std::string csvPath = "/home/ychoi/ATOM/config/experiment/experiment_information.csv";
 
-CppConfigFile setEnvironment(std::string configTag) {
-	CppConfigFile config("/home/ychoi/ATOM/config/experiment/analysis.conf");
-	io::CSVReader<6> csv("/home/ychoi/ATOM/config/experiment/analysis.csv");
-	csv.read_header(io::ignore_extra_column, "tag", "input_file", "output_file", "mask_file", "hot_pixel_file", "hit_cut");
+ArgumentParser set_parse(int argc, char** argv) {
+	ArgumentParser parser = ArgumentParser(argc, argv).setDescription("Get masked file from experiment");
+	parser.add_argument("TAG").help("Tag for config").add_finish();
+	parser.parse_args();
+	return parser;
+}
 
-	std::string tag, inputFile, outputFile, maskFile, hotPixelFile, hitCut;
-	for ( int i = 0; csv.read_row(tag, inputFile, outputFile, maskFile, hotPixelFile, hitCut); i++ ) {
-		if ( tag == configTag ) {
-			config.modifyConfig("File").addDictionary("input_file", inputFile);
-			config.modifyConfig("File").addDictionary("output_file", outputFile);
-			config.modifyConfig("File").addDictionary("mask_file", maskFile);
-			config.modifyConfig("File").addDictionary("hot_pixel_file", hotPixelFile);
-			config.modifyConfig("Masking").addDictionary("hit_cut", hitCut);
+CppConfigFile setEnvironment(const ArgumentParser& parser) {
+	const std::string tag = parser.get_value<std::string>("TAG");
+
+	CppConfigFile config(configPath);
+
+	io::CSVReader<4> csv(csvPath);
+	csv.read_header(io::ignore_extra_column, "TAG", "RAW_FILE", "MASKED_FILE", "MASK_PIXEL_FILE");
+	std::string csvTag, rawFile, maskedFile, maskPixelFile;
+	for ( int i = 0; csv.read_row(csvTag, rawFile, maskedFile, maskPixelFile); i++ ) {
+		if ( csvTag == tag ) {
+			config.modifyConfig("CONFIG").addDictionary("RAW_FILE", rawFile);
+			config.modifyConfig("CONFIG").addDictionary("MASKED_FILE", maskedFile);
+			config.modifyConfig("CONFIG").addDictionary("MASK_PIXEL_FILE", maskPixelFile);
+			break;
 		}
 	}
 	return config;
 }
 
-
-
 int main(int argc, char** argv) {
-	CppConfigFile config = setEnvironment(argv[1]);
+	ArgumentParser parser = set_parse(argc, argv);
 
-	TDataAnalyser* analyse = new TDataAnalyser(config);
-	analyse->extractEvent();
-	// analyse->excludeHotPixel();
-	analyse->extractCluster();
-	analyse->extractHotPixel();
-	analyse->extractShape();
-	analyse->saveEvent();
-	analyse->saveCluster();
-	analyse->saveShape();
+	CppConfigFile config = setEnvironment(parser);
 
-
-	delete analyse;
+	TDataAnalyser analyse(config);
+	analyse.openInputFile();
+	analyse.openOutputFile();
+	analyse.extractEvent();
+	analyse.excludeHotPixel();
+	analyse.extractCluster();
+	analyse.extractShape();
+	analyse.saveEvent();
+	analyse.saveCluster();
+	analyse.saveShape();
 }
