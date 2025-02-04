@@ -49,6 +49,13 @@ public:
 };
 
 class SimulationInfo {
+	std::string mTag;
+	int mLength;
+	int mPhi;
+	double mCollimatorLength;
+	double mCollimatorArea;
+	int mNEvent;
+	std::array<double, 4> mEntry;
 
 };
 
