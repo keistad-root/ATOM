@@ -21,12 +21,11 @@
 
 class TDataAnalyser {
 public:
-	TDataAnalyser(CppConfigFile* config);
+	TDataAnalyser(const CppConfigFile& config);
 	~TDataAnalyser();
 private:
-	CppConfigFile* mConfig;
-
-	TFile* mInputFile;
+	CppConfigFile mConfig;
+	std::unique_ptr<TFile> mInputFile;
 	TFile* mOutputFile;
 
 	std::vector<TALPIDEEvent*> mEventSet;
@@ -35,6 +34,9 @@ private:
 
 	std::array<std::array<bool, 512>, 1024> mMaskingMap;
 public:
+	void openInputFile();
+	void openOutputFile();
+
 	void extractEvent();
 	void excludeHotPixel();
 	void extractHotPixel();

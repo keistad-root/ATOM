@@ -6,6 +6,9 @@
 
 #include "TDataAnalyser.h"
 
+const std::string configPath = "/home/ychoi/ATOM/config/experiment/analysis.conf";
+const std::string csvPath = "/home/ychoi/ATOM/config/experiment/experiment_information.csv";
+
 CppConfigFile setEnvironment(std::string configTag) {
 	CppConfigFile config("/home/ychoi/ATOM/config/experiment/analysis.conf");
 	io::CSVReader<6> csv("/home/ychoi/ATOM/config/experiment/analysis.csv");
@@ -24,10 +27,12 @@ CppConfigFile setEnvironment(std::string configTag) {
 	return config;
 }
 
+
+
 int main(int argc, char** argv) {
 	CppConfigFile config = setEnvironment(argv[1]);
 
-	TDataAnalyser* analyse = new TDataAnalyser(&config);
+	TDataAnalyser* analyse = new TDataAnalyser(config);
 	analyse->extractEvent();
 	// analyse->excludeHotPixel();
 	analyse->extractCluster();

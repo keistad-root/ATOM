@@ -1,17 +1,21 @@
 #include "TDataAnalyser.h"
 
-TDataAnalyser::TDataAnalyser(CppConfigFile* config) : mConfig(config) {
-	std::filesystem::path inputPath = mConfig->getConfig("File").find("input_file");
+TDataAnalyser::TDataAnalyser(const CppConfigFile& config) : mConfig(config) {
+	std::filesystem::path inputPath = mConfig.getConfig("CONFIG").find("RAW_FILE");
 
 	std::clog << "TAnalyser object for \033[1;32m" << inputPath.stem() << "\033[0m is armed" << std::endl;
-	mInputFile = new TFile(static_cast<TString>(inputPath));
-
-	std::filesystem::path outputPath = mConfig->getConfig("File").find("output_file");
-	mOutputFile = new TFile(static_cast<TString>(outputPath), "RECREATE");
 }
 
-TDataAnalyser::~TDataAnalyser() {
-	mOutputFile->Close();
+TDataAnalyser::~TDataAnalyser() { }
+
+void TDataAnalyser::openInputFile() {
+	std::filesystem::path inputPath = mConfig.getConfig("CONFIG").find("RAW_FILE");
+	mInputFile = std::make_unique<TFile>(static_cast<TString>(inputPath));
+}
+
+void TDataAnalyser::openOutputFile() {
+	std::filesystem::path outputPath = mConfig.getConfig("File").find("output_file");
+	mOutputFile = new TFile(static_cast<TString>(outputPath), "RECREATE");
 }
 
 void TDataAnalyser::extractEvent() {
@@ -60,7 +64,7 @@ void TDataAnalyser::excludeHotPixel() {
 			mMaskingMap[X][Y] = false;
 		}
 	}
-	std::filesystem::path maskingPath = mConfig->getConfig("File").find("mask_file");
+	std::filesystem::path maskingPath = mConfig.getConfig("File").find("mask_file");
 	std::ifstream maskingFile(maskingPath);
 
 	std::string maskingStr;
@@ -99,11 +103,11 @@ void TDataAnalyser::extractHotPixel() {
 		}
 	}
 
-	std::filesystem::path hotPixelFilePath = mConfig->getConfig("File").find("hot_pixel_file");
+	std::filesystem::path hotPixelFilePath = mConfig.getConfig("CONFIG").find("MASK_PIXEL_FILE");
 	std::filesystem::create_directories(hotPixelFilePath.parent_path());
 	std::ofstream hotPixelFile(hotPixelFilePath);
 
-	int hitCut = mConfig->getConfig("Masking").hasKey("hit_cut") ? stoi(mConfig->getConfig("Masking").find("hit_cut")) : -1;
+	int hitCut = mConfig.getConfig("CONFIG").hasKey("HIT_CUT") ? stoi(mConfig.getConfig("CONFIG").find("HIT_CUT")) : -1;
 	if ( hitCut != -1 ) {
 		for ( int y = 0; y < 512; y++ ) {
 			for ( int x = 0; x < 1024; x++ ) {
