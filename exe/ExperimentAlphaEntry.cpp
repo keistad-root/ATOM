@@ -60,13 +60,19 @@ int main() {
 	int nLength, nPhi;
 	double nCollimatorLength, nCollimatorArea;
 	int nMinute;
+	std::vector<std::string> tags;
 	while ( csvWriter.read_row(nTag, nLength, nPhi, nCollimatorLength, nCollimatorArea, nMinute) ) {
-		file << nTag.substr(0, nTag.size() - 1) << ", " << nLength << ", " << nPhi << ", " << nCollimatorLength << ", " << nCollimatorArea << ", " << nMinute;
-		std::array<double, 60> alphaCounts = alphaData.find(nTag.substr(0, nTag.size() - 1))->second;
-		std::array<double, 60> alphaErrors = alphaError.find(nTag.substr(0, nTag.size() - 1))->second;
-		for ( int i = 0; i < 60; i++ ) {
-			file << ", " << alphaCounts[i] << ", " << alphaErrors[i];
+		if ( std::find(tags.begin(), tags.end(), nTag.substr(0, nTag.size() - 1)) != tags.end() ) {
+			continue;
+		} else {
+			file << nTag.substr(0, nTag.size() - 1) << ", " << nLength << ", " << nPhi << ", " << nCollimatorLength << ", " << nCollimatorArea << ", " << nMinute;
+			std::array<double, 60> alphaCounts = alphaData.find(nTag.substr(0, nTag.size() - 1))->second;
+			std::array<double, 60> alphaErrors = alphaError.find(nTag.substr(0, nTag.size() - 1))->second;
+			for ( int i = 0; i < 60; i++ ) {
+				file << ", " << alphaCounts[i] << ", " << alphaErrors[i];
+			}
+			file << std::endl;
+			tags.push_back(nTag.substr(0, nTag.size() - 1));
 		}
-		file << std::endl;
 	}
 }
