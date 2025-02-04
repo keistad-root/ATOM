@@ -12,17 +12,6 @@
 #include "TMath.h"
 #include "TF1.h"
 
-class ExperimentInfo;
-class SimulationInfo {
-
-};
-
-std::vector<ExperimentInfo> getExperimentSet();
-
-int main() {
-	std::vector<ExperimentInfo> expData = getExperimentSet();
-	return 0;
-}
 
 class ExperimentInfo {
 public:
@@ -49,7 +38,28 @@ public:
 	int getMinute() const { return mMinute; }
 	const std::array<double, 60>& getEntry() const { return mEntry; }
 	const std::array<double, 60>& getError() const { return mError; }
+	const std::array<double, 2> getSubEntry(int start, int end) const {
+		std::array<double, 2> subEntry = {0, 0};
+		for ( int i = start - 1; i < end; i++ ) {
+			subEntry[0] += mEntry[i];
+			subEntry[1] += mError[i];
+		}
+		return subEntry;
+	}
 };
+
+class SimulationInfo {
+
+};
+
+std::vector<ExperimentInfo> getExperimentSet();
+
+int main() {
+	std::vector<ExperimentInfo> expData = getExperimentSet();
+	std::cout << expData[0].getTag() << " " << expData[0].getSubEntry(1, 2)[0] << std::endl;
+	return 0;
+}
+
 
 std::vector<ExperimentInfo> getExperimentSet() {
 	io::CSVReader<126> expCSV("/home/ychoi/ATOM/Data/experiment_alpha.csv");
