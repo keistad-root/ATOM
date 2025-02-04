@@ -20,6 +20,7 @@ set(TEST_EXE
 	ExperimentAnalysis
 	ExperimentAnalysisPlot
 	ExperimentPloting
+	ExperimentAlphaEntry
     
 	entrySimulation
 	G4Simulation
