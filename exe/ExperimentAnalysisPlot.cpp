@@ -8,7 +8,7 @@
 
 const std::string configPath = "/home/ychoi/ATOM/config/experiment/analysis_plot.conf";
 const std::string csvPath = "/home/ychoi/ATOM/config/experiment/experiment_information.csv";
-const std::string dataPath = "/mnt/homes/ychoi/entry_test/DATA/experiment.csv";
+const std::string dataPath = "/home/ychoi/ATOM/Data/experiment.csv";
 
 ArgumentParser set_parse(int argc, char** argv) {
 	ArgumentParser parser = ArgumentParser(argc, argv).setDescription("Drawing experiment plots");
@@ -38,7 +38,38 @@ CppConfigFile setEnvironment(const ArgumentParser& parser) {
 
 void addEntry2CSV(const std::string tag, const std::array<int, 60> entry) {
 	io::CSVReader<6> infoCsv(csvPath);
-	infoCsv.read_header(io::ignore_extra_column, "TAG", "LENGTH", "PHI", "COLLIMATOR_LENGTH", "COLLIMATOR_AREA", "EVENT_NUM");
+	infoCsv.read_header(io::ignore_extra_column, "TAG", "LENGTH", "PHI", "COLLIMATOR_LENGTH", "COLLIMATOR_AREA", "MINUTE");
+	std::string infoTag;
+	int infoLength, infoPhi;
+	double COLLIMATOR_LENGTH, COLLIMATOR_AREA;
+	int minute;
+
+	while ( infoCsv.read_row(infoTag, infoLength, infoPhi, COLLIMATOR_LENGTH, COLLIMATOR_AREA, minute) ) {
+		if ( infoTag == tag ) {
+			break;
+		}
+	}
+
+	io::CSVReader<1> csv(dataPath);
+	csv.read_header(io::ignore_extra_column, "TAG");
+	std::string csvTag;
+	bool isExist = false;
+	while ( csv.read_row(csvTag) ) {
+		if ( csvTag == tag ) {
+			isExist = true;
+			break;
+		}
+	}
+
+	if ( !isExist ) {
+		std::ofstream file(dataPath, std::ios::app);
+		file << tag << ", " << infoLength << ", " << infoPhi << ", " << COLLIMATOR_LENGTH << ", " << COLLIMATOR_AREA << ", " << minute;
+		for ( int i = 0; i < 60; i++ ) {
+			file << ", " << (entry[i] * 10. / minute);
+		}
+		file << std::endl;
+		file.close();
+	}
 }
 
 int main(int argc, char** argv) {
@@ -52,6 +83,7 @@ int main(int argc, char** argv) {
 	plot.FillHitInfo();
 	plot.FillClusterInfo();
 	plot.FillShapeInfo();
+	addEntry2CSV(parser.get_value<std::string>("TAG"), plot.getEntry());
 	plot.savePlots();
 	// if ( config.hasConfig("TotalShape") ) plot->saveTotalShape();
 	// if ( config.hasConfig("Top10Shape") ) plot->saveTop10Shape();

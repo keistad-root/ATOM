@@ -58,6 +58,8 @@ public:
 	void saveClusterSizeWithTime();
 
 	void savePlots();
+
+	std::array<int, 60> getEntry();
 };
 
 #endif

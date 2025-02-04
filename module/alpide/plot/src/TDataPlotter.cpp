@@ -90,7 +90,6 @@ void TDataPlotter::FillShapeInfo() {
 
 void TDataPlotter::savePlots() {
 	if ( isHitmap ) {
-		std::cout << "Hello" << std::endl;
 		TCanvas* canvas = new TCanvas("hitmapCanvas", "", 3000, 1500);
 		savePlot(canvas, mHitmap, mConfig.getConfig("HITMAP"));
 		saveCanvas(canvas, mOutputPath, mConfig.getConfig("HITMAP"));
@@ -283,4 +282,12 @@ void TDataPlotter::saveClusterSizeWithTime() {
 	savePlot(canvas, clusterSizeWithTime, "ClusterSizeWithTime");
 
 	saveCanvas(canvas, mOutputPath, mConfig.getConfig("ClusterSizeWithTime"));
+}
+
+std::array<int, 60> TDataPlotter::getEntry() {
+	std::array<int, 60> entry;
+	for ( int i = 0; i < 60; i++ ) {
+		entry[i] = mClustersize->GetBinContent(i + 1);
+	}
+	return entry;
 }
