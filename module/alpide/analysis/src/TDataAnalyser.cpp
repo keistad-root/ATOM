@@ -2,7 +2,6 @@
 
 TDataAnalyser::TDataAnalyser(const CppConfigFile& config) : mConfig(config) {
 	std::filesystem::path inputPath = mConfig.getConfig("CONFIG").find("RAW_FILE");
-
 	std::clog << "TAnalyser object for \033[1;32m" << inputPath.stem() << "\033[0m is armed" << std::endl;
 }
 
