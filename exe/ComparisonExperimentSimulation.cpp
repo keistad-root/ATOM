@@ -49,6 +49,10 @@ public:
 };
 
 class SimulationInfo {
+public:
+	SimulationInfo(const std::string& tag, int length, int phi, double collimatorLength, double collimatorArea, int event) : mTag(tag), mLength(length), mPhi(phi), mCollimatorLength(collimatorLength), mCollimatorArea(collimatorArea), mNEvent(event) { };
+	~SimulationInfo() { };
+private:
 	std::string mTag;
 	int mLength;
 	int mPhi;
@@ -56,7 +60,19 @@ class SimulationInfo {
 	double mCollimatorArea;
 	int mNEvent;
 	std::array<double, 4> mEntry;
-
+public:
+	void setEntry(const std::array<double, 4>& entry) { mEntry = entry; }
+	const std::string& getTag() const { return mTag; }
+	int getLength() const { return mLength; }
+	int getPhi() const { return mPhi; }
+	double getCollimatorLength() const { return mCollimatorLength; }
+	double getCollimatorArea() const { return mCollimatorArea; }
+	int getNEvent() const { return mNEvent; }
+	const std::array<double, 4>& getEntry() const { return mEntry; }
+	double getEEM() const { return mEntry[0]; }
+	double getEAM() const { return mEntry[1]; }
+	double getEAE() const { return mEntry[2]; }
+	double getDouble() const { return mEntry[3]; }
 };
 
 std::vector<ExperimentInfo> getExperimentSet();
