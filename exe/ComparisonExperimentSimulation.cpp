@@ -42,8 +42,9 @@ public:
 		std::array<double, 2> subEntry = {0, 0};
 		for ( int i = start - 1; i < end; i++ ) {
 			subEntry[0] += mEntry[i];
-			subEntry[1] += mError[i];
+			subEntry[1] += pow(mError[i], 2);
 		}
+		subEntry[1] = sqrt(subEntry[1]);
 		return subEntry;
 	}
 };
@@ -79,7 +80,8 @@ std::vector<ExperimentInfo> getExperimentSet();
 
 int main() {
 	std::vector<ExperimentInfo> expData = getExperimentSet();
-	std::cout << expData[0].getTag() << " " << expData[0].getSubEntry(1, 2)[0] << std::endl;
+	std::cout << expData[3].getTag() << " " << expData[3].getSubEntry(1, 1)[0] << " " << expData[3].getSubEntry(1, 1)[1] << " " << expData[3].getSubEntry(4, 4)[0] << " " << expData[3].getSubEntry(4, 4)[1] << " " << expData[3].getSubEntry(5, 32)[0] << " " << expData[3].getSubEntry(5, 32)[1] << " " << expData[3].getSubEntry(40, 60)[0] << " " << expData[3].getSubEntry(40, 60)[1] << std::endl;
+	std::cout << expData[0].getTag() << " " << expData[0].getSubEntry(1, 1)[0] << " " << expData[0].getSubEntry(1, 1)[1] << " " << expData[0].getSubEntry(4, 4)[0] << " " << expData[0].getSubEntry(4, 4)[1] << " " << expData[0].getSubEntry(5, 32)[0] << " " << expData[0].getSubEntry(5, 32)[1] << " " << expData[0].getSubEntry(40, 60)[0] << " " << expData[0].getSubEntry(40, 60)[1] << std::endl;
 	return 0;
 }
 

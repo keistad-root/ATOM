@@ -16,7 +16,7 @@ int main() {
 	std::unordered_map<std::string, std::array<double, 4>> alError;
 
 	while ( CSV.read_row(tag, length, phi, collimatorLength, collimatorArea, eventNum, eem, eam, eae, doubleCluster) ) {
-		std::array<double, 60> errors;
-		errors[i] = std::sqrt(counts[i] * 2580000. / eventNum) * eventNum / 2580000.;
+		double eemError, eamError,
+			errors[i] = std::sqrt(counts[i] * 2580000. / eventNum) * eventNum / 2580000.;
 	}
 }
