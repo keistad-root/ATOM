@@ -80,8 +80,8 @@ std::vector<ExperimentInfo> getExperimentSet();
 
 int main() {
 	std::vector<ExperimentInfo> expData = getExperimentSet();
-	std::cout << expData[3].getTag() << " " << expData[3].getSubEntry(1, 1)[0] << " " << expData[3].getSubEntry(1, 1)[1] << " " << expData[3].getSubEntry(4, 4)[0] << " " << expData[3].getSubEntry(4, 4)[1] << " " << expData[3].getSubEntry(5, 32)[0] << " " << expData[3].getSubEntry(5, 32)[1] << " " << expData[3].getSubEntry(40, 60)[0] << " " << expData[3].getSubEntry(40, 60)[1] << std::endl;
-	std::cout << expData[0].getTag() << " " << expData[0].getSubEntry(1, 1)[0] << " " << expData[0].getSubEntry(1, 1)[1] << " " << expData[0].getSubEntry(4, 4)[0] << " " << expData[0].getSubEntry(4, 4)[1] << " " << expData[0].getSubEntry(5, 32)[0] << " " << expData[0].getSubEntry(5, 32)[1] << " " << expData[0].getSubEntry(40, 60)[0] << " " << expData[0].getSubEntry(40, 60)[1] << std::endl;
+	std::cout << expData[2].getTag() << " " << expData[2].getSubEntry(1, 1)[0] << " " << expData[2].getSubEntry(1, 1)[1] << " " << expData[2].getSubEntry(4, 4)[0] << " " << expData[2].getSubEntry(4, 4)[1] << " " << expData[2].getSubEntry(5, 32)[0] << " " << expData[2].getSubEntry(5, 32)[1] << " " << expData[2].getSubEntry(40, 60)[0] << " " << expData[2].getSubEntry(40, 60)[1] << std::endl;
+	std::cout << expData[4].getTag() << " " << expData[4].getSubEntry(1, 1)[0] << " " << expData[4].getSubEntry(1, 1)[1] << " " << expData[4].getSubEntry(4, 4)[0] << " " << expData[4].getSubEntry(4, 4)[1] << " " << expData[4].getSubEntry(5, 32)[0] << " " << expData[4].getSubEntry(5, 32)[1] << " " << expData[4].getSubEntry(40, 60)[0] << " " << expData[4].getSubEntry(40, 60)[1] << std::endl;
 	return 0;
 }
 
