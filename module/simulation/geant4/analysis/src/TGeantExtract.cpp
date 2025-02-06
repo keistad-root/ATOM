@@ -3,13 +3,13 @@
 TGeantExtract::TGeantExtract(const CppConfigFile& config) {
 	CppConfigDictionary fileConfig = config.getConfig("File");
 
-	if ( fileConfig.find("DIVIDED_NUM") != "1" ) {
-		mIsDivide = true;
-		mNumFile = std::stoi(fileConfig.find("DIVIDED_NUM"));
-	} else {
-		mIsDivide = false;
-		mNumFile = 1;
-	}
+	// if ( fileConfig.find("DIVIDED_NUM") != "1" ) {
+	mIsDivide = true;
+	mNumFile = std::stoi(fileConfig.find("DIVIDED_NUM"));
+	// } else {
+	// 	mIsDivide = false;
+	// 	mNumFile = 1;
+	// }
 
 	std::filesystem::path inputFilePath = fileConfig.find("INPUT_FILE");
 	mInputFileParentPath = inputFilePath.parent_path();
