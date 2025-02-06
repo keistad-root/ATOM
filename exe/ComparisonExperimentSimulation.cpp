@@ -77,6 +77,7 @@ public:
 };
 
 std::vector<ExperimentInfo> getExperimentSet();
+std::vector<SimulationInfo> getSimulationSet();
 
 int main() {
 	std::vector<ExperimentInfo> expData = getExperimentSet();
@@ -84,7 +85,6 @@ int main() {
 	std::cout << expData[4].getTag() << " " << expData[4].getSubEntry(1, 1)[0] << " " << expData[4].getSubEntry(1, 1)[1] << " " << expData[4].getSubEntry(4, 4)[0] << " " << expData[4].getSubEntry(4, 4)[1] << " " << expData[4].getSubEntry(5, 32)[0] << " " << expData[4].getSubEntry(5, 32)[1] << " " << expData[4].getSubEntry(40, 60)[0] << " " << expData[4].getSubEntry(40, 60)[1] << std::endl;
 	return 0;
 }
-
 
 std::vector<ExperimentInfo> getExperimentSet() {
 	io::CSVReader<126> expCSV("/home/ychoi/ATOM/Data/experiment_alpha.csv");
@@ -102,6 +102,10 @@ std::vector<ExperimentInfo> getExperimentSet() {
 		expData.push_back(expInfo);
 	}
 	return expData;
+}
+
+std::vector<SimulationInfo> getSimulationSet() {
+	io::CSVReader<9> simCSV("/home/ychoi/ATOM/Data/simulation_entry.csv");
 }
 
 
