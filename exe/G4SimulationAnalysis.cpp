@@ -70,8 +70,17 @@ void addEntry2CSV(const std::string tag, const std::array<int, 4> entry) {
 	if ( !isExist ) {
 		std::ofstream file(DATA_PATH, std::ios::app);
 		double timeRatio = EVENT_10MIN / eventNum;
+		double eem = entry[0] * timeRatio;
+		double eemError = std::sqrt(eem) * timeRatio;
+		double eam = (entry[1] - 2 * entry[3]) * timeRatio;
+		double eamError = std::sqrt(eam) * timeRatio;
+		double eae = (entry[2] - 2 * entry[3]) * timeRatio;
+		double eaeError = std::sqrt(eae) * timeRatio;
+		double doubleCluster = entry[3] * timeRatio;
+		double doubleClusterError = std::sqrt(doubleCluster) * timeRatio;
 
-		file << tag << ", " << infoLength << ", " << infoPhi << ", " << COLLIMATOR_LENGTH << ", " << COLLIMATOR_AREA << ", " << eventNum << ", " << entry[0] * timeRatio << ", " << (entry[1] - 2 * entry[3]) * timeRatio << ", " << (entry[2] - 2 * entry[3]) * timeRatio << ", " << entry[3] * timeRatio << std::endl;
+		file << tag << ", " << infoLength << ", " << infoPhi << ", " << COLLIMATOR_LENGTH << ", " << COLLIMATOR_AREA << ", " << eventNum << ", ";
+		file << eem << ", " << eemError << ", " << eam << ", " << eamError << ", " << eae << ", " << eaeError << ", " << doubleCluster << ", " << doubleClusterError << std::endl;
 		file.close();
 	}
 }
