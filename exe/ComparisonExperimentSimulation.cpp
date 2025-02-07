@@ -15,6 +15,7 @@
 
 class ExperimentInfo {
 public:
+	ExperimentInfo() { };
 	ExperimentInfo(const std::string& tag, int length, int phi, double collimatorLength, double collimatorArea, int minute) : mTag(tag), mLength(length), mPhi(phi), mCollimatorLength(collimatorLength), mCollimatorArea(collimatorArea), mMinute(minute) { };
 	~ExperimentInfo() { };
 
@@ -77,12 +78,45 @@ public:
 };
 
 std::vector<ExperimentInfo> getExperimentSet();
-std::vector<SimulationInfo> getSimulationSet();
 
 int main() {
+	TGraphErrors* L1Graph[3] = {new TGraphErrors(), new TGraphErrors(), new TGraphErrors()};
+
 	std::vector<ExperimentInfo> expData = getExperimentSet();
-	std::cout << expData[2].getTag() << " " << expData[2].getSubEntry(1, 1)[0] << " " << expData[2].getSubEntry(1, 1)[1] << " " << expData[2].getSubEntry(4, 4)[0] << " " << expData[2].getSubEntry(4, 4)[1] << " " << expData[2].getSubEntry(5, 32)[0] << " " << expData[2].getSubEntry(5, 32)[1] << " " << expData[2].getSubEntry(40, 60)[0] << " " << expData[2].getSubEntry(40, 60)[1] << std::endl;
-	std::cout << expData[4].getTag() << " " << expData[4].getSubEntry(1, 1)[0] << " " << expData[4].getSubEntry(1, 1)[1] << " " << expData[4].getSubEntry(4, 4)[0] << " " << expData[4].getSubEntry(4, 4)[1] << " " << expData[4].getSubEntry(5, 32)[0] << " " << expData[4].getSubEntry(5, 32)[1] << " " << expData[4].getSubEntry(40, 60)[0] << " " << expData[4].getSubEntry(40, 60)[1] << std::endl;
+
+	std::vector<ExperimentInfo> refExpData;
+	std::vector<ExperimentInfo> testExpData;
+
+	for ( auto& exp : expData ) {
+		std::string tag = exp.getTag();
+		if ( tag.find("REF") != std::string::npos ) {
+			refExpData.push_back(exp);
+		} else {
+			testExpData.push_back(exp);
+		}
+	}
+
+	for ( auto& testExp : testExpData ) {
+		if ( testExp.getLength() == 1 ) {
+			ExperimentInfo refL1;
+			for ( auto& refExp : refExpData ) {
+				if ( refExp.getLength() == 1 ) {
+					refL1 = refExp;
+					break;
+				}
+			}
+			std::array<double, 2> refL1Entry = refL1.getSubEntry(1, 1);
+			std::array<double, 2> testL1Entry = testExp.getSubEntry(1, 1);
+			double ratio = testL1Entry[0] / refL1Entry[0];
+			double ratioError = sqrt(pow(testL1Entry[1] / refL1Entry[0], 2) + pow(testL1Entry[1] * refL1Entry[0] / pow(refL1Entry[0], 2), 2));
+			L1Graph[0]->SetPoint(L1Graph[0]->GetN(), testExp.getCollimatorLength(), ratio);
+		}
+	}
+
+	TCanvas* canvas = new TCanvas("L1", "L1", 500, 500);
+	L1Graph[0]->Draw("AP");
+	canvas->SaveAs("L1.png");
+
 	return 0;
 }
 
@@ -104,9 +138,9 @@ std::vector<ExperimentInfo> getExperimentSet() {
 	return expData;
 }
 
-std::vector<SimulationInfo> getSimulationSet() {
-	io::CSVReader<9> simCSV("/home/ychoi/ATOM/Data/simulation_entry.csv");
-}
+// std::vector<SimulationInfo> getSimulationSet() {
+// 	io::CSVReader<9> simCSV("/home/ychoi/ATOM/Data/simulation_entry.csv");
+// }
 
 
 // std::vector<std::tuple<int, int, std::array<double, 4>>> getSimulationData() {
