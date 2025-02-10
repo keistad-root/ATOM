@@ -17,6 +17,12 @@ TDetectorConstruction::TDetectorConstruction(const CppConfigDictionary& config) 
 	} else {
 		mScreenBoolean = true;
 	}
+	mALPIDEposX = stod(config.find("ALPIDE_POSITION_X")) * mm;
+	mALPIDEposY = stod(config.find("ALPIDE_POSITION_Y")) * mm;
+
+	mALPIDEangX = stod(config.find("ALPIDE_ANGLE_X")) * deg;
+	mALPIDEangY = stod(config.find("ALPIDE_ANGLE_Y")) * deg;
+	mALPIDEangZ = stod(config.find("ALPIDE_ANGLE_Z")) * deg;
 }
 
 G4VPhysicalVolume* TDetectorConstruction::Construct() {
@@ -69,21 +75,23 @@ void TDetectorConstruction::getALPIDE() {
 	mAlpideSubstrateLogical->SetVisAttributes(G4VisAttributes(G4Colour::Yellow()));
 
 	mALPIDE = new G4AssemblyVolume();
+
+
+	G4ThreeVector alpideMetalVector = G4ThreeVector(0, 0, -.5 * alpideMetalZ);
+	mALPIDE->AddPlacedVolume(mAlpideMetalLogical, alpideMetalVector, new G4RotationMatrix());
+
+	G4ThreeVector alpideEpitaxialVector = G4ThreeVector(0, 0, -alpideMetalZ - .5 * alpideEpitaxialZ);
+	mALPIDE->AddPlacedVolume(mAlpideEpitaxialLogical, alpideEpitaxialVector, new G4RotationMatrix());
+
+	G4ThreeVector alpideSubstrateVector = G4ThreeVector(0, 0, -alpideMetalZ - alpideEpitaxialZ - .5 * alpideSubstrateZ);
+	mALPIDE->AddPlacedVolume(mAlpideSubstrateLogical, alpideSubstrateVector, new G4RotationMatrix());
+
+	G4ThreeVector alpidePosition = G4ThreeVector(mALPIDEposX, mALPIDEposY, 0);
 	G4RotationMatrix* alpideRotation = new G4RotationMatrix();
 	alpideRotation->rotateX(mALPIDEangX);
 	alpideRotation->rotateY(mALPIDEangY);
 	alpideRotation->rotateZ(mALPIDEangZ);
-
-	G4ThreeVector alpideMetalVector = G4ThreeVector(0, 0, -.5 * alpideMetalZ);
-	mALPIDE->AddPlacedVolume(mAlpideMetalLogical, alpideMetalVector, alpideRotation);
-
-	G4ThreeVector alpideEpitaxialVector = G4ThreeVector(0, 0, -alpideMetalZ - .5 * alpideEpitaxialZ);
-	mALPIDE->AddPlacedVolume(mAlpideEpitaxialLogical, alpideEpitaxialVector, alpideRotation);
-
-	G4ThreeVector alpideSubstrateVector = G4ThreeVector(0, 0, -alpideMetalZ - alpideEpitaxialZ - .5 * alpideSubstrateZ);
-	mALPIDE->AddPlacedVolume(mAlpideSubstrateLogical, alpideSubstrateVector, alpideRotation);
-
-	G4Transform3D t3d = G4Transform3D();
+	G4Transform3D t3d = G4Transform3D(*alpideRotation, alpidePosition);
 	mALPIDE->MakeImprint(mWorldLogical, t3d);
 
 	G4Region* alpideRegion = new G4Region("ALPIDERegion");

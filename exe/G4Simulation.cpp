@@ -21,7 +21,7 @@ const std::string INFORMATION_PATH = "/home/ychoi/ATOM/config/g4simulation/g4inf
 
 CppConfigFile setEnvironment(const ArgumentParser& parser) {
 	CppConfigFile config(CONFIG_PATH);
-	io::CSVReader<7> infoCSV(INFORMATION_PATH);
+	io::CSVReader<8> infoCSV(INFORMATION_PATH);
 
 	infoCSV.read_header(io::ignore_extra_column, "TAG", "SIMULATION_FILE", "COLLIMATOR_LENGTH", "COLLIMATOR_AREA", "AL_SHIELD", "DISTANCE_ALPIDE_COLLIMATOR", "DISTANCE_SOURCE_COLLIMATOR", "EVENT_NUM");
 
@@ -67,6 +67,7 @@ CppConfigFile setEnvironment(const ArgumentParser& parser) {
 ArgumentParser set_parse(int argc, char** argv) {
 	ArgumentParser parser = ArgumentParser(argc, argv).setDescription("Plot the Geant4 simulation data");
 	parser.add_argument("tag").help("Tag for the file").set_default("").add_finish();
+	parser.add_argument("--vis").help("Visualize the simulation").set_default("false").add_finish();
 	parser.parse_args();
 	return parser;
 }
@@ -99,28 +100,28 @@ int main(int argc, char** argv) {
 	// Set initial action
 	runManager->SetUserInitialization(new TActionInitialization(config));
 
-	// Set visualization
 	G4VisManager* visManager = new G4VisExecutive(argc, argv);
 	visManager->Initialize();
-
+	// Set visualization
 	G4UImanager* UImanager = G4UImanager::GetUIpointer();
 
-	// G4UIExecutive* ui = new G4UIExecutive(argc, argv);
-	// UImanager->ApplyCommand("/control/execute init_vis.mac");
-	// ui->SessionStart();
-	// delete ui;
+	G4UIExecutive* ui = new G4UIExecutive(argc, argv, "Qt");
+	if ( parser.get_value<std::string>("vis") == "true" ) {
+		UImanager->ApplyCommand("/control/execute init_vis.mac");
+		ui->SessionStart();
+	} else {
+		UImanager->ApplyCommand("/run/initialize");
 
-	UImanager->ApplyCommand("/run/initialize");
+		UImanager->ApplyCommand("/control/verbose 1");
+		UImanager->ApplyCommand("/run/verbose 1");
+		UImanager->ApplyCommand("/event/verbose 0");
+		UImanager->ApplyCommand("/tracking/verbose 0");
 
-	UImanager->ApplyCommand("/control/verbose 1");
-	UImanager->ApplyCommand("/run/verbose 1");
-	UImanager->ApplyCommand("/event/verbose 0");
-	UImanager->ApplyCommand("/tracking/verbose 0");
-
-	G4String activity = config.getConfig("ENVIRONMENT").find("ACTIVITY");
-	UImanager->ApplyCommand("/run/beamOn " + activity);
-	analysisManager->close();
-
+		G4String activity = config.getConfig("ENVIRONMENT").find("ACTIVITY");
+		UImanager->ApplyCommand("/run/beamOn " + activity);
+		analysisManager->close();
+	}
+	delete ui;
 	delete visManager;
 	delete runManager;
 
