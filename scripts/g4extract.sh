@@ -1,29 +1,26 @@
 #!/bin/bash
 
-# Remove the old tmux session named "g4simulation"
-tmux kill-session -t g4simulation
-
-# Create a new tmux session named "g4simulation"
-tmux new-session -d -s g4simulation
+# Create a new tmux session named "G4SimulationExtract"
+tmux new-session -d -s g4
 
 # Create 10 additional windows (total 11 windows)
-for i in {1..9}; do
-    tmux new-window -t g4simulation
+for i in {1..11}; do
+    tmux new-window -t g4
 done
 
 # Send commands to each window
-tmux send-keys -t g4simulation:0 'htop' C-m
-tmux send-keys -t g4simulation:1 './G4SimulationExtract L1F2AX' C-m
-tmux send-keys -t g4simulation:2 './G4SimulationExtract L1F2AO' C-m
-tmux send-keys -t g4simulation:3 './G4SimulationExtract L1F3AX' C-m
-tmux send-keys -t g4simulation:4 './G4SimulationExtract L1F3AO' C-m
-tmux send-keys -t g4simulation:5 './G4SimulationExtract L1F4AX' C-m
-tmux send-keys -t g4simulation:6 './G4SimulationExtract L1F4AO' C-m
-tmux send-keys -t g4simulation:7 './G4SimulationExtract L1F7AX' C-m
-tmux send-keys -t g4simulation:8 './G4SimulationExtract L1REFAX' C-m
-tmux send-keys -t g4simulation:9 './G4SimulationExtract L1REFAO' C-m
-# tmux send-keys -t g4simulation:10 './G4SimulationExtract L1F4AX_L104' C-m
-# tmux send-keys -t g4simulation:11 './G4SimulationExtract L1F4AX_L105' C-m
+tmux send-keys -t g4:0 'htop' C-m
+tmux send-keys -t g4:1 './G4SimulationExtract L1F4AX_DX000; ./G4SimulationExtract L1F4AX_DY000' C-m
+tmux send-keys -t g4:2 './G4SimulationExtract L1F4AX_DX002; ./G4SimulationExtract L1F4AX_DY002' C-m
+tmux send-keys -t g4:3 './G4SimulationExtract L1F4AX_DX004; ./G4SimulationExtract L1F4AX_DY004' C-m
+tmux send-keys -t g4:4 './G4SimulationExtract L1F4AX_DX006; ./G4SimulationExtract L1F4AX_DY006' C-m
+tmux send-keys -t g4:5 './G4SimulationExtract L1F4AX_DX008; ./G4SimulationExtract L1F4AX_DY008' C-m
+tmux send-keys -t g4:6 './G4SimulationExtract L1F4AX_DX010; ./G4SimulationExtract L1F4AX_DY010' C-m
+tmux send-keys -t g4:7 './G4SimulationExtract L1F4AX_DX012; ./G4SimulationExtract L1F4AX_DY012' C-m
+tmux send-keys -t g4:8 './G4SimulationExtract L1F4AX_DX014; ./G4SimulationExtract L1F4AX_DY014' C-m
+tmux send-keys -t g4:9 './G4SimulationExtract L1F4AX_DX016; ./G4SimulationExtract L1F4AX_DY016' C-m
+tmux send-keys -t g4:10 './G4SimulationExtract L1F4AX_DX018; ./G4SimulationExtract L1F4AX_DY018' C-m
+tmux send-keys -t g4:11 './G4SimulationExtract L1F4AX_DX020; ./G4SimulationExtract L1F4AX_DY020' C-m
 
 # Attach to the tmux session
-tmux attach-session -t g4simulation
+tmux attach-session -t g4
