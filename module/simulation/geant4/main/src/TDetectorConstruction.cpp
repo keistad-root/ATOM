@@ -5,10 +5,10 @@ const G4double N_DENSITY = 14.01 * g / mole;
 const G4double O_DENSITY = 16.00 * g / mole;
 
 TDetectorConstruction::TDetectorConstruction(const CppConfigDictionary& config) : G4VUserDetectorConstruction() {
-	mAirPressure = stod(config.find("air_pressure")) * 0.001;
-	mCollimatorLength = stod(config.find("collimator_length")) * mm;
-	mCollimatorHoleDiameter = 2 * sqrt(stod(config.find("collimator_area")) / CLHEP::pi) * mm;
-	mDistanceBetweenALPIDEAndCollimator = config.hasKey("distance_alpide_and_collimator") ? stod(config.find("distance_alpide_and_collimator")) * mm : 2. * mm;
+	mAirPressure = stod(config.find("AIR_PRESSURE")) * 0.001;
+	mCollimatorLength = stod(config.find("COLLIMATOR_LENGTH")) * mm;
+	mCollimatorHoleDiameter = 2 * sqrt(stod(config.find("COLLIMATOR_AREA")) / CLHEP::pi) * mm;
+	mDistanceBetweenALPIDEAndCollimator = config.hasKey("DISTANCE_ALPIDE_AND_COLLIMATOR") ? stod(config.find("DISTANCE_ALPIDE_AND_COLLIMATOR")) * mm : 2. * mm;
 	if ( config.hasKey("screen") && config.find("screen") == "true" ) {
 		mScreenBoolean = true;
 	} else if ( config.hasKey("screen") && config.find("screen") == "false" ) {
