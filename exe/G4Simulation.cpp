@@ -21,13 +21,13 @@ const std::string INFORMATION_PATH = "/home/ychoi/ATOM/config/g4simulation/g4inf
 
 CppConfigFile setEnvironment(const ArgumentParser& parser) {
 	CppConfigFile config(CONFIG_PATH);
-	io::CSVReader<8> infoCSV(INFORMATION_PATH);
+	io::CSVReader<13> infoCSV(INFORMATION_PATH);
 
-	infoCSV.read_header(io::ignore_extra_column, "TAG", "SIMULATION_FILE", "COLLIMATOR_LENGTH", "COLLIMATOR_AREA", "AL_SHIELD", "DISTANCE_ALPIDE_COLLIMATOR", "DISTANCE_SOURCE_COLLIMATOR", "EVENT_NUM");
+	infoCSV.read_header(io::ignore_extra_column, "TAG", "SIMULATION_FILE", "COLLIMATOR_LENGTH", "COLLIMATOR_AREA", "AL_SHIELD", "DISTANCE_ALPIDE_COLLIMATOR", "DISTANCE_SOURCE_COLLIMATOR", "EVENT_NUM", "ALPIDE_POSITION_X", "ALPIDE_POSITION_Y", "ALPIDE_ANGLE_X", "ALPIDE_ANGLE_Y", "ALPIDE_ANGLE_Z");
 
-	std::string tags, simulationFile, collimatorLength, collimatorArea, alShield, distanceALPIDECollimator, distanceSourceCollimator, nEvent;
+	std::string tags, simulationFile, collimatorLength, collimatorArea, alShield, distanceALPIDECollimator, distanceSourceCollimator, nEvent, alpidePositionX, alpidePositionY, alpideAngleX, alpideAngleY, alpideAngleZ;
 
-	while ( infoCSV.read_row(tags, simulationFile, collimatorLength, collimatorArea, alShield, distanceALPIDECollimator, distanceSourceCollimator, nEvent) ) {
+	while ( infoCSV.read_row(tags, simulationFile, collimatorLength, collimatorArea, alShield, distanceALPIDECollimator, distanceSourceCollimator, nEvent, alpidePositionX, alpidePositionY, alpideAngleX, alpideAngleY, alpideAngleZ) ) {
 		if ( tags == parser.get_value<std::string>("tag") ) {
 			config.modifyConfig("FILE").addDictionary("OUTPUT_FILE", simulationFile);
 			config.modifyConfig("ENVIRONMENT").addDictionary("COLLIMATOR_LENGTH", collimatorLength);
@@ -36,6 +36,12 @@ CppConfigFile setEnvironment(const ArgumentParser& parser) {
 			config.modifyConfig("ENVIRONMENT").addDictionary("DISTANCE_ALPIDE_COLLIMATOR", distanceALPIDECollimator);
 			config.modifyConfig("ENVIRONMENT").addDictionary("DISTANCE_SOURCE_COLLIMATOR", distanceSourceCollimator);
 			config.modifyConfig("ENVIRONMENT").addDictionary("ACTIVITY", nEvent);
+
+			config.modifyConfig("ENVIRONMENT").addDictionary("ALPIDE_POSITION_X", alpidePositionX);
+			config.modifyConfig("ENVIRONMENT").addDictionary("ALPIDE_POSITION_Y", alpidePositionY);
+			config.modifyConfig("ENVIRONMENT").addDictionary("ALPIDE_ANGLE_X", alpideAngleX);
+			config.modifyConfig("ENVIRONMENT").addDictionary("ALPIDE_ANGLE_Y", alpideAngleY);
+			config.modifyConfig("ENVIRONMENT").addDictionary("ALPIDE_ANGLE_Z", alpideAngleZ);
 		}
 	}
 
@@ -102,26 +108,26 @@ int main(int argc, char** argv) {
 
 	G4VisManager* visManager = new G4VisExecutive(argc, argv);
 	visManager->Initialize();
+
 	// Set visualization
 	G4UImanager* UImanager = G4UImanager::GetUIpointer();
 
-	G4UIExecutive* ui = new G4UIExecutive(argc, argv, "Qt");
-	if ( parser.get_value<std::string>("vis") == "true" ) {
-		UImanager->ApplyCommand("/control/execute init_vis.mac");
-		ui->SessionStart();
-	} else {
-		UImanager->ApplyCommand("/run/initialize");
+	// G4UIExecutive* ui = new G4UIExecutive(argc, argv);
+	// UImanager->ApplyCommand("/control/execute init_vis.mac");
+	// ui->SessionStart();
+	// delete ui;
 
-		UImanager->ApplyCommand("/control/verbose 1");
-		UImanager->ApplyCommand("/run/verbose 1");
-		UImanager->ApplyCommand("/event/verbose 0");
-		UImanager->ApplyCommand("/tracking/verbose 0");
+	UImanager->ApplyCommand("/run/initialize");
 
-		G4String activity = config.getConfig("ENVIRONMENT").find("ACTIVITY");
-		UImanager->ApplyCommand("/run/beamOn " + activity);
-		analysisManager->close();
-	}
-	delete ui;
+	UImanager->ApplyCommand("/control/verbose 1");
+	UImanager->ApplyCommand("/run/verbose 1");
+	UImanager->ApplyCommand("/event/verbose 0");
+	UImanager->ApplyCommand("/tracking/verbose 0");
+
+	G4String activity = config.getConfig("ENVIRONMENT").find("ACTIVITY");
+	UImanager->ApplyCommand("/run/beamOn " + activity);
+	analysisManager->close();
+	// delete ui;
 	delete visManager;
 	delete runManager;
 
