@@ -41,6 +41,12 @@ private:
 	G4double mCollimatorLength;
 	G4double mCollimatorHoleDiameter;
 	G4double mDistanceBetweenALPIDEAndCollimator;
+	G4double mDistanceBetweenSourceAndCollimator;
+	G4double mALPIDEposX;
+	G4double mALPIDEposY;
+	G4double mALPIDEangX;
+	G4double mALPIDEangY;
+	G4double mALPIDEangZ;
 	G4bool mScreenBoolean;
 
 public:

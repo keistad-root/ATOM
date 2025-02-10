@@ -23,19 +23,19 @@ CppConfigFile setEnvironment(const ArgumentParser& parser) {
 	CppConfigFile config(CONFIG_PATH);
 	io::CSVReader<7> infoCSV(INFORMATION_PATH);
 
-	infoCSV.read_header(io::ignore_extra_column, "TAG", "SIMULATION_FILE", "COLLIMATOR_LENGTH", "COLLIMATOR_AREA", "AL_SHIELD", "DISTANCE_SOURCE_ALPIDE", "EVENT_NUM");
+	infoCSV.read_header(io::ignore_extra_column, "TAG", "SIMULATION_FILE", "COLLIMATOR_LENGTH", "COLLIMATOR_AREA", "AL_SHIELD", "DISTANCE_ALPIDE_COLLIMATOR", "DISTANCE_SOURCE_COLLIMATOR", "EVENT_NUM");
 
-	std::string tags, simulationFile, collimatorLength, collimatorArea, alShield, distanceSourceALPIDE, nEvent;
+	std::string tags, simulationFile, collimatorLength, collimatorArea, alShield, distanceALPIDECollimator, distanceSourceCollimator, nEvent;
 
-	while ( infoCSV.read_row(tags, simulationFile, collimatorLength, collimatorArea, alShield, distanceSourceALPIDE, nEvent) ) {
+	while ( infoCSV.read_row(tags, simulationFile, collimatorLength, collimatorArea, alShield, distanceALPIDECollimator, distanceSourceCollimator, nEvent) ) {
 		if ( tags == parser.get_value<std::string>("tag") ) {
-			config.modifyConfig("File").addDictionary("output_file", simulationFile);
-			config.modifyConfig("Environment").addDictionary("collimator_length", collimatorLength);
-			config.modifyConfig("Environment").addDictionary("collimator_area", collimatorArea);
-			config.modifyConfig("Environment").addDictionary("screen", alShield);
-			double distanceALPIDECollimator = stod(distanceSourceALPIDE) - .5 * mm - stod(collimatorLength);
-			config.modifyConfig("Environment").addDictionary("distance_alpide_and_collimator", std::to_string(distanceALPIDECollimator));
-			config.modifyConfig("Environment").addDictionary("activity", nEvent);
+			config.modifyConfig("FILE").addDictionary("OUTPUT_FILE", simulationFile);
+			config.modifyConfig("ENVIRONMENT").addDictionary("COLLIMATOR_LENGTH", collimatorLength);
+			config.modifyConfig("ENVIRONMENT").addDictionary("COLLIMATOR_AREA", collimatorArea);
+			config.modifyConfig("ENVIRONMENT").addDictionary("AL_SCREEN", alShield);
+			config.modifyConfig("ENVIRONMENT").addDictionary("DISTANCE_ALPIDE_COLLIMATOR", distanceALPIDECollimator);
+			config.modifyConfig("ENVIRONMENT").addDictionary("DISTANCE_SOURCE_COLLIMATOR", distanceSourceCollimator);
+			config.modifyConfig("ENVIRONMENT").addDictionary("ACTIVITY", nEvent);
 		}
 	}
 
@@ -83,10 +83,10 @@ int main(int argc, char** argv) {
 	G4RunManager* runManager = new G4RunManager;
 
 	// Set geometry
-	runManager->SetUserInitialization(new TDetectorConstruction(config.getConfig("Environment")));
+	runManager->SetUserInitialization(new TDetectorConstruction(config.getConfig("ENVIRONMENT")));
 
 	// Define Analysis Manager
-	std::string outputName = config.getConfig("File").find("output_file");
+	std::string outputName = config.getConfig("FILE").find("OUTPUT_FILE");
 	TAnalysisManager* analysisManager = new TAnalysisManager();
 	analysisManager->setFileName(outputName);
 
@@ -117,7 +117,7 @@ int main(int argc, char** argv) {
 	UImanager->ApplyCommand("/event/verbose 0");
 	UImanager->ApplyCommand("/tracking/verbose 0");
 
-	G4String activity = config.getConfig("Environment").find("activity");
+	G4String activity = config.getConfig("ENVIRONMENT").find("ACTIVITY");
 	UImanager->ApplyCommand("/run/beamOn " + activity);
 	analysisManager->close();
 

@@ -48,11 +48,12 @@ void TPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
 		fParticleGun->SetParticleEnergy(5.4 * MeV);
 	}
 
-	G4double collimatorLength = stod(mConfig.getConfig("Environment").find("collimator_length")) * mm;
-	G4double distanceBetweenALPIDEAndCollimator = mConfig.getConfig("Environment").hasKey("distance_alpide_and_collimator") ? stod(mConfig.getConfig("Environment").find("distance_alpide_and_collimator")) * mm : 2. * mm;
-	G4double centerPositionZ = collimatorLength + distanceBetweenALPIDEAndCollimator + 0.5 * mm;
+	G4double collimatorLength = stod(mConfig.getConfig("ENVIRONMENT").find("COLLIMATOR_LENGTH")) * mm;
+	G4double distanceBetweenALPIDEAndCollimator = mConfig.getConfig("ENVIRONMENT").hasKey("DISTANCE_ALPIDE_COLLIMATOR") ? stod(mConfig.getConfig("ENVIRONMENT").find("DISTANCE_ALPIDE_COLLIMATOR")) * mm : 2. * mm;
+	G4double distanceBetweenSourceAndCollimator = mConfig.getConfig("ENVIRONMENT").hasKey("DISTANCE_SOURCE_COLLIMATOR") ? stod(mConfig.getConfig("ENVIRONMENT").find("DISTANCE_SOURCE_COLLIMATOR")) * mm : .5 * mm;
+	G4double centerPositionZ = (collimatorLength + distanceBetweenALPIDEAndCollimator + distanceBetweenSourceAndCollimator) * mm;
 	G4double centerPosition[3] = {0, 0, centerPositionZ};
-	G4double radius = stod(mConfig.getConfig("Environment").find("source_radius")) * mm;
+	G4double radius = stod(mConfig.getConfig("ENVIRONMENT").find("SOURCE_RADIUS")) * mm;
 
 	G4double r = radius * std::sqrt(G4UniformRand());
 	G4double theta = 2 * M_PI * G4UniformRand();
@@ -79,7 +80,7 @@ const G4ParticleGun* TPrimaryGeneratorAction::GetParticleGun() const {
 }
 
 void TPrimaryGeneratorAction::setAlphaEnergy() {
-	std::string csvPath = mConfig.getConfig("File").find("alpha_energy");
+	std::string csvPath = mConfig.getConfig("FILE").find("ALPHA_ENERGY");
 	io::CSVReader<4> in(csvPath);
 	in.read_header(io::ignore_extra_column, "energy", "energy_uncertainty", "intensity", "intensity_uncertainty");
 	double energy, energyUncertainty, intensity, intensityUncertainty;

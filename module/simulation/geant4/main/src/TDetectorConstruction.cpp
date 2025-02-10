@@ -8,10 +8,11 @@ TDetectorConstruction::TDetectorConstruction(const CppConfigDictionary& config) 
 	mAirPressure = stod(config.find("AIR_PRESSURE")) * 0.001;
 	mCollimatorLength = stod(config.find("COLLIMATOR_LENGTH")) * mm;
 	mCollimatorHoleDiameter = 2 * sqrt(stod(config.find("COLLIMATOR_AREA")) / CLHEP::pi) * mm;
-	mDistanceBetweenALPIDEAndCollimator = config.hasKey("DISTANCE_ALPIDE_AND_COLLIMATOR") ? stod(config.find("DISTANCE_ALPIDE_AND_COLLIMATOR")) * mm : 2. * mm;
-	if ( config.hasKey("screen") && config.find("screen") == "true" ) {
+	mDistanceBetweenALPIDEAndCollimator = config.hasKey("DISTANCE_ALPIDE_COLLIMATOR") ? stod(config.find("DISTANCE_ALPIDE_COLLIMATOR")) * mm : 2. * mm;
+	mDistanceBetweenSourceAndCollimator = config.hasKey("DISTANCE_SOURCE_COLLIMATOR") ? stod(config.find("DISTANCE_SOURCE_COLLIMATOR")) * mm : .5 * mm;
+	if ( config.hasKey("AL_SCREEN") && config.find("AL_SCREEN") == "true" ) {
 		mScreenBoolean = true;
-	} else if ( config.hasKey("screen") && config.find("screen") == "false" ) {
+	} else if ( config.hasKey("AL_SCREEN") && config.find("AL_SCREEN") == "false" ) {
 		mScreenBoolean = false;
 	} else {
 		mScreenBoolean = true;
@@ -68,7 +69,11 @@ void TDetectorConstruction::getALPIDE() {
 	mAlpideSubstrateLogical->SetVisAttributes(G4VisAttributes(G4Colour::Yellow()));
 
 	mALPIDE = new G4AssemblyVolume();
-	G4RotationMatrix* alpideRotation = new G4RotationMatrix(0.0 * deg, 0.0 * deg, 0.0 * deg);
+	G4RotationMatrix* alpideRotation = new G4RotationMatrix();
+	alpideRotation->rotateX(mALPIDEangX);
+	alpideRotation->rotateY(mALPIDEangY);
+	alpideRotation->rotateZ(mALPIDEangZ);
+
 	G4ThreeVector alpideMetalVector = G4ThreeVector(0, 0, -.5 * alpideMetalZ);
 	mALPIDE->AddPlacedVolume(mAlpideMetalLogical, alpideMetalVector, alpideRotation);
 
