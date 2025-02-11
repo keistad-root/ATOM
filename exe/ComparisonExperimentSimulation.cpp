@@ -19,6 +19,7 @@ std::vector<TExperimentInfo> getExperimentSet() {
 }
 
 int main() {
+	std::cout << CMAKE_BINARY_DIR << std::endl;
 	TGraphErrors* L1Graph[3] = {new TGraphErrors(), new TGraphErrors(), new TGraphErrors()};
 
 	std::vector<TExperimentInfo> expData = getExperimentSet();

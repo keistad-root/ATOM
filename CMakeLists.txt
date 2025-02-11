@@ -25,7 +25,6 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clan
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules)
 
 # Find ROOT package
 find_package(ROOT)
@@ -96,6 +95,7 @@ message(STATUS "Garfield Include Directory: ${Garfield_INCLUDE_DIR}")
 file(GLOB_RECURSE HEADERS RELATIVE ${CMAKE_SOURCE_DIR} "module/**/*.h")
 file(GLOB_RECURSE SOURCES RELATIVE ${CMAKE_SOURCE_DIR} "module/**/*.cpp")
 
+
 # Add header and source files to library
 add_library(myProject SHARED ${SOURCES})
 
@@ -118,3 +118,5 @@ add_subdirectory(exe)
 # file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/data)
 # file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/output)
 file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/config)
+
+target_compile_definitions(myProject PRIVATE CMAKE_BINARY_DIR="${CMAKE_BINARY_DIR}")
