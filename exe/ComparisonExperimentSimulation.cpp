@@ -12,80 +12,19 @@
 #include "TMath.h"
 #include "TF1.h"
 
+#include "TExperimentInfo.h"
 
-class ExperimentInfo {
-public:
-	ExperimentInfo() { };
-	ExperimentInfo(const std::string& tag, int length, int phi, double collimatorLength, double collimatorArea, int minute) : mTag(tag), mLength(length), mPhi(phi), mCollimatorLength(collimatorLength), mCollimatorArea(collimatorArea), mMinute(minute) { };
-	~ExperimentInfo() { };
+std::vector<TExperimentInfo> getExperimentSet() {
 
-private:
-	std::string mTag;
-	int mLength;
-	int mPhi;
-	double mCollimatorLength;
-	double mCollimatorArea;
-	int mMinute;
-	std::array<double, 60> mEntry;
-	std::array<double, 60> mError;
-public:
-	void setEntry(const std::array<double, 60>& entry) { mEntry = entry; }
-	void setError(const std::array<double, 60>& error) { mError = error; }
-	const std::string& getTag() const { return mTag; }
-	int getLength() const { return mLength; }
-	int getPhi() const { return mPhi; }
-	double getCollimatorLength() const { return mCollimatorLength; }
-	double getCollimatorArea() const { return mCollimatorArea; }
-	int getMinute() const { return mMinute; }
-	const std::array<double, 60>& getEntry() const { return mEntry; }
-	const std::array<double, 60>& getError() const { return mError; }
-	const std::array<double, 2> getSubEntry(int start, int end) const {
-		std::array<double, 2> subEntry = {0, 0};
-		for ( int i = start - 1; i < end; i++ ) {
-			subEntry[0] += mEntry[i];
-			subEntry[1] += pow(mError[i], 2);
-		}
-		subEntry[1] = sqrt(subEntry[1]);
-		return subEntry;
-	}
-};
-
-class SimulationInfo {
-public:
-	SimulationInfo(const std::string& tag, int length, int phi, double collimatorLength, double collimatorArea, int event) : mTag(tag), mLength(length), mPhi(phi), mCollimatorLength(collimatorLength), mCollimatorArea(collimatorArea), mNEvent(event) { };
-	~SimulationInfo() { };
-private:
-	std::string mTag;
-	int mLength;
-	int mPhi;
-	double mCollimatorLength;
-	double mCollimatorArea;
-	int mNEvent;
-	std::array<double, 4> mEntry;
-public:
-	void setEntry(const std::array<double, 4>& entry) { mEntry = entry; }
-	const std::string& getTag() const { return mTag; }
-	int getLength() const { return mLength; }
-	int getPhi() const { return mPhi; }
-	double getCollimatorLength() const { return mCollimatorLength; }
-	double getCollimatorArea() const { return mCollimatorArea; }
-	int getNEvent() const { return mNEvent; }
-	const std::array<double, 4>& getEntry() const { return mEntry; }
-	double getEEM() const { return mEntry[0]; }
-	double getEAM() const { return mEntry[1]; }
-	double getEAE() const { return mEntry[2]; }
-	double getDouble() const { return mEntry[3]; }
-};
-
-std::vector<ExperimentInfo> getExperimentSet();
+}
 
 int main() {
 	TGraphErrors* L1Graph[3] = {new TGraphErrors(), new TGraphErrors(), new TGraphErrors()};
 
-	std::vector<ExperimentInfo> expData = getExperimentSet();
+	std::vector<TExperimentInfo> expData = getExperimentSet();
 
-	std::vector<ExperimentInfo> refExpData;
-	std::vector<ExperimentInfo> testExpData;
+	std::vector<TExperimentInfo> refExpData;
+	std::vector<TExperimentInfo> testExpData;
 
 	for ( auto& exp : expData ) {
 		std::string tag = exp.getTag();
@@ -98,7 +37,7 @@ int main() {
 
 	for ( auto& testExp : testExpData ) {
 		if ( testExp.getLength() == 1 ) {
-			ExperimentInfo refL1;
+			TExperimentInfo refL1;
 			for ( auto& refExp : refExpData ) {
 				if ( refExp.getLength() == 1 ) {
 					refL1 = refExp;

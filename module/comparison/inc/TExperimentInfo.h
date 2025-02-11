@@ -31,6 +31,7 @@ public:
 	int getMinute() const;
 	const std::array<double, 60>& getEntry() const;
 	const std::array<double, 60>& getError() const;
+	const std::array<double, 2> getSubEntry(int start, int end) const;
 };
 
 #endif

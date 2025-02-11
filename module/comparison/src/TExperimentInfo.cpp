@@ -1,5 +1,6 @@
 #include "TExperimentInfo.h"
-
+#include<cmath>
+#include "TMathUser.h"
 TExperimentInfo::TExperimentInfo() { }
 
 TExperimentInfo::~TExperimentInfo() { }
@@ -58,4 +59,14 @@ const std::array<double, 60>& TExperimentInfo::getEntry() const {
 
 const std::array<double, 60>& TExperimentInfo::getError() const {
 	return mError;
+}
+
+const std::array<double, 2> TExperimentInfo::getSubEntry(int start, int end) const {
+	std::array<double, 2> subEntry = {0, 0};
+	for ( int i = start - 1; i < end; i++ ) {
+		subEntry[0] += mEntry[i];
+		subEntry[1] += std::pow(mError[i], 2);
+	}
+	subEntry[1] = std::sqrt(subEntry[1]);
+	return getEffectiveNumber(subEntry[0], subEntry[1]);
 }
