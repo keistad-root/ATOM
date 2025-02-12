@@ -121,5 +121,5 @@ add_subdirectory(exe)
 # Make data directory to deal with input and output data
 file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Data)
 file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Plot)
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Config)
 
+file(COPY ${CMAKE_SOURCE_DIR}/config DESTINATION ${CMAKE_BINARY_DIR})
