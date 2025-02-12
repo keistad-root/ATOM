@@ -27,6 +27,7 @@ public:
 	void setError(const std::array<double, 60>& error);
 	const std::string& getTag() const;
 	int getLength() const;
+	int getPhi() const;
 	double getCollimatorLength() const;
 	double getCollimatorArea() const;
 	int getMinute() const;

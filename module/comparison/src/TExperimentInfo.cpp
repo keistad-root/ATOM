@@ -45,6 +45,10 @@ int TExperimentInfo::getLength() const {
 	return mLength;
 }
 
+int TExperimentInfo::getPhi() const {
+	return mPhi;
+}
+
 double TExperimentInfo::getCollimatorLength() const {
 	return mCollimatorLength;
 }

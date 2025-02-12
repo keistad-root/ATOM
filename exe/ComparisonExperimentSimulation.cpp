@@ -23,169 +23,96 @@ std::vector<TExperimentInfo> getExperimentSet() {
 int main() {
 	TExperimentInfoSet expSet;
 
-	// TGraphErrors* L1Graph[3] = {new TGraphErrors(), new TGraphErrors(), new TGraphErrors()};
+	TGraphErrors* L1Graph[3] = {new TGraphErrors(), new TGraphErrors(), new TGraphErrors()};
 
-	// std::vector<TExperimentInfo> expData = getExperimentSet();
+	std::vector<TExperimentInfo> refExpData;
+	std::vector<TExperimentInfo> testExpData;
 
-	// std::vector<TExperimentInfo> refExpData;
-	// std::vector<TExperimentInfo> testExpData;
+	for ( auto& exp : expSet.getExperimentSet() ) {
+		std::string tag = exp.getTag();
+		if ( tag.find("REF") != std::string::npos ) {
+			refExpData.push_back(exp);
+		} else {
+			testExpData.push_back(exp);
+		}
+	}
 
-	// for ( auto& exp : expData ) {
-	// 	std::string tag = exp.getTag();
-	// 	if ( tag.find("REF") != std::string::npos ) {
-	// 		refExpData.push_back(exp);
-	// 	} else {
-	// 		testExpData.push_back(exp);
-	// 	}
-	// }
+	for ( auto& testExp : testExpData ) {
+		if ( testExp.getPhi() == 2 ) {
+			TExperimentInfo refL1;
+			for ( auto& refExp : refExpData ) {
+				if ( refExp.getLength() == testExp.getLength() ) {
+					refL1 = refExp;
+					break;
+				}
+			}
+			std::array<double, 2> refL1Entry = refL1.getSubEntry(1, 1);
+			std::array<double, 2> testL1Entry = testExp.getSubEntry(1, 1);
+			double ratio = testL1Entry[0] / refL1Entry[0];
+			double ratioError = sqrt(pow(testL1Entry[1] / refL1Entry[0], 2) + pow(testL1Entry[1] * refL1Entry[0] / pow(refL1Entry[0], 2), 2));
+			L1Graph[0]->SetPoint(L1Graph[0]->GetN(), testExp.getCollimatorLength(), ratio);
+			L1Graph[0]->SetPointError(L1Graph[0]->GetN() - 1, 0.05, ratioError);
+		}
+		if ( testExp.getPhi() == 3 ) {
+			TExperimentInfo refL1;
+			for ( auto& refExp : refExpData ) {
+				if ( refExp.getLength() == testExp.getLength() ) {
+					refL1 = refExp;
+					break;
+				}
+			}
+			std::array<double, 2> refL1Entry = refL1.getSubEntry(1, 1);
+			std::array<double, 2> testL1Entry = testExp.getSubEntry(1, 1);
+			double ratio = testL1Entry[0] / refL1Entry[0];
+			double ratioError = sqrt(pow(testL1Entry[1] / refL1Entry[0], 2) + pow(testL1Entry[1] * refL1Entry[0] / pow(refL1Entry[0], 2), 2));
+			L1Graph[1]->SetPoint(L1Graph[0]->GetN(), testExp.getCollimatorLength(), ratio);
+			L1Graph[1]->SetPointError(L1Graph[0]->GetN() - 1, 0.05, ratioError);
+		}
+		if ( testExp.getPhi() == 4 ) {
+			TExperimentInfo refL1;
+			for ( auto& refExp : refExpData ) {
+				if ( refExp.getLength() == testExp.getLength() ) {
+					refL1 = refExp;
+					break;
+				}
+			}
+			std::array<double, 2> refL1Entry = refL1.getSubEntry(1, 1);
+			std::array<double, 2> testL1Entry = testExp.getSubEntry(1, 1);
+			double ratio = testL1Entry[0] / refL1Entry[0];
+			double ratioError = sqrt(pow(testL1Entry[1] / refL1Entry[0], 2) + pow(testL1Entry[1] * refL1Entry[0] / pow(refL1Entry[0], 2), 2));
+			L1Graph[2]->SetPoint(L1Graph[0]->GetN(), testExp.getCollimatorLength(), ratio);
+			L1Graph[2]->SetPointError(L1Graph[0]->GetN() - 1, 0.05, ratioError);
+		}
+	}
 
-	// for ( auto& testExp : testExpData ) {
-	// 	if ( testExp.getLength() == 1 ) {
-	// 		TExperimentInfo refL1;
-	// 		for ( auto& refExp : refExpData ) {
-	// 			if ( refExp.getLength() == 1 ) {
-	// 				refL1 = refExp;
-	// 				break;
-	// 			}
-	// 		}
-	// 		std::array<double, 2> refL1Entry = refL1.getSubEntry(1, 1);
-	// 		std::array<double, 2> testL1Entry = testExp.getSubEntry(1, 1);
-	// 		double ratio = testL1Entry[0] / refL1Entry[0];
-	// 		double ratioError = sqrt(pow(testL1Entry[1] / refL1Entry[0], 2) + pow(testL1Entry[1] * refL1Entry[0] / pow(refL1Entry[0], 2), 2));
-	// 		L1Graph[0]->SetPoint(L1Graph[0]->GetN(), testExp.getCollimatorLength(), ratio);
-	// 	}
-	// }
+	TCanvas* canvas = new TCanvas("L1", "L1", 1000, 1000);
+	L1Graph[0]->SetTitle("Cluster Size 1 vs. Electrons loss energy in metal layer; Collimator Length[mm]; Ratio to Reference");
+	L1Graph[0]->SetMaximum(0.5);
+	L1Graph[0]->SetMarkerStyle(24);
+	L1Graph[0]->SetMarkerSize(2);
+	L1Graph[0]->SetMarkerColor(kRed);
+	L1Graph[0]->SetLineColor(kRed);
+	L1Graph[0]->Draw("AP");
 
-	// TCanvas* canvas = new TCanvas("L1", "L1", 500, 500);
-	// L1Graph[0]->Draw("AP");
-	// canvas->SaveAs("L1.png");
+	L1Graph[1]->SetMarkerStyle(24);
+	L1Graph[1]->SetMarkerSize(2);
+	L1Graph[1]->SetMarkerColor(kBlue);
+	L1Graph[1]->SetLineColor(kBlue);
+	L1Graph[1]->Draw("P");
+
+	L1Graph[2]->SetMarkerStyle(24);
+	L1Graph[2]->SetMarkerSize(2);
+	L1Graph[2]->SetMarkerColor(kMagenta);
+	L1Graph[2]->SetLineColor(kMagenta);
+	L1Graph[2]->Draw("P");
+
+	canvas->SetGrid();
+	canvas->SetLeftMargin(0.14);
+	// canvas->SetLogy();
+	canvas->SaveAs("Plot/L1.png");
 
 	return 0;
 }
-
-// std::vector<ExperimentInfo> getExperimentSet() {
-// 	io::CSVReader<126> expCSV("/home/ychoi/ATOM/Data/experiment_alpha.csv");
-// 	expCSV.read_header(io::ignore_extra_column, "TAG", "LENGTH", "PHI", "COLLIMATOR_LENGTH", "COLLIMATOR_AREA", "MINUTE", "CS1", "CS1_ERROR", "CS2", "CS2_ERROR", "CS3", "CS3_ERROR", "CS4", "CS4_ERROR", "CS5", "CS5_ERROR", "CS6", "CS6_ERROR", "CS7", "CS7_ERROR", "CS8", "CS8_ERROR", "CS9", "CS9_ERROR", "CS10", "CS10_ERROR", "CS11", "CS11_ERROR", "CS12", "CS12_ERROR", "CS13", "CS13_ERROR", "CS14", "CS14_ERROR", "CS15", "CS15_ERROR", "CS16", "CS16_ERROR", "CS17", "CS17_ERROR", "CS18", "CS18_ERROR", "CS19", "CS19_ERROR", "CS20", "CS20_ERROR", "CS21", "CS21_ERROR", "CS22", "CS22_ERROR", "CS23", "CS23_ERROR", "CS24", "CS24_ERROR", "CS25", "CS25_ERROR", "CS26", "CS26_ERROR", "CS27", "CS27_ERROR", "CS28", "CS28_ERROR", "CS29", "CS29_ERROR", "CS30", "CS30_ERROR", "CS31", "CS31_ERROR", "CS32", "CS32_ERROR", "CS33", "CS33_ERROR", "CS34", "CS34_ERROR", "CS35", "CS35_ERROR", "CS36", "CS36_ERROR", "CS37", "CS37_ERROR", "CS38", "CS38_ERROR", "CS39", "CS39_ERROR", "CS40", "CS40_ERROR", "CS41", "CS41_ERROR", "CS42", "CS42_ERROR", "CS43", "CS43_ERROR", "CS44", "CS44_ERROR", "CS45", "CS45_ERROR", "CS46", "CS46_ERROR", "CS47", "CS47_ERROR", "CS48", "CS48_ERROR", "CS49", "CS49_ERROR", "CS50", "CS50_ERROR", "CS51", "CS51_ERROR", "CS52", "CS52_ERROR", "CS53", "CS53_ERROR", "CS54", "CS54_ERROR", "CS55", "CS55_ERROR", "CS56", "CS56_ERROR", "CS57", "CS57_ERROR", "CS58", "CS58_ERROR", "CS59", "CS59_ERROR", "CS60", "CS60_ERROR");
-// 	std::string tag;
-// 	int length, phi, minute;
-// 	double collimatorLength, collimatorArea;
-// 	std::array<double, 60> entry;
-// 	std::array<double, 60> entryError;
-// 	std::vector<ExperimentInfo> expData;
-// 	while ( expCSV.read_row(tag, length, phi, collimatorLength, collimatorArea, minute, entry[0], entryError[0], entry[1], entryError[0], entry[2], entryError[2], entry[3], entryError[3], entry[4], entryError[4], entry[5], entryError[5], entry[6], entryError[6], entry[7], entryError[7], entry[8], entryError[8], entry[9], entryError[9], entry[10], entryError[10], entry[11], entryError[11], entry[12], entryError[12], entry[13], entryError[13], entry[14], entryError[14], entry[15], entryError[15], entry[16], entryError[16], entry[17], entryError[17], entry[18], entryError[18], entry[19], entryError[19], entry[20], entryError[20], entry[21], entryError[21], entry[22], entryError[22], entry[23], entryError[23], entry[24], entryError[24], entry[25], entryError[25], entry[26], entryError[26], entry[27], entryError[27], entry[28], entryError[28], entry[29], entryError[29], entry[30], entryError[30], entry[31], entryError[31], entry[32], entryError[32], entry[33], entryError[33], entry[34], entryError[34], entry[35], entryError[35], entry[36], entryError[36], entry[37], entryError[37], entry[38], entryError[38], entry[39], entryError[39], entry[40], entryError[40], entry[41], entryError[41], entry[42], entryError[42], entry[43], entryError[43], entry[44], entryError[44], entry[45], entryError[45], entry[46], entryError[46], entry[47], entryError[47], entry[48], entryError[48], entry[49], entryError[49], entry[50], entryError[50], entry[51], entryError[51], entry[52], entryError[52], entry[53], entryError[53], entry[54], entryError[54], entry[55], entryError[55], entry[56], entryError[56], entry[57], entryError[57], entry[58], entryError[58], entry[59], entryError[59]) ) {
-// 		ExperimentInfo expInfo(tag, length, phi, collimatorLength, collimatorArea, minute);
-// 		expInfo.setEntry(entry);
-// 		expInfo.setError(entryError);
-// 		expData.push_back(expInfo);
-// 	}
-// 	return expData;
-// }
-
-// std::vector<SimulationInfo> getSimulationSet() {
-// 	io::CSVReader<9> simCSV("/home/ychoi/ATOM/Data/simulation_entry.csv");
-// }
-
-
-// std::vector<std::tuple<int, int, std::array<double, 4>>> getSimulationData() {
-// 	io::CSVReader<9> simCSV("/home/ychoi/ATOM/Data/simulation_entry.csv");
-
-// 	simCSV.read_header(io::ignore_extra_column, "Collimator", "Length", "Width", "Area", "Area_Error", "Region_A", "Region_B", "Region_C", "Region_D");
-
-// 	std::string collimator;
-// 	int length, width;
-// 	double area, areaError, regionA, regionB, regionC, regionD;
-
-// 	std::vector<std::tuple<int, int, std::array<double, 4>>> simRefData;
-// 	std::vector<std::tuple<int, int, std::array<double, 4>>> simData;
-
-// 	while ( simCSV.read_row(collimator, length, width, area, areaError, regionA, regionB, regionC, regionD) ) {
-// 		if ( width == 11 ) {
-// 			simRefData.push_back(std::make_tuple(length, width, std::array<double, 4>{regionA, regionB, regionC, regionD}));
-// 		} else {
-// 			simData.push_back(std::make_tuple(length, width, std::array<double, 4>{regionA, regionB, regionC, regionD}));
-// 		}
-// 	}
-// 	std::vector<std::tuple<int, int, std::array<double, 4>>> simRatioData;
-
-// 	for ( auto& simDataEntry : simData ) {
-// 		for ( auto& simRefDataEntry : simRefData ) {
-// 			if ( std::get<0>(simDataEntry) == std::get<0>(simRefDataEntry) ) {
-// 				std::array<double, 4> ratio = {std::get<2>(simDataEntry)[0] / std::get<2>(simRefDataEntry)[0], std::get<2>(simDataEntry)[1] / std::get<2>(simRefDataEntry)[1], std::get<2>(simDataEntry)[2] / std::get<2>(simRefDataEntry)[2], std::get<2>(simDataEntry)[3] / std::get<2>(simRefDataEntry)[3]};
-
-// 				simRatioData.push_back(std::make_tuple(std::get<0>(simDataEntry), std::get<1>(simDataEntry), ratio));
-// 			}
-// 		}
-// 	}
-// 	return simRatioData;
-// }
-
-// std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> getExperimentData() {
-// 	io::CSVReader<63> expCSV("/home/ychoi/ATOM/Data/clustersize_entry.csv");
-
-// 	expCSV.read_header(io::ignore_extra_column, "length", "width", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46", "47", "48", "49", "50", "51", "52", "53", "54", "55", "56", "57", "58", "59", "60", "61");
-
-// 	std::tuple<int, int, std::array<double, 61>> expEntry;
-// 	std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> expData;
-// 	std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> expRefData;
-// 	// std::vector<std::array<int, 2>> regionDivide = {{1, 4}, {5, 10}, {11, 32}, {40, 61}};
-// 	std::vector<std::array<int, 2>> regionDivide = {{4, 32}, {5, 10}, {11, 32}, {5, 32}};
-// 	// std::vector<std::array<int, 2>> regionDivide = {{1, 1}, {5, 10}, {11, 32}, {5, 32}};
-// 	// std::vector<std::array<int, 2>> regionDivide = {{4, 4}, {5, 10}, {11, 32}, {5, 32}};
-// 	std::array<double, 4> regionEntry = {0, 0, 0, 0};
-// 	std::array<double, 4> regionEntryError = {0, 0, 0, 0};
-
-// 	while ( expCSV.read_row(std::get<0>(expEntry), std::get<1>(expEntry), std::get<2>(expEntry)[0], std::get<2>(expEntry)[1], std::get<2>(expEntry)[2], std::get<2>(expEntry)[3], std::get<2>(expEntry)[4], std::get<2>(expEntry)[5], std::get<2>(expEntry)[6], std::get<2>(expEntry)[7], std::get<2>(expEntry)[8], std::get<2>(expEntry)[9], std::get<2>(expEntry)[10], std::get<2>(expEntry)[11], std::get<2>(expEntry)[12], std::get<2>(expEntry)[13], std::get<2>(expEntry)[14], std::get<2>(expEntry)[15], std::get<2>(expEntry)[16], std::get<2>(expEntry)[17], std::get<2>(expEntry)[18], std::get<2>(expEntry)[19], std::get<2>(expEntry)[20], std::get<2>(expEntry)[21], std::get<2>(expEntry)[22], std::get<2>(expEntry)[23], std::get<2>(expEntry)[24], std::get<2>(expEntry)[25], std::get<2>(expEntry)[26], std::get<2>(expEntry)[27], std::get<2>(expEntry)[28], std::get<2>(expEntry)[29], std::get<2>(expEntry)[30], std::get<2>(expEntry)[31], std::get<2>(expEntry)[32], std::get<2>(expEntry)[33], std::get<2>(expEntry)[34], std::get<2>(expEntry)[35], std::get<2>(expEntry)[36], std::get<2>(expEntry)[37], std::get<2>(expEntry)[38], std::get<2>(expEntry)[39], std::get<2>(expEntry)[40], std::get<2>(expEntry)[41], std::get<2>(expEntry)[42], std::get<2>(expEntry)[43], std::get<2>(expEntry)[44], std::get<2>(expEntry)[45], std::get<2>(expEntry)[46], std::get<2>(expEntry)[47], std::get<2>(expEntry)[48], std::get<2>(expEntry)[49], std::get<2>(expEntry)[50], std::get<2>(expEntry)[51], std::get<2>(expEntry)[52], std::get<2>(expEntry)[53], std::get<2>(expEntry)[54], std::get<2>(expEntry)[55], std::get<2>(expEntry)[56], std::get<2>(expEntry)[57], std::get<2>(expEntry)[58], std::get<2>(expEntry)[59], std::get<2>(expEntry)[60]) ) {
-// 		for ( int i = 0; i < std::get<2>(expEntry).size(); i++ ) {
-// 			if ( i >= regionDivide[0][0] - 1 && i <= regionDivide[0][1] - 1 ) {
-// 				regionEntry[0] += std::get<2>(expEntry)[i];
-// 			}
-// 			if ( i >= regionDivide[1][0] - 1 && i <= regionDivide[1][1] - 1 ) {
-// 				regionEntry[1] += std::get<2>(expEntry)[i];
-// 			}
-// 			if ( i >= regionDivide[2][0] - 1 && i <= regionDivide[2][1] - 1 ) {
-// 				regionEntry[2] += std::get<2>(expEntry)[i];
-// 			}
-// 			if ( i >= regionDivide[3][0] - 1 && i <= regionDivide[3][1] - 1 ) {
-// 				regionEntry[3] += std::get<2>(expEntry)[i];
-// 			}
-// 		}
-// 		if ( std::get<1>(expEntry) == 11 ) {
-// 			expRefData.push_back(std::make_tuple(std::get<0>(expEntry), std::get<1>(expEntry), regionEntry, regionEntryError));
-// 		} else {
-// 			expData.push_back(std::make_tuple(std::get<0>(expEntry), std::get<1>(expEntry), regionEntry, regionEntryError));
-// 		}
-// 		regionEntry = {0, 0, 0, 0};
-// 	}
-
-// 	io::CSVReader<4> scaleCSV("/home/ychoi/ATOM/Data/time_scale.csv");
-// 	scaleCSV.read_header(io::ignore_extra_column, "length", "width", "time", "scale");
-// 	int length, width, time;
-// 	double scale;
-// 	while ( scaleCSV.read_row(length, width, time, scale) ) {
-// 		for ( auto& expDataEntry : expData ) {
-// 			if ( std::get<0>(expDataEntry) == length && std::get<1>(expDataEntry) == width ) {
-// 				regionEntryError[0] = TMath::Sqrt(TMath::Abs(std::get<2>(expDataEntry)[0] / scale)) * scale;
-// 				regionEntryError[1] = TMath::Sqrt(TMath::Abs(std::get<2>(expDataEntry)[1] / scale)) * scale;
-// 				regionEntryError[2] = TMath::Sqrt(TMath::Abs(std::get<2>(expDataEntry)[2] / scale)) * scale;
-// 				regionEntryError[3] = TMath::Sqrt(TMath::Abs(std::get<2>(expDataEntry)[3] / scale)) * scale;
-// 				std::get<3>(expDataEntry) = regionEntryError;
-// 			}
-// 		}
-// 	}
-// 	std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>> expRatioData;
-// 	for ( auto& expDataEntry : expData ) {
-// 		for ( auto& expRefDataEntry : expRefData ) {
-// 			if ( std::get<0>(expDataEntry) == std::get<0>(expRefDataEntry) ) {
-// 				std::array<double, 4> ratio = {std::get<2>(expDataEntry)[0] / std::get<2>(expRefDataEntry)[0], std::get<2>(expDataEntry)[1] / std::get<2>(expRefDataEntry)[1], std::get<2>(expDataEntry)[2] / std::get<2>(expRefDataEntry)[2], std::get<2>(expDataEntry)[3] / std::get<2>(expRefDataEntry)[3]};
-
-// 				std::array<double, 4> ratioError = {TMath::Sqrt(TMath::Power(std::get<3>(expDataEntry)[0] / std::get<2>(expRefDataEntry)[0], 2) + TMath::Power(std::get<2>(expDataEntry)[0] * std::get<3>(expRefDataEntry)[0] / TMath::Power(std::get<2>(expRefDataEntry)[0], 2), 2)), TMath::Sqrt(TMath::Power(std::get<3>(expDataEntry)[1] / std::get<2>(expRefDataEntry)[1], 2) + TMath::Power(std::get<2>(expDataEntry)[1] * std::get<3>(expRefDataEntry)[1] / TMath::Power(std::get<2>(expRefDataEntry)[1], 2), 2)), TMath::Sqrt(TMath::Power(std::get<3>(expDataEntry)[2] / std::get<2>(expRefDataEntry)[2], 2) + TMath::Power(std::get<2>(expDataEntry)[2] * std::get<3>(expRefDataEntry)[2] / TMath::Power(std::get<2>(expRefDataEntry)[2], 2), 2)), TMath::Sqrt(TMath::Power(std::get<3>(expDataEntry)[3] / std::get<2>(expRefDataEntry)[3], 2) + TMath::Power(std::get<2>(expDataEntry)[3] * std::get<3>(expRefDataEntry)[3] / TMath::Power(std::get<2>(expRefDataEntry)[3], 2), 2))};
-
-// 				expRatioData.push_back(std::make_tuple(std::get<0>(expDataEntry), std::get<1>(expDataEntry), ratio, ratioError));
-// 			}
-// 		}
-// 	}
-// 	return expRatioData;
-// }
 
 // void drawForLength(int drawWidth, std::vector<std::tuple<int, int, std::array<double, 4>, std::array<double, 4>>>& expData, std::vector<std::tuple<int, int, std::array<double, 4>>>& simData) {
 // 	TGraphErrors* expGraphPhi2[4] = {new TGraphErrors(), new TGraphErrors(), new TGraphErrors(), new TGraphErrors()};
