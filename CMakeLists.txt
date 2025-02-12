@@ -118,5 +118,3 @@ add_subdirectory(exe)
 # file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/data)
 # file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/output)
 file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/config)
-
-target_compile_definitions(myProject PRIVATE CMAKE_BINARY_DIR="${CMAKE_BINARY_DIR}")
