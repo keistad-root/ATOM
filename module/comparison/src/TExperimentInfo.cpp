@@ -13,6 +13,10 @@ void TExperimentInfo::setLength(int length) {
 	mLength = length;
 }
 
+void TExperimentInfo::setPhi(int phi) {
+	mPhi = phi;
+}
+
 void TExperimentInfo::setCollimatorLength(double collimatorLength) {
 	mCollimatorLength = collimatorLength;
 }

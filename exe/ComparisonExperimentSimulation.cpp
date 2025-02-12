@@ -12,49 +12,53 @@
 #include "TMath.h"
 #include "TF1.h"
 
+
 #include "TExperimentInfo.h"
+#include "TExperimentInfoSet.h"
 
 std::vector<TExperimentInfo> getExperimentSet() {
 
 }
 
 int main() {
-	TGraphErrors* L1Graph[3] = {new TGraphErrors(), new TGraphErrors(), new TGraphErrors()};
+	TExperimentInfoSet expSet;
 
-	std::vector<TExperimentInfo> expData = getExperimentSet();
+	// TGraphErrors* L1Graph[3] = {new TGraphErrors(), new TGraphErrors(), new TGraphErrors()};
 
-	std::vector<TExperimentInfo> refExpData;
-	std::vector<TExperimentInfo> testExpData;
+	// std::vector<TExperimentInfo> expData = getExperimentSet();
 
-	for ( auto& exp : expData ) {
-		std::string tag = exp.getTag();
-		if ( tag.find("REF") != std::string::npos ) {
-			refExpData.push_back(exp);
-		} else {
-			testExpData.push_back(exp);
-		}
-	}
+	// std::vector<TExperimentInfo> refExpData;
+	// std::vector<TExperimentInfo> testExpData;
 
-	for ( auto& testExp : testExpData ) {
-		if ( testExp.getLength() == 1 ) {
-			TExperimentInfo refL1;
-			for ( auto& refExp : refExpData ) {
-				if ( refExp.getLength() == 1 ) {
-					refL1 = refExp;
-					break;
-				}
-			}
-			std::array<double, 2> refL1Entry = refL1.getSubEntry(1, 1);
-			std::array<double, 2> testL1Entry = testExp.getSubEntry(1, 1);
-			double ratio = testL1Entry[0] / refL1Entry[0];
-			double ratioError = sqrt(pow(testL1Entry[1] / refL1Entry[0], 2) + pow(testL1Entry[1] * refL1Entry[0] / pow(refL1Entry[0], 2), 2));
-			L1Graph[0]->SetPoint(L1Graph[0]->GetN(), testExp.getCollimatorLength(), ratio);
-		}
-	}
+	// for ( auto& exp : expData ) {
+	// 	std::string tag = exp.getTag();
+	// 	if ( tag.find("REF") != std::string::npos ) {
+	// 		refExpData.push_back(exp);
+	// 	} else {
+	// 		testExpData.push_back(exp);
+	// 	}
+	// }
 
-	TCanvas* canvas = new TCanvas("L1", "L1", 500, 500);
-	L1Graph[0]->Draw("AP");
-	canvas->SaveAs("L1.png");
+	// for ( auto& testExp : testExpData ) {
+	// 	if ( testExp.getLength() == 1 ) {
+	// 		TExperimentInfo refL1;
+	// 		for ( auto& refExp : refExpData ) {
+	// 			if ( refExp.getLength() == 1 ) {
+	// 				refL1 = refExp;
+	// 				break;
+	// 			}
+	// 		}
+	// 		std::array<double, 2> refL1Entry = refL1.getSubEntry(1, 1);
+	// 		std::array<double, 2> testL1Entry = testExp.getSubEntry(1, 1);
+	// 		double ratio = testL1Entry[0] / refL1Entry[0];
+	// 		double ratioError = sqrt(pow(testL1Entry[1] / refL1Entry[0], 2) + pow(testL1Entry[1] * refL1Entry[0] / pow(refL1Entry[0], 2), 2));
+	// 		L1Graph[0]->SetPoint(L1Graph[0]->GetN(), testExp.getCollimatorLength(), ratio);
+	// 	}
+	// }
+
+	// TCanvas* canvas = new TCanvas("L1", "L1", 500, 500);
+	// L1Graph[0]->Draw("AP");
+	// canvas->SaveAs("L1.png");
 
 	return 0;
 }

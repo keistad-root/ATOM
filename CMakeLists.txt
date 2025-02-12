@@ -25,6 +25,8 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clan
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
+configure_file (config.h.in ${CMAKE_SOURCE_DIR}/module/config.h @ONLY)
+
 
 # Find ROOT package
 find_package(ROOT)
@@ -92,7 +94,7 @@ message(STATUS "Geant4 Include Directory: ${Geant4_INCLUDE_DIR}")
 message(STATUS "Garfield Include Directory: ${Garfield_INCLUDE_DIR}")
 
 # Find header files and source files and store it as variable
-file(GLOB_RECURSE HEADERS RELATIVE ${CMAKE_SOURCE_DIR} "module/**/*.h")
+file(GLOB_RECURSE HEADERS RELATIVE ${CMAKE_SOURCE_DIR} "module/**/*.h" "module/config.h")
 file(GLOB_RECURSE SOURCES RELATIVE ${CMAKE_SOURCE_DIR} "module/**/*.cpp")
 
 
@@ -115,6 +117,7 @@ include_directories(${Garfield_INCLUDE_DIRS})
 add_subdirectory(exe)
 
 # Make data directory to deal with input and output data
-# file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/data)
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Data)
 # file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/output)
-file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/config)
+file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/Config)
+

@@ -10,6 +10,10 @@ public:
 	~TExperimentInfoSet();
 private:
 	std::vector<TExperimentInfo> mExperimentSet;
+
+public:
+	const std::vector<TExperimentInfo>& getExperimentSet() const;
+	const TExperimentInfo& getExperimentInfo(const std::string& tag) const;
 };
 
 #endif

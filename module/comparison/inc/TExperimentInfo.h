@@ -10,7 +10,7 @@ public:
 	~TExperimentInfo();
 private:
 	std::string mTag;
-	int mLength;
+	int mLength, mPhi;
 	double mCollimatorLength;
 	double mCollimatorArea;
 	int mMinute;
@@ -19,6 +19,7 @@ private:
 public:
 	void setTag(const std::string& tag);
 	void setLength(int length);
+	void setPhi(int phi);
 	void setCollimatorLength(double collimatorLength);
 	void setCollimatorArea(double collimatorArea);
 	void setMinute(int minute);
