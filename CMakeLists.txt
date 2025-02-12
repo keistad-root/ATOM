@@ -67,6 +67,8 @@ add_compile_options("-Wno-attributes")
 # add_compile_options("-O1")
 # add_compile_options("-g")
 
+set(DATA_DIR "${CMAKE_BINARY_DIR}/Data" CACHE PATH "Data directory")	
+
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     add_compile_options(-Wno-c11-extensions)
 endif()

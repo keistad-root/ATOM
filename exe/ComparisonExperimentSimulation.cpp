@@ -12,13 +12,8 @@
 #include "TMath.h"
 #include "TF1.h"
 
-
 #include "TExperimentInfo.h"
 #include "TExperimentInfoSet.h"
-
-std::vector<TExperimentInfo> getExperimentSet() {
-
-}
 
 int main() {
 	TExperimentInfoSet expSet;
