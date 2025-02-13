@@ -8,7 +8,7 @@
 
 const std::string CONFIG_PATH = "/home/ychoi/ATOM/config/g4simulation/g4analysis.conf";
 const std::string INFORMATION_PATH = "/home/ychoi/ATOM/config/g4simulation/g4information.csv";
-const std::string DATA_PATH = "/home/ychoi/ATOM/Data/g4data.csv";
+const std::string DATA_PATH = "/home/ychoi/ATOM/build/Data/g4data.csv";
 
 const double EVENT_10MIN = 2580000;
 
@@ -40,15 +40,15 @@ ArgumentParser set_parse(int argc, char** argv) {
 }
 
 void addEntry2CSV(const std::string tag, const std::array<int, 4> entry) {
-	io::CSVReader<6> infoCsv("/home/ychoi/ATOM/config/g4simulation/g4information.csv");
-	infoCsv.read_header(io::ignore_extra_column, "TAG", "LENGTH", "PHI", "COLLIMATOR_LENGTH", "COLLIMATOR_AREA", "EVENT_NUM");
+	io::CSVReader<13> infoCsv("/home/ychoi/ATOM/config/g4simulation/g4information.csv");
+	infoCsv.read_header(io::ignore_extra_column, "TAG", "LENGTH", "PHI", "COLLIMATOR_LENGTH", "COLLIMATOR_AREA", "EVENT_NUM", "DISTANCE_ALPIDE_COLLIMATOR", "DISTANCE_SOURCE_COLLIMATOR", "ALPIDE_POSITION_X", "ALPIDE_POSITION_Y", "ALPIDE_ANGLE_X", "ALPIDE_ANGLE_Y", "ALPIDE_ANGLE_Z");
 
 	std::string infoTag;
 	int infoLength, infoPhi;
-	double COLLIMATOR_LENGTH, COLLIMATOR_AREA;
+	double COLLIMATOR_LENGTH, COLLIMATOR_AREA, DISTANCE_ALPIDE_COLLIMATOR, DISTANCE_SOURCE_COLLIMATOR, ALPIDE_POSITION_X, ALPIDE_POSITION_Y, ALPIDE_ANGLE_X, ALPIDE_ANGLE_Y, ALPIDE_ANGLE_Z;
 	int eventNum;
 
-	while ( infoCsv.read_row(infoTag, infoLength, infoPhi, COLLIMATOR_LENGTH, COLLIMATOR_AREA, eventNum) ) {
+	while ( infoCsv.read_row(infoTag, infoLength, infoPhi, COLLIMATOR_LENGTH, COLLIMATOR_AREA, eventNum, DISTANCE_ALPIDE_COLLIMATOR, DISTANCE_SOURCE_COLLIMATOR, ALPIDE_POSITION_X, ALPIDE_POSITION_Y, ALPIDE_ANGLE_X, ALPIDE_ANGLE_Y, ALPIDE_ANGLE_Z) ) {
 		if ( infoTag == tag ) {
 			break;
 		}
@@ -79,8 +79,25 @@ void addEntry2CSV(const std::string tag, const std::array<int, 4> entry) {
 		double doubleCluster = entry[3] * timeRatio;
 		double doubleClusterError = std::sqrt(doubleCluster) * timeRatio;
 
-		file << tag << ", " << infoLength << ", " << infoPhi << ", " << COLLIMATOR_LENGTH << ", " << COLLIMATOR_AREA << ", " << eventNum << ", ";
-		file << eem << ", " << eemError << ", " << eam << ", " << eamError << ", " << eae << ", " << eaeError << ", " << doubleCluster << ", " << doubleClusterError << std::endl;
+		file <<
+			tag << ", " <<
+			infoLength << ", " <<
+			infoPhi << ", " <<
+			COLLIMATOR_LENGTH << ", " <<
+			COLLIMATOR_AREA << ", " <<
+			eventNum << ", "
+			<< DISTANCE_ALPIDE_COLLIMATOR << ", " <<
+			DISTANCE_SOURCE_COLLIMATOR << ", " <<
+			ALPIDE_POSITION_X << ", " <<
+			ALPIDE_POSITION_Y << ", " <<
+			ALPIDE_ANGLE_X << ", " <<
+			ALPIDE_ANGLE_Y << ", " <<
+			ALPIDE_ANGLE_Z << ", ";
+		file <<
+			eem << ", " << eemError << ", " <<
+			eam << ", " << eamError << ", " <<
+			eae << ", " << eaeError << ", " <<
+			doubleCluster << ", " << doubleClusterError << std::endl;
 		file.close();
 	}
 }

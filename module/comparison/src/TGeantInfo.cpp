@@ -23,6 +23,34 @@ void TGeantInfo::setCollimatorArea(double collimatorArea) {
 	mCollimatorArea = collimatorArea;
 }
 
+void TGeantInfo::setDistanceAlpideCollimator(double distanceAlpideCollimator) {
+	mDistanceAlpideCollimator = distanceAlpideCollimator;
+}
+
+void TGeantInfo::setDistanceSourceCollimator(double distanceSourceCollimator) {
+	mDistanceSourceCollimator = distanceSourceCollimator;
+}
+
+void TGeantInfo::setAlpidePositionX(double alpidePositionX) {
+	mAlpidePositionX = alpidePositionX;
+}
+
+void TGeantInfo::setAlpidePositionY(double alpidePositionY) {
+	mAlpidePositionY = alpidePositionY;
+}
+
+void TGeantInfo::setAlpideAngleX(double alpideAngleX) {
+	mAlpideAngleX = alpideAngleX;
+}
+
+void TGeantInfo::setAlpideAngleY(double alpideAngleY) {
+	mAlpideAngleY = alpideAngleY;
+}
+
+void TGeantInfo::setAlpideAngleZ(double alpideAngleZ) {
+	mAlpideAngleZ = alpideAngleZ;
+}
+
 void TGeantInfo::setNEvent(int nEvent) {
 	mNEvent = nEvent;
 }
@@ -57,6 +85,34 @@ double TGeantInfo::getCollimatorArea() const {
 
 int TGeantInfo::getNEvent() const {
 	return mNEvent;
+}
+
+double TGeantInfo::getDistanceAlpideCollimator() const {
+	return mDistanceAlpideCollimator;
+}
+
+double TGeantInfo::getDistanceSourceCollimator() const {
+	return mDistanceSourceCollimator;
+}
+
+double TGeantInfo::getAlpidePositionX() const {
+	return mAlpidePositionX;
+}
+
+double TGeantInfo::getAlpidePositionY() const {
+	return mAlpidePositionY;
+}
+
+double TGeantInfo::getAlpideAngleX() const {
+	return mAlpideAngleX;
+}
+
+double TGeantInfo::getAlpideAngleY() const {
+	return mAlpideAngleY;
+}
+
+double TGeantInfo::getAlpideAngleZ() const {
+	return mAlpideAngleZ;
 }
 
 const std::array<double, 2> TGeantInfo::getEEM() const {
