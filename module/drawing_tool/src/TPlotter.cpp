@@ -89,6 +89,15 @@ void TPlotter::savePlot(TCanvas* canvas, TH1* plot, const std::string& configNam
 	setMargin(canvas, mConfig->getConfig(configName));
 }
 
+void TPlotter::savePlot(TCanvas* canvas, TGraph* plot, const CppConfigDictionary& config) {
+	setTitle(plot, config);
+	setXRange(plot, config);
+	setYRange(plot, config);
+	setAttribute(plot, config);
+	config.hasKey("type") ? drawPlot(canvas, plot, config.find("type")) : drawPlot(canvas, plot, "APL");
+	setMargin(canvas, config);
+}
+
 void TPlotter::addLegend(TCanvas* canvas, TLegend*& legend, const CppConfigDictionary& config) {
 	std::vector<double> position = {0, 0, 0, 0};
 	if ( config.hasKey("legend_position") ) {

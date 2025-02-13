@@ -70,6 +70,7 @@ public:
 	void savePlot(TCanvas* canvas, TH2* plot, const std::string& configName);
 	void savePlot(std::unique_ptr<TCanvas>& canvas, std::unique_ptr<TGraph>& plot, const CppConfigDictionary& config);
 	void savePlot(TCanvas* canvas, TMultiGraph* plot, const CppConfigDictionary& config);
+	void savePlot(TCanvas* canvas, TGraph* plot, const CppConfigDictionary& config);
 	// void savePlot(TH1* plot, const std::string& configName);
 	// void savePlot(TH2* plot, const std::string& configName);
 
