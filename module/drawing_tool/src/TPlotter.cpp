@@ -315,6 +315,5 @@ void TPlotter::saveCanvas(TCanvas* canvas, std::filesystem::path path, const Cpp
 	std::string name = config.hasKey("name") ? config.find("name") : "filename";
 	std::string extension = config.hasKey("extension") ? config.find("extension") : EXTENSION;
 	TString savePath = static_cast<TString>((path / name).replace_extension(extension));
-	std::cout << savePath << std::endl;
 	canvas->SaveAs(savePath);
 }

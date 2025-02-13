@@ -24,6 +24,10 @@ inline std::array<double, 2> getEffectiveNumber(double value, double error) {
 	double effectiveValue = floor(value * pow(10, -digit)) / pow(10, -digit);
 	double effectiveError = floor(error * pow(10, -digit)) / pow(10, -digit);
 
+	if ( digit < -100 ) {
+		effectiveValue = 0;
+		effectiveError = 0;
+	}
 	return {effectiveValue, effectiveError};
 }
 

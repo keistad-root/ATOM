@@ -14,6 +14,7 @@
 
 #include "TExperimentInfo.h"
 #include "TExperimentInfoSet.h"
+#include "TGeantInfoSet.h"
 
 #include "CppConfigFile.h"
 #include "TPlotter.h"
@@ -55,6 +56,7 @@ void addExperimentData(const TExperimentInfoSet& expSet, TGraphErrors** graph, c
 				}
 			}
 			std::array<double, 2> refL1Entry = refL1.getSubEntry(min, max);
+
 			std::array<double, 2> testL1Entry = testExp.getSubEntry(min, max);
 			double ratio = testL1Entry[0] / refL1Entry[0];
 			double ratioError = sqrt(pow(testL1Entry[1] / refL1Entry[0], 2) + pow(testL1Entry[1] * refL1Entry[0] / pow(refL1Entry[0], 2), 2));
@@ -79,18 +81,11 @@ void addExperimentData(const TExperimentInfoSet& expSet, TGraphErrors** graph, c
 	}
 }
 
+void getSimulationData(const TGeantInfoSet& expSet, TGraphErrors** graph, const std::string& tag) {
+	std::vector<TGeantInfo> refExpData;
+	std::vector<TGeantInfo> testExpData;
 
-int main() {
-	CppConfigFile configFile("/home/ychoi/ATOM/config/comparison/Final_plot.conf");
-
-	TExperimentInfoSet expSet;
-
-	TGraphErrors* L1Graph[3] = {new TGraphErrors(), new TGraphErrors(), new TGraphErrors()};
-
-	std::vector<TExperimentInfo> refExpData;
-	std::vector<TExperimentInfo> testExpData;
-
-	for ( auto& exp : expSet.getExperimentSet() ) {
+	for ( auto& exp : expSet.getGeantSet() ) {
 		std::string tag = exp.getTag();
 		if ( tag.find("REF") != std::string::npos ) {
 			refExpData.push_back(exp);
@@ -98,80 +93,61 @@ int main() {
 			testExpData.push_back(exp);
 		}
 	}
+}
 
-	for ( auto& testExp : testExpData ) {
-		if ( testExp.getPhi() == 2 ) {
-			TExperimentInfo refL1;
-			for ( auto& refExp : refExpData ) {
-				if ( refExp.getLength() == testExp.getLength() ) {
-					refL1 = refExp;
-					break;
-				}
-			}
-			std::array<double, 2> refL1Entry = refL1.getSubEntry(1, 1);
-			std::array<double, 2> testL1Entry = testExp.getSubEntry(1, 1);
-			double ratio = testL1Entry[0] / refL1Entry[0];
-			double ratioError = sqrt(pow(testL1Entry[1] / refL1Entry[0], 2) + pow(testL1Entry[1] * refL1Entry[0] / pow(refL1Entry[0], 2), 2));
-			L1Graph[0]->SetPoint(L1Graph[0]->GetN(), testExp.getCollimatorLength(), ratio);
-			L1Graph[0]->SetPointError(L1Graph[0]->GetN() - 1, 0.05, ratioError);
-		}
-		if ( testExp.getPhi() == 3 ) {
-			TExperimentInfo refL1;
-			for ( auto& refExp : refExpData ) {
-				if ( refExp.getLength() == testExp.getLength() ) {
-					refL1 = refExp;
-					break;
-				}
-			}
-			std::array<double, 2> refL1Entry = refL1.getSubEntry(1, 1);
-			std::array<double, 2> testL1Entry = testExp.getSubEntry(1, 1);
-			double ratio = testL1Entry[0] / refL1Entry[0];
-			double ratioError = sqrt(pow(testL1Entry[1] / refL1Entry[0], 2) + pow(testL1Entry[1] * refL1Entry[0] / pow(refL1Entry[0], 2), 2));
-			L1Graph[1]->SetPoint(L1Graph[1]->GetN(), testExp.getCollimatorLength(), ratio);
-			L1Graph[1]->SetPointError(L1Graph[1]->GetN() - 1, 0.05, ratioError);
-		}
-		if ( testExp.getPhi() == 4 ) {
-			TExperimentInfo refL1;
-			for ( auto& refExp : refExpData ) {
-				if ( refExp.getLength() == testExp.getLength() ) {
-					refL1 = refExp;
-					break;
-				}
-			}
-			std::array<double, 2> refL1Entry = refL1.getSubEntry(1, 1);
-			std::array<double, 2> testL1Entry = testExp.getSubEntry(1, 1);
-			double ratio = testL1Entry[0] / refL1Entry[0];
-			double ratioError = sqrt(pow(testL1Entry[1] / refL1Entry[0], 2) + pow(testL1Entry[1] * refL1Entry[0] / pow(refL1Entry[0], 2), 2));
-			L1Graph[2]->SetPoint(L1Graph[2]->GetN(), testExp.getCollimatorLength(), ratio);
-			L1Graph[2]->SetPointError(L1Graph[2]->GetN() - 1, 0.05, ratioError);
-		}
-	}
+TMultiGraph* getExperimentGraphs(const TExperimentInfoSet& expSet, const int min, const int max) {
+	TGraphErrors* graph[3] = {new TGraphErrors(), new TGraphErrors(), new TGraphErrors()};
+	addExperimentData(expSet, graph, min, max);
 
 	TMultiGraph* mg = new TMultiGraph();
-	L1Graph[0]->SetMaximum(0.5);
-	L1Graph[0]->SetMarkerStyle(24);
-	L1Graph[0]->SetMarkerSize(2);
-	L1Graph[0]->SetMarkerColor(kRed);
-	L1Graph[0]->SetLineColor(kRed);
-	mg->Add(L1Graph[0]);
-	L1Graph[1]->SetMarkerStyle(24);
-	L1Graph[1]->SetMarkerSize(2);
-	L1Graph[1]->SetMarkerColor(kBlue);
-	L1Graph[1]->SetLineColor(kBlue);
-	L1Graph[1]->Draw("P");
-	mg->Add(L1Graph[1]);
-	L1Graph[2]->SetMarkerStyle(24);
-	L1Graph[2]->SetMarkerSize(2);
-	L1Graph[2]->SetMarkerColor(kMagenta);
-	L1Graph[2]->SetLineColor(kMagenta);
-	L1Graph[2]->Draw("P");
-	mg->Add(L1Graph[2]);
+	graph[0]->SetMarkerStyle(24);
+	graph[0]->SetMarkerSize(2);
+	graph[0]->SetMarkerColor(kRed);
+	graph[0]->SetLineColor(kRed);
+	mg->Add(graph[0]);
+	graph[1]->SetMarkerStyle(24);
+	graph[1]->SetMarkerSize(2);
+	graph[1]->SetMarkerColor(kBlue);
+	graph[1]->SetLineColor(kBlue);
+	mg->Add(graph[1]);
+	graph[2]->SetMarkerStyle(24);
+	graph[2]->SetMarkerSize(2);
+	graph[2]->SetMarkerColor(kMagenta);
+	graph[2]->SetLineColor(kMagenta);
+	mg->Add(graph[2]);
 
-	TCanvas* canvas = new TCanvas("L1", "L1", 1000, 1000);
+	return mg;
+}
+
+int main() {
+	CppConfigFile configFile("/home/ychoi/ATOM/config/comparison/Final_plot.conf");
+
+	TExperimentInfoSet expSet;
+
+	TMultiGraph* cs1 = getExperimentGraphs(expSet, 1, 1);
+
+	TCanvas* cs1Canvas = new TCanvas("cs1", "", 1000, 1000);
 	TPlotter plotter;
-	plotter.savePlot(canvas, mg, configFile.getConfig("CS1_VS_ELECTRON"));
+	plotter.savePlot(cs1Canvas, cs1, configFile.getConfig("CS1_VS_ELECTRON"));
 	std::filesystem::path path = "/home/ychoi/ATOM/build/Data/";
-	plotter.saveCanvas(canvas, path, configFile.getConfig("CS1_VS_ELECTRON"));
+	plotter.saveCanvas(cs1Canvas, path, configFile.getConfig("CS1_VS_ELECTRON"));
+
+	TMultiGraph* cs4 = getExperimentGraphs(expSet, 4, 4);
+
+	TCanvas* cs4Canvas = new TCanvas("cs4", "", 1000, 1000);
+	plotter.savePlot(cs4Canvas, cs4, configFile.getConfig("CS4_VS_ALPHA"));
+	plotter.saveCanvas(cs4Canvas, path, configFile.getConfig("CS4_VS_ALPHA"));
+
+	TMultiGraph* bc = getExperimentGraphs(expSet, 5, 32);
+
+	TCanvas* bcCanvas = new TCanvas("bc", "", 1000, 1000);
+	plotter.savePlot(bcCanvas, bc, configFile.getConfig("BC_VS_ALPHA"));
+	plotter.saveCanvas(bcCanvas, path, configFile.getConfig("BC_VS_ALPHA"));
+
+	TMultiGraph* d = getExperimentGraphs(expSet, 40, 60);
+	TCanvas* dCanvas = new TCanvas("d", "", 1000, 1000);
+	plotter.savePlot(dCanvas, d, configFile.getConfig("D_VS_ALPHA"));
+	plotter.saveCanvas(dCanvas, path, configFile.getConfig("D_VS_ALPHA"));
 
 	return 0;
 }
