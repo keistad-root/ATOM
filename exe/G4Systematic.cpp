@@ -2,7 +2,20 @@
 #include "TF1.h"
 #include "TCanvas.h"
 
+#include "TGeantInfoSet.h"
+
+#include<string>
+
 int main() {
+	TGeantInfoSet set;
+
+	for ( auto& entry : set.getGeantSet() ) {
+		std::string tag = entry.getTag();
+		if ( tag.find("DX") != std::string::npos ) {
+
+		}
+	}
+
 	Double_t width[11] = {0.82, 0.85, 0.88, 0.91, 0.94, 0.97, 1.00, 1.03, 1.06, 1.09, 1.12};
 	Double_t Double[11] = {0, 1, 1, 0, 1, 0, 0, 2, 1, 0, 3};
 	Double_t EAM[11] = {720, 785, 805, 846, 962, 932, 1056, 1067, 1047, 1134, 1226};

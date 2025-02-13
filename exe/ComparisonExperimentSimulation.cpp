@@ -231,7 +231,7 @@ TMultiGraph* getSimulationGraphs(const TGeantInfoSet& simSet, const std::string&
 }
 
 int main() {
-	CppConfigFile configFile("/home/ychoi/ATOM/config/comparison/Final_plot.conf");
+	CppConfigFile configFile("/home/ychoi/ATOM/config/Final_plot.conf");
 
 	TExperimentInfoSet expSet;
 	TGeantInfoSet simSet;
