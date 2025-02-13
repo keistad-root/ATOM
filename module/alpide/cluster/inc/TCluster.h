@@ -52,7 +52,7 @@ public:
 	bool isNeighbour(const TCluster& cluster) const;
 	bool isContain(const std::pair<int, int>& pixel)const;
 	bool isContain(const TCluster& cluster) const;
-	const int getDistance(const std::pair<int, int>& pixel1, const std::pair<int, int>& pixel2) const;
+	int getDistance(const std::pair<int, int>& pixel1, const std::pair<int, int>& pixel2) const;
 
 	void calMembers();
 	void calMinMax();
@@ -65,10 +65,10 @@ public:
 
 	// Getter
 	const std::pair<double, double> getCenter() const;
-	const double getLongRadius() const;
+	double getLongRadius() const;
 	// const std::pair<double, double> getStdevInAxis() const;
 	// const double getStdev() const;
-	const int getSize() const;
+	int getSize() const;
 	// const TMatrix2D<int>& getShape() const;
 
 	// Setter for member
@@ -80,13 +80,13 @@ public:
 	void setMaxY(const int maxY);
 
 	// Getter for member
-	const std::vector <std::pair<int, int>> getPixels() const;
-	const int getEvent() const;
-	const int getTimeStamp() const;
-	const int getMinX() const;
-	const int getMinY() const;
-	const int getMaxX() const;
-	const int getMaxY() const;
+	const std::vector<std::pair<int, int>> getPixels() const;
+	int getEvent() const;
+	int getTimeStamp() const;
+	int getMinX() const;
+	int getMinY() const;
+	int getMaxX() const;
+	int getMaxY() const;
 
 	bool operator==(const TCluster& cluster) const;
 	bool operator!=(const TCluster& cluster) const;

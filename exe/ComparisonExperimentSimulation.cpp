@@ -15,7 +15,74 @@
 #include "TExperimentInfo.h"
 #include "TExperimentInfoSet.h"
 
+#include "CppConfigFile.h"
+#include "TPlotter.h"
+
+void addExperimentData(const TExperimentInfoSet& expSet, TGraphErrors** graph, const int min, const int max) {
+	std::vector<TExperimentInfo> refExpData;
+	std::vector<TExperimentInfo> testExpData;
+
+	for ( auto& exp : expSet.getExperimentSet() ) {
+		std::string tag = exp.getTag();
+		if ( tag.find("REF") != std::string::npos ) {
+			refExpData.push_back(exp);
+		} else {
+			testExpData.push_back(exp);
+		}
+	}
+	for ( auto& testExp : testExpData ) {
+		if ( testExp.getPhi() == 2 ) {
+			TExperimentInfo refL1;
+			for ( auto& refExp : refExpData ) {
+				if ( refExp.getLength() == testExp.getLength() ) {
+					refL1 = refExp;
+					break;
+				}
+			}
+			std::array<double, 2> refL1Entry = refL1.getSubEntry(min, max);
+			std::array<double, 2> testL1Entry = testExp.getSubEntry(min, max);
+			double ratio = testL1Entry[0] / refL1Entry[0];
+			double ratioError = sqrt(pow(testL1Entry[1] / refL1Entry[0], 2) + pow(testL1Entry[1] * refL1Entry[0] / pow(refL1Entry[0], 2), 2));
+			graph[0]->SetPoint(graph[0]->GetN(), testExp.getCollimatorLength(), ratio);
+			graph[0]->SetPointError(graph[0]->GetN() - 1, 0.05, ratioError);
+		}
+		if ( testExp.getPhi() == 3 ) {
+			TExperimentInfo refL1;
+			for ( auto& refExp : refExpData ) {
+				if ( refExp.getLength() == testExp.getLength() ) {
+					refL1 = refExp;
+					break;
+				}
+			}
+			std::array<double, 2> refL1Entry = refL1.getSubEntry(min, max);
+			std::array<double, 2> testL1Entry = testExp.getSubEntry(min, max);
+			double ratio = testL1Entry[0] / refL1Entry[0];
+			double ratioError = sqrt(pow(testL1Entry[1] / refL1Entry[0], 2) + pow(testL1Entry[1] * refL1Entry[0] / pow(refL1Entry[0], 2), 2));
+			graph[1]->SetPoint(graph[1]->GetN(), testExp.getCollimatorLength(), ratio);
+			graph[1]->SetPointError(graph[1]->GetN() - 1, 0.05, ratioError);
+		}
+		if ( testExp.getPhi() == 4 ) {
+			TExperimentInfo refL1;
+			for ( auto& refExp : refExpData ) {
+				if ( refExp.getLength() == testExp.getLength() ) {
+					refL1 = refExp;
+					break;
+				}
+			}
+			std::array<double, 2> refL1Entry = refL1.getSubEntry(min, max);
+			std::array<double, 2> testL1Entry = testExp.getSubEntry(min, max);
+			double ratio = testL1Entry[0] / refL1Entry[0];
+			double ratioError = sqrt(pow(testL1Entry[1] / refL1Entry[0], 2) + pow(testL1Entry[1] * refL1Entry[0] / pow(refL1Entry[0], 2), 2));
+			graph[2]->SetPoint(graph[2]->GetN(), testExp.getCollimatorLength(), ratio);
+			graph[2]->SetPointError(graph[2]->GetN() - 1, 0.05, ratioError);
+		}
+	}
+}
+
+
 int main() {
+	CppConfigFile configFile("/home/ychoi/ATOM/config/comparison/Final_plot.conf");
+
 	TExperimentInfoSet expSet;
 
 	TGraphErrors* L1Graph[3] = {new TGraphErrors(), new TGraphErrors(), new TGraphErrors()};
@@ -60,8 +127,8 @@ int main() {
 			std::array<double, 2> testL1Entry = testExp.getSubEntry(1, 1);
 			double ratio = testL1Entry[0] / refL1Entry[0];
 			double ratioError = sqrt(pow(testL1Entry[1] / refL1Entry[0], 2) + pow(testL1Entry[1] * refL1Entry[0] / pow(refL1Entry[0], 2), 2));
-			L1Graph[1]->SetPoint(L1Graph[0]->GetN(), testExp.getCollimatorLength(), ratio);
-			L1Graph[1]->SetPointError(L1Graph[0]->GetN() - 1, 0.05, ratioError);
+			L1Graph[1]->SetPoint(L1Graph[1]->GetN(), testExp.getCollimatorLength(), ratio);
+			L1Graph[1]->SetPointError(L1Graph[1]->GetN() - 1, 0.05, ratioError);
 		}
 		if ( testExp.getPhi() == 4 ) {
 			TExperimentInfo refL1;
@@ -75,36 +142,36 @@ int main() {
 			std::array<double, 2> testL1Entry = testExp.getSubEntry(1, 1);
 			double ratio = testL1Entry[0] / refL1Entry[0];
 			double ratioError = sqrt(pow(testL1Entry[1] / refL1Entry[0], 2) + pow(testL1Entry[1] * refL1Entry[0] / pow(refL1Entry[0], 2), 2));
-			L1Graph[2]->SetPoint(L1Graph[0]->GetN(), testExp.getCollimatorLength(), ratio);
-			L1Graph[2]->SetPointError(L1Graph[0]->GetN() - 1, 0.05, ratioError);
+			L1Graph[2]->SetPoint(L1Graph[2]->GetN(), testExp.getCollimatorLength(), ratio);
+			L1Graph[2]->SetPointError(L1Graph[2]->GetN() - 1, 0.05, ratioError);
 		}
 	}
 
-	TCanvas* canvas = new TCanvas("L1", "L1", 1000, 1000);
-	L1Graph[0]->SetTitle("Cluster Size 1 vs. Electrons loss energy in metal layer; Collimator Length[mm]; Ratio to Reference");
+	TMultiGraph* mg = new TMultiGraph();
 	L1Graph[0]->SetMaximum(0.5);
 	L1Graph[0]->SetMarkerStyle(24);
 	L1Graph[0]->SetMarkerSize(2);
 	L1Graph[0]->SetMarkerColor(kRed);
 	L1Graph[0]->SetLineColor(kRed);
-	L1Graph[0]->Draw("AP");
-
+	mg->Add(L1Graph[0]);
 	L1Graph[1]->SetMarkerStyle(24);
 	L1Graph[1]->SetMarkerSize(2);
 	L1Graph[1]->SetMarkerColor(kBlue);
 	L1Graph[1]->SetLineColor(kBlue);
 	L1Graph[1]->Draw("P");
-
+	mg->Add(L1Graph[1]);
 	L1Graph[2]->SetMarkerStyle(24);
 	L1Graph[2]->SetMarkerSize(2);
 	L1Graph[2]->SetMarkerColor(kMagenta);
 	L1Graph[2]->SetLineColor(kMagenta);
 	L1Graph[2]->Draw("P");
+	mg->Add(L1Graph[2]);
 
-	canvas->SetGrid();
-	canvas->SetLeftMargin(0.14);
-	// canvas->SetLogy();
-	canvas->SaveAs("Plot/L1.png");
+	TCanvas* canvas = new TCanvas("L1", "L1", 1000, 1000);
+	TPlotter plotter;
+	plotter.savePlot(canvas, mg, configFile.getConfig("CS1_VS_ELECTRON"));
+	std::filesystem::path path = "/home/ychoi/ATOM/build/Data/";
+	plotter.saveCanvas(canvas, path, configFile.getConfig("CS1_VS_ELECTRON"));
 
 	return 0;
 }

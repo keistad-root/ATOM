@@ -85,7 +85,7 @@ bool TCluster::isContain(const TCluster& cluster) const {
 	return neighbour;
 }
 
-const int TCluster::getDistance(const std::pair<int, int>& pixel1, const std::pair<int, int>& pixel2) const {
+int TCluster::getDistance(const std::pair<int, int>& pixel1, const std::pair<int, int>& pixel2) const {
 	return std::abs(pixel1.first - pixel2.first) + std::abs(pixel1.second - pixel2.second);
 }
 
@@ -136,11 +136,11 @@ const std::pair<double, double> TCluster::getCenter() const {
 	return center;
 }
 
-const int TCluster::getSize() const {
+int TCluster::getSize() const {
 	return size;
 }
 
-const double TCluster::getLongRadius() const {
+double TCluster::getLongRadius() const {
 	return mLongRadius;
 }
 
@@ -154,10 +154,10 @@ void TCluster::setMaxY(const int maxY) { mMaxY = maxY; }
 
 // Getter for member
 const std::vector <std::pair<int, int>> TCluster::getPixels() const { return mPixels; }
-const int TCluster::getEvent() const { return mEvent; }
-const int TCluster::getTimeStamp() const { return mTime; }
-const int TCluster::getMinX() const { return mMinX; }
-const int TCluster::getMinY() const { return mMinY; }
-const int TCluster::getMaxX() const { return mMaxX; }
-const int TCluster::getMaxY() const { return mMaxY; }
+int TCluster::getEvent() const { return mEvent; }
+int TCluster::getTimeStamp() const { return mTime; }
+int TCluster::getMinX() const { return mMinX; }
+int TCluster::getMinY() const { return mMinY; }
+int TCluster::getMaxX() const { return mMaxX; }
+int TCluster::getMaxY() const { return mMaxY; }
 
