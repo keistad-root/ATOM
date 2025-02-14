@@ -4,7 +4,7 @@ TDataPlotter::TDataPlotter(const CppConfigFile& config) : TPlotter(), mConfig(co
 	mOutputPath = mConfig.getConfig("CONFIG").find("OUTPUT_DIRECTORY");
 	std::filesystem::create_directories(mOutputPath);
 
-	gStyle->SetOptStat(0);
+	// gStyle->SetOptStat(0);
 
 	if ( mConfig.hasConfig("HITMAP") ) isHitmap = true;
 	if ( mConfig.hasConfig("CLUSTERMAP") ) isClustermap = true;

@@ -6,7 +6,12 @@
 #include "TGeantInfoSet.h"
 #include "CppConfigFile.h"
 #include "TPlotter.h"
+#include "TText.h"
 #include<string>
+
+void setGraph(const std::string& tag) {
+
+}
 
 int main() {
 	CppConfigFile config("/home/ychoi/ATOM/config/Systematic.conf");
@@ -32,15 +37,18 @@ int main() {
 	}
 
 	TCanvas* canvas[3] = {new TCanvas("eemCanvas", "", 1000, 1000), new TCanvas("eaeCanvas", "", 1000, 1000), new TCanvas("doubleCanvas", "", 1000, 1000)};
-	TF1* fitFunc[3] = {new TF1("fitFunc1", "[0]*x+[1]", 0, 100), new TF1("fitFunc2", "[0]*x+[1]", 0, 100), new TF1("fitFunc3", "[0]*x+[1]", 0, 100)};
+	TF1* fitFunc[3] = {new TF1("fitFunc1", "[0]*x+[1]", 0, 3), new TF1("fitFunc2", "[0]*x+[1]", 0, 3), new TF1("fitFunc3", "[0]*x+[1]", 0, 3)};
 	graph[0]->Fit(fitFunc[0], "R");
 	graph[1]->Fit(fitFunc[1], "R");
 	graph[2]->Fit(fitFunc[2], "R");
-
+	TText* text = new TText(.5, .5, static_cast<TString>("Slope: " + std::to_string(fitFunc[0]->GetParameter(0))));
+	text->SetTextSize(2);
 
 	TPlotter plotter;
 	std::filesystem::path outputPath = "/home/ychoi/ATOM/build/Data/";
 	plotter.savePlot(canvas[0], graph[0], config.getConfig("ALPIDE_POSITION_X_EEM"));
+	canvas[0]->cd();
+	text->Draw("SAME");
 	plotter.saveCanvas(canvas[0], outputPath, config.getConfig("ALPIDE_POSITION_X_EEM"));
 	plotter.savePlot(canvas[1], graph[1], config.getConfig("ALPIDE_POSITION_X_EAE"));
 	plotter.saveCanvas(canvas[1], outputPath, config.getConfig("ALPIDE_POSITION_X_EAE"));

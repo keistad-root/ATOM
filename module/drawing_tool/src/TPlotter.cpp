@@ -104,7 +104,7 @@ void TPlotter::addLegend(TCanvas* canvas, TLegend*& legend, const CppConfigDicti
 		position = getDoubleSetFromString(config.find("legend_position"));
 	}
 	legend = new TLegend(position[0], position[1], position[2], position[3]);
-	gStyle->SetOptStat(0);
+	// gStyle->SetOptStat(0);
 	if ( config.hasKey("legend_title") ) {
 		legend->SetHeader(static_cast<TString>(config.find("legend_title")), "C");
 	}
