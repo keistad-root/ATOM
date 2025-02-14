@@ -25,6 +25,7 @@ void setGraph(const CppConfigFile& config, const TGeantInfoSet& set, const std::
 		else if ( name == "DY" ) xAxis = entry.getAlpidePositionY();
 		else if ( name == "_AX" ) xAxis = entry.getAlpideAngleX();
 		else if ( name == "AY" ) xAxis = entry.getAlpideAngleY();
+		else if ( name == "LS" ) xAxis = entry.getDistanceSourceCollimator();
 		graph[0]->SetPoint(graph[0]->GetN(), xAxis, entry.getEEM()[0]);
 		graph[0]->SetPointError(graph[0]->GetN() - 1, 0, entry.getEEM()[1]);
 		graph[1]->SetPoint(graph[1]->GetN(), xAxis, entry.getEAE()[0]);
@@ -66,8 +67,9 @@ int main() {
 	std::vector<TGeantInfo> interestSet;
 	// setGraph(config, set, "DX");
 	// setGraph(config, set, "DY");
-	setGraph(config, set, "_AX");
-	setGraph(config, set, "AY");
+	// setGraph(config, set, "_AX");
+	// setGraph(config, set, "AY");
+	setGraph(config, set, "LS");
 
 	return 0;
 }
