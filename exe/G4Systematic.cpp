@@ -23,7 +23,7 @@ void setGraph(const CppConfigFile& config, const TGeantInfoSet& set, const std::
 		double xAxis;
 		if ( name == "DX" ) xAxis = entry.getAlpidePositionX();
 		else if ( name == "DY" ) xAxis = entry.getAlpidePositionY();
-		else if ( name == "AX" ) xAxis = entry.getAlpideAngleX();
+		else if ( name == "_AX" ) xAxis = entry.getAlpideAngleX();
 		else if ( name == "AY" ) xAxis = entry.getAlpideAngleY();
 		graph[0]->SetPoint(graph[0]->GetN(), xAxis, entry.getEEM()[0]);
 		graph[0]->SetPointError(graph[0]->GetN() - 1, 0, entry.getEEM()[1]);
@@ -33,7 +33,7 @@ void setGraph(const CppConfigFile& config, const TGeantInfoSet& set, const std::
 		graph[2]->SetPointError(graph[2]->GetN() - 1, 0, entry.getDouble()[1]);
 	}
 
-	TF1* fitFunc[3] = {new TF1("fitFunc1", "[0]*x+[1]", 0, 3), new TF1("fitFunc2", "[0]*x+[1]", 0, 3), new TF1("fitFunc3", "[0]*x+[1]", 0, 3)};
+	TF1* fitFunc[3] = {new TF1("fitFunc1", "[0]*x+[1]", 0, 10), new TF1("fitFunc2", "[0]*x+[1]", 0, 10), new TF1("fitFunc3", "[0]*x+[1]", 0, 10)};
 	graph[0]->Fit(fitFunc[0], "R");
 	graph[1]->Fit(fitFunc[1], "R");
 	graph[2]->Fit(fitFunc[2], "R");
@@ -64,9 +64,10 @@ int main() {
 	TGeantInfoSet set;
 
 	std::vector<TGeantInfo> interestSet;
-	setGraph(config, set, "DX");
-	setGraph(config, set, "DY");
-	setGraph(config, set, "AX");
+	// setGraph(config, set, "DX");
+	// setGraph(config, set, "DY");
+	setGraph(config, set, "_AX");
+	setGraph(config, set, "AY");
 
 	return 0;
 }

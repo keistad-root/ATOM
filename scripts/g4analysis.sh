@@ -2,28 +2,28 @@
 
 cd ~/ATOM/build
 
-./G4SimulationAnalysis L1F4AX_LS045
-./G4SimulationAnalysis L1F4AX_LS046
-./G4SimulationAnalysis L1F4AX_LS047
-./G4SimulationAnalysis L1F4AX_LS048
-./G4SimulationAnalysis L1F4AX_LS049
-./G4SimulationAnalysis L1F4AX_LS050
-./G4SimulationAnalysis L1F4AX_LS051
-./G4SimulationAnalysis L1F4AX_LS052
-./G4SimulationAnalysis L1F4AX_LS053
-./G4SimulationAnalysis L1F4AX_LS054
-./G4SimulationAnalysis L1F4AX_LS055
-./G4SimulationAnalysis L1F4AX_LA195
-./G4SimulationAnalysis L1F4AX_LA196
-./G4SimulationAnalysis L1F4AX_LA197
-./G4SimulationAnalysis L1F4AX_LA198
-./G4SimulationAnalysis L1F4AX_LA199
-./G4SimulationAnalysis L1F4AX_LA200
-./G4SimulationAnalysis L1F4AX_LA201
-./G4SimulationAnalysis L1F4AX_LA202
-./G4SimulationAnalysis L1F4AX_LA203
-./G4SimulationAnalysis L1F4AX_LA204
-./G4SimulationAnalysis L1F4AX_LA205
+./G4SimulationAnalysis L1F4AX_W0990
+./G4SimulationAnalysis L1F4AX_W1002
+./G4SimulationAnalysis L1F4AX_W1014
+./G4SimulationAnalysis L1F4AX_W1026
+./G4SimulationAnalysis L1F4AX_W1038
+./G4SimulationAnalysis L1F4AX_W1050
+./G4SimulationAnalysis L1F4AX_W1062
+./G4SimulationAnalysis L1F4AX_W1074
+./G4SimulationAnalysis L1F4AX_W1086
+./G4SimulationAnalysis L1F4AX_W1098
+./G4SimulationAnalysis L1F4AX_W1110
+./G4SimulationAnalysis L1F4AX_L095
+./G4SimulationAnalysis L1F4AX_L096
+./G4SimulationAnalysis L1F4AX_L097
+./G4SimulationAnalysis L1F4AX_L098
+./G4SimulationAnalysis L1F4AX_L099
+./G4SimulationAnalysis L1F4AX_L100
+./G4SimulationAnalysis L1F4AX_L101
+./G4SimulationAnalysis L1F4AX_L102
+./G4SimulationAnalysis L1F4AX_L103
+./G4SimulationAnalysis L1F4AX_L104
+./G4SimulationAnalysis L1F4AX_L105
 
 
 # ./G4SimulationAnalysis L1F2AX
