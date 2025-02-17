@@ -63,6 +63,7 @@ public:
 	void saveClusterSizeWithTime();
 
 	void getMeanX();
+	void getMeanY();
 
 	void savePlots();
 

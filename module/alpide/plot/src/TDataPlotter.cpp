@@ -132,6 +132,7 @@ void TDataPlotter::savePlots() {
 		savePlot(canvas, mHitmap, mConfig.getConfig("HITMAP"));
 		if ( isClustersizeRegion ) {
 			std::vector<double> center = TPlotter::getDoubleSetFromString(mConfig.getConfig("CLUSTERSIZE_REGION").find("center"));
+			std::cout << center[0] << " " << center[1] << std::endl;
 			TEllipse* circle2mm = new TEllipse(center[0], center[1], 2 * (1 / 0.028));
 			circle2mm->SetLineColor(kRed);
 			circle2mm->SetLineWidth(2);
@@ -225,10 +226,43 @@ void TDataPlotter::getMeanX() {
 		sliceX->SetBinContent(517, (sliceX->GetBinContent(515) + sliceX->GetBinContent(519)) / 2);
 		sliceX->SetBinContent(518, (sliceX->GetBinContent(516) + sliceX->GetBinContent(520)) / 2);
 
-		TF1* fitFunc = new TF1("fitFunc", "gaus", 0, ALPIDECOLUMN);
-		sliceX->Fit(fitFunc, "R");
-		meanX->SetBinContent(i, fitFunc->GetParameter(1));
+		TF1* fitFunc = new TF1("fitFunc", "[0]*e^([1]*(x-[2])^2)", 0, ALPIDECOLUMN);
+		fitFunc->SetParameter(0, 1);
+		fitFunc->SetParameter(1, -0.0001);
+		fitFunc->SetParameter(2, 500);
+		sliceX->Fit(fitFunc, "RQ");
+		if ( fitFunc->GetParameter(0) > 0 ) {
+			meanX->Fill(fitFunc->GetParameter(2));
+		}
+		delete sliceX;
+		delete fitFunc;
 	}
+	TCanvas* canvas = new TCanvas("meanXCanvas", "", 3000, 1500);
+	savePlot(canvas, meanX, mConfig.getConfig("MEAN_X"));
+	saveCanvas(canvas, mOutputPath, mConfig.getConfig("MEAN_X"));
+}
+
+void TDataPlotter::getMeanY() {
+	TH1D* meanY = new TH1D("meanY", "Mean Y; Row; Entry", ALPIDEROW, 0, ALPIDEROW);
+	for ( int i = 0; i < ALPIDECOLUMN; i++ ) {
+		TH1D* sliceY = new TH1D("sliceY", "Slice Y; Row; Entry", ALPIDEROW, 0, ALPIDEROW);
+		for ( int j = 0; j < ALPIDEROW; j++ ) {
+			sliceY->SetBinContent(j + 1, mHitmap->GetBinContent(i + 1, j + 1));
+		}
+		TF1* fitFunc = new TF1("fitFunc", "[0]*e^([1]*(x-[2])^2)", 0, ALPIDEROW);
+		// fitFunc->SetParameter(0, 1); 
+		fitFunc->SetParameter(1, -0.0001);
+		fitFunc->SetParameter(2, 301);
+		sliceY->Fit(fitFunc, "RQ");
+		if ( fitFunc->GetParameter(0) > 0 ) {
+			meanY->Fill(fitFunc->GetParameter(2));
+		}
+		delete sliceY;
+		delete fitFunc;
+	}
+	TCanvas* canvas = new TCanvas("meanYCanvas", "", 3000, 1500);
+	savePlot(canvas, meanY, mConfig.getConfig("MEAN_Y"));
+	saveCanvas(canvas, mOutputPath, mConfig.getConfig("MEAN_Y"));
 }
 
 void TDataPlotter::saveTotalShape() {
