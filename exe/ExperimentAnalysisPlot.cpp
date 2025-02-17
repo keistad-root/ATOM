@@ -22,13 +22,14 @@ CppConfigFile setEnvironment(const ArgumentParser& parser) {
 
 	CppConfigFile config(configPath);
 
-	io::CSVReader<3> csv(csvPath);
-	csv.read_header(io::ignore_extra_column, "TAG", "MASKED_FILE", "OUTPUT_DIRECTORY");
-	std::string csvTag, maskedFile, outputDirectory;
-	while ( csv.read_row(csvTag, maskedFile, outputDirectory) ) {
+	io::CSVReader<4> csv(csvPath);
+	csv.read_header(io::ignore_extra_column, "TAG", "MASKED_FILE", "OUTPUT_DIRECTORY", "CENTER");
+	std::string csvTag, maskedFile, outputDirectory, center;
+	while ( csv.read_row(csvTag, maskedFile, outputDirectory, center) ) {
 		if ( csvTag == tag ) {
 			config.modifyConfig("CONFIG").addDictionary("MASKED_FILE", maskedFile);
 			config.modifyConfig("CONFIG").addDictionary("OUTPUT_DIRECTORY", outputDirectory);
+			config.modifyConfig("CLUSTERSIZE_REGION").addDictionary("center", center);
 			break;
 		}
 	}

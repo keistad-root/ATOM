@@ -118,6 +118,29 @@ void TDataPlotter::savePlots() {
 	if ( isHitmap ) {
 		TCanvas* canvas = new TCanvas("hitmapCanvas", "", 3000, 1500);
 		savePlot(canvas, mHitmap, mConfig.getConfig("HITMAP"));
+		if ( isClustersizeRegion ) {
+			std::vector<double> center = TPlotter::getDoubleSetFromString(mConfig.getConfig("CLUSTERSIZE_REGION").find("center"));
+			TEllipse* circle2mm = new TEllipse(center[0], center[1], 2 * (1 / 0.028));
+			circle2mm->SetLineColor(kRed);
+			circle2mm->SetLineWidth(2);
+			circle2mm->SetFillStyle(0);
+			circle2mm->Draw("SAME");
+			TEllipse* circle4mm = new TEllipse(center[0], center[1], 4 * (1 / 0.028));
+			circle4mm->SetLineColor(kRed);
+			circle4mm->SetLineWidth(2);
+			circle4mm->SetFillStyle(0);
+			circle4mm->Draw("SAME");
+			TEllipse* circle6mm = new TEllipse(center[0], center[1], 6 * (1 / 0.028));
+			circle6mm->SetLineColor(kRed);
+			circle6mm->SetLineWidth(2);
+			circle6mm->SetFillStyle(0);
+			circle6mm->Draw("SAME");
+			TEllipse* circle8mm = new TEllipse(center[0], center[1], 8 * (1 / 0.028));
+			circle8mm->SetLineColor(kRed);
+			circle8mm->SetLineWidth(2);
+			circle8mm->SetFillStyle(0);
+			circle8mm->Draw("SAME");
+		}
 		saveCanvas(canvas, mOutputPath, mConfig.getConfig("HITMAP"));
 		delete canvas;
 		canvas = nullptr;
@@ -138,14 +161,28 @@ void TDataPlotter::savePlots() {
 	}
 	if ( isClustersizeRegion ) {
 		TCanvas* canvas = new TCanvas("clustersizeRegionCanvas", "", 3000, 1500);
+		TLegend* legend = new TLegend(0.7, 0.6, 0.9, 0.9);
 		mClusterSizeOfRegion[0]->SetLineColor(kRed);
+		mClusterSizeOfRegion[0]->SetLineWidth(4);
+		legend->AddEntry(mClusterSizeOfRegion[0], "R=2mm", "l");
 		mClusterSizeOfRegion[1]->SetLineColor(kBlue);
+		mClusterSizeOfRegion[1]->SetLineWidth(4);
+		legend->AddEntry(mClusterSizeOfRegion[1], "R=4mm", "l");
 		mClusterSizeOfRegion[2]->SetLineColor(kMagenta);
+		mClusterSizeOfRegion[2]->SetLineWidth(4);
+		legend->AddEntry(mClusterSizeOfRegion[2], "R=6mm", "l");
 		mClusterSizeOfRegion[3]->SetLineColor(kGreen + 3);
+		mClusterSizeOfRegion[3]->SetLineWidth(4);
+		legend->AddEntry(mClusterSizeOfRegion[3], "R=8mm", "l");
+		mClustersize->SetLineColor(kBlack);
+		mClustersize->SetLineWidth(4);
+		legend->AddEntry(mClustersize, "No Radius", "l");
 		savePlot(canvas, mClusterSizeOfRegion[0], mConfig.getConfig("CLUSTERSIZE_REGION"));
 		mClusterSizeOfRegion[1]->Draw("SAME");
 		mClusterSizeOfRegion[2]->Draw("SAME");
 		mClusterSizeOfRegion[3]->Draw("SAME");
+		mClustersize->Draw("SAME");
+		saveLegend(canvas, legend);
 		saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERSIZE_REGION"));
 		delete canvas;
 		canvas = nullptr;

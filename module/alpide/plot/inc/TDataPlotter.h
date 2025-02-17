@@ -11,6 +11,7 @@
 #include "TLine.h"
 #include "TPad.h"
 #include "TText.h"
+#include "TEllipse.h"
 
 // User header
 #include "TALPIDEEvent.h"
