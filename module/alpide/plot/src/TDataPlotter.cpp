@@ -240,6 +240,7 @@ void TDataPlotter::getMeanX() {
 	TCanvas* canvas = new TCanvas("meanXCanvas", "", 3000, 1500);
 	savePlot(canvas, meanX, mConfig.getConfig("MEAN_X"));
 	saveCanvas(canvas, mOutputPath, mConfig.getConfig("MEAN_X"));
+	delete canvas;
 }
 
 void TDataPlotter::getMeanY() {
@@ -263,8 +264,11 @@ void TDataPlotter::getMeanY() {
 	TCanvas* canvas = new TCanvas("meanYCanvas", "", 3000, 1500);
 	savePlot(canvas, meanY, mConfig.getConfig("MEAN_Y"));
 	TF1* fitFunc = new TF1("fitFunc", "[0]*e^([1]*(x-[2])^2)", 250, 350);
-	meanY->Fit(fitFunc, "RQ");
+	fitFunc->SetParameter(1, -0.01);
+	fitFunc->SetParameter(2, 300);
+	meanY->Fit(fitFunc, "R");
 	saveCanvas(canvas, mOutputPath, mConfig.getConfig("MEAN_Y"));
+	delete canvas;
 }
 
 void TDataPlotter::saveTotalShape() {
