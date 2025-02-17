@@ -9,6 +9,7 @@ TDataPlotter::TDataPlotter(const CppConfigFile& config) : TPlotter(), mConfig(co
 	if ( mConfig.hasConfig("HITMAP") ) isHitmap = true;
 	if ( mConfig.hasConfig("CLUSTERMAP") ) isClustermap = true;
 	if ( mConfig.hasConfig("CLUSTERSIZE") ) isClustersize = true;
+	if ( mConfig.hasConfig("CLUSTERSIZE_REGION") ) isClustersizeRegion = true;
 }
 
 TDataPlotter::~TDataPlotter() { }
@@ -30,6 +31,12 @@ void TDataPlotter::InitPlot() {
 	if ( isClustersize ) {
 		mClustersize = new TH1D("clustersize", "Cluster size; Cluster size; Entry", 100, .5, 100.5);
 		setBins(mClustersize, mConfig.getConfig("CLUSTERSIZE"));
+	}
+	if ( isClustersizeRegion ) {
+		mClusterSizeOfRegion.push_back(new TH1D("R=2mm", "", 100, .5, 100.5));
+		mClusterSizeOfRegion.push_back(new TH1D("R=4mm", "", 100, .5, 100.5));
+		mClusterSizeOfRegion.push_back(new TH1D("R=6mm", "", 100, .5, 100.5));
+		mClusterSizeOfRegion.push_back(new TH1D("R=8mm", "", 100, .5, 100.5));
 	}
 }
 
@@ -66,6 +73,25 @@ void TDataPlotter::FillClusterInfo() {
 		clusterTree->GetEntry(iCluster);
 		if ( isClustermap ) mClustermap->Fill(x, y);
 		if ( isClustersize ) mClustersize->Fill(size);
+		if ( isClustersizeRegion ) {
+			std::vector<double> center = TPlotter::getDoubleSetFromString(mConfig.getConfig("CLUSTERSIZE_REGION").find("center"));
+
+			if ( std::abs(x - center[0]) < 2 * (1 / 0.028) && std::abs(y - center[1]) < 2 * (1 / 0.028) ) {
+				mClusterSizeOfRegion[0]->Fill(size);
+				mClusterSizeOfRegion[1]->Fill(size);
+				mClusterSizeOfRegion[2]->Fill(size);
+				mClusterSizeOfRegion[3]->Fill(size);
+			} else if ( std::abs(x - center[0]) < 4 * (1 / 0.028) && std::abs(y - center[1]) < 4 * (1 / 0.028) ) {
+				mClusterSizeOfRegion[1]->Fill(size);
+				mClusterSizeOfRegion[2]->Fill(size);
+				mClusterSizeOfRegion[3]->Fill(size);
+			} else if ( std::abs(x - center[0]) < 6 * (1 / 0.028) && std::abs(y - center[1]) < 6 * (1 / 0.028) ) {
+				mClusterSizeOfRegion[2]->Fill(size);
+				mClusterSizeOfRegion[3]->Fill(size);
+			} else if ( std::abs(x - center[0]) < 8 * (1 / 0.028) && std::abs(y - center[1]) < 8 * (1 / 0.028) ) {
+				mClusterSizeOfRegion[3]->Fill(size);
+			}
+		}
 	}
 }
 
@@ -107,6 +133,20 @@ void TDataPlotter::savePlots() {
 		TCanvas* canvas = new TCanvas("clustersizeCanvas", "", 3000, 1500);
 		savePlot(canvas, mClustersize, mConfig.getConfig("CLUSTERSIZE"));
 		saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERSIZE"));
+		delete canvas;
+		canvas = nullptr;
+	}
+	if ( isClustersizeRegion ) {
+		TCanvas* canvas = new TCanvas("clustersizeRegionCanvas", "", 3000, 1500);
+		mClusterSizeOfRegion[0]->SetLineColor(kRed);
+		mClusterSizeOfRegion[1]->SetLineColor(kBlue);
+		mClusterSizeOfRegion[2]->SetLineColor(kMagenta);
+		mClusterSizeOfRegion[3]->SetLineColor(kGreen + 3);
+		savePlot(canvas, mClusterSizeOfRegion[0], mConfig.getConfig("CLUSTERSIZE_REGION"));
+		mClusterSizeOfRegion[1]->Draw("SAME");
+		mClusterSizeOfRegion[2]->Draw("SAME");
+		mClusterSizeOfRegion[3]->Draw("SAME");
+		saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERSIZE_REGION"));
 		delete canvas;
 		canvas = nullptr;
 	}
