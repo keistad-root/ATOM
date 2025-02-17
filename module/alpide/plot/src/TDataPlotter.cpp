@@ -231,7 +231,7 @@ void TDataPlotter::getMeanX() {
 		fitFunc->SetParameter(1, -0.0001);
 		fitFunc->SetParameter(2, 500);
 		sliceX->Fit(fitFunc, "RQ");
-		if ( fitFunc->GetParameter(0) > 0 ) {
+		if ( fitFunc->GetParameter(0) > 0.1 ) {
 			meanX->Fill(fitFunc->GetParameter(2));
 		}
 		delete sliceX;
@@ -252,9 +252,9 @@ void TDataPlotter::getMeanY() {
 		TF1* fitFunc = new TF1("fitFunc", "[0]*e^([1]*(x-[2])^2)", 0, ALPIDEROW);
 		// fitFunc->SetParameter(0, 1); 
 		fitFunc->SetParameter(1, -0.0001);
-		fitFunc->SetParameter(2, 301);
+		// fitFunc->SetParLimits(2, 250, 350);
 		sliceY->Fit(fitFunc, "RQ");
-		if ( fitFunc->GetParameter(0) > 0 ) {
+		if ( fitFunc->GetParameter(0) > 0.1 ) {
 			meanY->Fill(fitFunc->GetParameter(2));
 		}
 		delete sliceY;
@@ -262,6 +262,8 @@ void TDataPlotter::getMeanY() {
 	}
 	TCanvas* canvas = new TCanvas("meanYCanvas", "", 3000, 1500);
 	savePlot(canvas, meanY, mConfig.getConfig("MEAN_Y"));
+	TF1* fitFunc = new TF1("fitFunc", "[0]*e^([1]*(x-[2])^2)", 250, 350);
+	meanY->Fit(fitFunc, "RQ");
 	saveCanvas(canvas, mOutputPath, mConfig.getConfig("MEAN_Y"));
 }
 
