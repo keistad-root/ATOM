@@ -12,6 +12,7 @@
 #include "TPad.h"
 #include "TText.h"
 #include "TEllipse.h"
+#include "TF1.h"
 
 // User header
 #include "TALPIDEEvent.h"
@@ -37,6 +38,8 @@ private:
 	std::filesystem::path mOutputPath;
 
 	TH2D* mHitmap;
+	TH1D* mHitmapProjectionX;
+	TH1D* mHitmapProjectionY;
 	TH1D* mTime;
 
 	TH2D* mClustermap;
@@ -46,7 +49,7 @@ private:
 
 	std::vector<std::pair<TH2I*, int>> mShapeSet;
 
-	bool isHitmap = false, isClustermap = false, isClustersize = false, isClustersizeRegion = false;
+	bool isHitmap = false, isClustermap = false, isClustersize = false, isClustersizeRegion = false, isHitmapProjectionX = false, isHitmapProjectionY = false;
 public:
 	void openInputFile();
 
@@ -58,6 +61,8 @@ public:
 	void saveTotalShape();
 	void saveTop10Shape();
 	void saveClusterSizeWithTime();
+
+	void getMeanX();
 
 	void savePlots();
 

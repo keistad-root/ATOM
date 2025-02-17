@@ -7,6 +7,8 @@ TDataPlotter::TDataPlotter(const CppConfigFile& config) : TPlotter(), mConfig(co
 	// gStyle->SetOptStat(0);
 
 	if ( mConfig.hasConfig("HITMAP") ) isHitmap = true;
+	if ( mConfig.hasConfig("HITMAP_PROJECTION_X") ) isHitmapProjectionX = true;
+	if ( mConfig.hasConfig("HITMAP_PROJECTION_Y") ) isHitmapProjectionY = true;
 	if ( mConfig.hasConfig("CLUSTERMAP") ) isClustermap = true;
 	if ( mConfig.hasConfig("CLUSTERSIZE") ) isClustersize = true;
 	if ( mConfig.hasConfig("CLUSTERSIZE_REGION") ) isClustersizeRegion = true;
@@ -23,6 +25,14 @@ void TDataPlotter::InitPlot() {
 	if ( isHitmap ) {
 		mHitmap = new TH2D("hitmap", "Hitmap; Column; Row", ALPIDECOLUMN, 0, ALPIDECOLUMN, ALPIDEROW, 0, ALPIDEROW);
 		setBins(mHitmap, mConfig.getConfig("HITMAP"));
+	}
+	if ( isHitmapProjectionX ) {
+		mHitmapProjectionX = new TH1D("hitmapProjectionX", "Hitmap Projection X; Column; Entry", ALPIDECOLUMN, 0, ALPIDECOLUMN);
+		setBins(mHitmapProjectionX, mConfig.getConfig("HITMAP_PROJECTION_X"));
+	}
+	if ( isHitmapProjectionY ) {
+		mHitmapProjectionY = new TH1D("hitmapProjectionY", "Hitmap Projection Y; Row; Entry", ALPIDEROW, 0, ALPIDEROW);
+		setBins(mHitmapProjectionY, mConfig.getConfig("HITMAP_PROJECTION_Y"));
 	}
 	if ( isClustermap ) {
 		mClustermap = new TH2D("clustermap", "Clustermap; Column; Row", ALPIDECOLUMN, 0, ALPIDECOLUMN, ALPIDEROW, 0, ALPIDEROW);
@@ -53,6 +63,8 @@ void TDataPlotter::FillHitInfo() {
 	for ( int iHit = 0; iHit < nHit; iHit++ ) {
 		hitTree->GetEntry(iHit);
 		if ( isHitmap ) mHitmap->Fill(x, y);
+		if ( isHitmapProjectionX ) mHitmapProjectionX->Fill(x);
+		if ( isHitmapProjectionY ) mHitmapProjectionY->Fill(y);
 	}
 }
 
@@ -145,6 +157,20 @@ void TDataPlotter::savePlots() {
 		delete canvas;
 		canvas = nullptr;
 	}
+	if ( isHitmapProjectionX ) {
+		TCanvas* canvas = new TCanvas("hitmapProjectionXCanvas", "", 3000, 1500);
+		savePlot(canvas, mHitmapProjectionX, mConfig.getConfig("HITMAP_PROJECTION_X"));
+		saveCanvas(canvas, mOutputPath, mConfig.getConfig("HITMAP_PROJECTION_X"));
+		delete canvas;
+		canvas = nullptr;
+	}
+	if ( isHitmapProjectionY ) {
+		TCanvas* canvas = new TCanvas("hitmapProjectionYCanvas", "", 3000, 1500);
+		savePlot(canvas, mHitmapProjectionY, mConfig.getConfig("HITMAP_PROJECTION_Y"));
+		saveCanvas(canvas, mOutputPath, mConfig.getConfig("HITMAP_PROJECTION_Y"));
+		delete canvas;
+		canvas = nullptr;
+	}
 	if ( isClustermap ) {
 		TCanvas* canvas = new TCanvas("clustermapCanvas", "", 3000, 1500);
 		savePlot(canvas, mClustermap, mConfig.getConfig("CLUSTERMAP"));
@@ -189,6 +215,21 @@ void TDataPlotter::savePlots() {
 	}
 }
 
+void TDataPlotter::getMeanX() {
+	TH1D* meanX = new TH1D("meanX", "Mean X; Column; Entry", ALPIDECOLUMN, 0, ALPIDECOLUMN);
+	for ( int i = 0; i < ALPIDEROW; i++ ) {
+		TH1D* sliceX = new TH1D("sliceX", "Slice X; Column; Entry", ALPIDECOLUMN, 0, ALPIDECOLUMN);
+		for ( int j = 0; j < ALPIDECOLUMN; j++ ) {
+			sliceX->SetBinContent(j + 1, mHitmap->GetBinContent(j + 1, i + 1));
+		}
+		sliceX->SetBinContent(517, (sliceX->GetBinContent(515) + sliceX->GetBinContent(519)) / 2);
+		sliceX->SetBinContent(518, (sliceX->GetBinContent(516) + sliceX->GetBinContent(520)) / 2);
+
+		TF1* fitFunc = new TF1("fitFunc", "gaus", 0, ALPIDECOLUMN);
+		sliceX->Fit(fitFunc, "R");
+		meanX->SetBinContent(i, fitFunc->GetParameter(1));
+	}
+}
 
 void TDataPlotter::saveTotalShape() {
 	int prevClusterSize = -1;
