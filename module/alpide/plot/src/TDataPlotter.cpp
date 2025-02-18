@@ -217,7 +217,7 @@ void TDataPlotter::savePlots() {
 }
 
 void TDataPlotter::getMeanX() {
-	TH1D* meanX = new TH1D("meanX", "Mean X; Column; Entry", ALPIDECOLUMN, 0, ALPIDECOLUMN);
+	TH1D* meanX = new TH1D("meanX", "Mean X; Column; Entry", ALPIDECOLUMN / 4, 0, ALPIDECOLUMN);
 	for ( int i = 0; i < ALPIDEROW; i++ ) {
 		TH1D* sliceX = new TH1D("sliceX", "Slice X; Column; Entry", ALPIDECOLUMN, 0, ALPIDECOLUMN);
 		for ( int j = 0; j < ALPIDECOLUMN; j++ ) {
@@ -226,47 +226,72 @@ void TDataPlotter::getMeanX() {
 		sliceX->SetBinContent(517, (sliceX->GetBinContent(515) + sliceX->GetBinContent(519)) / 2);
 		sliceX->SetBinContent(518, (sliceX->GetBinContent(516) + sliceX->GetBinContent(520)) / 2);
 
-		TF1* fitFunc = new TF1("fitFunc", "[0]*e^([1]*(x-[2])^2)", 0, ALPIDECOLUMN);
-		fitFunc->SetParameter(0, 1);
-		fitFunc->SetParameter(1, -0.0001);
-		fitFunc->SetParameter(2, 500);
+		TF1* fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^[3])", 0, ALPIDECOLUMN);
+		fitFunc->SetParameter(0, 10);
+		fitFunc->SetParLimits(1, 100, 900);
+		fitFunc->SetParameter(2, 10);
+		fitFunc->SetParameter(3, 2);
 		sliceX->Fit(fitFunc, "RQ");
-		if ( fitFunc->GetParameter(0) > 0.1 ) {
-			meanX->Fill(fitFunc->GetParameter(2));
+		if ( fitFunc->GetParameter(0) > 1 ) {
+			meanX->Fill(fitFunc->GetParameter(1));
 		}
+
 		delete sliceX;
 		delete fitFunc;
 	}
 	TCanvas* canvas = new TCanvas("meanXCanvas", "", 3000, 1500);
+	TF1* fitFunc = new TF1("fitFunc", "[0]*e^([1]*(x-[2])^2)", 400, 600);
+	fitFunc->SetParameter(1, -0.01);
+	fitFunc->SetParameter(2, 550);
+	meanX->Fit(fitFunc, "R");
 	savePlot(canvas, meanX, mConfig.getConfig("MEAN_X"));
+	TText* text = new TText(0.1, 0.8, Form("Mean X: %.2f", fitFunc->GetParameter(2)));
+	text->SetNDC();
+	text->SetTextAlign(13);
+	text->SetTextSize(.05);
+	text->SetTextColor(kBlack);
+	text->Draw();
 	saveCanvas(canvas, mOutputPath, mConfig.getConfig("MEAN_X"));
 	delete canvas;
 }
 
 void TDataPlotter::getMeanY() {
-	TH1D* meanY = new TH1D("meanY", "Mean Y; Row; Entry", ALPIDEROW, 0, ALPIDEROW);
+	TH1D* meanY = new TH1D("meanY", "Mean Y; Row; Entry", ALPIDEROW / 2, 0, ALPIDEROW);
 	for ( int i = 0; i < ALPIDECOLUMN; i++ ) {
 		TH1D* sliceY = new TH1D("sliceY", "Slice Y; Row; Entry", ALPIDEROW, 0, ALPIDEROW);
 		for ( int j = 0; j < ALPIDEROW; j++ ) {
 			sliceY->SetBinContent(j + 1, mHitmap->GetBinContent(i + 1, j + 1));
 		}
-		TF1* fitFunc = new TF1("fitFunc", "[0]*e^([1]*(x-[2])^2)", 0, ALPIDEROW);
-		// fitFunc->SetParameter(0, 1); 
-		fitFunc->SetParameter(1, -0.0001);
-		// fitFunc->SetParLimits(2, 250, 350);
+		TF1* fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^[3])", 200, 400);
+		fitFunc->SetParameter(0, 20);
+		fitFunc->SetParLimits(1, 200, 400);
+		fitFunc->SetParameter(2, 10);
+		fitFunc->SetParameter(3, 2);
 		sliceY->Fit(fitFunc, "RQ");
-		if ( fitFunc->GetParameter(0) > 0.1 ) {
-			meanY->Fill(fitFunc->GetParameter(2));
+		if ( fitFunc->GetParameter(0) > 1 ) {
+			meanY->Fill(fitFunc->GetParameter(1));
+		}
+		if ( i == 500 ) {
+			TCanvas* canvas = new TCanvas("sliceYCanvas", "", 3000, 1500);
+			sliceY->Draw();
+			canvas->SaveAs("sliceY.png");
+			delete canvas;
 		}
 		delete sliceY;
 		delete fitFunc;
 	}
 	TCanvas* canvas = new TCanvas("meanYCanvas", "", 3000, 1500);
-	savePlot(canvas, meanY, mConfig.getConfig("MEAN_Y"));
-	TF1* fitFunc = new TF1("fitFunc", "[0]*e^([1]*(x-[2])^2)", 250, 350);
+	TF1* fitFunc = new TF1("fitFunc", "[0]*e^([1]*(x-[2])^2)", 200, 350);
 	fitFunc->SetParameter(1, -0.01);
 	fitFunc->SetParameter(2, 300);
 	meanY->Fit(fitFunc, "R");
+	savePlot(canvas, meanY, mConfig.getConfig("MEAN_Y"));
+	TText* text = new TText(0.1, 0.8, Form("Mean Y: %.2f", fitFunc->GetParameter(2)));
+	text->SetNDC();
+	text->SetTextAlign(13);
+	text->SetTextSize(.05);
+	text->SetTextColor(kBlack);
+	text->Draw();
 	saveCanvas(canvas, mOutputPath, mConfig.getConfig("MEAN_Y"));
 	delete canvas;
 }
