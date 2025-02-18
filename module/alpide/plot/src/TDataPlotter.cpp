@@ -210,16 +210,22 @@ void TDataPlotter::savePlots() {
 		TF1* fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^2)", center[0] - 50, center[0] + 50);
 		fitFunc->SetParameters(mClustermapProjectionX->GetMinimum(), center[0], 200);
 		mClustermapProjectionX->Fit(fitFunc, "RQ");
-		if ( fitFunc->GetParameter(1) < 0 ) {
-			fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^2)", center[1] - 75, center[1] + 75);
+		if ( fitFunc->GetParameter(1) < 0 || std::abs(center[0] - fitFunc->GetParameter(1)) > 10 ) {
+			fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^2)", center[0] - 75, center[0] + 75);
 			fitFunc->SetParameters(mClustermapProjectionX->GetMaximum(), center[0], 200);
 			mClustermapProjectionX->Fit(fitFunc, "RQ");
-			if ( fitFunc->GetParameter(1) < 0 ) {
-				fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^2)", center[1] - 100, center[1] + 100);
+			if ( fitFunc->GetParameter(1) < 0 || std::abs(center[0] - fitFunc->GetParameter(1)) > 15 ) {
+				fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^2)", center[0] - 100, center[0] + 100);
+				fitFunc->SetParameters(mClustermapProjectionX->GetMaximum(), center[0], 200);
+				mClustermapProjectionX->Fit(fitFunc, "RQ");
+			}
+			if ( fitFunc->GetParameter(1) < 0 || std::abs(center[0] - fitFunc->GetParameter(1)) > 20 ) {
+				fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^2)", center[0] - 200, center[0] + 200);
 				fitFunc->SetParameters(mClustermapProjectionX->GetMaximum(), center[0], 200);
 				mClustermapProjectionX->Fit(fitFunc, "RQ");
 			}
 		}
+		std::cout << " " << std::round(fitFunc->GetParameter(1));
 		TText* text = new TText(0.5, 0.5, Form("Mean: %.0f", fitFunc->GetParameter(1)));
 		text->SetNDC();
 		text->SetTextAlign(22);
@@ -235,16 +241,17 @@ void TDataPlotter::savePlots() {
 		TF1* fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^2)", center[1] - 50, center[1] + 50);
 		fitFunc->SetParameters(mClustermapProjectionY->GetMaximum(), center[1], 100);
 		mClustermapProjectionY->Fit(fitFunc, "RQ");
-		if ( fitFunc->GetParameter(1) < 0 ) {
+		if ( fitFunc->GetParameter(1) < 0 || std::abs(center[1] - fitFunc->GetParameter(1)) > 10 ) {
 			fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^2)", center[1] - 75, center[1] + 75);
 			fitFunc->SetParameters(mClustermapProjectionY->GetMaximum(), center[1], 100);
 			mClustermapProjectionY->Fit(fitFunc, "RQ");
-			if ( fitFunc->GetParameter(1) < 0 ) {
+			if ( fitFunc->GetParameter(1) < 0 || std::abs(center[1] - fitFunc->GetParameter(1)) > 15 ) {
 				fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^2)", center[1] - 100, center[1] + 100);
 				fitFunc->SetParameters(mClustermapProjectionY->GetMaximum(), center[1], 100);
 				mClustermapProjectionY->Fit(fitFunc, "RQ");
 			}
 		}
+		std::cout << " " << std::round(fitFunc->GetParameter(1)) << std::endl;
 		TText* text = new TText(0.5, 0.5, Form("Mean: %.0f", fitFunc->GetParameter(1)));
 		text->SetNDC();
 		text->SetTextAlign(22);
