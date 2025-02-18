@@ -217,32 +217,41 @@ void TDataPlotter::savePlots() {
 }
 
 void TDataPlotter::getMeanX() {
-	TH1D* meanX = new TH1D("meanX", "Mean X; Column; Entry", ALPIDECOLUMN / 4, 0, ALPIDECOLUMN);
-	for ( int i = 0; i < ALPIDEROW; i++ ) {
-		TH1D* sliceX = new TH1D("sliceX", "Slice X; Column; Entry", ALPIDECOLUMN, 0, ALPIDECOLUMN);
-		for ( int j = 0; j < ALPIDECOLUMN; j++ ) {
-			sliceX->SetBinContent(j + 1, mHitmap->GetBinContent(j + 1, i + 1));
+	TH1D* meanX = new TH1D("meanX", "Mean X; Column; Entry", ALPIDECOLUMN, 0, ALPIDECOLUMN);
+	std::vector<int> centerXrange = TPlotter::getIntegerSetFromString(mConfig.getConfig("MEAN_X").find("center_range"));
+	std::vector<int> centerYrange = TPlotter::getIntegerSetFromString(mConfig.getConfig("MEAN_Y").find("center_range"));
+	for ( int i = centerYrange[0]; i < centerYrange[1]; i++ ) {
+		TH1D* sliceX = new TH1D("sliceX", "Slice X; Column; Entry", centerXrange[1] - centerXrange[0], centerXrange[0], centerXrange[1]);
+		for ( int j = centerXrange[0]; j < centerXrange[1]; j++ ) {
+			sliceX->SetBinContent(j + 1 - centerXrange[0], mHitmap->GetBinContent(j + 1, i + 1));
 		}
-		sliceX->SetBinContent(517, (sliceX->GetBinContent(515) + sliceX->GetBinContent(519)) / 2);
-		sliceX->SetBinContent(518, (sliceX->GetBinContent(516) + sliceX->GetBinContent(520)) / 2);
+		sliceX->SetBinContent(517 - centerXrange[0], (sliceX->GetBinContent(515 - centerXrange[0]) + sliceX->GetBinContent(519 - centerXrange[0])) / 2);
+		sliceX->SetBinContent(518 - centerXrange[0], (sliceX->GetBinContent(516 - centerXrange[0]) + sliceX->GetBinContent(520 - centerXrange[0])) / 2);
 
-		TF1* fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^[3])", 0, ALPIDECOLUMN);
-		fitFunc->SetParameter(0, 10);
-		fitFunc->SetParLimits(1, 100, 900);
+		TF1* fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^[3])", centerXrange[0], centerXrange[1]);
+		fitFunc->SetParameter(0, 50);
+		fitFunc->SetParameter(1, (centerXrange[0] + centerXrange[1]) / 2);
 		fitFunc->SetParameter(2, 10);
 		fitFunc->SetParameter(3, 2);
 		sliceX->Fit(fitFunc, "RQ");
 		if ( fitFunc->GetParameter(0) > 1 ) {
 			meanX->Fill(fitFunc->GetParameter(1));
 		}
-
+		if ( i == 300 ) {
+			std::cout << fitFunc->GetParameter(1) << std::endl;
+			TCanvas* canvas = new TCanvas("sliceXCanvas", "", 3000, 1500);
+			sliceX->Draw();
+			canvas->SaveAs("sliceX.png");
+			delete canvas;
+		}
 		delete sliceX;
 		delete fitFunc;
 	}
 	TCanvas* canvas = new TCanvas("meanXCanvas", "", 3000, 1500);
 	TF1* fitFunc = new TF1("fitFunc", "[0]*e^([1]*(x-[2])^2)", 400, 600);
+	// fitFunc->SetParameter(0, 50);
 	fitFunc->SetParameter(1, -0.01);
-	fitFunc->SetParameter(2, 550);
+	fitFunc->SetParameter(2, (centerXrange[0] + centerXrange[1]) / 2);
 	meanX->Fit(fitFunc, "R");
 	savePlot(canvas, meanX, mConfig.getConfig("MEAN_X"));
 	TText* text = new TText(0.1, 0.8, Form("Mean X: %.2f", fitFunc->GetParameter(2)));
@@ -256,15 +265,17 @@ void TDataPlotter::getMeanX() {
 }
 
 void TDataPlotter::getMeanY() {
-	TH1D* meanY = new TH1D("meanY", "Mean Y; Row; Entry", ALPIDEROW / 2, 0, ALPIDEROW);
-	for ( int i = 0; i < ALPIDECOLUMN; i++ ) {
-		TH1D* sliceY = new TH1D("sliceY", "Slice Y; Row; Entry", ALPIDEROW, 0, ALPIDEROW);
-		for ( int j = 0; j < ALPIDEROW; j++ ) {
-			sliceY->SetBinContent(j + 1, mHitmap->GetBinContent(i + 1, j + 1));
+	TH1D* meanY = new TH1D("meanY", "Mean Y; Row; Entry", ALPIDEROW, 0, ALPIDEROW);
+	std::vector<int> centerXrange = TPlotter::getIntegerSetFromString(mConfig.getConfig("MEAN_X").find("center_range"));
+	std::vector<int> centerYrange = TPlotter::getIntegerSetFromString(mConfig.getConfig("MEAN_Y").find("center_range"));
+	for ( int i = centerXrange[0]; i < centerXrange[1]; i++ ) {
+		TH1D* sliceY = new TH1D("sliceY", "Slice Y; Row; Entry", centerYrange[1] - centerYrange[0], centerYrange[0], centerYrange[1]);
+		for ( int j = centerYrange[0]; j < centerYrange[1]; j++ ) {
+			sliceY->SetBinContent(j + 1 - centerYrange[0], mHitmap->GetBinContent(i + 1, j + 1));
 		}
-		TF1* fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^[3])", 200, 400);
-		fitFunc->SetParameter(0, 20);
-		fitFunc->SetParLimits(1, 200, 400);
+		TF1* fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^[3])", centerYrange[0], centerYrange[1]);
+		fitFunc->SetParameter(0, 50);
+		fitFunc->SetParameter(1, (centerYrange[0] + centerYrange[1]) / 2);
 		fitFunc->SetParameter(2, 10);
 		fitFunc->SetParameter(3, 2);
 		sliceY->Fit(fitFunc, "RQ");
