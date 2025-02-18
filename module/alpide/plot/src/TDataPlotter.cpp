@@ -41,11 +41,11 @@ void TDataPlotter::InitPlot() {
 		setBins(mClustermap, mConfig.getConfig("CLUSTERMAP"));
 	}
 	if ( isClustermapProjectionX ) {
-		mClustermapProjectionX = new TH1D("clustermapProjectionX", "Clustermap Projection X; Column; Row", ALPIDECOLUMN / 2, 0, ALPIDECOLUMN);
+		mClustermapProjectionX = new TH1D("clustermapProjectionX", "Clustermap Projection X; Column; Row", ALPIDECOLUMN / 4, 0, ALPIDECOLUMN);
 		setBins(mClustermapProjectionX, mConfig.getConfig("CLUSTERMAP_PROJECTION_X"));
 	}
 	if ( isClustermapProjectionY ) {
-		mClustermapProjectionY = new TH1D("clustermapProjectionY", "Clustermap Projection Y; Column; Row", ALPIDEROW / 2, 0, ALPIDEROW);
+		mClustermapProjectionY = new TH1D("clustermapProjectionY", "Clustermap Projection Y; Column; Row", ALPIDEROW / 4, 0, ALPIDEROW);
 		setBins(mClustermapProjectionY, mConfig.getConfig("CLUSTERMAP_PROJECTION_Y"));
 	}
 	if ( isClustersize ) {
@@ -203,12 +203,24 @@ void TDataPlotter::savePlots() {
 	}
 	if ( isClustermapProjectionX ) {
 		TCanvas* canvas = new TCanvas("clustermapProjectionXCanvas", "", 3000, 1500);
-		TF1* fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^2)", 400, 600);
-		fitFunc->SetParameters(1000, 500, 200);
-		// mClustermapProjectionX->SetBinContent(259, 0);
-		mClustermapProjectionX->SetBinContent(259, (mClustermapProjectionX->GetBinContent(258) + mClustermapProjectionX->GetBinContent(260)) / 2);
+		std::vector<int> center = TPlotter::getIntegerSetFromString(mConfig.getConfig("CLUSTERSIZE_REGION").find("center"));
+		mClustermapProjectionX->SetBinContent(130, (mClustermapProjectionX->GetBinContent(128) + mClustermapProjectionX->GetBinContent(132)) / 2);
+		mClustermapProjectionX->SetBinContent(129, (mClustermapProjectionX->GetBinContent(127) + mClustermapProjectionX->GetBinContent(131)) / 2);
+
+		TF1* fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^2)", center[0] - 50, center[0] + 50);
+		fitFunc->SetParameters(mClustermapProjectionX->GetMinimum(), center[0], 200);
 		mClustermapProjectionX->Fit(fitFunc, "RQ");
-		TText* text = new TText(0.5, 0.5, Form("Mean: %.2f", fitFunc->GetParameter(1)));
+		if ( fitFunc->GetParameter(1) < 0 ) {
+			fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^2)", center[1] - 75, center[1] + 75);
+			fitFunc->SetParameters(mClustermapProjectionX->GetMaximum(), center[0], 200);
+			mClustermapProjectionX->Fit(fitFunc, "RQ");
+			if ( fitFunc->GetParameter(1) < 0 ) {
+				fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^2)", center[1] - 100, center[1] + 100);
+				fitFunc->SetParameters(mClustermapProjectionX->GetMaximum(), center[0], 200);
+				mClustermapProjectionX->Fit(fitFunc, "RQ");
+			}
+		}
+		TText* text = new TText(0.5, 0.5, Form("Mean: %.0f", fitFunc->GetParameter(1)));
 		text->SetNDC();
 		text->SetTextAlign(22);
 		text->Draw("SAME");
@@ -218,10 +230,22 @@ void TDataPlotter::savePlots() {
 	}
 	if ( isClustermapProjectionY ) {
 		TCanvas* canvas = new TCanvas("clustermapProjectionYCanvas", "", 3000, 1500);
-		TF1* fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^2)", 200, 400);
-		fitFunc->SetParameters(1000, 250, 50);
+		std::vector<int> center = TPlotter::getIntegerSetFromString(mConfig.getConfig("CLUSTERSIZE_REGION").find("center"));
+
+		TF1* fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^2)", center[1] - 50, center[1] + 50);
+		fitFunc->SetParameters(mClustermapProjectionY->GetMaximum(), center[1], 100);
 		mClustermapProjectionY->Fit(fitFunc, "RQ");
-		TText* text = new TText(0.5, 0.5, Form("Mean: %.2f", fitFunc->GetParameter(1)));
+		if ( fitFunc->GetParameter(1) < 0 ) {
+			fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^2)", center[1] - 75, center[1] + 75);
+			fitFunc->SetParameters(mClustermapProjectionY->GetMaximum(), center[1], 100);
+			mClustermapProjectionY->Fit(fitFunc, "RQ");
+			if ( fitFunc->GetParameter(1) < 0 ) {
+				fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^2)", center[1] - 100, center[1] + 100);
+				fitFunc->SetParameters(mClustermapProjectionY->GetMaximum(), center[1], 100);
+				mClustermapProjectionY->Fit(fitFunc, "RQ");
+			}
+		}
+		TText* text = new TText(0.5, 0.5, Form("Mean: %.0f", fitFunc->GetParameter(1)));
 		text->SetNDC();
 		text->SetTextAlign(22);
 		text->Draw("SAME");
