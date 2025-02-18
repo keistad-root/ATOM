@@ -43,13 +43,15 @@ private:
 	TH1D* mTime;
 
 	TH2D* mClustermap;
+	TH1D* mClustermapProjectionX;
+	TH1D* mClustermapProjectionY;
 	TH1D* mClusterTime;
 	TH1D* mClustersize;
 	std::vector<TH1D*> mClusterSizeOfRegion;
 
 	std::vector<std::pair<TH2I*, int>> mShapeSet;
 
-	bool isHitmap = false, isClustermap = false, isClustersize = false, isClustersizeRegion = false, isHitmapProjectionX = false, isHitmapProjectionY = false;
+	bool isHitmap = false, isClustermap = false, isClustersize = false, isClustersizeRegion = false, isHitmapProjectionX = false, isHitmapProjectionY = false, isClustermapProjectionX = false, isClustermapProjectionY = false;
 public:
 	void openInputFile();
 
