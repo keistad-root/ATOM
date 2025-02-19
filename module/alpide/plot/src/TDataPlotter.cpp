@@ -1,5 +1,7 @@
 #include "TDataPlotter.h"
 
+#include<unistd.h>
+
 TDataPlotter::TDataPlotter(const CppConfigFile& config) : TPlotter(), mConfig(config) {
 	mOutputPath = mConfig.getConfig("CONFIG").find("OUTPUT_DIRECTORY");
 	std::filesystem::create_directories(mOutputPath);
@@ -207,8 +209,10 @@ void TDataPlotter::savePlots() {
 		mClustermapProjectionX->SetBinContent(130, (mClustermapProjectionX->GetBinContent(128) + mClustermapProjectionX->GetBinContent(132)) / 2);
 		mClustermapProjectionX->SetBinContent(129, (mClustermapProjectionX->GetBinContent(127) + mClustermapProjectionX->GetBinContent(131)) / 2);
 
-		TF1* fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^2)", center[0] - 100, center[0] + 100);
-		fitFunc->SetParameters(mClustermapProjectionX->GetMaximum(), center[0], mClustermapProjectionX->GetStdDev());
+		TF1* fitFunc = new TF1("fitFunc", "[3]*e^(-((x-[4])/[5])^2) + [0]*e^(-((x-[1])/[2])^2)", 1, ALPIDECOLUMN - 1);
+		fitFunc->SetParameters(mClustermapProjectionX->GetMaximum() - mClustermapProjectionX->GetMinimum(), center[0], mClustermapProjectionX->GetStdDev(), mClustermapProjectionX->GetMinimum(), center[0], mClustermapProjectionX->GetStdDev());
+		fitFunc->SetParLimits(0, mClustermapProjectionX->GetMinimum(), mClustermapProjectionX->GetMaximum());
+		fitFunc->SetParLimits(2, 1, 100000);
 		mClustermapProjectionX->Fit(fitFunc, "RQ");
 		std::cout << " " << std::round(fitFunc->GetParameter(1));
 		TText* text = new TText(0.5, 0.5, Form("Mean: %.0f", fitFunc->GetParameter(1)));
@@ -218,13 +222,19 @@ void TDataPlotter::savePlots() {
 		savePlot(canvas, mClustermapProjectionX, mConfig.getConfig("CLUSTERMAP_PROJECTION_X"));
 		saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERMAP_PROJECTION_X"));
 		delete canvas;
+		delete fitFunc;
+		delete text;
 	}
+	sleep(1);
 	if ( isClustermapProjectionY ) {
 		TCanvas* canvas = new TCanvas("clustermapProjectionYCanvas", "", 3000, 1500);
 		std::vector<int> center = TPlotter::getIntegerSetFromString(mConfig.getConfig("CLUSTERSIZE_REGION").find("center"));
 
-		TF1* fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^2)", center[1] - 100, center[1] + 100);
-		fitFunc->SetParameters(mClustermapProjectionY->GetMaximum(), center[1], mClustermapProjectionY->GetStdDev());
+		TF1* fitFunc = new TF1("fitFunc", "[3]+[0]*e^(-((x-[1])/[2])^2)", 1, ALPIDEROW - 1);
+		fitFunc->SetParameters(mClustermapProjectionY->GetMaximum() - mClustermapProjectionY->GetMinimum(), center[1], mClustermapProjectionY->GetStdDev(), mClustermapProjectionY->GetMinimum());
+		fitFunc->SetParLimits(0, mClustermapProjectionY->GetMinimum(), mClustermapProjectionY->GetMaximum());
+		fitFunc->SetParLimits(2, 1, 100000);
+		// fitFunc->SetParLimits(0, 0, 10000);
 		mClustermapProjectionY->Fit(fitFunc, "RQ");
 		std::cout << " " << std::round(fitFunc->GetParameter(1)) << std::endl;
 		TText* text = new TText(0.5, 0.5, Form("Mean: %.0f", fitFunc->GetParameter(1)));
@@ -234,6 +244,8 @@ void TDataPlotter::savePlots() {
 		savePlot(canvas, mClustermapProjectionY, mConfig.getConfig("CLUSTERMAP_PROJECTION_Y"));
 		saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERMAP_PROJECTION_Y"));
 		delete canvas;
+		delete fitFunc;
+		delete text;
 	}
 	if ( isClustermap ) {
 		TCanvas* canvas = new TCanvas("clustermapCanvas", "", 3000, 1500);
