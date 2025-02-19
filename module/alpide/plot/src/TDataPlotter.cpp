@@ -6,7 +6,7 @@ TDataPlotter::TDataPlotter(const CppConfigFile& config) : TPlotter(), mConfig(co
 	mOutputPath = mConfig.getConfig("CONFIG").find("OUTPUT_DIRECTORY");
 	std::filesystem::create_directories(mOutputPath);
 
-	// gStyle->SetOptStat(0);
+	gStyle->SetOptStat(0);
 
 	if ( mConfig.hasConfig("HITMAP") ) isHitmap = true;
 	if ( mConfig.hasConfig("HITMAP_PROJECTION_X") ) isHitmapProjectionX = true;
@@ -211,69 +211,51 @@ void TDataPlotter::savePlots() {
 		mClustermapProjectionX->SetMinimum(0);
 
 		TF1* fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^2)+[3]", mClustermapProjectionX->GetMean() - 150, mClustermapProjectionX->GetMean() + 150);
-		// fitFunc->SetParameter(0, mClustermapProjectionX->GetMaximum());
-		fitFunc->SetParLimits(0, 1, mClustermapProjectionX->GetMaximum());
+		fitFunc->SetParLimits(0, 0, mClustermapProjectionX->GetMaximum() * 10);
 		fitFunc->SetParameter(1, mClustermapProjectionX->GetMean());
 		fitFunc->SetParameter(2, mClustermapProjectionX->GetStdDev());
 		fitFunc->SetParameter(3, mClustermapProjectionX->GetMinimum());
-		// fitFunc->SetParameter(4, (mClustermapProjectionX->GetBinContent(mClustermapProjectionX->GetMean() + 100) - mClustermapProjectionX->GetBinContent(mClustermapProjectionX->GetMean() - 100)) / 200);
 		mClustermapProjectionX->Fit(fitFunc, "R");
-		TF1* gaus = new TF1("gaus", "[0]*e^(-((x-[1])/[2])^2)", 1, ALPIDECOLUMN - 1);
-		gaus->SetParameters(fitFunc->GetParameter(0), fitFunc->GetParameter(1), fitFunc->GetParameter(2));
-		gaus->SetLineColor(kBlue);
-		gaus->SetLineWidth(4);
-		TF1* constant = new TF1("constant", "[0]", 1, ALPIDECOLUMN - 1);
-		constant->SetParameter(0, fitFunc->GetParameter(3));
-		// constant->SetParameter(1, fitFunc->GetParameter(4));
-		constant->SetLineColor(kGreen + 3);
-		constant->SetLineWidth(4);
 
-		TText* text = new TText(0.5, 0.5, Form("Mean: %.0f", fitFunc->GetParameter(1)));
-		text->SetNDC();
-		text->SetTextAlign(22);
+		TPaveText* latex = new TPaveText(.8, .5, .95, .95, "NDC");
+		latex->AddText(Form("[0]: %.0f #pm %.0f", fitFunc->GetParameter(0), fitFunc->GetParError(0)));
+		latex->AddText(Form("[1]: %.0f #pm %.0f", fitFunc->GetParameter(1), fitFunc->GetParError(1)));
+		latex->AddText(Form("[2]: %.0f #pm %.0f", fitFunc->GetParameter(2), fitFunc->GetParError(2)));
+		latex->AddText(Form("[3]: %.0f #pm %.0f", fitFunc->GetParameter(3), fitFunc->GetParError(3)));
+		latex->AddText(Form("#chi^{2}/NDoF: %.2f", fitFunc->GetChisquare() / fitFunc->GetNDF()));
+		latex->SetLabel("Fit parameters");
+
 		savePlot(canvas, mClustermapProjectionX, mConfig.getConfig("CLUSTERMAP_PROJECTION_X"));
-		gaus->Draw("SAME");
-		constant->Draw("SAME");
-		text->Draw("SAME");
+		latex->Draw();
 		saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERMAP_PROJECTION_X"));
 		delete canvas;
 		delete fitFunc;
-		delete text;
 	}
 	if ( isClustermapProjectionY ) {
 		TCanvas* canvas = new TCanvas("clustermapProjectionYCanvas", "", 3000, 1500);
 		std::vector<int> center = TPlotter::getIntegerSetFromString(mConfig.getConfig("CLUSTERSIZE_REGION").find("center"));
+		mClustermapProjectionY->SetMinimum(0);
 
-		TF1* fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^2)+[3]", mClustermapProjectionY->GetMean() - 200, mClustermapProjectionY->GetMean() + 200);
-		fitFunc->SetParLimits(0, 1, mClustermapProjectionY->GetMaximum());
+		TF1* fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^2)+[3]", mClustermapProjectionY->GetMean() - 150, mClustermapProjectionY->GetMean() + 150);
+		fitFunc->SetParLimits(0, 0, mClustermapProjectionY->GetMaximum() * 10);
 		fitFunc->SetParameter(1, mClustermapProjectionY->GetMean());
 		fitFunc->SetParameter(2, mClustermapProjectionY->GetStdDev());
 		fitFunc->SetParameter(3, mClustermapProjectionY->GetMinimum());
-		// fitFunc->SetParameter(4, (mClustermapProjectionY->GetBinContent(mClustermapProjectionY->GetMean() + 100) - mClustermapProjectionY->GetBinContent(mClustermapProjectionY->GetMean() - 100)) / 200);
 		mClustermapProjectionY->Fit(fitFunc, "R");
-		TF1* gaus = new TF1("gaus", "[0]*e^(-((x-[1])/[2])^2)", 1, ALPIDECOLUMN - 1);
-		gaus->SetParameters(fitFunc->GetParameter(0), fitFunc->GetParameter(1), fitFunc->GetParameter(2));
-		gaus->SetLineColor(kBlue);
-		gaus->SetLineWidth(4);
-		TF1* constant = new TF1("constant", "[0]+[1]*x", 1, ALPIDECOLUMN - 1);
-		constant->SetParameter(0, fitFunc->GetParameter(3));
-		// constant->SetParameter(1, fitFunc->GetParameter(4));
-		constant->SetLineColor(kGreen + 3);
-		constant->SetLineWidth(4);
 
-		TText* text = new TText(0.5, 0.5, Form("Mean: %.0f", fitFunc->GetParameter(1)));
-		text->SetNDC();
-		text->SetTextAlign(22);
-		mClustermapProjectionY->SetMinimum(0);
+		TPaveText* latex = new TPaveText(.8, .5, .95, .95, "NDC");
+		latex->AddText(Form("[0]: %.0f #pm %.0f", fitFunc->GetParameter(0), fitFunc->GetParError(0)));
+		latex->AddText(Form("[1]: %.0f #pm %.0f", fitFunc->GetParameter(1), fitFunc->GetParError(1)));
+		latex->AddText(Form("[2]: %.0f #pm %.0f", fitFunc->GetParameter(2), fitFunc->GetParError(2)));
+		latex->AddText(Form("[3]: %.0f #pm %.0f", fitFunc->GetParameter(3), fitFunc->GetParError(3)));
+		latex->AddText(Form("#chi^{2}/NDoF: %.2f", fitFunc->GetChisquare() / fitFunc->GetNDF()));
+		latex->SetLabel("Fit parameters");
+
 		savePlot(canvas, mClustermapProjectionY, mConfig.getConfig("CLUSTERMAP_PROJECTION_Y"));
-		// lorents->Draw("SAME");
-		gaus->Draw("SAME");
-		constant->Draw("SAME");
-		text->Draw("SAME");
+		latex->Draw();
 		saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERMAP_PROJECTION_Y"));
 		delete canvas;
 		delete fitFunc;
-		delete text;
 	}
 	if ( isClustermap ) {
 		TCanvas* canvas = new TCanvas("clustermapCanvas", "", 3000, 1500);

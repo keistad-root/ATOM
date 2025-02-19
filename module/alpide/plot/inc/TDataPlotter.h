@@ -13,6 +13,7 @@
 #include "TText.h"
 #include "TEllipse.h"
 #include "TF1.h"
+#include "TPaveText.h"
 
 // User header
 #include "TALPIDEEvent.h"
