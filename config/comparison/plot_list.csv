@@ -1,61 +1,49 @@
-tag, hist, legend, ratio
-1mm_nocollimator_alphagamma, 1mm_nocollimator_alphagamma, L1REF #alpha+#gamma, 1
-1mm_2phi_alphagamma, 1mm_2phi_alphagamma, L1#phi2 #alpha+#gamma, 0.07143
-1mm_3phi_alphagamma, 1mm_3phi_alphagamma, L1#phi3 #alpha+#gamma, 0.35714
-1mm_4phi_alphagamma, 1mm_4phi_alphagamma, L1#phi4 #alpha+#gamma, 0.83333
-1mm_7phi_alphagamma, 1mm_7phi_alphagamma, L1#phi7 #alpha+#gamma, 1
-1mm_nocollimator_alpha, 1mm_nocollimator_alphagamma - 1mm_nocollimator_gamma, L1REF #alpha, 1
-1mm_2phi_alpha, 1mm_2phi_alphagamma - 1mm_2phi_gamma, L1#phi2 #alpha, 0.07143
-1mm_3phi_alpha, 1mm_3phi_alphagamma - 1mm_3phi_gamma, L1#phi3 #alpha, 0.35714
-1mm_4phi_alpha, 1mm_4phi_alphagamma - 1mm_4phi_gamma, L1#phi4 #alpha, 0.83333
-1mm_7phi_alpha, 1mm_7phi_alphagamma - 1mm_7phi_gamma, L1#phi7 #alpha, 1
-1mm_nocollimator_gamma, 1mm_nocollimator_gamma, L1REF #gamma, 1
-1mm_2phi_gamma, 1mm_2phi_gamma, L1#phi2 #gamma, 0.07143
-1mm_3phi_gamma, 1mm_3phi_gamma, L1#phi3 #gamma, 0.35714
-1mm_4phi_gamma, 1mm_4phi_gamma, L1#phi4 #gamma, 0.83333
-1mm_7phi_gamma, 1mm_7phi_gamma, L1#phi7 #gamma, 1
-3mm_nocollimator_alphagamma, 3mm_nocollimator_alphagamma, L3REF #alpha+#gamma, 1
-3mm_2phi_alphagamma, 3mm_2phi_alphagamma, L3 #phi2 #alpha+#gamma, 0.05155
-3mm_3phi_alphagamma, 3mm_3phi_alphagamma, L3 #phi3 #alpha+#gamma, 0.4
-3mm_4phi_alphagamma, 3mm_4phi_alphagamma, L3 #phi4 #alpha+#gamma, 0.90909
-3mm_7phi_alphagamma, 3mm_7phi_alphagamma, L3 #phi7 #alpha+#gamma, 1.25
-3mm_nocollimator_alpha, 3mm_nocollimator_alphagamma - 3mm_nocollimator_gamma, L3REF #alpha, 1
-3mm_2phi_alpha, 3mm_2phi_alphagamma - 3mm_2phi_gamma, L3#phi2 #alpha, 0.05155
-3mm_3phi_alpha, 3mm_3phi_alphagamma - 3mm_3phi_gamma, L3#phi3 #alpha, 0.4
-3mm_4phi_alpha, 3mm_4phi_alphagamma - 3mm_4phi_gamma, L3#phi4 #alpha, 0.90909
-3mm_7phi_alpha, 3mm_7phi_alphagamma - 3mm_7phi_gamma, L3#phi7 #alpha, 1.25
-3mm_nocollimator_gamma, 3mm_nocollimator_gamma, L3REF #gamma, 1
-3mm_2phi_gamma, 3mm_2phi_gamma, L3#phi2 #gamma, 0.05155
-3mm_3phi_gamma, 3mm_3phi_gamma, L3#phi3 #gamma, 0.4
-3mm_4phi_gamma, 3mm_4phi_gamma, L3#phi4 #gamma, 0.90909
-3mm_7phi_gamma, 3mm_7phi_gamma, L3#phi7 #gamma, 1.25
-7mm_nocollimator_alphagamma, 7mm_nocollimator_alphagamma, L7REF #alpha+#gamma, 1
-7mm_2phi_alphagamma, 7mm_2phi_alphagamma, L7#phi2 #alpha+#gamma, 0.01031
-7mm_3phi_alphagamma, 7mm_3phi_alphagamma, L7#phi3 #alpha+#gamma, 0.16393
-7mm_4phi_alphagamma, 7mm_4phi_alphagamma, L7#phi4 #alpha+#gamma, 0.5
-7mm_7phi_alphagamma, 7mm_7phi_alphagamma, L7#phi7 #alpha+#gamma, 0.52632
-7mm_nocollimator_alpha, 7mm_nocollimator_alphagamma - 7mm_nocollimator_gamma, L7REF #alpha, 1
-7mm_2phi_alpha, 7mm_2phi_alphagamma - 7mm_2phi_gamma, L7#phi2 #alpha, 0.01031
-7mm_3phi_alpha, 7mm_3phi_alphagamma - 7mm_3phi_gamma, L7#phi3 #alpha, 0.16393
-7mm_4phi_alpha, 7mm_4phi_alphagamma - 7mm_4phi_gamma, L7#phi4 #alpha, 0.5
-7mm_7phi_alpha, 7mm_7phi_alphagamma - 7mm_7phi_gamma, L7#phi7 #alpha, 0.52632
-7mm_nocollimator_gamma, 7mm_nocollimator_gamma, L7REF #gamma, 1
-7mm_2phi_gamma, 7mm_2phi_gamma, L7#phi2 #gamma, 0.01031
-7mm_3phi_gamma, 7mm_3phi_gamma, L7#phi3 #gamma, 0.16393
-7mm_4phi_gamma, 7mm_4phi_gamma, L7#phi4 #gamma, 0.5
-7mm_7phi_gamma, 7mm_7phi_gamma, L7#phi7 #gamma, 0.52632
-20mm_nocollimator_alphagamma, 20mm_nocollimator_alphagamma, L20REF #alpha+#gamma, 1
-20mm_2phi_alphagamma, 20mm_2phi_alphagamma, L20#phi2 #alpha+#gamma, 0.00662
-20mm_3phi_alphagamma, 20mm_3phi_alphagamma, L20#phi3 #alpha+#gamma, 0.01852
-20mm_4phi_alphagamma, 20mm_4phi_alphagamma, L20#phi4 #alpha+#gamma, 0.16667
-20mm_7phi_alphagamma, 20mm_7phi_alphagamma, L20#phi7 #alpha+#gamma, 0.10989
-20mm_nocollimator_alpha, 20mm_nocollimator_alphagamma - 20mm_nocollimator_gamma, L20REF #alpha, 1
-20mm_2phi_alpha, 20mm_2phi_alphagamma - 20mm_2phi_gamma, L20#phi2 #alpha, 0.00662
-20mm_3phi_alpha, 20mm_3phi_alphagamma - 20mm_3phi_gamma, L20#phi3 #alpha, 0.01852
-20mm_4phi_alpha, 20mm_4phi_alphagamma - 20mm_4phi_gamma, L20#phi4 #alpha, 0.16667
-20mm_7phi_alpha, 20mm_7phi_alphagamma - 20mm_7phi_gamma, L20#phi7 #alpha, 0.10989
-20mm_nocollimator_gamma, 20mm_nocollimator_gamma, L20REF #gamma, 1
-20mm_2phi_gamma, 20mm_2phi_gamma, L20#phi2 #gamma, 0.00662
-20mm_3phi_gamma, 20mm_3phi_gamma, L20#phi3 #gamma, 0.01852
-20mm_4phi_gamma, 20mm_4phi_gamma, L20#phi4 #gamma, 0.16667
-20mm_7phi_gamma, 20mm_7phi_gamma, L20#phi7 #gamma, 0.10989
+TAG, HIST, LEGEND, RATIO
+L1F2X, L1F2X, L1#phi2 #alpha+#gamma, 0.07143
+L1F3X, L1F3X, L1#phi3 #alpha+#gamma, 0.35714
+L1F4X, L1F4X, L1#phi4 #alpha+#gamma, 0.83333
+L1REFX, L1REFX, L1REF #alpha+#gamma, 1
+L1F2O, L1F2O, L1#phi2 #gamma, 0.07143
+L1F3O, L1F3O, L1#phi3 #gamma, 0.35714
+L1F4O, L1F4O, L1#phi4 #gamma, 0.83333
+L1REFO, L1REFO, L1REF #gamma, 1
+L1F2A, L1F2X - L1F2O, L1#phi2 #alpha, 0.07143
+L1F3A, L1F3X - L1F3O, L1#phi3 #alpha, 0.35714
+L1F4A, L1F4X - L1F4O, L1#phi4 #alpha, 0.83333
+L1REFA, L1REFX - L1REFO, L1REF #alpha, 1
+L3F2X, L3F2X, L3 #phi2 #alpha+#gamma, 0.05155
+L3F3X, L3F3X, L3 #phi3 #alpha+#gamma, 0.4
+L3F4X, L3F4X, L3 #phi4 #alpha+#gamma, 0.90909
+L3REFX, L3REFX, L3REF #alpha+#gamma, 1
+L3F2O, L3F2O, L3 #phi2 #gamma, 0.05155
+L3F3O, L3F3O, L3 #phi3 #gamma, 0.4
+L3F4O, L3F4O, L3 #phi4 #gamma, 0.90909
+L3REFO, L3REFO, L3REF #gamma, 1
+L3F2A, L3F2X - L3F2O, L3 #phi2 #alpha, 0.05155
+L3F3A, L3F3X - L3F3O, L3 #phi3 #alpha, 0.4
+L3F4A, L3F4X - L3F4O, L3 #phi4 #alpha, 0.90909
+L3REFA, L3REFX - L3REFO, L3REF #alpha, 1
+L7F2X, L7F2X, L7 #phi2 #alpha+#gamma, 0.01031
+L7F3X, L7F3X, L7 #phi3 #alpha+#gamma, 0.16393
+L7F4X, L7F4X, L7 #phi4 #alpha+#gamma, 0.45455
+L7REFX, L7REFX, L7REF #alpha+#gamma, 1
+L7F2O, L7F2O, L7 #phi2 #gamma, 0.01031
+L7F3O, L7F3O, L7 #phi3 #gamma, 0.16393
+L7F4O, L7F4O, L7 #phi4 #gamma, 0.45455
+L7REFO, L7REFO, L7REF #gamma, 1
+L7F2A, L7F2X - L7F2O, L7 #phi2 #alpha, 0.01031
+L7F3A, L7F3X - L7F3O, L7 #phi3 #alpha, 0.16393
+L7F4A, L7F4X - L7F4O, L7 #phi4 #alpha, 0.45455
+L7REFA, L7REFX - L7REFO, L7REF #alpha, 1
+L20F2X, L20F2X, L20 #phi2 #alpha+#gamma, 0.00662
+L20F3X, L20F3X, L20 #phi3 #alpha+#gamma, 0.13158
+L20F4X, L20F4X, L20 #phi4 #alpha+#gamma, 0.36842
+L20REFX, L20REFX, L20REF #alpha+#gamma, 1
+L20F2O, L20F2O, L20 #phi2 #gamma, 0.00662
+L20F3O, L20F3O, L20 #phi3 #gamma, 0.13158
+L20F4O, L20F4O, L20 #phi4 #gamma, 0.36842
+L20REFO, L20REFO, L20REF #gamma, 1
+L20F2A, L20F2X - L20F2O, L20 #phi2 #alpha, 0.00662
+L20F3A, L20F3X - L20F3O, L20 #phi3 #alpha, 0.13158
+L20F4A, L20F4X - L20F4O, L20 #phi4 #alpha, 0.36842
+L20REFA, L20REFX - L20REFO, L20REF #alpha, 1

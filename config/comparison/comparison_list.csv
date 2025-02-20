@@ -1,4 +1,17 @@
 tag, output_directory, name, y_range, plot_list
+L1, /mnt/homes/ychoi/CLUSTER_SIZE/EXPERIMENT/RESULT/, clustersize_L1, 5E-01 2E+05, L1F2O L1F2X L1F3O L1F3X L1F4O L1F4X L1REFO L1REFX
+L3, /mnt/homes/ychoi/CLUSTER_SIZE/EXPERIMENT/RESULT/, clustersize_L3, 5E-01 2E+05, L3F2O L3F2X L3F3O L3F3X L3F4O L3F4X L3REFO L3REFX
+L7, /mnt/homes/ychoi/CLUSTER_SIZE/EXPERIMENT/RESULT/, clustersize_L7, 5E-01 2E+05, L7F2O L7F2X L7F3O L7F3X L7F4O L7F4X L7REFO L7REFX
+L20, /mnt/homes/ychoi/CLUSTER_SIZE/EXPERIMENT/RESULT/, clustersize_L20, 5E-01 2E+05, L20F2O L20F2X L20F3O L20F3X L20F4O L20F4X L20REFO L20REFX
+L1AG, /mnt/homes/ychoi/CLUSTER_SIZE/EXPERIMENT/RESULT/, clustersize_L1AGAMMA, 5E-01 2E+05, L1F2X L1F3X L1F4X L1REFX
+L3AG, /mnt/homes/ychoi/CLUSTER_SIZE/EXPERIMENT/RESULT/, clustersize_L3AGAMMA, 5E-01 2E+05, L3F2X L3F3X L3F4X L3REFX
+L7AG, /mnt/homes/ychoi/CLUSTER_SIZE/EXPERIMENT/RESULT/, clustersize_L7AGAMMA, 5E-01 2E+05, L7F2X L7F3X L7F4X L7REFX
+L20AG, /mnt/homes/ychoi/CLUSTER_SIZE/EXPERIMENT/RESULT/, clustersize_L20AGAMMA, 5E-01 2E+05, L20F2X L20F3X L20F4X L20REFX
+L1G, /mnt/homes/ychoi/CLUSTER_SIZE/EXPERIMENT/RESULT/, clustersize_L1GAMMA, 5E-01 2E+05, L1F2O L1F3O L1F4O L1REFO
+L3G, /mnt/homes/ychoi/CLUSTER_SIZE/EXPERIMENT/RESULT/, clustersize_L3GAMMA, 5E-01 2E+05, L3F2O L3F3O L3F4O L3REFO
+L7G, /mnt/homes/ychoi/CLUSTER_SIZE/EXPERIMENT/RESULT/, clustersize_L7GAMMA, 5E-01 2E+05, L7F2O L7F3O L7F4O L7REFO
+L20G, /mnt/homes/ychoi/CLUSTER_SIZE/EXPERIMENT/RESULT/, clustersize_L20GAMMA, 5E-01 2E+05, L20F2O L20F3O L20F4O L20REFO
+
 1mm_alpha, /mnt/homes/ychoi/entry_test/result/, clustersize_1mm_alpha, 5E-01 2E+05, 1mm_2phi_alpha 1mm_3phi_alpha 1mm_4phi_alpha 1mm_7phi_alpha 1mm_nocollimator_alpha 
 1mm_gamma, /mnt/homes/ychoi/entry_test/result/, clustersize_1mm_gamma, 5E-01 2E+05, 1mm_nocollimator_gamma 1mm_2phi_gamma 1mm_3phi_gamma 1mm_4phi_gamma 1mm_7phi_gamma
 1mm_alphagamma, /mnt/homes/ychoi/entry_test/result/, clustersize_1mm_alphagamma, 5E-01 2E+05, 1mm_nocollimator_alphagamma 1mm_2phi_alphagamma 1mm_3phi_alphagamma 1mm_4phi_alphagamma 1mm_7phi_alphagamma
