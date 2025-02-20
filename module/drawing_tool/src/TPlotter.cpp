@@ -1,5 +1,176 @@
 #include "TPlotter.h"
 
+// Set TH1 attributes
+void TPlotter::setAttribute(TH1* plot, const CppConfigDictionary& config) {
+	setLineColour(plot, config);
+	setLineWidth(plot, config);
+	setLineStyle(plot, config);
+}
+
+void TPlotter::setLineColour(TH1* plot, const CppConfigDictionary& config) {
+	if ( config.hasKey("LINE_COLOUR") ) {
+		Color_t lineColour = TColourUser::getColour(config.find("line_colour"));
+		plot->SetLineColor(lineColour);
+	}
+}
+
+void TPlotter::setLineWidth(TH1* plot, const CppConfigDictionary& config) {
+	if ( config.hasKey("LINE_WIDTH") ) {
+		Width_t lineWidth = stod(config.find("LINE_WIDTH"));
+		plot->SetLineWidth(lineWidth);
+	}
+}
+
+void TPlotter::setLineStyle(TH1* plot, const CppConfigDictionary& config) {
+	if ( config.hasKey("LINE_STYLE") ) {
+		Style_t lineStyle = static_cast<short>(stoi(config.find("LINE_STYLE")));
+		plot->SetLineStyle(lineStyle);
+	}
+}
+
+// Set TH2 attributes
+void TPlotter::setAttribute(TH2* plot, const CppConfigDictionary& config) { }
+
+void TPlotter::setAttribute(TGraph* graph, const CppConfigDictionary& config) {
+	setLineColour(graph, config);
+	setLineWidth(graph, config);
+	setLineStyle(graph, config);
+}
+
+void TPlotter::setLineStyle(TGraph* plot, const CppConfigDictionary& config) {
+	if ( config.hasKey("LINE_STYLE") ) {
+		Style_t lineStyle = stoi(config.find("LINE_STYLE"));
+		plot->SetLineStyle(lineStyle);
+	}
+}
+
+void TPlotter::setLineColour(TGraph* plot, const CppConfigDictionary& config) {
+	if ( config.hasKey("LINE_COLOUR") ) {
+		Color_t lineColour = TColourUser::getColour(config.find("line_colour"));
+		plot->SetLineColor(lineColour);
+	}
+}
+
+void TPlotter::setLineWidth(TGraph* plot, const CppConfigDictionary& config) {
+	if ( config.hasKey("LINE_WIDTH") ) {
+		Width_t lineWidth = stod(config.find("LINE_WIDTH"));
+		plot->SetLineWidth(lineWidth);
+	}
+}
+
+void TPlotter::setMarkerStyle(TGraph* plot, const CppConfigDictionary& config) {
+	if ( config.hasKey("MARKER_STYLE") ) {
+		Style_t markerStyle = static_cast<short>(stoi(config.find("MARKER_STYLE")));
+		plot->SetMarkerStyle(markerStyle);
+	}
+}
+
+void TPlotter::setMarkerSize(TGraph* plot, const CppConfigDictionary& config) {
+	if ( config.hasKey("MARKER_SIZE") ) {
+		Size_t markerSize = stof(config.find("MARKER_SIZE"));
+		plot->SetMarkerSize(markerSize);
+	}
+}
+
+void TPlotter::setMarkerColour(TGraph* plot, const CppConfigDictionary& config) {
+	if ( config.hasKey("MARKER_COLOUR") ) {
+		Color_t markerColour = TColourUser::getColour(config.find("MARKER_COLOUR"));
+		plot->SetMarkerColor(markerColour);
+	}
+}
+
+void TPlotter::drawPlot(TCanvas* canvas, TH1* plot, TString drawType) {
+	canvas->cd();
+	plot->Draw(drawType);
+}
+
+void TPlotter::drawPlot(TCanvas* canvas, TH2* plot, TString drawType) {
+	canvas->cd();
+	plot->Draw(drawType);
+}
+
+void TPlotter::drawPlot(TCanvas* canvas, TGraph* plot, TString drawType) {
+	canvas->cd();
+	plot->Draw(drawType);
+}
+
+void TPlotter::drawPlot(TCanvas* canvas, TMultiGraph* plot, TString drawType) {
+	canvas->cd();
+	plot->Draw(drawType);
+}
+
+
+void TPlotter::setCanvasAttribute(TCanvas* canvas, const CppConfigDictionary& config) {
+	TObject* firstObject = canvas->GetListOfPrimitives()->At(0);
+	if ( firstObject->InheritsFrom("TH1") ) {
+		TH1* hist = static_cast<TH1*>(firstObject);
+		setTitle(hist, config);
+		setXRange(hist, config);
+		setYRange(hist, config);
+	} else if ( firstObject->InheritsFrom("TH2") ) {
+		TH2* hist = static_cast<TH2*>(firstObject);
+		setTitle(hist, config);
+		setXRange(hist, config);
+		setYRange(hist, config);
+		setZRange(hist, config);
+	} else if ( firstObject->InheritsFrom("TGraph") ) {
+		TGraph* graph = static_cast<TGraph*>(firstObject);
+		setTitle(graph, config);
+		setXRange(graph, config);
+		setYRange(graph, config);
+	} else if ( firstObject->InheritsFrom("TMultiGraph") ) {
+		TMultiGraph* multiGraph = static_cast<TMultiGraph*>(firstObject);
+		setTitle(multiGraph, config);
+		setXRange(multiGraph, config);
+		setYRange(multiGraph, config);
+	}
+	if ( config.hasKey("margin") ) {
+		std::vector<double> marginSet = getDoubleSetFromString(config.find("margin"));
+		canvas->SetMargin(marginSet[0], marginSet[1], marginSet[2], marginSet[3]);
+	}
+	if ( config.hasKey("logx") && config.find("logx") == "true" ) {
+		canvas->SetLogx();
+	}
+	if ( config.hasKey("logy") && config.find("logy") == "true" ) {
+		canvas->SetLogy();
+	}
+	if ( config.hasKey("grid") && config.find("grid") == "false" ) {
+	} else {
+		canvas->SetGrid();
+	}
+}
+
+void TPlotter::setTitle(TH1* plot, CppConfigDictionary& config) {
+	if ( config.hasKey("") )
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 void TPlotter::initHist(TH1* hist, const CppConfigDictionary& config) {
 	std::vector<double> set = {1, 0, 1};
 	if ( config.hasKey("bins") ) {
@@ -76,7 +247,7 @@ void TPlotter::savePlot(std::unique_ptr<TCanvas>& canvas, std::unique_ptr<TGraph
 
 	drawPlot(canvas.get(), plot.get(), "APL");
 	setCanvasAttribute(canvas, config);
-	saveCanvas(canvas.get(), mOutputPath, config);
+	// saveCanvas(canvas.get(), mOutputPath, config);
 }
 
 void TPlotter::savePlot(TCanvas* canvas, TH1* plot, const std::string& configName) {
@@ -210,46 +381,6 @@ void TPlotter::saveLegend(TCanvas* canvas, TLegend* legend) {
 	canvas->cd();
 	gStyle->SetOptStat(0);
 	legend->Draw("SAME");
-}
-
-void TPlotter::setCanvasAttribute(TCanvas* canvas, const CppConfigDictionary& config) {
-	TObject* firstObject = canvas->GetListOfPrimitives()->At(0);
-	if ( firstObject->InheritsFrom("TH1") ) {
-		TH1* hist = static_cast<TH1*>(firstObject);
-		setTitle(hist, config);
-		setXRange(hist, config);
-		setYRange(hist, config);
-	} else if ( firstObject->InheritsFrom("TH2") ) {
-		TH2* hist = static_cast<TH2*>(firstObject);
-		setTitle(hist, config);
-		setXRange(hist, config);
-		setYRange(hist, config);
-		setZRange(hist, config);
-	} else if ( firstObject->InheritsFrom("TGraph") ) {
-		TGraph* graph = static_cast<TGraph*>(firstObject);
-		setTitle(graph, config);
-		setXRange(graph, config);
-		setYRange(graph, config);
-	} else if ( firstObject->InheritsFrom("TMultiGraph") ) {
-		TMultiGraph* multiGraph = static_cast<TMultiGraph*>(firstObject);
-		setTitle(multiGraph, config);
-		setXRange(multiGraph, config);
-		setYRange(multiGraph, config);
-	}
-	if ( config.hasKey("margin") ) {
-		std::vector<double> marginSet = getDoubleSetFromString(config.find("margin"));
-		canvas->SetMargin(marginSet[0], marginSet[1], marginSet[2], marginSet[3]);
-	}
-	if ( config.hasKey("logx") && config.find("logx") == "true" ) {
-		canvas->SetLogx();
-	}
-	if ( config.hasKey("logy") && config.find("logy") == "true" ) {
-		canvas->SetLogy();
-	}
-	if ( config.hasKey("grid") && config.find("grid") == "false" ) {
-	} else {
-		canvas->SetGrid();
-	}
 }
 
 

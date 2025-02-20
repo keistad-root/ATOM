@@ -40,23 +40,31 @@ const std::string EXTENSION = "png";
 class TPlotter {
 public:
 	TPlotter() = default;
-private:
-	const CppConfigFile* mConfig;
-	std::filesystem::path mOutputPath;
-
+	~TPlotter() = default;
 public:
-	template <typename T> void setAttribute(T* plot, const CppConfigDictionary& config);
+	static void setAttribute(TH1* plot, const CppConfigDictionary& config);
+	static void setLineColour(TH1* plot, const CppConfigDictionary& config);
+	static void setLineWidth(TH1* plot, const CppConfigDictionary& config);
+	static void setLineStyle(TH1* plot, const CppConfigDictionary& config);
 
-	template <typename T> void setLineStyle(T* plot, const CppConfigDictionary& config);
-	template <typename T> void setLineColour(T* plot, const CppConfigDictionary& config);
-	template <typename T> void setLineWidth(T* plot, const CppConfigDictionary& config);
-	template <typename T> void setMarkerStyle(T* plot, const CppConfigDictionary& config);
-	template <typename T> void setMarkerColour(T* plot, const CppConfigDictionary& config);
-	template <typename T> void setMarkerSize(T* plot, const CppConfigDictionary& config);
+	static void setAttribute(TH2* plot, const CppConfigDictionary& config);
 
-	template <typename T> void drawPlot(TCanvas* canvas, T* plot, TString drawType = "SAME");
-	void setCanvasAttribute(TCanvas* canvas, const CppConfigDictionary& config);
-	void setCanvasAttribute(std::unique_ptr<TCanvas>& canvas, const CppConfigDictionary& config);
+	static void setAttribute(TGraph* graph, const CppConfigDictionary& config);
+	static void setLineStyle(TGraph* plot, const CppConfigDictionary& config);
+	static void setLineColour(TGraph* plot, const CppConfigDictionary& config);
+	static void setLineWidth(TGraph* plot, const CppConfigDictionary& config);
+	static void setMarkerStyle(TGraph* plot, const CppConfigDictionary& config);
+	static void setMarkerSize(TGraph* plot, const CppConfigDictionary& config);
+	static void setMarkerColour(TGraph* plot, const CppConfigDictionary& config);
+
+	static void drawPlot(TCanvas* canvas, TH1* plot, TString drawType);
+	static void drawPlot(TCanvas* canvas, TH2* plot, TString drawType);
+	static void drawPlot(TCanvas* canvas, TGraph* plot, TString drawType);
+	static void drawPlot(TCanvas* canvas, TMultiGraph* plot, TString drawType);
+
+	static void setCanvasAttribute(TCanvas* canvas, const CppConfigDictionary& config);
+	static void setTitle(TH1* plot, CppConfigDictionary& config);
+	static void setRange(TH1* plot, CppConfigDictionary& config);
 
 	void initHist(TH1* hist, const CppConfigDictionary& config);
 	void initHist(std::unique_ptr<TH1D>& hist, const CppConfigDictionary& config);
@@ -81,8 +89,6 @@ public:
 	TString getTitle(const std::string& titleStr);
 
 	// Getter
-	std::filesystem::path getOutputPath() { return mOutputPath; }
-	const CppConfigFile* getMainConfig() { return mConfig; }
 
 	// Plot property
 	template <typename T> void setXBin(T* hist, const CppConfigDictionary& config);
@@ -104,50 +110,6 @@ public:
 	void saveCanvas(TCanvas* canvas, std::filesystem::path path, const CppConfigDictionary& config);
 };
 
-template <typename T> void TPlotter::setAttribute(T* plot, const CppConfigDictionary& config) {
-	setLineStyle(plot, config);
-	setLineColour(plot, config);
-	setLineWidth(plot, config);
-	setMarkerStyle(plot, config);
-	setMarkerColour(plot, config);
-	setMarkerSize(plot, config);
-}
-
-template <typename T> void TPlotter::setLineStyle(T* hist, const CppConfigDictionary& config) {
-	if ( config.hasKey("line_style") ) {
-		hist->SetLineStyle(stoi(config.find("line_style")));
-	}
-}
-
-template <typename T> void TPlotter::setLineColour(T* hist, const CppConfigDictionary& config) {
-	if ( config.hasKey("line_colour") ) {
-		hist->SetLineColor(TColourUser::getColour(config.find("line_colour")));
-	}
-}
-
-template <typename T> void TPlotter::setLineWidth(T* hist, const CppConfigDictionary& config) {
-	if ( config.hasKey("line_width") ) {
-		hist->SetLineWidth(stoi(config.find("line_width")));
-	}
-}
-
-template <typename T> void TPlotter::setMarkerStyle(T* hist, const CppConfigDictionary& config) {
-	if ( config.hasKey("marker_style") ) {
-		hist->SetMarkerStyle(stoi(config.find("marker_style")));
-	}
-}
-
-template <typename T> void TPlotter::setMarkerColour(T* hist, const CppConfigDictionary& config) {
-	if ( config.hasKey("marker_colour") ) {
-		hist->SetMarkerColor(TColourUser::getColour(config.find("marker_colour")));
-	}
-}
-
-template <typename T> void TPlotter::setMarkerSize(T* hist, const CppConfigDictionary& config) {
-	if ( config.hasKey("marker_size") ) {
-		hist->SetMarkerSize(stoi(config.find("marker_size")));
-	}
-}
 
 template <typename T> void TPlotter::drawPlot(TCanvas* canvas, T* plot, TString drawType) {
 	canvas->cd();
