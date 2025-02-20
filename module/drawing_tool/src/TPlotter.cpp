@@ -1,3 +1,20 @@
+#include<array>
+#include<sstream>
+#include<typeinfo>
+#include<iostream>
+
+#include "TString.h"
+#include "TH1.h"
+#include "TH2.h"
+#include "TCanvas.h"
+#include "TLegend.h"
+#include "TColourUser.h"
+#include "TStyle.h"
+#include "TMultiGraph.h"
+#include "TGraph.h"
+#include "TGaxis.h"
+#include "TFrame.h"
+
 #include "TPlotter.h"
 
 // Set TH1 attributes
@@ -79,26 +96,28 @@ void TPlotter::setMarkerColour(TGraph* plot, const CppConfigDictionary& config) 
 	}
 }
 
-void TPlotter::drawPlot(TCanvas* canvas, TH1* plot, TString drawType) {
+void TPlotter::drawPlot(TCanvas* canvas, TH1* plot, const CppConfigDictionary& config, TString drawType) {
 	canvas->cd();
+	setAttribute(plot, config);
 	plot->Draw(drawType);
 }
 
-void TPlotter::drawPlot(TCanvas* canvas, TH2* plot, TString drawType) {
+void TPlotter::drawPlot(TCanvas* canvas, TH2* plot, const CppConfigDictionary& config, TString drawType) {
 	canvas->cd();
+	setAttribute(plot, config);
 	plot->Draw(drawType);
 }
 
-void TPlotter::drawPlot(TCanvas* canvas, TGraph* plot, TString drawType) {
+void TPlotter::drawPlot(TCanvas* canvas, TGraph* plot, const CppConfigDictionary& config, TString drawType) {
 	canvas->cd();
+	setAttribute(plot, config);
 	plot->Draw(drawType);
 }
 
-void TPlotter::drawPlot(TCanvas* canvas, TMultiGraph* plot, TString drawType) {
+void TPlotter::drawPlot(TCanvas* canvas, TMultiGraph* plot, const CppConfigDictionary& config, TString drawType) {
 	canvas->cd();
 	plot->Draw(drawType);
 }
-
 
 void TPlotter::setCanvasAttribute(TCanvas* canvas, const CppConfigDictionary& config) {
 	TObject* firstObject = canvas->GetListOfPrimitives()->At(0);
@@ -119,21 +138,9 @@ void TPlotter::setCanvasAttribute(TCanvas* canvas, const CppConfigDictionary& co
 		setTitle(multiGraph, config);
 		setRange(multiGraph, config);
 	}
-
-	if ( config.hasKey("margin") ) {
-		std::vector<double> marginSet = getDoubleSetFromString(config.find("margin"));
-		canvas->SetMargin(marginSet[0], marginSet[1], marginSet[2], marginSet[3]);
-	}
-	if ( config.hasKey("logx") && config.find("logx") == "true" ) {
-		canvas->SetLogx();
-	}
-	if ( config.hasKey("logy") && config.find("logy") == "true" ) {
-		canvas->SetLogy();
-	}
-	if ( config.hasKey("grid") && config.find("grid") == "false" ) {
-	} else {
-		canvas->SetGrid();
-	}
+	setMargin(canvas, config);
+	setLogScale(canvas, config);
+	setGrid(canvas, config);
 }
 
 void TPlotter::setTitle(TH1* plot, const CppConfigDictionary& config) {
@@ -194,7 +201,6 @@ void TPlotter::setRange(TGraph* plot, const CppConfigDictionary& config) {
 	}
 }
 
-
 void TPlotter::setTitle(TMultiGraph* plot, const CppConfigDictionary& config) {
 	if ( config.hasKey("TITLE") ) {
 		TString title = getTitle(config.find("TITLE"));
@@ -213,17 +219,46 @@ void TPlotter::setRange(TMultiGraph* plot, const CppConfigDictionary& config) {
 	}
 }
 
-
-
-
-
-
-void TPlotter::initHist(TH1* hist, const CppConfigDictionary& config) {
-	std::vector<double> set = {1, 0, 1};
-	if ( config.hasKey("bins") ) {
-		set = getDoubleSetFromString(config.find("bins"));
+void TPlotter::setMargin(TCanvas* canvas, const CppConfigDictionary& config) {
+	if ( config.hasKey("MARGIN") ) {
+		std::vector<double> marginSet = getDoubleSetFromString(config.find("MARGIN"));
+		canvas->SetMargin(marginSet[0], marginSet[1], marginSet[2], marginSet[3]);
 	}
-	hist->SetBins(static_cast<int>(set[0]), set[1], set[2]);
+}
+
+void TPlotter::setLogScale(TCanvas* canvas, const CppConfigDictionary& config) {
+	if ( config.hasKey("LOG_X") && config.find("LOG_X") == "true" ) {
+		canvas->SetLogx();
+	}
+	if ( config.hasKey("LOG_Y") && config.find("LOG_Y") == "true" ) {
+		canvas->SetLogy();
+	}
+	if ( config.hasKey("LOG_Z") && config.find("LOG_Z") == "true" ) {
+		canvas->SetLogz();
+	}
+}
+
+void TPlotter::setGrid(TCanvas* canvas, const CppConfigDictionary& config) {
+	if ( config.hasKey("GRID") && config.find("GRID") == "false" ) {
+		canvas->SetGrid();
+	}
+}
+
+void TPlotter::initPlot(TH1* hist, const CppConfigDictionary& config) {
+	std::vector<double> bin = {1, 0, 1};
+	if ( config.hasKey("BIN") ) {
+		bin = getDoubleSetFromString(config.find("BIN"));
+	}
+	hist = new TH1D("hist", "", static_cast<int>(bin[0]), bin[1], bin[2]);
+}
+
+void TPlotter::initPlot(TH2* hist, const CppConfigDictionary& config) {
+	std::vector<double> bin = {1, 0, 1, 1, 0, 1};
+	if ( config.hasKey("BIN") ) {
+		bin = getDoubleSetFromString(config.find("BIN"));
+	}
+	hist = new TH2D("hist", "", static_cast<int>(bin[0]), bin[1], bin[2], static_cast<int>(bin[3]), bin[4], bin[5]);
+
 }
 
 TString TPlotter::getTitle(std::string_view titleStr) {
@@ -236,187 +271,42 @@ TString TPlotter::getTitle(std::string_view titleStr) {
 	return mainTitle + ";" + xTitle + ";" + yTitle;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-void TPlotter::initHist(std::unique_ptr<TH1D>& hist, const CppConfigDictionary& config) {
-	std::vector<double> set = {1, 0, 1};
-	if ( config.hasKey("bins") ) {
-		set = getDoubleSetFromString(config.find("bins"));
-	}
-	hist->SetBins(static_cast<int>(set[0]), set[1], set[2]);
-	if ( config.hasKey("name") ) {
-		hist->SetName(static_cast<TString>(config.find("name")));
-	}
-}
-
-void TPlotter::initHist(TH2* hist, const CppConfigDictionary& config) {
-	std::vector<double> set = {1, 0, 1, 1, 0, 1};
-	if ( config.hasKey("bins") ) {
-		set = getDoubleSetFromString(config.find("bins"));
-	}
-	hist->SetBins(static_cast<int>(set[0]), set[1], set[2], static_cast<int>(set[3]), set[4], set[5]);
-}
-
-void TPlotter::initHist(std::unique_ptr<TH2D>& hist, const CppConfigDictionary& config) {
-	std::vector<double> set = {1, 0, 1, 1, 0, 1};
-	if ( config.hasKey("bins") ) {
-		set = getDoubleSetFromString(config.find("bins"));
-	}
-	hist->SetBins(static_cast<int>(set[0]), set[1], set[2], static_cast<int>(set[3]), set[4], set[5]);
-	if ( config.hasKey("name") ) {
-		hist->SetName(static_cast<TString>(config.find("name")));
-	}
-}
-
-void TPlotter::savePlot(TCanvas* canvas, TH1* plot, const CppConfigDictionary& config) {
-	setTitle(plot, config);
-	setXRange(plot, config);
-	setYRange(plot, config);
-	setAttribute(plot, config);
-
-	plot->Draw("SAME HIST");
-	setMargin(canvas, config);
-}
-
-void TPlotter::savePlot(TCanvas* canvas, TH2* plot, const CppConfigDictionary& config) {
-	setTitle(plot, config);
-	setXRange(plot, config);
-	setYRange(plot, config);
-	setZRange(plot, config);
-	setAttribute(plot, config);
-
-	drawPlot(canvas, plot, "COLZ");
-	setMargin(canvas, config);
-}
-
-void TPlotter::savePlot(TCanvas* canvas, TMultiGraph* plot, const CppConfigDictionary& config) {
-	setTitle(plot, config);
-	setXRange(plot, config);
-	setYRange(plot, config);
-
-	plot->Draw("APL");
-	setMargin(canvas, config);
-}
-
-void TPlotter::savePlot(std::unique_ptr<TCanvas>& canvas, std::unique_ptr<TGraph>& plot, const CppConfigDictionary& config) {
-	setTitle(plot.get(), config);
-	setXRange(plot.get(), config);
-	setYRange(plot.get(), config);
-	setAttribute(plot.get(), config);
-
-	drawPlot(canvas.get(), plot.get(), "APL");
-	setCanvasAttribute(canvas, config);
-	// saveCanvas(canvas.get(), mOutputPath, config);
-}
-
-void TPlotter::savePlot(TCanvas* canvas, TH1* plot, const std::string& configName) {
-	setTitle(plot, mConfig->getConfig(configName));
-	setXRange(plot, mConfig->getConfig(configName));
-	setYRange(plot, mConfig->getConfig(configName));
-	setAttribute(plot, mConfig->getConfig(configName));
-
-	plot->Draw("COLZ0");
-	setMargin(canvas, mConfig->getConfig(configName));
-}
-
-void TPlotter::savePlot(TCanvas* canvas, TGraph* plot, const CppConfigDictionary& config) {
-	setTitle(plot, config);
-	setXRange(plot, config);
-	setYRange(plot, config);
-	setAttribute(plot, config);
-	config.hasKey("type") ? drawPlot(canvas, plot, config.find("type")) : drawPlot(canvas, plot, "APL");
-	setMargin(canvas, config);
-}
-
-void TPlotter::addLegend(TCanvas* canvas, TLegend*& legend, const CppConfigDictionary& config) {
-	std::vector<double> position = {0, 0, 0, 0};
-	if ( config.hasKey("legend_position") ) {
-		position = getDoubleSetFromString(config.find("legend_position"));
+void TPlotter::initLegend(TLegend* legend, const CppConfigDictionary& config) {
+	std::vector<double> position = {.7, .7, .9, .9};
+	if ( config.hasKey("LEGEND_POSITION") ) {
+		position = getDoubleSetFromString(config.find("LEGEND_POSITION"));
 	}
 	legend = new TLegend(position[0], position[1], position[2], position[3]);
-	// gStyle->SetOptStat(0);
-	if ( config.hasKey("legend_title") ) {
-		legend->SetHeader(static_cast<TString>(config.find("legend_title")), "C");
+	if ( config.hasKey("LEGEND_TITLE") ) {
+		legend->SetHeader(static_cast<TString>(config.find("LEGEND_TITLE")), "C");
 	}
 }
 
-// void TPlotter::savePlot(TH1* plot, const std::string& configName) {
-// 	TCanvas* canvas = new TCanvas("canvas", "", CANVAS_WIDTH, CANVAS_HEIGHT);
-// 	setTitle(plot, mConfig->getConfig(configName));
-// 	// setBins(plot, mConfig->getConfig(configName));
-// 	setXRange(plot, mConfig->getConfig(configName));
-// 	setYRange(plot, mConfig->getConfig(configName));
-
-// 	if ( mConfig->getConfig(configName).hasKey("type") ) {
-// 		TString type = mConfig->getConfig(configName).find("type");
-// 		plot->Draw(type);
-// 	} else {
-// 		plot->Draw();
-// 	}
-// 	setMargin(canvas, mConfig->getConfig(configName));
-// 	saveCanvas(canvas, mOutputPath, mConfig->getConfig(configName));
-
-// 	delete canvas;
-// 	canvas = nullptr;
-// }
-
-void TPlotter::savePlot(TCanvas* canvas, TH2* plot, const std::string& configName) {
-	setTitle(plot, mConfig->getConfig(configName));
-	setXRange(plot, mConfig->getConfig(configName));
-	setYRange(plot, mConfig->getConfig(configName));
-	setZRange(plot, mConfig->getConfig(configName));
-
-	if ( mConfig->getConfig(configName).hasKey("type") ) {
-		TString type = mConfig->getConfig(configName).find("type");
-		plot->Draw(type);
-	} else {
-		plot->Draw();
+void TPlotter::initCanvas(TCanvas* canvas, const CppConfigDictionary& config) {
+	std::vector<double> size = {800, 600};
+	static int iCanvas = 0;
+	if ( config.hasKey("CANVAS_SIZE") ) {
+		size = getDoubleSetFromString(config.find("CANVAS_SIZE"));
 	}
+	canvas = new TCanvas(Form("canvas_%d", iCanvas), "", size[0], size[1]);
+	iCanvas++;
 }
 
+void TPlotter::saveLegend(TCanvas* canvas, TLegend* legend) {
+	canvas->cd();
+	gStyle->SetOptStat(0);
+	legend->Draw("SAME");
+}
 
-// void TPlotter::savePlot(TH2* plot, const std::string& configName) {
-// 	TCanvas* canvas = new TCanvas("canvas", "", CANVAS_WIDTH, CANVAS_HEIGHT);
-// 	setTitle(plot, mConfig->getConfig(configName));
-// 	setXRange(plot, mConfig->getConfig(configName));
-// 	setYRange(plot, mConfig->getConfig(configName));
-// 	setZRange(plot, mConfig->getConfig(configName));
+void TPlotter::saveCanvas(TCanvas* canvas, std::filesystem::path path, const CppConfigDictionary& config) {
+	setCanvasAttribute(canvas, config);
 
-// 	if ( mConfig->getConfig(configName).hasKey("type") ) {
-// 		TString type = mConfig->getConfig(configName).find("type");
-// 		plot->Draw(type);
-// 	} else {
-// 		plot->Draw();
-// 	}
+	std::string name = config.hasKey("NAME") ? config.find("NAME") : "filename";
+	std::string extension = config.hasKey("EXTENSION") ? config.find("EXTENSION") : "png";
 
-// 	saveCanvas(canvas, mOutputPath, mConfig->getConfig(configName));
-
-// 	delete canvas;
-// 	canvas = nullptr;
-// }
+	TString savePath = static_cast<TString>((path / name).replace_extension(extension));
+	canvas->SaveAs(savePath);
+}
 
 const std::vector<int> TPlotter::getIntegerSetFromString(const std::string& numStr) {
 	std::vector<int> temp;
@@ -440,86 +330,74 @@ const std::vector<double> TPlotter::getDoubleSetFromString(const std::string& nu
 	return temp;
 }
 
-
-
-
-void TPlotter::setMargin(TCanvas* canvas, const CppConfigDictionary& config) {
-	if ( config.hasKey("margin") ) {
-		std::vector<double> marginSet = getDoubleSetFromString(config.find("margin"));
-		canvas->SetMargin(marginSet[0], marginSet[1], marginSet[2], marginSet[3]);
-	}
-}
-
-
-
-void TPlotter::saveLegend(TCanvas* canvas, TLegend* legend) {
-	canvas->cd();
-	gStyle->SetOptStat(0);
-	legend->Draw("SAME");
-}
-
-
-void TPlotter::setCanvasAttribute(std::unique_ptr<TCanvas>& canvas, const CppConfigDictionary& config) {
-	TObject* firstObject = canvas->GetListOfPrimitives()->At(0);
-	if ( firstObject->InheritsFrom("TH1") ) {
-		TH1* hist = static_cast<TH1*>(firstObject);
-		setTitle(hist, config);
-		setXRange(hist, config);
-		setYRange(hist, config);
-		setRightAxis(hist, config);
-	} else if ( firstObject->InheritsFrom("TH2") ) {
-		TH2* hist = static_cast<TH2*>(firstObject);
-		setTitle(hist, config);
-		setXRange(hist, config);
-		setYRange(hist, config);
-		setZRange(hist, config);
-	} else if ( firstObject->InheritsFrom("TGraph") ) {
-		TGraph* graph = static_cast<TGraph*>(firstObject);
-		setTitle(graph, config);
-		setXRange(graph, config);
-		setYRange(graph, config);
-	} else if ( firstObject->InheritsFrom("TMultiGraph") ) {
-		TMultiGraph* multiGraph = static_cast<TMultiGraph*>(firstObject);
-		setTitle(multiGraph, config);
-		setXRange(multiGraph, config);
-		setYRange(multiGraph, config);
-	}
-	if ( config.hasKey("margin") ) {
-		std::vector<double> marginSet = getDoubleSetFromString(config.find("margin"));
-		canvas->SetMargin(marginSet[0], marginSet[1], marginSet[2], marginSet[3]);
-	}
-	if ( config.hasKey("logx") && config.find("logx") == "true" ) {
-		canvas->SetLogx();
-	}
-	if ( config.hasKey("logy") && config.find("logy") == "true" ) {
-		canvas->SetLogy();
-	}
-	if ( config.hasKey("grid") && config.find("grid") == "false" ) {
+void TPlotter::setRightAxis(TH1* plot, const CppConfigDictionary& config) {
+	if ( config.hasKey("RIGHT_AXIS") && config.find("RIGHT_AXIS") == "false" ) {
 	} else {
-		canvas->SetGrid();
+		double xmax = plot->GetXaxis()->GetXmax();
+		double ymin = plot->GetMinimum();
+		double ymax = plot->GetMaximum() * 1.05;
+		if ( config.hasKey("Y_RANGE") ) {
+			std::vector<double> range = getDoubleSetFromString(config.find("Y_RANGE"));
+			ymin = range[0];
+			ymax = range[1];
+		} else if ( config.hasKey("LOGY") && config.find("LOGY") == "true" ) {
+			double minNonZero = std::numeric_limits<double>::max();
+			for ( int i = 1; i <= plot->GetNbinsX(); ++i ) {
+				double binContent = plot->GetBinContent(i);
+				if ( binContent > 0 && binContent < minNonZero ) {
+					minNonZero = binContent;
+				}
+			}
+			ymin = minNonZero / 1.5;
+			ymax = plot->GetMaximum() * 1.5;
+			plot->GetYaxis()->SetRangeUser(ymin, ymax);
+		} else {
+			ymin = plot->GetMinimum();
+			ymax = plot->GetMaximum() * 1.1;
+			plot->GetYaxis()->SetRangeUser(ymin, ymax);
+		}
+		TGaxis* axis;
+		if ( config.hasKey("LOGY") && config.find("LOGY") == "true" ) {
+			axis = new TGaxis(xmax, ymin, xmax, ymax, ymin, ymax, 510, "+G");
+		} else {
+			axis = new TGaxis(xmax, ymin, xmax, ymax, ymin, ymax, 510, "+L");
+		}
+		axis->Draw();
 	}
 }
 
-void TPlotter::saveCanvas(TCanvas* canvas, std::filesystem::path path, const CppConfigDictionary& config) {
-	if ( config.hasKey("logx") && config.find("logx") == "true" ) {
-		canvas->SetLogx();
-	}
-	if ( config.hasKey("logy") && config.find("logy") == "true" ) {
-		canvas->SetLogy();
-	}
-	if ( config.hasKey("logz") && config.find("logz") == "true" ) {
-		canvas->SetLogz();
-	}
-	if ( config.hasKey("grid") && config.find("grid") == "false" ) {
+void TPlotter::setRightAxis(TGraph* plot, const CppConfigDictionary& config) {
+	if ( config.hasKey("RIGHT_AXIS") && config.find("RIGHT_AXIS") == "false" ) {
 	} else {
-		canvas->SetGrid();
+		double xmax = plot->GetXaxis()->GetXmax();
+		double ymin = plot->GetMinimum();
+		double ymax = plot->GetMaximum() * 1.05;
+		if ( config.hasKey("Y_RANGE") ) {
+			std::vector<double> range = getDoubleSetFromString(config.find("Y_RANGE"));
+			ymin = range[0];
+			ymax = range[1];
+		} else if ( config.hasKey("LOGY") && config.find("LOGY") == "true" ) {
+			double minNonZero = std::numeric_limits<double>::max();
+			for ( int i = 1; i <= plot->GetNbinsX(); ++i ) {
+				double binContent = plot->GetBinContent(i);
+				if ( binContent > 0 && binContent < minNonZero ) {
+					minNonZero = binContent;
+				}
+			}
+			ymin = minNonZero / 1.5;
+			ymax = plot->GetMaximum() * 1.5;
+			plot->GetYaxis()->SetRangeUser(ymin, ymax);
+		} else {
+			ymin = plot->GetMinimum();
+			ymax = plot->GetMaximum() * 1.1;
+			plot->GetYaxis()->SetRangeUser(ymin, ymax);
+		}
+		TGaxis* axis;
+		if ( config.hasKey("LOGY") && config.find("LOGY") == "true" ) {
+			axis = new TGaxis(xmax, ymin, xmax, ymax, ymin, ymax, 510, "+G");
+		} else {
+			axis = new TGaxis(xmax, ymin, xmax, ymax, ymin, ymax, 510, "+L");
+		}
+		axis->Draw();
 	}
-	if ( config.hasKey("canvas_size") ) {
-		std::vector<double> size = getDoubleSetFromString(config.find("canvas_size"));
-		canvas->SetCanvasSize(size[0], size[1]);
-	}
-	std::string name = config.hasKey("name") ? config.find("name") : "filename";
-	std::string extension = config.hasKey("extension") ? config.find("extension") : EXTENSION;
-	TString savePath = static_cast<TString>((path / name).replace_extension(extension));
-	canvas->SaveAs(savePath);
 }
