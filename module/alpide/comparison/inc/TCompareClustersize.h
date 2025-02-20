@@ -17,14 +17,16 @@
 
 class TClusterInfo {
 public:
-	TClusterInfo(std::string_view tag);
+	TClusterInfo(std::string_view tag, const CppConfigDictionary& config);
 	~TClusterInfo();
 private:
 	std::string mTag;
-	TFile* mFile;
 	CppConfigDictionary mConfig;
-	TH1D* mClusterSIzeGraph;
-
+	TH1D* mClusterSizeHistogram;
+public:
+	TH1D* setClusterSizeHistogram(std::string_view name);
+	TH1D* getClusterSizeHistogram() { return mClusterSizeHistogram; }
+	const CppConfigDictionary& getConfig() const { return mConfig; }
 };
 
 class TCompareClustersize : public TPlotter {
@@ -34,24 +36,8 @@ private:
 	CppConfigFile mConfig;
 	std::filesystem::path mOutputPath;
 	std::vector<TClusterInfo> mClusterInfo;
-
-
-
-	std::unordered_map<std::string, TH1D*> mGraphFileSet;
-	std::vector<CppConfigDictionary> mPlotDictionary;
-	std::vector<std::pair<CppConfigDictionary, TH1D*>> mGraphSet;
-	std::vector<std::pair<CppConfigDictionary, TH1D*>> mXregionSet;
-	CppConfigDictionary mRegionDictionary;
 public:
-	TH1D* getClustersize(const std::string& file);
-
-	TH1D* subtractClustersize(const std::string& graph1, const std::string& graph2);
-
-	void setGraphSet();
 	void drawClustersize();
-	void drawRegion();
-	void getClusterStr();
-	void thinRegionCluster();
 };
 
 #endif
