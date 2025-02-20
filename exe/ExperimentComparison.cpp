@@ -47,7 +47,7 @@ CppConfigFile setEnvironment(const std::string& tagging) {
 
 	std::array<std::string, 7> colour = {"red", "blue", "violet", "indigo", "green", "orange", "yellow"};
 	int iColour = 0;
-	CppConfigDictionary plotDictionary("plots");
+	CppConfigDictionary plotDictionary("PLOT_SET");
 	while ( plotListCSV.read_row(plotListTag, hist, legend, ratio) ) {
 		if ( std::find(plotSet.begin(), plotSet.end(), plotListTag) != plotSet.end() ) {
 			CppConfigDictionary temp(plotListTag);

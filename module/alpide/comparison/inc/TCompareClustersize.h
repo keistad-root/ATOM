@@ -16,10 +16,14 @@
 #include "CppConfigFile.h"
 
 class TClusterInfo {
+public:
+	TClusterInfo(std::string_view tag);
+	~TClusterInfo();
 private:
 	std::string mTag;
 	TFile* mFile;
-
+	CppConfigDictionary mConfig;
+	TH1D* mClusterSIzeGraph;
 
 };
 
@@ -29,6 +33,10 @@ public:
 private:
 	CppConfigFile mConfig;
 	std::filesystem::path mOutputPath;
+	std::vector<TClusterInfo> mClusterInfo;
+
+
+
 	std::unordered_map<std::string, TH1D*> mGraphFileSet;
 	std::vector<CppConfigDictionary> mPlotDictionary;
 	std::vector<std::pair<CppConfigDictionary, TH1D*>> mGraphSet;

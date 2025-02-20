@@ -1,7 +1,18 @@
 #include "TCompareClustersize.h"
 
+#include "config.h"
+
+const std::string experimentInfoCSV = std::string(SOURCE_DIR) + "/build/config/EXPERIMENT_INFORMATION.csv";
+
+TClusterInfo::TClusterInfo(std::string_view tag) : mTag(tag) { }
+
+TClusterInfo::~TClusterInfo() { }
 
 TCompareClustersize::TCompareClustersize(const CppConfigFile& config) : TPlotter(), mConfig(config) {
+	for ( auto& plotConfig : mConfig.getConfig("PLOT_LIST").getSubConfigSet() ) {
+		TClusterInfo temp(plotConfig.getConfigName());
+	}
+
 	const CppConfigDictionary fileList = mConfig.getConfig("FileList");
 	for ( const std::string& file : fileList.getKeyList() ) {
 		const std::string& path = fileList.find(file);
