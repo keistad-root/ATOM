@@ -64,15 +64,15 @@ TCompareClustersize::TCompareClustersize(const CppConfigFile& config) : TPlotter
 }
 
 void TCompareClustersize::drawClustersize() {
-	TCanvas* canvas = new TCanvas("canvas", "", 1500, 1000);
+	TCanvas* canvas;
 	TLegend* legend;
-	addLegend(canvas, legend, mConfig.getConfig("Clustersize"));
+	initCanvas(canvas, mConfig.getConfig("Clustersize"));
+	initLegend(legend, mConfig.getConfig("Clustersize"));
 	for ( auto& plot : mClusterInfo ) {
 		setAttribute(plot.getClusterSizeHistogram(), plot.getConfig());
-		drawPlot(canvas, plot.getClusterSizeHistogram(), "SAME HISTE");
+		drawPlot(canvas, plot.getClusterSizeHistogram(), plot.getConfig(), "SAME HISTE");
 		legend->AddEntry(plot.getClusterSizeHistogram(), static_cast<TString>(plot.getConfig().find("legend")));
 	}
-	setCanvasAttribute(canvas, mConfig.getConfig("Clustersize"));
 	saveLegend(canvas, legend);
 	saveCanvas(canvas, mOutputPath, mConfig.getConfig("Clustersize"));
 }

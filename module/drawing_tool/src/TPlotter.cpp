@@ -125,14 +125,17 @@ void TPlotter::setCanvasAttribute(TCanvas* canvas, const CppConfigDictionary& co
 		TH1* hist = static_cast<TH1*>(firstObject);
 		setTitle(hist, config);
 		setRange(hist, config);
+		setRightAxis(hist, config);
 	} else if ( firstObject->InheritsFrom("TH2") ) {
 		TH2* hist = static_cast<TH2*>(firstObject);
 		setTitle(hist, config);
 		setRange(hist, config);
+		setRightAxis(hist, config);
 	} else if ( firstObject->InheritsFrom("TGraph") ) {
 		TGraph* graph = static_cast<TGraph*>(firstObject);
 		setTitle(graph, config);
 		setRange(graph, config);
+		setRightAxis(graph, config);
 	} else if ( firstObject->InheritsFrom("TMultiGraph") ) {
 		TMultiGraph* multiGraph = static_cast<TMultiGraph*>(firstObject);
 		setTitle(multiGraph, config);
@@ -377,14 +380,7 @@ void TPlotter::setRightAxis(TGraph* plot, const CppConfigDictionary& config) {
 			ymin = range[0];
 			ymax = range[1];
 		} else if ( config.hasKey("LOGY") && config.find("LOGY") == "true" ) {
-			double minNonZero = std::numeric_limits<double>::max();
-			for ( int i = 1; i <= plot->GetNbinsX(); ++i ) {
-				double binContent = plot->GetBinContent(i);
-				if ( binContent > 0 && binContent < minNonZero ) {
-					minNonZero = binContent;
-				}
-			}
-			ymin = minNonZero / 1.5;
+			ymin = plot->GetMinimum() > 0 ? plot->GetMinimum() : .1;
 			ymax = plot->GetMaximum() * 1.5;
 			plot->GetYaxis()->SetRangeUser(ymin, ymax);
 		} else {

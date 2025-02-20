@@ -78,7 +78,6 @@ public:
 
 	static void setRightAxis(TH1* plot, const CppConfigDictionary& config);
 	static void setRightAxis(TGraph* plot, const CppConfigDictionary& config);
-	static void setRightAxis(TMultiGraph* plot, const CppConfigDictionary& config);
 
 	// Canvas property
 };
