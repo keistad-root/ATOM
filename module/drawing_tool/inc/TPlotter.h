@@ -63,13 +63,23 @@ public:
 	static void drawPlot(TCanvas* canvas, TMultiGraph* plot, TString drawType);
 
 	static void setCanvasAttribute(TCanvas* canvas, const CppConfigDictionary& config);
-	static void setTitle(TH1* plot, CppConfigDictionary& config);
-	static void setRange(TH1* plot, CppConfigDictionary& config);
+	static void setTitle(TH1* plot, const CppConfigDictionary& config);
+	static void setRange(TH1* plot, const CppConfigDictionary& config);
+	static void setTitle(TH2* plot, const CppConfigDictionary& config);
+	static void setRange(TH2* plot, const CppConfigDictionary& config);
+	static void setTitle(TGraph* plot, const CppConfigDictionary& config);
+	static void setRange(TGraph* plot, const CppConfigDictionary& config);
+	static void setTitle(TMultiGraph* plot, const CppConfigDictionary& config);
+	static void setRange(TMultiGraph* plot, const CppConfigDictionary& config);
+	static void setMargin(TCanvas* canvas, const CppConfigDictionary& config);
+	static void setLogScale(TCanvas* canvas, const CppConfigDictionary& config);
 
-	void initHist(TH1* hist, const CppConfigDictionary& config);
-	void initHist(std::unique_ptr<TH1D>& hist, const CppConfigDictionary& config);
-	void initHist(TH2* hist, const CppConfigDictionary& config);
-	void initHist(std::unique_ptr<TH2D>& hist, const CppConfigDictionary& config);
+	static void initHist(TH1* hist, const CppConfigDictionary& config);
+	static void initHist(TH2* hist, const CppConfigDictionary& config);
+
+	static TString getTitle(std::string_view titleStr);
+
+
 
 
 	void savePlot(TCanvas* canvas, TH1* plot, const CppConfigDictionary& config);
@@ -86,7 +96,6 @@ public:
 
 	static const std::vector<int> getIntegerSetFromString(const std::string& rangeStr);
 	static const std::vector<double> getDoubleSetFromString(const std::string& rangeStr);
-	TString getTitle(const std::string& titleStr);
 
 	// Getter
 
@@ -102,10 +111,8 @@ public:
 
 	template <typename T> void setRightAxis(T* hist, const CppConfigDictionary& config);
 
-	template <typename T> void setTitle(T* hist, const CppConfigDictionary& config);
 
 	// Canvas property
-	void setMargin(TCanvas* hist, const CppConfigDictionary& config);
 	void saveLegend(TCanvas* canvas, TLegend* legend);
 	void saveCanvas(TCanvas* canvas, std::filesystem::path path, const CppConfigDictionary& config);
 };

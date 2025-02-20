@@ -105,25 +105,21 @@ void TPlotter::setCanvasAttribute(TCanvas* canvas, const CppConfigDictionary& co
 	if ( firstObject->InheritsFrom("TH1") ) {
 		TH1* hist = static_cast<TH1*>(firstObject);
 		setTitle(hist, config);
-		setXRange(hist, config);
-		setYRange(hist, config);
+		setRange(hist, config);
 	} else if ( firstObject->InheritsFrom("TH2") ) {
 		TH2* hist = static_cast<TH2*>(firstObject);
 		setTitle(hist, config);
-		setXRange(hist, config);
-		setYRange(hist, config);
-		setZRange(hist, config);
+		setRange(hist, config);
 	} else if ( firstObject->InheritsFrom("TGraph") ) {
 		TGraph* graph = static_cast<TGraph*>(firstObject);
 		setTitle(graph, config);
-		setXRange(graph, config);
-		setYRange(graph, config);
+		setRange(graph, config);
 	} else if ( firstObject->InheritsFrom("TMultiGraph") ) {
 		TMultiGraph* multiGraph = static_cast<TMultiGraph*>(firstObject);
 		setTitle(multiGraph, config);
-		setXRange(multiGraph, config);
-		setYRange(multiGraph, config);
+		setRange(multiGraph, config);
 	}
+
 	if ( config.hasKey("margin") ) {
 		std::vector<double> marginSet = getDoubleSetFromString(config.find("margin"));
 		canvas->SetMargin(marginSet[0], marginSet[1], marginSet[2], marginSet[3]);
@@ -140,31 +136,82 @@ void TPlotter::setCanvasAttribute(TCanvas* canvas, const CppConfigDictionary& co
 	}
 }
 
-void TPlotter::setTitle(TH1* plot, CppConfigDictionary& config) {
-	if ( config.hasKey("") )
+void TPlotter::setTitle(TH1* plot, const CppConfigDictionary& config) {
+	if ( config.hasKey("TITLE") ) {
+		TString title = getTitle(config.find("TITLE"));
+		plot->SetTitle(title);
+	}
+}
+
+void TPlotter::setRange(TH1* plot, const CppConfigDictionary& config) {
+	if ( config.hasKey("X_RANGE") ) {
+		std::vector<double> range = getDoubleSetFromString(config.find("X_RANGE"));
+		plot->GetXaxis()->SetRangeUser(range[0], range[1]);
+	}
+	if ( config.hasKey("Y_RANGE") ) {
+		std::vector<double> range = getDoubleSetFromString(config.find("Y_RANGE"));
+		plot->GetYaxis()->SetRangeUser(range[0], range[1]);
+	}
+}
+
+void TPlotter::setTitle(TH2* plot, const CppConfigDictionary& config) {
+	if ( config.hasKey("TITLE") ) {
+		TString title = getTitle(config.find("TITLE"));
+		plot->SetTitle(title);
+	}
+}
+
+void TPlotter::setRange(TH2* plot, const CppConfigDictionary& config) {
+	if ( config.hasKey("X_RANGE") ) {
+		std::vector<double> range = getDoubleSetFromString(config.find("X_RANGE"));
+		plot->GetXaxis()->SetRangeUser(range[0], range[1]);
+	}
+	if ( config.hasKey("Y_RANGE") ) {
+		std::vector<double> range = getDoubleSetFromString(config.find("Y_RANGE"));
+		plot->GetYaxis()->SetRangeUser(range[0], range[1]);
+	}
+	if ( config.hasKey("Z_RANGE") ) {
+		std::vector<double> range = getDoubleSetFromString(config.find("Z_RANGE"));
+		plot->GetYaxis()->SetRangeUser(range[0], range[1]);
+	}
+}
+
+void TPlotter::setTitle(TGraph* plot, const CppConfigDictionary& config) {
+	if ( config.hasKey("TITLE") ) {
+		TString title = getTitle(config.find("TITLE"));
+		plot->SetTitle(title);
+	}
+}
+
+void TPlotter::setRange(TGraph* plot, const CppConfigDictionary& config) {
+	if ( config.hasKey("X_RANGE") ) {
+		std::vector<double> range = getDoubleSetFromString(config.find("X_RANGE"));
+		plot->GetXaxis()->SetRangeUser(range[0], range[1]);
+	}
+	if ( config.hasKey("Y_RANGE") ) {
+		std::vector<double> range = getDoubleSetFromString(config.find("Y_RANGE"));
+		plot->GetYaxis()->SetRangeUser(range[0], range[1]);
+	}
 }
 
 
+void TPlotter::setTitle(TMultiGraph* plot, const CppConfigDictionary& config) {
+	if ( config.hasKey("TITLE") ) {
+		TString title = getTitle(config.find("TITLE"));
+		plot->SetTitle(title);
+	}
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+void TPlotter::setRange(TMultiGraph* plot, const CppConfigDictionary& config) {
+	if ( config.hasKey("X_RANGE") ) {
+		std::vector<double> range = getDoubleSetFromString(config.find("X_RANGE"));
+		plot->GetXaxis()->SetRangeUser(range[0], range[1]);
+	}
+	if ( config.hasKey("Y_RANGE") ) {
+		std::vector<double> range = getDoubleSetFromString(config.find("Y_RANGE"));
+		plot->GetYaxis()->SetRangeUser(range[0], range[1]);
+	}
+}
 
 
 
@@ -178,6 +225,41 @@ void TPlotter::initHist(TH1* hist, const CppConfigDictionary& config) {
 	}
 	hist->SetBins(static_cast<int>(set[0]), set[1], set[2]);
 }
+
+TString TPlotter::getTitle(std::string_view titleStr) {
+	std::string str = std::string(titleStr);
+	int firstSplit = str.find("\" \"");
+	int secondSplit = str.find("\" \"", titleStr.find("\" \"") + 1);
+	std::string mainTitle = str.substr(1, firstSplit - 1);
+	std::string xTitle = str.substr(firstSplit + 3, secondSplit - firstSplit - 3);
+	std::string yTitle = str.substr(secondSplit + 3, titleStr.size() - secondSplit - 4);
+	return mainTitle + ";" + xTitle + ";" + yTitle;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void TPlotter::initHist(std::unique_ptr<TH1D>& hist, const CppConfigDictionary& config) {
 	std::vector<double> set = {1, 0, 1};
@@ -368,14 +450,7 @@ void TPlotter::setMargin(TCanvas* canvas, const CppConfigDictionary& config) {
 	}
 }
 
-TString TPlotter::getTitle(const std::string& titleStr) {
-	int firstSplit = titleStr.find("\" \"");
-	int secondSplit = titleStr.find("\" \"", titleStr.find("\" \"") + 1);
-	std::string mainTitle = titleStr.substr(1, firstSplit - 1);
-	std::string xTitle = titleStr.substr(firstSplit + 3, secondSplit - firstSplit - 3);
-	std::string yTitle = titleStr.substr(secondSplit + 3, titleStr.size() - secondSplit - 4);
-	return mainTitle + ";" + xTitle + ";" + yTitle;
-}
+
 
 void TPlotter::saveLegend(TCanvas* canvas, TLegend* legend) {
 	canvas->cd();
