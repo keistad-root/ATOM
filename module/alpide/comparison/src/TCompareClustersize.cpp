@@ -36,7 +36,10 @@ TH1D* TClusterInfo::setClusterSizeHistogram(std::string_view name) {
 		if ( tag == name ) {
 			TFile* file = new TFile(static_cast<TString>(maskedFile), "READ");
 			TTree* tree = static_cast<TTree*>(file->Get("cluster"));
+			Double_t x, y;
 			UInt_t size;
+			tree->SetBranchAddress("X", &x);
+			tree->SetBranchAddress("Y", &y);
 			tree->SetBranchAddress("Size", &size);
 
 			Int_t nCluster = tree->GetEntries();
@@ -52,8 +55,11 @@ TH1D* TClusterInfo::setClusterSizeHistogram(std::string_view name) {
 }
 
 TCompareClustersize::TCompareClustersize(const CppConfigFile& config) : TPlotter(), mConfig(config) {
+	mOutputPath = mConfig.getConfig("FILE").find("output_directory");
+	std::filesystem::create_directories(mOutputPath);
 	for ( auto& plotConfig : mConfig.getConfig("PLOT_SET").getSubConfigSet() ) {
 		TClusterInfo temp(plotConfig.getConfigName(), plotConfig);
+		mClusterInfo.push_back(temp);
 	}
 }
 

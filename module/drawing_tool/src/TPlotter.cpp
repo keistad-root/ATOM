@@ -197,14 +197,6 @@ void TPlotter::setMargin(TCanvas* canvas, const CppConfigDictionary& config) {
 	}
 }
 
-
-
-
-
-
-
-
-
 TString TPlotter::getTitle(const std::string& titleStr) {
 	int firstSplit = titleStr.find("\" \"");
 	int secondSplit = titleStr.find("\" \"", titleStr.find("\" \"") + 1);
@@ -214,10 +206,9 @@ TString TPlotter::getTitle(const std::string& titleStr) {
 	return mainTitle + ";" + xTitle + ";" + yTitle;
 }
 
-
-
 void TPlotter::saveLegend(TCanvas* canvas, TLegend* legend) {
 	canvas->cd();
+	gStyle->SetOptStat(0);
 	legend->Draw("SAME");
 }
 
