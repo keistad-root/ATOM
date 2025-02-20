@@ -15,6 +15,14 @@
 #include "TPlotter.h"
 #include "CppConfigFile.h"
 
+class TClusterInfo {
+private:
+	std::string mTag;
+	TFile* mFile;
+
+
+};
+
 class TCompareClustersize : public TPlotter {
 public:
 	TCompareClustersize(const CppConfigFile& config);
@@ -24,6 +32,7 @@ private:
 	std::unordered_map<std::string, TH1D*> mGraphFileSet;
 	std::vector<CppConfigDictionary> mPlotDictionary;
 	std::vector<std::pair<CppConfigDictionary, TH1D*>> mGraphSet;
+	std::vector<std::pair<CppConfigDictionary, TH1D*>> mXregionSet;
 	CppConfigDictionary mRegionDictionary;
 public:
 	TH1D* getClustersize(const std::string& file);
@@ -34,6 +43,7 @@ public:
 	void drawClustersize();
 	void drawRegion();
 	void getClusterStr();
+	void thinRegionCluster();
 };
 
 #endif
