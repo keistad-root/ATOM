@@ -260,6 +260,30 @@ void TDataPlotter::savePlots() {
 	if ( isClustermap ) {
 		TCanvas* canvas = new TCanvas("clustermapCanvas", "", 3000, 1500);
 		savePlot(canvas, mClustermap, mConfig.getConfig("CLUSTERMAP"));
+		if ( isClustersizeRegion ) {
+			std::vector<double> center = TPlotter::getDoubleSetFromString(mConfig.getConfig("CLUSTERSIZE_REGION").find("center"));
+			std::cout << center[0] << " " << center[1] << std::endl;
+			TEllipse* circle2mm = new TEllipse(center[0], center[1], 2 * (1 / 0.028));
+			circle2mm->SetLineColor(kRed);
+			circle2mm->SetLineWidth(2);
+			circle2mm->SetFillStyle(0);
+			circle2mm->Draw("SAME");
+			TEllipse* circle4mm = new TEllipse(center[0], center[1], 4 * (1 / 0.028));
+			circle4mm->SetLineColor(kRed);
+			circle4mm->SetLineWidth(2);
+			circle4mm->SetFillStyle(0);
+			circle4mm->Draw("SAME");
+			TEllipse* circle6mm = new TEllipse(center[0], center[1], 6 * (1 / 0.028));
+			circle6mm->SetLineColor(kRed);
+			circle6mm->SetLineWidth(2);
+			circle6mm->SetFillStyle(0);
+			circle6mm->Draw("SAME");
+			TEllipse* circle8mm = new TEllipse(center[0], center[1], 8 * (1 / 0.028));
+			circle8mm->SetLineColor(kRed);
+			circle8mm->SetLineWidth(2);
+			circle8mm->SetFillStyle(0);
+			circle8mm->Draw("SAME");
+		}
 		saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERMAP"));
 		delete canvas;
 		canvas = nullptr;
