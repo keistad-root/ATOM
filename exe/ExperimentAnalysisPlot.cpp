@@ -6,9 +6,9 @@
 
 #include "TDataPlotter.h"
 
-const std::string configPath = "/home/ychoi/ATOM/config/experiment/analysis_plot.conf";
-const std::string csvPath = "/home/ychoi/ATOM/config/experiment/experiment_information.csv";
-const std::string dataPath = "/home/ychoi/ATOM/Data/experiment.csv";
+const std::string configPath = "/home/ychoi/ATOM/build/config/ANALYSIS_PLOT.conf";
+const std::string csvPath = "/home/ychoi/ATOM/build/config/EXPERIMENT_INFORMATION.csv";
+const std::string dataPath = "/home/ychoi/ATOM/Data/EXPERIMENT.csv";
 
 ArgumentParser set_parse(int argc, char** argv) {
 	ArgumentParser parser = ArgumentParser(argc, argv).setDescription("Drawing experiment plots");
