@@ -1,5 +1,17 @@
 #include "TCompareClustersize.h"
+#include<filesystem>
+#include<unordered_map>
 
+#include "TH1.h"
+#include "TFile.h"
+#include "TTree.h"
+#include "TGraphErrors.h"
+#include "TMultiGraph.h"
+
+#include "TLegend.h"
+
+#include "TPlotter.h"
+#include "CppConfigFile.h"
 #include "config.h"
 #include<csv.h>
 
