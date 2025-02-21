@@ -14,7 +14,7 @@
 #include "TF1.h"
 #include "TPaveText.h"
 #include "TLegend.h"
-
+#include "TGraph.h"
 // User header
 #include "TALPIDEEvent.h"
 #include "TPlotter.h"
@@ -40,6 +40,7 @@ TDataPlotter::TDataPlotter(const CppConfigFile& config) : mConfig(config) {
 	if ( mConfig.hasConfig("CLUSTERSIZE_REGION") ) isClustersizeRegion = true;
 	if ( mConfig.hasConfig("CLUSTERMAP_PROJECTION_X") ) isClustermapProjectionX = true;
 	if ( mConfig.hasConfig("CLUSTERMAP_PROJECTION_Y") ) isClustermapProjectionY = true;
+	if ( mConfig.hasConfig("CLUSTERMAP_SLICE_X") ) isClustermapSliceX = true;
 }
 
 TDataPlotter::~TDataPlotter() { }
@@ -109,7 +110,10 @@ void TDataPlotter::FillClusterInfo() {
 	clusterTree->SetBranchAddress("Size", &size);
 
 	Int_t nCluster = clusterTree->GetEntries();
-
+	TH1D* clustermapSliceX[11];
+	for ( int i = 0; i < 11; i++ ) {
+		clustermapSliceX[i] = new TH1D(Form("clustermapSliceX_%d", i), "", ALPIDECOLUMN / 2, 0, ALPIDECOLUMN);
+	}
 	for ( int iCluster = 0; iCluster < nCluster; iCluster++ ) {
 		clusterTree->GetEntry(iCluster);
 		if ( isClustermap ) mClustermap->Fill(x, y);
@@ -137,16 +141,33 @@ void TDataPlotter::FillClusterInfo() {
 		}
 
 		if ( isClustermapSliceX ) {
-			TH1D* clustermapSliceX[11];
 			std::vector<double> center = TPlotter::getDoubleSetFromString(mConfig.getConfig("CLUSTERSIZE_REGION").find("center"));
+
 			for ( int i = 0; i < 11; i++ ) {
-				clustermapSliceX[i] = new TH1D(Form("clustermapSliceX_%d", i), "", ALPIDEROW / 2, 0, ALPIDEROW);
+				if ( std::abs(y - center[1] + 50 - 10 * i) < 5 ) {
+					clustermapSliceX[i]->Fill(x);
+				}
 			}
-			if ( std::abs(y - center[1] - 5 * 10) < 5 ) {
-				clustermapSliceX[0]->Fill(x);
-			}
+
 		}
 	}
+	TGraph* graph = new TGraph();
+	std::vector<double> center = TPlotter::getDoubleSetFromString(mConfig.getConfig("CLUSTERSIZE_REGION").find("center"));
+	for ( int i = 0; i < 11; i++ ) {
+		TCanvas* canvas = new TCanvas(Form("sliceX_%d", i), "", 2000, 1000);
+		TF1* fitFunc = new TF1(Form("sliceXFitFunc_%d", i), "[0]*e^(-((x-[1])/[2])^2)+[3]", 0, ALPIDECOLUMN);
+		fitFunc->SetParameters(clustermapSliceX[i]->GetMaximum(), clustermapSliceX[i]->GetMean(), clustermapSliceX[i]->GetStdDev(), clustermapSliceX[i]->GetMinimum());
+		clustermapSliceX[i]->Fit(fitFunc, "RQ");
+		clustermapSliceX[i]->Draw();
+		canvas->SaveAs(Form("Plot/sliceX_%d.png", i));
+		delete canvas;
+		graph->SetPoint(i, center[1] - 50 + (10 * i), fitFunc->GetParameter(1));
+	}
+	TCanvas* canvas = new TCanvas("sliceX", "", 2000, 1000);
+	graph->SetMarkerStyle(20);
+	graph->SetMarkerSize(2);
+	graph->Draw("AP");
+	canvas->SaveAs("Plot/sliceX.png");
 }
 
 void TDataPlotter::FillShapeInfo() {
@@ -171,10 +192,9 @@ void TDataPlotter::FillShapeInfo() {
 void TDataPlotter::savePlots() {
 	if ( isHitmap ) {
 		TCanvas* canvas = new TCanvas("hitmapCanvas", "", 3000, 1500);
-		TPlotter::drawPlot(canvas, mHitmap, mConfig.getConfig("HITMAP"), "COLZ");
+		TPlotter::drawPlot(canvas, mHitmap, mConfig.getConfig("HITMAP"), " ");
 		if ( isClustersizeRegion ) {
 			std::vector<double> center = TPlotter::getDoubleSetFromString(mConfig.getConfig("CLUSTERSIZE_REGION").find("center"));
-			std::cout << center[0] << " " << center[1] << std::endl;
 			TEllipse* circle2mm = new TEllipse(center[0], center[1], 2 * (1 / 0.028));
 			circle2mm->SetLineColor(kRed);
 			circle2mm->SetLineWidth(2);
@@ -292,7 +312,6 @@ void TDataPlotter::savePlots() {
 		TPlotter::drawPlot(canvas, mClustermap, mConfig.getConfig("CLUSTERMAP"), "COLZ");
 		if ( isClustersizeRegion ) {
 			std::vector<double> center = TPlotter::getDoubleSetFromString(mConfig.getConfig("CLUSTERSIZE_REGION").find("center"));
-			std::cout << center[0] << " " << center[1] << std::endl;
 			TEllipse* circle2mm = new TEllipse(center[0], center[1], 2 * (1 / 0.028));
 			circle2mm->SetLineColor(kRed);
 			circle2mm->SetLineWidth(2);
@@ -377,7 +396,6 @@ void TDataPlotter::getMeanX() {
 			meanX->Fill(fitFunc->GetParameter(1));
 		}
 		if ( i == 300 ) {
-			std::cout << fitFunc->GetParameter(1) << std::endl;
 			TCanvas* canvas = new TCanvas("sliceXCanvas", "", 3000, 1500);
 			sliceX->Draw();
 			canvas->SaveAs("sliceX.png");

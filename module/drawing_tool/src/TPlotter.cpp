@@ -125,7 +125,7 @@ void TPlotter::setCanvasAttribute(TCanvas* canvas, const CppConfigDictionary& co
 	if ( firstObject->InheritsFrom("TFrame") ) {
 		firstObject = canvas->GetListOfPrimitives()->At(1);
 	}
-	if ( firstObject->InheritsFrom("TH1") ) {
+	if ( firstObject->InheritsFrom("TH1") && !firstObject->InheritsFrom("TH2") ) {
 		TH1* hist = static_cast<TH1*>(firstObject);
 		setTitle(hist, config);
 		setRange(hist, config);
@@ -134,7 +134,6 @@ void TPlotter::setCanvasAttribute(TCanvas* canvas, const CppConfigDictionary& co
 		TH2* hist = static_cast<TH2*>(firstObject);
 		setTitle(hist, config);
 		setRange(hist, config);
-		setRightAxis(hist, config);
 	} else if ( firstObject->InheritsFrom("TGraph") ) {
 		TGraph* graph = static_cast<TGraph*>(firstObject);
 		setTitle(graph, config);
