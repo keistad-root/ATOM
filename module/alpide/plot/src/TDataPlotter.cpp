@@ -44,7 +44,9 @@ TDataPlotter::TDataPlotter(const CppConfigFile& config) : mConfig(config) {
 	if ( mConfig.hasConfig("CLUSTERMAP_SLICE_Y") ) isClustermapSliceY = true;
 }
 
-TDataPlotter::~TDataPlotter() { }
+TDataPlotter::~TDataPlotter() {
+	mInputFile->Close();
+}
 
 void TDataPlotter::openInputFile() {
 	std::filesystem::path inputPath = mConfig.getConfig("CONFIG").find("MASKED_FILE");
@@ -123,9 +125,9 @@ void TDataPlotter::FillClusterInfo() {
 		if ( isClustersize ) mClustersize->Fill(size);
 		if ( isClustermapProjectionX ) mClustermapProjectionX->Fill(x);
 		if ( isClustermapProjectionY ) mClustermapProjectionY->Fill(y);
+
 		if ( isClustersizeRegion ) {
 			std::vector<double> center = TPlotter::getDoubleSetFromString(mConfig.getConfig("CLUSTERSIZE_REGION").find("center"));
-
 			if ( std::abs(x - center[0]) < 2 * (1 / 0.028) && std::abs(y - center[1]) < 2 * (1 / 0.028) ) {
 				mClusterSizeOfRegion[0]->Fill(size);
 				mClusterSizeOfRegion[1]->Fill(size);
@@ -142,7 +144,6 @@ void TDataPlotter::FillClusterInfo() {
 				mClusterSizeOfRegion[3]->Fill(size);
 			}
 		}
-
 		if ( isClustermapSliceX ) {
 			for ( int i = 0; i < 11; i++ ) {
 				if ( std::abs(y - 300 + 50 - 10 * i) < 5 ) {
@@ -434,94 +435,10 @@ void TDataPlotter::savePlots() {
 	}
 }
 
-void TDataPlotter::getMeanX() {
-	TH1D* meanX = new TH1D("meanX", "Mean X; Column; Entry", ALPIDECOLUMN, 0, ALPIDECOLUMN);
-	std::vector<int> centerXrange = TPlotter::getIntegerSetFromString(mConfig.getConfig("MEAN_X").find("center_range"));
-	std::vector<int> centerYrange = TPlotter::getIntegerSetFromString(mConfig.getConfig("MEAN_Y").find("center_range"));
-	for ( int i = centerYrange[0]; i < centerYrange[1]; i++ ) {
-		TH1D* sliceX = new TH1D("sliceX", "Slice X; Column; Entry", centerXrange[1] - centerXrange[0], centerXrange[0], centerXrange[1]);
-		for ( int j = centerXrange[0]; j < centerXrange[1]; j++ ) {
-			sliceX->SetBinContent(j + 1 - centerXrange[0], mHitmap->GetBinContent(j + 1, i + 1));
-		}
-		sliceX->SetBinContent(517 - centerXrange[0], (sliceX->GetBinContent(515 - centerXrange[0]) + sliceX->GetBinContent(519 - centerXrange[0])) / 2);
-		sliceX->SetBinContent(518 - centerXrange[0], (sliceX->GetBinContent(516 - centerXrange[0]) + sliceX->GetBinContent(520 - centerXrange[0])) / 2);
 
-		TF1* fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^[3])", centerXrange[0], centerXrange[1]);
-		fitFunc->SetParameter(0, 50);
-		fitFunc->SetParameter(1, (centerXrange[0] + centerXrange[1]) / 2);
-		fitFunc->SetParameter(2, 10);
-		fitFunc->SetParameter(3, 2);
-		sliceX->Fit(fitFunc, "RQ");
-		if ( fitFunc->GetParameter(0) > 1 ) {
-			meanX->Fill(fitFunc->GetParameter(1));
-		}
-		if ( i == 300 ) {
-			TCanvas* canvas = new TCanvas("sliceXCanvas", "", 3000, 1500);
-			sliceX->Draw();
-			canvas->SaveAs("sliceX.png");
-			delete canvas;
-		}
-		delete sliceX;
-		delete fitFunc;
-	}
-	TCanvas* canvas = new TCanvas("meanXCanvas", "", 3000, 1500);
-	TF1* fitFunc = new TF1("fitFunc", "[0]*e^([1]*(x-[2])^2)", centerXrange[0], centerXrange[1]);
-	fitFunc->SetParameter(1, -0.01);
-	fitFunc->SetParameter(2, centerXrange[0]);
-	meanX->Fit(fitFunc, "R");
-	TPlotter::drawPlot(canvas, meanX, mConfig.getConfig("MEAN_X"), " ");
-	TText* text = new TText(0.1, 0.8, Form("Mean X: %.2f", fitFunc->GetParameter(2)));
-	text->SetNDC();
-	text->SetTextAlign(13);
-	text->SetTextSize(.05);
-	text->SetTextColor(kBlack);
-	text->Draw();
-	TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("MEAN_X"));
-	delete canvas;
-}
 
-void TDataPlotter::getMeanY() {
-	TH1D* meanY = new TH1D("meanY", "Mean Y; Row; Entry", ALPIDEROW, 0, ALPIDEROW);
-	std::vector<int> centerXrange = TPlotter::getIntegerSetFromString(mConfig.getConfig("MEAN_X").find("center_range"));
-	std::vector<int> centerYrange = TPlotter::getIntegerSetFromString(mConfig.getConfig("MEAN_Y").find("center_range"));
-	for ( int i = centerXrange[0]; i < centerXrange[1]; i++ ) {
-		TH1D* sliceY = new TH1D("sliceY", "Slice Y; Row; Entry", centerYrange[1] - centerYrange[0], centerYrange[0], centerYrange[1]);
-		for ( int j = centerYrange[0]; j < centerYrange[1]; j++ ) {
-			sliceY->SetBinContent(j + 1 - centerYrange[0], mHitmap->GetBinContent(i + 1, j + 1));
-		}
-		TF1* fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^[3])", centerYrange[0], centerYrange[1]);
-		fitFunc->SetParameter(0, 50);
-		fitFunc->SetParameter(1, (centerYrange[0] + centerYrange[1]) / 2);
-		fitFunc->SetParameter(2, 10);
-		fitFunc->SetParameter(3, 2);
-		sliceY->Fit(fitFunc, "RQ");
-		if ( fitFunc->GetParameter(0) > 1 ) {
-			meanY->Fill(fitFunc->GetParameter(1));
-		}
-		if ( i == 500 ) {
-			TCanvas* canvas = new TCanvas("sliceYCanvas", "", 3000, 1500);
-			sliceY->Draw();
-			canvas->SaveAs("sliceY.png");
-			delete canvas;
-		}
-		delete sliceY;
-		delete fitFunc;
-	}
-	TCanvas* canvas = new TCanvas("meanYCanvas", "", 3000, 1500);
-	TF1* fitFunc = new TF1("fitFunc", "[0]*e^([1]*(x-[2])^2)", centerYrange[0], centerYrange[1]);
-	fitFunc->SetParameter(1, -0.01);
-	fitFunc->SetParameter(2, centerYrange[0]);
-	meanY->Fit(fitFunc, "R");
-	TPlotter::drawPlot(canvas, meanY, mConfig.getConfig("MEAN_Y"), " ");
-	TText* text = new TText(0.1, 0.8, Form("Mean Y: %.2f", fitFunc->GetParameter(2)));
-	text->SetNDC();
-	text->SetTextAlign(13);
-	text->SetTextSize(.05);
-	text->SetTextColor(kBlack);
-	text->Draw();
-	TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("MEAN_Y"));
-	delete canvas;
-}
+
+
 
 void TDataPlotter::saveTotalShape() {
 	int prevClusterSize = -1;
