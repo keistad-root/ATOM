@@ -168,20 +168,22 @@ void TDataPlotter::FillClusterInfo() {
 		clustermapSliceX[i]->SetBinContent(260, (clustermapSliceX[i]->GetBinContent(258) + clustermapSliceX[i]->GetBinContent(262)) / 2);
 		TF1* fitFunc = new TF1(Form("sliceXFitFunc_%d", i), "[0]*e^(-((x-[1])/[2])^2)+[3]", 0, ALPIDECOLUMN);
 		fitFunc->SetParameters(clustermapSliceX[i]->GetMaximum(), clustermapSliceX[i]->GetMean(), clustermapSliceX[i]->GetStdDev() / 10, clustermapSliceX[i]->GetMinimum());
-		clustermapSliceX[i]->Fit(fitFunc, "RQ");
+		clustermapSliceX[i]->Fit(fitFunc, "R");
+		clustermapSliceX[i]->SetTitle(Form("Row: %d#pm10; Column; Entry", 300 - 50 + (10 * i)));
 		clustermapSliceX[i]->Draw();
 		canvas->SaveAs(Form("Plot/sliceX_%d.png", i));
 		delete canvas;
 		graphX->SetPoint(i, 300 - 50 + (10 * i), fitFunc->GetParameter(1));
 		graphX->SetPointError(i, 5, fitFunc->GetParError(1));
-		graphAmplitudeX->SetPoint(i, 300 - 50 * (10 * i), fitFunc->GetParameter(0));
+		graphAmplitudeX->SetPoint(i, 300 - 50 + (10 * i), fitFunc->GetParameter(0));
 		graphAmplitudeX->SetPointError(i, 5, fitFunc->GetParError(0));
 		delete fitFunc;
 
 		TCanvas* canvas2 = new TCanvas(Form("sliceY_%d", i), "", 2000, 1000);
 		TF1* fitFunc2 = new TF1(Form("sliceYFitFunc_%d", i), "[0]*e^(-((x-[1])/[2])^2)+[3]", 0, ALPIDEROW);
 		fitFunc2->SetParameters(clustermapSliceY[i]->GetMaximum(), clustermapSliceY[i]->GetMean(), clustermapSliceY[i]->GetStdDev() / 10, clustermapSliceY[i]->GetMinimum());
-		clustermapSliceY[i]->Fit(fitFunc2, "RQ");
+		clustermapSliceY[i]->Fit(fitFunc2, "R");
+		clustermapSliceY[i]->SetTitle(Form("Column: %d#pm10; Row; Entry", 500 - 50 + (10 * i)));
 		clustermapSliceY[i]->Draw();
 		canvas2->SaveAs(Form("Plot/sliceY_%d.png", i));
 		delete canvas2;
@@ -194,6 +196,7 @@ void TDataPlotter::FillClusterInfo() {
 	TCanvas* canvas = new TCanvas("sliceX", "", 1000, 1000);
 	graphX->SetMarkerStyle(24);
 	graphX->SetMarkerSize(2);
+	graphX->SetTitle("Slicing in Row Direction; Row; Mean of Gaussian Fit");
 	graphX->Draw("AP");
 	canvas->SaveAs("Plot/sliceX.png");
 	delete canvas;
@@ -201,7 +204,9 @@ void TDataPlotter::FillClusterInfo() {
 	canvas = new TCanvas("sliceAmplitudeX", "", 1000, 1000);
 	graphAmplitudeX->SetMarkerStyle(24);
 	graphAmplitudeX->SetMarkerSize(2);
-	graphAmplitudeX->SetYRange(1, 2);
+	graphAmplitudeX->SetMaximum(200);
+	graphAmplitudeX->SetMinimum(0);
+	graphAmplitudeX->SetTitle("Slicing in Row Direction; Row; Amplitude of Gaussian Fit");
 	graphAmplitudeX->Draw("AP");
 	canvas->SaveAs("Plot/amplitudeX.png");
 	delete canvas;
@@ -209,6 +214,7 @@ void TDataPlotter::FillClusterInfo() {
 	canvas = new TCanvas("sliceY", "", 1000, 1000);
 	graphY->SetMarkerStyle(24);
 	graphY->SetMarkerSize(2);
+	graphY->SetTitle("Slicing in Column Direction; Column; Mean of Gaussian Fit");
 	graphY->Draw("AP");
 	canvas->SaveAs("Plot/sliceY.png");
 	delete canvas;
@@ -216,6 +222,9 @@ void TDataPlotter::FillClusterInfo() {
 	canvas = new TCanvas("sliceAmplitudeY", "", 1000, 1000);
 	graphAmplitudeY->SetMarkerStyle(24);
 	graphAmplitudeY->SetMarkerSize(2);
+	graphAmplitudeY->SetMaximum(200);
+	graphAmplitudeY->SetMinimum(0);
+	graphAmplitudeY->SetTitle("Slicing in Column Direction; Column; Amplitude of Gaussian Fit");
 	graphAmplitudeY->Draw("AP");
 	canvas->SaveAs("Plot/amplitudeY.png");
 	delete canvas;
