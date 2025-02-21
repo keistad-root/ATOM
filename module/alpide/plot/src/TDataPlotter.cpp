@@ -284,7 +284,7 @@ void TDataPlotter::savePlots() {
 		fitFunc->SetParameter(1, mClustermapProjectionX->GetMean());
 		fitFunc->SetParameter(2, mClustermapProjectionX->GetStdDev());
 		fitFunc->SetParameter(3, mClustermapProjectionX->GetMinimum());
-		mClustermapProjectionX->Fit(fitFunc, "R");
+		mClustermapProjectionX->Fit(fitFunc, "RQ");
 
 		TPaveText* latex = new TPaveText(.8, .5, .95, .95, "NDC");
 		latex->AddText(Form("[0]: %.0f #pm %.0f", fitFunc->GetParameter(0), fitFunc->GetParError(0)));
@@ -311,7 +311,7 @@ void TDataPlotter::savePlots() {
 		fitFunc->SetParameter(1, mClustermapProjectionY->GetMean());
 		fitFunc->SetParameter(2, mClustermapProjectionY->GetStdDev());
 		fitFunc->SetParameter(3, mClustermapProjectionY->GetMinimum());
-		mClustermapProjectionY->Fit(fitFunc, "R");
+		mClustermapProjectionY->Fit(fitFunc, "RQ");
 
 		TPaveText* latex = new TPaveText(.8, .5, .95, .95, "NDC");
 		latex->AddText(Form("[0]: %.0f #pm %.0f", fitFunc->GetParameter(0), fitFunc->GetParError(0)));
@@ -401,6 +401,7 @@ void TDataPlotter::savePlots() {
 			TPlotter::initCanvas(canvas, plotConfig);
 			mClustermapSliceX[i]->SetBinContent(259, (mClustermapSliceX[i]->GetBinContent(258) + mClustermapSliceX[i]->GetBinContent(260)) / 2);
 			mClustermapSliceX[i]->SetBinContent(260, (mClustermapSliceX[i]->GetBinContent(259) + mClustermapSliceX[i]->GetBinContent(261)) / 2);
+			TPlotter::drawPlot(canvas, mClustermapSliceX[i], plotConfig, "HISTE");
 
 			TF1* fitFunc = new TF1(Form("fitFunc_%d", i), "[0]*e^(-((x-[1])/[2])^2)+[3]", 0, ALPIDECOLUMN);
 			fitFunc->SetParameters(mClustermapSliceX[i]->GetMaximum(), mClustermapSliceX[i]->GetMean(), mClustermapSliceX[i]->GetStdDev() / 10, mClustermapSliceX[i]->GetMinimum());
@@ -408,9 +409,10 @@ void TDataPlotter::savePlots() {
 
 			std::vector<int> range = TPlotter::getIntegerSetFromString(plotConfig.find("ROW_RANGE"));
 			mClustermapSliceXMean->SetPoint(i, (range[0] + range[1]) / 2, fitFunc->GetParameter(1));
+			mClustermapSliceXMean->SetPointError(i, (range[0] - range[1]) / 2, fitFunc->GetParError(1));
 			mClustermapSliceXAmplitude->SetPoint(i, (range[0] + range[1]) / 2, fitFunc->GetParameter(0));
+			mClustermapSliceXAmplitude->SetPointError(i, (range[0] - range[1]) / 2, fitFunc->GetParError(0));
 
-			TPlotter::drawPlot(canvas, mClustermapSliceX[i], plotConfig, "HISTE");
 			TPlotter::saveCanvas(canvas, mOutputPath, plotConfig);
 			delete canvas;
 			delete fitFunc;
@@ -424,7 +426,7 @@ void TDataPlotter::savePlots() {
 		}
 		{
 			TCanvas* canvas;
-			TPlotter::initCanvas(canvas, mConfig.getConfig("CLUSTERMAP_SLICE_Y").getSubConfig("AMPLITUDE_PLOT"));
+			TPlotter::initCanvas(canvas, mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("AMPLITUDE_PLOT"));
 			TPlotter::drawPlot(canvas, mClustermapSliceXAmplitude, mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("AMPLITUDE_PLOT"), "AP");
 			TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("AMPLITUDE_PLOT"));
 			delete canvas;
@@ -439,20 +441,35 @@ void TDataPlotter::savePlots() {
 			TPlotter::initCanvas(canvas, plotConfig);
 			TF1* fitFunc = new TF1(Form("fitFunc_%d", i), "[0]*e^(-((x-[1])/[2])^2)+[3]", 0, ALPIDEROW);
 			fitFunc->SetParameters(mClustermapSliceY[i]->GetMaximum(), mClustermapSliceY[i]->GetMean(), mClustermapSliceY[i]->GetStdDev() / 10, mClustermapSliceY[i]->GetMinimum());
+			TPlotter::drawPlot(canvas, mClustermapSliceX[i], plotConfig, "HISTE");
 			mClustermapSliceY[i]->Fit(fitFunc, "RQ");
 
 			std::vector<int>range = TPlotter::getIntegerSetFromString(plotConfig.find("COLUMN_RANGE"));
 			mClustermapSliceYMean->SetPoint(i, (range[0] + range[1]) / 2, fitFunc->GetParameter(1));
+			mClustermapSliceYMean->SetPointError(i, (range[0] - range[1]) / 2, fitFunc->GetParError(1));
 			mClustermapSliceYAmplitude->SetPoint(i, (range[0] + range[1]) / 2, fitFunc->GetParameter(0));
+			mClustermapSliceYAmplitude->SetPointError(i, (range[0] - range[1]) / 2, fitFunc->GetParError(0));
 
-			TPlotter::drawPlot(canvas, mClustermapSliceX[i], plotConfig, "HISTE");
 			TPlotter::saveCanvas(canvas, mOutputPath, plotConfig);
+			delete canvas;
+			delete fitFunc;
+		}
+		{
+			TCanvas* canvas;
+			TPlotter::initCanvas(canvas, mConfig.getConfig("CLUSTERMAP_SLICE_Y").getSubConfig("MEAN_PLOT"));
+			TPlotter::drawPlot(canvas, mClustermapSliceYMean, mConfig.getConfig("CLUSTERMAP_SLICE_Y").getSubConfig("MEAN_PLOT"), "AP");
+			TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERMAP_SLICE_Y").getSubConfig("MEAN_PLOT"));
+			delete canvas;
+		}
+		{
+			TCanvas* canvas;
+			TPlotter::initCanvas(canvas, mConfig.getConfig("CLUSTERMAP_SLICE_Y").getSubConfig("AMPLITUDE_PLOT"));
+			TPlotter::drawPlot(canvas, mClustermapSliceYAmplitude, mConfig.getConfig("CLUSTERMAP_SLICE_Y").getSubConfig("AMPLITUDE_PLOT"), "AP");
+			TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERMAP_SLICE_Y").getSubConfig("AMPLITUDE_PLOT"));
+			delete canvas;
 		}
 	}
 }
-
-
-
 
 void TDataPlotter::saveTotalShape() {
 	int prevClusterSize = -1;

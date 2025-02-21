@@ -30,7 +30,7 @@ void TPlotter::setLineColour(TH1* plot, const CppConfigDictionary& config) {
 	if ( config.hasKey("LINE_COLOUR") ) {
 		lineColour = TColourUser::getColour(config.find("LINE_COLOUR"));
 	} else {
-		lineColour = TColourUser::getColour(config.find("blue"));
+		lineColour = TColourUser::getColour("blue");
 	}
 	plot->SetLineColor(lineColour);
 }
@@ -58,6 +58,9 @@ void TPlotter::setAttribute(TGraph* graph, const CppConfigDictionary& config) {
 	setLineColour(graph, config);
 	setLineWidth(graph, config);
 	setLineStyle(graph, config);
+	setMarkerStyle(graph, config);
+	setMarkerSize(graph, config);
+	setMarkerColour(graph, config);
 }
 
 void TPlotter::setLineStyle(TGraph* plot, const CppConfigDictionary& config) {
@@ -72,7 +75,7 @@ void TPlotter::setLineColour(TGraph* plot, const CppConfigDictionary& config) {
 	if ( config.hasKey("LINE_COLOUR") ) {
 		lineColour = TColourUser::getColour(config.find("LINE_COLOUR"));
 	} else {
-		lineColour = TColourUser::getColour(config.find("blue"));
+		lineColour = TColourUser::getColour("blue");
 	}
 	plot->SetLineColor(lineColour);
 }
@@ -395,19 +398,24 @@ void TPlotter::setRightAxis(TGraph* plot, const CppConfigDictionary& config) {
 			ymin = range[0];
 			ymax = range[1];
 		} else if ( config.hasKey("LOG_Y") && config.find("LOG_Y") == "true" ) {
-			ymin = plot->GetMinimum() > 0 ? plot->GetMinimum() : .1;
-			ymax = plot->GetMaximum() * 1.5;
-			plot->GetYaxis()->SetRangeUser(ymin, ymax);
+			*std::min_element(plot->GetY(), plot->GetY() + plot->GetN());
+			ymin = *std::min_element(plot->GetY(), plot->GetY() + plot->GetN()) > 0 ? *std::min_element(plot->GetY(), plot->GetY() + plot->GetN()) : .1;
+			ymax = *std::max_element(plot->GetY(), plot->GetY() + plot->GetN()) * 1.5;
+			plot->SetMinimum(ymin);
+			plot->SetMaximum(ymax);
 		} else {
-			ymin = plot->GetMinimum();
-			ymax = plot->GetMaximum() * 1.1;
-			plot->GetYaxis()->SetRangeUser(ymin, ymax);
+			ymin = *std::min_element(plot->GetY(), plot->GetY() + plot->GetN()) * .9;
+			ymax = *std::max_element(plot->GetY(), plot->GetY() + plot->GetN()) * 1.1;
+			plot->SetMinimum(ymin);
+			plot->SetMaximum(ymax);
 		}
 		TGaxis* axis;
 		if ( config.hasKey("LOG_Y") && config.find("LOG_Y") == "true" ) {
 			axis = new TGaxis(xmax, ymin, xmax, ymax, ymin, ymax, 510, "+G");
 		} else {
 			axis = new TGaxis(xmax, ymin, xmax, ymax, ymin, ymax, 510, "+L");
+			axis->SetTextFont(gStyle->GetTextFont());
+			axis->SetLabelFont(gStyle->GetLabelFont("X"));
 		}
 		axis->Draw();
 	}
