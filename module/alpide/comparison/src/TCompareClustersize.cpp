@@ -42,12 +42,13 @@ TClusterInfo::TClusterInfo(std::string_view tag, const CppConfigDictionary& conf
 TClusterInfo::~TClusterInfo() { }
 
 TH1D* TClusterInfo::setClusterSizeHistogram(std::string_view name) {
-	io::CSVReader<2> in(experimentInfoCSV);
-	in.read_header(io::ignore_extra_column, "TAG", "MASKED_FILE");
-	std::string tag, maskedFile;
+	io::CSVReader<3> in(experimentInfoCSV);
+	in.read_header(io::ignore_extra_column, "TAG", "MASKED_FILE", "CENTER");
+	std::string tag, maskedFile, centerStr;
 	TH1D* hist = new TH1D(static_cast<TString>(name), "", 120, 0.5, 120.5);
-	while ( in.read_row(tag, maskedFile) ) {
+	while ( in.read_row(tag, maskedFile, centerStr) ) {
 		if ( tag == name ) {
+			std::vector<int> center = TPlotter::getIntegerSetFromString(centerStr);
 			TFile* file = new TFile(static_cast<TString>(maskedFile), "READ");
 			TTree* tree = static_cast<TTree*>(file->Get("cluster"));
 			Double_t x, y;
@@ -59,7 +60,9 @@ TH1D* TClusterInfo::setClusterSizeHistogram(std::string_view name) {
 			Int_t nCluster = tree->GetEntries();
 			for ( int iCluster = 0; iCluster < nCluster; iCluster++ ) {
 				tree->GetEntry(iCluster);
-				hist->Fill(size);
+				if ( x < center[0] + 10 && x > center[0] - 10 && y < center[1] + 100 && y > center[1] - 100 ) {
+					hist->Fill(size);
+				}
 			}
 			delete tree;
 			delete file;

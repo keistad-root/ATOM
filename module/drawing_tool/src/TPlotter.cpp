@@ -27,7 +27,7 @@ void TPlotter::setAttribute(TH1* plot, const CppConfigDictionary& config) {
 
 void TPlotter::setLineColour(TH1* plot, const CppConfigDictionary& config) {
 	if ( config.hasKey("LINE_COLOUR") ) {
-		Color_t lineColour = TColourUser::getColour(config.find("line_colour"));
+		Color_t lineColour = TColourUser::getColour(config.find("LINE_COLOUR"));
 		plot->SetLineColor(lineColour);
 	}
 }
@@ -64,7 +64,7 @@ void TPlotter::setLineStyle(TGraph* plot, const CppConfigDictionary& config) {
 
 void TPlotter::setLineColour(TGraph* plot, const CppConfigDictionary& config) {
 	if ( config.hasKey("LINE_COLOUR") ) {
-		Color_t lineColour = TColourUser::getColour(config.find("line_colour"));
+		Color_t lineColour = TColourUser::getColour(config.find("LINE_COLOUR"));
 		plot->SetLineColor(lineColour);
 	}
 }
@@ -121,7 +121,8 @@ void TPlotter::drawPlot(TCanvas* canvas, TMultiGraph* plot, const CppConfigDicti
 }
 
 void TPlotter::setCanvasAttribute(TCanvas* canvas, const CppConfigDictionary& config) {
-	TObject* firstObject = canvas->GetListOfPrimitives()->At(0);
+	TObject* firstObject = canvas->GetListOfPrimitives()->At(1);
+
 	if ( firstObject->InheritsFrom("TH1") ) {
 		TH1* hist = static_cast<TH1*>(firstObject);
 		setTitle(hist, config);
@@ -161,6 +162,7 @@ void TPlotter::setRange(TH1* plot, const CppConfigDictionary& config) {
 	}
 	if ( config.hasKey("Y_RANGE") ) {
 		std::vector<double> range = getDoubleSetFromString(config.find("Y_RANGE"));
+		std::cout << "HELLO" << std::endl;
 		plot->GetYaxis()->SetRangeUser(range[0], range[1]);
 	}
 }
@@ -275,7 +277,7 @@ TString TPlotter::getTitle(std::string_view titleStr) {
 	return mainTitle + ";" + xTitle + ";" + yTitle;
 }
 
-void TPlotter::initLegend(TLegend* legend, const CppConfigDictionary& config) {
+void TPlotter::initLegend(TLegend*& legend, const CppConfigDictionary& config) {
 	std::vector<double> position = {.7, .7, .9, .9};
 	if ( config.hasKey("LEGEND_POSITION") ) {
 		position = getDoubleSetFromString(config.find("LEGEND_POSITION"));
@@ -286,7 +288,7 @@ void TPlotter::initLegend(TLegend* legend, const CppConfigDictionary& config) {
 	}
 }
 
-void TPlotter::initCanvas(TCanvas* canvas, const CppConfigDictionary& config) {
+void TPlotter::initCanvas(TCanvas*& canvas, const CppConfigDictionary& config) {
 	std::vector<double> size = {800, 600};
 	static int iCanvas = 0;
 	if ( config.hasKey("CANVAS_SIZE") ) {
