@@ -121,8 +121,10 @@ void TPlotter::drawPlot(TCanvas* canvas, TMultiGraph* plot, const CppConfigDicti
 }
 
 void TPlotter::setCanvasAttribute(TCanvas* canvas, const CppConfigDictionary& config) {
-	TObject* firstObject = canvas->GetListOfPrimitives()->At(1);
-
+	TObject* firstObject = canvas->GetListOfPrimitives()->At(0);
+	if ( firstObject->InheritsFrom("TFrame") ) {
+		firstObject = canvas->GetListOfPrimitives()->At(1);
+	}
 	if ( firstObject->InheritsFrom("TH1") ) {
 		TH1* hist = static_cast<TH1*>(firstObject);
 		setTitle(hist, config);
@@ -246,6 +248,8 @@ void TPlotter::setLogScale(TCanvas* canvas, const CppConfigDictionary& config) {
 
 void TPlotter::setGrid(TCanvas* canvas, const CppConfigDictionary& config) {
 	if ( config.hasKey("GRID") && config.find("GRID") == "false" ) {
+
+	} else {
 		canvas->SetGrid();
 	}
 }
@@ -346,7 +350,7 @@ void TPlotter::setRightAxis(TH1* plot, const CppConfigDictionary& config) {
 			std::vector<double> range = getDoubleSetFromString(config.find("Y_RANGE"));
 			ymin = range[0];
 			ymax = range[1];
-		} else if ( config.hasKey("LOGY") && config.find("LOGY") == "true" ) {
+		} else if ( config.hasKey("LOG_Y") && config.find("LOG_Y") == "true" ) {
 			double minNonZero = std::numeric_limits<double>::max();
 			for ( int i = 1; i <= plot->GetNbinsX(); ++i ) {
 				double binContent = plot->GetBinContent(i);
@@ -363,7 +367,7 @@ void TPlotter::setRightAxis(TH1* plot, const CppConfigDictionary& config) {
 			plot->GetYaxis()->SetRangeUser(ymin, ymax);
 		}
 		TGaxis* axis;
-		if ( config.hasKey("LOGY") && config.find("LOGY") == "true" ) {
+		if ( config.hasKey("LOG_Y") && config.find("LOG_Y") == "true" ) {
 			axis = new TGaxis(xmax, ymin, xmax, ymax, ymin, ymax, 510, "+G");
 		} else {
 			axis = new TGaxis(xmax, ymin, xmax, ymax, ymin, ymax, 510, "+L");
@@ -382,7 +386,7 @@ void TPlotter::setRightAxis(TGraph* plot, const CppConfigDictionary& config) {
 			std::vector<double> range = getDoubleSetFromString(config.find("Y_RANGE"));
 			ymin = range[0];
 			ymax = range[1];
-		} else if ( config.hasKey("LOGY") && config.find("LOGY") == "true" ) {
+		} else if ( config.hasKey("LOG_Y") && config.find("LOG_Y") == "true" ) {
 			ymin = plot->GetMinimum() > 0 ? plot->GetMinimum() : .1;
 			ymax = plot->GetMaximum() * 1.5;
 			plot->GetYaxis()->SetRangeUser(ymin, ymax);
@@ -392,7 +396,7 @@ void TPlotter::setRightAxis(TGraph* plot, const CppConfigDictionary& config) {
 			plot->GetYaxis()->SetRangeUser(ymin, ymax);
 		}
 		TGaxis* axis;
-		if ( config.hasKey("LOGY") && config.find("LOGY") == "true" ) {
+		if ( config.hasKey("LOG_Y") && config.find("LOG_Y") == "true" ) {
 			axis = new TGaxis(xmax, ymin, xmax, ymax, ymin, ymax, 510, "+G");
 		} else {
 			axis = new TGaxis(xmax, ymin, xmax, ymax, ymin, ymax, 510, "+L");

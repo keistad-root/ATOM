@@ -135,6 +135,17 @@ void TDataPlotter::FillClusterInfo() {
 				mClusterSizeOfRegion[3]->Fill(size);
 			}
 		}
+
+		if ( isClustermapSliceX ) {
+			TH1D* clustermapSliceX[11];
+			std::vector<double> center = TPlotter::getDoubleSetFromString(mConfig.getConfig("CLUSTERSIZE_REGION").find("center"));
+			for ( int i = 0; i < 11; i++ ) {
+				clustermapSliceX[i] = new TH1D(Form("clustermapSliceX_%d", i), "", ALPIDEROW / 2, 0, ALPIDEROW);
+			}
+			if ( std::abs(y - center[1] - 5 * 10) < 5 ) {
+				clustermapSliceX[0]->Fill(x);
+			}
+		}
 	}
 }
 
@@ -209,6 +220,7 @@ void TDataPlotter::savePlots() {
 	}
 	if ( isHitmapProjectionY ) {
 		TCanvas* canvas = new TCanvas("hitmapProjectionYCanvas", "", 3000, 1500);
+		TPlotter::initCanvas(canvas, mConfig.getConfig("HITMAP_PROJECTION_Y"));
 		TF1* fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^2)", 0, ALPIDEROW);
 		fitFunc->SetParameters(1000, 250, 50);
 		mHitmapProjectionY->Fit(fitFunc, "RQ");

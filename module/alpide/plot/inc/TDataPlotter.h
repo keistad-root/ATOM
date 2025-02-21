@@ -35,7 +35,7 @@ private:
 
 	std::vector<std::pair<TH2I*, int>> mShapeSet;
 
-	bool isHitmap = false, isClustermap = false, isClustersize = false, isClustersizeRegion = false, isHitmapProjectionX = false, isHitmapProjectionY = false, isClustermapProjectionX = false, isClustermapProjectionY = false;
+	bool isHitmap = false, isClustermap = false, isClustersize = false, isClustersizeRegion = false, isHitmapProjectionX = false, isHitmapProjectionY = false, isClustermapProjectionX = false, isClustermapProjectionY = false, isClustermapSliceX = false, isClustermapSliceY = false;
 public:
 	void openInputFile();
 

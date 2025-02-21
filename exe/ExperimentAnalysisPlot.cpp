@@ -8,7 +8,7 @@
 
 const std::string configPath = "/home/ychoi/ATOM/build/config/ANALYSIS_PLOT.conf";
 const std::string csvPath = "/home/ychoi/ATOM/build/config/EXPERIMENT_INFORMATION.csv";
-const std::string dataPath = "/home/ychoi/ATOM/Data/EXPERIMENT.csv";
+const std::string dataPath = "/home/ychoi/ATOM/build/Data/EXPERIMENT.csv";
 
 ArgumentParser set_parse(int argc, char** argv) {
 	ArgumentParser parser = ArgumentParser(argc, argv).setDescription("Drawing experiment plots");
