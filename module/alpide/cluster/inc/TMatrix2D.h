@@ -22,8 +22,8 @@ public:
 	void setMatrix(const std::vector<std::vector<numT>>& matrix);
 	void setElement(const int iRow, const int iColumn, const numT element);
 	const numT getElement(const int iRow, const int iColumn) const;
-	const int getNRow() const;
-	const int getNColumn() const;
+	int getNRow() const;
+	int getNColumn() const;
 	const std::pair<int, int> getDimension() const;
 
 	template<typename numT2>
@@ -115,12 +115,12 @@ const numT TMatrix2D<numT>::getElement(const int iRow, const int iColumn) const 
 }
 
 template<typename numT>
-const int TMatrix2D<numT>::getNRow() const {
+int TMatrix2D<numT>::getNRow() const {
 	return mNRow;
 }
 
 template<typename numT>
-const int TMatrix2D<numT>::getNColumn() const {
+int TMatrix2D<numT>::getNColumn() const {
 	return mNColumn;
 }
 

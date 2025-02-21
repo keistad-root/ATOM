@@ -63,7 +63,7 @@ private:
 public:
 	TClusterShape();
 	TClusterShape(const int clusterSize, const std::vector<TCluster*>& clusters);
-	TClusterShape(const std::vector<TCluster*> clusters);
+	// TClusterShape(const std::vector<TCluster*> clusters);
 	// TClusterShape(const std::vector<TCluster*> clusters, const int clusterSize);
 	~TClusterShape();
 
@@ -76,7 +76,7 @@ public:
 	const std::vector<TShapeInfo>& getClusterShapeInfos() const;
 
 	void setClusterSize(const int ClusterSize);
-	const int getClusterSize() const;
+	int getClusterSize() const;
 private:
 	unsigned int fBits;
 public:

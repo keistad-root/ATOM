@@ -8,6 +8,6 @@ void TEvent::setEvent(const int event) {
 	iEvent = event;
 }
 
-const int TEvent::getEvent() const {
+int TEvent::getEvent() const {
 	return iEvent;
 }

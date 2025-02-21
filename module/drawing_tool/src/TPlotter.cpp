@@ -26,16 +26,21 @@ void TPlotter::setAttribute(TH1* plot, const CppConfigDictionary& config) {
 }
 
 void TPlotter::setLineColour(TH1* plot, const CppConfigDictionary& config) {
+	Color_t lineColour;
 	if ( config.hasKey("LINE_COLOUR") ) {
-		Color_t lineColour = TColourUser::getColour(config.find("LINE_COLOUR"));
-		plot->SetLineColor(lineColour);
+		lineColour = TColourUser::getColour(config.find("LINE_COLOUR"));
+	} else {
+		lineColour = TColourUser::getColour(config.find("blue"));
 	}
+	plot->SetLineColor(lineColour);
 }
 
 void TPlotter::setLineWidth(TH1* plot, const CppConfigDictionary& config) {
 	if ( config.hasKey("LINE_WIDTH") ) {
 		Width_t lineWidth = stod(config.find("LINE_WIDTH"));
 		plot->SetLineWidth(lineWidth);
+	} else {
+		plot->SetLineWidth(4);
 	}
 }
 
@@ -63,16 +68,21 @@ void TPlotter::setLineStyle(TGraph* plot, const CppConfigDictionary& config) {
 }
 
 void TPlotter::setLineColour(TGraph* plot, const CppConfigDictionary& config) {
+	Color_t lineColour;
 	if ( config.hasKey("LINE_COLOUR") ) {
-		Color_t lineColour = TColourUser::getColour(config.find("LINE_COLOUR"));
-		plot->SetLineColor(lineColour);
+		lineColour = TColourUser::getColour(config.find("LINE_COLOUR"));
+	} else {
+		lineColour = TColourUser::getColour(config.find("blue"));
 	}
+	plot->SetLineColor(lineColour);
 }
 
 void TPlotter::setLineWidth(TGraph* plot, const CppConfigDictionary& config) {
 	if ( config.hasKey("LINE_WIDTH") ) {
 		Width_t lineWidth = stod(config.find("LINE_WIDTH"));
 		plot->SetLineWidth(lineWidth);
+	} else {
+		plot->SetLineWidth(4);
 	}
 }
 
@@ -163,7 +173,6 @@ void TPlotter::setRange(TH1* plot, const CppConfigDictionary& config) {
 	}
 	if ( config.hasKey("Y_RANGE") ) {
 		std::vector<double> range = getDoubleSetFromString(config.find("Y_RANGE"));
-		std::cout << "HELLO" << std::endl;
 		plot->GetYaxis()->SetRangeUser(range[0], range[1]);
 	}
 }

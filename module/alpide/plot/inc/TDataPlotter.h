@@ -11,6 +11,7 @@ class TH2D;
 class TH1D;
 class TH2I;
 class TFile;
+class TGraphErrors;
 
 class TDataPlotter {
 public:
@@ -24,14 +25,18 @@ private:
 	TH2D* mHitmap;
 	TH1D* mHitmapProjectionX;
 	TH1D* mHitmapProjectionY;
-	TH1D* mTime;
 
 	TH2D* mClustermap;
 	TH1D* mClustermapProjectionX;
 	TH1D* mClustermapProjectionY;
-	TH1D* mClusterTime;
 	TH1D* mClustersize;
 	std::vector<TH1D*> mClusterSizeOfRegion;
+	std::vector<TH1D*> mClustermapSliceX;
+	std::vector<TH1D*> mClustermapSliceY;
+	TGraphErrors* mClustermapSliceXMean;
+	TGraphErrors* mClustermapSliceXAmplitude;
+	TGraphErrors* mClustermapSliceYMean;
+	TGraphErrors* mClustermapSliceYAmplitude;
 
 	std::vector<std::pair<TH2I*, int>> mShapeSet;
 
@@ -47,10 +52,6 @@ public:
 	void saveTotalShape();
 	void saveTop10Shape();
 	void saveClusterSizeWithTime();
-
-	void getMeanX();
-	void getMeanY();
-
 	void savePlots();
 
 	std::array<int, 60> getEntry();

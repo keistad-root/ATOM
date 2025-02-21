@@ -12,7 +12,7 @@ void TALPIDEEvent::pushData(const std::pair<int, int>& coordinate) {
 	data.push_back(std::move(coordinate));
 }
 
-const long int TALPIDEEvent::getTime() const {
+long int TALPIDEEvent::getTime() const {
 	return iTime;
 }
 
@@ -51,6 +51,6 @@ void TALPIDEEvent::sortPixel() {
 			  });
 }
 
-const int TALPIDEEvent::getNData() const {
+int TALPIDEEvent::getNData() const {
 	return data.size();
 }

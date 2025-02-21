@@ -127,7 +127,7 @@ void TDataAnalyser::extractCluster() {
 
 void TDataAnalyser::extractShape() {
 	std::sort(mClusterSet.begin(), mClusterSet.end(), [ ](const TCluster* a, const TCluster* b) { return a->getSize() < b->getSize(); });
-	int nClusterSize = 0;
+	// int nClusterSize = 0;
 	std::map<int, std::vector<TCluster*>> clusterSet;
 	for ( TCluster* cluster : mClusterSet ) {
 		if ( clusterSet.find(cluster->getSize()) == clusterSet.end() ) {

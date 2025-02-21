@@ -26,10 +26,6 @@ TClusterShape::TClusterShape(const int clusterSize, const std::vector<TCluster*>
 // 	// 	}
 // }
 
-TClusterShape::TClusterShape(const std::vector<TCluster*> clusters) {
-	// mClusterWithN.assign(clusters.begin(), clusters.end());
-}
-
 TClusterShape::~TClusterShape() {
 	// for ( TShapeInfo shapeInfo : mClusterShapeInfos ) {
 	// 	delete shapeInfo.mClusterMap;
@@ -102,17 +98,34 @@ void TClusterShape::identifyShapes() {
  * @see
 */
 void TClusterShape::sortShapes(bool descend) {
-	std::sort(mClusterShapeInfos.begin(), mClusterShapeInfos.end(),
-			  [ ](TShapeInfo& a, TShapeInfo& b) {
-				  if ( a.mEntry != b.mEntry ) {
-					  return a.mEntry > b.mEntry;
-				  } else if ( a.mClusterMatrix->getNRow() != b.mClusterMatrix->getNRow() ) {
-					  return a.mClusterMatrix->getNRow() < b.mClusterMatrix->getNRow();
-				  } else {
-					  return a.mClusterMatrix->getNColumn() < b.mClusterMatrix->getNColumn();
+	if ( descend ) {
+		std::sort(mClusterShapeInfos.begin(), mClusterShapeInfos.end(),
+				  [ ](TShapeInfo& a, TShapeInfo& b) {
+					  if ( a.mEntry != b.mEntry ) {
+
+						  return a.mEntry > b.mEntry;
+					  } else if ( a.mClusterMatrix->getNRow() != b.mClusterMatrix->getNRow() ) {
+						  return a.mClusterMatrix->getNRow() < b.mClusterMatrix->getNRow();
+					  } else {
+						  return a.mClusterMatrix->getNColumn() < b.mClusterMatrix->getNColumn();
+					  }
 				  }
-			  }
-	);
+		);
+	} else {
+		std::sort(mClusterShapeInfos.begin(), mClusterShapeInfos.end(),
+				  [ ](TShapeInfo& a, TShapeInfo& b) {
+					  if ( a.mEntry != b.mEntry ) {
+
+						  return a.mEntry < b.mEntry;
+					  } else if ( a.mClusterMatrix->getNRow() != b.mClusterMatrix->getNRow() ) {
+						  return a.mClusterMatrix->getNRow() > b.mClusterMatrix->getNRow();
+					  } else {
+						  return a.mClusterMatrix->getNColumn() > b.mClusterMatrix->getNColumn();
+					  }
+				  }
+		);
+	}
+
 }
 
 /**
@@ -207,6 +220,6 @@ const std::vector<TShapeInfo>& TClusterShape::getClusterShapeInfos() const {
  * @brief Getter of `mClusterSize` member
  * @return const int
 */
-const int TClusterShape::getClusterSize() const {
+int TClusterShape::getClusterSize() const {
 	return mClusterSize;
 }

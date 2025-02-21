@@ -24,7 +24,7 @@ public:
 	void setTime(const long int time);
 
 	// Getter
-	const long int getTime() const;
+	long int getTime() const;
 	const std::vector<std::pair<int, int>>& getData() const;
 
 	void removePixel(const std::pair<int, int>& coordinate);
@@ -32,7 +32,7 @@ public:
 	void removeDuplication();
 	void sortPixel();
 
-	const int getNData() const;
+	int getNData() const;
 
 private:
 	unsigned int fBits;

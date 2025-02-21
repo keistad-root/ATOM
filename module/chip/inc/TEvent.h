@@ -9,7 +9,7 @@ public:
 	TEvent();
 	virtual ~TEvent();
 	void setEvent(const int event);
-	const int getEvent() const;
+	int getEvent() const;
 };
 
 #endif

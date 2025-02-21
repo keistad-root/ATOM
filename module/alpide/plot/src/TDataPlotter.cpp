@@ -15,6 +15,7 @@
 #include "TPaveText.h"
 #include "TLegend.h"
 #include "TGraphErrors.h"
+
 // User header
 #include "TALPIDEEvent.h"
 #include "TPlotter.h"
@@ -46,6 +47,19 @@ TDataPlotter::TDataPlotter(const CppConfigFile& config) : mConfig(config) {
 
 TDataPlotter::~TDataPlotter() {
 	mInputFile->Close();
+	// delete mHitmap;
+	// delete mHitmapProjectionX;
+	// delete mHitmapProjectionY;
+	// delete mClustermap;
+	// delete mClustermapProjectionX;
+	// delete mClustermapProjectionY;
+	// delete mClustersize;
+	// for ( auto& hist : mClusterSizeOfRegion ) {
+	// 	delete hist;
+	// }
+	// for ( auto& shape : mShapeSet ) {
+	// 	delete shape.first;
+	// }
 }
 
 void TDataPlotter::openInputFile() {
@@ -81,11 +95,28 @@ void TDataPlotter::InitPlot() {
 		mClusterSizeOfRegion.push_back(new TH1D("R=6mm", "", 100, .5, 100.5));
 		mClusterSizeOfRegion.push_back(new TH1D("R=8mm", "", 100, .5, 100.5));
 	}
+	if ( isClustermapSliceX ) {
+		int nPlot = mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("SUB_PLOTS").getSubConfigSet().size();
+		for ( int i = 0; i < nPlot; i++ ) {
+			mClustermapSliceX.push_back(new TH1D(Form("clustermapSliceX_%d", i), "", ALPIDECOLUMN / 2, 0, ALPIDECOLUMN));
+		}
+		mClustermapSliceXMean = new TGraphErrors();
+		mClustermapSliceXAmplitude = new TGraphErrors();
+	}
+	if ( isClustermapSliceY ) {
+		int nPlot = mConfig.getConfig("CLUSTERMAP_SLICE_Y").getSubConfig("SUB_PLOTS").getSubConfigSet().size();
+		for ( int i = 0; i < nPlot; i++ ) {
+			mClustermapSliceY.push_back(new TH1D(Form("clustermapSliceY_%d", i), "", ALPIDEROW / 2, 0, ALPIDEROW));
+		}
+		mClustermapSliceYMean = new TGraphErrors();
+		mClustermapSliceYAmplitude = new TGraphErrors();
+	}
 }
 
 void TDataPlotter::FillHitInfo() {
 	UInt_t timeStamp;
 	UShort_t x, y;
+
 	TTree* hitTree = static_cast<TTree*>(mInputFile->Get("hit"));
 	hitTree->SetBranchAddress("TimeStamp", &timeStamp);
 	hitTree->SetBranchAddress("X", &x);
@@ -113,12 +144,7 @@ void TDataPlotter::FillClusterInfo() {
 	clusterTree->SetBranchAddress("Size", &size);
 
 	Int_t nCluster = clusterTree->GetEntries();
-	TH1D* clustermapSliceX[11];
-	TH1D* clustermapSliceY[11];
-	for ( int i = 0; i < 11; i++ ) {
-		clustermapSliceX[i] = new TH1D(Form("clustermapSliceX_%d", i), "", ALPIDECOLUMN / 2, 0, ALPIDECOLUMN);
-		clustermapSliceY[i] = new TH1D(Form("clustermapSliceY_%d", i), "", ALPIDEROW / 2, 0, ALPIDEROW);
-	}
+
 	for ( int iCluster = 0; iCluster < nCluster; iCluster++ ) {
 		clusterTree->GetEntry(iCluster);
 		if ( isClustermap ) mClustermap->Fill(x, y);
@@ -145,90 +171,24 @@ void TDataPlotter::FillClusterInfo() {
 			}
 		}
 		if ( isClustermapSliceX ) {
-			for ( int i = 0; i < 11; i++ ) {
-				if ( std::abs(y - 300 + 50 - 10 * i) < 5 ) {
-					clustermapSliceX[i]->Fill(x);
+			int nPlot = mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("SUB_PLOTS").getSubConfigSet().size();
+			for ( int i = 0; i < nPlot; i++ ) {
+				std::vector<int> range = TPlotter::getIntegerSetFromString(mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("SUB_PLOTS").getSubConfigSet()[i].find("ROW_RANGE"));
+				if ( range[0] < y && y < range[1] ) {
+					mClustermapSliceX[i]->Fill(x);
 				}
 			}
 		}
 		if ( isClustermapSliceY ) {
-			for ( int i = 0; i < 11; i++ ) {
-				if ( std::abs(x - 500 + 50 - 10 * i) < 5 ) {
-					clustermapSliceY[i]->Fill(y);
+			int nPlot = mConfig.getConfig("CLUSTERMAP_SLICE_Y").getSubConfig("SUB_PLOTS").getSubConfigSet().size();
+			for ( int i = 0; i < nPlot; i++ ) {
+				std::vector<int> range = TPlotter::getIntegerSetFromString(mConfig.getConfig("CLUSTERMAP_SLICE_Y").getSubConfig("SUB_PLOTS").getSubConfigSet()[i].find("COLUMN_RANGE"));
+				if ( range[0] < x && x < range[1] ) {
+					mClustermapSliceY[i]->Fill(y);
 				}
 			}
 		}
 	}
-	TGraphErrors* graphX = new TGraphErrors();
-	TGraphErrors* graphAmplitudeX = new TGraphErrors();
-	TGraphErrors* graphY = new TGraphErrors();
-	TGraphErrors* graphAmplitudeY = new TGraphErrors();
-	for ( int i = 0; i < 11; i++ ) {
-		TCanvas* canvas = new TCanvas(Form("sliceX_%d", i), "", 2000, 1000);
-		clustermapSliceX[i]->SetBinContent(259, (clustermapSliceX[i]->GetBinContent(257) + clustermapSliceX[i]->GetBinContent(261)) / 2);
-		clustermapSliceX[i]->SetBinContent(260, (clustermapSliceX[i]->GetBinContent(258) + clustermapSliceX[i]->GetBinContent(262)) / 2);
-		TF1* fitFunc = new TF1(Form("sliceXFitFunc_%d", i), "[0]*e^(-((x-[1])/[2])^2)+[3]", 0, ALPIDECOLUMN);
-		fitFunc->SetParameters(clustermapSliceX[i]->GetMaximum(), clustermapSliceX[i]->GetMean(), clustermapSliceX[i]->GetStdDev() / 10, clustermapSliceX[i]->GetMinimum());
-		clustermapSliceX[i]->Fit(fitFunc, "R");
-		clustermapSliceX[i]->SetTitle(Form("Row: %d#pm10; Column; Entry", 300 - 50 + (10 * i)));
-		clustermapSliceX[i]->Draw();
-		canvas->SaveAs(Form("Plot/sliceX_%d.png", i));
-		delete canvas;
-		graphX->SetPoint(i, 300 - 50 + (10 * i), fitFunc->GetParameter(1));
-		graphX->SetPointError(i, 5, fitFunc->GetParError(1));
-		graphAmplitudeX->SetPoint(i, 300 - 50 + (10 * i), fitFunc->GetParameter(0));
-		graphAmplitudeX->SetPointError(i, 5, fitFunc->GetParError(0));
-		delete fitFunc;
-
-		TCanvas* canvas2 = new TCanvas(Form("sliceY_%d", i), "", 2000, 1000);
-		TF1* fitFunc2 = new TF1(Form("sliceYFitFunc_%d", i), "[0]*e^(-((x-[1])/[2])^2)+[3]", 0, ALPIDEROW);
-		fitFunc2->SetParameters(clustermapSliceY[i]->GetMaximum(), clustermapSliceY[i]->GetMean(), clustermapSliceY[i]->GetStdDev() / 10, clustermapSliceY[i]->GetMinimum());
-		clustermapSliceY[i]->Fit(fitFunc2, "R");
-		clustermapSliceY[i]->SetTitle(Form("Column: %d#pm10; Row; Entry", 500 - 50 + (10 * i)));
-		clustermapSliceY[i]->Draw();
-		canvas2->SaveAs(Form("Plot/sliceY_%d.png", i));
-		delete canvas2;
-		graphY->SetPoint(i, 500 - 50 + (10 * i), fitFunc2->GetParameter(1));
-		graphY->SetPointError(i, 5, fitFunc2->GetParError(1));
-		graphAmplitudeY->SetPoint(i, 500 - 50 + (10 * i), fitFunc2->GetParameter(0));
-		graphAmplitudeY->SetPointError(i, 5, fitFunc2->GetParError(0));
-		delete fitFunc2;
-	}
-	TCanvas* canvas = new TCanvas("sliceX", "", 1000, 1000);
-	graphX->SetMarkerStyle(24);
-	graphX->SetMarkerSize(2);
-	graphX->SetTitle("Slicing in Row Direction; Row; Mean of Gaussian Fit");
-	graphX->Draw("AP");
-	canvas->SaveAs("Plot/sliceX.png");
-	delete canvas;
-
-	canvas = new TCanvas("sliceAmplitudeX", "", 1000, 1000);
-	graphAmplitudeX->SetMarkerStyle(24);
-	graphAmplitudeX->SetMarkerSize(2);
-	graphAmplitudeX->SetMaximum(200);
-	graphAmplitudeX->SetMinimum(0);
-	graphAmplitudeX->SetTitle("Slicing in Row Direction; Row; Amplitude of Gaussian Fit");
-	graphAmplitudeX->Draw("AP");
-	canvas->SaveAs("Plot/amplitudeX.png");
-	delete canvas;
-
-	canvas = new TCanvas("sliceY", "", 1000, 1000);
-	graphY->SetMarkerStyle(24);
-	graphY->SetMarkerSize(2);
-	graphY->SetTitle("Slicing in Column Direction; Column; Mean of Gaussian Fit");
-	graphY->Draw("AP");
-	canvas->SaveAs("Plot/sliceY.png");
-	delete canvas;
-
-	canvas = new TCanvas("sliceAmplitudeY", "", 1000, 1000);
-	graphAmplitudeY->SetMarkerStyle(24);
-	graphAmplitudeY->SetMarkerSize(2);
-	graphAmplitudeY->SetMaximum(200);
-	graphAmplitudeY->SetMinimum(0);
-	graphAmplitudeY->SetTitle("Slicing in Column Direction; Column; Amplitude of Gaussian Fit");
-	graphAmplitudeY->Draw("AP");
-	canvas->SaveAs("Plot/amplitudeY.png");
-	delete canvas;
 }
 
 void TDataPlotter::FillShapeInfo() {
@@ -243,7 +203,7 @@ void TDataPlotter::FillShapeInfo() {
 
 	Int_t n = shapeTree->GetEntries();
 
-	int prevClusterSize = -1;
+	// int prevClusterSize = -1;
 	for ( int iShape = 0; iShape < n; iShape++ ) {
 		shapeTree->GetEntry(iShape);
 		mShapeSet.push_back({new TH2I(*pixelMap), nShape});
@@ -279,17 +239,13 @@ void TDataPlotter::savePlots() {
 		}
 		TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("HITMAP"));
 		delete canvas;
-		canvas = nullptr;
 	}
 	if ( isHitmapProjectionX ) {
 		TCanvas* canvas = new TCanvas("hitmapProjectionXCanvas", "", 3000, 1500);
 		mHitmapProjectionX->SetBinContent(259, (mHitmapProjectionX->GetBinContent(258) + mHitmapProjectionX->GetBinContent(260)) / 2);
-		// mHitmapProjectionX->SetBinContent(517, (mHitmapProjectionX->GetBinContent(515) + mHitmapProjectionX->GetBinContent(519)) / 2);
-		// mHitmapProjectionX->SetBinContent(518, (mHitmapProjectionX->GetBinContent(516) + mHitmapProjectionX->GetBinContent(520)) / 2);
 		TF1* fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^[3])", 0, ALPIDECOLUMN);
 		fitFunc->SetParameters(1000, 500, 100, 2);
 		mHitmapProjectionX->Fit(fitFunc, "RQ");
-
 		TPlotter::drawPlot(canvas, mHitmapProjectionX, mConfig.getConfig("HITMAP_PROJECTION_X"), "HISTE");
 		TText* text = new TText(0.5, 0.5, Form("Mean: %.2f", fitFunc->GetParameter(1)));
 		text->SetNDC();
@@ -297,7 +253,8 @@ void TDataPlotter::savePlots() {
 		text->Draw("SAME");
 		TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("HITMAP_PROJECTION_X"));
 		delete canvas;
-		canvas = nullptr;
+		delete fitFunc;
+		delete text;
 	}
 	if ( isHitmapProjectionY ) {
 		TCanvas* canvas = new TCanvas("hitmapProjectionYCanvas", "", 3000, 1500);
@@ -312,7 +269,8 @@ void TDataPlotter::savePlots() {
 		TPlotter::drawPlot(canvas, mHitmapProjectionY, mConfig.getConfig("HITMAP_PROJECTION_Y"), "HISTE");
 		TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("HITMAP_PROJECTION_Y"));
 		delete canvas;
-		canvas = nullptr;
+		delete fitFunc;
+		delete text;
 	}
 	if ( isClustermapProjectionX ) {
 		TCanvas* canvas = new TCanvas("clustermapProjectionXCanvas", "", 3000, 1500);
@@ -340,6 +298,7 @@ void TDataPlotter::savePlots() {
 		latex->Draw();
 		TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERMAP_PROJECTION_X"));
 		delete canvas;
+		delete latex;
 		delete fitFunc;
 	}
 	if ( isClustermapProjectionY ) {
@@ -366,6 +325,7 @@ void TDataPlotter::savePlots() {
 		latex->Draw();
 		TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERMAP_PROJECTION_Y"));
 		delete canvas;
+		delete latex;
 		delete fitFunc;
 	}
 	if ( isClustermap ) {
@@ -403,7 +363,6 @@ void TDataPlotter::savePlots() {
 		TPlotter::drawPlot(canvas, mClustersize, mConfig.getConfig("CLUSTERSIZE"), "HISTE");
 		TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERSIZE"));
 		delete canvas;
-		canvas = nullptr;
 	}
 	if ( isClustersizeRegion ) {
 		TCanvas* canvas = new TCanvas("clustersizeRegionCanvas", "", 3000, 1500);
@@ -431,11 +390,66 @@ void TDataPlotter::savePlots() {
 		TPlotter::saveLegend(canvas, legend);
 		TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERSIZE_REGION"));
 		delete canvas;
-		canvas = nullptr;
+		delete legend;
+	}
+	if ( isClustermapSliceX ) {
+		int nPlot = mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("SUB_PLOTS").getSubConfigSet().size();
+		for ( int i = 0; i < nPlot; i++ ) {
+			CppConfigDictionary plotConfig = mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("SUB_PLOTS").getSubConfigSet()[i];
+
+			TCanvas* canvas;
+			TPlotter::initCanvas(canvas, plotConfig);
+			mClustermapSliceX[i]->SetBinContent(259, (mClustermapSliceX[i]->GetBinContent(258) + mClustermapSliceX[i]->GetBinContent(260)) / 2);
+			mClustermapSliceX[i]->SetBinContent(260, (mClustermapSliceX[i]->GetBinContent(259) + mClustermapSliceX[i]->GetBinContent(261)) / 2);
+
+			TF1* fitFunc = new TF1(Form("fitFunc_%d", i), "[0]*e^(-((x-[1])/[2])^2)+[3]", 0, ALPIDECOLUMN);
+			fitFunc->SetParameters(mClustermapSliceX[i]->GetMaximum(), mClustermapSliceX[i]->GetMean(), mClustermapSliceX[i]->GetStdDev() / 10, mClustermapSliceX[i]->GetMinimum());
+			mClustermapSliceX[i]->Fit(fitFunc, "RQ");
+
+			std::vector<int> range = TPlotter::getIntegerSetFromString(plotConfig.find("ROW_RANGE"));
+			mClustermapSliceXMean->SetPoint(i, (range[0] + range[1]) / 2, fitFunc->GetParameter(1));
+			mClustermapSliceXAmplitude->SetPoint(i, (range[0] + range[1]) / 2, fitFunc->GetParameter(0));
+
+			TPlotter::drawPlot(canvas, mClustermapSliceX[i], plotConfig, "HISTE");
+			TPlotter::saveCanvas(canvas, mOutputPath, plotConfig);
+			delete canvas;
+			delete fitFunc;
+		}
+		{
+			TCanvas* canvas;
+			TPlotter::initCanvas(canvas, mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("MEAN_PLOT"));
+			TPlotter::drawPlot(canvas, mClustermapSliceXMean, mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("MEAN_PLOT"), "AP");
+			TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("MEAN_PLOT"));
+			delete canvas;
+		}
+		{
+			TCanvas* canvas;
+			TPlotter::initCanvas(canvas, mConfig.getConfig("CLUSTERMAP_SLICE_Y").getSubConfig("AMPLITUDE_PLOT"));
+			TPlotter::drawPlot(canvas, mClustermapSliceXAmplitude, mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("AMPLITUDE_PLOT"), "AP");
+			TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("AMPLITUDE_PLOT"));
+			delete canvas;
+		}
+	}
+	if ( isClustermapSliceY ) {
+		int nPlot = mConfig.getConfig("CLUSTERMAP_SLICE_Y").getSubConfig("SUB_PLOTS").getSubConfigSet().size();
+		for ( int i = 0; i < nPlot; i++ ) {
+			CppConfigDictionary plotConfig = mConfig.getConfig("CLUSTERMAP_SLICE_Y").getSubConfig("SUB_PLOTS").getSubConfigSet()[i];
+
+			TCanvas* canvas;
+			TPlotter::initCanvas(canvas, plotConfig);
+			TF1* fitFunc = new TF1(Form("fitFunc_%d", i), "[0]*e^(-((x-[1])/[2])^2)+[3]", 0, ALPIDEROW);
+			fitFunc->SetParameters(mClustermapSliceY[i]->GetMaximum(), mClustermapSliceY[i]->GetMean(), mClustermapSliceY[i]->GetStdDev() / 10, mClustermapSliceY[i]->GetMinimum());
+			mClustermapSliceY[i]->Fit(fitFunc, "RQ");
+
+			std::vector<int>range = TPlotter::getIntegerSetFromString(plotConfig.find("COLUMN_RANGE"));
+			mClustermapSliceYMean->SetPoint(i, (range[0] + range[1]) / 2, fitFunc->GetParameter(1));
+			mClustermapSliceYAmplitude->SetPoint(i, (range[0] + range[1]) / 2, fitFunc->GetParameter(0));
+
+			TPlotter::drawPlot(canvas, mClustermapSliceX[i], plotConfig, "HISTE");
+			TPlotter::saveCanvas(canvas, mOutputPath, plotConfig);
+		}
 	}
 }
-
-
 
 
 
@@ -490,7 +504,7 @@ void TDataPlotter::saveTotalShape() {
 		int width = shape.first->GetNbinsX();
 		int height = shape.first->GetNbinsY();
 
-		TPad* pad = new TPad(Form("pad&d_%d", clusterSize, iClusterShape), "", (double) nominalHeader / (plotsWidth + nominalHeader) + ((double) plotsWidth / (plotsWidth + nominalHeader)) * ((double) iClusterShape / nWidth), ((double) plotsHeight / (plotsHeight + nominalHeader)) * (((double) nHeight - iClusterSize - 1) / nHeight), (double) nominalHeader / (plotsWidth + nominalHeader) + ((double) plotsWidth / (plotsWidth + nominalHeader)) * (double) (iClusterShape + 1) / nWidth, ((double) plotsHeight / (plotsHeight + nominalHeader)) * (((double) nHeight - iClusterSize) / nHeight), -1, 1);
+		TPad* pad = new TPad(Form("pad%d_%d", clusterSize, iClusterShape), "", (double) nominalHeader / (plotsWidth + nominalHeader) + ((double) plotsWidth / (plotsWidth + nominalHeader)) * ((double) iClusterShape / nWidth), ((double) plotsHeight / (plotsHeight + nominalHeader)) * (((double) nHeight - iClusterSize - 1) / nHeight), (double) nominalHeader / (plotsWidth + nominalHeader) + ((double) plotsWidth / (plotsWidth + nominalHeader)) * (double) (iClusterShape + 1) / nWidth, ((double) plotsHeight / (plotsHeight + nominalHeader)) * (((double) nHeight - iClusterSize) / nHeight), -1, 1);
 		mPadSet.push_back(pad);
 		pad->Draw();
 		pad->cd();
