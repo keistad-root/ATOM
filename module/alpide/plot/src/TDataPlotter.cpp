@@ -14,7 +14,7 @@
 #include "TF1.h"
 #include "TPaveText.h"
 #include "TLegend.h"
-#include "TGraph.h"
+#include "TGraphErrors.h"
 // User header
 #include "TALPIDEEvent.h"
 #include "TPlotter.h"
@@ -41,6 +41,7 @@ TDataPlotter::TDataPlotter(const CppConfigFile& config) : mConfig(config) {
 	if ( mConfig.hasConfig("CLUSTERMAP_PROJECTION_X") ) isClustermapProjectionX = true;
 	if ( mConfig.hasConfig("CLUSTERMAP_PROJECTION_Y") ) isClustermapProjectionY = true;
 	if ( mConfig.hasConfig("CLUSTERMAP_SLICE_X") ) isClustermapSliceX = true;
+	if ( mConfig.hasConfig("CLUSTERMAP_SLICE_Y") ) isClustermapSliceY = true;
 }
 
 TDataPlotter::~TDataPlotter() { }
@@ -111,8 +112,10 @@ void TDataPlotter::FillClusterInfo() {
 
 	Int_t nCluster = clusterTree->GetEntries();
 	TH1D* clustermapSliceX[11];
+	TH1D* clustermapSliceY[11];
 	for ( int i = 0; i < 11; i++ ) {
 		clustermapSliceX[i] = new TH1D(Form("clustermapSliceX_%d", i), "", ALPIDECOLUMN / 2, 0, ALPIDECOLUMN);
+		clustermapSliceY[i] = new TH1D(Form("clustermapSliceY_%d", i), "", ALPIDEROW / 2, 0, ALPIDEROW);
 	}
 	for ( int iCluster = 0; iCluster < nCluster; iCluster++ ) {
 		clusterTree->GetEntry(iCluster);
@@ -141,33 +144,81 @@ void TDataPlotter::FillClusterInfo() {
 		}
 
 		if ( isClustermapSliceX ) {
-			std::vector<double> center = TPlotter::getDoubleSetFromString(mConfig.getConfig("CLUSTERSIZE_REGION").find("center"));
-
 			for ( int i = 0; i < 11; i++ ) {
-				if ( std::abs(y - center[1] + 50 - 10 * i) < 5 ) {
+				if ( std::abs(y - 300 + 50 - 10 * i) < 5 ) {
 					clustermapSliceX[i]->Fill(x);
 				}
 			}
-
+		}
+		if ( isClustermapSliceY ) {
+			for ( int i = 0; i < 11; i++ ) {
+				if ( std::abs(x - 500 + 50 - 10 * i) < 5 ) {
+					clustermapSliceY[i]->Fill(y);
+				}
+			}
 		}
 	}
-	TGraph* graph = new TGraph();
-	std::vector<double> center = TPlotter::getDoubleSetFromString(mConfig.getConfig("CLUSTERSIZE_REGION").find("center"));
+	TGraphErrors* graphX = new TGraphErrors();
+	TGraphErrors* graphAmplitudeX = new TGraphErrors();
+	TGraphErrors* graphY = new TGraphErrors();
+	TGraphErrors* graphAmplitudeY = new TGraphErrors();
 	for ( int i = 0; i < 11; i++ ) {
 		TCanvas* canvas = new TCanvas(Form("sliceX_%d", i), "", 2000, 1000);
+		clustermapSliceX[i]->SetBinContent(259, (clustermapSliceX[i]->GetBinContent(257) + clustermapSliceX[i]->GetBinContent(261)) / 2);
+		clustermapSliceX[i]->SetBinContent(260, (clustermapSliceX[i]->GetBinContent(258) + clustermapSliceX[i]->GetBinContent(262)) / 2);
 		TF1* fitFunc = new TF1(Form("sliceXFitFunc_%d", i), "[0]*e^(-((x-[1])/[2])^2)+[3]", 0, ALPIDECOLUMN);
-		fitFunc->SetParameters(clustermapSliceX[i]->GetMaximum(), clustermapSliceX[i]->GetMean(), clustermapSliceX[i]->GetStdDev(), clustermapSliceX[i]->GetMinimum());
+		fitFunc->SetParameters(clustermapSliceX[i]->GetMaximum(), clustermapSliceX[i]->GetMean(), clustermapSliceX[i]->GetStdDev() / 10, clustermapSliceX[i]->GetMinimum());
 		clustermapSliceX[i]->Fit(fitFunc, "RQ");
 		clustermapSliceX[i]->Draw();
 		canvas->SaveAs(Form("Plot/sliceX_%d.png", i));
 		delete canvas;
-		graph->SetPoint(i, center[1] - 50 + (10 * i), fitFunc->GetParameter(1));
+		graphX->SetPoint(i, 300 - 50 + (10 * i), fitFunc->GetParameter(1));
+		graphX->SetPointError(i, 5, fitFunc->GetParError(1));
+		graphAmplitudeX->SetPoint(i, 300 - 50 * (10 * i), fitFunc->GetParameter(0));
+		graphAmplitudeX->SetPointError(i, 5, fitFunc->GetParError(0));
+		delete fitFunc;
+
+		TCanvas* canvas2 = new TCanvas(Form("sliceY_%d", i), "", 2000, 1000);
+		TF1* fitFunc2 = new TF1(Form("sliceYFitFunc_%d", i), "[0]*e^(-((x-[1])/[2])^2)+[3]", 0, ALPIDEROW);
+		fitFunc2->SetParameters(clustermapSliceY[i]->GetMaximum(), clustermapSliceY[i]->GetMean(), clustermapSliceY[i]->GetStdDev() / 10, clustermapSliceY[i]->GetMinimum());
+		clustermapSliceY[i]->Fit(fitFunc2, "RQ");
+		clustermapSliceY[i]->Draw();
+		canvas2->SaveAs(Form("Plot/sliceY_%d.png", i));
+		delete canvas2;
+		graphY->SetPoint(i, 500 - 50 + (10 * i), fitFunc2->GetParameter(1));
+		graphY->SetPointError(i, 5, fitFunc2->GetParError(1));
+		graphAmplitudeY->SetPoint(i, 500 - 50 + (10 * i), fitFunc2->GetParameter(0));
+		graphAmplitudeY->SetPointError(i, 5, fitFunc2->GetParError(0));
+		delete fitFunc2;
 	}
-	TCanvas* canvas = new TCanvas("sliceX", "", 2000, 1000);
-	graph->SetMarkerStyle(20);
-	graph->SetMarkerSize(2);
-	graph->Draw("AP");
+	TCanvas* canvas = new TCanvas("sliceX", "", 1000, 1000);
+	graphX->SetMarkerStyle(24);
+	graphX->SetMarkerSize(2);
+	graphX->Draw("AP");
 	canvas->SaveAs("Plot/sliceX.png");
+	delete canvas;
+
+	canvas = new TCanvas("sliceAmplitudeX", "", 1000, 1000);
+	graphAmplitudeX->SetMarkerStyle(24);
+	graphAmplitudeX->SetMarkerSize(2);
+	graphAmplitudeX->SetYRange(1, 2);
+	graphAmplitudeX->Draw("AP");
+	canvas->SaveAs("Plot/amplitudeX.png");
+	delete canvas;
+
+	canvas = new TCanvas("sliceY", "", 1000, 1000);
+	graphY->SetMarkerStyle(24);
+	graphY->SetMarkerSize(2);
+	graphY->Draw("AP");
+	canvas->SaveAs("Plot/sliceY.png");
+	delete canvas;
+
+	canvas = new TCanvas("sliceAmplitudeY", "", 1000, 1000);
+	graphAmplitudeY->SetMarkerStyle(24);
+	graphAmplitudeY->SetMarkerSize(2);
+	graphAmplitudeY->Draw("AP");
+	canvas->SaveAs("Plot/amplitudeY.png");
+	delete canvas;
 }
 
 void TDataPlotter::FillShapeInfo() {
