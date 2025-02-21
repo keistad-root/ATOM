@@ -1,8 +1,13 @@
 #include "TGeantComparison.h"
 
+#include "TCanvas.h"
+#include "TH1.h"
+#include "TH2.h"
+#include "TF1.h"
+
 const int REF_PHI = 11;
 
-TGeantComparison::TGeantComparison(const CppConfigFile& config) : TPlotter(), mConfig(config) {
+TGeantComparison::TGeantComparison(const CppConfigFile& config) : mConfig(config) {
 	mOutputPath = mConfig.getConfig("File").find("output_directory");
 	std::vector<std::string> fileTagList = mConfig.getConfig("FileList").getKeyList();
 	// for ( const auto& fileTag : fileTagList ) {
@@ -34,26 +39,25 @@ void TGeantComparison::getComparedPlot(const std::string& configName) {
 	std::string tag;
 	double x, y;
 
-	std::unique_ptr<TGraph> graph = std::make_unique<TGraph>();
+	TGraph* graph = new TGraph();
 	while ( dataCSV.read_row(tag, x, y) ) {
 		if ( std::find(interestSet.begin(), interestSet.end(), tag) != interestSet.end() ) {
 			graph->SetPoint(graph->GetN(), x, y);
 		}
 	}
 
-	std::unique_ptr<TF1> fitFunc = std::make_unique<TF1>("fitFunc", "[0]*x + [1]", 0.9, 1.1);
+	TF1* fitFunc = new TF1("fitFunc", "[0]*x + [1]", 0.9, 1.1);
 	graph->Fit("fitFunc", "R");
 
-	std::unique_ptr<TText> slopeText = std::make_unique<TText>(.55, .11, TString::Format("Slope: %.2f", fitFunc->GetParameter(0)));
+	TText* slopeText = new TText(.55, .11, TString::Format("Slope: %.2f", fitFunc->GetParameter(0)));
 	slopeText->SetNDC();
 	slopeText->SetTextSize(1. / 16);
 
-	std::unique_ptr<TCanvas> canvas = std::make_unique<TCanvas>();
-	savePlot(canvas, graph, mConfig.getConfig(configName));
-	setCanvasAttribute(canvas.get(), mConfig.getConfig(configName));
+	TCanvas* canvas = new TCanvas();
+	TPlotter::drawPlot(canvas, graph, mConfig.getConfig(configName), " ");
 	fitFunc->Draw("same");
 	slopeText->Draw();
-	saveCanvas(canvas.get(), mOutputPath, mConfig.getConfig(configName));
+	TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig(configName));
 }
 
 void TGeantComparison::getPlotNormalized() {
@@ -87,17 +91,16 @@ void TGeantComparison::getPlotNormalized() {
 		}
 	}
 
-	std::unique_ptr<TGraph> graph = std::make_unique<TGraph>();
+	TGraph* graph = new TGraph();
 	for ( int i = 0; i < interestData.size(); i++ ) {
 		double xValue = interestData[i][0];
 		double yValue = interestData[i][1] / referenceData[1];
 		graph->SetPoint(i, xValue, yValue);
 	}
 
-	std::unique_ptr<TCanvas> canvas = std::make_unique<TCanvas>();
-	savePlot(canvas, graph, mConfig.getConfig("NormalizedPlot"));
-	setCanvasAttribute(canvas, mConfig.getConfig("NormalizedPlot"));
-	saveCanvas(canvas.get(), mOutputPath, mConfig.getConfig("NormalizedPlot"));
+	TCanvas* canvas = new TCanvas();
+	TPlotter::drawPlot(canvas, graph, mConfig.getConfig("NormalizedPlot"), " ");
+	TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("NormalizedPlot"));
 }
 
 
@@ -117,8 +120,7 @@ void TGeantComparison::getDividePlot() {
 		}
 	}
 
-	std::unique_ptr<TCanvas> canvas = std::make_unique<TCanvas>();
-	savePlot(canvas.get(), resultHist, mConfig.getConfig("EpitaxialRatio"));
-	setCanvasAttribute(canvas, mConfig.getConfig("EpitaxialRatio"));
-	saveCanvas(canvas.get(), mOutputPath, mConfig.getConfig("EpitaxialRatio"));
+	TCanvas* canvas = new TCanvas();
+	TPlotter::drawPlot(canvas, resultHist, mConfig.getConfig("EpitaxialRatio"), " ");
+	TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("EpitaxialRatio"));
 }

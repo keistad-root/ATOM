@@ -1,14 +1,16 @@
 #include "TGeantPlot.h"
 
 #include "TFile.h"
+#include "TH1.h"
+#include "TH2.h"
 #include "TList.h"
 #include "TKey.h"
-
-TGeantPlot::~TGeantPlot() { }
+#include "TCanvas.h"
+#include "TGraph.h"
 
 void TGeantPlot::readInputFile(std::filesystem::path inputFilePath) {
 	TString inputFileName = std::string(inputFilePath);
-	mInputFile = std::make_unique<TFile>(inputFileName, "READ");
+	mInputFile = new TFile(inputFileName, "READ");
 }
 
 void TGeantPlot::getHistorams() {
@@ -17,14 +19,14 @@ void TGeantPlot::getHistorams() {
 	TKey* key;
 
 	while ( (key = (TKey*) next()) ) {
-		std::unique_ptr<TObject> objPtr(key->ReadObj());
+		TObject* objPtr = (key->ReadObj());
 		if ( objPtr->InheritsFrom(TH1D::Class()) ) {
 			std::string keyName = objPtr->GetName();
-			m1DHistograms.insert_or_assign(keyName, std::make_unique<TH1D>(*dynamic_cast<TH1D*>(objPtr.get())));
+			m1DHistograms.insert_or_assign(keyName, static_cast<TH1D*>(objPtr));
 		}
 		if ( objPtr->InheritsFrom(TH2D::Class()) ) {
 			std::string keyName = objPtr->GetName();
-			m2DHistograms.insert_or_assign(keyName, std::make_unique<TH2D>(*dynamic_cast<TH2D*>(objPtr.get())));
+			m2DHistograms.insert_or_assign(keyName, static_cast<TH2D*>(objPtr));
 		}
 	}
 }
@@ -37,9 +39,8 @@ void TGeantPlot::saveHistorams(const std::vector<CppConfigDictionary>& configLis
 	for ( const auto& [key, hist] : m1DHistograms ) {
 		for ( const CppConfigDictionary& config : configList ) {
 			if ( key == config.getConfigName() ) {
-				std::unique_ptr<TCanvas> canvas = std::make_unique<TCanvas>();
-				savePlot(canvas.get(), hist.get(), config);
-				setCanvasAttribute(canvas, config);
+				TCanvas* canvas = new TCanvas();
+				TPlotter::drawPlot(canvas, hist, config, "HIST");
 				hist->SetEntries(hist->GetEffectiveEntries());
 				if ( key == "IncidentParticle" ) {
 					for ( int i = 0; i < hist->GetNbinsX(); i++ ) {
@@ -51,16 +52,15 @@ void TGeantPlot::saveHistorams(const std::vector<CppConfigDictionary>& configLis
 						hist->GetXaxis()->SetBinLabel(i + 1., mVolumeName[i]);
 					}
 				}
-				saveCanvas(canvas.get(), mOutputDirectory, config);
+				TPlotter::saveCanvas(canvas, mOutputDirectory, config);
 			}
 		}
 	}
 	for ( const auto& [key, hist] : m2DHistograms ) {
 		for ( const CppConfigDictionary& config : configList ) {
 			if ( key == config.getConfigName() ) {
-				std::unique_ptr<TCanvas> canvas = std::make_unique<TCanvas>();
-				savePlot(canvas.get(), hist.get(), config);
-				setCanvasAttribute(canvas, config);
+				TCanvas* canvas = new TCanvas();
+				TPlotter::drawPlot(canvas, hist, config, "COLZ");
 				if ( key == "ElctronIncidentXYWithElectrode" ) {
 					TGraph* electrode = new TGraph();
 					for ( int i = 0; i < 10; i++ ) {
@@ -75,7 +75,7 @@ void TGeantPlot::saveHistorams(const std::vector<CppConfigDictionary>& configLis
 					// canvas->SetGrayscale();
 					// TColor::InvertPalette();
 				}
-				saveCanvas(canvas.get(), mOutputDirectory, config);
+				TPlotter::saveCanvas(canvas, mOutputDirectory, config);
 
 			}
 		}
@@ -83,9 +83,9 @@ void TGeantPlot::saveHistorams(const std::vector<CppConfigDictionary>& configLis
 }
 
 void TGeantPlot::getEntries() {
-	std::unique_ptr<TH1D>& hist = m1DHistograms.find("AlphaDepositEnergyEpitaxial")->second;
-	std::unique_ptr<TH1D>& metalAlphaHist = m1DHistograms.find("AlphaDepositEnergyMetal")->second;
-	std::unique_ptr<TH1D>& metalElectronHist = m1DHistograms.find("ElectronDepositEnergyMetal")->second;
+	TH1D* hist = m1DHistograms.find("AlphaDepositEnergyEpitaxial")->second;
+	TH1D* metalAlphaHist = m1DHistograms.find("AlphaDepositEnergyMetal")->second;
+	TH1D* metalElectronHist = m1DHistograms.find("ElectronDepositEnergyMetal")->second;
 
 	std::cout << metalAlphaHist->GetEffectiveEntries() << "\t" << metalElectronHist->GetEffectiveEntries() << "\t" << hist->GetEffectiveEntries() << std::endl;
 	int maxBin = 0;

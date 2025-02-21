@@ -245,25 +245,24 @@ int main() {
 	TMultiGraph* doubleC = getSimulationGraphs(simSet, "DOUBLE");
 
 	TCanvas* cs1Canvas = new TCanvas("cs1", "", 1000, 1000);
-	TPlotter plotter;
-	plotter.savePlot(cs1Canvas, cs1, configFile.getConfig("CS1_VS_ELECTRON"));
-	plotter.savePlot(cs1Canvas, eem, configFile.getConfig("CS1_VS_ELECTRON"));
+	TPlotter::drawPlot(cs1Canvas, cs1, configFile.getConfig("CS1_VS_ELECTRON"), " ");
+	TPlotter::drawPlot(cs1Canvas, eem, configFile.getConfig("CS1_VS_ELECTRON"), "SAME");
 	std::filesystem::path path = "/home/ychoi/ATOM/build/Data/";
-	plotter.saveCanvas(cs1Canvas, path, configFile.getConfig("CS1_VS_ELECTRON"));
+	TPlotter::saveCanvas(cs1Canvas, path, configFile.getConfig("CS1_VS_ELECTRON"));
 
 
 	TCanvas* cs4Canvas = new TCanvas("cs4", "", 1000, 1000);
-	plotter.savePlot(cs4Canvas, cs4, configFile.getConfig("CS4_VS_ALPHA"));
-	plotter.saveCanvas(cs4Canvas, path, configFile.getConfig("CS4_VS_ALPHA"));
+	TPlotter::drawPlot(cs4Canvas, cs4, configFile.getConfig("CS4_VS_ALPHA"), " ");
+	TPlotter::saveCanvas(cs4Canvas, path, configFile.getConfig("CS4_VS_ALPHA"));
 
 
 	TCanvas* bcCanvas = new TCanvas("bc", "", 1000, 1000);
-	plotter.savePlot(bcCanvas, bc, configFile.getConfig("BC_VS_ALPHA"));
-	plotter.saveCanvas(bcCanvas, path, configFile.getConfig("BC_VS_ALPHA"));
+	TPlotter::drawPlot(bcCanvas, bc, configFile.getConfig("BC_VS_ALPHA"), " ");
+	TPlotter::saveCanvas(bcCanvas, path, configFile.getConfig("BC_VS_ALPHA"));
 
 	TCanvas* dCanvas = new TCanvas("d", "", 1000, 1000);
-	plotter.savePlot(dCanvas, d, configFile.getConfig("D_VS_ALPHA"));
-	plotter.saveCanvas(dCanvas, path, configFile.getConfig("D_VS_ALPHA"));
+	TPlotter::drawPlot(dCanvas, d, configFile.getConfig("D_VS_ALPHA"), " ");
+	TPlotter::saveCanvas(dCanvas, path, configFile.getConfig("D_VS_ALPHA"));
 
 	return 0;
 }

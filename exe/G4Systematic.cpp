@@ -41,14 +41,13 @@ void setGraph(const CppConfigFile& config, const TGeantInfoSet& set, const std::
 
 	TCanvas* canvas[3] = {new TCanvas("eemCanvas", "", 1000, 1000), new TCanvas("eaeCanvas", "", 1000, 1000), new TCanvas("doubleCanvas", "", 1000, 1000)};
 
-	TPlotter plotter;
 	std::filesystem::path outputPath = "/home/ychoi/ATOM/build/Data/";
-	plotter.savePlot(canvas[0], graph[0], config.getConfig(name + "_EEM"));
-	plotter.saveCanvas(canvas[0], outputPath, config.getConfig(name + "_EEM"));
-	plotter.savePlot(canvas[1], graph[1], config.getConfig(name + "_EAE"));
-	plotter.saveCanvas(canvas[1], outputPath, config.getConfig(name + "_EAE"));
-	plotter.savePlot(canvas[2], graph[2], config.getConfig(name + "_DOUBLE"));
-	plotter.saveCanvas(canvas[2], outputPath, config.getConfig(name + "_DOUBLE"));
+	TPlotter::drawPlot(canvas[0], graph[0], config.getConfig(name + "_EEM"), " ");
+	TPlotter::saveCanvas(canvas[0], outputPath, config.getConfig(name + "_EEM"));
+	TPlotter::drawPlot(canvas[1], graph[1], config.getConfig(name + "_EAE"), " ");
+	TPlotter::saveCanvas(canvas[1], outputPath, config.getConfig(name + "_EAE"));
+	TPlotter::drawPlot(canvas[2], graph[2], config.getConfig(name + "_DOUBLE"), " ");
+	TPlotter::saveCanvas(canvas[2], outputPath, config.getConfig(name + "_DOUBLE"));
 	delete graph[0];
 	delete graph[1];
 	delete graph[2];

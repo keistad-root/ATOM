@@ -1,41 +1,24 @@
 #ifndef __TDATAPLOTTER__
 #define __TDATAPLOTTER__
 
-// ROOT header
-#include "TCanvas.h"
-#include "TFile.h"
-#include "TTree.h"
-#include "TH2D.h"
-#include "TH1D.h"
-#include "TStyle.h"
-#include "TLine.h"
-#include "TPad.h"
-#include "TText.h"
-#include "TEllipse.h"
-#include "TF1.h"
-#include "TPaveText.h"
+#include<vector>
+#include<array>
+#include<filesystem>
 
-// User header
-#include "TALPIDEEvent.h"
-#include "TPlotter.h"
 #include "CppConfigFile.h"
-#include "TClusterShape.h"
 
-const int ALPIDECOLUMN = 1024;
-const int ALPIDEROW = 512;
+class TH2D;
+class TH1D;
+class TH2I;
+class TFile;
 
-// const int CANVAS_WIDTH = 2000; 
-// const int CANVAS_HEIGHT = 1000;
-
-// const std::string EXTENSION = "png";
-
-class TDataPlotter : public TPlotter {
+class TDataPlotter {
 public:
 	TDataPlotter(const CppConfigFile& config);
 	~TDataPlotter();
 private:
 	CppConfigFile mConfig;
-	std::unique_ptr<TFile> mInputFile;
+	TFile* mInputFile;
 	std::filesystem::path mOutputPath;
 
 	TH2D* mHitmap;

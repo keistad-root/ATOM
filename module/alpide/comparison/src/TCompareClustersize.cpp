@@ -1,4 +1,5 @@
 #include "TCompareClustersize.h"
+
 #include<filesystem>
 #include<unordered_map>
 
@@ -66,9 +67,8 @@ TH1D* TClusterInfo::setClusterSizeHistogram(std::string_view name) {
 	return hist;
 }
 
-TCompareClustersize::TCompareClustersize(const CppConfigFile& config) : TPlotter(), mConfig(config) {
+TCompareClustersize::TCompareClustersize(const CppConfigFile& config) : mConfig(config) {
 	mOutputPath = mConfig.getConfig("FILE").find("output_directory");
-	std::filesystem::create_directories(mOutputPath);
 	for ( auto& plotConfig : mConfig.getConfig("PLOT_SET").getSubConfigSet() ) {
 		TClusterInfo temp(plotConfig.getConfigName(), plotConfig);
 		mClusterInfo.push_back(temp);
@@ -78,13 +78,13 @@ TCompareClustersize::TCompareClustersize(const CppConfigFile& config) : TPlotter
 void TCompareClustersize::drawClustersize() {
 	TCanvas* canvas;
 	TLegend* legend;
-	initCanvas(canvas, mConfig.getConfig("Clustersize"));
-	initLegend(legend, mConfig.getConfig("Clustersize"));
+	TPlotter::initCanvas(canvas, mConfig.getConfig("Clustersize"));
+	TPlotter::initLegend(legend, mConfig.getConfig("Clustersize"));
 	for ( auto& plot : mClusterInfo ) {
-		setAttribute(plot.getClusterSizeHistogram(), plot.getConfig());
-		drawPlot(canvas, plot.getClusterSizeHistogram(), plot.getConfig(), "SAME HISTE");
+		TPlotter::setAttribute(plot.getClusterSizeHistogram(), plot.getConfig());
+		TPlotter::drawPlot(canvas, plot.getClusterSizeHistogram(), plot.getConfig(), "SAME HISTE");
 		legend->AddEntry(plot.getClusterSizeHistogram(), static_cast<TString>(plot.getConfig().find("legend")));
 	}
-	saveLegend(canvas, legend);
-	saveCanvas(canvas, mOutputPath, mConfig.getConfig("Clustersize"));
+	TPlotter::saveLegend(canvas, legend);
+	TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("Clustersize"));
 }

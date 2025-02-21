@@ -11,10 +11,9 @@
 #include "TGraphErrors.h"
 #include "TPlotter.h"
 #include "CppConfigFile.h"
-#include "TF1.h"
 #include "TText.h"
 
-class TGeantComparison : public TPlotter {
+class TGeantComparison {
 public:
 	TGeantComparison(const CppConfigFile& config);
 	~TGeantComparison();

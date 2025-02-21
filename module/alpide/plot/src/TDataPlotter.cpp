@@ -1,8 +1,32 @@
 #include "TDataPlotter.h"
 
+// ROOT header
+#include "TCanvas.h"
+#include "TFile.h"
+#include "TTree.h"
+#include "TH2D.h"
+#include "TH1D.h"
+#include "TStyle.h"
+#include "TLine.h"
+#include "TPad.h"
+#include "TText.h"
+#include "TEllipse.h"
+#include "TF1.h"
+#include "TPaveText.h"
+#include "TLegend.h"
+
+// User header
+#include "TALPIDEEvent.h"
+#include "TPlotter.h"
+#include "CppConfigFile.h"
+#include "TClusterShape.h"
+
 #include<unistd.h>
 
-TDataPlotter::TDataPlotter(const CppConfigFile& config) : TPlotter(), mConfig(config) {
+const int ALPIDECOLUMN = 1024;
+const int ALPIDEROW = 512;
+
+TDataPlotter::TDataPlotter(const CppConfigFile& config) : mConfig(config) {
 	mOutputPath = mConfig.getConfig("CONFIG").find("OUTPUT_DIRECTORY");
 	std::filesystem::create_directories(mOutputPath);
 
@@ -22,37 +46,30 @@ TDataPlotter::~TDataPlotter() { }
 
 void TDataPlotter::openInputFile() {
 	std::filesystem::path inputPath = mConfig.getConfig("CONFIG").find("MASKED_FILE");
-	mInputFile = std::make_unique<TFile>(static_cast<TString>(inputPath));
+	mInputFile = new TFile(static_cast<TString>(inputPath));
 }
 
 void TDataPlotter::InitPlot() {
 	if ( isHitmap ) {
 		mHitmap = new TH2D("hitmap", "Hitmap; Column; Row", ALPIDECOLUMN, 0, ALPIDECOLUMN, ALPIDEROW, 0, ALPIDEROW);
-		setBins(mHitmap, mConfig.getConfig("HITMAP"));
 	}
 	if ( isHitmapProjectionX ) {
 		mHitmapProjectionX = new TH1D("hitmapProjectionX", "Hitmap Projection X; Column; Entry", ALPIDECOLUMN / 2, 0, ALPIDECOLUMN);
-		setBins(mHitmapProjectionX, mConfig.getConfig("HITMAP_PROJECTION_X"));
 	}
 	if ( isHitmapProjectionY ) {
 		mHitmapProjectionY = new TH1D("hitmapProjectionY", "Hitmap Projection Y; Row; Entry", ALPIDEROW / 2, 0, ALPIDEROW);
-		setBins(mHitmapProjectionY, mConfig.getConfig("HITMAP_PROJECTION_Y"));
 	}
 	if ( isClustermap ) {
 		mClustermap = new TH2D("clustermap", "Clustermap; Column; Row", ALPIDECOLUMN, 0, ALPIDECOLUMN, ALPIDEROW, 0, ALPIDEROW);
-		setBins(mClustermap, mConfig.getConfig("CLUSTERMAP"));
 	}
 	if ( isClustermapProjectionX ) {
 		mClustermapProjectionX = new TH1D("clustermapProjectionX", "Clustermap Projection X; Column; Row", ALPIDECOLUMN / 4, 0, ALPIDECOLUMN);
-		setBins(mClustermapProjectionX, mConfig.getConfig("CLUSTERMAP_PROJECTION_X"));
 	}
 	if ( isClustermapProjectionY ) {
 		mClustermapProjectionY = new TH1D("clustermapProjectionY", "Clustermap Projection Y; Column; Row", ALPIDEROW / 4, 0, ALPIDEROW);
-		setBins(mClustermapProjectionY, mConfig.getConfig("CLUSTERMAP_PROJECTION_Y"));
 	}
 	if ( isClustersize ) {
 		mClustersize = new TH1D("clustersize", "Cluster size; Cluster size; Entry", 100, .5, 100.5);
-		setBins(mClustersize, mConfig.getConfig("CLUSTERSIZE"));
 	}
 	if ( isClustersizeRegion ) {
 		mClusterSizeOfRegion.push_back(new TH1D("R=2mm", "", 100, .5, 100.5));
@@ -143,7 +160,7 @@ void TDataPlotter::FillShapeInfo() {
 void TDataPlotter::savePlots() {
 	if ( isHitmap ) {
 		TCanvas* canvas = new TCanvas("hitmapCanvas", "", 3000, 1500);
-		savePlot(canvas, mHitmap, mConfig.getConfig("HITMAP"));
+		TPlotter::drawPlot(canvas, mHitmap, mConfig.getConfig("HITMAP"), "COLZ");
 		if ( isClustersizeRegion ) {
 			std::vector<double> center = TPlotter::getDoubleSetFromString(mConfig.getConfig("CLUSTERSIZE_REGION").find("center"));
 			std::cout << center[0] << " " << center[1] << std::endl;
@@ -168,7 +185,7 @@ void TDataPlotter::savePlots() {
 			circle8mm->SetFillStyle(0);
 			circle8mm->Draw("SAME");
 		}
-		saveCanvas(canvas, mOutputPath, mConfig.getConfig("HITMAP"));
+		TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("HITMAP"));
 		delete canvas;
 		canvas = nullptr;
 	}
@@ -180,12 +197,13 @@ void TDataPlotter::savePlots() {
 		TF1* fitFunc = new TF1("fitFunc", "[0]*e^(-((x-[1])/[2])^[3])", 0, ALPIDECOLUMN);
 		fitFunc->SetParameters(1000, 500, 100, 2);
 		mHitmapProjectionX->Fit(fitFunc, "RQ");
-		savePlot(canvas, mHitmapProjectionX, mConfig.getConfig("HITMAP_PROJECTION_X"));
+
+		TPlotter::drawPlot(canvas, mHitmapProjectionX, mConfig.getConfig("HITMAP_PROJECTION_X"), "HISTE");
 		TText* text = new TText(0.5, 0.5, Form("Mean: %.2f", fitFunc->GetParameter(1)));
 		text->SetNDC();
 		text->SetTextAlign(22);
 		text->Draw("SAME");
-		saveCanvas(canvas, mOutputPath, mConfig.getConfig("HITMAP_PROJECTION_X"));
+		TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("HITMAP_PROJECTION_X"));
 		delete canvas;
 		canvas = nullptr;
 	}
@@ -198,8 +216,8 @@ void TDataPlotter::savePlots() {
 		text->SetNDC();
 		text->SetTextAlign(22);
 		text->Draw("SAME");
-		savePlot(canvas, mHitmapProjectionY, mConfig.getConfig("HITMAP_PROJECTION_Y"));
-		saveCanvas(canvas, mOutputPath, mConfig.getConfig("HITMAP_PROJECTION_Y"));
+		TPlotter::drawPlot(canvas, mHitmapProjectionY, mConfig.getConfig("HITMAP_PROJECTION_Y"), "HISTE");
+		TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("HITMAP_PROJECTION_Y"));
 		delete canvas;
 		canvas = nullptr;
 	}
@@ -225,9 +243,9 @@ void TDataPlotter::savePlots() {
 		latex->AddText(Form("#chi^{2}/NDoF: %.2f", fitFunc->GetChisquare() / fitFunc->GetNDF()));
 		latex->SetLabel("Fit parameters");
 
-		savePlot(canvas, mClustermapProjectionX, mConfig.getConfig("CLUSTERMAP_PROJECTION_X"));
+		TPlotter::drawPlot(canvas, mClustermapProjectionX, mConfig.getConfig("CLUSTERMAP_PROJECTION_X"), " ");
 		latex->Draw();
-		saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERMAP_PROJECTION_X"));
+		TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERMAP_PROJECTION_X"));
 		delete canvas;
 		delete fitFunc;
 	}
@@ -251,15 +269,15 @@ void TDataPlotter::savePlots() {
 		latex->AddText(Form("#chi^{2}/NDoF: %.2f", fitFunc->GetChisquare() / fitFunc->GetNDF()));
 		latex->SetLabel("Fit parameters");
 
-		savePlot(canvas, mClustermapProjectionY, mConfig.getConfig("CLUSTERMAP_PROJECTION_Y"));
+		TPlotter::drawPlot(canvas, mClustermapProjectionY, mConfig.getConfig("CLUSTERMAP_PROJECTION_Y"), " ");
 		latex->Draw();
-		saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERMAP_PROJECTION_Y"));
+		TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERMAP_PROJECTION_Y"));
 		delete canvas;
 		delete fitFunc;
 	}
 	if ( isClustermap ) {
 		TCanvas* canvas = new TCanvas("clustermapCanvas", "", 3000, 1500);
-		savePlot(canvas, mClustermap, mConfig.getConfig("CLUSTERMAP"));
+		TPlotter::drawPlot(canvas, mClustermap, mConfig.getConfig("CLUSTERMAP"), "COLZ");
 		if ( isClustersizeRegion ) {
 			std::vector<double> center = TPlotter::getDoubleSetFromString(mConfig.getConfig("CLUSTERSIZE_REGION").find("center"));
 			std::cout << center[0] << " " << center[1] << std::endl;
@@ -284,14 +302,14 @@ void TDataPlotter::savePlots() {
 			circle8mm->SetFillStyle(0);
 			circle8mm->Draw("SAME");
 		}
-		saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERMAP"));
+		TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERMAP"));
 		delete canvas;
 		canvas = nullptr;
 	}
 	if ( isClustersize ) {
 		TCanvas* canvas = new TCanvas("clustersizeCanvas", "", 3000, 1500);
-		savePlot(canvas, mClustersize, mConfig.getConfig("CLUSTERSIZE"));
-		saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERSIZE"));
+		TPlotter::drawPlot(canvas, mClustersize, mConfig.getConfig("CLUSTERSIZE"), "HISTE");
+		TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERSIZE"));
 		delete canvas;
 		canvas = nullptr;
 	}
@@ -313,13 +331,13 @@ void TDataPlotter::savePlots() {
 		mClustersize->SetLineColor(kBlack);
 		mClustersize->SetLineWidth(4);
 		legend->AddEntry(mClustersize, "No Radius", "l");
-		savePlot(canvas, mClusterSizeOfRegion[0], mConfig.getConfig("CLUSTERSIZE_REGION"));
+		TPlotter::drawPlot(canvas, mClusterSizeOfRegion[0], mConfig.getConfig("CLUSTERSIZE_REGION"), "HISTE");
 		mClusterSizeOfRegion[1]->Draw("SAME");
 		mClusterSizeOfRegion[2]->Draw("SAME");
 		mClusterSizeOfRegion[3]->Draw("SAME");
 		mClustersize->Draw("SAME");
-		saveLegend(canvas, legend);
-		saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERSIZE_REGION"));
+		TPlotter::saveLegend(canvas, legend);
+		TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERSIZE_REGION"));
 		delete canvas;
 		canvas = nullptr;
 	}
@@ -361,14 +379,14 @@ void TDataPlotter::getMeanX() {
 	fitFunc->SetParameter(1, -0.01);
 	fitFunc->SetParameter(2, centerXrange[0]);
 	meanX->Fit(fitFunc, "R");
-	savePlot(canvas, meanX, mConfig.getConfig("MEAN_X"));
+	TPlotter::drawPlot(canvas, meanX, mConfig.getConfig("MEAN_X"), " ");
 	TText* text = new TText(0.1, 0.8, Form("Mean X: %.2f", fitFunc->GetParameter(2)));
 	text->SetNDC();
 	text->SetTextAlign(13);
 	text->SetTextSize(.05);
 	text->SetTextColor(kBlack);
 	text->Draw();
-	saveCanvas(canvas, mOutputPath, mConfig.getConfig("MEAN_X"));
+	TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("MEAN_X"));
 	delete canvas;
 }
 
@@ -404,14 +422,14 @@ void TDataPlotter::getMeanY() {
 	fitFunc->SetParameter(1, -0.01);
 	fitFunc->SetParameter(2, centerYrange[0]);
 	meanY->Fit(fitFunc, "R");
-	savePlot(canvas, meanY, mConfig.getConfig("MEAN_Y"));
+	TPlotter::drawPlot(canvas, meanY, mConfig.getConfig("MEAN_Y"), " ");
 	TText* text = new TText(0.1, 0.8, Form("Mean Y: %.2f", fitFunc->GetParameter(2)));
 	text->SetNDC();
 	text->SetTextAlign(13);
 	text->SetTextSize(.05);
 	text->SetTextColor(kBlack);
 	text->Draw();
-	saveCanvas(canvas, mOutputPath, mConfig.getConfig("MEAN_Y"));
+	TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("MEAN_Y"));
 	delete canvas;
 }
 
@@ -503,20 +521,7 @@ void TDataPlotter::saveTotalShape() {
 		iClusterShape++;
 
 	}
-	saveCanvas(canvas, mOutputPath, mConfig.getConfig("TotalShape"));
-
-	// for ( TText* text : mTextSet ) {
-	// 	delete text;
-	// 	text = nullptr;
-	// }
-	// for ( TPad* pad : mPadSet ) {
-	// 	delete pad;
-	// 	pad = nullptr;
-	// }
-	// for ( TLine* line : mLineSet ) {
-	// 	delete line;
-	// 	line = nullptr;
-	// }
+	TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("TotalShape"));
 }
 
 void TDataPlotter::saveTop10Shape() {
@@ -561,13 +566,13 @@ void TDataPlotter::saveTop10Shape() {
 		numberingText->SetTextColor(kBlack);
 		numberingText->Draw();
 	}
-	saveCanvas(canvas, mOutputPath, mConfig.getConfig("Top10Shape"));
+	TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("Top10Shape"));
 }
 
 void TDataPlotter::saveClusterSizeWithTime() {
 	TCanvas* canvas = new TCanvas("clusterSizeWithTime", "", 1000, 1000);
 	TH2D* clusterSizeWithTime = new TH2D();
-	initHist(clusterSizeWithTime, mConfig.getConfig("ClusterSizeWithTime"));
+	TPlotter::initPlot(clusterSizeWithTime, mConfig.getConfig("ClusterSizeWithTime"));
 
 	UInt_t timeStamp;
 	UInt_t size;
@@ -581,9 +586,9 @@ void TDataPlotter::saveClusterSizeWithTime() {
 		clusterSizeWithTime->Fill(timeStamp, size);
 	}
 
-	savePlot(canvas, clusterSizeWithTime, "ClusterSizeWithTime");
+	TPlotter::drawPlot(canvas, clusterSizeWithTime, mConfig.getConfig("ClusterSizeWithTime"), " ");
 
-	saveCanvas(canvas, mOutputPath, mConfig.getConfig("ClusterSizeWithTime"));
+	TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("ClusterSizeWithTime"));
 }
 
 std::array<int, 60> TDataPlotter::getEntry() {

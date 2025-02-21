@@ -69,7 +69,7 @@ public:
 	static void setGrid(TCanvas* canvas, const CppConfigDictionary& config);
 
 	static void saveLegend(TCanvas* canvas, TLegend* legend);
-	void saveCanvas(TCanvas* canvas, std::filesystem::path path, const CppConfigDictionary& config);
+	static void saveCanvas(TCanvas* canvas, std::filesystem::path path, const CppConfigDictionary& config);
 
 	static TString getTitle(std::string_view titleStr);
 

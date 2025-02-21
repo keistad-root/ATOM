@@ -1,14 +1,16 @@
 #include "TGeantAnalysis.h"
 
+#include "TH1D.h"
+#include "TH2D.h"
 
-TGeantAnalysis::TGeantAnalysis() : TPlotter() { }
+TGeantAnalysis::TGeantAnalysis() { }
 
 TGeantAnalysis::~TGeantAnalysis() { }
 
 void TGeantAnalysis::readIncidentFile(std::filesystem::path inputFilePath) {
 	TString inputFileName = std::string(inputFilePath);
-	mIncidentFile = std::make_unique<TFile>(inputFileName, "READ");
-	mIncidentTree.reset(static_cast<TTree*>(mIncidentFile->Get("IncidentAnalysis")));
+	mIncidentFile = new TFile(inputFileName, "READ");
+	mIncidentTree = static_cast<TTree*>(mIncidentFile->Get("IncidentAnalysis"));
 
 	mIncidentTree->SetBranchAddress("eventID", &mIncidentTuple.eventID);
 	mIncidentTree->SetBranchAddress("trackID", &mIncidentTuple.trackID);
@@ -45,8 +47,8 @@ void TGeantAnalysis::readIncidentFile(std::filesystem::path inputFilePath) {
 
 void TGeantAnalysis::readPrimaryFile(std::filesystem::path inputFilePath) {
 	TString inputFileName = std::string(inputFilePath);
-	mPrimaryFile = std::make_unique<TFile>(inputFileName, "READ");
-	mPrimaryTree.reset(static_cast<TTree*>(mPrimaryFile->Get("PrimaryAnalysis")));
+	mPrimaryFile = new TFile(inputFileName, "READ");
+	mPrimaryTree = static_cast<TTree*>(mPrimaryFile->Get("PrimaryAnalysis"));
 
 	mPrimaryTree->SetBranchAddress("eventID", &mPrimaryTuple.eventID);
 	mPrimaryTree->SetBranchAddress("x", &mPrimaryTuple.position[0]);
@@ -62,13 +64,13 @@ void TGeantAnalysis::setHistograms(const std::vector<CppConfigDictionary>& confi
 	for ( const CppConfigDictionary& config : configList ) {
 		std::string_view key = config.getConfigName();
 		if ( config.hasKey("type") && config.find("type") == "1H" ) {
-			std::unique_ptr<TH1D> hist = std::make_unique<TH1D>();
-			initHist(hist, config);
+			TH1D* hist;
+			TPlotter::initPlot(hist, config);
 			m1DHistograms.insert_or_assign(key, std::move(hist));
 		}
 		if ( config.hasKey("type") && config.find("type") == "2H" ) {
-			std::unique_ptr<TH2D> hist = std::make_unique<TH2D>();
-			initHist(hist, config);
+			TH2D* hist;
+			TPlotter::initPlot(hist, config);
 			m2DHistograms.insert_or_assign(key, std::move(hist));
 		}
 	}

@@ -2,7 +2,10 @@
 #define __TCOMPARECLUSTERSIZE__
 
 #include<string>
-#include "CppConfigDictionary.h"
+#include<vector>
+#include "CppConfigFile.h"
+
+class TH1D;
 
 class TClusterInfo {
 public:
@@ -18,7 +21,7 @@ public:
 	const CppConfigDictionary& getConfig() const { return mConfig; }
 };
 
-class TCompareClustersize : public TPlotter {
+class TCompareClustersize {
 public:
 	TCompareClustersize(const CppConfigFile& config);
 private:

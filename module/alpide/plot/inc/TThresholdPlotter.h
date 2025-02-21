@@ -22,7 +22,7 @@
 const int ALPIDECOLUMN = 1024;
 const int ALPIDEROW = 512;
 
-class TThresholdPlotter : public TPlotter {
+class TThresholdPlotter {
 public:
 	TThresholdPlotter(const CppConfigFile* config);
 	~TThresholdPlotter();

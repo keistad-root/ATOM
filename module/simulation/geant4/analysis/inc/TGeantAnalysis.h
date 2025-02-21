@@ -14,22 +14,25 @@
 #include "TParticleID.h"
 #include "TVolumeID.h"
 
-class TGeantAnalysis : public TPlotter {
+class TH1D;
+class TH2D;
+
+class TGeantAnalysis {
 public:
 	TGeantAnalysis();
 	~TGeantAnalysis();
 
 private:
-	std::unique_ptr<TFile> mPrimaryFile;
-	std::unique_ptr<TFile> mIncidentFile;
-	std::unique_ptr<TTree> mPrimaryTree;
-	std::unique_ptr<TTree> mIncidentTree;
+	TFile* mPrimaryFile;
+	TFile* mIncidentFile;
+	TTree* mPrimaryTree;
+	TTree* mIncidentTree;
 	std::filesystem::path mOutputPath;
 
 	TPrimaryAnalysisTuple mPrimaryTuple;
 	TIncidentAnalysisTuple mIncidentTuple;
-	std::unordered_map<std::string_view, std::unique_ptr<TH1D>> m1DHistograms;
-	std::unordered_map<std::string_view, std::unique_ptr<TH2D>> m2DHistograms;
+	std::unordered_map<std::string_view, TH1D*> m1DHistograms;
+	std::unordered_map<std::string_view, TH2D*> m2DHistograms;
 	std::array<int, 4> mEntry;
 
 public:

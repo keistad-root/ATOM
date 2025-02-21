@@ -1,6 +1,6 @@
 #include "TThresholdPlotter.h"
 
-TThresholdPlotter::TThresholdPlotter(const CppConfigFile* config) : TPlotter(), mConfig(config) {
+TThresholdPlotter::TThresholdPlotter(const CppConfigFile* config) : mConfig(config) {
 	CppConfigDictionary fileConfig = mConfig->getConfig("File");
 	std::filesystem::path dataPath = fileConfig.find("data_file");
 	try {
@@ -40,40 +40,31 @@ TThresholdPlotter::~TThresholdPlotter() {
 
 void TThresholdPlotter::InitPlot() {
 	if ( isThrDist ) {
-		mThrDist = new TH1D("thresholdDistribution", "", 50, 0, 50);
-		setBins(mThrDist, mConfig->getConfig("ThresholdDistribution"));
+		TPlotter::initPlot(mThrDist, mConfig->getConfig("ThresholdDistribution"));
 	}
 	if ( isNoiseDist ) {
-		mNoiseDist = new TH1D("noiseDistribution", "", 30, 0, 30);
-		setBins(mNoiseDist, mConfig->getConfig("NoiseDistribution"));
+		TPlotter::initPlot(mThrDist, mConfig->getConfig("NoiseDistribution"));
 	}
 	if ( isQualityDist ) {
-		mQualityDist = new TH1D("qualityDistribution", "", 30, 0, 30);
-		setBins(mQualityDist, mConfig->getConfig("QualityDistribution"));
+		TPlotter::initPlot(mThrDist, mConfig->getConfig("QualityDistribution"));
 	}
 	if ( isThrMap ) {
-		mThrMap = new TH2D("thresholdMap", "", ALPIDECOLUMN, 0, ALPIDECOLUMN, ALPIDEROW, 0, ALPIDEROW);
-		setBins(mThrMap, mConfig->getConfig("ThresholdMap"));
+		TPlotter::initPlot(mThrDist, mConfig->getConfig("ThresholdMap"));
 	}
 	if ( isNoiseMap ) {
-		mNoiseMap = new TH2D("noiseMap", "", ALPIDECOLUMN, 0, ALPIDECOLUMN, ALPIDEROW, 0, ALPIDEROW);
-		setBins(mNoiseMap, mConfig->getConfig("NoiseMap"));
+		TPlotter::initPlot(mThrDist, mConfig->getConfig("NoiseMap"));
 	}
 	if ( isQualityMap ) {
-		mQualityMap = new TH2D("qualityMap", "", ALPIDECOLUMN, 0, ALPIDECOLUMN, ALPIDEROW, 0, ALPIDEROW);
-		setBins(mThrMap, mConfig->getConfig("QualityMap"));
+		TPlotter::initPlot(mThrDist, mConfig->getConfig("QualityMap"));
 	}
 	if ( isThrNoiCorr ) {
-		mThrNoi = new TH2D("thrNoiCorrelation", "", 50, 0, 50, 30, 0, 30);
-		setBins(mThrNoi, mConfig->getConfig("ThresholdNoiseCorrelation"));
+		TPlotter::initPlot(mThrDist, mConfig->getConfig("ThresholdNoiseCorrelation"));
 	}
 	if ( isThrQuaCorr ) {
-		mThrQua = new TH2D("thrQuaCorrelation", "", 50, 0, 50, 10, 0, 10);
-		setBins(mThrQua, mConfig->getConfig("ThresholdQualityCorrelation"));
+		TPlotter::initPlot(mThrDist, mConfig->getConfig("ThresholdQualityCorrelation"));
 	}
 	if ( isNoiQuaCorr ) {
-		mNoiQua = new TH2D("NoiseQualityCorrelation", "", 30, 0, 30, 10, 0, 10);
-		setBins(mNoiQua, mConfig->getConfig("NoiseQualityCorrelation"));
+		TPlotter::initPlot(mThrDist, mConfig->getConfig("NoiseQualityCorrelation"));
 	}
 }
 
@@ -107,64 +98,64 @@ void TThresholdPlotter::savePlots() {
 	std::filesystem::create_directories(mOutputPath);
 	if ( isThrDist ) {
 		TCanvas* canvas = new TCanvas("thrDistCanvas", "");
-		savePlot(canvas, mThrDist, mConfig->getConfig("ThresholdDistribution"));
-		saveCanvas(canvas, mOutputPath, mConfig->getConfig("ThresholdDistribution"));
+		TPlotter::drawPlot(canvas, mThrDist, mConfig->getConfig("ThresholdDistribution"), "COLZ");
+		TPlotter::saveCanvas(canvas, mOutputPath, mConfig->getConfig("ThresholdDistribution"));
 		delete canvas;
 		canvas = nullptr;
 	}
 	if ( isNoiseDist ) {
 		TCanvas* canvas = new TCanvas("noiseDistCanvas", "");
-		savePlot(canvas, mNoiseDist, mConfig->getConfig("NoiseDistribution"));
-		saveCanvas(canvas, mOutputPath, mConfig->getConfig("NoiseDistribution"));
+		TPlotter::drawPlot(canvas, mNoiseDist, mConfig->getConfig("NoiseDistribution"), "HIST");
+		TPlotter::saveCanvas(canvas, mOutputPath, mConfig->getConfig("NoiseDistribution"));
 		delete canvas;
 		canvas = nullptr;
 	}
 	if ( isQualityDist ) {
 		TCanvas* canvas = new TCanvas("qualityDistCanvas", "");
-		savePlot(canvas, mQualityDist, mConfig->getConfig("QualityDistribution"));
-		saveCanvas(canvas, mOutputPath, mConfig->getConfig("QualityDistribution"));
+		TPlotter::drawPlot(canvas, mQualityDist, mConfig->getConfig("QualityDistribution"), "HIST");
+		TPlotter::saveCanvas(canvas, mOutputPath, mConfig->getConfig("QualityDistribution"));
 		delete canvas;
 		canvas = nullptr;
 	}
 	if ( isThrMap ) {
 		TCanvas* canvas = new TCanvas("thrMapCanvas", "");
-		savePlot(canvas, mThrMap, mConfig->getConfig("ThresholdMap"));
-		saveCanvas(canvas, mOutputPath, mConfig->getConfig("ThresholdMap"));
+		TPlotter::drawPlot(canvas, mThrMap, mConfig->getConfig("ThresholdMap"), "COLZ");
+		TPlotter::saveCanvas(canvas, mOutputPath, mConfig->getConfig("ThresholdMap"));
 		delete canvas;
 		canvas = nullptr;
 	}
 	if ( isNoiseMap ) {
 		TCanvas* canvas = new TCanvas("noiseMapCanvas", "");
-		savePlot(canvas, mNoiseMap, mConfig->getConfig("NoiseMap"));
-		saveCanvas(canvas, mOutputPath, mConfig->getConfig("NoiseMap"));
+		TPlotter::drawPlot(canvas, mNoiseMap, mConfig->getConfig("NoiseMap"), "COLZ");
+		TPlotter::saveCanvas(canvas, mOutputPath, mConfig->getConfig("NoiseMap"));
 		delete canvas;
 		canvas = nullptr;
 	}
 	if ( isQualityMap ) {
 		TCanvas* canvas = new TCanvas("qualityMapCanvas", "");
-		savePlot(canvas, mQualityMap, mConfig->getConfig("QualityMap"));
-		saveCanvas(canvas, mOutputPath, mConfig->getConfig("QualityMap"));
+		TPlotter::drawPlot(canvas, mQualityMap, mConfig->getConfig("QualityMap"), "COLZ");
+		TPlotter::saveCanvas(canvas, mOutputPath, mConfig->getConfig("QualityMap"));
 		delete canvas;
 		canvas = nullptr;
 	}
 	if ( isThrNoiCorr ) {
 		TCanvas* canvas = new TCanvas("thrNoiCanvas", "");
-		savePlot(canvas, mThrNoi, mConfig->getConfig("ThresholdNoiseCorrelation"));
-		saveCanvas(canvas, mOutputPath, mConfig->getConfig("ThresholdNoiseCorrelation"));
+		TPlotter::drawPlot(canvas, mThrNoi, mConfig->getConfig("ThresholdNoiseCorrelation"), "COLZ");
+		TPlotter::saveCanvas(canvas, mOutputPath, mConfig->getConfig("ThresholdNoiseCorrelation"));
 		delete canvas;
 		canvas = nullptr;
 	}
 	if ( isThrQuaCorr ) {
 		TCanvas* canvas = new TCanvas("thrQuaCanvas", "");
-		savePlot(canvas, mThrQua, mConfig->getConfig("ThresholdQualityCorrelation"));
-		saveCanvas(canvas, mOutputPath, mConfig->getConfig("ThresholdQualityCorrelation"));
+		TPlotter::drawPlot(canvas, mThrQua, mConfig->getConfig("ThresholdQualityCorrelation"), "COLZ");
+		TPlotter::saveCanvas(canvas, mOutputPath, mConfig->getConfig("ThresholdQualityCorrelation"));
 		delete canvas;
 		canvas = nullptr;
 	}
 	if ( isNoiQuaCorr ) {
 		TCanvas* canvas = new TCanvas("noiQuaCanvas", "");
-		savePlot(canvas, mNoiQua, mConfig->getConfig("NoiseQualityCorrelation"));
-		saveCanvas(canvas, mOutputPath, mConfig->getConfig("NoiseQualityCorrelation"));
+		TPlotter::drawPlot(canvas, mNoiQua, mConfig->getConfig("NoiseQualityCorrelation"), "COLZ");
+		TPlotter::saveCanvas(canvas, mOutputPath, mConfig->getConfig("NoiseQualityCorrelation"));
 		delete canvas;
 		canvas = nullptr;
 	}
