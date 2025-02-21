@@ -8,12 +8,13 @@
 #include "TTree.h"
 #include "TGraphErrors.h"
 #include "TMultiGraph.h"
-
+#include "TCanvas.h"
 #include "TLegend.h"
 
 #include "TPlotter.h"
 #include "CppConfigFile.h"
 #include "config.h"
+
 #include<csv.h>
 
 const std::string experimentInfoCSV = std::string(SOURCE_DIR) + "/build/config/EXPERIMENT_INFORMATION.csv";
@@ -76,8 +77,8 @@ TCompareClustersize::TCompareClustersize(const CppConfigFile& config) : mConfig(
 }
 
 void TCompareClustersize::drawClustersize() {
-	TCanvas* canvas;
-	TLegend* legend;
+	TCanvas* canvas = new TCanvas();
+	TLegend* legend = new TLegend();
 	TPlotter::initCanvas(canvas, mConfig.getConfig("Clustersize"));
 	TPlotter::initLegend(legend, mConfig.getConfig("Clustersize"));
 	for ( auto& plot : mClusterInfo ) {

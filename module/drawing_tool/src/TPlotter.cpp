@@ -15,6 +15,7 @@
 #include "TGaxis.h"
 #include "TFrame.h"
 
+#include "TColourUser.h"
 #include "TPlotter.h"
 
 // Set TH1 attributes
