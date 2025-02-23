@@ -14,6 +14,7 @@
 #include "TPlotter.h"
 #include "CppConfigFile.h"
 #include "config.h"
+#include "TStyle.h"
 
 #include<csv.h>
 
@@ -37,6 +38,7 @@ TClusterInfo::TClusterInfo(std::string_view tag, const CppConfigDictionary& conf
 			mClusterSizeHistogram->Scale(stod(mConfig.find("RATIO")));
 		}
 	}
+	gStyle->SetOptStat(0);
 }
 
 TClusterInfo::~TClusterInfo() { }
@@ -82,12 +84,11 @@ TCompareClustersize::TCompareClustersize(const CppConfigFile& config) : mConfig(
 }
 
 void TCompareClustersize::drawClustersize() {
-	TCanvas* canvas = new TCanvas();
-	TLegend* legend = new TLegend();
+	TCanvas* canvas;
+	TLegend* legend;
 	TPlotter::initCanvas(canvas, mConfig.getConfig("CLUSTERSIZE"));
 	TPlotter::initLegend(legend, mConfig.getConfig("CLUSTERSIZE"));
 	for ( auto& plot : mClusterInfo ) {
-		TPlotter::setAttribute(plot.getClusterSizeHistogram(), plot.getConfig());
 		TPlotter::drawPlot(canvas, plot.getClusterSizeHistogram(), plot.getConfig(), "SAME HISTE");
 		legend->AddEntry(plot.getClusterSizeHistogram(), static_cast<TString>(plot.getConfig().find("LEGEND")));
 	}

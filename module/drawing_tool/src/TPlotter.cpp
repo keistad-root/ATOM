@@ -315,7 +315,6 @@ void TPlotter::initCanvas(TCanvas*& canvas, const CppConfigDictionary& config) {
 
 void TPlotter::saveLegend(TCanvas* canvas, TLegend* legend) {
 	canvas->cd();
-	gStyle->SetOptStat(0);
 	legend->Draw("SAME");
 }
 
@@ -379,7 +378,7 @@ void TPlotter::setRightAxis(TH1* plot, const CppConfigDictionary& config) {
 		}
 		TGaxis* axis;
 		if ( config.hasKey("LOG_Y") && config.find("LOG_Y") == "true" ) {
-			axis = new TGaxis(xmax, ymin, xmax, ymax, ymin, ymax, 510, "+G");
+			axis = new TGaxis(xmax, ymin, xmax, ymax, ymin, ymax, 510, "+LG");
 			axis->SetTextFont(gStyle->GetTextFont());
 			axis->SetLabelFont(gStyle->GetLabelFont("X"));
 		} else {
@@ -415,7 +414,7 @@ void TPlotter::setRightAxis(TGraph* plot, const CppConfigDictionary& config) {
 		}
 		TGaxis* axis;
 		if ( config.hasKey("LOG_Y") && config.find("LOG_Y") == "true" ) {
-			axis = new TGaxis(xmax, ymin, xmax, ymax, ymin, ymax, 510, "+G");
+			axis = new TGaxis(xmax, ymin, xmax, ymax, ymin, ymax, 510, "+LG");
 			axis->SetTextFont(gStyle->GetTextFont());
 			axis->SetLabelFont(gStyle->GetLabelFont("X"));
 		} else {
