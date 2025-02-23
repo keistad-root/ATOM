@@ -380,6 +380,8 @@ void TPlotter::setRightAxis(TH1* plot, const CppConfigDictionary& config) {
 		TGaxis* axis;
 		if ( config.hasKey("LOG_Y") && config.find("LOG_Y") == "true" ) {
 			axis = new TGaxis(xmax, ymin, xmax, ymax, ymin, ymax, 510, "+G");
+			axis->SetTextFont(gStyle->GetTextFont());
+			axis->SetLabelFont(gStyle->GetLabelFont("X"));
 		} else {
 			axis = new TGaxis(xmax, ymin, xmax, ymax, ymin, ymax, 510, "+L");
 			axis->SetTextFont(gStyle->GetTextFont());
@@ -414,6 +416,8 @@ void TPlotter::setRightAxis(TGraph* plot, const CppConfigDictionary& config) {
 		TGaxis* axis;
 		if ( config.hasKey("LOG_Y") && config.find("LOG_Y") == "true" ) {
 			axis = new TGaxis(xmax, ymin, xmax, ymax, ymin, ymax, 510, "+G");
+			axis->SetTextFont(gStyle->GetTextFont());
+			axis->SetLabelFont(gStyle->GetLabelFont("X"));
 		} else {
 			axis = new TGaxis(xmax, ymin, xmax, ymax, ymin, ymax, 510, "+L");
 			axis->SetTextFont(gStyle->GetTextFont());
