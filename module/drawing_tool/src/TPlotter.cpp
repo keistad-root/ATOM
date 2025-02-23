@@ -382,6 +382,8 @@ void TPlotter::setRightAxis(TH1* plot, const CppConfigDictionary& config) {
 			axis = new TGaxis(xmax, ymin, xmax, ymax, ymin, ymax, 510, "+G");
 		} else {
 			axis = new TGaxis(xmax, ymin, xmax, ymax, ymin, ymax, 510, "+L");
+			axis->SetTextFont(gStyle->GetTextFont());
+			axis->SetLabelFont(gStyle->GetLabelFont("X"));
 		}
 		axis->Draw();
 	}

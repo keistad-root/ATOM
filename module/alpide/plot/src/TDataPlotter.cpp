@@ -401,11 +401,12 @@ void TDataPlotter::savePlots() {
 			TPlotter::initCanvas(canvas, plotConfig);
 			mClustermapSliceX[i]->SetBinContent(259, (mClustermapSliceX[i]->GetBinContent(258) + mClustermapSliceX[i]->GetBinContent(260)) / 2);
 			mClustermapSliceX[i]->SetBinContent(260, (mClustermapSliceX[i]->GetBinContent(259) + mClustermapSliceX[i]->GetBinContent(261)) / 2);
-			TPlotter::drawPlot(canvas, mClustermapSliceX[i], plotConfig, "HISTE");
 
 			TF1* fitFunc = new TF1(Form("fitFunc_%d", i), "[0]*e^(-((x-[1])/[2])^2)+[3]", 0, ALPIDECOLUMN);
 			fitFunc->SetParameters(mClustermapSliceX[i]->GetMaximum(), mClustermapSliceX[i]->GetMean(), mClustermapSliceX[i]->GetStdDev() / 10, mClustermapSliceX[i]->GetMinimum());
+			TPlotter::drawPlot(canvas, mClustermapSliceX[i], plotConfig, "HISTE");
 			mClustermapSliceX[i]->Fit(fitFunc, "RQ");
+			fitFunc->Draw("SAME");
 
 			std::vector<int> range = TPlotter::getIntegerSetFromString(plotConfig.find("ROW_RANGE"));
 			mClustermapSliceXMean->SetPoint(i, (range[0] + range[1]) / 2, fitFunc->GetParameter(1));
@@ -443,6 +444,7 @@ void TDataPlotter::savePlots() {
 			fitFunc->SetParameters(mClustermapSliceY[i]->GetMaximum(), mClustermapSliceY[i]->GetMean(), mClustermapSliceY[i]->GetStdDev() / 10, mClustermapSliceY[i]->GetMinimum());
 			TPlotter::drawPlot(canvas, mClustermapSliceX[i], plotConfig, "HISTE");
 			mClustermapSliceY[i]->Fit(fitFunc, "RQ");
+			fitFunc->Draw("SAME");
 
 			std::vector<int>range = TPlotter::getIntegerSetFromString(plotConfig.find("COLUMN_RANGE"));
 			mClustermapSliceYMean->SetPoint(i, (range[0] + range[1]) / 2, fitFunc->GetParameter(1));
