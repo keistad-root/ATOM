@@ -90,7 +90,30 @@ void TCompareClustersize::drawClustersize() {
 	for ( auto& plot : mClusterInfo ) {
 		TPlotter::drawPlot(canvas, plot.getClusterSizeHistogram(), plot.getConfig(), "SAME HISTE");
 		legend->AddEntry(plot.getClusterSizeHistogram(), static_cast<TString>(plot.getConfig().find("LEGEND")));
+
+		double entry = 0.;
+		double stdev = 0.;
+		entry = plot.getClusterSizeHistogram()->GetBinContent(1);
+		stdev = plot.getClusterSizeHistogram()->GetBinError(1);
+		std::cout << entry << ", " << stdev << ", ";
+
+		entry = 0.;
+		stdev = 0.;
+		for ( int i = 4; i < 33; i++ ) {
+			entry += plot.getClusterSizeHistogram()->GetBinContent(i);
+			stdev += std::pow(plot.getClusterSizeHistogram()->GetBinError(i), 2);
+		}
+		std::cout << entry << ", " << std::sqrt(stdev) << ", ";
+
+		entry = 0.;
+		stdev = 0.;
+		for ( int i = 33; i < 120; i++ ) {
+			entry += plot.getClusterSizeHistogram()->GetBinContent(i);
+			stdev += std::pow(plot.getClusterSizeHistogram()->GetBinError(i), 2);
+		}
+		std::cout << entry << ", " << std::sqrt(stdev) << std::endl;
 	}
+
 	TPlotter::saveLegend(canvas, legend);
 	TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERSIZE"));
 }

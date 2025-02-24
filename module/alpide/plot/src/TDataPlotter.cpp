@@ -403,7 +403,7 @@ void TDataPlotter::savePlots() {
 			TF1* fitFunc = new TF1(Form("fitFunc_%d", i), "[0]*e^(-((x-[1])/[2])^2)+[3]", 0, ALPIDECOLUMN);
 			fitFunc->SetParameters(mClustermapSliceX[i]->GetMaximum(), mClustermapSliceX[i]->GetMean(), mClustermapSliceX[i]->GetStdDev(), mClustermapSliceX[i]->GetMinimum());
 			TPlotter::drawPlot(canvas, mClustermapSliceX[i], plotConfig, "HIST");
-			mClustermapSliceX[i]->Fit(fitFunc, "R");
+			mClustermapSliceX[i]->Fit(fitFunc, "RQ");
 			fitFunc->Draw("SAME");
 
 			std::vector<int> range = TPlotter::getIntegerSetFromString(plotConfig.find("ROW_RANGE"));
@@ -438,7 +438,7 @@ void TDataPlotter::savePlots() {
 			TF1* fitFunc = new TF1(Form("fitFunc_%d", i), "[0]*e^(-((x-[1])/[2])^2)+[3]", 0, ALPIDEROW);
 			fitFunc->SetParameters(mClustermapSliceY[i]->GetMaximum(), mClustermapSliceY[i]->GetMean(), mClustermapSliceY[i]->GetStdDev(), mClustermapSliceY[i]->GetMinimum());
 			TPlotter::drawPlot(canvas, mClustermapSliceY[i], plotConfig, "HIST");
-			mClustermapSliceY[i]->Fit(fitFunc, "R");
+			mClustermapSliceY[i]->Fit(fitFunc, "RQ");
 			fitFunc->Draw("SAME");
 
 			std::vector<int>range = TPlotter::getIntegerSetFromString(plotConfig.find("COLUMN_RANGE"));

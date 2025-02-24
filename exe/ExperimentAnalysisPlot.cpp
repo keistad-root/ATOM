@@ -1,6 +1,6 @@
 #include <csv.h>
 #include <string>
-
+#include <numeric>
 #include "cppargs.h"
 #include "CppConfigFile.h"
 
@@ -65,9 +65,10 @@ void addEntry2CSV(const std::string tag, const std::array<int, 60> entry) {
 	if ( !isExist ) {
 		std::ofstream file(dataPath, std::ios::app);
 		file << tag << ", " << infoLength << ", " << infoPhi << ", " << COLLIMATOR_LENGTH << ", " << COLLIMATOR_AREA << ", " << minute;
-		for ( int i = 0; i < 60; i++ ) {
-			file << ", " << (entry[i] * 10. / minute);
-		}
+		file << entry[0] << ", ";
+		file << std::accumulate(entry.begin() + 1, entry.begin() + 33, 0) << ", ";
+		file << std::accumulate(entry.begin() + 33, entry.end(), 0);
+
 		file << std::endl;
 		file.close();
 	}
