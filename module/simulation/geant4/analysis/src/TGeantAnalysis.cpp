@@ -2,6 +2,7 @@
 
 #include "TH1D.h"
 #include "TH2D.h"
+#include<cmath>
 
 TGeantAnalysis::TGeantAnalysis() { }
 
@@ -65,11 +66,11 @@ void TGeantAnalysis::setHistograms(const std::vector<CppConfigDictionary>& confi
 		std::string_view key = config.getConfigName();
 		if ( config.hasKey("type") && config.find("type") == "1H" ) {
 			TH1D* hist = TPlotter::init1DHist(config);
-			m1DHistograms.insert_or_assign(key, std::move(hist));
+			m1DHistograms.insert_or_assign(key, hist);
 		}
 		if ( config.hasKey("type") && config.find("type") == "2H" ) {
 			TH2D* hist = TPlotter::init2DHist(config);
-			m2DHistograms.insert_or_assign(key, std::move(hist));
+			m2DHistograms.insert_or_assign(key, hist);
 		}
 	}
 }
@@ -84,15 +85,16 @@ void TGeantAnalysis::readTree() {
 	for ( Int_t i = 0; i < nEntries; i++ ) {
 		progressBar.printProgress();
 		mIncidentTree->GetEntry(i);
-		fillIncidentHistograms();
-
-		if ( mIncidentTuple.particleID == PARTICLE::alpha ) {
-			position.push_back({mIncidentTuple.position[0], mIncidentTuple.position[1]});
-		}
-		if ( preTimeStamp != mIncidentTuple.eventID / 107 ) {
-			preTimeStamp = mIncidentTuple.eventID / 107;
-			nDouble += getNDouble(position);
-			position.clear();
+		if ( std::abs(mIncidentTuple.position[0]) < 4.35 && std::abs(mIncidentTuple.position[1]) < 0.27 ) {
+			fillIncidentHistograms();
+			if ( mIncidentTuple.particleID == PARTICLE::alpha ) {
+				position.push_back({mIncidentTuple.position[0], mIncidentTuple.position[1]});
+			}
+			if ( preTimeStamp != mIncidentTuple.eventID / 107 ) {
+				preTimeStamp = mIncidentTuple.eventID / 107;
+				nDouble += getNDouble(position);
+				position.clear();
+			}
 		}
 	}
 	for ( Int_t i = 0; i < mPrimaryTree->GetEntries(); i++ ) {
