@@ -14,8 +14,7 @@ set(TEST_EXE
 	ComparisonGeant4
 	ComparisonDepositEnergy
 	# GarfieldSimulation
-    Merge
-	
+    ExperimentMerge
 	ExperimentMasking
 	ExperimentAnalysis
 	ExperimentAnalysisPlot
