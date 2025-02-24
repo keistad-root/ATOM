@@ -18,6 +18,27 @@
 #include "TColourUser.h"
 #include "TPlotter.h"
 
+/**
+ * @brief Initializing canvas
+ * @details Initialize canvas with informations given by config.
+ * Canvas size is set to 1000x1000 by default.
+ * The canvas size in config file can be set by "CANVAS_SIZE" key.
+ * @param canvas
+ * @param config
+*/
+TCanvas* TPlotter::initCanvas(const CppConfigDictionary& config) {
+	std::vector<double> size = {1000, 1000};
+	static int iCanvas = 0;
+	if ( config.hasKey("CANVAS_SIZE") ) {
+		size = getDoubleSetFromString(config.find("CANVAS_SIZE"));
+	}
+	TCanvas* canvas = new TCanvas(Form("canvas_%d", iCanvas), "", size[0], size[1]);
+	iCanvas++;
+
+	return canvas;
+}
+
+
 // Set TH1 attributes
 void TPlotter::setAttribute(TH1* plot, const CppConfigDictionary& config) {
 	setLineColour(plot, config);
@@ -303,15 +324,6 @@ void TPlotter::initLegend(TLegend*& legend, const CppConfigDictionary& config) {
 	}
 }
 
-void TPlotter::initCanvas(TCanvas*& canvas, const CppConfigDictionary& config) {
-	std::vector<double> size = {800, 600};
-	static int iCanvas = 0;
-	if ( config.hasKey("CANVAS_SIZE") ) {
-		size = getDoubleSetFromString(config.find("CANVAS_SIZE"));
-	}
-	canvas = new TCanvas(Form("canvas_%d", iCanvas), "", size[0], size[1]);
-	iCanvas++;
-}
 
 void TPlotter::saveLegend(TCanvas* canvas, TLegend* legend) {
 	canvas->cd();

@@ -84,9 +84,8 @@ TCompareClustersize::TCompareClustersize(const CppConfigFile& config) : mConfig(
 }
 
 void TCompareClustersize::drawClustersize() {
-	TCanvas* canvas;
+	TCanvas* canvas = TPlotter::initCanvas(mConfig.getConfig("CLUSTERSIZE"));
 	TLegend* legend;
-	TPlotter::initCanvas(canvas, mConfig.getConfig("CLUSTERSIZE"));
 	TPlotter::initLegend(legend, mConfig.getConfig("CLUSTERSIZE"));
 	for ( auto& plot : mClusterInfo ) {
 		TPlotter::drawPlot(canvas, plot.getClusterSizeHistogram(), plot.getConfig(), "SAME HISTE");

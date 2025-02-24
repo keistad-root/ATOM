@@ -28,12 +28,10 @@ class TLegend;
 
 class TPlotter {
 public:
+	static TCanvas* initCanvas(const CppConfigDictionary& config);
+	static void initLegend(TLegend*& legend, const CppConfigDictionary& config);
 	static void initPlot(TH1* hist, const CppConfigDictionary& config);
 	static void initPlot(TH2* hist, const CppConfigDictionary& config);
-
-	static void initLegend(TLegend*& legend, const CppConfigDictionary& config);
-
-	static void initCanvas(TCanvas*& canvas, const CppConfigDictionary& config);
 
 	static void setAttribute(TH1* plot, const CppConfigDictionary& config);
 	static void setLineColour(TH1* plot, const CppConfigDictionary& config);
