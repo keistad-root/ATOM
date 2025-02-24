@@ -40,31 +40,31 @@ TThresholdPlotter::~TThresholdPlotter() {
 
 void TThresholdPlotter::InitPlot() {
 	if ( isThrDist ) {
-		TPlotter::initPlot(mThrDist, mConfig->getConfig("ThresholdDistribution"));
+		mThrDist = TPlotter::init1DHist(mConfig->getConfig("ThresholdDistribution"));
 	}
 	if ( isNoiseDist ) {
-		TPlotter::initPlot(mThrDist, mConfig->getConfig("NoiseDistribution"));
+		mNoiseDist = TPlotter::init1DHist(mConfig->getConfig("NoiseDistribution"));
 	}
 	if ( isQualityDist ) {
-		TPlotter::initPlot(mThrDist, mConfig->getConfig("QualityDistribution"));
+		mQualityDist = TPlotter::init1DHist(mConfig->getConfig("QualityDistribution"));
 	}
 	if ( isThrMap ) {
-		TPlotter::initPlot(mThrDist, mConfig->getConfig("ThresholdMap"));
+		mThrMap = TPlotter::init2DHist(mConfig->getConfig("ThresholdMap"));
 	}
 	if ( isNoiseMap ) {
-		TPlotter::initPlot(mThrDist, mConfig->getConfig("NoiseMap"));
+		mNoiseMap = TPlotter::init2DHist(mConfig->getConfig("NoiseMap"));
 	}
 	if ( isQualityMap ) {
-		TPlotter::initPlot(mThrDist, mConfig->getConfig("QualityMap"));
+		mQualityMap = TPlotter::init2DHist(mConfig->getConfig("QualityMap"));
 	}
 	if ( isThrNoiCorr ) {
-		TPlotter::initPlot(mThrDist, mConfig->getConfig("ThresholdNoiseCorrelation"));
+		mThrNoi = TPlotter::init2DHist(mConfig->getConfig("ThresholdNoiseCorrelation"));
 	}
 	if ( isThrQuaCorr ) {
-		TPlotter::initPlot(mThrDist, mConfig->getConfig("ThresholdQualityCorrelation"));
+		mThrQua = TPlotter::init2DHist(mConfig->getConfig("ThresholdQualityCorrelation"));
 	}
 	if ( isNoiQuaCorr ) {
-		TPlotter::initPlot(mThrDist, mConfig->getConfig("NoiseQualityCorrelation"));
+		mNoiQua = TPlotter::init2DHist(mConfig->getConfig("NoiseQualityCorrelation"));
 	}
 }
 

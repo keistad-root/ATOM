@@ -38,6 +38,27 @@ TCanvas* TPlotter::initCanvas(const CppConfigDictionary& config) {
 	return canvas;
 }
 
+TH1D* TPlotter::init1DHist(const CppConfigDictionary& config) {
+	static int i1DHist = 0;
+	std::vector<double> bin = {1, 0, 1};
+	if ( config.hasKey("BIN") ) {
+		bin = getDoubleSetFromString(config.find("BIN"));
+	}
+	TH1D* hist = new TH1D(Form("hist1d_%d", i1DHist), "", static_cast<int>(bin[0]), bin[1], bin[2]);
+	i1DHist++;
+	return hist;
+}
+
+TH2D* TPlotter::init2DHist(const CppConfigDictionary& config) {
+	static int i2DHist = 0;
+	std::vector<double> bin = {1, 0, 1, 1, 0, 1};
+	if ( config.hasKey("BIN") ) {
+		bin = getDoubleSetFromString(config.find("BIN"));
+	}
+	TH2D* hist = new TH2D(Form("hist2d_%d", i2DHist), "", static_cast<int>(bin[0]), bin[1], bin[2], static_cast<int>(bin[3]), bin[4], bin[5]);
+	i2DHist++;
+	return hist;
+}
 
 // Set TH1 attributes
 void TPlotter::setAttribute(TH1* plot, const CppConfigDictionary& config) {
@@ -50,10 +71,11 @@ void TPlotter::setLineColour(TH1* plot, const CppConfigDictionary& config) {
 	Color_t lineColour;
 	if ( config.hasKey("LINE_COLOUR") ) {
 		lineColour = TColourUser::getColour(config.find("LINE_COLOUR"));
+		plot->SetLineColor(lineColour);
 	} else {
 		lineColour = TColourUser::getColour("blue");
+		plot->SetLineColor(lineColour);
 	}
-	plot->SetLineColor(lineColour);
 }
 
 void TPlotter::setLineWidth(TH1* plot, const CppConfigDictionary& config) {
@@ -284,23 +306,6 @@ void TPlotter::setGrid(TCanvas* canvas, const CppConfigDictionary& config) {
 	} else {
 		canvas->SetGrid();
 	}
-}
-
-void TPlotter::initPlot(TH1* hist, const CppConfigDictionary& config) {
-	std::vector<double> bin = {1, 0, 1};
-	if ( config.hasKey("BIN") ) {
-		bin = getDoubleSetFromString(config.find("BIN"));
-	}
-	hist = new TH1D("hist", "", static_cast<int>(bin[0]), bin[1], bin[2]);
-}
-
-void TPlotter::initPlot(TH2* hist, const CppConfigDictionary& config) {
-	std::vector<double> bin = {1, 0, 1, 1, 0, 1};
-	if ( config.hasKey("BIN") ) {
-		bin = getDoubleSetFromString(config.find("BIN"));
-	}
-	hist = new TH2D("hist", "", static_cast<int>(bin[0]), bin[1], bin[2], static_cast<int>(bin[3]), bin[4], bin[5]);
-
 }
 
 TString TPlotter::getTitle(std::string_view titleStr) {

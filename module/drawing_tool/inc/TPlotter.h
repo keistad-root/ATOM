@@ -19,7 +19,9 @@
 #include "CppConfigDictionary.h"
 
 class TH1;
+class TH1D;
 class TH2;
+class TH2D;
 class TGraph;
 class TMultiGraph;
 class TCanvas;
@@ -30,8 +32,8 @@ class TPlotter {
 public:
 	static TCanvas* initCanvas(const CppConfigDictionary& config);
 	static void initLegend(TLegend*& legend, const CppConfigDictionary& config);
-	static void initPlot(TH1* hist, const CppConfigDictionary& config);
-	static void initPlot(TH2* hist, const CppConfigDictionary& config);
+	static TH1D* init1DHist(const CppConfigDictionary& config);
+	static TH2D* init2DHist(const CppConfigDictionary& config);
 
 	static void setAttribute(TH1* plot, const CppConfigDictionary& config);
 	static void setLineColour(TH1* plot, const CppConfigDictionary& config);

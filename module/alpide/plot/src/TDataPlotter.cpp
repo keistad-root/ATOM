@@ -98,7 +98,7 @@ void TDataPlotter::InitPlot() {
 	if ( isClustermapSliceX ) {
 		int nPlot = mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("SUB_PLOTS").getSubConfigSet().size();
 		for ( int i = 0; i < nPlot; i++ ) {
-			mClustermapSliceX.push_back(new TH1D(Form("clustermapSliceX_%d", i), "", ALPIDECOLUMN / 2, 0, ALPIDECOLUMN));
+			mClustermapSliceX.push_back(TPlotter::init1DHist(mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("SUB_PLOTS").getSubConfigSet()[i]));
 		}
 		mClustermapSliceXMean = new TGraphErrors();
 		mClustermapSliceXAmplitude = new TGraphErrors();
@@ -106,7 +106,7 @@ void TDataPlotter::InitPlot() {
 	if ( isClustermapSliceY ) {
 		int nPlot = mConfig.getConfig("CLUSTERMAP_SLICE_Y").getSubConfig("SUB_PLOTS").getSubConfigSet().size();
 		for ( int i = 0; i < nPlot; i++ ) {
-			mClustermapSliceY.push_back(new TH1D(Form("clustermapSliceY_%d", i), "", ALPIDEROW / 2, 0, ALPIDEROW));
+			mClustermapSliceY.push_back(TPlotter::init1DHist(mConfig.getConfig("CLUSTERMAP_SLICE_Y").getSubConfig("SUB_PLOTS").getSubConfigSet()[i]));
 		}
 		mClustermapSliceYMean = new TGraphErrors();
 		mClustermapSliceYAmplitude = new TGraphErrors();
@@ -402,7 +402,7 @@ void TDataPlotter::savePlots() {
 
 			TF1* fitFunc = new TF1(Form("fitFunc_%d", i), "[0]*e^(-((x-[1])/[2])^2)+[3]", 0, ALPIDECOLUMN);
 			fitFunc->SetParameters(mClustermapSliceX[i]->GetMaximum(), mClustermapSliceX[i]->GetMean(), mClustermapSliceX[i]->GetStdDev() / 10, mClustermapSliceX[i]->GetMinimum());
-			TPlotter::drawPlot(canvas, mClustermapSliceX[i], plotConfig, "HISTE");
+			TPlotter::drawPlot(canvas, mClustermapSliceX[i], plotConfig, "HIST");
 			mClustermapSliceX[i]->Fit(fitFunc, "RQ");
 			fitFunc->Draw("SAME");
 
@@ -436,8 +436,8 @@ void TDataPlotter::savePlots() {
 
 			TCanvas* canvas = TPlotter::initCanvas(plotConfig);
 			TF1* fitFunc = new TF1(Form("fitFunc_%d", i), "[0]*e^(-((x-[1])/[2])^2)+[3]", 0, ALPIDEROW);
-			fitFunc->SetParameters(mClustermapSliceY[i]->GetMaximum(), mClustermapSliceY[i]->GetMean(), mClustermapSliceY[i]->GetStdDev() / 10, mClustermapSliceY[i]->GetMinimum());
-			TPlotter::drawPlot(canvas, mClustermapSliceX[i], plotConfig, "HISTE");
+			fitFunc->SetParameters(mClustermapSliceY[i]->GetMaximum(), mClustermapSliceY[i]->GetMean(), mClustermapSliceY[i]->GetStdDev(), mClustermapSliceY[i]->GetMinimum());
+			TPlotter::drawPlot(canvas, mClustermapSliceY[i], plotConfig, "HIST");
 			mClustermapSliceY[i]->Fit(fitFunc, "RQ");
 			fitFunc->Draw("SAME");
 
@@ -604,8 +604,7 @@ void TDataPlotter::saveTop10Shape() {
 
 void TDataPlotter::saveClusterSizeWithTime() {
 	TCanvas* canvas = new TCanvas("clusterSizeWithTime", "", 1000, 1000);
-	TH2D* clusterSizeWithTime = new TH2D();
-	TPlotter::initPlot(clusterSizeWithTime, mConfig.getConfig("ClusterSizeWithTime"));
+	TH2D* clusterSizeWithTime = TPlotter::init2DHist(mConfig.getConfig("ClusterSizeWithTime"));
 
 	UInt_t timeStamp;
 	UInt_t size;

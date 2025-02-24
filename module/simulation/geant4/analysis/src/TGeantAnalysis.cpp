@@ -64,13 +64,11 @@ void TGeantAnalysis::setHistograms(const std::vector<CppConfigDictionary>& confi
 	for ( const CppConfigDictionary& config : configList ) {
 		std::string_view key = config.getConfigName();
 		if ( config.hasKey("type") && config.find("type") == "1H" ) {
-			TH1D* hist;
-			TPlotter::initPlot(hist, config);
+			TH1D* hist = TPlotter::init1DHist(config);
 			m1DHistograms.insert_or_assign(key, std::move(hist));
 		}
 		if ( config.hasKey("type") && config.find("type") == "2H" ) {
-			TH2D* hist;
-			TPlotter::initPlot(hist, config);
+			TH2D* hist = TPlotter::init2DHist(config);
 			m2DHistograms.insert_or_assign(key, std::move(hist));
 		}
 	}
