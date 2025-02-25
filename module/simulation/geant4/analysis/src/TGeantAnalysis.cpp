@@ -85,7 +85,7 @@ void TGeantAnalysis::readTree() {
 	for ( Int_t i = 0; i < nEntries; i++ ) {
 		progressBar.printProgress();
 		mIncidentTree->GetEntry(i);
-		if ( std::abs(mIncidentTuple.position[0]) < 4.35 && std::abs(mIncidentTuple.position[1]) < 0.27 ) {
+		if ( std::abs(mIncidentTuple.position[0]) < 4.35 && std::abs(mIncidentTuple.position[1]) < 0.27 ) { // 300 pixel * 20 pixel
 			fillIncidentHistograms();
 			if ( mIncidentTuple.particleID == PARTICLE::alpha ) {
 				position.push_back({mIncidentTuple.position[0], mIncidentTuple.position[1]});
@@ -109,6 +109,7 @@ void TGeantAnalysis::readTree() {
 
 int TGeantAnalysis::getNDouble(std::vector<std::pair<Double_t, Double_t>> position) {
 	Int_t num = 0;
+	Int_t nParticipant = 0;
 	for ( Int_t i = 0; i < position.size(); i++ ) {
 		for ( Int_t j = i + 1; j < position.size(); j++ ) {
 			Double_t distance = TMath::Sqrt(TMath::Power(position[i].first - position[j].first, 2) + TMath::Power(position[i].second - position[j].second, 2));
