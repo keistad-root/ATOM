@@ -17,7 +17,7 @@
 #include <csv.h>
 
 const std::string CONFIG_PATH = "/home/ychoi/ATOM/config/g4simulation/g4simulation.conf";
-const std::string INFORMATION_PATH = "/home/ychoi/ATOM/config/g4simulation/g4information.csv";
+const std::string INFORMATION_PATH = "/home/ychoi/ATOM/build/config/GEANT4_INFORMATION.csv";
 
 CppConfigFile setEnvironment(const ArgumentParser& parser) {
 	CppConfigFile config(CONFIG_PATH);
