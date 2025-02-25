@@ -6,8 +6,8 @@
 #include "cppargs.h"
 #include "CppConfigFile.h"
 
-const std::string CONFIG_PATH = "/home/ychoi/ATOM/config/g4simulation/g4analysis.conf";
-const std::string INFORMATION_PATH = "/home/ychoi/ATOM/config/g4simulation/g4information.csv";
+const std::string CONFIG_PATH = "/home/ychoi/ATOM/build/config/GEANT4_ANALYSIS.conf";
+const std::string INFORMATION_PATH = "/home/ychoi/ATOM/build/config/GEANT4_INFORMATION.csv";
 const std::string DATA_PATH = "/home/ychoi/ATOM/build/Data/g4data.csv";
 
 const double EVENT_10MIN = 2580000;

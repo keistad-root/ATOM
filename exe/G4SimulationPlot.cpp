@@ -7,9 +7,9 @@
 #include "CppConfigFile.h"
 
 CppConfigFile setEnvironment(const ArgumentParser& parser) {
-	CppConfigFile config("/home/ychoi/ATOM/config/g4simulation/g4plot.conf");
+	CppConfigFile config("/home/ychoi/ATOM/build/config/GEANT4_PLOT.conf");
 	io::CSVReader<3> csv("/home/ychoi/ATOM/build/config/GEANT4_INFORMATION.csv");
-	csv.read_header(io::ignore_extra_column, "TAG", "PLOT_FILE", "output_directory");
+	csv.read_header(io::ignore_extra_column, "TAG", "PLOT_FILE", "PLOT_DICTIONARY");
 
 	std::string tags, input_file, output_directory;
 	double collimatorLength;

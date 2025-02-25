@@ -21,11 +21,11 @@ void TGeantPlot::getHistorams() {
 	while ( (key = (TKey*) next()) ) {
 		TObject* objPtr = (key->ReadObj());
 		if ( objPtr->InheritsFrom(TH1D::Class()) ) {
-			std::string keyName = objPtr->GetName();
+			std::string keyName = key->GetName();
 			m1DHistograms.insert_or_assign(keyName, static_cast<TH1D*>(objPtr));
 		}
 		if ( objPtr->InheritsFrom(TH2D::Class()) ) {
-			std::string keyName = objPtr->GetName();
+			std::string keyName = key->GetName();
 			m2DHistograms.insert_or_assign(keyName, static_cast<TH2D*>(objPtr));
 		}
 	}
