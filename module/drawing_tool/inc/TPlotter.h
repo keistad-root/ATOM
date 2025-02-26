@@ -26,12 +26,13 @@ class TGraph;
 class TMultiGraph;
 class TCanvas;
 class TLegend;
+class TGraphErrors;
 
 
 class TPlotter {
 public:
 	static TCanvas* initCanvas(const CppConfigDictionary& config);
-	static void initLegend(TLegend*& legend, const CppConfigDictionary& config);
+	static TLegend* initLegend(const CppConfigDictionary& config);
 	static TH1D* init1DHist(const CppConfigDictionary& config);
 	static TH2D* init2DHist(const CppConfigDictionary& config);
 
@@ -50,9 +51,18 @@ public:
 	static void setMarkerSize(TGraph* plot, const CppConfigDictionary& config);
 	static void setMarkerColour(TGraph* plot, const CppConfigDictionary& config);
 
+	static void setAttribute(TGraphErrors* graph, const CppConfigDictionary& config);
+	static void setLineStyle(TGraphErrors* plot, const CppConfigDictionary& config);
+	static void setLineColour(TGraphErrors* plot, const CppConfigDictionary& config);
+	static void setLineWidth(TGraphErrors* plot, const CppConfigDictionary& config);
+	static void setMarkerStyle(TGraphErrors* plot, const CppConfigDictionary& config);
+	static void setMarkerSize(TGraphErrors* plot, const CppConfigDictionary& config);
+	static void setMarkerColour(TGraphErrors* plot, const CppConfigDictionary& config);
+
 	static void drawPlot(TCanvas* canvas, TH1* plot, const CppConfigDictionary& config, TString drawType);
 	static void drawPlot(TCanvas* canvas, TH2* plot, const CppConfigDictionary& config, TString drawType);
 	static void drawPlot(TCanvas* canvas, TGraph* plot, const CppConfigDictionary& config, TString drawType);
+	static void drawPlot(TCanvas* canvas, TGraphErrors* plot, const CppConfigDictionary& config, TString drawType);
 	static void drawPlot(TCanvas* canvas, TMultiGraph* plot, const CppConfigDictionary& config, TString drawType);
 
 	static void setCanvasAttribute(TCanvas* canvas, const CppConfigDictionary& config);

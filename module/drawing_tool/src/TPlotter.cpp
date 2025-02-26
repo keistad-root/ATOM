@@ -12,6 +12,7 @@
 #include "TStyle.h"
 #include "TMultiGraph.h"
 #include "TGraph.h"
+#include "TGraphErrors.h"
 #include "TGaxis.h"
 #include "TFrame.h"
 
@@ -153,6 +154,63 @@ void TPlotter::setMarkerColour(TGraph* plot, const CppConfigDictionary& config) 
 	}
 }
 
+
+void TPlotter::setAttribute(TGraphErrors* graph, const CppConfigDictionary& config) {
+	setLineColour(graph, config);
+	setLineWidth(graph, config);
+	setLineStyle(graph, config);
+	setMarkerStyle(graph, config);
+	setMarkerSize(graph, config);
+	setMarkerColour(graph, config);
+}
+
+void TPlotter::setLineStyle(TGraphErrors* plot, const CppConfigDictionary& config) {
+	if ( config.hasKey("LINE_STYLE") ) {
+		Style_t lineStyle = stoi(config.find("LINE_STYLE"));
+		plot->SetLineStyle(lineStyle);
+	}
+}
+
+void TPlotter::setLineColour(TGraphErrors* plot, const CppConfigDictionary& config) {
+	Color_t lineColour;
+	if ( config.hasKey("LINE_COLOUR") ) {
+		lineColour = TColourUser::getColour(config.find("LINE_COLOUR"));
+	} else {
+		lineColour = TColourUser::getColour("blue");
+	}
+	plot->SetLineColor(lineColour);
+}
+
+void TPlotter::setLineWidth(TGraphErrors* plot, const CppConfigDictionary& config) {
+	if ( config.hasKey("LINE_WIDTH") ) {
+		Width_t lineWidth = stod(config.find("LINE_WIDTH"));
+		plot->SetLineWidth(lineWidth);
+	} else {
+		plot->SetLineWidth(4);
+	}
+}
+
+void TPlotter::setMarkerStyle(TGraphErrors* plot, const CppConfigDictionary& config) {
+	if ( config.hasKey("MARKER_STYLE") ) {
+		Style_t markerStyle = static_cast<short>(stoi(config.find("MARKER_STYLE")));
+		plot->SetMarkerStyle(markerStyle);
+	}
+}
+
+void TPlotter::setMarkerSize(TGraphErrors* plot, const CppConfigDictionary& config) {
+	if ( config.hasKey("MARKER_SIZE") ) {
+		Size_t markerSize = stof(config.find("MARKER_SIZE"));
+		plot->SetMarkerSize(markerSize);
+	}
+}
+
+void TPlotter::setMarkerColour(TGraphErrors* plot, const CppConfigDictionary& config) {
+	if ( config.hasKey("MARKER_COLOUR") ) {
+		Color_t markerColour = TColourUser::getColour(config.find("MARKER_COLOUR"));
+		plot->SetMarkerColor(markerColour);
+	}
+}
+
 void TPlotter::drawPlot(TCanvas* canvas, TH1* plot, const CppConfigDictionary& config, TString drawType) {
 	canvas->cd();
 	setAttribute(plot, config);
@@ -166,6 +224,12 @@ void TPlotter::drawPlot(TCanvas* canvas, TH2* plot, const CppConfigDictionary& c
 }
 
 void TPlotter::drawPlot(TCanvas* canvas, TGraph* plot, const CppConfigDictionary& config, TString drawType) {
+	canvas->cd();
+	setAttribute(plot, config);
+	plot->Draw(drawType);
+}
+
+void TPlotter::drawPlot(TCanvas* canvas, TGraphErrors* plot, const CppConfigDictionary& config, TString drawType) {
 	canvas->cd();
 	setAttribute(plot, config);
 	plot->Draw(drawType);
@@ -318,15 +382,16 @@ TString TPlotter::getTitle(std::string_view titleStr) {
 	return mainTitle + ";" + xTitle + ";" + yTitle;
 }
 
-void TPlotter::initLegend(TLegend*& legend, const CppConfigDictionary& config) {
+TLegend* TPlotter::initLegend(const CppConfigDictionary& config) {
 	std::vector<double> position = {.7, .7, .9, .9};
 	if ( config.hasKey("LEGEND_POSITION") ) {
 		position = getDoubleSetFromString(config.find("LEGEND_POSITION"));
 	}
-	legend = new TLegend(position[0], position[1], position[2], position[3]);
+	TLegend* legend = new TLegend(position[0], position[1], position[2], position[3]);
 	if ( config.hasKey("LEGEND_TITLE") ) {
 		legend->SetHeader(static_cast<TString>(config.find("LEGEND_TITLE")), "C");
 	}
+	return legend;
 }
 
 
