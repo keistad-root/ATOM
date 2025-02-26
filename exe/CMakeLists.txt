@@ -18,8 +18,8 @@ set(TEST_EXE
 	G4SimulationPlot
 
 	# Compare
-	ComparisonExperimentSimulation
-
+	ComparisonMonocollimator
+	ComparisonLength
 	# CompareThresholdData
 	# CompareRegion
 	# ExperimentComparison

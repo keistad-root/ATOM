@@ -11,6 +11,7 @@
 #include "cppargs.h"
 #include "CppConfigFile.h"
 #include "TPlotter.h"
+#include "config.h"
 
 ArgumentParser set_parse(int argc, char** argv) {
 	ArgumentParser parser = ArgumentParser(argc, argv).setDescription("Compare experiment and simulation data for one collimator");
@@ -160,7 +161,7 @@ TCanvas* getRatioGraph(const std::string& eutTag, const std::string& refTag, con
 	return canvas;
 }
 
-TCanvas* getOriginGraph(const std::string& eutTag, const std::string& refTag, const CppConfigDictionary& config) {
+TCanvas* getOriginGraph(const std::string& eutTag, const CppConfigDictionary& config) {
 	TGraphErrors* expGraph = getExperimentOriginGraph(eutTag);
 	TGraphErrors* simGraph = getSimulationOriginGraph(eutTag);
 
@@ -183,9 +184,25 @@ TCanvas* getOriginGraph(const std::string& eutTag, const std::string& refTag, co
 	return canvas;
 }
 
+const std::string configPath = std::filesystem::path(SOURCE_DIR) / "build/config/COMPARISON_MONOCOLLIMATOR.conf";
+
+CppConfigFile setEnvironment(const ArgumentParser& parser) {
+	CppConfigFile config = CppConfigFile(configPath);
+
+	std::string eutTag = parser.get_value<std::string>("EUT");
+	std::string collimatorName = eutTag.substr(0, eutTag.find("F")) + "\#phi" + eutTag.substr(eutTag.find("F") + 1, eutTag.size() - eutTag.find("F") - 1);
+
+	config.modifyConfig("RATIO").addDictionary("NAME", config.modifyConfig("RATIO").find("NAME") + "_" + eutTag);
+	config.modifyConfig("RATIO").addDictionary("TITLE", "\"" + collimatorName + " Collimator\" \"\" \"Ratio to Reference\"");
+	config.modifyConfig("ORIGIN").addDictionary("NAME", config.modifyConfig("ORIGIN").find("NAME") + "_" + eutTag);
+	config.modifyConfig("ORIGIN").addDictionary("TITLE", "\"" + collimatorName + " Collimator\" \"\" \"Entry\"");
+
+	return config;
+}
+
 int main(int argc, char** argv) {
 	ArgumentParser parser = set_parse(argc, argv);
-	CppConfigFile config("/home/ychoi/ATOM/build/config/COMPARISON_MONOCOLLIMATOR.conf");
+	CppConfigFile config = setEnvironment(parser);
 	std::string eutTag = parser.get_value<std::string>("EUT");
 	std::string refTag = parser.get_value<std::string>("REF");
 
@@ -193,7 +210,7 @@ int main(int argc, char** argv) {
 	std::filesystem::path path = config.getConfig("FILE").find("OUTPUT_DIRECTORY");
 	TPlotter::saveCanvas(ratioCanvas, path, config.getConfig("RATIO"));
 
-	TCanvas* originCanvas = getOriginGraph(eutTag, refTag, config.getConfig("ORIGIN"));
+	TCanvas* originCanvas = getOriginGraph(eutTag, config.getConfig("ORIGIN"));
 	TPlotter::saveCanvas(originCanvas, path, config.getConfig("ORIGIN"));
 	return 0;
 }
