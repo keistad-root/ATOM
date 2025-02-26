@@ -14,8 +14,8 @@ private:
 	double mCollimatorLength;
 	double mCollimatorArea;
 	int mMinute;
-	std::array<double, 60> mEntry;
-	std::array<double, 60> mError;
+	std::array<double, 3> mEntry;
+	std::array<double, 3> mError;
 public:
 	void setTag(const std::string& tag);
 	void setLength(int length);
@@ -23,17 +23,17 @@ public:
 	void setCollimatorLength(double collimatorLength);
 	void setCollimatorArea(double collimatorArea);
 	void setMinute(int minute);
-	void setEntry(const std::array<double, 60>& entry);
-	void setError(const std::array<double, 60>& error);
+	void setEntry(const std::array<double, 3>& entry);
+	void setError(const std::array<double, 3>& error);
 	const std::string& getTag() const;
 	int getLength() const;
 	int getPhi() const;
 	double getCollimatorLength() const;
 	double getCollimatorArea() const;
 	int getMinute() const;
-	const std::array<double, 60>& getEntry() const;
-	const std::array<double, 60>& getError() const;
-	const std::array<double, 2> getSubEntry(int start, int end) const;
+	const std::array<double, 2> getCS1() const;
+	const std::array<double, 2> getCS4TO32() const;
+	const std::array<double, 2> getCS33Over() const;
 };
 
 #endif

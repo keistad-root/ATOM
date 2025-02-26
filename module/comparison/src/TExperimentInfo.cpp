@@ -29,11 +29,11 @@ void TExperimentInfo::setMinute(int minute) {
 	mMinute = minute;
 }
 
-void TExperimentInfo::setEntry(const std::array<double, 60>& entry) {
+void TExperimentInfo::setEntry(const std::array<double, 3>& entry) {
 	mEntry = entry;
 }
 
-void TExperimentInfo::setError(const std::array<double, 60>& error) {
+void TExperimentInfo::setError(const std::array<double, 3>& error) {
 	mError = error;
 }
 
@@ -61,20 +61,23 @@ int TExperimentInfo::getMinute() const {
 	return mMinute;
 }
 
-const std::array<double, 60>& TExperimentInfo::getEntry() const {
-	return mEntry;
+const std::array<double, 2> TExperimentInfo::getCS1() const {
+	std::array<double, 2> cs1;
+	cs1[0] = mEntry[0];
+	cs1[1] = mError[0];
+	return cs1;
 }
 
-const std::array<double, 60>& TExperimentInfo::getError() const {
-	return mError;
+const std::array<double, 2> TExperimentInfo::getCS4TO32() const {
+	std::array<double, 2> cs4to32;
+	cs4to32[0] = mEntry[1];
+	cs4to32[1] = mError[1];
+	return cs4to32;
 }
 
-const std::array<double, 2> TExperimentInfo::getSubEntry(int start, int end) const {
-	std::array<double, 2> subEntry = {0, 0};
-	for ( int i = start - 1; i < end; i++ ) {
-		subEntry[0] += mEntry[i];
-		subEntry[1] += std::pow(mError[i], 2);
-	}
-	subEntry[1] = std::sqrt(subEntry[1]);
-	return getEffectiveNumber(subEntry[0], subEntry[1]);
+const std::array<double, 2> TExperimentInfo::getCS33Over() const {
+	std::array<double, 2> cs33over;
+	cs33over[0] = mEntry[2];
+	cs33over[1] = mError[2];
+	return cs33over;
 }
