@@ -9,6 +9,7 @@ set(TEST_EXE
 	ExperimentMasking
 	ExperimentAnalysis
 	ExperimentAnalysisPlot
+	ExperimentComparison
     
 	# Geant4 Simulation
 	G4Simulation

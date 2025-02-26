@@ -92,7 +92,7 @@ void TGeantComparison::getPlotNormalized() {
 	}
 
 	TGraph* graph = new TGraph();
-	for ( int i = 0; i < interestData.size(); i++ ) {
+	for ( long unsigned int i = 0; i < interestData.size(); i++ ) {
 		double xValue = interestData[i][0];
 		double yValue = interestData[i][1] / referenceData[1];
 		graph->SetPoint(i, xValue, yValue);

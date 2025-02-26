@@ -12,7 +12,6 @@ CppConfigFile setEnvironment(const ArgumentParser& parser) {
 	csv.read_header(io::ignore_extra_column, "TAG", "PLOT_FILE", "PLOT_DICTIONARY");
 
 	std::string tags, input_file, output_directory;
-	double collimatorLength;
 
 	std::string tag = parser.get_value<std::string>("tag");
 	while ( csv.read_row(tags, input_file, output_directory) ) {
