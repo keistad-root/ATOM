@@ -28,7 +28,6 @@ TExperimentInfoSet::TExperimentInfoSet() {
 	}
 }
 
-TExperimentInfoSet::~TExperimentInfoSet() { }
 
 const std::vector<TExperimentInfo>& TExperimentInfoSet::getExperimentSet() const {
 	return mExperimentSet;

@@ -7,7 +7,6 @@
 class TExperimentInfoSet {
 public:
 	TExperimentInfoSet();
-	~TExperimentInfoSet();
 private:
 	std::vector<TExperimentInfo> mExperimentSet;
 

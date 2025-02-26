@@ -20,13 +20,26 @@ ArgumentParser set_parse(int argc, char** argv) {
 	return parser;
 }
 
+std::vector<TGraphErrors*> getExperimentGraphSet(const std::vector<std::string>& tagSet, const std::string& refTag) {
+	std::vector<TGraphErrors*> graphSet;
+	TExperimentInfoSet expSet;
+
+	std::vector<TExperimentInfoSet> expList;
+	for ( const std::string& tag : tagSet ) {
+		TExperimentInfo temp = expSet.getExperimentInfo(tag);
+		// expList.push_back(temp);
+	}
+
+	return graphSet;
+}
+
 int main(int argc, char** argv) {
 	ArgumentParser parser = set_parse(argc, argv);
 
 	std::vector<std::string> tagSet = parser.get_value<std::vector<std::string>>("EUT");
 	std::string refTag = parser.get_value<std::string>("REF");
 
-	std::cout << refTag << std::endl;
+
 
 	return 0;
 }
