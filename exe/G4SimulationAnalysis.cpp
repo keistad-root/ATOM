@@ -40,7 +40,7 @@ ArgumentParser set_parse(int argc, char** argv) {
 }
 
 void addEntry2CSV(const std::string tag, const std::array<int, 4> entry) {
-	io::CSVReader<13> infoCsv("/home/ychoi/ATOM/config/g4simulation/g4information.csv");
+	io::CSVReader<13> infoCsv(INFORMATION_PATH);
 	infoCsv.read_header(io::ignore_extra_column, "TAG", "LENGTH", "PHI", "COLLIMATOR_LENGTH", "COLLIMATOR_AREA", "EVENT_NUM", "DISTANCE_ALPIDE_COLLIMATOR", "DISTANCE_SOURCE_COLLIMATOR", "ALPIDE_POSITION_X", "ALPIDE_POSITION_Y", "ALPIDE_ANGLE_X", "ALPIDE_ANGLE_Y", "ALPIDE_ANGLE_Z");
 
 	std::string infoTag;
