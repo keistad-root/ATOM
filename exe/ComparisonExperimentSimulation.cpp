@@ -8,53 +8,57 @@
 #include "TAxis.h"
 #include "TText.h"
 #include "TLegend.h"
+#include "cppargs.h"
+
+ArgumentParser set_parse(int argc, char** argv) {
+	ArgumentParser parser = ArgumentParser(argc, argv).setDescription("Compare experiment and simulation data for one collimator");
+	parser.add_argument("EUT").help("Experiment tag under test").add_finish();
+	parser.add_argument("REF").help("Experiment tag for reference").add_finish();
+	parser.parse_args();
+	return parser;
+}
+
+TGraphErrors* getExperimentGraph(const std::string& eutTag, const std::string& refTag) {
+	TGraphErrors* graph = new TGraphErrors();
+
+	TExperimentInfoSet expInfo;
+	TExperimentInfo alphagamma = expInfo.getExperimentInfo(eutTag + "X");
+	TExperimentInfo gamma = expInfo.getExperimentInfo(eutTag + "O");
+	TExperimentInfo refAlphagamma = expInfo.getExperimentInfo(refTag + "X");
+	TExperimentInfo refGamma = expInfo.getExperimentInfo(refTag + "O");
+
+	Double_t cs1Ratio = (alphagamma.getCS1()[0] - gamma.getCS1()[0]) / (refAlphagamma.getCS1()[0] - refGamma.getCS1()[0]);
+	Double_t cs1RatioError = std::pow(1. / (refAlphagamma.getCS1()[0] - refGamma.getCS1()[0]), 2) * (std::pow(alphagamma.getCS1()[1], 2) + std::pow(gamma.getCS1()[1], 2)) + std::pow((alphagamma.getCS1()[0] - gamma.getCS1()[0]) / (std::pow(refAlphagamma.getCS1()[0] - refGamma.getCS1()[0], 2)), 2) * (std::pow(refAlphagamma.getCS1()[1], 2) + std::pow(refGamma.getCS1()[1], 2));
+
+	Double_t cs4to32Ratio = (alphagamma.getCS4TO32()[0] - gamma.getCS4TO32()[0]) / (refAlphagamma.getCS4TO32()[0] - refGamma.getCS4TO32()[0]);
+	Double_t cs4to32RatioError = std::pow(1. / (refAlphagamma.getCS4TO32()[0] - refGamma.getCS4TO32()[0]), 2) * (std::pow(alphagamma.getCS4TO32()[1], 2) + std::pow(gamma.getCS4TO32()[1], 2)) + std::pow((alphagamma.getCS4TO32()[0] - gamma.getCS4TO32()[0]) / (std::pow(refAlphagamma.getCS4TO32()[0] - refGamma.getCS4TO32()[0], 2)), 2) * (std::pow(refAlphagamma.getCS4TO32()[1], 2) + std::pow(refGamma.getCS4TO32()[1], 2));
+
+	Double_t cs33overRatio = (alphagamma.getCS33Over()[0] - gamma.getCS33Over()[0]) / (refAlphagamma.getCS33Over()[0] - refGamma.getCS33Over()[0]);
+	Double_t cs33overRatioError = std::pow(1. / (refAlphagamma.getCS33Over()[0] - refGamma.getCS33Over()[0]), 2) * (std::pow(alphagamma.getCS33Over()[1], 2) + std::pow(gamma.getCS33Over()[1], 2)) + std::pow((alphagamma.getCS33Over()[0] - gamma.getCS33Over()[0]) / (std::pow(refAlphagamma.getCS33Over()[0] - refGamma.getCS33Over()[0], 2)), 2) * (std::pow(refAlphagamma.getCS33Over()[1], 2) + std::pow(refGamma.getCS33Over()[1], 2));
+
+	graph->SetPoint(0, 1, cs1Ratio);
+	graph->SetPointError(0, 0, cs1RatioError);
+	graph->SetPoint(1, 2, cs4to32Ratio);
+	graph->SetPointError(1, 0, cs4to32RatioError);
+	graph->SetPoint(2, 3, cs33overRatio);
+	graph->SetPointError(2, 0, cs33overRatioError);
+
+	return graph;
+}
+
 
 int main(int argc, char** argv) {
-	TExperimentInfoSet expInfo;
-	TGeantInfoSet geantInfo;
+	ArgumentParser parser = set_parse(argc, argv);
+	std::string eutTag = parser.get_value<std::string>("EUT");
+	std::string refTag = parser.get_value<std::string>("REF");
 
-	std::string eutTag = "L20F2";
-	std::string refTag = "L20REF";
-	TExperimentInfo eutAlphaExp = expInfo.getExperimentInfo(eutTag + "X");
-	TExperimentInfo eutGammaExp = expInfo.getExperimentInfo(eutTag + "O");
-	TExperimentInfo refAlphaExp = expInfo.getExperimentInfo(refTag + "X");
-	TExperimentInfo refGammaExp = expInfo.getExperimentInfo(refTag + "O");
+	TGraphErrors* expGraph = getExperimentGraph(eutTag, refTag);
+
 
 	TGeantInfo eutAlphaGeant = geantInfo.getGeantInfo(eutTag + "AX");
 	TGeantInfo refAlphaGeant = geantInfo.getGeantInfo(refTag + "AX");
 
-	TGraphErrors* expGraph = new TGraphErrors();
 	TGraphErrors* geantGraph = new TGraphErrors();
-
-	std::array<double, 2> expCS1Entry = eutAlphaExp.getCS1();
-	expCS1Entry[0] -= eutGammaExp.getCS1()[0];
-	expCS1Entry[1] = std::sqrt(std::pow(eutAlphaExp.getCS1()[1], 2) + std::pow(eutGammaExp.getCS1()[1], 2));
-
-	std::array<double, 2> refCS1Entry = refAlphaExp.getCS1();
-	refCS1Entry[0] -= refGammaExp.getCS1()[0];
-	refCS1Entry[1] = std::sqrt(std::pow(refAlphaExp.getCS1()[1], 2) + std::pow(refGammaExp.getCS1()[1], 2));
-
-	std::array<double, 2> expCS4TO32Entry = eutAlphaExp.getCS4TO32();
-	expCS4TO32Entry[0] -= eutGammaExp.getCS4TO32()[0];
-	expCS4TO32Entry[1] = std::sqrt(std::pow(eutAlphaExp.getCS4TO32()[1], 2) + std::pow(eutGammaExp.getCS4TO32()[1], 2));
-	std::array<double, 2> refCS4TO32Entry = refAlphaExp.getCS4TO32();
-	refCS4TO32Entry[0] -= refGammaExp.getCS4TO32()[0];
-	refCS4TO32Entry[1] = std::sqrt(std::pow(refAlphaExp.getCS4TO32()[1], 2) + std::pow(refGammaExp.getCS4TO32()[1], 2));
-
-	std::array<double, 2> expCS33OverEntry = eutAlphaExp.getCS33Over();
-	expCS33OverEntry[0] -= eutGammaExp.getCS33Over()[0];
-	expCS33OverEntry[1] = std::sqrt(std::pow(eutAlphaExp.getCS33Over()[1], 2) + std::pow(eutGammaExp.getCS33Over()[1], 2));
-	std::array<double, 2> refCS33OverEntry = refAlphaExp.getCS33Over();
-	refCS33OverEntry[0] -= refGammaExp.getCS33Over()[0];
-	refCS33OverEntry[1] = std::sqrt(std::pow(refAlphaExp.getCS33Over()[1], 2) + std::pow(refGammaExp.getCS33Over()[1], 2));
-
-
-	expGraph->SetPoint(0, 1, expCS1Entry[0] / refCS1Entry[0]);
-	expGraph->SetPointError(0, 0, std::sqrt(std::pow(expCS1Entry[1] / refCS1Entry[0], 2) + std::pow(expCS1Entry[0] * refCS1Entry[1] / std::pow(refCS1Entry[0], 2), 2)));
-	expGraph->SetPoint(1, 2, expCS4TO32Entry[0] / refCS4TO32Entry[0]);
-	expGraph->SetPointError(1, 0, std::sqrt(std::pow(expCS4TO32Entry[1] / refCS4TO32Entry[0], 2) + std::pow(expCS4TO32Entry[0] * refCS4TO32Entry[1] / std::pow(refCS4TO32Entry[0], 2), 2)));
-	expGraph->SetPoint(2, 3, expCS33OverEntry[0] / refCS33OverEntry[0]);
-	expGraph->SetPointError(2, 0, std::sqrt(std::pow(expCS33OverEntry[1] / refCS33OverEntry[0], 2) + std::pow(expCS33OverEntry[0] * refCS33OverEntry[1] / std::pow(refCS33OverEntry[0], 2), 2)));
 
 	geantGraph->SetPoint(0, 1, eutAlphaGeant.getEEM()[0] / refAlphaGeant.getEEM()[0]);
 	geantGraph->SetPointError(0, 0, std::sqrt(std::pow(eutAlphaGeant.getEEM()[1] / refAlphaGeant.getEEM()[0], 2) + std::pow(eutAlphaGeant.getEEM()[0] * refAlphaGeant.getEEM()[1] / std::pow(refAlphaGeant.getEEM()[0], 2), 2)));
