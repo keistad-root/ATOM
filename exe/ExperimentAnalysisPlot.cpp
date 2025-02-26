@@ -3,12 +3,13 @@
 #include <numeric>
 #include "cppargs.h"
 #include "CppConfigFile.h"
+#include "config.h"
 
 #include "TDataPlotter.h"
 
-const std::string configPath = "/home/ychoi/ATOM/build/config/ANALYSIS_PLOT.conf";
-const std::string csvPath = "/home/ychoi/ATOM/build/config/EXPERIMENT_INFORMATION.csv";
-const std::string dataPath = "/home/ychoi/ATOM/build/Data/EXPERIMENT.csv";
+const std::string configPath = std::filesystem::path(SOURCE_DIR) / "build/config/ANALYSIS_PLOT.conf";
+const std::string csvPath = std::filesystem::path(SOURCE_DIR) / "build/config/EXPERIMENT_INFORMATION.csv";
+const std::string dataPath = std::filesystem::path(SOURCE_DIR) / "build/Data/EXPERIMENT.csv";
 
 ArgumentParser set_parse(int argc, char** argv) {
 	ArgumentParser parser = ArgumentParser(argc, argv).setDescription("Drawing experiment plots");

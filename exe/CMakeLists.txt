@@ -1,37 +1,36 @@
 # Set the exe file set
 set(TEST_EXE
-    # ExperimentAnalysis
+    # Threshold
     ThresholdAnalysis
 	ThresholdPlot
 
-	CompareThresholdData
-	CompareRegion
-	ExperimentComparison
-    ThrPede
-	CompareCollimatorArea
-	CompareEntry
-	ComparisonExperimentSimulation
-	ComparisonGeant4
-	ComparisonDepositEnergy
-	# GarfieldSimulation
+	# Experiment
     ExperimentMerge
 	ExperimentMasking
 	ExperimentAnalysis
 	ExperimentAnalysisPlot
-	ExperimentPloting
-	ExperimentAlphaEntry
     
-	entrySimulation
+	# Geant4 Simulation
 	G4Simulation
-    G4SimulationAnalysis
-	G4DoubleCluster
 	G4SimulationExtract
+    G4SimulationAnalysis
 	G4SimulationPlot
-	G4SimulationComparison
-	G4SimulationSecondData
-	G4Systematic
-	photo
-	temp_incident
+
+	# Compare
+	ComparisonExperimentSimulation
+
+	# CompareThresholdData
+	# CompareRegion
+	# ExperimentComparison
+	# CompareCollimatorArea
+	# CompareEntry
+	# ComparisonGeant4
+	# ComparisonDepositEnergy
+	# # GarfieldSimulation
+
+	# entrySimulation
+	# photo
+	# temp_incident
 )
 # for now put the executables in the build root for compatibility with existing scripts
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})

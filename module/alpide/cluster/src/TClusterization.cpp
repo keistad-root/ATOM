@@ -12,7 +12,7 @@ TClusterization::~TClusterization() { }
 void TClusterization::removeConsecutionPixels() {
 	std::vector<std::pair<int, int>> preDeletedPixel;
 	std::vector<std::pair<int, int>> currentDeletedPixel;
-	for ( int iEvent = 1; iEvent < mEvents.size(); iEvent++ ) {
+	for ( long unsigned int iEvent = 1; iEvent < mEvents.size(); iEvent++ ) {
 		for ( int iPixel = mEvents[iEvent]->getData().size() - 1; iPixel > -1; iPixel-- ) {
 
 			if ( std::find(mEvents[iEvent - 1]->getData().begin(), mEvents[iEvent - 1]->getData().end(), mEvents[iEvent]->getData()[iPixel]) != mEvents[iEvent - 1]->getData().end() || (!preDeletedPixel.empty() && find(preDeletedPixel.begin(), preDeletedPixel.end(), mEvents[iEvent]->getData()[iPixel]) != preDeletedPixel.end()) ) {
