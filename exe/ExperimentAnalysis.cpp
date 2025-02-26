@@ -3,11 +3,12 @@
 
 #include "cppargs.h"
 #include "CppConfigFile.h"
+#include "config.h"
 
 #include "TDataAnalyser.h"
 
-const std::string configPath = "/home/ychoi/ATOM/config/experiment/analysis.conf";
-const std::string csvPath = "/home/ychoi/ATOM/config/experiment/experiment_information.csv";
+const std::string configPath = std::filesystem::path(SOURCE_DIR) / "build/config/EXPERIMENT_ANALYSIS.conf";
+const std::string csvPath = std::filesystem::path(SOURCE_DIR) / "build/config/EXPERIMENT_INFORMATION.csv";
 
 ArgumentParser set_parse(int argc, char** argv) {
 	ArgumentParser parser = ArgumentParser(argc, argv).setDescription("Get masked file from experiment");

@@ -428,6 +428,8 @@ void TDataPlotter::savePlots() {
 			TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("AMPLITUDE_PLOT"));
 			delete canvas;
 		}
+		Int_t xMax = std::distance(mClustermapSliceXAmplitude->GetY(), std::max_element(mClustermapSliceXAmplitude->GetY(), mClustermapSliceXAmplitude->GetY() + mClustermapSliceXAmplitude->GetN()));
+		std::cout << mClustermapSliceXMean->GetPointX(xMax) << " " << mClustermapSliceXMean->GetPointY(xMax) << "+-" << mClustermapSliceXMean->GetErrorY(xMax) << std::endl;
 	}
 	if ( isClustermapSliceY ) {
 		int nPlot = mConfig.getConfig("CLUSTERMAP_SLICE_Y").getSubConfig("SUB_PLOTS").getSubConfigSet().size();
@@ -463,6 +465,8 @@ void TDataPlotter::savePlots() {
 			TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERMAP_SLICE_Y").getSubConfig("AMPLITUDE_PLOT"));
 			delete canvas;
 		}
+		Int_t xMax = std::distance(mClustermapSliceYAmplitude->GetY(), std::max_element(mClustermapSliceYAmplitude->GetY(), mClustermapSliceYAmplitude->GetY() + mClustermapSliceYAmplitude->GetN()));
+		std::cout << mClustermapSliceYMean->GetPointX(xMax) << " " << mClustermapSliceYMean->GetPointY(xMax) << "+-" << mClustermapSliceYMean->GetErrorY(xMax) << std::endl;
 	}
 }
 
