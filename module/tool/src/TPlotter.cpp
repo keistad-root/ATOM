@@ -15,6 +15,7 @@
 #include "TGraphErrors.h"
 #include "TGaxis.h"
 #include "TFrame.h"
+#include "TF1.h"
 
 #include "TColourUser.h"
 #include "TPlotter.h"
@@ -59,6 +60,24 @@ TH2D* TPlotter::init2DHist(const CppConfigDictionary& config) {
 	TH2D* hist = new TH2D(Form("hist2d_%d", i2DHist), "", static_cast<int>(bin[0]), bin[1], bin[2], static_cast<int>(bin[3]), bin[4], bin[5]);
 	i2DHist++;
 	return hist;
+}
+
+TF1* TPlotter::initFunction(const CppConfigDictionary& config) {
+	static int iFunction = 0;
+	std::vector<double> range = {0, 1};
+	if ( config.hasKey("FIT_RANGE") ) {
+		range = getDoubleSetFromString(config.find("FIT_RANGE"));
+	}
+	TString formula = config.hasKey("FIT_FUNC") ? config.find("FIT_FUNC").substr(1, config.find("FIT_FUNC").size() - 2) : "x";
+	TF1* func = new TF1(Form("func_%d", iFunction), formula, range[0], range[1]);
+	if ( config.hasKey("FIT_PAR") ) {
+		std::vector<double> par = getDoubleSetFromString(config.find("FIT_PAR"));
+		for ( int i = 0; i < par.size(); i++ ) {
+			func->SetParameter(i, par[i]);
+		}
+	}
+	iFunction++;
+	return func;
 }
 
 // Set TH1 attributes

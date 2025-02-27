@@ -27,7 +27,7 @@ class TMultiGraph;
 class TCanvas;
 class TLegend;
 class TGraphErrors;
-
+class TF1;
 
 class TPlotter {
 public:
@@ -35,7 +35,7 @@ public:
 	static TLegend* initLegend(const CppConfigDictionary& config);
 	static TH1D* init1DHist(const CppConfigDictionary& config);
 	static TH2D* init2DHist(const CppConfigDictionary& config);
-
+	static TF1* initFunction(const CppConfigDictionary& config);
 	static void setAttribute(TH1* plot, const CppConfigDictionary& config);
 	static void setLineColour(TH1* plot, const CppConfigDictionary& config);
 	static void setLineWidth(TH1* plot, const CppConfigDictionary& config);
