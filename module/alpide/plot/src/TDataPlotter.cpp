@@ -427,9 +427,9 @@ void TDataPlotter::savePlots() {
 		{
 			TCanvas* canvas = TPlotter::initCanvas(mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("MEAN_PLOT"));
 			TPlotter::drawPlot(canvas, mClustermapSliceXMean, mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("MEAN_PLOT"), "AP");
-			TF1* fitFunc = TPlotter::initFunction(mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("MEAN_PLOT"));
-			mClustermapSliceXMean->Fit(fitFunc, "RQ");
-			fitFunc->Draw("SAME");
+			// TF1* fitFunc = TPlotter::initFunction(mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("MEAN_PLOT"));
+			// mClustermapSliceXMean->Fit(fitFunc, "RQ");
+			// fitFunc->Draw("SAME");
 			// TPaveText* fitText = new TPaveText(.6, .5, .9, .9, "NDC");
 			// fitText->AddText(fitFunc->GetFormula()->GetExpFormula());
 			// fitText->AddText(Form("#chi^{2}/NDoF: %.2f", fitFunc->GetChisquare() / fitFunc->GetNDF()));
