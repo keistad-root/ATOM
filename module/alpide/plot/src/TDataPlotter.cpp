@@ -468,11 +468,19 @@ void TDataPlotter::savePlots() {
 			CppConfigDictionary plotConfig = mConfig.getConfig("CLUSTERMAP_SLICE_Y").getSubConfig("SUB_PLOTS").getSubConfigSet()[i];
 
 			TCanvas* canvas = TPlotter::initCanvas(plotConfig);
-			TF1* fitFunc = new TF1(Form("fitFunc_%d", i), "[0]*e^(-((x-[1])/[2])^2)+[3]", 0, ALPIDEROW);
-			fitFunc->SetParameters(mClustermapSliceY[i]->GetMaximum(), mClustermapSliceY[i]->GetMean(), mClustermapSliceY[i]->GetStdDev(), mClustermapSliceY[i]->GetMinimum());
+			TF1* fitFunc = TPlotter::initFunction(plotConfig);
 			TPlotter::drawPlot(canvas, mClustermapSliceY[i], plotConfig, "HIST");
 			mClustermapSliceY[i]->Fit(fitFunc, "RQ");
 			fitFunc->Draw("SAME");
+
+			TPaveText* fitText = new TPaveText(.6, .5, .9, .9, "NDC");
+			fitText->AddText(fitFunc->GetFormula()->GetExpFormula());
+			fitText->AddText(Form("#chi^{2}/NDoF: %.2f", fitFunc->GetChisquare() / fitFunc->GetNDF()));
+			for ( int i = 0; i < fitFunc->GetNpar(); i++ ) {
+				fitText->AddText(Form("[%d]: %.2f #pm %.2f", i, fitFunc->GetParameter(i), fitFunc->GetParError(i)));
+			}
+			fitText->SetLabel("Fit parameters");
+			fitText->Draw();
 
 			std::vector<double>range = TPlotter::getDoubleSetFromString(plotConfig.find("COLUMN_RANGE"));
 			mClustermapSliceYMean->SetPoint(i, (range[0] + range[1]) / 2, fitFunc->GetParameter(1));
@@ -493,6 +501,19 @@ void TDataPlotter::savePlots() {
 		{
 			TCanvas* canvas = TPlotter::initCanvas(mConfig.getConfig("CLUSTERMAP_SLICE_Y").getSubConfig("AMPLITUDE_PLOT"));
 			TPlotter::drawPlot(canvas, mClustermapSliceYAmplitude, mConfig.getConfig("CLUSTERMAP_SLICE_Y").getSubConfig("AMPLITUDE_PLOT"), "AP");
+			TF1* fitFunc = TPlotter::initFunction(mConfig.getConfig("CLUSTERMAP_SLICE_Y").getSubConfig("AMPLITUDE_PLOT"));
+			mClustermapSliceYAmplitude->Fit(fitFunc, "R");
+			fitFunc->Draw("SAME");
+
+			TPaveText* fitText = new TPaveText(.6, .5, .9, .9, "NDC");
+			fitText->AddText(fitFunc->GetFormula()->GetExpFormula());
+			fitText->AddText(Form("#chi^{2}/NDoF: %.2f", fitFunc->GetChisquare() / fitFunc->GetNDF()));
+			for ( int i = 0; i < fitFunc->GetNpar(); i++ ) {
+				fitText->AddText(Form("[%d]: %.2f #pm %.2f", i, fitFunc->GetParameter(i), fitFunc->GetParError(i)));
+			}
+			fitText->SetLabel("Fit parameters");
+			fitText->Draw();
+
 			TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERMAP_SLICE_Y").getSubConfig("AMPLITUDE_PLOT"));
 			delete canvas;
 		}
