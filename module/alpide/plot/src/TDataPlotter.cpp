@@ -173,7 +173,7 @@ void TDataPlotter::FillClusterInfo() {
 		if ( isClustermapSliceX ) {
 			int nPlot = mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("SUB_PLOTS").getSubConfigSet().size();
 			for ( int i = 0; i < nPlot; i++ ) {
-				std::vector<int> range = TPlotter::getIntegerSetFromString(mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("SUB_PLOTS").getSubConfigSet()[i].find("ROW_RANGE"));
+				std::vector<double> range = TPlotter::getDoubleSetFromString(mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("SUB_PLOTS").getSubConfigSet()[i].find("ROW_RANGE"));
 				if ( range[0] < y && y < range[1] ) {
 					mClustermapSliceX[i]->Fill(x);
 				}
@@ -182,7 +182,7 @@ void TDataPlotter::FillClusterInfo() {
 		if ( isClustermapSliceY ) {
 			int nPlot = mConfig.getConfig("CLUSTERMAP_SLICE_Y").getSubConfig("SUB_PLOTS").getSubConfigSet().size();
 			for ( int i = 0; i < nPlot; i++ ) {
-				std::vector<int> range = TPlotter::getIntegerSetFromString(mConfig.getConfig("CLUSTERMAP_SLICE_Y").getSubConfig("SUB_PLOTS").getSubConfigSet()[i].find("COLUMN_RANGE"));
+				std::vector<double> range = TPlotter::getDoubleSetFromString(mConfig.getConfig("CLUSTERMAP_SLICE_Y").getSubConfig("SUB_PLOTS").getSubConfigSet()[i].find("COLUMN_RANGE"));
 				if ( range[0] < x && x < range[1] ) {
 					mClustermapSliceY[i]->Fill(y);
 				}
@@ -401,13 +401,20 @@ void TDataPlotter::savePlots() {
 			mClustermapSliceX[i]->SetBinContent(260, (mClustermapSliceX[i]->GetBinContent(259) + mClustermapSliceX[i]->GetBinContent(261)) / 2);
 
 			TF1* fitFunc = TPlotter::initFunction(plotConfig);
-			// new TF1(Form("fitFunc_%d", i), "[0]*e^(-((x-[1])/[2])^2)+[3]", 0, ALPIDECOLUMN);
-			// fitFunc->SetParameters(mClustermapSliceX[i]->GetMaximum(), mClustermapSliceX[i]->GetMean(), mClustermapSliceX[i]->GetStdDev(), mClustermapSliceX[i]->GetMinimum());
 			TPlotter::drawPlot(canvas, mClustermapSliceX[i], plotConfig, "HIST");
 			mClustermapSliceX[i]->Fit(fitFunc, "RQ");
 			fitFunc->Draw("SAME");
 
-			std::vector<int> range = TPlotter::getIntegerSetFromString(plotConfig.find("ROW_RANGE"));
+			TPaveText* fitText = new TPaveText(.6, .5, .9, .9, "NDC");
+			fitText->AddText(fitFunc->GetFormula()->GetExpFormula());
+			fitText->AddText(Form("#chi^{2}/NDoF: %.2f", fitFunc->GetChisquare() / fitFunc->GetNDF()));
+			for ( int i = 0; i < fitFunc->GetNpar(); i++ ) {
+				fitText->AddText(Form("[%d]: %.2f #pm %.2f", i, fitFunc->GetParameter(i), fitFunc->GetParError(i)));
+			}
+			fitText->SetLabel("Fit parameters");
+			fitText->Draw();
+
+			std::vector<double> range = TPlotter::getDoubleSetFromString(plotConfig.find("ROW_RANGE"));
 			mClustermapSliceXMean->SetPoint(i, (range[0] + range[1]) / 2, fitFunc->GetParameter(1));
 			mClustermapSliceXMean->SetPointError(i, (range[0] - range[1]) / 2, fitFunc->GetParError(1));
 			mClustermapSliceXAmplitude->SetPoint(i, (range[0] + range[1]) / 2, fitFunc->GetParameter(0));
@@ -420,12 +427,35 @@ void TDataPlotter::savePlots() {
 		{
 			TCanvas* canvas = TPlotter::initCanvas(mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("MEAN_PLOT"));
 			TPlotter::drawPlot(canvas, mClustermapSliceXMean, mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("MEAN_PLOT"), "AP");
+			TF1* fitFunc = TPlotter::initFunction(mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("MEAN_PLOT"));
+			mClustermapSliceXMean->Fit(fitFunc, "RQ");
+			fitFunc->Draw("SAME");
+			// TPaveText* fitText = new TPaveText(.6, .5, .9, .9, "NDC");
+			// fitText->AddText(fitFunc->GetFormula()->GetExpFormula());
+			// fitText->AddText(Form("#chi^{2}/NDoF: %.2f", fitFunc->GetChisquare() / fitFunc->GetNDF()));
+			// for ( int i = 0; i < fitFunc->GetNpar(); i++ ) {
+			// 	fitText->AddText(Form("[%d]: %.2f #pm %.2f", i, fitFunc->GetParameter(i), fitFunc->GetParError(i)));
+			// }
+			// fitText->SetLabel("Fit parameters");
+			// fitText->Draw();
 			TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("MEAN_PLOT"));
 			delete canvas;
 		}
 		{
 			TCanvas* canvas = TPlotter::initCanvas(mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("AMPLITUDE_PLOT"));
 			TPlotter::drawPlot(canvas, mClustermapSliceXAmplitude, mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("AMPLITUDE_PLOT"), "AP");
+			TF1* fitFunc = TPlotter::initFunction(mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("AMPLITUDE_PLOT"));
+			mClustermapSliceXAmplitude->Fit(fitFunc, "RQ");
+			fitFunc->Draw("SAME");
+			TPaveText* fitText = new TPaveText(.6, .5, .9, .9, "NDC");
+			fitText->AddText(fitFunc->GetFormula()->GetExpFormula());
+			fitText->AddText(Form("#chi^{2}/NDoF: %.2f", fitFunc->GetChisquare() / fitFunc->GetNDF()));
+			for ( int i = 0; i < fitFunc->GetNpar(); i++ ) {
+				fitText->AddText(Form("[%d]: %.2f #pm %.2f", i, fitFunc->GetParameter(i), fitFunc->GetParError(i)));
+			}
+			fitText->SetLabel("Fit parameters");
+			fitText->Draw();
+
 			TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("AMPLITUDE_PLOT"));
 			delete canvas;
 		}
@@ -444,7 +474,7 @@ void TDataPlotter::savePlots() {
 			mClustermapSliceY[i]->Fit(fitFunc, "RQ");
 			fitFunc->Draw("SAME");
 
-			std::vector<int>range = TPlotter::getIntegerSetFromString(plotConfig.find("COLUMN_RANGE"));
+			std::vector<double>range = TPlotter::getDoubleSetFromString(plotConfig.find("COLUMN_RANGE"));
 			mClustermapSliceYMean->SetPoint(i, (range[0] + range[1]) / 2, fitFunc->GetParameter(1));
 			mClustermapSliceYMean->SetPointError(i, (range[0] - range[1]) / 2, fitFunc->GetParError(1));
 			mClustermapSliceYAmplitude->SetPoint(i, (range[0] + range[1]) / 2, fitFunc->GetParameter(0));
