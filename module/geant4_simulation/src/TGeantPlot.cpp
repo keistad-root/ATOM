@@ -39,7 +39,7 @@ void TGeantPlot::saveHistorams(const std::vector<CppConfigDictionary>& configLis
 	for ( const auto& [key, hist] : m1DHistograms ) {
 		for ( const CppConfigDictionary& config : configList ) {
 			if ( key == config.getConfigName() ) {
-				TCanvas* canvas = new TCanvas();
+				TCanvas* canvas = TPlotter::initCanvas(config);
 				TPlotter::drawPlot(canvas, hist, config, "HIST");
 				hist->SetEntries(hist->GetEffectiveEntries());
 				if ( key == "IncidentParticle" ) {
@@ -59,7 +59,7 @@ void TGeantPlot::saveHistorams(const std::vector<CppConfigDictionary>& configLis
 	for ( const auto& [key, hist] : m2DHistograms ) {
 		for ( const CppConfigDictionary& config : configList ) {
 			if ( key == config.getConfigName() ) {
-				TCanvas* canvas = new TCanvas();
+				TCanvas* canvas = TPlotter::initCanvas(config);
 				TPlotter::drawPlot(canvas, hist, config, "COLZ");
 				if ( key == "ElctronIncidentXYWithElectrode" ) {
 					TGraph* electrode = new TGraph();

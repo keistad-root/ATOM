@@ -103,7 +103,7 @@ void TPlotter::setLineWidth(TH1* plot, const CppConfigDictionary& config) {
 		Width_t lineWidth = stod(config.find("LINE_WIDTH"));
 		plot->SetLineWidth(lineWidth);
 	} else {
-		plot->SetLineWidth(4);
+		plot->SetLineWidth(2);
 	}
 }
 
@@ -148,7 +148,7 @@ void TPlotter::setLineWidth(TGraph* plot, const CppConfigDictionary& config) {
 		Width_t lineWidth = stod(config.find("LINE_WIDTH"));
 		plot->SetLineWidth(lineWidth);
 	} else {
-		plot->SetLineWidth(4);
+		plot->SetLineWidth(2);
 	}
 }
 
@@ -205,7 +205,7 @@ void TPlotter::setLineWidth(TGraphErrors* plot, const CppConfigDictionary& confi
 		Width_t lineWidth = stod(config.find("LINE_WIDTH"));
 		plot->SetLineWidth(lineWidth);
 	} else {
-		plot->SetLineWidth(4);
+		plot->SetLineWidth(2);
 	}
 }
 

@@ -17,6 +17,7 @@ ArgumentParser set_parse(int argc, char** argv) {
 	ArgumentParser parser = ArgumentParser(argc, argv).setDescription("Compare experiment and simulation data for one collimator");
 	parser.add_argument("EUT").help("Experiment tag under test").add_finish();
 	parser.add_argument("REF").help("Experiment tag for reference").add_finish();
+	parser.add_argument("--sim").help("Use simulation data").set_default("true").add_finish();
 	parser.parse_args();
 	return parser;
 }
@@ -138,17 +139,21 @@ std::array<TText*, 6> getAxis() {
 	return label;
 }
 
-TCanvas* getRatioGraph(const std::string& eutTag, const std::string& refTag, const CppConfigDictionary& config) {
+TCanvas* getRatioGraph(const std::string& eutTag, const std::string& refTag, const CppConfigDictionary& config, bool sim = false) {
 	TGraphErrors* expGraph = getExperimentRatioGraph(eutTag, refTag);
-	TGraphErrors* simGraph = getSimulationRatioGraph(eutTag, refTag);
+	TGraphErrors* simGraph;
+	if ( sim ) {
+		simGraph = getSimulationRatioGraph(eutTag, refTag);
+	}
 
 	TCanvas* canvas = TPlotter::initCanvas(config);
 	TLegend* legend = TPlotter::initLegend(config);
 	legend->AddEntry(expGraph, "Experiment", "PE");
 	TPlotter::drawPlot(canvas, expGraph, config.getSubConfig("EXPERIMENT"), "AP");
-	legend->AddEntry(simGraph, "Simulation", "PE");
-	TPlotter::drawPlot(canvas, simGraph, config.getSubConfig("SIMULATION"), "P SAME");
-
+	if ( sim ) {
+		legend->AddEntry(simGraph, "Simulation", "PE");
+		TPlotter::drawPlot(canvas, simGraph, config.getSubConfig("SIMULATION"), "P SAME");
+	}
 	expGraph->GetXaxis()->SetLabelOffset(999);
 	expGraph->GetXaxis()->SetTickLength(0);
 	std::array<TText*, 6> axisLabel = getAxis();
@@ -161,16 +166,21 @@ TCanvas* getRatioGraph(const std::string& eutTag, const std::string& refTag, con
 	return canvas;
 }
 
-TCanvas* getOriginGraph(const std::string& eutTag, const CppConfigDictionary& config) {
+TCanvas* getOriginGraph(const std::string& eutTag, const CppConfigDictionary& config, bool sim = false) {
 	TGraphErrors* expGraph = getExperimentOriginGraph(eutTag);
-	TGraphErrors* simGraph = getSimulationOriginGraph(eutTag);
+	TGraphErrors* simGraph;
+	if ( sim ) {
+		simGraph = getSimulationOriginGraph(eutTag);
+	}
 
 	TCanvas* canvas = TPlotter::initCanvas(config);
 	TLegend* legend = TPlotter::initLegend(config);
 	legend->AddEntry(expGraph, "Experiment", "PE");
 	TPlotter::drawPlot(canvas, expGraph, config.getSubConfig("EXPERIMENT"), "AP");
-	legend->AddEntry(simGraph, "Simulation", "PE");
-	TPlotter::drawPlot(canvas, simGraph, config.getSubConfig("SIMULATION"), "P SAME");
+	if ( sim ) {
+		legend->AddEntry(simGraph, "Simulation", "PE");
+		TPlotter::drawPlot(canvas, simGraph, config.getSubConfig("SIMULATION"), "P SAME");
+	}
 
 	expGraph->GetXaxis()->SetLabelOffset(999);
 	expGraph->GetXaxis()->SetTickLength(0);
@@ -190,7 +200,7 @@ CppConfigFile setEnvironment(const ArgumentParser& parser) {
 	CppConfigFile config = CppConfigFile(configPath);
 
 	std::string eutTag = parser.get_value<std::string>("EUT");
-	std::string collimatorName = eutTag.substr(0, eutTag.find("F")) + "\#phi" + eutTag.substr(eutTag.find("F") + 1, eutTag.size() - eutTag.find("F") - 1);
+	std::string collimatorName = eutTag.find("REF") ? eutTag : eutTag.substr(0, eutTag.find("F")) + "\#phi" + eutTag.substr(eutTag.find("F") + 1, eutTag.size() - eutTag.find("F") - 1);
 
 	config.modifyConfig("RATIO").addDictionary("NAME", config.modifyConfig("RATIO").find("NAME") + "_" + eutTag);
 	config.modifyConfig("RATIO").addDictionary("TITLE", "\"" + collimatorName + " Collimator\" \"\" \"Ratio to Reference\"");
@@ -205,12 +215,13 @@ int main(int argc, char** argv) {
 	CppConfigFile config = setEnvironment(parser);
 	std::string eutTag = parser.get_value<std::string>("EUT");
 	std::string refTag = parser.get_value<std::string>("REF");
+	bool sim = parser.get_value<bool>("sim");
 
-	TCanvas* ratioCanvas = getRatioGraph(eutTag, refTag, config.getConfig("RATIO"));
+	TCanvas* ratioCanvas = getRatioGraph(eutTag, refTag, config.getConfig("RATIO"), sim);
 	std::filesystem::path path = config.getConfig("FILE").find("OUTPUT_DIRECTORY");
 	TPlotter::saveCanvas(ratioCanvas, path, config.getConfig("RATIO"));
 
-	TCanvas* originCanvas = getOriginGraph(eutTag, config.getConfig("ORIGIN"));
+	TCanvas* originCanvas = getOriginGraph(eutTag, config.getConfig("ORIGIN"), sim);
 	TPlotter::saveCanvas(originCanvas, path, config.getConfig("ORIGIN"));
 	return 0;
 }
