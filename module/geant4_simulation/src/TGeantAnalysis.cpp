@@ -113,6 +113,7 @@ int TGeantAnalysis::getNDouble(std::vector<std::pair<Double_t, Double_t>> positi
 	for ( Int_t i = 0; i < position.size(); i++ ) {
 		for ( Int_t j = i + 1; j < position.size(); j++ ) {
 			Double_t distance = TMath::Sqrt(TMath::Power(position[i].first - position[j].first, 2) + TMath::Power(position[i].second - position[j].second, 2));
+			m1DHistograms["DistanceBetweenIncidentAlpha"]->Fill(distance * 1000);
 			if ( distance > 0.048 && distance < 0.154 ) {
 				num++;
 			}

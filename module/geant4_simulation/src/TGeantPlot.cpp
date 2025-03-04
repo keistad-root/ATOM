@@ -103,7 +103,6 @@ void TGeantPlot::getEntries() {
 	TH1D* metalAlphaHist = m1DHistograms.find("AlphaDepositEnergyMetal")->second;
 	TH1D* metalElectronHist = m1DHistograms.find("ElectronDepositEnergyMetal")->second;
 
-	std::cout << metalAlphaHist->GetEffectiveEntries() << "\t" << metalElectronHist->GetEffectiveEntries() << "\t" << hist->GetEffectiveEntries() << std::endl;
 	int maxBin = 0;
 	for ( int i = 1; i <= m1DHistograms["AlphaIncidentAngle"]->GetNbinsX(); i++ ) {
 		if ( m1DHistograms["AlphaIncidentAngle"]->GetBinContent(i) > 1 ) {
