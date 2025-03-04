@@ -402,7 +402,7 @@ TString TPlotter::getTitle(std::string_view titleStr) {
 }
 
 TLegend* TPlotter::initLegend(const CppConfigDictionary& config) {
-	std::vector<double> position = {.7, .7, .9, .9};
+	std::vector<double> position = {.6, .7, .9, .9};
 	if ( config.hasKey("LEGEND_POSITION") ) {
 		position = getDoubleSetFromString(config.find("LEGEND_POSITION"));
 	}

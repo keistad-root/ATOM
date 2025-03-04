@@ -7,6 +7,9 @@
 #include "TKey.h"
 #include "TCanvas.h"
 #include "TGraph.h"
+#include "TLegend.h"
+#include "TString.h"
+#include "TStyle.h"
 
 void TGeantPlot::readInputFile(std::filesystem::path inputFilePath) {
 	TString inputFileName = std::string(inputFilePath);
@@ -36,12 +39,17 @@ void TGeantPlot::setOutputDirectory(std::string_view outputDirectory) {
 }
 
 void TGeantPlot::saveHistorams(const std::vector<CppConfigDictionary>& configList) {
+	gStyle->SetOptStat(0);
 	for ( const auto& [key, hist] : m1DHistograms ) {
 		for ( const CppConfigDictionary& config : configList ) {
 			if ( key == config.getConfigName() ) {
 				TCanvas* canvas = TPlotter::initCanvas(config);
+				TLegend* legend = TPlotter::initLegend(config);
 				TPlotter::drawPlot(canvas, hist, config, "HIST");
 				hist->SetEntries(hist->GetEffectiveEntries());
+				legend->AddEntry(hist, Form("Entries: %.1f", hist->GetEffectiveEntries()), "");
+				legend->AddEntry(hist, Form("Mean: %.3f", hist->GetMean()), "");
+				legend->AddEntry(hist, Form("Std Dev: %.3f", hist->GetStdDev()), "");
 				if ( key == "IncidentParticle" ) {
 					for ( int i = 0; i < hist->GetNbinsX(); i++ ) {
 						hist->GetXaxis()->SetBinLabel(i + 1., mParticleName[i]);
@@ -52,6 +60,7 @@ void TGeantPlot::saveHistorams(const std::vector<CppConfigDictionary>& configLis
 						hist->GetXaxis()->SetBinLabel(i + 1., mVolumeName[i]);
 					}
 				}
+				TPlotter::saveLegend(canvas, legend);
 				TPlotter::saveCanvas(canvas, mOutputDirectory, config);
 			}
 		}
@@ -60,7 +69,13 @@ void TGeantPlot::saveHistorams(const std::vector<CppConfigDictionary>& configLis
 		for ( const CppConfigDictionary& config : configList ) {
 			if ( key == config.getConfigName() ) {
 				TCanvas* canvas = TPlotter::initCanvas(config);
+				TLegend* legend = TPlotter::initLegend(config);
 				TPlotter::drawPlot(canvas, hist, config, "COLZ");
+				legend->AddEntry(hist, Form("Entries: %.1f", hist->GetEffectiveEntries()), "");
+				legend->AddEntry(hist, Form("Mean x: %.3f", hist->GetMean(1)), "");
+				legend->AddEntry(hist, Form("Mean y: %.3f", hist->GetMean(2)), "");
+				legend->AddEntry(hist, Form("Std Dev x: %.3f", hist->GetStdDev(1)), "");
+				legend->AddEntry(hist, Form("Std Dev y: %.3f", hist->GetStdDev(2)), "");
 				if ( key == "ElctronIncidentXYWithElectrode" ) {
 					TGraph* electrode = new TGraph();
 					for ( int i = 0; i < 10; i++ ) {
@@ -75,6 +90,7 @@ void TGeantPlot::saveHistorams(const std::vector<CppConfigDictionary>& configLis
 					// canvas->SetGrayscale();
 					// TColor::InvertPalette();
 				}
+				TPlotter::saveLegend(canvas, legend);
 				TPlotter::saveCanvas(canvas, mOutputDirectory, config);
 
 			}
