@@ -253,9 +253,6 @@ void TGeantAnalysis::fillIncidentHistograms() {
 			if ( key == "AlphaIncidentLocalTime" ) {
 				hist->Fill(mIncidentTuple.localTime);
 			}
-			if ( key == "AlphaIncidentKineticEnergy" ) {
-				hist->Fill(mIncidentTuple.kineticEnergy);
-			}
 			if ( key == "AlphaDepositEnergyTotal" ) {
 				if ( isDeposit ) {
 					hist->Fill(depositEnergy);
