@@ -14,13 +14,14 @@ const double EVENT_10MIN = 2580000;
 
 CppConfigFile setEnvironment(const ArgumentParser& parser) {
 	CppConfigFile config(CONFIG_PATH);
-	io::CSVReader<4> infoCSV(INFORMATION_PATH);
-	infoCSV.read_header(io::ignore_extra_column, "TAG", "INCIDENT_FILE", "PRIMARY_FILE", "PLOT_FILE");
-	std::string tags, input_incident_file, input_primary_file, output_file;
-	while ( infoCSV.read_row(tags, input_incident_file, input_primary_file, output_file) ) {
+	io::CSVReader<5> infoCSV(INFORMATION_PATH);
+	infoCSV.read_header(io::ignore_extra_column, "TAG", "INCIDENT_FILE", "PRIMARY_FILE", "SECONDARY_FILE", "PLOT_FILE");
+	std::string tags, input_incident_file, input_primary_file, input_secondary_file, output_file;
+	while ( infoCSV.read_row(tags, input_incident_file, input_primary_file, input_secondary_file, output_file) ) {
 		if ( parser.get_value<std::string>("tag") == tags ) {
 			config.modifyConfig("File").addDictionary("input_incident_file", input_incident_file);
 			config.modifyConfig("File").addDictionary("input_primary_file", input_primary_file);
+			config.modifyConfig("File").addDictionary("input_secondary_file", input_secondary_file);
 			config.modifyConfig("File").addDictionary("output_file", output_file);
 		}
 	}
@@ -110,14 +111,12 @@ int main(int argc, char** argv) {
 	TGeantAnalysis plot;
 	plot.readIncidentFile(config.getConfig("File").find("input_incident_file"));
 	plot.readPrimaryFile(config.getConfig("File").find("input_primary_file"));
+	plot.readSecondaryFile(config.getConfig("File").find("input_secondary_file"));
 	plot.setHistograms(config.getConfigList());
 	plot.readTree();
 	plot.saveFile(config.getConfig("File").find("output_file"));
 
-	if ( parser.get_value<bool>("secondary") ) {
-		// plot.readSecondaryFile(config.getConfig("File").find("input_secondary_file"));
 
-	}
 
 	addEntry2CSV(parser.get_value<std::string>("tag"), plot.getEntry());
 

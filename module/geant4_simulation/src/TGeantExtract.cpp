@@ -318,4 +318,6 @@ void TGeantExtract::getSecondaryAnalysisInformation() {
 	mSecondaryAnalysisTuple.finalMomentum[1] = mTrackTuple.finalMomentum[1];
 	mSecondaryAnalysisTuple.finalMomentum[2] = mTrackTuple.finalMomentum[2];
 	mSecondaryAnalysisTuple.finalKineticEnergy = mTrackTuple.finalKineticEnergy;
+
+	mSecondaryAnalysisTree->Fill();
 }

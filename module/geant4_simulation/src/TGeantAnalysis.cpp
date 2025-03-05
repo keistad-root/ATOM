@@ -61,6 +61,32 @@ void TGeantAnalysis::readPrimaryFile(std::filesystem::path inputFilePath) {
 	mPrimaryTree->SetBranchAddress("kineticEnergy", &mPrimaryTuple.kineticEnergy);
 }
 
+void TGeantAnalysis::readSecondaryFile(std::filesystem::path inputFilePath) {
+	TString inputFileName = std::string(inputFilePath);
+	mSecondaryFile = new TFile(inputFileName, "READ");
+	mSecondaryTree = static_cast<TTree*>(mSecondaryFile->Get("SecondaryAnalysis"));
+
+	mSecondaryTree->SetBranchAddress("eventID", &mSecondaryTuple.eventID);
+	mSecondaryTree->SetBranchAddress("trackID", &mSecondaryTuple.trackID);
+	mSecondaryTree->SetBranchAddress("particleID", &mSecondaryTuple.particleID);
+	mSecondaryTree->SetBranchAddress("initialVolumeID", &mSecondaryTuple.initialVolumeID);
+	mSecondaryTree->SetBranchAddress("initX", &mSecondaryTuple.initialPosition[0]);
+	mSecondaryTree->SetBranchAddress("initY", &mSecondaryTuple.initialPosition[1]);
+	mSecondaryTree->SetBranchAddress("initZ", &mSecondaryTuple.initialPosition[2]);
+	mSecondaryTree->SetBranchAddress("initPX", &mSecondaryTuple.initialMomentum[0]);
+	mSecondaryTree->SetBranchAddress("initPY", &mSecondaryTuple.initialMomentum[1]);
+	mSecondaryTree->SetBranchAddress("initPZ", &mSecondaryTuple.initialMomentum[2]);
+	mSecondaryTree->SetBranchAddress("initKineticEnergy", &mSecondaryTuple.initialKineticEnergy);
+	mSecondaryTree->SetBranchAddress("finalVolumeID", &mSecondaryTuple.finalVolumeID);
+	mSecondaryTree->SetBranchAddress("finalX", &mSecondaryTuple.finalPosition[0]);
+	mSecondaryTree->SetBranchAddress("finalY", &mSecondaryTuple.finalPosition[1]);
+	mSecondaryTree->SetBranchAddress("finalZ", &mSecondaryTuple.finalPosition[2]);
+	mSecondaryTree->SetBranchAddress("finalPX", &mSecondaryTuple.finalMomentum[0]);
+	mSecondaryTree->SetBranchAddress("finalPY", &mSecondaryTuple.finalMomentum[1]);
+	mSecondaryTree->SetBranchAddress("finalPZ", &mSecondaryTuple.finalMomentum[2]);
+	mSecondaryTree->SetBranchAddress("finalKineticEnergy", &mSecondaryTuple.finalKineticEnergy);
+}
+
 void TGeantAnalysis::setHistograms(const std::vector<CppConfigDictionary>& configList) {
 	for ( const CppConfigDictionary& config : configList ) {
 		std::string_view key = config.getConfigName();
@@ -97,10 +123,21 @@ void TGeantAnalysis::readTree() {
 			}
 		}
 	}
+	std::cout << std::endl;
+	ProgressBar progressBar2(static_cast<int>(mPrimaryTree->GetEntries()));
 	for ( Int_t i = 0; i < mPrimaryTree->GetEntries(); i++ ) {
+		progressBar2.printProgress();
 		mPrimaryTree->GetEntry(i);
 		fillPrimaryHistograms();
 	}
+	std::cout << std::endl;
+	ProgressBar progressBar3(static_cast<int>(mSecondaryTree->GetEntries()));
+	for ( Int_t i = 0; i < mSecondaryTree->GetEntries(); i++ ) {
+		progressBar3.printProgress();
+		mSecondaryTree->GetEntry(i);
+		fillSecondaryHistograms();
+	}
+
 	mEntry[0] = m1DHistograms["ElectronDepositEnergyMetal"]->GetEffectiveEntries();
 	mEntry[1] = m1DHistograms["AlphaDepositEnergyMetal"]->GetEffectiveEntries();
 	mEntry[2] = m1DHistograms["AlphaDepositEnergyEpitaxial"]->GetEffectiveEntries();
@@ -412,6 +449,15 @@ void TGeantAnalysis::fillIncidentHistograms() {
 	}
 }
 
+void TGeantAnalysis::fillSecondaryHistograms() {
+	// if ( mSecondaryTuple.initialVolumeID == VOLUME::ALPIDEMetal || mSecondaryTuple.initialVolumeID == VOLUME::ALPIDEEpitaxial || mSecondaryTuple.initialVolumeID == VOLUME::ALPIDESubstrate ) {
+	for ( const auto& [key, hist] : m1DHistograms ) {
+		if ( key == "SecondaryParticleInALPIDE" ) {
+			hist->Fill(mSecondaryTuple.particleID);
+		}
+		// }
+	}
+}
 void TGeantAnalysis::saveFile(std::filesystem::path outputFilePath) {
 	TString outputFileName = std::string(outputFilePath);
 	TFile outputFile(outputFileName, "RECREATE");
