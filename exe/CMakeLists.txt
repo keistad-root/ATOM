@@ -16,6 +16,7 @@ set(TEST_EXE
 	G4SimulationExtract
     G4SimulationAnalysis
 	G4SimulationPlot
+	G4SimulationAnalysisSecondary
 
 	# Compare
 	ComparisonMonocollimator
