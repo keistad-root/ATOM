@@ -17,8 +17,8 @@ void TGeantAnalysisSecondary::openFile() {
 	static int iFile = 0;
 	std::filesystem::path inputFileName = mConfig.getConfig("FILE").find("SIMULATION_FILE");
 	TString inputFileNameStr = std::string(inputFileName.stem()) + "_" + std::to_string(iFile) + std::string(inputFileName.extension());
-
-	mInputFile = new TFile(inputFileName, "READ");
+	iFile++;
+	mInputFile = new TFile(inputFileNameStr, "READ");
 	mInputTree = static_cast<TTree*>(mInputFile->Get("trackTree"));
 
 	mInputTree->SetBranchAddress("eventID", &mInputTuple.eventID);
