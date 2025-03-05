@@ -22,8 +22,8 @@ CppConfigFile setEnvironment(const ArgumentParser& parser) {
 		if ( parser.get_value<std::string>("tag") == tags ) {
 			config.modifyConfig("FILE").addDictionary("SIMULATION_FILE", inputFile);
 			std::filesystem::path outputPath = outputFile;
-			std::string outputPathStr = std::string(outputPath.stem()) + "_Secondary" + std::string(outputPath.extension());
-			config.modifyConfig("FILE").addDictionary("PLOT_FILE", outputPathStr);
+			outputPath.replace_filename(std::string(outputPath.stem()) + "_Secondary" + std::string(outputPath.extension()));
+			config.modifyConfig("FILE").addDictionary("PLOT_FILE", std::string(outputPath));
 			config.modifyConfig("FILE").addDictionary("DIVIDED_NUM", dividedNum);
 		}
 	}
@@ -50,6 +50,7 @@ int main(int argc, char** argv) {
 	int nFile = stoi(config.getConfig("FILE").find("DIVIDED_NUM"));
 	plot.setHistograms();
 	for ( int i = 0; i < nFile; i++ ) {
+		std::cout << "(" << i + 1 << "/" << nFile << ")" << std::endl;
 		plot.openFile();
 		plot.readTree();
 	}

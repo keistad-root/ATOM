@@ -22,8 +22,8 @@ private:
 	TTree* mInputTree;
 
 	TSecondaryAnalysisTuple mInputTuple;
-	std::unordered_map<std::string_view, TH1D*> m1DHistograms;
-	std::unordered_map<std::string_view, TH2D*> m2DHistograms;
+	std::unordered_map<std::string, TH1D*> m1DHistograms;
+	std::unordered_map<std::string, TH2D*> m2DHistograms;
 public:
 	void openFile();
 	void setHistograms();
