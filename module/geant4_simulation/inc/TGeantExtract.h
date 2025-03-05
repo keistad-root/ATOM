@@ -21,6 +21,7 @@ private:
 
 	std::filesystem::path mPrimaryOutputFilePath;
 	std::filesystem::path mIncidentOutputFilePath;
+	std::filesystem::path mSecondaryOutputFilePath;
 
 	bool mIsDivide = false;
 	int mNumFile = 1;
@@ -39,6 +40,9 @@ private:
 	std::unique_ptr<TFile> mIncidentAnalysisOutputFile;
 	std::unique_ptr<TTree> mIncidentAnalysisTree;
 	TIncidentAnalysisTuple mIncidentAnalysisTuple;
+	std::unique_ptr<TFile> mSecondaryAnalysisOutputFile;
+	std::unique_ptr<TTree> mSecondaryAnalysisTree;
+	TSecondaryAnalysisTuple mSecondaryAnalysisTuple;
 
 public:
 	void openInputFile();
@@ -51,8 +55,10 @@ private:
 
 	void initPrimaryAnalysisTree();
 	void initIncidentAnalysisTree();
+	void initSecondaryAnalysisTree();
 	void getPrimaryAnalysisInformation();
 	void getIncidentAnalysisInformation();
+	void getSecondaryAnalysisInformation();
 
 	void extractFromAFile();
 };

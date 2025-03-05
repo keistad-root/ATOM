@@ -19,6 +19,7 @@ CppConfigFile setEnvironment(const ArgumentParser& parser) {
 			config.modifyConfig("File").addDictionary("INPUT_FILE", simulationFile);
 			config.modifyConfig("File").addDictionary("PRIMARY_OUTPUT_FILE", primaryFile);
 			config.modifyConfig("File").addDictionary("INCIDENT_OUTPUT_FILE", incidentFile);
+			config.modifyConfig("File").addDictionary("SECONDARY_OUTPUT_FILE", secondaryFile);
 			config.modifyConfig("File").addDictionary("DIVIDED_NUM", dividedNum);
 		}
 	}
@@ -29,6 +30,10 @@ CppConfigFile setEnvironment(const ArgumentParser& parser) {
 	std::filesystem::path incidentOutputPath = config.getConfig("File").find("INCIDENT_OUTPUT_FILE");
 	if ( !std::filesystem::exists(incidentOutputPath.parent_path()) ) {
 		std::filesystem::create_directories(incidentOutputPath.parent_path());
+	}
+	std::filesystem::path secondaryOutputPath = config.getConfig("File").find("SECONDARY_OUTPUT_FILE");
+	if ( !std::filesystem::exists(secondaryOutputPath.parent_path()) ) {
+		std::filesystem::create_directories(secondaryOutputPath.parent_path());
 	}
 
 	return config;
@@ -47,7 +52,6 @@ int main(int argc, char** argv) {
 	TGeantExtract extract(config);
 	extract.openOutputFile();
 	extract.extractTrack();
-
 
 	return 0;
 }

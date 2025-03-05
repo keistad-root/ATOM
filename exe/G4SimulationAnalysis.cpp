@@ -35,6 +35,7 @@ CppConfigFile setEnvironment(const ArgumentParser& parser) {
 ArgumentParser set_parse(int argc, char** argv) {
 	ArgumentParser parser = ArgumentParser(argc, argv).setDescription("Plot the Geant4 simulation data");
 	parser.add_argument("tag").help("Tag for the file").set_default("").add_finish();
+	parser.add_argument("--secondary").help("Analyse the secondary particles").set_default("false").add_finish();
 	parser.parse_args();
 	return parser;
 }
@@ -112,6 +113,11 @@ int main(int argc, char** argv) {
 	plot.setHistograms(config.getConfigList());
 	plot.readTree();
 	plot.saveFile(config.getConfig("File").find("output_file"));
+
+	if ( parser.get_value<bool>("secondary") ) {
+		// plot.readSecondaryFile(config.getConfig("File").find("input_secondary_file"));
+
+	}
 
 	addEntry2CSV(parser.get_value<std::string>("tag"), plot.getEntry());
 
