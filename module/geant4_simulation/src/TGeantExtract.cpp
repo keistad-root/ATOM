@@ -1,5 +1,7 @@
 #include "TGeantExtract.h"
 
+#include "TVolumeID.h"
+
 TGeantExtract::TGeantExtract(const CppConfigFile& config) {
 	CppConfigDictionary fileConfig = config.getConfig("File");
 
@@ -102,7 +104,9 @@ void TGeantExtract::extractFromAFile() {
 		if ( mTrackTuple.parentID == 0 ) {
 			getPrimaryAnalysisInformation();
 		} else {
-			getSecondaryAnalysisInformation();
+			if ( mTrackTuple.initialVolumeID == VOLUME::ALPIDEMetal || mTrackTuple.initialVolumeID == VOLUME::ALPIDEEpitaxial || mTrackTuple.initialVolumeID == VOLUME::ALPIDESubstrate ) {
+				getSecondaryAnalysisInformation();
+			}
 		}
 		mIncidentTree->GetEntry(iIncident);
 		if ( mTrackTuple.eventID == mIncidentTuple.eventID && mTrackTuple.trackID == mIncidentTuple.trackID ) {
@@ -230,6 +234,7 @@ void TGeantExtract::initSecondaryAnalysisTree() {
 
 	mSecondaryAnalysisTree->Branch("eventID", &mSecondaryAnalysisTuple.eventID);
 	mSecondaryAnalysisTree->Branch("trackID", &mSecondaryAnalysisTuple.trackID);
+	mSecondaryAnalysisTree->Branch("parentID", &mSecondaryAnalysisTuple.parentID);
 	mSecondaryAnalysisTree->Branch("particleID", &mSecondaryAnalysisTuple.particleID);
 	mSecondaryAnalysisTree->Branch("initialVolumeID", &mSecondaryAnalysisTuple.initialVolumeID);
 	mSecondaryAnalysisTree->Branch("initX", &mSecondaryAnalysisTuple.initialPosition[0]);
@@ -301,6 +306,7 @@ void TGeantExtract::getIncidentAnalysisInformation() {
 void TGeantExtract::getSecondaryAnalysisInformation() {
 	mSecondaryAnalysisTuple.eventID = mTrackTuple.eventID;
 	mSecondaryAnalysisTuple.trackID = mTrackTuple.trackID;
+	mSecondaryAnalysisTuple.parentID = mTrackTuple.parentID;
 	mSecondaryAnalysisTuple.particleID = mTrackTuple.particleID;
 	mSecondaryAnalysisTuple.initialVolumeID = mTrackTuple.initialVolumeID;
 	mSecondaryAnalysisTuple.initialPosition[0] = mTrackTuple.initialPosition[0];

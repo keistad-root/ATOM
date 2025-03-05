@@ -450,12 +450,18 @@ void TGeantAnalysis::fillIncidentHistograms() {
 }
 
 void TGeantAnalysis::fillSecondaryHistograms() {
-	// if ( mSecondaryTuple.initialVolumeID == VOLUME::ALPIDEMetal || mSecondaryTuple.initialVolumeID == VOLUME::ALPIDEEpitaxial || mSecondaryTuple.initialVolumeID == VOLUME::ALPIDESubstrate ) {
-	for ( const auto& [key, hist] : m1DHistograms ) {
-		if ( key == "SecondaryParticleInALPIDE" ) {
-			hist->Fill(mSecondaryTuple.particleID);
+	if ( mSecondaryTuple.initialVolumeID == VOLUME::ALPIDEMetal || mSecondaryTuple.initialVolumeID == VOLUME::ALPIDEEpitaxial || mSecondaryTuple.initialVolumeID == VOLUME::ALPIDESubstrate ) {
+		for ( const auto& [key, hist] : m1DHistograms ) {
+			if ( key == "SecondaryParticleInALPIDE" ) {
+				hist->Fill(mSecondaryTuple.particleID);
+			}
+			if ( key == "SecondaryInALPIDEVolume" ) {
+				hist->Fill(mSecondaryTuple.initialVolumeID);
+			}
+			if ( key == "SecondaryInALPIDEDecayVolume" ) {
+				hist->Fill(mSecondaryTuple.finalVolumeID);
+			}
 		}
-		// }
 	}
 }
 void TGeantAnalysis::saveFile(std::filesystem::path outputFilePath) {

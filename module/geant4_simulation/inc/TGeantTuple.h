@@ -54,6 +54,7 @@ struct TIncidentAnalysisTuple {
 
 struct TSecondaryAnalysisTuple {
 	Int_t eventID, trackID;
+	Int_t parentID;
 	Int_t particleID;
 	Int_t initialVolumeID;
 	Double_t initialPosition[3];
