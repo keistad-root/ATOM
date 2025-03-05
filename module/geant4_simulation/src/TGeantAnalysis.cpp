@@ -288,6 +288,9 @@ void TGeantAnalysis::fillIncidentHistograms() {
 			if ( key == "ElectronIncidentVolume" ) {
 				hist->Fill(mIncidentTuple.initialVolumeID);
 			}
+			if ( key == "ElectronFinalVolume" ) {
+				hist->Fill(mIncidentTuple.finalVolumeID);
+			}
 			if ( key == "ElectronIncidentAngle" ) {
 				hist->Fill(180 - incidentTheta);
 			}

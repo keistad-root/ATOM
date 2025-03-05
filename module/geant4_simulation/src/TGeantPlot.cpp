@@ -55,7 +55,7 @@ void TGeantPlot::saveHistorams(const std::vector<CppConfigDictionary>& configLis
 						hist->GetXaxis()->SetBinLabel(i + 1., mParticleName[i]);
 					}
 				}
-				if ( key == "IncidentVolume" || key == "AlphaIncidentVolume" || key == "ElectronIncidentVolume" ) {
+				if ( key == "IncidentVolume" || key == "AlphaIncidentVolume" || key == "ElectronIncidentVolume" || key == "ElectronFinalVolume" ) {
 					for ( int i = 0; i < hist->GetNbinsX(); i++ ) {
 						hist->GetXaxis()->SetBinLabel(i + 1., mVolumeName[i]);
 					}
