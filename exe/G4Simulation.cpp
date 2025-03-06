@@ -23,15 +23,16 @@ const std::string INFORMATION_PATH = std::filesystem::path(SOURCE_DIR) / "build/
 
 CppConfigFile setEnvironment(const ArgumentParser& parser) {
 	CppConfigFile config(CONFIG_PATH);
-	io::CSVReader<13> infoCSV(INFORMATION_PATH);
+	io::CSVReader<14> infoCSV(INFORMATION_PATH);
 
-	infoCSV.read_header(io::ignore_extra_column, "TAG", "SIMULATION_FILE", "COLLIMATOR_LENGTH", "COLLIMATOR_AREA", "AL_SHIELD", "DISTANCE_ALPIDE_COLLIMATOR", "DISTANCE_SOURCE_COLLIMATOR", "EVENT_NUM", "ALPIDE_POSITION_X", "ALPIDE_POSITION_Y", "ALPIDE_ANGLE_X", "ALPIDE_ANGLE_Y", "ALPIDE_ANGLE_Z");
+	infoCSV.read_header(io::ignore_extra_column, "TAG", "SIMULATION_FILE", "PARTICLE", "COLLIMATOR_LENGTH", "COLLIMATOR_AREA", "AL_SHIELD", "DISTANCE_ALPIDE_COLLIMATOR", "DISTANCE_SOURCE_COLLIMATOR", "EVENT_NUM", "ALPIDE_POSITION_X", "ALPIDE_POSITION_Y", "ALPIDE_ANGLE_X", "ALPIDE_ANGLE_Y", "ALPIDE_ANGLE_Z");
 
-	std::string tags, simulationFile, collimatorLength, collimatorArea, alShield, distanceALPIDECollimator, distanceSourceCollimator, nEvent, alpidePositionX, alpidePositionY, alpideAngleX, alpideAngleY, alpideAngleZ;
+	std::string tags, simulationFile, particle, collimatorLength, collimatorArea, alShield, distanceALPIDECollimator, distanceSourceCollimator, nEvent, alpidePositionX, alpidePositionY, alpideAngleX, alpideAngleY, alpideAngleZ;
 
-	while ( infoCSV.read_row(tags, simulationFile, collimatorLength, collimatorArea, alShield, distanceALPIDECollimator, distanceSourceCollimator, nEvent, alpidePositionX, alpidePositionY, alpideAngleX, alpideAngleY, alpideAngleZ) ) {
+	while ( infoCSV.read_row(tags, simulationFile, particle, collimatorLength, collimatorArea, alShield, distanceALPIDECollimator, distanceSourceCollimator, nEvent, alpidePositionX, alpidePositionY, alpideAngleX, alpideAngleY, alpideAngleZ) ) {
 		if ( tags == parser.get_value<std::string>("tag") ) {
 			config.modifyConfig("FILE").addDictionary("OUTPUT_FILE", simulationFile);
+			config.modifyConfig("ENVIRONMENT").addDictionary("SOURCE_PARTICLE", particle);
 			config.modifyConfig("ENVIRONMENT").addDictionary("COLLIMATOR_LENGTH", collimatorLength);
 			config.modifyConfig("ENVIRONMENT").addDictionary("COLLIMATOR_AREA", collimatorArea);
 			config.modifyConfig("ENVIRONMENT").addDictionary("AL_SCREEN", alShield);
@@ -46,7 +47,6 @@ CppConfigFile setEnvironment(const ArgumentParser& parser) {
 			config.modifyConfig("ENVIRONMENT").addDictionary("ALPIDE_ANGLE_Z", alpideAngleZ);
 		}
 	}
-
 	return config;
 }
 
