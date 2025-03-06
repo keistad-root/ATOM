@@ -364,6 +364,20 @@ void TGeantAnalysis::fillIncidentHistograms() {
 				}
 			}
 		}
+		if ( mIncidentTuple.particleID == PARTICLE::gamma1 ) {
+			if ( key == "GammaIncidentZ" ) {
+				hist->Fill(mIncidentTuple.position[2] * 1000);
+			}
+			if ( key == "GammaIncidentAngle" ) {
+				hist->Fill(180 - incidentTheta);
+			}
+			if ( key == "GammaIncidentKineticEnergy" ) {
+				hist->Fill(mIncidentTuple.kineticEnergy * 1000);
+			}
+			if ( key == "GammaIncidentVolume" ) {
+				hist->Fill(mIncidentTuple.initialVolumeID);
+			}
+		}
 	}
 	for ( const auto& [key, hist] : m2DHistograms ) {
 		if ( key == "IncidentXY" ) {
@@ -447,6 +461,11 @@ void TGeantAnalysis::fillIncidentHistograms() {
 				if ( mIncidentTuple.depositEnergy[2] > -.5 ) {
 					hist->Fill(180 - incidentTheta, mIncidentTuple.depositEnergy[2] * 1000);
 				}
+			}
+		}
+		if ( mIncidentTuple.particleID == PARTICLE::gamma1 ) {
+			if ( key == "GammaIncidentXY" ) {
+				hist->Fill(mIncidentTuple.position[0], mIncidentTuple.position[1]);
 			}
 		}
 	}

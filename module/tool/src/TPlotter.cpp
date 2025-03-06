@@ -326,7 +326,7 @@ void TPlotter::setRange(TH2* plot, const CppConfigDictionary& config) {
 	}
 	if ( config.hasKey("Z_RANGE") ) {
 		std::vector<double> range = getDoubleSetFromString(config.find("Z_RANGE"));
-		plot->GetYaxis()->SetRangeUser(range[0], range[1]);
+		plot->GetZaxis()->SetRangeUser(range[0], range[1]);
 	}
 }
 
