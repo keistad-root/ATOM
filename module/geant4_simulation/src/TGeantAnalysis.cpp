@@ -377,6 +377,11 @@ void TGeantAnalysis::fillIncidentHistograms() {
 			if ( key == "GammaIncidentVolume" ) {
 				hist->Fill(mIncidentTuple.initialVolumeID);
 			}
+			if ( key == "GammaDepositEnergyTotal" ) {
+				if ( isDeposit ) {
+					hist->Fill(depositEnergy * 1000000);
+				}
+			}
 		}
 	}
 	for ( const auto& [key, hist] : m2DHistograms ) {
