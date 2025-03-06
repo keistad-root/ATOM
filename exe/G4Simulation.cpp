@@ -47,28 +47,6 @@ CppConfigFile setEnvironment(const ArgumentParser& parser) {
 		}
 	}
 
-	// io::CSVReader<7> csv("/home/ychoi/ATOM/config/g4simulation/g4simulation.csv");
-
-	// csv.read_header(io::ignore_extra_column, "num", "output_file", "collimator_length", "collimator_area", "screen", "distance_alpide_and_collimator", "n_event");
-	// int num;
-	// std::string output_file;
-	// std::string collimator_length;
-	// std::string collimator_area;
-	// std::string screen;
-	// std::string distance_alpide_and_collimator;
-	// std::string n_event;
-
-	// while ( csv.read_row(num, output_file, collimator_length, collimator_area, screen, distance_alpide_and_collimator, n_event) ) {
-	// 	if ( num == exp ) {
-	// 		config.modifyConfig("File").addDictionary("output_file", output_file);
-	// 		config.modifyConfig("Environment").addDictionary("collimator_length", collimator_length);
-	// 		config.modifyConfig("Environment").addDictionary("collimator_area", collimator_area);
-	// 		config.modifyConfig("Environment").addDictionary("screen", screen);
-	// 		config.modifyConfig("Environment").addDictionary("distance_alpide_and_collimator", distance_alpide_and_collimator);
-	// 		config.modifyConfig("Environment").addDictionary("activity", n_event);
-	// 	}
-	// }
-
 	return config;
 }
 

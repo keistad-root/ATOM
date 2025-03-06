@@ -24,21 +24,21 @@ private:
 	CppConfigFile mConfig;
 	// G4GeneralParticleSource* fParticleGun;
 
-	struct AlphaEnergyEntry {
+	struct EnergyEntry {
 		double energy;
 		double energyUncertainty;
 		double intensity;
 		double intensityUncertainty;
 	};
 
-	std::vector<AlphaEnergyEntry> mAlphaEnergy;
+	std::vector<EnergyEntry> mEnergy;
 public:
 	void GeneratePrimaries(G4Event*) override;
 
 	// const G4GeneralParticleSource* GetParticleGun() const;
 	const G4ParticleGun* GetParticleGun() const;
 
-	void setAlphaEnergy();
+	void setEnergyDistribution(std::string_view particle);
 };
 
 #endif
