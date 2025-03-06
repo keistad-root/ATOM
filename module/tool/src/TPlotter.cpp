@@ -20,6 +20,8 @@
 #include "TColourUser.h"
 #include "TPlotter.h"
 
+#include<ctime>
+
 /**
  * @brief Initializing canvas
  * @details Initialize canvas with informations given by config.
@@ -424,9 +426,22 @@ void TPlotter::saveCanvas(TCanvas* canvas, std::filesystem::path path, const Cpp
 
 	std::string name = config.hasKey("NAME") ? config.find("NAME") : "filename";
 	std::string extension = config.hasKey("EXTENSION") ? config.find("EXTENSION") : "png";
+	time_t now = time(NULL);
+	struct tm* pnow = localtime(&now);
 
-	TString savePath = static_cast<TString>((path / name).replace_extension(extension));
-	canvas->SaveAs(savePath);
+	std::ostringstream date;
+	date << std::setw(2) << std::setfill('0') << pnow->tm_year - 100;
+	date << std::setw(2) << std::setfill('0') << pnow->tm_mon + 1;
+	date << std::setw(2) << std::setfill('0') << pnow->tm_mday;
+	date << "_";
+	date << std::setw(2) << std::setfill('0') << pnow->tm_hour;
+	date << std::setw(2) << std::setfill('0') << pnow->tm_min;
+	date << std::setw(2) << std::setfill('0') << pnow->tm_sec;
+	name += "_" + date.str();
+
+	std::filesystem::path savePath = (path / name).replace_extension(extension);
+	std::filesystem::create_directories(savePath.parent_path());
+	canvas->SaveAs(static_cast<TString>(savePath));
 }
 
 const std::vector<int> TPlotter::getIntegerSetFromString(const std::string& numStr) {
