@@ -111,17 +111,17 @@ void TGeantAnalysis::readTree() {
 	for ( Int_t i = 0; i < nEntries; i++ ) {
 		progressBar.printProgress();
 		mIncidentTree->GetEntry(i);
-		if ( std::abs(mIncidentTuple.position[0]) < 4.35 && std::abs(mIncidentTuple.position[1]) < 0.27 ) { // 300 pixel * 20 pixel
-			fillIncidentHistograms();
-			if ( mIncidentTuple.particleID == PARTICLE::alpha ) {
-				position.push_back({mIncidentTuple.position[0], mIncidentTuple.position[1]});
-			}
-			if ( preTimeStamp != mIncidentTuple.eventID / 107 ) {
-				preTimeStamp = mIncidentTuple.eventID / 107;
-				nDouble += getNDouble(position);
-				position.clear();
-			}
+		// if ( std::abs(mIncidentTuple.position[0]) < 4.35 && std::abs(mIncidentTuple.position[1]) < 0.27 ) { // 300 pixel * 20 pixel
+		fillIncidentHistograms();
+		if ( mIncidentTuple.particleID == PARTICLE::alpha ) {
+			position.push_back({mIncidentTuple.position[0], mIncidentTuple.position[1]});
 		}
+		if ( preTimeStamp != mIncidentTuple.eventID / 107 ) {
+			preTimeStamp = mIncidentTuple.eventID / 107;
+			nDouble += getNDouble(position);
+			position.clear();
+		}
+		// }
 	}
 	std::cout << std::endl;
 	ProgressBar progressBar2(static_cast<int>(mPrimaryTree->GetEntries()));
