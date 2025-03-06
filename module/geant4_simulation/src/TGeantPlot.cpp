@@ -11,6 +11,9 @@
 #include "TString.h"
 #include "TStyle.h"
 
+std::vector<std::string> volumePlot = {"IncidentVolume", "AlphaIncidentVolume", "ElectronIncidentVolume", "ElectronFinalVolume", "SecondaryInALPIDEVolume", "SecondaryInALPIDEDecayVolume", "SecondaryInitVolume", "SecondaryFinalVolume"
+};
+
 void TGeantPlot::readInputFile(std::filesystem::path inputFilePath) {
 	TString inputFileName = std::string(inputFilePath);
 	mInputFile = new TFile(inputFileName, "READ");
@@ -50,12 +53,12 @@ void TGeantPlot::saveHistorams(const std::vector<CppConfigDictionary>& configLis
 				legend->AddEntry(hist, Form("Entries: %.1f", hist->GetEffectiveEntries()), "");
 				legend->AddEntry(hist, Form("Mean: %.3f", hist->GetMean()), "");
 				legend->AddEntry(hist, Form("Std Dev: %.3f", hist->GetStdDev()), "");
-				if ( key == "IncidentParticle" || key == "SecondaryParticleInALPIDE" ) {
+				if ( key == "IncidentParticle" || key == "SecondaryParticleInALPIDE" || key == "SecondaryParticle" ) {
 					for ( int i = 0; i < hist->GetNbinsX(); i++ ) {
 						hist->GetXaxis()->SetBinLabel(i + 1., mParticleName[i]);
 					}
 				}
-				if ( key == "IncidentVolume" || key == "AlphaIncidentVolume" || key == "ElectronIncidentVolume" || key == "ElectronFinalVolume" || key == "SecondaryInALPIDEVolume" || key == "SecondaryInALPIDEDecayVolume" ) {
+				if ( std::find(volumePlot.begin(), volumePlot.end(), key) != volumePlot.end() ) {
 					for ( int i = 0; i < hist->GetNbinsX(); i++ ) {
 						hist->GetXaxis()->SetBinLabel(i + 1., mVolumeName[i]);
 					}
