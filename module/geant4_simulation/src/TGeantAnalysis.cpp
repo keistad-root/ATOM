@@ -188,7 +188,7 @@ void TGeantAnalysis::fillIncidentHistograms() {
 	Double_t incidentMomentum = TMath::Sqrt(mIncidentTuple.momentum[0] * mIncidentTuple.momentum[0] + mIncidentTuple.momentum[1] * mIncidentTuple.momentum[1] + mIncidentTuple.momentum[2] * mIncidentTuple.momentum[2]);
 	Double_t incidentTheta = TMath::ACos(mIncidentTuple.momentum[2] / incidentMomentum) * 180. / TMath::Pi();
 	if ( incidentTheta < 90 ) {
-		std::cout << incidentTheta << std::endl;
+		std::cout << mIncidentTuple.initialVolumeID << " " << mIncidentTuple.initialPosition[2] << " " << mIncidentTuple.position[2] << " " << mIncidentTuple.finalPosition[2] << " " << incidentTheta << std::endl;
 	}
 	Double_t depositEnergy = 0.;
 	bool isDeposit = false;

@@ -252,7 +252,7 @@ void TAnalysisManager::doStepPhase(const G4Step* step) {
 
 	if ( currentVolume == mALPIDEMetalLogical && step->IsFirstStepInVolume() && getVolumeID(step->GetTrack()->GetOriginTouchableHandle()->GetVolume()->GetLogicalVolume()) > 3 ) {
 		G4LogicalVolume* postVolume = step->GetPostStepPoint()->GetTouchableHandle()->GetVolume()->GetLogicalVolume();
-		if ( postVolume != mWorldLogical && postVolume != mScreenLogical && postVolume != mCollimatorLogical ) {
+		if ( !isInALPIDE && postVolume != mWorldLogical && postVolume != mScreenLogical && postVolume != mCollimatorLogical ) {
 			isInALPIDE = true;
 			mIncidentTuple.eventID = mTrackTuple.eventID;
 			mIncidentTuple.trackID = step->GetTrack()->GetTrackID();
@@ -287,6 +287,10 @@ void TAnalysisManager::doStepPhase(const G4Step* step) {
 			}
 			mIncidentTuple.depositEnergy[2] += step->GetTotalEnergyDeposit();
 		}
+	}
+
+	if ( currentVolume == mALPIDEMetalLogical && currentVolume == mALPIDEEpitaxialLogical && currentVolume == mALPIDESubstrateLogical ) {
+		isInALPIDE = true;
 	}
 }
 
