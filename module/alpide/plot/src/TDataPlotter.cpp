@@ -123,10 +123,15 @@ void TDataPlotter::FillHitInfo() {
 	hitTree->SetBranchAddress("Y", &y);
 
 	Int_t nHit = hitTree->GetEntries();
+	std::vector<double> center = TPlotter::getDoubleSetFromString(mConfig.getConfig("CLUSTERSIZE_REGION").find("center"));
 
 	for ( int iHit = 0; iHit < nHit; iHit++ ) {
 		hitTree->GetEntry(iHit);
-		if ( isHitmap ) mHitmap->Fill(x, y);
+		if ( isHitmap ) {
+			if ( std::abs(x - center[0]) < 150 && std::abs(y - center[1]) < 10 ) {
+				mHitmap->Fill(x, y);
+			}
+		}
 		if ( isHitmapProjectionX ) mHitmapProjectionX->Fill(x);
 		if ( isHitmapProjectionY ) mHitmapProjectionY->Fill(y);
 	}
@@ -144,16 +149,21 @@ void TDataPlotter::FillClusterInfo() {
 	clusterTree->SetBranchAddress("Size", &size);
 
 	Int_t nCluster = clusterTree->GetEntries();
-
+	std::vector<double> center = TPlotter::getDoubleSetFromString(mConfig.getConfig("CLUSTERSIZE_REGION").find("center"));
 	for ( int iCluster = 0; iCluster < nCluster; iCluster++ ) {
 		clusterTree->GetEntry(iCluster);
-		if ( isClustermap ) mClustermap->Fill(x, y);
-		if ( isClustersize ) mClustersize->Fill(size);
+		if ( isClustermap ) {
+			if ( std::abs(x - center[0]) < 150 && std::abs(y - center[1]) < 10 ) {
+				mClustermap->Fill(x, y);
+			}
+		}
+		if ( isClustersize ) {
+			mClustersize->Fill(size);
+		}
 		if ( isClustermapProjectionX ) mClustermapProjectionX->Fill(x);
 		if ( isClustermapProjectionY ) mClustermapProjectionY->Fill(y);
 
 		if ( isClustersizeRegion ) {
-			std::vector<double> center = TPlotter::getDoubleSetFromString(mConfig.getConfig("CLUSTERSIZE_REGION").find("center"));
 			if ( std::abs(x - center[0]) < 2 * (1 / 0.028) && std::abs(y - center[1]) < 2 * (1 / 0.028) ) {
 				mClusterSizeOfRegion[0]->Fill(size);
 				mClusterSizeOfRegion[1]->Fill(size);
@@ -213,7 +223,7 @@ void TDataPlotter::FillShapeInfo() {
 void TDataPlotter::savePlots() {
 	if ( isHitmap ) {
 		TCanvas* canvas = new TCanvas("hitmapCanvas", "", 3000, 1500);
-		TPlotter::drawPlot(canvas, mHitmap, mConfig.getConfig("HITMAP"), "COLZ");
+		TPlotter::drawPlot(canvas, mHitmap, mConfig.getConfig("HITMAP"), "LEGO0");
 		if ( isClustersizeRegion ) {
 			std::vector<double> center = TPlotter::getDoubleSetFromString(mConfig.getConfig("CLUSTERSIZE_REGION").find("center"));
 			TEllipse* circle2mm = new TEllipse(center[0], center[1], 2 * (1 / 0.028));
@@ -329,7 +339,7 @@ void TDataPlotter::savePlots() {
 	}
 	if ( isClustermap ) {
 		TCanvas* canvas = new TCanvas("clustermapCanvas", "", 3000, 1500);
-		TPlotter::drawPlot(canvas, mClustermap, mConfig.getConfig("CLUSTERMAP"), "COLZ");
+		TPlotter::drawPlot(canvas, mClustermap, mConfig.getConfig("CLUSTERMAP"), "LEGO0");
 		if ( isClustersizeRegion ) {
 			std::vector<double> center = TPlotter::getDoubleSetFromString(mConfig.getConfig("CLUSTERSIZE_REGION").find("center"));
 			TEllipse* circle2mm = new TEllipse(center[0], center[1], 2 * (1 / 0.028));
