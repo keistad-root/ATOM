@@ -243,22 +243,22 @@ void TGeantAnalysis::fillIncidentHistograms() {
 		}
 		if ( key == "DepositEnergyTotal" ) {
 			if ( isDeposit ) {
-				hist->Fill(depositEnergy);
+				hist->Fill(depositEnergy * 1000);
 			}
 		}
 		if ( key == "DepositEnergyMetal" ) {
 			if ( mIncidentTuple.depositEnergy[0] > -.5 ) {
-				hist->Fill(mIncidentTuple.depositEnergy[0]);
+				hist->Fill(mIncidentTuple.depositEnergy[0] * 1000);
 			}
 		}
 		if ( key == "DepositEnergyEpitaxial" ) {
 			if ( mIncidentTuple.depositEnergy[1] > -.5 ) {
-				hist->Fill(mIncidentTuple.depositEnergy[1]);
+				hist->Fill(mIncidentTuple.depositEnergy[1] * 1000);
 			}
 		}
 		if ( key == "DepositEnergySubstrate" ) {
 			if ( mIncidentTuple.depositEnergy[2] > -.5 ) {
-				hist->Fill(mIncidentTuple.depositEnergy[2]);
+				hist->Fill(mIncidentTuple.depositEnergy[2] * 1000);
 			}
 		}
 		if ( key == "IncidentGlobalTime" ) {
