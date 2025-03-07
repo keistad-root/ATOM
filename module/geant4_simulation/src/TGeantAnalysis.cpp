@@ -380,8 +380,23 @@ void TGeantAnalysis::fillIncidentHistograms() {
 				hist->Fill(mIncidentTuple.initialVolumeID);
 			}
 			if ( key == "GammaDepositEnergyTotal" ) {
-				if ( isDeposit ) {
+				if ( isDeposit && depositEnergy > .000001 ) {
 					hist->Fill(depositEnergy * 1000000);
+				}
+			}
+			if ( key == "GammaDepositEnergyMetal" ) {
+				if ( mIncidentTuple.depositEnergy[0] > .000001 ) {
+					hist->Fill(mIncidentTuple.depositEnergy[0] * 1000000);
+				}
+			}
+			if ( key == "GammaDepositEnergyEpitaxial" ) {
+				if ( mIncidentTuple.depositEnergy[1] > .000001 ) {
+					hist->Fill(mIncidentTuple.depositEnergy[1] * 1000000);
+				}
+			}
+			if ( key == "GammaDepositEnergySubstrate" ) {
+				if ( mIncidentTuple.depositEnergy[2] > .000001 ) {
+					hist->Fill(mIncidentTuple.depositEnergy[2] * 1000000);
 				}
 			}
 		}
@@ -475,6 +490,28 @@ void TGeantAnalysis::fillIncidentHistograms() {
 		if ( mIncidentTuple.particleID == PARTICLE::gamma1 ) {
 			if ( key == "GammaIncidentXY" ) {
 				hist->Fill(mIncidentTuple.position[0], mIncidentTuple.position[1]);
+			}
+			if ( key == "GammaCorrelationDepositEnergyTotalAndIncidentAngle" ) {
+				if ( isDeposit ) {
+					if ( depositEnergy > .000001 ) {
+						hist->Fill(180 - incidentTheta, depositEnergy * 1000000);
+					}
+				}
+			}
+			if ( key == "GammaCorrelationDepositEnergyMetalAndIncidentAngle" ) {
+				if ( mIncidentTuple.depositEnergy[0] > .000001 ) {
+					hist->Fill(180 - incidentTheta, mIncidentTuple.depositEnergy[0] * 1000000);
+				}
+			}
+			if ( key == "GammaCorrelationDepositEnergyEpitaxialAndIncidentAngle" ) {
+				if ( mIncidentTuple.depositEnergy[1] > .000001 ) {
+					hist->Fill(180 - incidentTheta, mIncidentTuple.depositEnergy[1] * 1000000);
+				}
+			}
+			if ( key == "GammaCorrelationDepositEnergySubstrateAndIncidentAngle" ) {
+				if ( mIncidentTuple.depositEnergy[2] > .000001 ) {
+					hist->Fill(180 - incidentTheta, mIncidentTuple.depositEnergy[2] * 1000000);
+				}
 			}
 		}
 	}
