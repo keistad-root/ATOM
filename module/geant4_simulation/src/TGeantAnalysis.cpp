@@ -243,21 +243,23 @@ void TGeantAnalysis::fillIncidentHistograms() {
 		}
 		if ( key == "DepositEnergyTotal" ) {
 			if ( isDeposit ) {
-				hist->Fill(depositEnergy * 1000);
+				if ( depositEnergy > .000001 ) {
+					hist->Fill(depositEnergy * 1000);
+				}
 			}
 		}
 		if ( key == "DepositEnergyMetal" ) {
-			if ( mIncidentTuple.depositEnergy[0] > -.5 ) {
+			if ( mIncidentTuple.depositEnergy[0] > .000001 ) {
 				hist->Fill(mIncidentTuple.depositEnergy[0] * 1000);
 			}
 		}
 		if ( key == "DepositEnergyEpitaxial" ) {
-			if ( mIncidentTuple.depositEnergy[1] > -.5 ) {
+			if ( mIncidentTuple.depositEnergy[1] > .000001 ) {
 				hist->Fill(mIncidentTuple.depositEnergy[1] * 1000);
 			}
 		}
 		if ( key == "DepositEnergySubstrate" ) {
-			if ( mIncidentTuple.depositEnergy[2] > -.5 ) {
+			if ( mIncidentTuple.depositEnergy[2] > .000001 ) {
 				hist->Fill(mIncidentTuple.depositEnergy[2] * 1000);
 			}
 		}
@@ -390,22 +392,24 @@ void TGeantAnalysis::fillIncidentHistograms() {
 		}
 		if ( key == "CorrelationDepositEnergyTotalAndIncidentAngle" ) {
 			if ( isDeposit ) {
-				hist->Fill(180 - incidentTheta, depositEnergy);
+				if ( depositEnergy > .000001 ) {
+					hist->Fill(180 - incidentTheta, depositEnergy * 1000);
+				}
 			}
 		}
 		if ( key == "CorrelationDepositEnergyMetalAndIncidentAngle" ) {
-			if ( mIncidentTuple.depositEnergy[0] > -.5 ) {
-				hist->Fill(180 - incidentTheta, mIncidentTuple.depositEnergy[0]);
+			if ( mIncidentTuple.depositEnergy[0] > .000001 ) {
+				hist->Fill(180 - incidentTheta, mIncidentTuple.depositEnergy[0] * 1000);
 			}
 		}
 		if ( key == "CorrelationDepositEnergyEpitaxialAndIncidentAngle" ) {
-			if ( mIncidentTuple.depositEnergy[1] > -.5 ) {
-				hist->Fill(180 - incidentTheta, mIncidentTuple.depositEnergy[1]);
+			if ( mIncidentTuple.depositEnergy[1] > .000001 ) {
+				hist->Fill(180 - incidentTheta, mIncidentTuple.depositEnergy[1] * 1000);
 			}
 		}
 		if ( key == "CorrelationDepositEnergySubstrateAndIncidentAngle" ) {
-			if ( mIncidentTuple.depositEnergy[2] > -.5 ) {
-				hist->Fill(180 - incidentTheta, mIncidentTuple.depositEnergy[2]);
+			if ( mIncidentTuple.depositEnergy[2] > .000001 ) {
+				hist->Fill(180 - incidentTheta, mIncidentTuple.depositEnergy[2] * 1000);
 			}
 		}
 		if ( key == "CorrelationIncidentAngleAndStopPosition" ) {
