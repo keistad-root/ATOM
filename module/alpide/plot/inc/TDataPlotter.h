@@ -39,6 +39,8 @@ private:
 	TGraphErrors* mClustermapSliceYAmplitude;
 
 	std::vector<std::pair<TH2I*, int>> mShapeSet;
+	std::vector<double> mROI = {512, 256};
+	std::vector<double> mCenter = {512, 256};
 
 	bool isHitmap = false, isClustermap = false, isClustersize = false, isClustersizeRegion = false, isHitmapProjectionX = false, isHitmapProjectionY = false, isClustermapProjectionX = false, isClustermapProjectionY = false, isClustermapSliceX = false, isClustermapSliceY = false;
 public:
@@ -55,6 +57,8 @@ public:
 	void savePlots();
 
 	std::array<int, 60> getEntry();
+private:
+	void drawCircle(TCanvas* canvas);
 };
 
 #endif
