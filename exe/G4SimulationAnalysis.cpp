@@ -113,7 +113,9 @@ int main(int argc, char** argv) {
 	plot.readPrimaryFile(config.getConfig("File").find("input_primary_file"));
 	plot.readSecondaryFile(config.getConfig("File").find("input_secondary_file"));
 	plot.setHistograms(config.getConfigList());
-	plot.readTree();
+	plot.readPrimaryTree();
+	plot.readIncidentTree();
+	plot.readSecondaryTree();
 	plot.saveFile(config.getConfig("File").find("output_file"));
 
 

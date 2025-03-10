@@ -79,7 +79,7 @@ option(BUILD_DOC "Build documentation" OFF)
 if (BUILD_DOC)
   find_package(Doxygen)
   if (DOXYGEN_FOUND)
-	set(DOXYGEN_IN ${CMAKE_SOURCE_DIR}/docs/Doxyfile.in)
+	set(DOXYGEN_IN ${CMAKE_SOURCE_DIR}/Doxyfile)
 	set(DOXYGEN_OUT ${CMAKE_BINARY_DIR}/Doxyfile)
 
 	configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)

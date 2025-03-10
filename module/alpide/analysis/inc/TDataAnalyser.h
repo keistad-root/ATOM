@@ -44,6 +44,10 @@ private:
 
 	std::array<std::array<bool, 512>, 1024> mMaskingMap;
 public:
+	/**
+	 * @brief Open Input File
+	 * @details The input file's format is "ROOT". In the file, the x, y, event and time stamp is stored in this file.
+	*/
 	void openInputFile();
 	void openOutputFile();
 

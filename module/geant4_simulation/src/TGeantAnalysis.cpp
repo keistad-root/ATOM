@@ -4,7 +4,22 @@
 #include "TH2D.h"
 #include<cmath>
 
-TGeantAnalysis::TGeantAnalysis() { }
+TGeantAnalysis::TGeantAnalysis(const CppConfigFile& config) : mConfig(config) {
+	if ( mConfig.getConfig("FILE").hasKey("INPUT_PRIMARY_FILE") ) {
+		TString primaryFilePath = mConfig.getConfig("FILE").find("INPUT_PRIMARY_FILE");
+		mPrimaryFile = new TFile(primaryFilePath, "READ");
+		mPrimaryTree = static_cast<TTree*>(mPrimaryFile->Get("PrimaryAnalysis"));
+	}
+	if ( mConfig.getConfig("FILE").hasKey("INPUT_INCIDENT_FILE") ) {
+		TString incidentFilePath = mConfig.getConfig("FILE").find("INPUT_INCIDENT_FILE");
+		mIncidentFile = new TFile(incidentFilePath, "READ");
+		mIncidentTree = static_cast<TTree*>(mIncidentFile->Get("IncidentAnalysis"));
+	}
+
+	TString secondaryFilePath = mConfig.getConfig("FILE").find("INPUT_SECONDARY_FILE");
+	mSecondaryFile = new TFile(secondaryFilePath, "READ");
+	mSecondaryTree = static_cast<TTree*>(mSecondaryFile->Get("SecondaryAnalysis"));
+}
 
 TGeantAnalysis::~TGeantAnalysis() { }
 
@@ -101,7 +116,27 @@ void TGeantAnalysis::setHistograms(const std::vector<CppConfigDictionary>& confi
 	}
 }
 
-void TGeantAnalysis::readTree() {
+void TGeantAnalysis::readPrimaryTree() {
+	Int_t nEntries = mPrimaryTree->GetEntries();
+	ProgressBar progressBar(static_cast<int>(nEntries));
+	for ( Int_t i = 0; i < nEntries; i++ ) {
+		progressBar.printProgress();
+		mPrimaryTree->GetEntry(i);
+		fillPrimaryHistograms();
+	}
+}
+
+void TGeantAnalysis::readSecondaryTree() {
+	Int_t nEntries = mSecondaryTree->GetEntries();
+	ProgressBar progressBar(static_cast<int>(nEntries));
+	for ( Int_t i = 0; i < nEntries; i++ ) {
+		progressBar.printProgress();
+		mSecondaryTree->GetEntry(i);
+		fillSecondaryHistograms();
+	}
+}
+
+void TGeantAnalysis::readIncidentTree() {
 	Int_t nEntries = mIncidentTree->GetEntries();
 
 	std::vector<std::pair<Double_t, Double_t>> position;
@@ -122,20 +157,6 @@ void TGeantAnalysis::readTree() {
 			position.clear();
 		}
 		// }
-	}
-	std::cout << std::endl;
-	ProgressBar progressBar2(static_cast<int>(mPrimaryTree->GetEntries()));
-	for ( Int_t i = 0; i < mPrimaryTree->GetEntries(); i++ ) {
-		progressBar2.printProgress();
-		mPrimaryTree->GetEntry(i);
-		fillPrimaryHistograms();
-	}
-	std::cout << std::endl;
-	ProgressBar progressBar3(static_cast<int>(mSecondaryTree->GetEntries()));
-	for ( Int_t i = 0; i < mSecondaryTree->GetEntries(); i++ ) {
-		progressBar3.printProgress();
-		mSecondaryTree->GetEntry(i);
-		fillSecondaryHistograms();
 	}
 
 	mEntry[0] = m1DHistograms["ElectronDepositEnergyMetal"]->GetEffectiveEntries();

@@ -19,10 +19,11 @@ class TH2D;
 
 class TGeantAnalysis {
 public:
-	TGeantAnalysis();
+	TGeantAnalysis(const CppConfigFile& config);
 	~TGeantAnalysis();
-
 private:
+	CppConfigFile mConfig;
+
 	TFile* mPrimaryFile;
 	TFile* mIncidentFile;
 	TFile* mSecondaryFile;
@@ -43,7 +44,9 @@ public:
 	void readPrimaryFile(std::filesystem::path inputFilePath);
 	void readSecondaryFile(std::filesystem::path inputFilePath);
 	void setHistograms(const std::vector<CppConfigDictionary>& configList);
-	void readTree();
+	void readPrimaryTree();
+	void readIncidentTree();
+	void readSecondaryTree();
 	void fillIncidentHistograms();
 	void fillPrimaryHistograms();
 	void fillSecondaryHistograms();
