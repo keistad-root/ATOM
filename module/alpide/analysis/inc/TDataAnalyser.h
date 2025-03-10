@@ -1,3 +1,13 @@
+/**
+ * @file TDataAnalyser.h
+ * @author Yongjun Choi (yochoi@cern.ch)
+ * @brief Extract the event, cluster and shape information from primary root file
+ * @version 1.0.0
+ * @date 10-03-2025
+ *
+ * @copyright Copyright (c) 2025
+*/
+
 #ifndef __TDATAANALYSER__
 #define __TDATAANALYSER__
 
