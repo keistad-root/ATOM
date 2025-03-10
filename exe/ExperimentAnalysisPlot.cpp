@@ -31,7 +31,7 @@ CppConfigFile setEnvironment(const ArgumentParser& parser) {
 		if ( csvTag == tag ) {
 			config.modifyConfig("CONFIG").addDictionary("MASKED_FILE", maskedFile);
 			config.modifyConfig("CONFIG").addDictionary("OUTPUT_DIRECTORY", outputDirectory);
-			config.modifyConfig("CLUSTERSIZE_REGION").addDictionary("center", center);
+			config.modifyConfig("CONFIG").addDictionary("CENTER", center);
 			break;
 		}
 	}

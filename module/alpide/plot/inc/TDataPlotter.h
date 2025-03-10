@@ -12,6 +12,7 @@ class TH1D;
 class TH2I;
 class TFile;
 class TGraphErrors;
+class TCanvas;
 
 class TDataPlotter {
 public:

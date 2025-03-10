@@ -44,8 +44,8 @@ TDataPlotter::TDataPlotter(const CppConfigFile& config) : mConfig(config) {
 	if ( mConfig.hasConfig("CLUSTERMAP_SLICE_X") ) isClustermapSliceX = true;
 	if ( mConfig.hasConfig("CLUSTERMAP_SLICE_Y") ) isClustermapSliceY = true;
 
-	mROI = mConfig.getConfig("CONFIG").hasKey("CENTER") ? TPlotter::getDoubleSetFromString(mConfig.getConfig("CONFIG").find("CENTER")) : std::vector<double>{512, 256};
-	mCenter = mConfig.getConfig("CONFIG").hasKey("ROI") ? TPlotter::getDoubleSetFromString(mConfig.getConfig("CONFIG").find("ROI")) : std::vector<double>{512, 256};
+	mCenter = mConfig.getConfig("CONFIG").hasKey("CENTER") ? TPlotter::getDoubleSetFromString(mConfig.getConfig("CONFIG").find("CENTER")) : std::vector<double>{512, 256};
+	mROI = mConfig.getConfig("CONFIG").hasKey("ROI") ? TPlotter::getDoubleSetFromString(mConfig.getConfig("CONFIG").find("ROI")) : std::vector<double>{512, 256};
 }
 
 TDataPlotter::~TDataPlotter() {
@@ -226,7 +226,7 @@ void TDataPlotter::drawCircle(TCanvas* canvas) {
 
 void TDataPlotter::savePlots() {
 	if ( isHitmap ) {
-		TCanvas* canvas = new TCanvas("hitmapCanvas", "", 3000, 1500);
+		TCanvas* canvas = TPlotter::initCanvas(mConfig.getConfig("HITMAP"));
 		TPlotter::drawPlot(canvas, mHitmap, mConfig.getConfig("HITMAP"), "LEGO0");
 		if ( mConfig.getConfig("HITMAP").hasKey("circle") && mConfig.getConfig("HITMAP").find("circle") == "true" ) { drawCircle(canvas); }
 		TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("HITMAP"));
@@ -285,8 +285,9 @@ void TDataPlotter::savePlots() {
 		TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERMAP_PROJECTION_X"));
 		delete canvas;
 	}
+
 	if ( isClustermapProjectionY ) {
-		TCanvas* canvas = new TCanvas("clustermapProjectionYCanvas", "", 3000, 1500);
+		TCanvas* canvas = TPlotter::initCanvas(mConfig.getConfig("CLUSTERMAP_PROJECTION_Y"));
 		TPlotter::drawPlot(canvas, mClustermapProjectionY, mConfig.getConfig("CLUSTERMAP_PROJECTION_Y"), "HISTE");
 		if ( mConfig.getConfig("CLUSTERMAP_PROJECTION_Y").hasKey("FIT_FUNC") ) {
 			TF1* fitFunc = TPlotter::initFunction(mConfig.getConfig("CLUSTERMAP_PROJECTION_Y"));
@@ -303,42 +304,22 @@ void TDataPlotter::savePlots() {
 		TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERMAP_PROJECTION_Y"));
 		delete canvas;
 	}
+
 	if ( isClustermap ) {
-		TCanvas* canvas = new TCanvas("clustermapCanvas", "", 3000, 1500);
+		TCanvas* canvas = TPlotter::initCanvas(mConfig.getConfig("CLUSTERMAP"));
 		TPlotter::drawPlot(canvas, mClustermap, mConfig.getConfig("CLUSTERMAP"), "LEGO0");
-		if ( isClustersizeRegion ) {
-			std::vector<double> center = TPlotter::getDoubleSetFromString(mConfig.getConfig("CLUSTERSIZE_REGION").find("center"));
-			TEllipse* circle2mm = new TEllipse(center[0], center[1], 2 * (1 / 0.028));
-			circle2mm->SetLineColor(kRed);
-			circle2mm->SetLineWidth(2);
-			circle2mm->SetFillStyle(0);
-			circle2mm->Draw("SAME");
-			TEllipse* circle4mm = new TEllipse(center[0], center[1], 4 * (1 / 0.028));
-			circle4mm->SetLineColor(kRed);
-			circle4mm->SetLineWidth(2);
-			circle4mm->SetFillStyle(0);
-			circle4mm->Draw("SAME");
-			TEllipse* circle6mm = new TEllipse(center[0], center[1], 6 * (1 / 0.028));
-			circle6mm->SetLineColor(kRed);
-			circle6mm->SetLineWidth(2);
-			circle6mm->SetFillStyle(0);
-			circle6mm->Draw("SAME");
-			TEllipse* circle8mm = new TEllipse(center[0], center[1], 8 * (1 / 0.028));
-			circle8mm->SetLineColor(kRed);
-			circle8mm->SetLineWidth(2);
-			circle8mm->SetFillStyle(0);
-			circle8mm->Draw("SAME");
-		}
+		if ( mConfig.getConfig("CLUSTERMAP").hasKey("circle") && mConfig.getConfig("CLUSTERMAP").find("circle") == "true" ) { drawCircle(canvas); }
 		TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERMAP"));
 		delete canvas;
-		canvas = nullptr;
 	}
+
 	if ( isClustersize ) {
-		TCanvas* canvas = new TCanvas("clustersizeCanvas", "", 3000, 1500);
+		TCanvas* canvas = TPlotter::initCanvas(mConfig.getConfig("CLUSTERSIZE"));
 		TPlotter::drawPlot(canvas, mClustersize, mConfig.getConfig("CLUSTERSIZE"), "HISTE");
 		TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERSIZE"));
 		delete canvas;
 	}
+
 	if ( isClustersizeRegion ) {
 		TCanvas* canvas = new TCanvas("clustersizeRegionCanvas", "", 3000, 1500);
 		TLegend* legend = new TLegend(0.7, 0.6, 0.9, 0.9);
