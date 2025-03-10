@@ -19,13 +19,13 @@ CppConfigFile setEnvironment(const ArgumentParser& parser) {
 	std::string tags, input_incident_file, input_primary_file, input_secondary_file, output_file;
 	while ( infoCSV.read_row(tags, input_incident_file, input_primary_file, input_secondary_file, output_file) ) {
 		if ( parser.get_value<std::string>("tag") == tags ) {
-			config.modifyConfig("File").addDictionary("input_incident_file", input_incident_file);
-			config.modifyConfig("File").addDictionary("input_primary_file", input_primary_file);
-			config.modifyConfig("File").addDictionary("input_secondary_file", input_secondary_file);
-			config.modifyConfig("File").addDictionary("output_file", output_file);
+			config.modifyConfig("FILE").addDictionary("INPUT_INCIDENT_FILE", input_incident_file);
+			config.modifyConfig("FILE").addDictionary("INPUT_PRIMARY_FILE", input_primary_file);
+			config.modifyConfig("FILE").addDictionary("INPUT_SECONDARY_FILE", input_secondary_file);
+			config.modifyConfig("FILE").addDictionary("OUTPUT_FILE", output_file);
 		}
 	}
-	std::filesystem::path outputPath = config.getConfig("File").find("output_file");
+	std::filesystem::path outputPath = config.getConfig("FILE").find("OUTPUT_FILE");
 	if ( !std::filesystem::exists(outputPath.parent_path()) ) {
 		std::filesystem::create_directories(outputPath.parent_path());
 	}
@@ -108,17 +108,10 @@ int main(int argc, char** argv) {
 	ArgumentParser parser = set_parse(argc, argv);
 	CppConfigFile config = setEnvironment(parser);
 
-	TGeantAnalysis plot;
-	plot.readIncidentFile(config.getConfig("File").find("input_incident_file"));
-	plot.readPrimaryFile(config.getConfig("File").find("input_primary_file"));
-	plot.readSecondaryFile(config.getConfig("File").find("input_secondary_file"));
-	plot.setHistograms(config.getConfigList());
-	plot.readPrimaryTree();
-	plot.readIncidentTree();
-	plot.readSecondaryTree();
-	plot.saveFile(config.getConfig("File").find("output_file"));
-
-
+	TGeantAnalysis plot(config);
+	plot.setHistograms();
+	plot.readTree();
+	plot.saveFile();
 
 	addEntry2CSV(parser.get_value<std::string>("tag"), plot.getEntry());
 

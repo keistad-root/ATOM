@@ -34,24 +34,29 @@ private:
 
 	TPrimaryAnalysisTuple mPrimaryTuple;
 	TIncidentAnalysisTuple mIncidentTuple;
+	std::vector<TIncidentAnalysisTuple> mIncidentSet;
 	TSecondaryAnalysisTuple mSecondaryTuple;
 	std::unordered_map<std::string_view, TH1D*> m1DHistograms;
 	std::unordered_map<std::string_view, TH2D*> m2DHistograms;
 	std::array<int, 4> mEntry;
 
+	bool isPrimary = false, isIncident = false, isSecondary = false;
+
 public:
-	void readIncidentFile(std::filesystem::path inputFilePath);
-	void readPrimaryFile(std::filesystem::path inputFilePath);
-	void readSecondaryFile(std::filesystem::path inputFilePath);
-	void setHistograms(const std::vector<CppConfigDictionary>& configList);
+	void setHistograms();
+	void readTree();
+	void saveFile();
+	const std::array<int, 4>& getEntry() const { return mEntry; };
+private:
+	void readIncidentFile();
+	void readPrimaryFile();
+	void readSecondaryFile();
 	void readPrimaryTree();
 	void readIncidentTree();
 	void readSecondaryTree();
+	int getNDouble(std::vector<std::pair<Double_t, Double_t>> position);
 	void fillIncidentHistograms();
 	void fillPrimaryHistograms();
 	void fillSecondaryHistograms();
-	void saveFile(std::filesystem::path outputFilePath);
-	int getNDouble(std::vector<std::pair<Double_t, Double_t>> position);
-	const std::array<int, 4>& getEntry() const { return mEntry; };
 };
 #endif

@@ -5,29 +5,43 @@
 #include<cmath>
 
 TGeantAnalysis::TGeantAnalysis(const CppConfigFile& config) : mConfig(config) {
-	if ( mConfig.getConfig("FILE").hasKey("INPUT_PRIMARY_FILE") ) {
+	isPrimary = mConfig.getConfig("FILE").hasKey("INPUT_PRIMARY_FILE");
+	isIncident = mConfig.getConfig("FILE").hasKey("INPUT_INCIDENT_FILE");
+	isSecondary = mConfig.getConfig("FILE").hasKey("INPUT_SECONDARY_FILE");
+	if ( isPrimary ) {
 		TString primaryFilePath = mConfig.getConfig("FILE").find("INPUT_PRIMARY_FILE");
 		mPrimaryFile = new TFile(primaryFilePath, "READ");
 		mPrimaryTree = static_cast<TTree*>(mPrimaryFile->Get("PrimaryAnalysis"));
+		readPrimaryFile();
 	}
-	if ( mConfig.getConfig("FILE").hasKey("INPUT_INCIDENT_FILE") ) {
+	if ( isIncident ) {
 		TString incidentFilePath = mConfig.getConfig("FILE").find("INPUT_INCIDENT_FILE");
 		mIncidentFile = new TFile(incidentFilePath, "READ");
 		mIncidentTree = static_cast<TTree*>(mIncidentFile->Get("IncidentAnalysis"));
+		readIncidentFile();
 	}
-
-	TString secondaryFilePath = mConfig.getConfig("FILE").find("INPUT_SECONDARY_FILE");
-	mSecondaryFile = new TFile(secondaryFilePath, "READ");
-	mSecondaryTree = static_cast<TTree*>(mSecondaryFile->Get("SecondaryAnalysis"));
+	if ( isSecondary ) {
+		TString secondaryFilePath = mConfig.getConfig("FILE").find("INPUT_SECONDARY_FILE");
+		mSecondaryFile = new TFile(secondaryFilePath, "READ");
+		mSecondaryTree = static_cast<TTree*>(mSecondaryFile->Get("SecondaryAnalysis"));
+		readSecondaryFile();
+	}
 }
 
 TGeantAnalysis::~TGeantAnalysis() { }
 
-void TGeantAnalysis::readIncidentFile(std::filesystem::path inputFilePath) {
-	TString inputFileName = std::string(inputFilePath);
-	mIncidentFile = new TFile(inputFileName, "READ");
-	mIncidentTree = static_cast<TTree*>(mIncidentFile->Get("IncidentAnalysis"));
+void TGeantAnalysis::readPrimaryFile() {
+	mPrimaryTree->SetBranchAddress("eventID", &mPrimaryTuple.eventID);
+	mPrimaryTree->SetBranchAddress("x", &mPrimaryTuple.position[0]);
+	mPrimaryTree->SetBranchAddress("y", &mPrimaryTuple.position[1]);
+	mPrimaryTree->SetBranchAddress("z", &mPrimaryTuple.position[2]);
+	mPrimaryTree->SetBranchAddress("px", &mPrimaryTuple.momentum[0]);
+	mPrimaryTree->SetBranchAddress("py", &mPrimaryTuple.momentum[1]);
+	mPrimaryTree->SetBranchAddress("pz", &mPrimaryTuple.momentum[2]);
+	mPrimaryTree->SetBranchAddress("kineticEnergy", &mPrimaryTuple.kineticEnergy);
+}
 
+void TGeantAnalysis::readIncidentFile() {
 	mIncidentTree->SetBranchAddress("eventID", &mIncidentTuple.eventID);
 	mIncidentTree->SetBranchAddress("trackID", &mIncidentTuple.trackID);
 	mIncidentTree->SetBranchAddress("particleID", &mIncidentTuple.particleID);
@@ -61,26 +75,7 @@ void TGeantAnalysis::readIncidentFile(std::filesystem::path inputFilePath) {
 	mIncidentTree->SetBranchAddress("finalKineticEnergy", &mIncidentTuple.finalKineticEnergy);
 }
 
-void TGeantAnalysis::readPrimaryFile(std::filesystem::path inputFilePath) {
-	TString inputFileName = std::string(inputFilePath);
-	mPrimaryFile = new TFile(inputFileName, "READ");
-	mPrimaryTree = static_cast<TTree*>(mPrimaryFile->Get("PrimaryAnalysis"));
-
-	mPrimaryTree->SetBranchAddress("eventID", &mPrimaryTuple.eventID);
-	mPrimaryTree->SetBranchAddress("x", &mPrimaryTuple.position[0]);
-	mPrimaryTree->SetBranchAddress("y", &mPrimaryTuple.position[1]);
-	mPrimaryTree->SetBranchAddress("z", &mPrimaryTuple.position[2]);
-	mPrimaryTree->SetBranchAddress("px", &mPrimaryTuple.momentum[0]);
-	mPrimaryTree->SetBranchAddress("py", &mPrimaryTuple.momentum[1]);
-	mPrimaryTree->SetBranchAddress("pz", &mPrimaryTuple.momentum[2]);
-	mPrimaryTree->SetBranchAddress("kineticEnergy", &mPrimaryTuple.kineticEnergy);
-}
-
-void TGeantAnalysis::readSecondaryFile(std::filesystem::path inputFilePath) {
-	TString inputFileName = std::string(inputFilePath);
-	mSecondaryFile = new TFile(inputFileName, "READ");
-	mSecondaryTree = static_cast<TTree*>(mSecondaryFile->Get("SecondaryAnalysis"));
-
+void TGeantAnalysis::readSecondaryFile() {
 	mSecondaryTree->SetBranchAddress("eventID", &mSecondaryTuple.eventID);
 	mSecondaryTree->SetBranchAddress("trackID", &mSecondaryTuple.trackID);
 	mSecondaryTree->SetBranchAddress("particleID", &mSecondaryTuple.particleID);
@@ -102,7 +97,8 @@ void TGeantAnalysis::readSecondaryFile(std::filesystem::path inputFilePath) {
 	mSecondaryTree->SetBranchAddress("finalKineticEnergy", &mSecondaryTuple.finalKineticEnergy);
 }
 
-void TGeantAnalysis::setHistograms(const std::vector<CppConfigDictionary>& configList) {
+void TGeantAnalysis::setHistograms() {
+	std::vector<CppConfigDictionary> configList = mConfig.getConfigList();
 	for ( const CppConfigDictionary& config : configList ) {
 		std::string_view key = config.getConfigName();
 		if ( config.hasKey("type") && config.find("type") == "1H" ) {
@@ -113,6 +109,18 @@ void TGeantAnalysis::setHistograms(const std::vector<CppConfigDictionary>& confi
 			TH2D* hist = TPlotter::init2DHist(config);
 			m2DHistograms.insert_or_assign(key, hist);
 		}
+	}
+}
+
+void TGeantAnalysis::readTree() {
+	if ( isPrimary ) {
+		readPrimaryTree();
+	}
+	if ( isIncident ) {
+		readIncidentTree();
+	}
+	if ( isSecondary ) {
+		readSecondaryTree();
 	}
 }
 
@@ -156,6 +164,7 @@ void TGeantAnalysis::readIncidentTree() {
 			nDouble += getNDouble(position);
 			position.clear();
 		}
+		mIncidentSet.push_back(mIncidentTuple);
 		// }
 	}
 
@@ -182,25 +191,28 @@ int TGeantAnalysis::getNDouble(std::vector<std::pair<Double_t, Double_t>> positi
 
 void TGeantAnalysis::fillPrimaryHistograms() {
 	for ( const auto& [key, hist] : m1DHistograms ) {
+		Double_t momentum = TMath::Sqrt(mPrimaryTuple.momentum[0] * mPrimaryTuple.momentum[0] + mPrimaryTuple.momentum[1] * mPrimaryTuple.momentum[1] + mPrimaryTuple.momentum[2] * mPrimaryTuple.momentum[2]);
+		Double_t theta = TMath::ACos(mPrimaryTuple.momentum[2] / momentum) * 180. / TMath::Pi();
+		Double_t phi = TMath::ATan2(mPrimaryTuple.momentum[1], mPrimaryTuple.momentum[0]) * 180. / TMath::Pi();
 		if ( key == "SourceZ" ) {
-			hist->Fill(mPrimaryTuple.position[2]);
+			Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+			hist->Fill(mPrimaryTuple.position[2] / multiple);
+		}
+		if ( key == "SourceKineticEnergy" ) {
+			Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+			hist->Fill(mPrimaryTuple.kineticEnergy / multiple);
 		}
 		if ( key == "SourceTheta" ) {
-			Double_t momentum = TMath::Sqrt(mPrimaryTuple.momentum[0] * mPrimaryTuple.momentum[0] + mPrimaryTuple.momentum[1] * mPrimaryTuple.momentum[1] + mPrimaryTuple.momentum[2] * mPrimaryTuple.momentum[2]);
-			Double_t theta = TMath::ACos(mPrimaryTuple.momentum[2] / momentum) * 180. / TMath::Pi();
 			hist->Fill(180 - theta);
 		}
 		if ( key == "SourcePhi" ) {
-			Double_t phi = TMath::ATan2(mPrimaryTuple.momentum[1], mPrimaryTuple.momentum[0]) * 180. / TMath::Pi();
 			hist->Fill(phi);
-		}
-		if ( key == "SourceKineticEnergy" ) {
-			hist->Fill(mPrimaryTuple.kineticEnergy);
 		}
 	}
 	for ( const auto& [key, hist] : m2DHistograms ) {
 		if ( key == "SourceXY" ) {
-			hist->Fill(mPrimaryTuple.position[0], mPrimaryTuple.position[1]);
+			Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+			hist->Fill(mPrimaryTuple.position[0] / multiple, mPrimaryTuple.position[1] / multiple);
 		}
 	}
 }
@@ -208,20 +220,17 @@ void TGeantAnalysis::fillPrimaryHistograms() {
 void TGeantAnalysis::fillIncidentHistograms() {
 	Double_t incidentMomentum = TMath::Sqrt(mIncidentTuple.momentum[0] * mIncidentTuple.momentum[0] + mIncidentTuple.momentum[1] * mIncidentTuple.momentum[1] + mIncidentTuple.momentum[2] * mIncidentTuple.momentum[2]);
 	Double_t incidentTheta = TMath::ACos(mIncidentTuple.momentum[2] / incidentMomentum) * 180. / TMath::Pi();
-	if ( incidentTheta < 90 ) {
-		std::cout << mIncidentTuple.initialVolumeID << " " << mIncidentTuple.initialPosition[2] << " " << mIncidentTuple.position[2] << " " << mIncidentTuple.finalPosition[2] << " " << incidentTheta << std::endl;
-	}
 	Double_t depositEnergy = 0.;
 	bool isDeposit = false;
-	if ( mIncidentTuple.depositEnergy[0] > -.5 ) {
+	if ( mIncidentTuple.depositEnergy[0] > .000001 ) {
 		depositEnergy += mIncidentTuple.depositEnergy[0];
 		isDeposit = true;
 	}
-	if ( mIncidentTuple.depositEnergy[1] > -.5 ) {
+	if ( mIncidentTuple.depositEnergy[1] > .000001 ) {
 		depositEnergy += mIncidentTuple.depositEnergy[1];
 		isDeposit = true;
 	}
-	if ( mIncidentTuple.depositEnergy[2] > -.5 ) {
+	if ( mIncidentTuple.depositEnergy[2] > .000001 ) {
 		depositEnergy += mIncidentTuple.depositEnergy[2];
 		isDeposit = true;
 	}
@@ -248,13 +257,15 @@ void TGeantAnalysis::fillIncidentHistograms() {
 			}
 		}
 		if ( key == "IncidentZ" ) {
-			hist->Fill(mIncidentTuple.position[2] * 1000);
+			Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+			hist->Fill(mIncidentTuple.position[2] / multiple);
 		}
 		if ( key == "IncidentAngle" ) {
 			hist->Fill(180 - incidentTheta);
 		}
 		if ( key == "IncidentKineticEnergy" ) {
-			hist->Fill(mIncidentTuple.kineticEnergy);
+			Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+			hist->Fill(mIncidentTuple.kineticEnergy / multiple);
 		}
 		if ( key == "IncidentParticle" ) {
 			hist->Fill(mIncidentTuple.particleID);
@@ -265,23 +276,27 @@ void TGeantAnalysis::fillIncidentHistograms() {
 		if ( key == "DepositEnergyTotal" ) {
 			if ( isDeposit ) {
 				if ( depositEnergy > .000001 ) {
-					hist->Fill(depositEnergy * 1000);
+					Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+					hist->Fill(depositEnergy / multiple);
 				}
 			}
 		}
 		if ( key == "DepositEnergyMetal" ) {
 			if ( mIncidentTuple.depositEnergy[0] > .000001 ) {
-				hist->Fill(mIncidentTuple.depositEnergy[0] * 1000);
+				Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+				hist->Fill(mIncidentTuple.depositEnergy[0] / multiple);
 			}
 		}
 		if ( key == "DepositEnergyEpitaxial" ) {
 			if ( mIncidentTuple.depositEnergy[1] > .000001 ) {
-				hist->Fill(mIncidentTuple.depositEnergy[1] * 1000);
+				Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+				hist->Fill(mIncidentTuple.depositEnergy[1] / multiple);
 			}
 		}
 		if ( key == "DepositEnergySubstrate" ) {
 			if ( mIncidentTuple.depositEnergy[2] > .000001 ) {
-				hist->Fill(mIncidentTuple.depositEnergy[2] * 1000);
+				Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+				hist->Fill(mIncidentTuple.depositEnergy[2] / multiple);
 			}
 		}
 		if ( key == "IncidentGlobalTime" ) {
@@ -308,7 +323,8 @@ void TGeantAnalysis::fillIncidentHistograms() {
 				hist->Fill(180 - incidentTheta);
 			}
 			if ( key == "AlphaIncidentKineticEnergy" ) {
-				hist->Fill(mIncidentTuple.kineticEnergy);
+				Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+				hist->Fill(mIncidentTuple.kineticEnergy / multiple);
 			}
 			if ( key == "AlphaIncidentGlobalTime" ) {
 				hist->Fill(mIncidentTuple.globalTime);
@@ -318,22 +334,26 @@ void TGeantAnalysis::fillIncidentHistograms() {
 			}
 			if ( key == "AlphaDepositEnergyTotal" ) {
 				if ( isDeposit ) {
-					hist->Fill(depositEnergy);
+					Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+					hist->Fill(depositEnergy / multiple);
 				}
 			}
 			if ( key == "AlphaDepositEnergyMetal" ) {
-				if ( mIncidentTuple.depositEnergy[0] > -.5 ) {
-					hist->Fill(mIncidentTuple.depositEnergy[0]);
+				if ( mIncidentTuple.depositEnergy[0] > .000001 ) {
+					Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+					hist->Fill(mIncidentTuple.depositEnergy[0] / multiple);
 				}
 			}
 			if ( key == "AlphaDepositEnergyEpitaxial" ) {
-				if ( mIncidentTuple.depositEnergy[1] > -.5 ) {
-					hist->Fill(mIncidentTuple.depositEnergy[1]);
+				if ( mIncidentTuple.depositEnergy[1] > .000001 ) {
+					Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+					hist->Fill(mIncidentTuple.depositEnergy[1] / multiple);
 				}
 			}
 			if ( key == "AlphaDepositEnergySubstrate" ) {
-				if ( mIncidentTuple.depositEnergy[2] > -.5 ) {
-					hist->Fill(mIncidentTuple.depositEnergy[2]);
+				if ( mIncidentTuple.depositEnergy[2] > .000001 ) {
+					Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+					hist->Fill(mIncidentTuple.depositEnergy[2] / multiple);
 				}
 			}
 		}
@@ -424,57 +444,66 @@ void TGeantAnalysis::fillIncidentHistograms() {
 	}
 	for ( const auto& [key, hist] : m2DHistograms ) {
 		if ( key == "IncidentXY" ) {
-			hist->Fill(mIncidentTuple.position[0], mIncidentTuple.position[1]);
+			Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+			hist->Fill(mIncidentTuple.position[0] / multiple, mIncidentTuple.position[1] / multiple);
 		}
 		if ( key == "CorrelationDepositEnergyTotalAndIncidentAngle" ) {
 			if ( isDeposit ) {
-				if ( depositEnergy > .000001 ) {
-					hist->Fill(180 - incidentTheta, depositEnergy * 1000);
-				}
+				Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+				hist->Fill(180 - incidentTheta, depositEnergy / multiple);
 			}
 		}
 		if ( key == "CorrelationDepositEnergyMetalAndIncidentAngle" ) {
 			if ( mIncidentTuple.depositEnergy[0] > .000001 ) {
-				hist->Fill(180 - incidentTheta, mIncidentTuple.depositEnergy[0] * 1000);
+				Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+				hist->Fill(180 - incidentTheta, mIncidentTuple.depositEnergy[0] / multiple);
 			}
 		}
 		if ( key == "CorrelationDepositEnergyEpitaxialAndIncidentAngle" ) {
 			if ( mIncidentTuple.depositEnergy[1] > .000001 ) {
-				hist->Fill(180 - incidentTheta, mIncidentTuple.depositEnergy[1] * 1000);
+				Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+				hist->Fill(180 - incidentTheta, mIncidentTuple.depositEnergy[1] / multiple);
 			}
 		}
 		if ( key == "CorrelationDepositEnergySubstrateAndIncidentAngle" ) {
 			if ( mIncidentTuple.depositEnergy[2] > .000001 ) {
-				hist->Fill(180 - incidentTheta, mIncidentTuple.depositEnergy[2] * 1000);
+				Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+				hist->Fill(180 - incidentTheta, mIncidentTuple.depositEnergy[2] / multiple);
 			}
 		}
 		if ( key == "CorrelationIncidentAngleAndStopPosition" ) {
 			if ( mIncidentTuple.finalVolumeID == VOLUME::ALPIDEMetal || mIncidentTuple.finalVolumeID == VOLUME::ALPIDEEpitaxial || mIncidentTuple.finalVolumeID == VOLUME::ALPIDESubstrate ) {
-				hist->Fill(180 - incidentTheta, -mIncidentTuple.finalPosition[2] * 1000);
+				Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+				hist->Fill(180 - incidentTheta, -mIncidentTuple.finalPosition[2] / multiple);
 			}
 		}
 		if ( mIncidentTuple.particleID == PARTICLE::alpha ) {
 			if ( key == "AlphaIncidentXY" ) {
-				hist->Fill(mIncidentTuple.position[0], mIncidentTuple.position[1]);
+				Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+				hist->Fill(mIncidentTuple.position[0] / multiple, mIncidentTuple.position[1] / multiple);
 			}
 			if ( key == "AlphaCorrelationDepositEnergyTotalAndIncidentAngle" ) {
 				if ( isDeposit ) {
-					hist->Fill(180 - incidentTheta, depositEnergy);
+					Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+					hist->Fill(180 - incidentTheta, depositEnergy / multiple);
 				}
 			}
 			if ( key == "AlphaCorrelationDepositEnergyMetalAndIncidentAngle" ) {
-				if ( mIncidentTuple.depositEnergy[0] > -.5 ) {
-					hist->Fill(180 - incidentTheta, mIncidentTuple.depositEnergy[0]);
+				if ( mIncidentTuple.depositEnergy[0] > .000001 ) {
+					Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+					hist->Fill(180 - incidentTheta, mIncidentTuple.depositEnergy[0] / multiple);
 				}
 			}
 			if ( key == "AlphaCorrelationDepositEnergyEpitaxialAndIncidentAngle" ) {
-				if ( mIncidentTuple.depositEnergy[1] > -.5 ) {
-					hist->Fill(180 - incidentTheta, mIncidentTuple.depositEnergy[1]);
+				if ( mIncidentTuple.depositEnergy[1] > .000001 ) {
+					Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+					hist->Fill(180 - incidentTheta, mIncidentTuple.depositEnergy[1] / multiple);
 				}
 			}
 			if ( key == "AlphaCorrelationDepositEnergySubstrateAndIncidentAngle" ) {
-				if ( mIncidentTuple.depositEnergy[2] > -.5 ) {
-					hist->Fill(180 - incidentTheta, mIncidentTuple.depositEnergy[2]);
+				if ( mIncidentTuple.depositEnergy[2] > .000001 ) {
+					Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+					hist->Fill(180 - incidentTheta, mIncidentTuple.depositEnergy[2] / multiple);
 				}
 			}
 		}
@@ -539,22 +568,28 @@ void TGeantAnalysis::fillIncidentHistograms() {
 }
 
 void TGeantAnalysis::fillSecondaryHistograms() {
-	if ( mSecondaryTuple.initialVolumeID == VOLUME::ALPIDEMetal || mSecondaryTuple.initialVolumeID == VOLUME::ALPIDEEpitaxial || mSecondaryTuple.initialVolumeID == VOLUME::ALPIDESubstrate ) {
-		for ( const auto& [key, hist] : m1DHistograms ) {
-			if ( key == "SecondaryParticleInALPIDE" ) {
-				hist->Fill(mSecondaryTuple.particleID);
-			}
-			if ( key == "SecondaryInALPIDEVolume" ) {
-				hist->Fill(mSecondaryTuple.initialVolumeID);
-			}
-			if ( key == "SecondaryInALPIDEDecayVolume" ) {
-				hist->Fill(mSecondaryTuple.finalVolumeID);
-			}
+	TIncidentAnalysisTuple incidentTuple;
+	for ( const auto& incident : mIncidentSet ) {
+		if ( incident.eventID == mSecondaryTuple.eventID && incident.trackID == mSecondaryTuple.parentID ) {
+			incidentTuple = incident;
+			break;
+		}
+	}
+
+	for ( const auto& [key, hist] : m1DHistograms ) {
+		if ( key == "SecondaryParticleInALPIDE" ) {
+			hist->Fill(mSecondaryTuple.particleID);
+		}
+		if ( key == "SecondaryInALPIDEVolume" ) {
+			hist->Fill(mSecondaryTuple.initialVolumeID);
+		}
+		if ( key == "SecondaryInALPIDEDecayVolume" ) {
+			hist->Fill(mSecondaryTuple.finalVolumeID);
 		}
 	}
 }
-void TGeantAnalysis::saveFile(std::filesystem::path outputFilePath) {
-	TString outputFileName = std::string(outputFilePath);
+void TGeantAnalysis::saveFile() {
+	TString outputFileName = std::string(mConfig.getConfig("FILE").find("OUTPUT_FILE"));
 	TFile outputFile(outputFileName, "RECREATE");
 	for ( const auto& [key, hist] : m1DHistograms ) {
 		hist->Write(key.data());
