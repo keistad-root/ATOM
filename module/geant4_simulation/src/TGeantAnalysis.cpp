@@ -152,7 +152,6 @@ void TGeantAnalysis::readIncidentTree() {
 	Int_t preTimeStamp = 0;
 	ProgressBar progressBar(static_cast<int>(nEntries));
 	Int_t nDouble = 0;
-	std::cout << m1DHistograms.size() << std::endl;
 	for ( Int_t i = 0; i < nEntries; i++ ) {
 		progressBar.printProgress();
 		mIncidentTree->GetEntry(i);
@@ -179,15 +178,11 @@ void TGeantAnalysis::readIncidentTree() {
 
 int TGeantAnalysis::getNDouble(std::vector<std::pair<Double_t, Double_t>> position) {
 	Int_t num = 0;
-	Int_t nParticipant = 0;
-	// TH1D* hist = m1DHistograms.find("DistanceBetweenIncidentAlpha")->second;
-	TH1D* hist = m1DHistograms["DistanceBetweenIncidentAlpha"];
-	std::cout << hist->GetName() << std::endl;
-	for ( Int_t i = 0; i < position.size(); i++ ) {
-		for ( Int_t j = i + 1; j < position.size(); j++ ) {
-			//if ( position.size() - 1 > j ) continue;
+	Int_t nPosition = position.size();
+	for ( Int_t i = 0; i < nPosition; i++ ) {
+		for ( Int_t j = i + 1; j < nPosition; j++ ) {
 			Double_t distance = TMath::Sqrt(TMath::Power(position[i].first - position[j].first, 2) + TMath::Power(position[i].second - position[j].second, 2));
-			hist->Fill(distance * 1000);
+			m1DHistograms["DistanceBetweenIncidentAlpha"]->Fill(distance * 1000);
 			if ( distance > 0.048 && distance < 0.154 ) {
 				num++;
 			}
@@ -202,11 +197,11 @@ void TGeantAnalysis::fillPrimaryHistograms() {
 		Double_t theta = TMath::ACos(mPrimaryTuple.momentum[2] / momentum) * 180. / TMath::Pi();
 		Double_t phi = TMath::ATan2(mPrimaryTuple.momentum[1], mPrimaryTuple.momentum[0]) * 180. / TMath::Pi();
 		if ( key == "SourceZ" ) {
-			Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+			Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
 			hist->Fill(mPrimaryTuple.position[2] / multiple);
 		}
 		if ( key == "SourceKineticEnergy" ) {
-			Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+			Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
 			hist->Fill(mPrimaryTuple.kineticEnergy / multiple);
 		}
 		if ( key == "SourceTheta" ) {
@@ -218,7 +213,7 @@ void TGeantAnalysis::fillPrimaryHistograms() {
 	}
 	for ( auto& [key, hist] : m2DHistograms ) {
 		if ( key == "SourceXY" ) {
-			Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+			Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
 			hist->Fill(mPrimaryTuple.position[0] / multiple, mPrimaryTuple.position[1] / multiple);
 		}
 	}
@@ -264,14 +259,14 @@ void TGeantAnalysis::fillIncidentHistograms() {
 			}
 		}
 		if ( key == "IncidentZ" ) {
-			Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+			Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
 			hist->Fill(mIncidentTuple.position[2] / multiple);
 		}
 		if ( key == "IncidentAngle" ) {
 			hist->Fill(180 - incidentTheta);
 		}
 		if ( key == "IncidentKineticEnergy" ) {
-			Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+			Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
 			hist->Fill(mIncidentTuple.kineticEnergy / multiple);
 		}
 		if ( key == "IncidentParticle" ) {
@@ -283,26 +278,26 @@ void TGeantAnalysis::fillIncidentHistograms() {
 		if ( key == "DepositEnergyTotal" ) {
 			if ( isDeposit ) {
 				if ( depositEnergy > .000001 ) {
-					Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+					Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
 					hist->Fill(depositEnergy / multiple);
 				}
 			}
 		}
 		if ( key == "DepositEnergyMetal" ) {
 			if ( mIncidentTuple.depositEnergy[0] > .000001 ) {
-				Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+				Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
 				hist->Fill(mIncidentTuple.depositEnergy[0] / multiple);
 			}
 		}
 		if ( key == "DepositEnergyEpitaxial" ) {
 			if ( mIncidentTuple.depositEnergy[1] > .000001 ) {
-				Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+				Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
 				hist->Fill(mIncidentTuple.depositEnergy[1] / multiple);
 			}
 		}
 		if ( key == "DepositEnergySubstrate" ) {
 			if ( mIncidentTuple.depositEnergy[2] > .000001 ) {
-				Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+				Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
 				hist->Fill(mIncidentTuple.depositEnergy[2] / multiple);
 			}
 		}
@@ -330,7 +325,7 @@ void TGeantAnalysis::fillIncidentHistograms() {
 				hist->Fill(180 - incidentTheta);
 			}
 			if ( key == "AlphaIncidentKineticEnergy" ) {
-				Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+				Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
 				hist->Fill(mIncidentTuple.kineticEnergy / multiple);
 			}
 			if ( key == "AlphaIncidentGlobalTime" ) {
@@ -341,25 +336,25 @@ void TGeantAnalysis::fillIncidentHistograms() {
 			}
 			if ( key == "AlphaDepositEnergyTotal" ) {
 				if ( isDeposit ) {
-					Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+					Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
 					hist->Fill(depositEnergy / multiple);
 				}
 			}
 			if ( key == "AlphaDepositEnergyMetal" ) {
 				if ( mIncidentTuple.depositEnergy[0] > .000001 ) {
-					Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+					Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
 					hist->Fill(mIncidentTuple.depositEnergy[0] / multiple);
 				}
 			}
 			if ( key == "AlphaDepositEnergyEpitaxial" ) {
 				if ( mIncidentTuple.depositEnergy[1] > .000001 ) {
-					Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+					Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
 					hist->Fill(mIncidentTuple.depositEnergy[1] / multiple);
 				}
 			}
 			if ( key == "AlphaDepositEnergySubstrate" ) {
 				if ( mIncidentTuple.depositEnergy[2] > .000001 ) {
-					Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+					Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
 					hist->Fill(mIncidentTuple.depositEnergy[2] / multiple);
 				}
 			}
@@ -451,65 +446,65 @@ void TGeantAnalysis::fillIncidentHistograms() {
 	}
 	for ( const auto& [key, hist] : m2DHistograms ) {
 		if ( key == "IncidentXY" ) {
-			Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+			Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
 			hist->Fill(mIncidentTuple.position[0] / multiple, mIncidentTuple.position[1] / multiple);
 		}
 		if ( key == "CorrelationDepositEnergyTotalAndIncidentAngle" ) {
 			if ( isDeposit ) {
-				Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+				Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
 				hist->Fill(180 - incidentTheta, depositEnergy / multiple);
 			}
 		}
 		if ( key == "CorrelationDepositEnergyMetalAndIncidentAngle" ) {
 			if ( mIncidentTuple.depositEnergy[0] > .000001 ) {
-				Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+				Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
 				hist->Fill(180 - incidentTheta, mIncidentTuple.depositEnergy[0] / multiple);
 			}
 		}
 		if ( key == "CorrelationDepositEnergyEpitaxialAndIncidentAngle" ) {
 			if ( mIncidentTuple.depositEnergy[1] > .000001 ) {
-				Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+				Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
 				hist->Fill(180 - incidentTheta, mIncidentTuple.depositEnergy[1] / multiple);
 			}
 		}
 		if ( key == "CorrelationDepositEnergySubstrateAndIncidentAngle" ) {
 			if ( mIncidentTuple.depositEnergy[2] > .000001 ) {
-				Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+				Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
 				hist->Fill(180 - incidentTheta, mIncidentTuple.depositEnergy[2] / multiple);
 			}
 		}
 		if ( key == "CorrelationIncidentAngleAndStopPosition" ) {
 			if ( mIncidentTuple.finalVolumeID == VOLUME::ALPIDEMetal || mIncidentTuple.finalVolumeID == VOLUME::ALPIDEEpitaxial || mIncidentTuple.finalVolumeID == VOLUME::ALPIDESubstrate ) {
-				Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+				Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
 				hist->Fill(180 - incidentTheta, -mIncidentTuple.finalPosition[2] / multiple);
 			}
 		}
 		if ( mIncidentTuple.particleID == PARTICLE::alpha ) {
 			if ( key == "AlphaIncidentXY" ) {
-				Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+				Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
 				hist->Fill(mIncidentTuple.position[0] / multiple, mIncidentTuple.position[1] / multiple);
 			}
 			if ( key == "AlphaCorrelationDepositEnergyTotalAndIncidentAngle" ) {
 				if ( isDeposit ) {
-					Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+					Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
 					hist->Fill(180 - incidentTheta, depositEnergy / multiple);
 				}
 			}
 			if ( key == "AlphaCorrelationDepositEnergyMetalAndIncidentAngle" ) {
 				if ( mIncidentTuple.depositEnergy[0] > .000001 ) {
-					Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+					Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
 					hist->Fill(180 - incidentTheta, mIncidentTuple.depositEnergy[0] / multiple);
 				}
 			}
 			if ( key == "AlphaCorrelationDepositEnergyEpitaxialAndIncidentAngle" ) {
 				if ( mIncidentTuple.depositEnergy[1] > .000001 ) {
-					Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+					Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
 					hist->Fill(180 - incidentTheta, mIncidentTuple.depositEnergy[1] / multiple);
 				}
 			}
 			if ( key == "AlphaCorrelationDepositEnergySubstrateAndIncidentAngle" ) {
 				if ( mIncidentTuple.depositEnergy[2] > .000001 ) {
-					Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
+					Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
 					hist->Fill(180 - incidentTheta, mIncidentTuple.depositEnergy[2] / multiple);
 				}
 			}
