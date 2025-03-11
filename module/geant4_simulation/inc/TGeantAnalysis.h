@@ -2,6 +2,7 @@
 #define __TGEANTANALYSIS__
 
 #include<filesystem>
+#include<unordered_map>
 #include "TFile.h"
 #include "TTree.h"
 #include "TMath.h"
@@ -36,8 +37,8 @@ private:
 	TIncidentAnalysisTuple mIncidentTuple;
 	std::vector<TIncidentAnalysisTuple> mIncidentSet;
 	TSecondaryAnalysisTuple mSecondaryTuple;
-	std::unordered_map<std::string_view, TH1D*> m1DHistograms;
-	std::unordered_map<std::string_view, TH2D*> m2DHistograms;
+	std::unordered_map<std::string, TH1D*> m1DHistograms;
+	std::unordered_map<std::string, TH2D*> m2DHistograms;
 	std::array<int, 4> mEntry;
 
 	bool isPrimary = false, isIncident = false, isSecondary = false;

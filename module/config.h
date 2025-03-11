@@ -4,6 +4,6 @@
 #define PROJECT_NAME ATOM
 #define SOURCE_DIR "/home/ychoi/ATOM"
 #define CONFIG_DIR "/home/ychoi/ATOM/build/config"
-#define CSV_DATA_DIR "/home/ychoi/ATOM/build/Data"
+#define CSV_DATA_DIR "/home/ychoi/ATOM/build/data"
 
 #endif

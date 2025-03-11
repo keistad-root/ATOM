@@ -111,7 +111,7 @@ int main(int argc, char** argv) {
 	TGeantAnalysis plot(config);
 	plot.setHistograms();
 	plot.readTree();
-	// plot.saveFile();
+	plot.saveFile();
 
 	// addEntry2CSV(parser.get_value<std::string>("tag"), plot.getEntry());
 

@@ -100,7 +100,7 @@ void TGeantAnalysis::readSecondaryFile() {
 void TGeantAnalysis::setHistograms() {
 	std::vector<CppConfigDictionary> configList = mConfig.getConfigList();
 	for ( const CppConfigDictionary& config : configList ) {
-		std::string_view key = config.getConfigName();
+		std::string key = config.hasKey("NAME") ? config.find("NAME") : "";
 		if ( config.hasKey("type") && config.find("type") == "1H" ) {
 			TH1D* hist = TPlotter::init1DHist(config);
 			m1DHistograms.insert_or_assign(key, hist);
@@ -110,6 +110,7 @@ void TGeantAnalysis::setHistograms() {
 			m2DHistograms.insert_or_assign(key, hist);
 		}
 	}
+
 }
 
 void TGeantAnalysis::readTree() {
@@ -151,6 +152,7 @@ void TGeantAnalysis::readIncidentTree() {
 	Int_t preTimeStamp = 0;
 	ProgressBar progressBar(static_cast<int>(nEntries));
 	Int_t nDouble = 0;
+	std::cout << m1DHistograms.size() << std::endl;
 	for ( Int_t i = 0; i < nEntries; i++ ) {
 		progressBar.printProgress();
 		mIncidentTree->GetEntry(i);
@@ -169,20 +171,23 @@ void TGeantAnalysis::readIncidentTree() {
 		// }
 	}
 
-	mEntry[0] = m1DHistograms["ElectronDepositEnergyMetal"]->GetEffectiveEntries();
-	mEntry[1] = m1DHistograms["AlphaDepositEnergyMetal"]->GetEffectiveEntries();
-	mEntry[2] = m1DHistograms["AlphaDepositEnergyEpitaxial"]->GetEffectiveEntries();
+	// mEntry[0] = m1DHistograms["ElectronDepositEnergyMetal"]->GetEffectiveEntries();
+	// mEntry[1] = m1DHistograms["AlphaDepositEnergyMetal"]->GetEffectiveEntries();
+	// mEntry[2] = m1DHistograms["AlphaDepositEnergyEpitaxial"]->GetEffectiveEntries();
 	mEntry[3] = nDouble;
 }
 
 int TGeantAnalysis::getNDouble(std::vector<std::pair<Double_t, Double_t>> position) {
 	Int_t num = 0;
 	Int_t nParticipant = 0;
+	// TH1D* hist = m1DHistograms.find("DistanceBetweenIncidentAlpha")->second;
+	TH1D* hist = m1DHistograms["DistanceBetweenIncidentAlpha"];
+	std::cout << hist->GetName() << std::endl;
 	for ( Int_t i = 0; i < position.size(); i++ ) {
 		for ( Int_t j = i + 1; j < position.size(); j++ ) {
+			//if ( position.size() - 1 > j ) continue;
 			Double_t distance = TMath::Sqrt(TMath::Power(position[i].first - position[j].first, 2) + TMath::Power(position[i].second - position[j].second, 2));
-			std::cout << distance << std::endl;
-			m1DHistograms["DistanceBetweenIncidentAlpha"]->Fill(distance * 1000);
+			hist->Fill(distance * 1000);
 			if ( distance > 0.048 && distance < 0.154 ) {
 				num++;
 			}
@@ -192,7 +197,7 @@ int TGeantAnalysis::getNDouble(std::vector<std::pair<Double_t, Double_t>> positi
 }
 
 void TGeantAnalysis::fillPrimaryHistograms() {
-	for ( const auto& [key, hist] : m1DHistograms ) {
+	for ( auto& [key, hist] : m1DHistograms ) {
 		Double_t momentum = TMath::Sqrt(mPrimaryTuple.momentum[0] * mPrimaryTuple.momentum[0] + mPrimaryTuple.momentum[1] * mPrimaryTuple.momentum[1] + mPrimaryTuple.momentum[2] * mPrimaryTuple.momentum[2]);
 		Double_t theta = TMath::ACos(mPrimaryTuple.momentum[2] / momentum) * 180. / TMath::Pi();
 		Double_t phi = TMath::ATan2(mPrimaryTuple.momentum[1], mPrimaryTuple.momentum[0]) * 180. / TMath::Pi();
@@ -211,7 +216,7 @@ void TGeantAnalysis::fillPrimaryHistograms() {
 			hist->Fill(phi);
 		}
 	}
-	for ( const auto& [key, hist] : m2DHistograms ) {
+	for ( auto& [key, hist] : m2DHistograms ) {
 		if ( key == "SourceXY" ) {
 			Double_t multiple = stod(mConfig.getConfig(key).find("MULTIPLE"));
 			hist->Fill(mPrimaryTuple.position[0] / multiple, mPrimaryTuple.position[1] / multiple);
