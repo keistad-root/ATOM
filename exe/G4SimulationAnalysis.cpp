@@ -5,11 +5,11 @@
 #include "TGeantAnalysis.h"
 #include "cppargs.h"
 #include "CppConfigFile.h"
+#include "config.h"
 
-const std::string CONFIG_PATH = "/home/ychoi/ATOM/build/config/GEANT4_ANALYSIS.conf";
-const std::string INFORMATION_PATH = "/home/ychoi/ATOM/build/config/GEANT4_INFORMATION.csv";
-const std::string DATA_PATH = "/home/ychoi/ATOM/build/Data/g4data.csv";
-
+const std::string CONFIG_PATH = CONFIG_DIR"/GEANT4_ANALYSIS.conf";
+const std::string INFORMATION_PATH = CONFIG_DIR"/GEANT4_INFORMATION.csv";
+const std::string DATA_PATH = CSV_DATA_DIR"/g4data.csv";
 const double EVENT_10MIN = 2580000;
 
 CppConfigFile setEnvironment(const ArgumentParser& parser) {
@@ -19,8 +19,8 @@ CppConfigFile setEnvironment(const ArgumentParser& parser) {
 	std::string tags, input_incident_file, input_primary_file, input_secondary_file, output_file;
 	while ( infoCSV.read_row(tags, input_incident_file, input_primary_file, input_secondary_file, output_file) ) {
 		if ( parser.get_value<std::string>("tag") == tags ) {
-			config.modifyConfig("FILE").addDictionary("INPUT_INCIDENT_FILE", input_incident_file);
 			config.modifyConfig("FILE").addDictionary("INPUT_PRIMARY_FILE", input_primary_file);
+			config.modifyConfig("FILE").addDictionary("INPUT_INCIDENT_FILE", input_incident_file);
 			config.modifyConfig("FILE").addDictionary("INPUT_SECONDARY_FILE", input_secondary_file);
 			config.modifyConfig("FILE").addDictionary("OUTPUT_FILE", output_file);
 		}
@@ -111,9 +111,9 @@ int main(int argc, char** argv) {
 	TGeantAnalysis plot(config);
 	plot.setHistograms();
 	plot.readTree();
-	plot.saveFile();
+	// plot.saveFile();
 
-	addEntry2CSV(parser.get_value<std::string>("tag"), plot.getEntry());
+	// addEntry2CSV(parser.get_value<std::string>("tag"), plot.getEntry());
 
 	return 0;
 }
