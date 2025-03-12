@@ -106,6 +106,7 @@ void addEntry2CSV(const std::string tag, const std::array<int, 4> entry) {
 
 int main(int argc, char** argv) {
 	ArgumentParser parser = set_parse(argc, argv);
+	std::cout << "??" << std::endl;
 	CppConfigFile config = setEnvironment(parser);
 
 	TGeantAnalysis plot(config);
