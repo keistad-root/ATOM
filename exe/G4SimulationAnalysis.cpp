@@ -13,6 +13,7 @@ const std::string DATA_PATH = CSV_DATA_DIR"/g4data.csv";
 const double EVENT_10MIN = 2580000;
 
 CppConfigFile setEnvironment(const ArgumentParser& parser) {
+	std::cout << CONFIG_PATH << std::endl;
 	CppConfigFile config(CONFIG_PATH);
 	io::CSVReader<5> infoCSV(INFORMATION_PATH);
 	infoCSV.read_header(io::ignore_extra_column, "TAG", "INCIDENT_FILE", "PRIMARY_FILE", "SECONDARY_FILE", "PLOT_FILE");
@@ -106,7 +107,6 @@ void addEntry2CSV(const std::string tag, const std::array<int, 4> entry) {
 
 int main(int argc, char** argv) {
 	ArgumentParser parser = set_parse(argc, argv);
-	std::cout << "??" << std::endl;
 	CppConfigFile config = setEnvironment(parser);
 
 	TGeantAnalysis plot(config);

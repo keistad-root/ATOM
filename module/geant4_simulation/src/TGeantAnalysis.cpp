@@ -584,7 +584,16 @@ void TGeantAnalysis::fillSecondaryHistograms() {
 		}
 		if ( key == "SecondaryMeanFreePathInALPIDE" ) {
 			Double_t meanFreePath = TMath::Sqrt(TMath::Power(mSecondaryTuple.finalPosition[0] - mSecondaryTuple.initialPosition[0], 2) + TMath::Power(mSecondaryTuple.finalPosition[1] - mSecondaryTuple.initialPosition[1], 2) + TMath::Power(mSecondaryTuple.finalPosition[2] - mSecondaryTuple.initialPosition[2], 2));
-			hist->Fill(meanFreePath);
+			Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
+			hist->Fill(meanFreePath / multiple);
+		}
+		if ( key == "SecondaryMotherParticleInALPIDE" ) {
+			for ( const auto& incident : mIncidentSet ) {
+				if ( incident.eventID == mSecondaryTuple.eventID && incident.trackID == mSecondaryTuple.parentID ) {
+					hist->Fill(incident.particleID);
+					break;
+				}
+			}
 		}
 		if ( key == "SecondaryInALPIDEVolume" ) {
 			hist->Fill(mSecondaryTuple.initialVolumeID);
