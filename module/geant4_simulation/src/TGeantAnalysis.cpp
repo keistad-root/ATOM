@@ -580,12 +580,12 @@ void TGeantAnalysis::fillSecondaryHistograms() {
 	}
 
 	for ( const auto& [key, hist] : m1DHistograms ) {
+		Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
 		if ( key == "SecondaryParticleInALPIDE" ) {
 			hist->Fill(mSecondaryTuple.particleID);
 		}
 		if ( key == "SecondaryMeanFreePathInALPIDE" ) {
 			Double_t meanFreePath = TMath::Sqrt(TMath::Power(mSecondaryTuple.finalPosition[0] - mSecondaryTuple.initialPosition[0], 2) + TMath::Power(mSecondaryTuple.finalPosition[1] - mSecondaryTuple.initialPosition[1], 2) + TMath::Power(mSecondaryTuple.finalPosition[2] - mSecondaryTuple.initialPosition[2], 2));
-			Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
 			hist->Fill(meanFreePath / multiple);
 		}
 		if ( key == "SecondaryMotherParticleInALPIDE" ) {
@@ -596,6 +596,17 @@ void TGeantAnalysis::fillSecondaryHistograms() {
 		}
 		if ( key == "SecondaryInALPIDEDecayVolume" ) {
 			hist->Fill(mSecondaryTuple.finalVolumeID);
+		}
+		if ( mSecondaryTuple.particleID == PARTICLE::electron ) {
+			if ( key == "SecondaryElectronInitialZ" ) {
+				hist->Fill(-mSecondaryTuple.initialPosition[2] / multiple);
+			}
+		}
+	}
+
+	for ( const auto& [key, hist] : m2DHistograms ) {
+		if ( key == "MotherDoughterCorrelationInALPIDE" ) {
+			hist->Fill(incidentTuple.particleID, mSecondaryTuple.particleID);
 		}
 	}
 }

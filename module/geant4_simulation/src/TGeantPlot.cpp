@@ -11,8 +11,8 @@
 #include "TString.h"
 #include "TStyle.h"
 
-std::vector<std::string> volumePlot = {"IncidentVolume", "AlphaIncidentVolume", "ElectronIncidentVolume", "ElectronFinalVolume", "SecondaryInALPIDEVolume", "SecondaryInALPIDEDecayVolume", "SecondaryInitVolume", "SecondaryFinalVolume", "GammaIncidentVolume"
-};
+std::vector<std::string> volumePlot = {"IncidentVolume", "AlphaIncidentVolume", "ElectronIncidentVolume", "ElectronFinalVolume", "SecondaryInALPIDEVolume", "SecondaryInALPIDEDecayVolume", "SecondaryInitVolume", "SecondaryFinalVolume", "GammaIncidentVolume"};
+std::vector<std::string> particleNamePlot = {"IncidentParticle", "SecondaryParticleInALPIDE", "SecondaryParticle", "SecondaryMotherParticleInALPIDE", "MotherDoughterCorrelationInALPIDE"};
 
 void TGeantPlot::readInputFile(std::filesystem::path inputFilePath) {
 	TString inputFileName = std::string(inputFilePath);
@@ -53,7 +53,7 @@ void TGeantPlot::saveHistorams(const std::vector<CppConfigDictionary>& configLis
 				legend->AddEntry(hist, Form("Entries: %.1f", hist->GetEffectiveEntries()), "");
 				legend->AddEntry(hist, Form("Mean: %.3f", hist->GetMean()), "");
 				legend->AddEntry(hist, Form("Std Dev: %.3f", hist->GetStdDev()), "");
-				if ( key == "IncidentParticle" || key == "SecondaryParticleInALPIDE" || key == "SecondaryParticle" ) {
+				if ( std::find(particleNamePlot.begin(), particleNamePlot.end(), key) != particleNamePlot.end() ) {
 					for ( int i = 0; i < hist->GetNbinsX(); i++ ) {
 						hist->GetXaxis()->SetBinLabel(i + 1., mParticleName[i]);
 					}
@@ -79,6 +79,12 @@ void TGeantPlot::saveHistorams(const std::vector<CppConfigDictionary>& configLis
 				legend->AddEntry(hist, Form("Mean y: %.3f", hist->GetMean(2)), "");
 				legend->AddEntry(hist, Form("Std Dev x: %.3f", hist->GetStdDev(1)), "");
 				legend->AddEntry(hist, Form("Std Dev y: %.3f", hist->GetStdDev(2)), "");
+				if ( std::find(particleNamePlot.begin(), particleNamePlot.end(), key) != particleNamePlot.end() ) {
+					for ( int i = 0; i < hist->GetNbinsX(); i++ ) {
+						hist->GetXaxis()->SetBinLabel(i + 1., mParticleName[i]);
+						hist->GetYaxis()->SetBinLabel(i + 1., mParticleName[i]);
+					}
+				}
 				if ( key == "ElctronIncidentXYWithElectrode" ) {
 					TGraph* electrode = new TGraph();
 					for ( int i = 0; i < 10; i++ ) {
