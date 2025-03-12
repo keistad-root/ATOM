@@ -63,6 +63,8 @@ void TAnalysisManager::open(const G4String& name) {
 	mIncidentTree->Branch("kineticEnergy", &mIncidentTuple.kineticEnergy);
 	mIncidentTree->Branch("globalTime", &mIncidentTuple.globalTime);
 	mIncidentTree->Branch("localTime", &mIncidentTuple.localTime);
+
+	mParticleFile.open("")
 }
 
 Int_t TAnalysisManager::getParticleID(const G4String& particleID) {

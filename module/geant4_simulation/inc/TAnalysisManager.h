@@ -1,6 +1,8 @@
 #ifndef __TANALYSISMANAGER__
 #define __TANALYSISMANAGER__
 
+#include<fstream>
+
 #include "G4RunManager.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4Run.hh"
@@ -86,6 +88,7 @@ public:
 
 private:
 	static TAnalysisManager* mInstance;
+	std::ofstream mParticleFile;
 
 	trackTuple mTrackTuple;
 	incidentTuple mIncidentTuple;

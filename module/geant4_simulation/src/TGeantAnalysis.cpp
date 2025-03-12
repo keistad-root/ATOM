@@ -572,9 +572,11 @@ void TGeantAnalysis::fillIncidentHistograms() {
 
 void TGeantAnalysis::fillSecondaryHistograms() {
 	TIncidentAnalysisTuple incidentTuple;
-	for ( const auto& incident : mIncidentSet ) {
-		if ( incident.eventID == mSecondaryTuple.eventID ) {
-			incidentTuple = incident;
+	static int nIncident = 0;
+	for ( int iIncident = nIncident; iIncident < mIncidentSet.size(); iIncident++ ) {
+		if ( mIncidentSet[iIncident].eventID == mSecondaryTuple.eventID && mIncidentSet[iIncident].trackID == mSecondaryTuple.parentID ) {
+			incidentTuple = mIncidentSet[iIncident];
+			nIncident = iIncident;
 			break;
 		}
 	}
