@@ -78,6 +78,7 @@ void TGeantAnalysis::readIncidentFile() {
 void TGeantAnalysis::readSecondaryFile() {
 	mSecondaryTree->SetBranchAddress("eventID", &mSecondaryTuple.eventID);
 	mSecondaryTree->SetBranchAddress("trackID", &mSecondaryTuple.trackID);
+	mSecondaryTree->SetBranchAddress("parentID", &mSecondaryTuple.parentID);
 	mSecondaryTree->SetBranchAddress("particleID", &mSecondaryTuple.particleID);
 	mSecondaryTree->SetBranchAddress("initialVolumeID", &mSecondaryTuple.initialVolumeID);
 	mSecondaryTree->SetBranchAddress("initX", &mSecondaryTuple.initialPosition[0]);
@@ -572,7 +573,7 @@ void TGeantAnalysis::fillIncidentHistograms() {
 void TGeantAnalysis::fillSecondaryHistograms() {
 	TIncidentAnalysisTuple incidentTuple;
 	for ( const auto& incident : mIncidentSet ) {
-		if ( incident.eventID == mSecondaryTuple.eventID && incident.trackID == mSecondaryTuple.parentID ) {
+		if ( incident.eventID == mSecondaryTuple.eventID ) {
 			incidentTuple = incident;
 			break;
 		}
@@ -588,19 +589,7 @@ void TGeantAnalysis::fillSecondaryHistograms() {
 			hist->Fill(meanFreePath / multiple);
 		}
 		if ( key == "SecondaryMotherParticleInALPIDE" ) {
-			// std::cout << mSecondaryTuple.parentID << std::endl;
-			static Int_t n = 0;
-			if ( mSecondaryTuple.parentID < 1 ) n++;
-			std::cout << n << std::endl;
-			// for ( const auto& incident : mIncidentSet ) {
-				// if ( incident.eventID == mSecondaryTuple.eventID ) {
-				// }
-				// if ( incident.eventID == mSecondaryTuple.eventID && incident.trackID == mSecondaryTuple.parentID ) {
-					// std::cout << incident.particleID << std::endl;
-				// hist->Fill(incident.particleID);
-				// break;
-			// }
-			// }
+			hist->Fill(incidentTuple.particleID);
 		}
 		if ( key == "SecondaryInALPIDEVolume" ) {
 			hist->Fill(mSecondaryTuple.initialVolumeID);
