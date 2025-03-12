@@ -115,7 +115,7 @@ void TGeantAnalysis::setHistograms() {
 
 void TGeantAnalysis::readTree() {
 	if ( isPrimary ) {
-		readPrimaryTree();
+		// readPrimaryTree();
 	}
 	if ( isIncident ) {
 		readIncidentTree();
@@ -588,12 +588,19 @@ void TGeantAnalysis::fillSecondaryHistograms() {
 			hist->Fill(meanFreePath / multiple);
 		}
 		if ( key == "SecondaryMotherParticleInALPIDE" ) {
-			for ( const auto& incident : mIncidentSet ) {
-				if ( incident.eventID == mSecondaryTuple.eventID && incident.trackID == mSecondaryTuple.parentID ) {
-					hist->Fill(incident.particleID);
-					break;
-				}
-			}
+			// std::cout << mSecondaryTuple.parentID << std::endl;
+			static Int_t n = 0;
+			if ( mSecondaryTuple.parentID < 1 ) n++;
+			std::cout << n << std::endl;
+			// for ( const auto& incident : mIncidentSet ) {
+				// if ( incident.eventID == mSecondaryTuple.eventID ) {
+				// }
+				// if ( incident.eventID == mSecondaryTuple.eventID && incident.trackID == mSecondaryTuple.parentID ) {
+					// std::cout << incident.particleID << std::endl;
+				// hist->Fill(incident.particleID);
+				// break;
+			// }
+			// }
 		}
 		if ( key == "SecondaryInALPIDEVolume" ) {
 			hist->Fill(mSecondaryTuple.initialVolumeID);
