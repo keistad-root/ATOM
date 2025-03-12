@@ -576,6 +576,7 @@ void TGeantAnalysis::fillSecondaryHistograms() {
 	for ( int iIncident = nIncident; iIncident < mIncidentSet.size(); iIncident++ ) {
 		if ( mIncidentSet[iIncident].eventID == mSecondaryTuple.eventID && mIncidentSet[iIncident].trackID == mSecondaryTuple.parentID ) {
 			incidentTuple = mIncidentSet[iIncident];
+			if ( incidentTuple.particleID == PARTICLE::unknown ) std::cout << "Unknown particle" << std::endl;
 			nIncident = iIncident;
 			break;
 		}

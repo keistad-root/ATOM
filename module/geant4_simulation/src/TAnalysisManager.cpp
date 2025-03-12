@@ -64,7 +64,7 @@ void TAnalysisManager::open(const G4String& name) {
 	mIncidentTree->Branch("globalTime", &mIncidentTuple.globalTime);
 	mIncidentTree->Branch("localTime", &mIncidentTuple.localTime);
 
-	mParticleFile.open("")
+	mParticleFile.open("/mnt/homes/ychoi/CLUSTER_SIZE/SIMULATION/unknown_particle.txt", std::ios::out);
 }
 
 Int_t TAnalysisManager::getParticleID(const G4String& particleID) {
@@ -91,6 +91,7 @@ Int_t TAnalysisManager::getParticleID(const G4String& particleID) {
 	} else if ( particleID == "Si28" ) {
 		return PARTICLE::silicon;
 	} else {
+		std::cout << "Unknown particle: " << particleID << std::endl;
 		return PARTICLE::unknown;
 	}
 }
