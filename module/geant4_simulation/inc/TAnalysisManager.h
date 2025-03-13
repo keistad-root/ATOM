@@ -22,62 +22,55 @@ struct trackTuple {
 	Int_t trackID;
 	Int_t parentID;
 	Int_t particleID;
-	Double_t initX, initY, initZ;
-	Double_t initPX, initPY, initPZ;
+	Double_t initPosition[3];
+	Double_t initMomentum[3];
 	Double_t initKineticEnergy;
 	Int_t initVolumeID;
-	Double_t finalX, finalY, finalZ;
-	Double_t finalPX, finalPY, finalPZ;
+	Double_t incidentPosition[3];
+	Double_t incidentMomentum[3];
+	Double_t incidentKineticEnergy;
+	Double_t depositEnergy[3];
+	Double_t globalTime;
+	Double_t localTime;
+	Double_t finalPosition[3];
+	Double_t finalMomentum[3];
 	Double_t finalKineticEnergy;
 	Int_t finalVolumeID;
+	Bool_t isInALPIDE;
 	void init() {
 		eventID = 0;
 		trackID = 0;
 		parentID = 0;
 		particleID = 0;
-		initX = 0;
-		initY = 0;
-		initZ = 0;
-		initPX = 0;
-		initPY = 0;
-		initPZ = 0;
-		initKineticEnergy = 0;
+		initPosition[0] = 0.;
+		initPosition[1] = 0.;
+		initPosition[2] = 0.;
+		initMomentum[0] = 0.;
+		initMomentum[1] = 0.;
+		initMomentum[2] = 0.;
+		initKineticEnergy = 0.;
 		initVolumeID = 0;
-		finalX = 0;
-		finalY = 0;
-		finalZ = 0;
-		finalPX = 0;
-		finalPY = 0;
-		finalPZ = 0;
-		finalKineticEnergy = 0;
+		incidentPosition[0] = 0.;
+		incidentPosition[1] = 0.;
+		incidentPosition[2] = 0.;
+		incidentMomentum[0] = 0.;
+		incidentMomentum[1] = 0.;
+		incidentMomentum[2] = 0.;
+		incidentKineticEnergy = 0.;
+		depositEnergy[0] = 0.;
+		depositEnergy[1] = 0.;
+		depositEnergy[2] = 0.;
+		globalTime = 0.;
+		localTime = 0.;
+		finalPosition[0] = 0.;
+		finalPosition[1] = 0.;
+		finalPosition[2] = 0.;
+		finalMomentum[0] = 0.;
+		finalMomentum[1] = 0.;
+		finalMomentum[2] = 0.;
+		finalKineticEnergy = 0.;
 		finalVolumeID = 0;
-	}
-};
-
-struct incidentTuple {
-	Int_t eventID = 0;
-	Int_t trackID = 0;
-	Double_t depositEnergy[3] = {-1, -1, -1};
-	Double_t position[3] = {0, 0, 0};
-	Double_t momentum[3] = {0, 0, 0};
-	Double_t globalTime = 0;
-	Double_t localTime = 0;
-	Double_t kineticEnergy = 0;
-	void init() {
-		eventID = 0;
-		trackID = 0;
-		depositEnergy[0] = -1;
-		depositEnergy[1] = -1;
-		depositEnergy[2] = -1;
-		position[0] = 0;
-		position[1] = 0;
-		position[2] = 0;
-		momentum[0] = 0;
-		momentum[1] = 0;
-		momentum[2] = 0;
-		globalTime = 0;
-		localTime = 0;
-		kineticEnergy = 0;
+		isInALPIDE = false;
 	}
 };
 
@@ -91,7 +84,6 @@ private:
 	std::ofstream mParticleFile;
 
 	trackTuple mTrackTuple;
-	incidentTuple mIncidentTuple;
 
 	G4String mFileName;
 	TFile* mFile = nullptr;
@@ -110,8 +102,6 @@ private:
 	G4LogicalVolume* mWorldLogical = nullptr;
 
 	bool isInALPIDE;
-	bool isInEpitaxial;
-	bool isInSubstrate;
 public:
 	static TAnalysisManager* Instance();
 

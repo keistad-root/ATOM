@@ -27,42 +27,25 @@ void TAnalysisManager::open(const G4String& name) {
 	mFile = new TFile(newPath, "RECREATE");
 	mTrackTree = new TTree("trackTree", "Track Information");
 
-	mTrackTree->Branch("eventID", &mTrackTuple.eventID);
-	mTrackTree->Branch("trackID", &mTrackTuple.trackID);
-	mTrackTree->Branch("parentID", &mTrackTuple.parentID);
-	mTrackTree->Branch("particleID", &mTrackTuple.particleID);
-	mTrackTree->Branch("initX", &mTrackTuple.initX);
-	mTrackTree->Branch("initY", &mTrackTuple.initY);
-	mTrackTree->Branch("initZ", &mTrackTuple.initZ);
-	mTrackTree->Branch("initPX", &mTrackTuple.initPX);
-	mTrackTree->Branch("initPY", &mTrackTuple.initPY);
-	mTrackTree->Branch("initPZ", &mTrackTuple.initPZ);
-	mTrackTree->Branch("initKineticEnergy", &mTrackTuple.initKineticEnergy);
-	mTrackTree->Branch("initVolumeID", &mTrackTuple.initVolumeID);
-	mTrackTree->Branch("finalX", &mTrackTuple.finalX);
-	mTrackTree->Branch("finalY", &mTrackTuple.finalY);
-	mTrackTree->Branch("finalZ", &mTrackTuple.finalZ);
-	mTrackTree->Branch("finalPX", &mTrackTuple.finalPX);
-	mTrackTree->Branch("finalPY", &mTrackTuple.finalPY);
-	mTrackTree->Branch("finalPZ", &mTrackTuple.finalPZ);
-	mTrackTree->Branch("finalKineticEnergy", &mTrackTuple.finalKineticEnergy);
-	mTrackTree->Branch("finalVolumeID", &mTrackTuple.finalVolumeID);
-
-	mIncidentTree = new TTree("incidentTree", "Incident Information");
-	mIncidentTree->Branch("eventID", &mIncidentTuple.eventID);
-	mIncidentTree->Branch("trackID", &mIncidentTuple.trackID);
-	mIncidentTree->Branch("depositEnergyMetal", &mIncidentTuple.depositEnergy[0]);
-	mIncidentTree->Branch("depositEnergyEpitaxial", &mIncidentTuple.depositEnergy[1]);
-	mIncidentTree->Branch("depositEnergySubstrate", &mIncidentTuple.depositEnergy[2]);
-	mIncidentTree->Branch("x", &mIncidentTuple.position[0]);
-	mIncidentTree->Branch("y", &mIncidentTuple.position[1]);
-	mIncidentTree->Branch("z", &mIncidentTuple.position[2]);
-	mIncidentTree->Branch("px", &mIncidentTuple.momentum[0]);
-	mIncidentTree->Branch("py", &mIncidentTuple.momentum[1]);
-	mIncidentTree->Branch("pz", &mIncidentTuple.momentum[2]);
-	mIncidentTree->Branch("kineticEnergy", &mIncidentTuple.kineticEnergy);
-	mIncidentTree->Branch("globalTime", &mIncidentTuple.globalTime);
-	mIncidentTree->Branch("localTime", &mIncidentTuple.localTime);
+	mTrackTree->Branch("eventID", &mTrackTuple.eventID, "eventID/I");
+	mTrackTree->Branch("trackID", &mTrackTuple.trackID, "trackID/I");
+	mTrackTree->Branch("parentID", &mTrackTuple.parentID, "parentID/I");
+	mTrackTree->Branch("particleID", &mTrackTuple.particleID, "particleID/I");
+	mTrackTree->Branch("initVolumeID", &mTrackTuple.initVolumeID, "initVolumeID/I");
+	mTrackTree->Branch("initPosition", mTrackTuple.initPosition, "initPosition[3]/D");
+	mTrackTree->Branch("initMomentum", mTrackTuple.initMomentum, "initMomentum[3]/D");
+	mTrackTree->Branch("initKineticEnergy", &mTrackTuple.initKineticEnergy, "initKineticEnergy/D");
+	mTrackTree->Branch("incidentPosition", mTrackTuple.incidentPosition, "incidentPosition[3]/D");
+	mTrackTree->Branch("incidentMomentum", mTrackTuple.incidentMomentum, "incidentMomentum[3]/D");
+	mTrackTree->Branch("incidentKineticEnergy", &mTrackTuple.incidentKineticEnergy, "incidentKineticEnergy/D");
+	mTrackTree->Branch("depositEnergy", mTrackTuple.depositEnergy, "depositEnergy[3]/D");
+	mTrackTree->Branch("globalTime", &mTrackTuple.globalTime, "globalTime/D");
+	mTrackTree->Branch("localTime", &mTrackTuple.localTime, "localTime/D");
+	mTrackTree->Branch("finalVolumeID", &mTrackTuple.finalVolumeID, "finalVolumeID/I");
+	mTrackTree->Branch("finalPosition", mTrackTuple.finalPosition, "finalPosition[3]/D");
+	mTrackTree->Branch("finalMomentum", mTrackTuple.finalMomentum, "finalMomentum[3]/D");
+	mTrackTree->Branch("finalKineticEnergy", &mTrackTuple.finalKineticEnergy, "finalKineticEnergy/D");
+	mTrackTree->Branch("isInALPIDE", &isInALPIDE, "isInALPIDE/O");
 
 	mParticleFile.open("/mnt/homes/ychoi/CLUSTER_SIZE/SIMULATION/unknown_particle.txt", std::ios::out);
 }
@@ -158,8 +141,6 @@ void TAnalysisManager::doEndOfEvent(const G4Event* event) { }
 
 void TAnalysisManager::doPreTracking(const G4Track* track) {
 	Int_t eventID = mTrackTuple.eventID;
-	mTrackTuple.init();
-	mIncidentTuple.init();
 
 	mTrackTuple.eventID = eventID;
 	mTrackTuple.trackID = track->GetTrackID();
@@ -171,8 +152,6 @@ void TAnalysisManager::doPreTracking(const G4Track* track) {
 		}
 	}
 	isInALPIDE = false;
-	isInEpitaxial = false;
-	isInSubstrate = false;
 }
 
 void TAnalysisManager::doPostTracking(const G4Track* track) {
@@ -197,36 +176,33 @@ void TAnalysisManager::doPostTracking(const G4Track* track) {
 	}
 
 	G4ThreeVector vertexPosition = track->GetVertexPosition();
-	mTrackTuple.initX = vertexPosition.x();
-	mTrackTuple.initY = vertexPosition.y();
-	mTrackTuple.initZ = vertexPosition.z();
+	mTrackTuple.initPosition[0] = vertexPosition.x();
+	mTrackTuple.initPosition[1] = vertexPosition.y();
+	mTrackTuple.initPosition[2] = vertexPosition.z();
 
 	G4ThreeVector vertexMomentum = track->GetVertexMomentumDirection();
-	mTrackTuple.initPX = vertexMomentum.x();
-	mTrackTuple.initPY = vertexMomentum.y();
-	mTrackTuple.initPZ = vertexMomentum.z();
+	mTrackTuple.initMomentum[0] = vertexMomentum.x();
+	mTrackTuple.initMomentum[1] = vertexMomentum.y();
+	mTrackTuple.initMomentum[2] = vertexMomentum.z();
 
 	mTrackTuple.initKineticEnergy = track->GetVertexKineticEnergy();
 	mTrackTuple.initVolumeID = getVolumeID(track->GetOriginTouchableHandle()->GetVolume()->GetLogicalVolume());
 
 	G4ThreeVector finalPosition = track->GetPosition();
-	mTrackTuple.finalX = finalPosition.x();
-	mTrackTuple.finalY = finalPosition.y();
-	mTrackTuple.finalZ = finalPosition.z();
+	mTrackTuple.finalPosition[0] = finalPosition.x();
+	mTrackTuple.finalPosition[1] = finalPosition.y();
+	mTrackTuple.finalPosition[2] = finalPosition.z();
 
 	G4ThreeVector finalMomentum = track->GetMomentumDirection();
-	mTrackTuple.finalPX = finalMomentum.x();
-	mTrackTuple.finalPY = finalMomentum.y();
-	mTrackTuple.finalPZ = finalMomentum.z();
+	mTrackTuple.finalMomentum[0] = finalMomentum.x();
+	mTrackTuple.finalMomentum[1] = finalMomentum.y();
+	mTrackTuple.finalMomentum[2] = finalMomentum.z();
 
 	mTrackTuple.finalKineticEnergy = track->GetKineticEnergy();
 
 	mTrackTuple.finalVolumeID = getVolumeID(track->GetVolume()->GetLogicalVolume());
 
 	mTrackTree->Fill();
-	if ( isInALPIDE ) {
-		mIncidentTree->Fill();
-	}
 }
 
 void TAnalysisManager::doStepPhase(const G4Step* step) {
@@ -253,46 +229,32 @@ void TAnalysisManager::doStepPhase(const G4Step* step) {
 		mWorldLogical = detectorConstruction->getWorldLogical();
 	}
 
-	if ( currentVolume == mALPIDEMetalLogical && step->IsFirstStepInVolume() && getVolumeID(step->GetTrack()->GetOriginTouchableHandle()->GetVolume()->GetLogicalVolume()) > 3 ) {
+	if ( !isInALPIDE && currentVolume == mALPIDEMetalLogical && step->IsFirstStepInVolume() && getVolumeID(step->GetTrack()->GetOriginTouchableHandle()->GetVolume()->GetLogicalVolume()) > 3 ) {
 		G4LogicalVolume* postVolume = step->GetPostStepPoint()->GetTouchableHandle()->GetVolume()->GetLogicalVolume();
-		if ( !isInALPIDE && postVolume != mWorldLogical && postVolume != mScreenLogical && postVolume != mCollimatorLogical ) {
+		if ( postVolume != mWorldLogical && postVolume != mScreenLogical && postVolume != mCollimatorLogical ) {
 			isInALPIDE = true;
-			mIncidentTuple.eventID = mTrackTuple.eventID;
-			mIncidentTuple.trackID = step->GetTrack()->GetTrackID();
-			mIncidentTuple.position[0] = step->GetPreStepPoint()->GetPosition().x();
-			mIncidentTuple.position[1] = step->GetPreStepPoint()->GetPosition().y();
-			mIncidentTuple.position[2] = step->GetPreStepPoint()->GetPosition().z();
-			mIncidentTuple.momentum[0] = step->GetPreStepPoint()->GetMomentum().x();
-			mIncidentTuple.momentum[1] = step->GetPreStepPoint()->GetMomentum().y();
-			mIncidentTuple.momentum[2] = step->GetPreStepPoint()->GetMomentum().z();
-			mIncidentTuple.globalTime = step->GetPreStepPoint()->GetGlobalTime();
-			mIncidentTuple.localTime = step->GetPreStepPoint()->GetLocalTime();
-			mIncidentTuple.kineticEnergy = step->GetPreStepPoint()->GetKineticEnergy();
-			mIncidentTuple.depositEnergy[0] = 0;
+			mTrackTuple.incidentPosition[0] = step->GetPreStepPoint()->GetPosition().x();
+			mTrackTuple.incidentPosition[1] = step->GetPreStepPoint()->GetPosition().y();
+			mTrackTuple.incidentPosition[2] = step->GetPreStepPoint()->GetPosition().z();
+			mTrackTuple.incidentMomentum[0] = step->GetPreStepPoint()->GetMomentum().x();
+			mTrackTuple.incidentMomentum[1] = step->GetPreStepPoint()->GetMomentum().y();
+			mTrackTuple.incidentMomentum[2] = step->GetPreStepPoint()->GetMomentum().z();
+			mTrackTuple.incidentKineticEnergy = step->GetPreStepPoint()->GetKineticEnergy();
+			mTrackTuple.globalTime = step->GetPreStepPoint()->GetGlobalTime();
+			mTrackTuple.localTime = step->GetPreStepPoint()->GetLocalTime();
 		}
 	}
 
-	if ( isInALPIDE ) {
-		if ( currentVolume == mALPIDEMetalLogical ) {
-			mIncidentTuple.depositEnergy[0] += step->GetTotalEnergyDeposit();
-		}
-		if ( currentVolume == mALPIDEEpitaxialLogical ) {
-			if ( !isInEpitaxial ) {
-				mIncidentTuple.depositEnergy[1] = 0;
-				isInEpitaxial = true;
-			}
-			mIncidentTuple.depositEnergy[1] += step->GetTotalEnergyDeposit();
-		}
-		if ( currentVolume == mALPIDESubstrateLogical ) {
-			if ( !isInSubstrate ) {
-				mIncidentTuple.depositEnergy[2] = 0;
-				isInSubstrate = true;
-			}
-			mIncidentTuple.depositEnergy[2] += step->GetTotalEnergyDeposit();
-		}
+	if ( currentVolume == mALPIDEMetalLogical ) {
+		mTrackTuple.depositEnergy[0] += step->GetTotalEnergyDeposit();
+		isInALPIDE = true;
 	}
-
-	if ( currentVolume == mALPIDEMetalLogical && currentVolume == mALPIDEEpitaxialLogical && currentVolume == mALPIDESubstrateLogical ) {
+	if ( currentVolume == mALPIDEEpitaxialLogical ) {
+		mTrackTuple.depositEnergy[1] += step->GetTotalEnergyDeposit();
+		isInALPIDE = true;
+	}
+	if ( currentVolume == mALPIDESubstrateLogical ) {
+		mTrackTuple.depositEnergy[2] += step->GetTotalEnergyDeposit();
 		isInALPIDE = true;
 	}
 }
