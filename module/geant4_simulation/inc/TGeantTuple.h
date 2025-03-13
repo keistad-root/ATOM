@@ -93,6 +93,7 @@ struct TSecondaryAnalysisTuple {
 	Double_t initialPosition[3];
 	Double_t initialMomentum[3];
 	Double_t initialKineticEnergy;
+	Double_t depositEnergy[3];
 	Int_t finalVolumeID;
 	Double_t finalPosition[3];
 	Double_t finalMomentum[3];

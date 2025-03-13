@@ -153,12 +153,8 @@ void TGeantExtract::initPrimaryAnalysisTree() {
 	mPrimaryAnalysisTree = new TTree("PrimaryAnalysis", "Primary Analysis Tree");
 
 	mPrimaryAnalysisTree->Branch("eventID", &mPrimaryAnalysisTuple.eventID);
-	mPrimaryAnalysisTree->Branch("x", &mPrimaryAnalysisTuple.position[0]);
-	mPrimaryAnalysisTree->Branch("y", &mPrimaryAnalysisTuple.position[1]);
-	mPrimaryAnalysisTree->Branch("z", &mPrimaryAnalysisTuple.position[2]);
-	mPrimaryAnalysisTree->Branch("px", &mPrimaryAnalysisTuple.momentum[0]);
-	mPrimaryAnalysisTree->Branch("py", &mPrimaryAnalysisTuple.momentum[1]);
-	mPrimaryAnalysisTree->Branch("pz", &mPrimaryAnalysisTuple.momentum[2]);
+	mPrimaryAnalysisTree->Branch("position", mPrimaryAnalysisTuple.position, "position[3]/D");
+	mPrimaryAnalysisTree->Branch("momentum", mPrimaryAnalysisTuple.momentum, "momentum[3]/D");
 	mPrimaryAnalysisTree->Branch("kineticEnergy", &mPrimaryAnalysisTuple.kineticEnergy);
 }
 
@@ -169,32 +165,18 @@ void TGeantExtract::initIncidentAnalysisTree() {
 	mIncidentAnalysisTree->Branch("trackID", &mIncidentAnalysisTuple.trackID);
 	mIncidentAnalysisTree->Branch("particleID", &mIncidentAnalysisTuple.particleID);
 	mIncidentAnalysisTree->Branch("initialVolumeID", &mIncidentAnalysisTuple.initialVolumeID);
-	mIncidentAnalysisTree->Branch("initX", &mIncidentAnalysisTuple.initialPosition[0]);
-	mIncidentAnalysisTree->Branch("initY", &mIncidentAnalysisTuple.initialPosition[1]);
-	mIncidentAnalysisTree->Branch("initZ", &mIncidentAnalysisTuple.initialPosition[2]);
-	mIncidentAnalysisTree->Branch("initPX", &mIncidentAnalysisTuple.initialMomentum[0]);
-	mIncidentAnalysisTree->Branch("initPY", &mIncidentAnalysisTuple.initialMomentum[1]);
-	mIncidentAnalysisTree->Branch("initPZ", &mIncidentAnalysisTuple.initialMomentum[2]);
+	mIncidentAnalysisTree->Branch("initPosition", mIncidentAnalysisTuple.initialPosition, "initPosition[3]/D");
+	mIncidentAnalysisTree->Branch("initMomentum", mIncidentAnalysisTuple.initialMomentum, "initMomentum[3]/D");
 	mIncidentAnalysisTree->Branch("initKineticEnergy", &mIncidentAnalysisTuple.initialKineticEnergy);
-	mIncidentAnalysisTree->Branch("depositEnergyMetal", &mIncidentAnalysisTuple.depositEnergy[0]);
-	mIncidentAnalysisTree->Branch("depositEnergyEpitaxial", &mIncidentAnalysisTuple.depositEnergy[1]);
-	mIncidentAnalysisTree->Branch("depositEnergySubstrate", &mIncidentAnalysisTuple.depositEnergy[2]);
-	mIncidentAnalysisTree->Branch("incidentX", &mIncidentAnalysisTuple.position[0]);
-	mIncidentAnalysisTree->Branch("incidentY", &mIncidentAnalysisTuple.position[1]);
-	mIncidentAnalysisTree->Branch("incidentZ", &mIncidentAnalysisTuple.position[2]);
-	mIncidentAnalysisTree->Branch("incidentPX", &mIncidentAnalysisTuple.momentum[0]);
-	mIncidentAnalysisTree->Branch("incidentPY", &mIncidentAnalysisTuple.momentum[1]);
-	mIncidentAnalysisTree->Branch("incidentPZ", &mIncidentAnalysisTuple.momentum[2]);
+	mIncidentAnalysisTree->Branch("depositEnergy", mIncidentAnalysisTuple.depositEnergy, "depositEnergy[3]/D");
+	mIncidentAnalysisTree->Branch("incidentPosition", mIncidentAnalysisTuple.position, "incidentPosition[3]/D");
+	mIncidentAnalysisTree->Branch("incidentMomentum", mIncidentAnalysisTuple.momentum, "incidentMomentum[3]/D");
 	mIncidentAnalysisTree->Branch("incidentKineticEnergy", &mIncidentAnalysisTuple.kineticEnergy);
 	mIncidentAnalysisTree->Branch("incidentGlobalTime", &mIncidentAnalysisTuple.globalTime);
 	mIncidentAnalysisTree->Branch("incidentLocalTime", &mIncidentAnalysisTuple.localTime);
 	mIncidentAnalysisTree->Branch("finalVolumeID", &mIncidentAnalysisTuple.finalVolumeID);
-	mIncidentAnalysisTree->Branch("finalX", &mIncidentAnalysisTuple.finalPosition[0]);
-	mIncidentAnalysisTree->Branch("finalY", &mIncidentAnalysisTuple.finalPosition[1]);
-	mIncidentAnalysisTree->Branch("finalZ", &mIncidentAnalysisTuple.finalPosition[2]);
-	mIncidentAnalysisTree->Branch("finalPX", &mIncidentAnalysisTuple.finalMomentum[0]);
-	mIncidentAnalysisTree->Branch("finalPY", &mIncidentAnalysisTuple.finalMomentum[1]);
-	mIncidentAnalysisTree->Branch("finalPZ", &mIncidentAnalysisTuple.finalMomentum[2]);
+	mIncidentAnalysisTree->Branch("finalPosition", mIncidentAnalysisTuple.finalPosition, "finalPosition[3]/D");
+	mIncidentAnalysisTree->Branch("finalMomentum", mIncidentAnalysisTuple.finalMomentum, "finalMomentum[3]/D");
 	mIncidentAnalysisTree->Branch("finalKineticEnergy", &mIncidentAnalysisTuple.finalKineticEnergy);
 }
 
@@ -206,20 +188,13 @@ void TGeantExtract::initSecondaryAnalysisTree() {
 	mSecondaryAnalysisTree->Branch("parentID", &mSecondaryAnalysisTuple.parentID);
 	mSecondaryAnalysisTree->Branch("particleID", &mSecondaryAnalysisTuple.particleID);
 	mSecondaryAnalysisTree->Branch("initialVolumeID", &mSecondaryAnalysisTuple.initialVolumeID);
-	mSecondaryAnalysisTree->Branch("initX", &mSecondaryAnalysisTuple.initialPosition[0]);
-	mSecondaryAnalysisTree->Branch("initY", &mSecondaryAnalysisTuple.initialPosition[1]);
-	mSecondaryAnalysisTree->Branch("initZ", &mSecondaryAnalysisTuple.initialPosition[2]);
-	mSecondaryAnalysisTree->Branch("initPX", &mSecondaryAnalysisTuple.initialMomentum[0]);
-	mSecondaryAnalysisTree->Branch("initPY", &mSecondaryAnalysisTuple.initialMomentum[1]);
-	mSecondaryAnalysisTree->Branch("initPZ", &mSecondaryAnalysisTuple.initialMomentum[2]);
+	mSecondaryAnalysisTree->Branch("initPosition", mSecondaryAnalysisTuple.initialPosition, "initPosition[3]/D");
+	mSecondaryAnalysisTree->Branch("initMomentum", mSecondaryAnalysisTuple.initialMomentum, "initMomentum[3]/D");
 	mSecondaryAnalysisTree->Branch("initKineticEnergy", &mSecondaryAnalysisTuple.initialKineticEnergy);
+	mIncidentAnalysisTree->Branch("depositEnergy", mSecondaryAnalysisTuple.depositEnergy, "depositEnergy[3]/D");
 	mSecondaryAnalysisTree->Branch("finalVolumeID", &mSecondaryAnalysisTuple.finalVolumeID);
-	mSecondaryAnalysisTree->Branch("finalX", &mSecondaryAnalysisTuple.finalPosition[0]);
-	mSecondaryAnalysisTree->Branch("finalY", &mSecondaryAnalysisTuple.finalPosition[1]);
-	mSecondaryAnalysisTree->Branch("finalZ", &mSecondaryAnalysisTuple.finalPosition[2]);
-	mSecondaryAnalysisTree->Branch("finalPX", &mSecondaryAnalysisTuple.finalMomentum[0]);
-	mSecondaryAnalysisTree->Branch("finalPY", &mSecondaryAnalysisTuple.finalMomentum[1]);
-	mSecondaryAnalysisTree->Branch("finalPZ", &mSecondaryAnalysisTuple.finalMomentum[2]);
+	mSecondaryAnalysisTree->Branch("finalPosition", mSecondaryAnalysisTuple.finalPosition, "finalPosition[3]/D");
+	mSecondaryAnalysisTree->Branch("finalMomentum", mSecondaryAnalysisTuple.finalMomentum, "finalMomentum[3]/D");
 	mSecondaryAnalysisTree->Branch("finalKineticEnergy", &mSecondaryAnalysisTuple.finalKineticEnergy);
 }
 
@@ -277,17 +252,17 @@ void TGeantExtract::getSecondaryAnalysisInformation() {
 	mSecondaryAnalysisTuple.trackID = mTrackTuple.trackID;
 	mSecondaryAnalysisTuple.parentID = mTrackTuple.parentID;
 	mSecondaryAnalysisTuple.particleID = mTrackTuple.particleID;
-	mIncidentAnalysisTuple.initialVolumeID = mTrackTuple.initVolumeID;
-	mIncidentAnalysisTuple.initialPosition[0] = mTrackTuple.initPosition[0];
-	mIncidentAnalysisTuple.initialPosition[1] = mTrackTuple.initPosition[1];
-	mIncidentAnalysisTuple.initialPosition[2] = mTrackTuple.initPosition[2];
-	mIncidentAnalysisTuple.initialMomentum[0] = mTrackTuple.initMomentum[0];
-	mIncidentAnalysisTuple.initialMomentum[1] = mTrackTuple.initMomentum[1];
-	mIncidentAnalysisTuple.initialMomentum[2] = mTrackTuple.initMomentum[2];
-	mIncidentAnalysisTuple.initialKineticEnergy = mTrackTuple.initKineticEnergy;
-	mIncidentAnalysisTuple.depositEnergy[0] = mTrackTuple.depositEnergy[0];
-	mIncidentAnalysisTuple.depositEnergy[1] = mTrackTuple.depositEnergy[1];
-	mIncidentAnalysisTuple.depositEnergy[2] = mTrackTuple.depositEnergy[2];
+	mSecondaryAnalysisTuple.initialVolumeID = mTrackTuple.initVolumeID;
+	mSecondaryAnalysisTuple.initialPosition[0] = mTrackTuple.initPosition[0];
+	mSecondaryAnalysisTuple.initialPosition[1] = mTrackTuple.initPosition[1];
+	mSecondaryAnalysisTuple.initialPosition[2] = mTrackTuple.initPosition[2];
+	mSecondaryAnalysisTuple.initialMomentum[0] = mTrackTuple.initMomentum[0];
+	mSecondaryAnalysisTuple.initialMomentum[1] = mTrackTuple.initMomentum[1];
+	mSecondaryAnalysisTuple.initialMomentum[2] = mTrackTuple.initMomentum[2];
+	mSecondaryAnalysisTuple.initialKineticEnergy = mTrackTuple.initKineticEnergy;
+	mSecondaryAnalysisTuple.depositEnergy[0] = mTrackTuple.depositEnergy[0];
+	mSecondaryAnalysisTuple.depositEnergy[1] = mTrackTuple.depositEnergy[1];
+	mSecondaryAnalysisTuple.depositEnergy[2] = mTrackTuple.depositEnergy[2];
 	mSecondaryAnalysisTuple.finalVolumeID = mTrackTuple.finalVolumeID;
 	mSecondaryAnalysisTuple.finalPosition[0] = mTrackTuple.finalPosition[0];
 	mSecondaryAnalysisTuple.finalPosition[1] = mTrackTuple.finalPosition[1];

@@ -32,12 +32,8 @@ TGeantAnalysis::~TGeantAnalysis() { }
 
 void TGeantAnalysis::readPrimaryFile() {
 	mPrimaryTree->SetBranchAddress("eventID", &mPrimaryTuple.eventID);
-	mPrimaryTree->SetBranchAddress("x", &mPrimaryTuple.position[0]);
-	mPrimaryTree->SetBranchAddress("y", &mPrimaryTuple.position[1]);
-	mPrimaryTree->SetBranchAddress("z", &mPrimaryTuple.position[2]);
-	mPrimaryTree->SetBranchAddress("px", &mPrimaryTuple.momentum[0]);
-	mPrimaryTree->SetBranchAddress("py", &mPrimaryTuple.momentum[1]);
-	mPrimaryTree->SetBranchAddress("pz", &mPrimaryTuple.momentum[2]);
+	mPrimaryTree->SetBranchAddress("position", mPrimaryTuple.position);
+	mPrimaryTree->SetBranchAddress("momentum", mPrimaryTuple.momentum);
 	mPrimaryTree->SetBranchAddress("kineticEnergy", &mPrimaryTuple.kineticEnergy);
 }
 
@@ -46,32 +42,18 @@ void TGeantAnalysis::readIncidentFile() {
 	mIncidentTree->SetBranchAddress("trackID", &mIncidentTuple.trackID);
 	mIncidentTree->SetBranchAddress("particleID", &mIncidentTuple.particleID);
 	mIncidentTree->SetBranchAddress("initialVolumeID", &mIncidentTuple.initialVolumeID);
-	mIncidentTree->SetBranchAddress("initX", &mIncidentTuple.initialPosition[0]);
-	mIncidentTree->SetBranchAddress("initY", &mIncidentTuple.initialPosition[1]);
-	mIncidentTree->SetBranchAddress("initZ", &mIncidentTuple.initialPosition[2]);
-	mIncidentTree->SetBranchAddress("initPX", &mIncidentTuple.initialMomentum[0]);
-	mIncidentTree->SetBranchAddress("initPY", &mIncidentTuple.initialMomentum[1]);
-	mIncidentTree->SetBranchAddress("initPZ", &mIncidentTuple.initialMomentum[2]);
+	mIncidentTree->SetBranchAddress("initPosition", mIncidentTuple.initialPosition);
+	mIncidentTree->SetBranchAddress("initMomentum", mIncidentTuple.initialMomentum);
 	mIncidentTree->SetBranchAddress("initKineticEnergy", &mIncidentTuple.initialKineticEnergy);
-	mIncidentTree->SetBranchAddress("depositEnergyMetal", &mIncidentTuple.depositEnergy[0]);
-	mIncidentTree->SetBranchAddress("depositEnergyEpitaxial", &mIncidentTuple.depositEnergy[1]);
-	mIncidentTree->SetBranchAddress("depositEnergySubstrate", &mIncidentTuple.depositEnergy[2]);
-	mIncidentTree->SetBranchAddress("incidentX", &mIncidentTuple.position[0]);
-	mIncidentTree->SetBranchAddress("incidentY", &mIncidentTuple.position[1]);
-	mIncidentTree->SetBranchAddress("incidentZ", &mIncidentTuple.position[2]);
-	mIncidentTree->SetBranchAddress("incidentPX", &mIncidentTuple.momentum[0]);
-	mIncidentTree->SetBranchAddress("incidentPY", &mIncidentTuple.momentum[1]);
-	mIncidentTree->SetBranchAddress("incidentPZ", &mIncidentTuple.momentum[2]);
+	mIncidentTree->SetBranchAddress("depositEnergy", mIncidentTuple.depositEnergy);
+	mIncidentTree->SetBranchAddress("incidentPosition", mIncidentTuple.position);
+	mIncidentTree->SetBranchAddress("incidentMomentum", mIncidentTuple.momentum);
 	mIncidentTree->SetBranchAddress("incidentKineticEnergy", &mIncidentTuple.kineticEnergy);
 	mIncidentTree->SetBranchAddress("incidentGlobalTime", &mIncidentTuple.globalTime);
 	mIncidentTree->SetBranchAddress("incidentLocalTime", &mIncidentTuple.localTime);
 	mIncidentTree->SetBranchAddress("finalVolumeID", &mIncidentTuple.finalVolumeID);
-	mIncidentTree->SetBranchAddress("finalX", &mIncidentTuple.finalPosition[0]);
-	mIncidentTree->SetBranchAddress("finalY", &mIncidentTuple.finalPosition[1]);
-	mIncidentTree->SetBranchAddress("finalZ", &mIncidentTuple.finalPosition[2]);
-	mIncidentTree->SetBranchAddress("finalPX", &mIncidentTuple.finalMomentum[0]);
-	mIncidentTree->SetBranchAddress("finalPY", &mIncidentTuple.finalMomentum[1]);
-	mIncidentTree->SetBranchAddress("finalPZ", &mIncidentTuple.finalMomentum[2]);
+	mIncidentTree->SetBranchAddress("finalPosition", mIncidentTuple.finalPosition);
+	mIncidentTree->SetBranchAddress("finalMomentum", mIncidentTuple.finalMomentum);
 	mIncidentTree->SetBranchAddress("finalKineticEnergy", &mIncidentTuple.finalKineticEnergy);
 }
 
@@ -81,20 +63,13 @@ void TGeantAnalysis::readSecondaryFile() {
 	mSecondaryTree->SetBranchAddress("parentID", &mSecondaryTuple.parentID);
 	mSecondaryTree->SetBranchAddress("particleID", &mSecondaryTuple.particleID);
 	mSecondaryTree->SetBranchAddress("initialVolumeID", &mSecondaryTuple.initialVolumeID);
-	mSecondaryTree->SetBranchAddress("initX", &mSecondaryTuple.initialPosition[0]);
-	mSecondaryTree->SetBranchAddress("initY", &mSecondaryTuple.initialPosition[1]);
-	mSecondaryTree->SetBranchAddress("initZ", &mSecondaryTuple.initialPosition[2]);
-	mSecondaryTree->SetBranchAddress("initPX", &mSecondaryTuple.initialMomentum[0]);
-	mSecondaryTree->SetBranchAddress("initPY", &mSecondaryTuple.initialMomentum[1]);
-	mSecondaryTree->SetBranchAddress("initPZ", &mSecondaryTuple.initialMomentum[2]);
+	mSecondaryTree->SetBranchAddress("initPosition", mSecondaryTuple.initialPosition);
+	mSecondaryTree->SetBranchAddress("initMomentum", mSecondaryTuple.initialMomentum);
 	mSecondaryTree->SetBranchAddress("initKineticEnergy", &mSecondaryTuple.initialKineticEnergy);
+	mSecondaryTree->SetBranchAddress("depositEnergy", mSecondaryTuple.depositEnergy);
 	mSecondaryTree->SetBranchAddress("finalVolumeID", &mSecondaryTuple.finalVolumeID);
-	mSecondaryTree->SetBranchAddress("finalX", &mSecondaryTuple.finalPosition[0]);
-	mSecondaryTree->SetBranchAddress("finalY", &mSecondaryTuple.finalPosition[1]);
-	mSecondaryTree->SetBranchAddress("finalZ", &mSecondaryTuple.finalPosition[2]);
-	mSecondaryTree->SetBranchAddress("finalPX", &mSecondaryTuple.finalMomentum[0]);
-	mSecondaryTree->SetBranchAddress("finalPY", &mSecondaryTuple.finalMomentum[1]);
-	mSecondaryTree->SetBranchAddress("finalPZ", &mSecondaryTuple.finalMomentum[2]);
+	mSecondaryTree->SetBranchAddress("finalPosition", mSecondaryTuple.finalPosition);
+	mSecondaryTree->SetBranchAddress("finalMomentum", mSecondaryTuple.finalMomentum);
 	mSecondaryTree->SetBranchAddress("finalKineticEnergy", &mSecondaryTuple.finalKineticEnergy);
 }
 
