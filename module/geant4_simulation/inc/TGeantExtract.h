@@ -49,7 +49,6 @@ public:
 	void extractTrack();
 private:
 	void initTrackTree();
-	void initIncidentTree();
 
 	void initPrimaryAnalysisTree();
 	void initIncidentAnalysisTree();
@@ -59,7 +58,7 @@ private:
 	void getSecondaryAnalysisInformation();
 
 	bool isIncident();
-
+	bool isProducedInALPIDE();
 	void extractFromAFile();
 };
 

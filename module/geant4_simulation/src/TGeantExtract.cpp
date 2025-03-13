@@ -38,7 +38,6 @@ void TGeantExtract::openInputFile() {
 	}
 	mInputFile.reset(new TFile(inputFilePath, "READ"));
 	initTrackTree();
-	initIncidentTree();
 }
 
 
@@ -88,7 +87,15 @@ void TGeantExtract::extractTrack() {
 }
 
 bool TGeantExtract::isIncident() {
-	if ( mTrackTuple.isInALPIDE && mTrackTuple.initVolumeID == VOLUME::World && mTrackTuple.initVolumeID == VOLUME::Collimator && mTrackTuple.initVolumeID == VOLUME::Screen ) {
+	if ( mTrackTuple.isInALPIDE && (mTrackTuple.initVolumeID == VOLUME::World || mTrackTuple.initVolumeID == VOLUME::Collimator || mTrackTuple.initVolumeID == VOLUME::Screen) ) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool TGeantExtract::isProducedInALPIDE() {
+	if ( mTrackTuple.initVolumeID == VOLUME::ALPIDEMetal || mTrackTuple.initVolumeID == VOLUME::ALPIDEEpitaxial || mTrackTuple.initVolumeID == VOLUME::ALPIDESubstrate ) {
 		return true;
 	} else {
 		return false;
@@ -111,10 +118,9 @@ void TGeantExtract::extractFromAFile() {
 		if ( isIncident() ) {
 			getIncidentAnalysisInformation();
 		}
-		if ( mTrackTuple.initVolumeID == VOLUME::ALPIDEMetal || mTrackTuple.initVolumeID == VOLUME::ALPIDEEpitaxial || mTrackTuple.initVolumeID == VOLUME::ALPIDESubstrate ) {
+		if ( isProducedInALPIDE() ) {
 			getSecondaryAnalysisInformation();
 		}
-		getIncidentAnalysisInformation();
 	}
 	iFile++;
 }
@@ -271,14 +277,17 @@ void TGeantExtract::getSecondaryAnalysisInformation() {
 	mSecondaryAnalysisTuple.trackID = mTrackTuple.trackID;
 	mSecondaryAnalysisTuple.parentID = mTrackTuple.parentID;
 	mSecondaryAnalysisTuple.particleID = mTrackTuple.particleID;
-	mSecondaryAnalysisTuple.initialVolumeID = mTrackTuple.initialVolumeID;
-	mSecondaryAnalysisTuple.initialPosition[0] = mTrackTuple.initialPosition[0];
-	mSecondaryAnalysisTuple.initialPosition[1] = mTrackTuple.initialPosition[1];
-	mSecondaryAnalysisTuple.initialPosition[2] = mTrackTuple.initialPosition[2];
-	mSecondaryAnalysisTuple.initialMomentum[0] = mTrackTuple.initialMomentum[0];
-	mSecondaryAnalysisTuple.initialMomentum[1] = mTrackTuple.initialMomentum[1];
-	mSecondaryAnalysisTuple.initialMomentum[2] = mTrackTuple.initialMomentum[2];
-	mSecondaryAnalysisTuple.initialKineticEnergy = mTrackTuple.initialKineticEnergy;
+	mIncidentAnalysisTuple.initialVolumeID = mTrackTuple.initVolumeID;
+	mIncidentAnalysisTuple.initialPosition[0] = mTrackTuple.initPosition[0];
+	mIncidentAnalysisTuple.initialPosition[1] = mTrackTuple.initPosition[1];
+	mIncidentAnalysisTuple.initialPosition[2] = mTrackTuple.initPosition[2];
+	mIncidentAnalysisTuple.initialMomentum[0] = mTrackTuple.initMomentum[0];
+	mIncidentAnalysisTuple.initialMomentum[1] = mTrackTuple.initMomentum[1];
+	mIncidentAnalysisTuple.initialMomentum[2] = mTrackTuple.initMomentum[2];
+	mIncidentAnalysisTuple.initialKineticEnergy = mTrackTuple.initKineticEnergy;
+	mIncidentAnalysisTuple.depositEnergy[0] = mTrackTuple.depositEnergy[0];
+	mIncidentAnalysisTuple.depositEnergy[1] = mTrackTuple.depositEnergy[1];
+	mIncidentAnalysisTuple.depositEnergy[2] = mTrackTuple.depositEnergy[2];
 	mSecondaryAnalysisTuple.finalVolumeID = mTrackTuple.finalVolumeID;
 	mSecondaryAnalysisTuple.finalPosition[0] = mTrackTuple.finalPosition[0];
 	mSecondaryAnalysisTuple.finalPosition[1] = mTrackTuple.finalPosition[1];
