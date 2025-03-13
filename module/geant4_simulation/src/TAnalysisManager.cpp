@@ -100,7 +100,6 @@ Int_t TAnalysisManager::getVolumeID(const G4LogicalVolume* volume) {
 void TAnalysisManager::close() {
 	mFile->cd();
 	mTrackTree->Write();
-	mIncidentTree->Write();
 	mFile->Close();
 }
 
@@ -127,7 +126,6 @@ void TAnalysisManager::doBeginOfEvent(const G4Event* event) {
 		if ( !isFirstEvent ) {
 			mFile->cd();
 			mTrackTree->Write();
-			mIncidentTree->Write();
 			mFile->Close();
 			open(mFileName);
 		} else {
@@ -152,6 +150,7 @@ void TAnalysisManager::doPreTracking(const G4Track* track) {
 		}
 	}
 	isInALPIDE = false;
+	mTrackTuple.init();
 }
 
 void TAnalysisManager::doPostTracking(const G4Track* track) {
@@ -201,7 +200,7 @@ void TAnalysisManager::doPostTracking(const G4Track* track) {
 	mTrackTuple.finalKineticEnergy = track->GetKineticEnergy();
 
 	mTrackTuple.finalVolumeID = getVolumeID(track->GetVolume()->GetLogicalVolume());
-
+	mTrackTuple.isInALPIDE = isInALPIDE;
 	mTrackTree->Fill();
 }
 
