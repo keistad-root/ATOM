@@ -36,6 +36,7 @@ private:
 	TPrimaryAnalysisTuple mPrimaryTuple;
 	TIncidentAnalysisTuple mIncidentTuple;
 	std::vector<TIncidentAnalysisTuple> mIncidentSet;
+	std::vector<TSecondaryAnalysisTuple> mSecondarySet;
 	TSecondaryAnalysisTuple mSecondaryTuple;
 	std::unordered_map<std::string, TH1D*> m1DHistograms;
 	std::unordered_map<std::string, TH2D*> m2DHistograms;

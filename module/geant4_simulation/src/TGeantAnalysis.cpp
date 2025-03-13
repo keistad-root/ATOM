@@ -139,10 +139,16 @@ void TGeantAnalysis::readPrimaryTree() {
 void TGeantAnalysis::readSecondaryTree() {
 	Int_t nEntries = mSecondaryTree->GetEntries();
 	ProgressBar progressBar(static_cast<int>(nEntries));
+	Int_t preEventID = 0;
 	for ( Int_t i = 0; i < nEntries; i++ ) {
 		progressBar.printProgress();
 		mSecondaryTree->GetEntry(i);
+		if ( preEventID != mSecondaryTuple.eventID ) {
+			preEventID = mSecondaryTuple.eventID;
+			mSecondarySet.clear();
+		}
 		fillSecondaryHistograms();
+		mSecondarySet.push_back(mSecondaryTuple);
 	}
 }
 
@@ -573,12 +579,22 @@ void TGeantAnalysis::fillIncidentHistograms() {
 void TGeantAnalysis::fillSecondaryHistograms() {
 	TIncidentAnalysisTuple incidentTuple;
 	static int nIncident = 0;
+	bool isFromPrimary = false;
 	for ( int iIncident = nIncident; iIncident < mIncidentSet.size(); iIncident++ ) {
 		if ( mIncidentSet[iIncident].eventID == mSecondaryTuple.eventID && mIncidentSet[iIncident].trackID == mSecondaryTuple.parentID ) {
 			incidentTuple = mIncidentSet[iIncident];
-			if ( incidentTuple.particleID == PARTICLE::unknown ) std::cout << "Unknown particle" << std::endl;
 			nIncident = iIncident;
+			isFromPrimary = true;
 			break;
+		}
+	}
+	TSecondaryAnalysisTuple preSecondaryTuple;
+	if ( !isFromPrimary ) {
+		for ( int i = 0; i < mSecondarySet.size(); i++ ) {
+			if ( mSecondarySet[i].eventID == mSecondaryTuple.eventID && mSecondarySet[i].trackID == mSecondaryTuple.parentID ) {
+				preSecondaryTuple = mSecondarySet[i];
+				break;
+			}
 		}
 	}
 
@@ -592,7 +608,11 @@ void TGeantAnalysis::fillSecondaryHistograms() {
 			hist->Fill(meanFreePath / multiple);
 		}
 		if ( key == "SecondaryMotherParticleInALPIDE" ) {
-			hist->Fill(incidentTuple.particleID);
+			if ( isFromPrimary ) {
+				hist->Fill(incidentTuple.particleID);
+			} else {
+				hist->Fill(preSecondaryTuple.particleID);
+			}
 		}
 		if ( key == "SecondaryInALPIDEVolume" ) {
 			hist->Fill(mSecondaryTuple.initialVolumeID);
@@ -608,8 +628,28 @@ void TGeantAnalysis::fillSecondaryHistograms() {
 	}
 
 	for ( const auto& [key, hist] : m2DHistograms ) {
+		Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
 		if ( key == "MotherDoughterCorrelationInALPIDE" ) {
-			hist->Fill(incidentTuple.particleID, mSecondaryTuple.particleID);
+			if ( isFromPrimary ) {
+				hist->Fill(incidentTuple.particleID, mSecondaryTuple.particleID);
+			} else {
+				hist->Fill(preSecondaryTuple.particleID, mSecondaryTuple.particleID);
+			}
+		}
+		if ( key == "KineticEnergyVSDepositEnergy" ) {
+			Double_t incidentDepositEnergy = 0.;
+			if ( incidentTuple.depositEnergy[0] > .000001 ) {
+				incidentDepositEnergy += incidentTuple.depositEnergy[0];
+			}
+			if ( incidentTuple.depositEnergy[1] > .000001 ) {
+				incidentDepositEnergy += incidentTuple.depositEnergy[1];
+			}
+			if ( incidentTuple.depositEnergy[2] > .000001 ) {
+				incidentDepositEnergy += incidentTuple.depositEnergy[2];
+			}
+			if ( incidentDepositEnergy > .000001 ) {
+				hist->Fill(incidentTuple.depositEnergy[0] / multiple, mSecondaryTuple.finalKineticEnergy / multiple);
+			}
 		}
 	}
 }
