@@ -140,6 +140,7 @@ void TAnalysisManager::doEndOfEvent(const G4Event* event) { }
 void TAnalysisManager::doPreTracking(const G4Track* track) {
 	Int_t eventID = mTrackTuple.eventID;
 
+	mTrackTuple.init();
 	mTrackTuple.eventID = eventID;
 	mTrackTuple.trackID = track->GetTrackID();
 	mTrackTuple.parentID = track->GetParentID();
@@ -150,7 +151,6 @@ void TAnalysisManager::doPreTracking(const G4Track* track) {
 		}
 	}
 	isInALPIDE = false;
-	mTrackTuple.init();
 }
 
 void TAnalysisManager::doPostTracking(const G4Track* track) {
