@@ -7,7 +7,7 @@
 TGeantAnalysis::TGeantAnalysis(const CppConfigFile& config) : mConfig(config) {
 	isPrimary = mConfig.getConfig("FILE").hasKey("INPUT_PRIMARY_FILE");
 	isIncident = mConfig.getConfig("FILE").hasKey("INPUT_INCIDENT_FILE");
-	isSecondary = mConfig.getConfig("FILE").hasKey("INPUT_SECONDARY_FILE");
+	// isSecondary = mConfig.getConfig("FILE").hasKey("INPUT_SECONDARY_FILE");
 	if ( isPrimary ) {
 		TString primaryFilePath = mConfig.getConfig("FILE").find("INPUT_PRIMARY_FILE");
 		mPrimaryFile = new TFile(primaryFilePath, "READ");
@@ -20,12 +20,12 @@ TGeantAnalysis::TGeantAnalysis(const CppConfigFile& config) : mConfig(config) {
 		mIncidentTree = static_cast<TTree*>(mIncidentFile->Get("IncidentAnalysis"));
 		readIncidentFile();
 	}
-	if ( isSecondary ) {
-		TString secondaryFilePath = mConfig.getConfig("FILE").find("INPUT_SECONDARY_FILE");
-		mSecondaryFile = new TFile(secondaryFilePath, "READ");
-		mSecondaryTree = static_cast<TTree*>(mSecondaryFile->Get("SecondaryAnalysis"));
-		readSecondaryFile();
-	}
+	// if ( isSecondary ) {
+	// 	TString secondaryFilePath = mConfig.getConfig("FILE").find("INPUT_SECONDARY_FILE");
+	// 	mSecondaryFile = new TFile(secondaryFilePath, "READ");
+	// 	mSecondaryTree = static_cast<TTree*>(mSecondaryFile->Get("SecondaryAnalysis"));
+	// 	readSecondaryFile();
+	// }
 }
 
 TGeantAnalysis::~TGeantAnalysis() { }
@@ -57,21 +57,21 @@ void TGeantAnalysis::readIncidentFile() {
 	mIncidentTree->SetBranchAddress("finalKineticEnergy", &mIncidentTuple.finalKineticEnergy);
 }
 
-void TGeantAnalysis::readSecondaryFile() {
-	mSecondaryTree->SetBranchAddress("eventID", &mSecondaryTuple.eventID);
-	mSecondaryTree->SetBranchAddress("trackID", &mSecondaryTuple.trackID);
-	mSecondaryTree->SetBranchAddress("parentID", &mSecondaryTuple.parentID);
-	mSecondaryTree->SetBranchAddress("particleID", &mSecondaryTuple.particleID);
-	mSecondaryTree->SetBranchAddress("initialVolumeID", &mSecondaryTuple.initialVolumeID);
-	mSecondaryTree->SetBranchAddress("initPosition", mSecondaryTuple.initialPosition);
-	mSecondaryTree->SetBranchAddress("initMomentum", mSecondaryTuple.initialMomentum);
-	mSecondaryTree->SetBranchAddress("initKineticEnergy", &mSecondaryTuple.initialKineticEnergy);
-	mSecondaryTree->SetBranchAddress("depositEnergy", mSecondaryTuple.depositEnergy);
-	mSecondaryTree->SetBranchAddress("finalVolumeID", &mSecondaryTuple.finalVolumeID);
-	mSecondaryTree->SetBranchAddress("finalPosition", mSecondaryTuple.finalPosition);
-	mSecondaryTree->SetBranchAddress("finalMomentum", mSecondaryTuple.finalMomentum);
-	mSecondaryTree->SetBranchAddress("finalKineticEnergy", &mSecondaryTuple.finalKineticEnergy);
-}
+// void TGeantAnalysis::readSecondaryFile() {
+// 	mSecondaryTree->SetBranchAddress("eventID", &mSecondaryTuple.eventID);
+// 	mSecondaryTree->SetBranchAddress("trackID", &mSecondaryTuple.trackID);
+// 	mSecondaryTree->SetBranchAddress("parentID", &mSecondaryTuple.parentID);
+// 	mSecondaryTree->SetBranchAddress("particleID", &mSecondaryTuple.particleID);
+// 	mSecondaryTree->SetBranchAddress("initialVolumeID", &mSecondaryTuple.initialVolumeID);
+// 	mSecondaryTree->SetBranchAddress("initPosition", mSecondaryTuple.initialPosition);
+// 	mSecondaryTree->SetBranchAddress("initMomentum", mSecondaryTuple.initialMomentum);
+// 	mSecondaryTree->SetBranchAddress("initKineticEnergy", &mSecondaryTuple.initialKineticEnergy);
+// 	mSecondaryTree->SetBranchAddress("depositEnergy", mSecondaryTuple.depositEnergy);
+// 	mSecondaryTree->SetBranchAddress("finalVolumeID", &mSecondaryTuple.finalVolumeID);
+// 	mSecondaryTree->SetBranchAddress("finalPosition", mSecondaryTuple.finalPosition);
+// 	mSecondaryTree->SetBranchAddress("finalMomentum", mSecondaryTuple.finalMomentum);
+// 	mSecondaryTree->SetBranchAddress("finalKineticEnergy", &mSecondaryTuple.finalKineticEnergy);
+// }
 
 void TGeantAnalysis::setHistograms() {
 	std::vector<CppConfigDictionary> configList = mConfig.getConfigList();
@@ -96,9 +96,9 @@ void TGeantAnalysis::readTree() {
 	if ( isIncident ) {
 		readIncidentTree();
 	}
-	if ( isSecondary ) {
-		readSecondaryTree();
-	}
+	// if ( isSecondary ) {
+	// 	readSecondaryTree();
+	// }
 }
 
 void TGeantAnalysis::readPrimaryTree() {
@@ -111,50 +111,60 @@ void TGeantAnalysis::readPrimaryTree() {
 	}
 }
 
-void TGeantAnalysis::readSecondaryTree() {
-	Int_t nEntries = mSecondaryTree->GetEntries();
-	ProgressBar progressBar(static_cast<int>(nEntries));
-	Int_t preEventID = 0;
-	for ( Int_t i = 0; i < nEntries; i++ ) {
-		progressBar.printProgress();
-		mSecondaryTree->GetEntry(i);
-		if ( preEventID != mSecondaryTuple.eventID ) {
-			preEventID = mSecondaryTuple.eventID;
-			m1DHistograms["DepositEnergyMetal"]->Fill(depositEnergyMetal);
-			m1DHistograms["DepositEnergyEpitaxial"]->Fill(depositEnergyEpitaxial);
-			m1DHistograms["DepositEnergySubstrate"]->Fill(depositEnergySubstrate);
-			depositEnergyMetal = 0.;
-			depositEnergyEpitaxial = 0.;
-			depositEnergySubstrate = 0.;
-			mSecondarySet.clear();
-		}
-		fillSecondaryHistograms();
-		mSecondarySet.push_back(mSecondaryTuple);
-	}
-}
+// void TGeantAnalysis::readSecondaryTree() {
+// 	Int_t nEntries = mSecondaryTree->GetEntries();
+// 	ProgressBar progressBar(static_cast<int>(nEntries));
+// 	Int_t preEventID = 0;
+// 	for ( Int_t i = 0; i < nEntries; i++ ) {
+// 		progressBar.printProgress();
+// 		mSecondaryTree->GetEntry(i);
+// 		if ( preEventID != mSecondaryTuple.eventID ) {
+// 			preEventID = mSecondaryTuple.eventID;
+// 			m1DHistograms["DepositEnergyMetal"]->Fill(depositEnergyMetal);
+// 			m1DHistograms["DepositEnergyEpitaxial"]->Fill(depositEnergyEpitaxial);
+// 			m1DHistograms["DepositEnergySubstrate"]->Fill(depositEnergySubstrate);
+// 			depositEnergyMetal = 0.;
+// 			depositEnergyEpitaxial = 0.;
+// 			depositEnergySubstrate = 0.;
+// 			mSecondarySet.clear();
+// 		}
+// 		fillSecondaryHistograms();
+// 		mSecondarySet.push_back(mSecondaryTuple);
+// 	}
+// }
 
 void TGeantAnalysis::readIncidentTree() {
 	Int_t nEntries = mIncidentTree->GetEntries();
 
 	std::vector<std::pair<Double_t, Double_t>> position;
 	Int_t preTimeStamp = 0;
+
+	Double_t depositEnergyMetal = 0.;
+	Double_t depositEnergyEpitaxial = 0.;
+	Double_t depositEnergySubstrate = 0.;
+
 	ProgressBar progressBar(static_cast<int>(nEntries));
 	Int_t nDouble = 0;
 	for ( Int_t i = 0; i < nEntries; i++ ) {
 		progressBar.printProgress();
 		mIncidentTree->GetEntry(i);
-		// if ( std::abs(mIncidentTuple.position[0]) < 4.35 && std::abs(mIncidentTuple.position[1]) < 0.27 ) { // 300 pixel * 20 pixel
-		fillIncidentHistograms();
-		if ( mIncidentTuple.particleID == PARTICLE::alpha ) {
-			position.push_back({mIncidentTuple.position[0], mIncidentTuple.position[1]});
+		if ( mIncidentTuple.initialVolumeID == VOLUME::Collimator || mIncidentTuple.initialVolumeID == VOLUME::Screen || mIncidentTuple.initialVolumeID == VOLUME::World ) {
+			// if ( std::abs(mIncidentTuple.position[0]) < 4.35 && std::abs(mIncidentTuple.position[1]) < 0.27 ) { // 300 pixel * 20 pixel
+			fillIncidentHistograms();
+			if ( mIncidentTuple.particleID == PARTICLE::alpha ) {
+				position.push_back({mIncidentTuple.position[0], mIncidentTuple.position[1]});
+			}
+			if ( preTimeStamp != mIncidentTuple.eventID / 107 ) {
+				preTimeStamp = mIncidentTuple.eventID / 107;
+				nDouble += getNDouble(position);
+				position.clear();
+				position.shrink_to_fit();
+			}
+		} else {
+			continue;
 		}
-		if ( preTimeStamp != mIncidentTuple.eventID / 107 ) {
-			preTimeStamp = mIncidentTuple.eventID / 107;
-			nDouble += getNDouble(position);
-			position.clear();
-			position.shrink_to_fit();
-		}
-		mIncidentSet.push_back(mIncidentTuple);
+
+		// mIncidentSet.push_back(mIncidentTuple);
 		// }
 	}
 
@@ -557,93 +567,94 @@ void TGeantAnalysis::fillIncidentHistograms() {
 	}
 }
 
-void TGeantAnalysis::fillSecondaryHistograms() {
-	TIncidentAnalysisTuple incidentTuple;
-	static int nIncident = 0;
-	bool isFromPrimary = false;
-	for ( int iIncident = nIncident; iIncident < mIncidentSet.size(); iIncident++ ) {
-		if ( mIncidentSet[iIncident].eventID == mSecondaryTuple.eventID && mIncidentSet[iIncident].trackID == mSecondaryTuple.parentID ) {
-			incidentTuple = mIncidentSet[iIncident];
-			nIncident = iIncident;
-			isFromPrimary = true;
-			break;
-		}
-	}
-	TSecondaryAnalysisTuple preSecondaryTuple;
-	if ( !isFromPrimary ) {
-		for ( int i = 0; i < mSecondarySet.size(); i++ ) {
-			if ( mSecondarySet[i].eventID == mSecondaryTuple.eventID && mSecondarySet[i].trackID == mSecondaryTuple.parentID ) {
-				preSecondaryTuple = mSecondarySet[i];
-				break;
-			}
-		}
-	}
+// void TGeantAnalysis::fillSecondaryHistograms() {
+// 	TIncidentAnalysisTuple incidentTuple;
+// 	static int nIncident = 0;
+// 	bool isFromPrimary = false;
+// 	for ( int iIncident = nIncident; iIncident < mIncidentSet.size(); iIncident++ ) {
+// 		if ( mIncidentSet[iIncident].eventID == mSecondaryTuple.eventID && mIncidentSet[iIncident].trackID == mSecondaryTuple.parentID ) {
+// 			incidentTuple = mIncidentSet[iIncident];
+// 			nIncident = iIncident;
+// 			isFromPrimary = true;
+// 			break;
+// 		}
+// 	}
+// 	TSecondaryAnalysisTuple preSecondaryTuple;
+// 	if ( !isFromPrimary ) {
+// 		for ( int i = 0; i < mSecondarySet.size(); i++ ) {
+// 			if ( mSecondarySet[i].eventID == mSecondaryTuple.eventID && mSecondarySet[i].trackID == mSecondaryTuple.parentID ) {
+// 				preSecondaryTuple = mSecondarySet[i];
+// 				break;
+// 			}
+// 		}
+// 	}
 
-	if ( mSecondaryTuple.depositEnergy[0] > 0.000001 ) {
-		depositEnergyMetal += mSecondaryTuple.depositEnergy[0];
-	}
-	if ( mSecondaryTuple.depositEnergy[1] > 0.000001 ) {
-		depositEnergyEpitaxial += mSecondaryTuple.depositEnergy[1];
-	}
-	if ( mSecondaryTuple.depositEnergy[2] > 0.000001 ) {
-		depositEnergySubstrate += mSecondaryTuple.depositEnergy[2];
-	}
+// 	if ( mSecondaryTuple.depositEnergy[0] > 0.000001 ) {
+// 		depositEnergyMetal += mSecondaryTuple.depositEnergy[0];
+// 	}
+// 	if ( mSecondaryTuple.depositEnergy[1] > 0.000001 ) {
+// 		depositEnergyEpitaxial += mSecondaryTuple.depositEnergy[1];
+// 	}
+// 	if ( mSecondaryTuple.depositEnergy[2] > 0.000001 ) {
+// 		depositEnergySubstrate += mSecondaryTuple.depositEnergy[2];
+// 	}
 
-	for ( const auto& [key, hist] : m1DHistograms ) {
-		Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
-		if ( key == "SecondaryParticleInALPIDE" ) {
-			hist->Fill(mSecondaryTuple.particleID);
-		}
-		if ( key == "SecondaryMeanFreePathInALPIDE" ) {
-			Double_t meanFreePath = TMath::Sqrt(TMath::Power(mSecondaryTuple.finalPosition[0] - mSecondaryTuple.initialPosition[0], 2) + TMath::Power(mSecondaryTuple.finalPosition[1] - mSecondaryTuple.initialPosition[1], 2) + TMath::Power(mSecondaryTuple.finalPosition[2] - mSecondaryTuple.initialPosition[2], 2));
-			hist->Fill(meanFreePath / multiple);
-		}
-		if ( key == "SecondaryMotherParticleInALPIDE" ) {
-			if ( isFromPrimary ) {
-				hist->Fill(incidentTuple.particleID);
-			} else {
-				hist->Fill(preSecondaryTuple.particleID);
-			}
-		}
-		if ( key == "SecondaryInALPIDEVolume" ) {
-			hist->Fill(mSecondaryTuple.initialVolumeID);
-		}
-		if ( key == "SecondaryInALPIDEDecayVolume" ) {
-			hist->Fill(mSecondaryTuple.finalVolumeID);
-		}
-		if ( mSecondaryTuple.particleID == PARTICLE::electron ) {
-			if ( key == "SecondaryElectronInitialZ" ) {
-				hist->Fill(-mSecondaryTuple.initialPosition[2] / multiple);
-			}
-		}
-	}
+// 	for ( const auto& [key, hist] : m1DHistograms ) {
+// 		Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
+// 		if ( key == "SecondaryParticleInALPIDE" ) {
+// 			hist->Fill(mSecondaryTuple.particleID);
+// 		}
+// 		if ( key == "SecondaryMeanFreePathInALPIDE" ) {
+// 			Double_t meanFreePath = TMath::Sqrt(TMath::Power(mSecondaryTuple.finalPosition[0] - mSecondaryTuple.initialPosition[0], 2) + TMath::Power(mSecondaryTuple.finalPosition[1] - mSecondaryTuple.initialPosition[1], 2) + TMath::Power(mSecondaryTuple.finalPosition[2] - mSecondaryTuple.initialPosition[2], 2));
+// 			hist->Fill(meanFreePath / multiple);
+// 		}
+// 		if ( key == "SecondaryMotherParticleInALPIDE" ) {
+// 			if ( isFromPrimary ) {
+// 				hist->Fill(incidentTuple.particleID);
+// 			} else {
+// 				hist->Fill(preSecondaryTuple.particleID);
+// 			}
+// 		}
+// 		if ( key == "SecondaryInALPIDEVolume" ) {
+// 			hist->Fill(mSecondaryTuple.initialVolumeID);
+// 		}
+// 		if ( key == "SecondaryInALPIDEDecayVolume" ) {
+// 			hist->Fill(mSecondaryTuple.finalVolumeID);
+// 		}
+// 		if ( mSecondaryTuple.particleID == PARTICLE::electron ) {
+// 			if ( key == "SecondaryElectronInitialZ" ) {
+// 				hist->Fill(-mSecondaryTuple.initialPosition[2] / multiple);
+// 			}
+// 		}
+// 	}
 
-	for ( const auto& [key, hist] : m2DHistograms ) {
-		Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
-		if ( key == "MotherDoughterCorrelationInALPIDE" ) {
-			if ( isFromPrimary ) {
-				hist->Fill(incidentTuple.particleID, mSecondaryTuple.particleID);
-			} else {
-				hist->Fill(preSecondaryTuple.particleID, mSecondaryTuple.particleID);
-			}
-		}
-		if ( key == "KineticEnergyVSDepositEnergy" ) {
-			Double_t incidentDepositEnergy = 0.;
-			if ( incidentTuple.depositEnergy[0] > .000001 ) {
-				incidentDepositEnergy += incidentTuple.depositEnergy[0];
-			}
-			if ( incidentTuple.depositEnergy[1] > .000001 ) {
-				incidentDepositEnergy += incidentTuple.depositEnergy[1];
-			}
-			if ( incidentTuple.depositEnergy[2] > .000001 ) {
-				incidentDepositEnergy += incidentTuple.depositEnergy[2];
-			}
-			if ( incidentDepositEnergy > .000001 ) {
-				hist->Fill(incidentTuple.depositEnergy[0] / multiple, mSecondaryTuple.finalKineticEnergy / multiple);
-			}
-		}
-	}
-}
+// 	for ( const auto& [key, hist] : m2DHistograms ) {
+// 		Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
+// 		if ( key == "MotherDoughterCorrelationInALPIDE" ) {
+// 			if ( isFromPrimary ) {
+// 				hist->Fill(incidentTuple.particleID, mSecondaryTuple.particleID);
+// 			} else {
+// 				hist->Fill(preSecondaryTuple.particleID, mSecondaryTuple.particleID);
+// 			}
+// 		}
+// 		if ( key == "KineticEnergyVSDepositEnergy" ) {
+// 			Double_t incidentDepositEnergy = 0.;
+// 			if ( incidentTuple.depositEnergy[0] > .000001 ) {
+// 				incidentDepositEnergy += incidentTuple.depositEnergy[0];
+// 			}
+// 			if ( incidentTuple.depositEnergy[1] > .000001 ) {
+// 				incidentDepositEnergy += incidentTuple.depositEnergy[1];
+// 			}
+// 			if ( incidentTuple.depositEnergy[2] > .000001 ) {
+// 				incidentDepositEnergy += incidentTuple.depositEnergy[2];
+// 			}
+// 			if ( incidentDepositEnergy > .000001 ) {
+// 				hist->Fill(incidentTuple.depositEnergy[0] / multiple, mSecondaryTuple.finalKineticEnergy / multiple);
+// 			}
+// 		}
+// 	}
+// }
+
 void TGeantAnalysis::saveFile() {
 	TString outputFileName = std::string(mConfig.getConfig("FILE").find("OUTPUT_FILE"));
 	TFile outputFile(outputFileName, "RECREATE");

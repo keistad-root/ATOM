@@ -42,10 +42,6 @@ private:
 	std::unordered_map<std::string, TH2D*> m2DHistograms;
 	std::array<int, 4> mEntry;
 
-	Double_t depositEnergyMetal = 0.;
-	Double_t depositEnergyEpitaxial = 0.;
-	Double_t depositEnergySubstrate = 0.;
-
 	bool isPrimary = false, isIncident = false, isSecondary = false;
 
 public:
@@ -59,10 +55,10 @@ private:
 	void readSecondaryFile();
 	void readPrimaryTree();
 	void readIncidentTree();
-	void readSecondaryTree();
+	// void readSecondaryTree();
 	int getNDouble(std::vector<std::pair<Double_t, Double_t>> position);
 	void fillIncidentHistograms();
 	void fillPrimaryHistograms();
-	void fillSecondaryHistograms();
+	// void fillSecondaryHistograms();
 };
 #endif
