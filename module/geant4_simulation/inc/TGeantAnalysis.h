@@ -42,6 +42,10 @@ private:
 	std::unordered_map<std::string, TH2D*> m2DHistograms;
 	std::array<int, 4> mEntry;
 
+	Double_t depositEnergyMetal = 0.;
+	Double_t depositEnergyEpitaxial = 0.;
+	Double_t depositEnergySubstrate = 0.;
+
 	bool isPrimary = false, isIncident = false, isSecondary = false;
 
 public:
