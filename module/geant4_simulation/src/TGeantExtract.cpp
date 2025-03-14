@@ -20,7 +20,7 @@ TGeantExtract::TGeantExtract(const CppConfigFile& config) {
 
 	mPrimaryOutputFilePath = fileConfig.find("PRIMARY_OUTPUT_FILE");
 	mIncidentOutputFilePath = fileConfig.find("INCIDENT_OUTPUT_FILE");
-	mSecondaryOutputFilePath = fileConfig.find("SECONDARY_OUTPUT_FILE");
+	// mSecondaryOutputFilePath = fileConfig.find("SECONDARY_OUTPUT_FILE");
 }
 
 TGeantExtract::~TGeantExtract() {
@@ -54,11 +54,11 @@ void TGeantExtract::openOutputFile() {
 	}
 	initIncidentAnalysisTree();
 
-	mSecondaryAnalysisOutputFile = new TFile(mSecondaryOutputFilePath.c_str(), "RECREATE");
-	if ( !mSecondaryAnalysisOutputFile->IsOpen() ) {
-		std::cerr << "Error: Cannot open the secondary analysis output file" << std::endl;
-	}
-	initSecondaryAnalysisTree();
+	// mSecondaryAnalysisOutputFile = new TFile(mSecondaryOutputFilePath.c_str(), "RECREATE");
+	// if ( !mSecondaryAnalysisOutputFile->IsOpen() ) {
+	// 	std::cerr << "Error: Cannot open the secondary analysis output file" << std::endl;
+	// }
+	// initSecondaryAnalysisTree();
 }
 
 void TGeantExtract::extractTrack() {
@@ -81,26 +81,28 @@ void TGeantExtract::extractTrack() {
 	mIncidentAnalysisOutputFile->Close();
 
 	// Write and close secondary analysis output file
-	mSecondaryAnalysisOutputFile->cd();
-	mSecondaryAnalysisTree->Write();
-	mSecondaryAnalysisOutputFile->Close();
+	// mSecondaryAnalysisOutputFile->cd();
+	// mSecondaryAnalysisTree->Write();
+	// mSecondaryAnalysisOutputFile->Close();
 }
 
 bool TGeantExtract::isIncident() {
 	if ( mTrackTuple.isInALPIDE && (mTrackTuple.initVolumeID == VOLUME::World || mTrackTuple.initVolumeID == VOLUME::Collimator || mTrackTuple.initVolumeID == VOLUME::Screen) ) {
 		return true;
-	} else {
-		return false;
-	}
-}
-
-bool TGeantExtract::isProducedInALPIDE() {
-	if ( mTrackTuple.initVolumeID == VOLUME::ALPIDEMetal || mTrackTuple.initVolumeID == VOLUME::ALPIDEEpitaxial || mTrackTuple.initVolumeID == VOLUME::ALPIDESubstrate ) {
+	} else if ( mTrackTuple.initVolumeID == VOLUME::ALPIDEMetal || mTrackTuple.initVolumeID == VOLUME::ALPIDEEpitaxial || mTrackTuple.initVolumeID == VOLUME::ALPIDESubstrate ) {
 		return true;
 	} else {
 		return false;
 	}
 }
+
+// bool TGeantExtract::isProducedInALPIDE() {
+// 	if ( mTrackTuple.initVolumeID == VOLUME::ALPIDEMetal || mTrackTuple.initVolumeID == VOLUME::ALPIDEEpitaxial || mTrackTuple.initVolumeID == VOLUME::ALPIDESubstrate ) {
+// 		return true;
+// 	} else {
+// 		return false;
+// 	}
+// }
 
 void TGeantExtract::extractFromAFile() {
 	static int iFile = 0;
@@ -118,9 +120,9 @@ void TGeantExtract::extractFromAFile() {
 		if ( isIncident() ) {
 			getIncidentAnalysisInformation();
 		}
-		if ( isProducedInALPIDE() ) {
-			getSecondaryAnalysisInformation();
-		}
+		// if ( isProducedInALPIDE() ) {
+		// 	getSecondaryAnalysisInformation();
+		// }
 	}
 	iFile++;
 }
@@ -180,23 +182,23 @@ void TGeantExtract::initIncidentAnalysisTree() {
 	mIncidentAnalysisTree->Branch("finalKineticEnergy", &mIncidentAnalysisTuple.finalKineticEnergy);
 }
 
-void TGeantExtract::initSecondaryAnalysisTree() {
-	mSecondaryAnalysisTree = new TTree("SecondaryAnalysis", "Secondary Analysis Tree");
+// void TGeantExtract::initSecondaryAnalysisTree() {
+// 	mSecondaryAnalysisTree = new TTree("SecondaryAnalysis", "Secondary Analysis Tree");
 
-	mSecondaryAnalysisTree->Branch("eventID", &mSecondaryAnalysisTuple.eventID);
-	mSecondaryAnalysisTree->Branch("trackID", &mSecondaryAnalysisTuple.trackID);
-	mSecondaryAnalysisTree->Branch("parentID", &mSecondaryAnalysisTuple.parentID);
-	mSecondaryAnalysisTree->Branch("particleID", &mSecondaryAnalysisTuple.particleID);
-	mSecondaryAnalysisTree->Branch("initialVolumeID", &mSecondaryAnalysisTuple.initialVolumeID);
-	mSecondaryAnalysisTree->Branch("initPosition", mSecondaryAnalysisTuple.initialPosition, "initPosition[3]/D");
-	mSecondaryAnalysisTree->Branch("initMomentum", mSecondaryAnalysisTuple.initialMomentum, "initMomentum[3]/D");
-	mSecondaryAnalysisTree->Branch("initKineticEnergy", &mSecondaryAnalysisTuple.initialKineticEnergy);
-	mIncidentAnalysisTree->Branch("depositEnergy", mSecondaryAnalysisTuple.depositEnergy, "depositEnergy[3]/D");
-	mSecondaryAnalysisTree->Branch("finalVolumeID", &mSecondaryAnalysisTuple.finalVolumeID);
-	mSecondaryAnalysisTree->Branch("finalPosition", mSecondaryAnalysisTuple.finalPosition, "finalPosition[3]/D");
-	mSecondaryAnalysisTree->Branch("finalMomentum", mSecondaryAnalysisTuple.finalMomentum, "finalMomentum[3]/D");
-	mSecondaryAnalysisTree->Branch("finalKineticEnergy", &mSecondaryAnalysisTuple.finalKineticEnergy);
-}
+// 	mSecondaryAnalysisTree->Branch("eventID", &mSecondaryAnalysisTuple.eventID);
+// 	mSecondaryAnalysisTree->Branch("trackID", &mSecondaryAnalysisTuple.trackID);
+// 	mSecondaryAnalysisTree->Branch("parentID", &mSecondaryAnalysisTuple.parentID);
+// 	mSecondaryAnalysisTree->Branch("particleID", &mSecondaryAnalysisTuple.particleID);
+// 	mSecondaryAnalysisTree->Branch("initialVolumeID", &mSecondaryAnalysisTuple.initialVolumeID);
+// 	mSecondaryAnalysisTree->Branch("initPosition", mSecondaryAnalysisTuple.initialPosition, "initPosition[3]/D");
+// 	mSecondaryAnalysisTree->Branch("initMomentum", mSecondaryAnalysisTuple.initialMomentum, "initMomentum[3]/D");
+// 	mSecondaryAnalysisTree->Branch("initKineticEnergy", &mSecondaryAnalysisTuple.initialKineticEnergy);
+// 	mIncidentAnalysisTree->Branch("depositEnergy", mSecondaryAnalysisTuple.depositEnergy, "depositEnergy[3]/D");
+// 	mSecondaryAnalysisTree->Branch("finalVolumeID", &mSecondaryAnalysisTuple.finalVolumeID);
+// 	mSecondaryAnalysisTree->Branch("finalPosition", mSecondaryAnalysisTuple.finalPosition, "finalPosition[3]/D");
+// 	mSecondaryAnalysisTree->Branch("finalMomentum", mSecondaryAnalysisTuple.finalMomentum, "finalMomentum[3]/D");
+// 	mSecondaryAnalysisTree->Branch("finalKineticEnergy", &mSecondaryAnalysisTuple.finalKineticEnergy);
+// }
 
 void TGeantExtract::getPrimaryAnalysisInformation() {
 	mPrimaryAnalysisTuple.eventID = mTrackTuple.eventID;
@@ -247,30 +249,30 @@ void TGeantExtract::getIncidentAnalysisInformation() {
 	mIncidentAnalysisTree->Fill();
 }
 
-void TGeantExtract::getSecondaryAnalysisInformation() {
-	mSecondaryAnalysisTuple.eventID = mTrackTuple.eventID;
-	mSecondaryAnalysisTuple.trackID = mTrackTuple.trackID;
-	mSecondaryAnalysisTuple.parentID = mTrackTuple.parentID;
-	mSecondaryAnalysisTuple.particleID = mTrackTuple.particleID;
-	mSecondaryAnalysisTuple.initialVolumeID = mTrackTuple.initVolumeID;
-	mSecondaryAnalysisTuple.initialPosition[0] = mTrackTuple.initPosition[0];
-	mSecondaryAnalysisTuple.initialPosition[1] = mTrackTuple.initPosition[1];
-	mSecondaryAnalysisTuple.initialPosition[2] = mTrackTuple.initPosition[2];
-	mSecondaryAnalysisTuple.initialMomentum[0] = mTrackTuple.initMomentum[0];
-	mSecondaryAnalysisTuple.initialMomentum[1] = mTrackTuple.initMomentum[1];
-	mSecondaryAnalysisTuple.initialMomentum[2] = mTrackTuple.initMomentum[2];
-	mSecondaryAnalysisTuple.initialKineticEnergy = mTrackTuple.initKineticEnergy;
-	mSecondaryAnalysisTuple.depositEnergy[0] = mTrackTuple.depositEnergy[0];
-	mSecondaryAnalysisTuple.depositEnergy[1] = mTrackTuple.depositEnergy[1];
-	mSecondaryAnalysisTuple.depositEnergy[2] = mTrackTuple.depositEnergy[2];
-	mSecondaryAnalysisTuple.finalVolumeID = mTrackTuple.finalVolumeID;
-	mSecondaryAnalysisTuple.finalPosition[0] = mTrackTuple.finalPosition[0];
-	mSecondaryAnalysisTuple.finalPosition[1] = mTrackTuple.finalPosition[1];
-	mSecondaryAnalysisTuple.finalPosition[2] = mTrackTuple.finalPosition[2];
-	mSecondaryAnalysisTuple.finalMomentum[0] = mTrackTuple.finalMomentum[0];
-	mSecondaryAnalysisTuple.finalMomentum[1] = mTrackTuple.finalMomentum[1];
-	mSecondaryAnalysisTuple.finalMomentum[2] = mTrackTuple.finalMomentum[2];
-	mSecondaryAnalysisTuple.finalKineticEnergy = mTrackTuple.finalKineticEnergy;
+// void TGeantExtract::getSecondaryAnalysisInformation() {
+// 	mSecondaryAnalysisTuple.eventID = mTrackTuple.eventID;
+// 	mSecondaryAnalysisTuple.trackID = mTrackTuple.trackID;
+// 	mSecondaryAnalysisTuple.parentID = mTrackTuple.parentID;
+// 	mSecondaryAnalysisTuple.particleID = mTrackTuple.particleID;
+// 	mSecondaryAnalysisTuple.initialVolumeID = mTrackTuple.initVolumeID;
+// 	mSecondaryAnalysisTuple.initialPosition[0] = mTrackTuple.initPosition[0];
+// 	mSecondaryAnalysisTuple.initialPosition[1] = mTrackTuple.initPosition[1];
+// 	mSecondaryAnalysisTuple.initialPosition[2] = mTrackTuple.initPosition[2];
+// 	mSecondaryAnalysisTuple.initialMomentum[0] = mTrackTuple.initMomentum[0];
+// 	mSecondaryAnalysisTuple.initialMomentum[1] = mTrackTuple.initMomentum[1];
+// 	mSecondaryAnalysisTuple.initialMomentum[2] = mTrackTuple.initMomentum[2];
+// 	mSecondaryAnalysisTuple.initialKineticEnergy = mTrackTuple.initKineticEnergy;
+// 	mSecondaryAnalysisTuple.depositEnergy[0] = mTrackTuple.depositEnergy[0];
+// 	mSecondaryAnalysisTuple.depositEnergy[1] = mTrackTuple.depositEnergy[1];
+// 	mSecondaryAnalysisTuple.depositEnergy[2] = mTrackTuple.depositEnergy[2];
+// 	mSecondaryAnalysisTuple.finalVolumeID = mTrackTuple.finalVolumeID;
+// 	mSecondaryAnalysisTuple.finalPosition[0] = mTrackTuple.finalPosition[0];
+// 	mSecondaryAnalysisTuple.finalPosition[1] = mTrackTuple.finalPosition[1];
+// 	mSecondaryAnalysisTuple.finalPosition[2] = mTrackTuple.finalPosition[2];
+// 	mSecondaryAnalysisTuple.finalMomentum[0] = mTrackTuple.finalMomentum[0];
+// 	mSecondaryAnalysisTuple.finalMomentum[1] = mTrackTuple.finalMomentum[1];
+// 	mSecondaryAnalysisTuple.finalMomentum[2] = mTrackTuple.finalMomentum[2];
+// 	mSecondaryAnalysisTuple.finalKineticEnergy = mTrackTuple.finalKineticEnergy;
 
-	mSecondaryAnalysisTree->Fill();
-}
+// 	mSecondaryAnalysisTree->Fill();
+// }

@@ -21,7 +21,7 @@ private:
 
 	std::filesystem::path mPrimaryOutputFilePath;
 	std::filesystem::path mIncidentOutputFilePath;
-	std::filesystem::path mSecondaryOutputFilePath;
+	// std::filesystem::path mSecondaryOutputFilePath;
 
 	bool mIsDivide = false;
 	int mNumFile = 1;
@@ -38,9 +38,9 @@ private:
 	TFile* mIncidentAnalysisOutputFile;
 	TTree* mIncidentAnalysisTree;
 	TIncidentAnalysisTuple mIncidentAnalysisTuple;
-	TFile* mSecondaryAnalysisOutputFile;
-	TTree* mSecondaryAnalysisTree;
-	TSecondaryAnalysisTuple mSecondaryAnalysisTuple;
+	// TFile* mSecondaryAnalysisOutputFile;
+	// TTree* mSecondaryAnalysisTree;
+	// TSecondaryAnalysisTuple mSecondaryAnalysisTuple;
 
 public:
 	void openInputFile();
@@ -52,13 +52,13 @@ private:
 
 	void initPrimaryAnalysisTree();
 	void initIncidentAnalysisTree();
-	void initSecondaryAnalysisTree();
+	// void initSecondaryAnalysisTree();
 	void getPrimaryAnalysisInformation();
 	void getIncidentAnalysisInformation();
-	void getSecondaryAnalysisInformation();
+	// void getSecondaryAnalysisInformation();
 
 	bool isIncident();
-	bool isProducedInALPIDE();
+	// bool isProducedInALPIDE();
 	void extractFromAFile();
 };
 
