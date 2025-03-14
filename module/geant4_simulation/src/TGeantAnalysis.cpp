@@ -143,6 +143,8 @@ void TGeantAnalysis::readIncidentTree() {
 	Double_t depositEnergyEpitaxial = 0.;
 	Double_t depositEnergySubstrate = 0.;
 
+	TIncidentAnalysisTuple preIncidentTuple;
+
 	ProgressBar progressBar(static_cast<int>(nEntries));
 	Int_t nDouble = 0;
 	for ( Int_t i = 0; i < nEntries; i++ ) {
@@ -150,7 +152,35 @@ void TGeantAnalysis::readIncidentTree() {
 		mIncidentTree->GetEntry(i);
 		if ( mIncidentTuple.initialVolumeID == VOLUME::Collimator || mIncidentTuple.initialVolumeID == VOLUME::Screen || mIncidentTuple.initialVolumeID == VOLUME::World ) {
 			// if ( std::abs(mIncidentTuple.position[0]) < 4.35 && std::abs(mIncidentTuple.position[1]) < 0.27 ) { // 300 pixel * 20 pixel
+			Double_t depositEnergyTotal = 0.;
+			if ( depositEnergyMetal > 0.000001 ) {
+				m1DHistograms["DepositEnergyMetal"]->Fill(depositEnergyMetal / .001);
+				depositEnergyTotal += depositEnergyMetal;
+			}
+			if ( depositEnergyEpitaxial > 0.000001 ) {
+				m1DHistograms["DepositEnergyEpitaxial"]->Fill(depositEnergyEpitaxial / .001);
+				depositEnergyTotal += depositEnergyEpitaxial;
+			}
+			if ( depositEnergySubstrate > 0.000001 ) {
+				m1DHistograms["DepositEnergySubstrate"]->Fill(depositEnergySubstrate / .001);
+				depositEnergyTotal += depositEnergySubstrate;
+			}
+			if ( depositEnergyTotal > 0.000001 ) {
+				m1DHistograms["DepositEnergyTotal"]->Fill(depositEnergyTotal / .001);
+			}
+			depositEnergyMetal = 0.;
+			depositEnergyEpitaxial = 0.;
+			depositEnergySubstrate = 0.;
 			fillIncidentHistograms();
+			if ( mIncidentTuple.depositEnergy[0] > 0.000001 ) {
+				depositEnergyMetal += mIncidentTuple.depositEnergy[0];
+			}
+			if ( mIncidentTuple.depositEnergy[1] > 0.000001 ) {
+				depositEnergyEpitaxial += mIncidentTuple.depositEnergy[1];
+			}
+			if ( mIncidentTuple.depositEnergy[2] > 0.000001 ) {
+				depositEnergySubstrate += mIncidentTuple.depositEnergy[2];
+			}
 			if ( mIncidentTuple.particleID == PARTICLE::alpha ) {
 				position.push_back({mIncidentTuple.position[0], mIncidentTuple.position[1]});
 			}
@@ -161,7 +191,15 @@ void TGeantAnalysis::readIncidentTree() {
 				position.shrink_to_fit();
 			}
 		} else {
-			continue;
+			if ( mIncidentTuple.depositEnergy[0] > 0.000001 ) {
+				depositEnergyMetal += mIncidentTuple.depositEnergy[0];
+			}
+			if ( mIncidentTuple.depositEnergy[1] > 0.000001 ) {
+				depositEnergyEpitaxial += mIncidentTuple.depositEnergy[1];
+			}
+			if ( mIncidentTuple.depositEnergy[2] > 0.000001 ) {
+				depositEnergySubstrate += mIncidentTuple.depositEnergy[2];
+			}
 		}
 
 		// mIncidentSet.push_back(mIncidentTuple);
