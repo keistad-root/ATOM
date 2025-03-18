@@ -57,5 +57,8 @@ private:
 	int getNDouble(std::vector<std::pair<Double_t, Double_t>> position);
 	void fillIncidentHistograms();
 	// void fillSecondaryHistograms();
+
+	bool isFromOutside();
+	bool isFromALPIDE();
 };
 #endif

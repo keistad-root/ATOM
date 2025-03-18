@@ -105,6 +105,20 @@ void TGeantAnalysis::readPrimaryTree() {
 	}
 }
 
+bool TGeantAnalysis::isFromOutside() {
+	if ( mIncidentTuple.initialVolumeID == VOLUME::Collimator || mIncidentTuple.initialVolumeID == VOLUME::Screen || mIncidentTuple.initialVolumeID == VOLUME::World ) {
+		return true;
+	}
+	return false;
+}
+
+bool TGeantAnalysis::isFromALPIDE() {
+	if ( mIncidentTuple.initialVolumeID == VOLUME::ALPIDESubstrate || mIncidentTuple.initialVolumeID == VOLUME::ALPIDEEpitaxial || mIncidentTuple.initialVolumeID == VOLUME::ALPIDEMetal ) {
+		return true;
+	}
+	return false;
+}
+
 void TGeantAnalysis::readIncidentTree() {
 	Int_t nEntries = mIncidentTree->GetEntries();
 
@@ -122,23 +136,22 @@ void TGeantAnalysis::readIncidentTree() {
 	for ( Int_t i = 0; i < nEntries; i++ ) {
 		progressBar.printProgress();
 		mIncidentTree->GetEntry(i);
-		if ( mIncidentTuple.initialVolumeID == VOLUME::Collimator || mIncidentTuple.initialVolumeID == VOLUME::Screen || mIncidentTuple.initialVolumeID == VOLUME::World ) {
-			if ( std::abs(mIncidentTuple.position[0]) > 4.35 && std::abs(mIncidentTuple.position[1]) > 0.27 ) continue; // 300 pixel * 20 pixel
-
+		if ( isFromOutside() ) {
+			// if ( std::abs(mIncidentTuple.position[0]) > 4.35 && std::abs(mIncidentTuple.position[1]) > 0.27 ) continue; // 300 pixel * 20 pixel
 			Double_t depositEnergyTotal = 0.;
-			if ( depositEnergyMetal > 0.000001 ) {
+			if ( depositEnergyMetal > eV ) {
 				m1DHistograms["DepositEnergyMetal"]->Fill(depositEnergyMetal / .001);
 				depositEnergyTotal += depositEnergyMetal;
 			}
-			if ( depositEnergyEpitaxial > 0.000001 ) {
+			if ( depositEnergyEpitaxial > eV ) {
 				m1DHistograms["DepositEnergyEpitaxial"]->Fill(depositEnergyEpitaxial / .001);
 				depositEnergyTotal += depositEnergyEpitaxial;
 			}
-			if ( depositEnergySubstrate > 0.000001 ) {
+			if ( depositEnergySubstrate > eV ) {
 				m1DHistograms["DepositEnergySubstrate"]->Fill(depositEnergySubstrate / .001);
 				depositEnergyTotal += depositEnergySubstrate;
 			}
-			if ( depositEnergyTotal > 0.000001 ) {
+			if ( depositEnergyTotal > eV ) {
 				m1DHistograms["DepositEnergyTotal"]->Fill(depositEnergyTotal / .001);
 			}
 			depositEnergyMetal = 0.;
@@ -163,7 +176,7 @@ void TGeantAnalysis::readIncidentTree() {
 				position.clear();
 				position.shrink_to_fit();
 			}
-		} else {
+		} else if ( isFromALPIDE() ) {
 			if ( mIncidentTuple.depositEnergy[0] > 0.000001 ) {
 				depositEnergyMetal += mIncidentTuple.depositEnergy[0];
 			}
