@@ -4,10 +4,11 @@
 #include "TH2D.h"
 #include<cmath>
 
+const Double_t eV = 0.000001;
+
 TGeantAnalysis::TGeantAnalysis(const CppConfigFile& config) : mConfig(config) {
 	isPrimary = mConfig.getConfig("FILE").hasKey("INPUT_PRIMARY_FILE");
 	isIncident = mConfig.getConfig("FILE").hasKey("INPUT_INCIDENT_FILE");
-	// isSecondary = mConfig.getConfig("FILE").hasKey("INPUT_SECONDARY_FILE");
 	if ( isPrimary ) {
 		TString primaryFilePath = mConfig.getConfig("FILE").find("INPUT_PRIMARY_FILE");
 		mPrimaryFile = new TFile(primaryFilePath, "READ");
@@ -20,12 +21,6 @@ TGeantAnalysis::TGeantAnalysis(const CppConfigFile& config) : mConfig(config) {
 		mIncidentTree = static_cast<TTree*>(mIncidentFile->Get("IncidentAnalysis"));
 		readIncidentFile();
 	}
-	// if ( isSecondary ) {
-	// 	TString secondaryFilePath = mConfig.getConfig("FILE").find("INPUT_SECONDARY_FILE");
-	// 	mSecondaryFile = new TFile(secondaryFilePath, "READ");
-	// 	mSecondaryTree = static_cast<TTree*>(mSecondaryFile->Get("SecondaryAnalysis"));
-	// 	readSecondaryFile();
-	// }
 }
 
 TGeantAnalysis::~TGeantAnalysis() { }
@@ -57,22 +52,6 @@ void TGeantAnalysis::readIncidentFile() {
 	mIncidentTree->SetBranchAddress("finalKineticEnergy", &mIncidentTuple.finalKineticEnergy);
 }
 
-// void TGeantAnalysis::readSecondaryFile() {
-// 	mSecondaryTree->SetBranchAddress("eventID", &mSecondaryTuple.eventID);
-// 	mSecondaryTree->SetBranchAddress("trackID", &mSecondaryTuple.trackID);
-// 	mSecondaryTree->SetBranchAddress("parentID", &mSecondaryTuple.parentID);
-// 	mSecondaryTree->SetBranchAddress("particleID", &mSecondaryTuple.particleID);
-// 	mSecondaryTree->SetBranchAddress("initialVolumeID", &mSecondaryTuple.initialVolumeID);
-// 	mSecondaryTree->SetBranchAddress("initPosition", mSecondaryTuple.initialPosition);
-// 	mSecondaryTree->SetBranchAddress("initMomentum", mSecondaryTuple.initialMomentum);
-// 	mSecondaryTree->SetBranchAddress("initKineticEnergy", &mSecondaryTuple.initialKineticEnergy);
-// 	mSecondaryTree->SetBranchAddress("depositEnergy", mSecondaryTuple.depositEnergy);
-// 	mSecondaryTree->SetBranchAddress("finalVolumeID", &mSecondaryTuple.finalVolumeID);
-// 	mSecondaryTree->SetBranchAddress("finalPosition", mSecondaryTuple.finalPosition);
-// 	mSecondaryTree->SetBranchAddress("finalMomentum", mSecondaryTuple.finalMomentum);
-// 	mSecondaryTree->SetBranchAddress("finalKineticEnergy", &mSecondaryTuple.finalKineticEnergy);
-// }
-
 void TGeantAnalysis::setHistograms() {
 	std::vector<CppConfigDictionary> configList = mConfig.getConfigList();
 	for ( const CppConfigDictionary& config : configList ) {
@@ -86,19 +65,15 @@ void TGeantAnalysis::setHistograms() {
 			m2DHistograms.insert_or_assign(key, hist);
 		}
 	}
-
 }
 
 void TGeantAnalysis::readTree() {
 	if ( isPrimary ) {
-		// readPrimaryTree();
+		readPrimaryTree();
 	}
 	if ( isIncident ) {
 		readIncidentTree();
 	}
-	// if ( isSecondary ) {
-	// 	readSecondaryTree();
-	// }
 }
 
 void TGeantAnalysis::readPrimaryTree() {
@@ -107,31 +82,28 @@ void TGeantAnalysis::readPrimaryTree() {
 	for ( Int_t i = 0; i < nEntries; i++ ) {
 		progressBar.printProgress();
 		mPrimaryTree->GetEntry(i);
-		fillPrimaryHistograms();
+
+		Double_t momentum = TMath::Sqrt(mPrimaryTuple.momentum[0] * mPrimaryTuple.momentum[0] + mPrimaryTuple.momentum[1] * mPrimaryTuple.momentum[1] + mPrimaryTuple.momentum[2] * mPrimaryTuple.momentum[2]);
+		Double_t theta = TMath::ACos(mPrimaryTuple.momentum[2] / momentum) * 180. / TMath::Pi();
+		Double_t phi = TMath::ATan2(mPrimaryTuple.momentum[1], mPrimaryTuple.momentum[0]) * 180. / TMath::Pi();
+
+		if ( m2DHistograms.find("SourceXY") != m2DHistograms.end() ) {
+			m2DHistograms["SourceXY"]->Fill(mPrimaryTuple.position[0], mPrimaryTuple.position[1]);
+		}
+		if ( m1DHistograms.find("SourceZ") != m1DHistograms.end() ) {
+			m1DHistograms["SourceZ"]->Fill(mPrimaryTuple.position[2]);
+		}
+		if ( m1DHistograms.find("SourceKineticEnergy") != m1DHistograms.end() ) {
+			m1DHistograms["SourceKineticEnergy"]->Fill(mPrimaryTuple.kineticEnergy);
+		}
+		if ( m1DHistograms.find("SourceTheta") != m1DHistograms.end() ) {
+			m1DHistograms["SourceTheta"]->Fill(180 - theta);
+		}
+		if ( m1DHistograms.find("SourcePhi") != m1DHistograms.end() ) {
+			m1DHistograms["SourcePhi"]->Fill(phi);
+		}
 	}
 }
-
-// void TGeantAnalysis::readSecondaryTree() {
-// 	Int_t nEntries = mSecondaryTree->GetEntries();
-// 	ProgressBar progressBar(static_cast<int>(nEntries));
-// 	Int_t preEventID = 0;
-// 	for ( Int_t i = 0; i < nEntries; i++ ) {
-// 		progressBar.printProgress();
-// 		mSecondaryTree->GetEntry(i);
-// 		if ( preEventID != mSecondaryTuple.eventID ) {
-// 			preEventID = mSecondaryTuple.eventID;
-// 			m1DHistograms["DepositEnergyMetal"]->Fill(depositEnergyMetal);
-// 			m1DHistograms["DepositEnergyEpitaxial"]->Fill(depositEnergyEpitaxial);
-// 			m1DHistograms["DepositEnergySubstrate"]->Fill(depositEnergySubstrate);
-// 			depositEnergyMetal = 0.;
-// 			depositEnergyEpitaxial = 0.;
-// 			depositEnergySubstrate = 0.;
-// 			mSecondarySet.clear();
-// 		}
-// 		fillSecondaryHistograms();
-// 		mSecondarySet.push_back(mSecondaryTuple);
-// 	}
-// }
 
 void TGeantAnalysis::readIncidentTree() {
 	Int_t nEntries = mIncidentTree->GetEntries();
@@ -151,7 +123,8 @@ void TGeantAnalysis::readIncidentTree() {
 		progressBar.printProgress();
 		mIncidentTree->GetEntry(i);
 		if ( mIncidentTuple.initialVolumeID == VOLUME::Collimator || mIncidentTuple.initialVolumeID == VOLUME::Screen || mIncidentTuple.initialVolumeID == VOLUME::World ) {
-			// if ( std::abs(mIncidentTuple.position[0]) < 4.35 && std::abs(mIncidentTuple.position[1]) < 0.27 ) { // 300 pixel * 20 pixel
+			if ( std::abs(mIncidentTuple.position[0]) > 4.35 && std::abs(mIncidentTuple.position[1]) > 0.27 ) continue; // 300 pixel * 20 pixel
+
 			Double_t depositEnergyTotal = 0.;
 			if ( depositEnergyMetal > 0.000001 ) {
 				m1DHistograms["DepositEnergyMetal"]->Fill(depositEnergyMetal / .001);
@@ -202,8 +175,6 @@ void TGeantAnalysis::readIncidentTree() {
 			}
 		}
 
-		// mIncidentSet.push_back(mIncidentTuple);
-		// }
 	}
 
 	// mEntry[0] = m1DHistograms["ElectronDepositEnergyMetal"]->GetEffectiveEntries();
@@ -225,34 +196,6 @@ int TGeantAnalysis::getNDouble(std::vector<std::pair<Double_t, Double_t>> positi
 		}
 	}
 	return num;
-}
-
-void TGeantAnalysis::fillPrimaryHistograms() {
-	for ( auto& [key, hist] : m1DHistograms ) {
-		Double_t momentum = TMath::Sqrt(mPrimaryTuple.momentum[0] * mPrimaryTuple.momentum[0] + mPrimaryTuple.momentum[1] * mPrimaryTuple.momentum[1] + mPrimaryTuple.momentum[2] * mPrimaryTuple.momentum[2]);
-		Double_t theta = TMath::ACos(mPrimaryTuple.momentum[2] / momentum) * 180. / TMath::Pi();
-		Double_t phi = TMath::ATan2(mPrimaryTuple.momentum[1], mPrimaryTuple.momentum[0]) * 180. / TMath::Pi();
-		if ( key == "SourceZ" ) {
-			Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
-			hist->Fill(mPrimaryTuple.position[2] / multiple);
-		}
-		if ( key == "SourceKineticEnergy" ) {
-			Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
-			hist->Fill(mPrimaryTuple.kineticEnergy / multiple);
-		}
-		if ( key == "SourceTheta" ) {
-			hist->Fill(180 - theta);
-		}
-		if ( key == "SourcePhi" ) {
-			hist->Fill(phi);
-		}
-	}
-	for ( auto& [key, hist] : m2DHistograms ) {
-		if ( key == "SourceXY" ) {
-			Double_t multiple = mConfig.getConfig(key).hasKey("MULTIPLE") ? stod(mConfig.getConfig(key).find("MULTIPLE")) : 1.;
-			hist->Fill(mPrimaryTuple.position[0] / multiple, mPrimaryTuple.position[1] / multiple);
-		}
-	}
 }
 
 void TGeantAnalysis::fillIncidentHistograms() {

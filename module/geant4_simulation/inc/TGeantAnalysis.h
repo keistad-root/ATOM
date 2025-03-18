@@ -56,7 +56,6 @@ private:
 	// void readSecondaryTree();
 	int getNDouble(std::vector<std::pair<Double_t, Double_t>> position);
 	void fillIncidentHistograms();
-	void fillPrimaryHistograms();
 	// void fillSecondaryHistograms();
 };
 #endif
