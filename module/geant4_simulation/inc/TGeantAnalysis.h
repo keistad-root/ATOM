@@ -27,20 +27,19 @@ private:
 
 	TFile* mPrimaryFile;
 	TFile* mIncidentFile;
-	TFile* mSecondaryFile;
 	TTree* mPrimaryTree;
 	TTree* mIncidentTree;
-	TTree* mSecondaryTree;
 	std::filesystem::path mOutputPath;
 
 	TPrimaryAnalysisTuple mPrimaryTuple;
 	TIncidentAnalysisTuple mIncidentTuple;
-	TSecondaryAnalysisTuple mSecondaryTuple;
 	std::unordered_map<std::string, TH1D*> m1DHistograms;
 	std::unordered_map<std::string, TH2D*> m2DHistograms;
 	std::array<int, 4> mEntry;
+	std::array<double, 2> mRoi;
 
 	bool isPrimary = false, isIncident = false, isSecondary = false;
+	bool isRoi = false;
 
 public:
 	void setHistograms();

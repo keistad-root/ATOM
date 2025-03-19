@@ -21,6 +21,11 @@ TGeantAnalysis::TGeantAnalysis(const CppConfigFile& config) : mConfig(config) {
 		mIncidentTree = static_cast<TTree*>(mIncidentFile->Get("IncidentAnalysis"));
 		readIncidentFile();
 	}
+	if ( mConfig.getConfig("File").hasKey("ROI") ) {
+		isRoi = true;
+		std::vector<double> temp = TPlotter::getDoubleSetFromString(mConfig.getConfig("File").find("ROI"));
+		mRoi = {temp[0], temp[1]};
+	}
 }
 
 TGeantAnalysis::~TGeantAnalysis() { }
@@ -120,15 +125,13 @@ void TGeantAnalysis::readIncidentTree() {
 	std::array<Double_t, 3> electronDepositEnergy = {0., 0., 0.};
 	std::array<Double_t, 3> gammaDepositEnergy = {0., 0., 0.};
 
-	TIncidentAnalysisTuple preIncidentTuple;
-
 	ProgressBar progressBar(static_cast<int>(nEntries));
 	Int_t nDouble = 0;
 	for ( Int_t i = 0; i < nEntries; i++ ) {
 		progressBar.printProgress();
 		mIncidentTree->GetEntry(i);
 		if ( isFromOutside() ) {
-			// if ( std::abs(mIncidentTuple.position[0]) > 4.35 && std::abs(mIncidentTuple.position[1]) > 0.27 ) continue; // 300 pixel * 20 pixel
+			if ( isRoi && (std::abs(mIncidentTuple.position[0]) > mRoi[0] || std::abs(mIncidentTuple.position[1]) > mRoi[1]) ) continue;
 			Double_t momentum = TMath::Sqrt(mIncidentTuple.momentum[0] * mIncidentTuple.momentum[0] + mIncidentTuple.momentum[1] * mIncidentTuple.momentum[1] + mIncidentTuple.momentum[2] * mIncidentTuple.momentum[2]);
 			Double_t theta = TMath::ACos(mIncidentTuple.momentum[2] / momentum) * 180. / TMath::Pi();
 
