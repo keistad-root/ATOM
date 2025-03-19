@@ -1,4 +1,4 @@
-#include "G4RunManager.hh"
+#include "G4MTRunManager.hh"
 #include "G4VisExecutive.hh"
 #include "G4UIExecutive.hh"
 #include "G4UImanager.hh"
@@ -67,8 +67,9 @@ int main(int argc, char** argv) {
 	G4Random::setTheEngine(RandomEngine);
 
 	// Define Run Manager
-	G4RunManager* runManager = new G4RunManager;
+	G4MTRunManager* runManager = new G4MTRunManager;
 
+	int nThreads = stoi(config.getConfig("ENVIRONMENT").find("ACTIVITY")) / 2580000;
 	// Set geometry
 	runManager->SetUserInitialization(new TDetectorConstruction(config.getConfig("ENVIRONMENT")));
 
