@@ -157,6 +157,7 @@ void TGeantAnalysis::readIncidentTree() {
 				if ( m1DHistograms.count("IncidentVolume") ) {
 					m1DHistograms["IncidentVolume"]->Fill(mIncidentTuple.initialVolumeID);
 				}
+
 				if ( totalDepositEnergy[1] > eV ) {
 					if ( m1DHistograms.count("DepositEnergyMetal") ) {
 						Double_t multiple = mConfig.getConfig("DepositEnergyMetal").hasKey("MULTIPLE") ? stod(mConfig.getConfig("DepositEnergyMetal").find("MULTIPLE")) : 1.;
@@ -608,10 +609,12 @@ void TGeantAnalysis::readIncidentTree() {
 			if ( m1DHistograms.count("SecondaryParticleInALPIDE") ) {
 				m1DHistograms["SecondaryParticleInALPIDE"]->Fill(mIncidentTuple.particleID);
 			}
-			if ( m1DHistograms.count("SecondaryDestanceGenerationToDecay") ) {
-				Double_t distance = TMath::Sqrt(TMath::Power(mIncidentTuple.position[0] - mIncidentTuple.finalPosition[0], 2) + TMath::Power(mIncidentTuple.position[1] - mIncidentTuple.finalPosition[1], 2) + TMath::Power(mIncidentTuple.position[2] - mIncidentTuple.finalPosition[2], 2));
-				Double_t multiple = mConfig.getConfig("SecondaryDestanceGenerationToDecay").hasKey("MULTIPLE") ? stod(mConfig.getConfig("SecondaryDestanceGenerationToDecay").find("MULTIPLE")) : 1.;
-				m1DHistograms["SecondaryDestanceGenerationToDecay"]->Fill(distance * multiple);
+			if ( m1DHistograms.count("SecondaryDistanceFromGenerationToStop") ) {
+				if ( mIncidentTuple.finalVolumeID < 4 ) {
+					Double_t distance = TMath::Sqrt(TMath::Power(mIncidentTuple.initialPosition[0] - mIncidentTuple.finalPosition[0], 2) + TMath::Power(mIncidentTuple.initialPosition[1] - mIncidentTuple.finalPosition[1], 2) + TMath::Power(mIncidentTuple.initialPosition[2] - mIncidentTuple.finalPosition[2], 2));
+					Double_t multiple = mConfig.getConfig("SecondaryDistanceFromGenerationToStop").hasKey("MULTIPLE") ? stod(mConfig.getConfig("SecondaryDistanceFromGenerationToStop").find("MULTIPLE")) : 1.;
+					m1DHistograms["SecondaryDistanceFromGenerationToStop"]->Fill(distance * multiple);
+				}
 			}
 			if ( m1DHistograms.count("SecondaryInALPIDEVolume") ) {
 				m1DHistograms["SecondaryInALPIDEVolume"]->Fill(mIncidentTuple.finalVolumeID);
