@@ -120,10 +120,10 @@ void TGeantAnalysis::readIncidentTree() {
 	std::vector<std::pair<Double_t, Double_t>> position;
 	Int_t preTimeStamp = 0;
 
-	std::array<Double_t, 3> totalDepositEnergy = {0., 0., 0.};
-	std::array<Double_t, 3> alphaDepositEnergy = {0., 0., 0.};
-	std::array<Double_t, 3> electronDepositEnergy = {0., 0., 0.};
-	std::array<Double_t, 3> gammaDepositEnergy = {0., 0., 0.};
+	std::array<Double_t, 4> totalDepositEnergy = {0., 0., 0., 0.};
+	std::array<Double_t, 4> alphaDepositEnergy = {0., 0., 0., 0.};
+	std::array<Double_t, 4> electronDepositEnergy = {0., 0., 0., 0.};
+	std::array<Double_t, 4> gammaDepositEnergy = {0., 0., 0., 0.};
 
 	ProgressBar progressBar(static_cast<int>(nEntries));
 	Int_t nDouble = 0;
@@ -134,7 +134,6 @@ void TGeantAnalysis::readIncidentTree() {
 			if ( isRoi && (std::abs(mIncidentTuple.position[0]) > mRoi[0] || std::abs(mIncidentTuple.position[1]) > mRoi[1]) ) continue;
 			Double_t momentum = TMath::Sqrt(mIncidentTuple.momentum[0] * mIncidentTuple.momentum[0] + mIncidentTuple.momentum[1] * mIncidentTuple.momentum[1] + mIncidentTuple.momentum[2] * mIncidentTuple.momentum[2]);
 			Double_t theta = TMath::ACos(mIncidentTuple.momentum[2] / momentum) * 180. / TMath::Pi();
-
 			// Major Plots
 			if ( m2DHistograms.count("IncidentXY") ) {
 				m2DHistograms["IncidentXY"]->Fill(mIncidentTuple.position[0], mIncidentTuple.position[1]);
@@ -156,53 +155,50 @@ void TGeantAnalysis::readIncidentTree() {
 			if ( m1DHistograms.count("IncidentVolume") ) {
 				m1DHistograms["IncidentVolume"]->Fill(mIncidentTuple.initialVolumeID);
 			}
-			Double_t depositEnergyTotal = 0.;
-			if ( totalDepositEnergy[0] > eV ) {
-				if ( m1DHistograms.find("DepositEnergyMetal") != m1DHistograms.end() ) {
-					Double_t multiple = mConfig.getConfig("DepositEnergyMetal").hasKey("MULTIPLE") ? stod(mConfig.getConfig("DepositEnergyMetal").find("MULTIPLE")) : 1.;
-					m1DHistograms["DepositEnergyMetal"]->Fill(totalDepositEnergy[0] * multiple);
-				}
-				if ( m2DHistograms.find("CorrelationDepositEnergyMetalAndIncidentAngle") != m2DHistograms.end() ) {
-					Double_t multiple = mConfig.getConfig("CorrelationDepositEnergyMetalAndIncidentAngle").hasKey("MULTIPLE") ? stod(mConfig.getConfig("CorrelationDepositEnergyMetalAndIncidentAngle").find("MULTIPLE")) : 1.;
-					m2DHistograms["CorrelationDepositEnergyMetalAndIncidentAngle"]->Fill(180 - theta, totalDepositEnergy[0] * multiple);
-				}
-				depositEnergyTotal += totalDepositEnergy[0];
-			}
-			totalDepositEnergy[0] = 0.;
 			if ( totalDepositEnergy[1] > eV ) {
-				if ( m1DHistograms.find("DepositEnergyEpitaxial") != m1DHistograms.end() ) {
-					Double_t multiple = mConfig.getConfig("DepositEnergyEpitaxial").hasKey("MULTIPLE") ? stod(mConfig.getConfig("DepositEnergyEpitaxial").find("MULTIPLE")) : 1.;
-					m1DHistograms["DepositEnergyEpitaxial"]->Fill(totalDepositEnergy[1] * multiple);
+				if ( m1DHistograms.count("DepositEnergyMetal") ) {
+					Double_t multiple = mConfig.getConfig("DepositEnergyMetal").hasKey("MULTIPLE") ? stod(mConfig.getConfig("DepositEnergyMetal").find("MULTIPLE")) : 1.;
+					m1DHistograms["DepositEnergyMetal"]->Fill(totalDepositEnergy[1] * multiple);
 				}
-				if ( m2DHistograms.find("CorrelationDepositEnergyEpitaxialAndIncidentAngle") != m2DHistograms.end() ) {
-					Double_t multiple = mConfig.getConfig("CorrelationDepositEnergyEpitaxialAndIncidentAngle").hasKey("MULTIPLE") ? stod(mConfig.getConfig("CorrelationDepositEnergyEpitaxialAndIncidentAngle").find("MULTIPLE")) : 1.;
-					m2DHistograms["CorrelationDepositEnergyEpitaxialAndIncidentAngle"]->Fill(180 - theta, totalDepositEnergy[1] * multiple);
+				if ( m2DHistograms.count("CorrelationDepositEnergyMetalAndIncidentAngle") ) {
+					Double_t multiple = mConfig.getConfig("CorrelationDepositEnergyMetalAndIncidentAngle").hasKey("MULTIPLE") ? stod(mConfig.getConfig("CorrelationDepositEnergyMetalAndIncidentAngle").find("MULTIPLE")) : 1.;
+					m2DHistograms["CorrelationDepositEnergyMetalAndIncidentAngle"]->Fill(180 - theta, totalDepositEnergy[1] * multiple);
 				}
-				depositEnergyTotal += totalDepositEnergy[1];
 			}
 			totalDepositEnergy[1] = 0.;
 			if ( totalDepositEnergy[2] > eV ) {
+				if ( m1DHistograms.find("DepositEnergyEpitaxial") != m1DHistograms.end() ) {
+					Double_t multiple = mConfig.getConfig("DepositEnergyEpitaxial").hasKey("MULTIPLE") ? stod(mConfig.getConfig("DepositEnergyEpitaxial").find("MULTIPLE")) : 1.;
+					m1DHistograms["DepositEnergyEpitaxial"]->Fill(totalDepositEnergy[2] * multiple);
+				}
+				if ( m2DHistograms.find("CorrelationDepositEnergyEpitaxialAndIncidentAngle") != m2DHistograms.end() ) {
+					Double_t multiple = mConfig.getConfig("CorrelationDepositEnergyEpitaxialAndIncidentAngle").hasKey("MULTIPLE") ? stod(mConfig.getConfig("CorrelationDepositEnergyEpitaxialAndIncidentAngle").find("MULTIPLE")) : 1.;
+					m2DHistograms["CorrelationDepositEnergyEpitaxialAndIncidentAngle"]->Fill(180 - theta, totalDepositEnergy[2] * multiple);
+				}
+			}
+			totalDepositEnergy[2] = 0.;
+			if ( totalDepositEnergy[3] > eV ) {
 				if ( m1DHistograms.count("DepositEnergySubstrate") ) {
 					Double_t multiple = mConfig.getConfig("DepositEnergySubstrate").hasKey("MULTIPLE") ? stod(mConfig.getConfig("DepositEnergySubstrate").find("MULTIPLE")) : 1.;
-					m1DHistograms["DepositEnergySubstrate"]->Fill(totalDepositEnergy[2] * multiple);
+					m1DHistograms["DepositEnergySubstrate"]->Fill(totalDepositEnergy[3] * multiple);
 				}
 				if ( m2DHistograms.count("CorrelationDepositEnergySubstrateAndIncidentAngle") ) {
 					Double_t multiple = mConfig.getConfig("CorrelationDepositEnergySubstrateAndIncidentAngle").hasKey("MULTIPLE") ? stod(mConfig.getConfig("CorrelationDepositEnergySubstrateAndIncidentAngle").find("MULTIPLE")) : 1.;
-					m2DHistograms["CorrelationDepositEnergySubstrateAndIncidentAngle"]->Fill(180 - theta, totalDepositEnergy[2] * multiple);
+					m2DHistograms["CorrelationDepositEnergySubstrateAndIncidentAngle"]->Fill(180 - theta, totalDepositEnergy[3] * multiple);
 				}
-				depositEnergyTotal += totalDepositEnergy[2];
 			}
-			totalDepositEnergy[2] = 0.;
-			if ( depositEnergyTotal > eV ) {
-				if ( m1DHistograms.count("DepositEnergyTotla") ) {
+			totalDepositEnergy[3] = 0.;
+			if ( totalDepositEnergy[0] > eV ) {
+				if ( m1DHistograms.count("DepositEnergyTotal") ) {
 					Double_t multiple = mConfig.getConfig("DepositEnergyTotal").hasKey("MULTIPLE") ? stod(mConfig.getConfig("DepositEnergyTotal").find("MULTIPLE")) : 1.;
-					m1DHistograms["DepositEnergyTotal"]->Fill(depositEnergyTotal * multiple);
+					m1DHistograms["DepositEnergyTotal"]->Fill(totalDepositEnergy[0] * multiple);
 				}
 				if ( m2DHistograms.count("CorrelationDepositEnergyTotalAndIncidentAngle") ) {
 					Double_t multiple = mConfig.getConfig("CorrelationDepositEnergyTotalAndIncidentAngle").hasKey("MULTIPLE") ? stod(mConfig.getConfig("CorrelationDepositEnergyTotalAndIncidentAngle").find("MULTIPLE")) : 1.;
-					m2DHistograms["CorrelationDepositEnergyTotalAndIncidentAngle"]->Fill(180 - theta, depositEnergyTotal * multiple);
+					m2DHistograms["CorrelationDepositEnergyTotalAndIncidentAngle"]->Fill(180 - theta, totalDepositEnergy[0] * multiple);
 				}
 			}
+			totalDepositEnergy[0] = 0.;
 			if ( m2DHistograms.count("CorrelationIncidentAngleAndStopPosition") ) {
 				if ( mIncidentTuple.finalVolumeID == VOLUME::ALPIDESubstrate || mIncidentTuple.finalVolumeID == VOLUME::ALPIDEEpitaxial || mIncidentTuple.finalVolumeID == VOLUME::ALPIDEMetal ) {
 					m2DHistograms["CorrelationIncidentAngleAndStopPosition"]->Fill(180 - theta, mIncidentTuple.position[2]);
@@ -487,21 +483,51 @@ void TGeantAnalysis::readIncidentTree() {
 
 			if ( mIncidentTuple.depositEnergy[0] > eV ) {
 				totalDepositEnergy[0] += mIncidentTuple.depositEnergy[0];
-				if ( mIncidentTuple.particleID == PARTICLE::alpha ) alphaDepositEnergy[0] += mIncidentTuple.depositEnergy[0];
-				if ( mIncidentTuple.particleID == PARTICLE::electron ) electronDepositEnergy[0] += mIncidentTuple.depositEnergy[0];
-				if ( mIncidentTuple.particleID == PARTICLE::gamma1 ) gammaDepositEnergy[0] += mIncidentTuple.depositEnergy[0];
+				totalDepositEnergy[1] += mIncidentTuple.depositEnergy[0];
+				if ( mIncidentTuple.particleID == PARTICLE::alpha ) {
+					alphaDepositEnergy[0] += mIncidentTuple.depositEnergy[0];
+					alphaDepositEnergy[1] += mIncidentTuple.depositEnergy[0];
+				}
+				if ( mIncidentTuple.particleID == PARTICLE::electron ) {
+					electronDepositEnergy[0] += mIncidentTuple.depositEnergy[0];
+					electronDepositEnergy[1] += mIncidentTuple.depositEnergy[0];
+				}
+				if ( mIncidentTuple.particleID == PARTICLE::gamma1 ) {
+					gammaDepositEnergy[0] += mIncidentTuple.depositEnergy[0];
+					gammaDepositEnergy[1] += mIncidentTuple.depositEnergy[0];
+				}
 			}
 			if ( mIncidentTuple.depositEnergy[1] > eV ) {
-				totalDepositEnergy[1] += mIncidentTuple.depositEnergy[1];
-				if ( mIncidentTuple.particleID == PARTICLE::alpha ) alphaDepositEnergy[1] += mIncidentTuple.depositEnergy[1];
-				if ( mIncidentTuple.particleID == PARTICLE::electron ) electronDepositEnergy[1] += mIncidentTuple.depositEnergy[1];
-				if ( mIncidentTuple.particleID == PARTICLE::gamma1 ) gammaDepositEnergy[1] += mIncidentTuple.depositEnergy[1];
+				totalDepositEnergy[0] += mIncidentTuple.depositEnergy[1];
+				totalDepositEnergy[2] += mIncidentTuple.depositEnergy[1];
+				if ( mIncidentTuple.particleID == PARTICLE::alpha ) {
+					alphaDepositEnergy[0] += mIncidentTuple.depositEnergy[1];
+					alphaDepositEnergy[2] += mIncidentTuple.depositEnergy[1];
+				}
+				if ( mIncidentTuple.particleID == PARTICLE::electron ) {
+					electronDepositEnergy[0] += mIncidentTuple.depositEnergy[1];
+					electronDepositEnergy[2] += mIncidentTuple.depositEnergy[1];
+				}
+				if ( mIncidentTuple.particleID == PARTICLE::gamma1 ) {
+					gammaDepositEnergy[0] += mIncidentTuple.depositEnergy[1];
+					gammaDepositEnergy[2] += mIncidentTuple.depositEnergy[1];
+				}
 			}
 			if ( mIncidentTuple.depositEnergy[2] > eV ) {
-				totalDepositEnergy[2] += mIncidentTuple.depositEnergy[2];
-				if ( mIncidentTuple.particleID == PARTICLE::alpha ) alphaDepositEnergy[2] += mIncidentTuple.depositEnergy[2];
-				if ( mIncidentTuple.particleID == PARTICLE::electron ) electronDepositEnergy[2] += mIncidentTuple.depositEnergy[2];
-				if ( mIncidentTuple.particleID == PARTICLE::gamma1 ) gammaDepositEnergy[2] += mIncidentTuple.depositEnergy[2];
+				totalDepositEnergy[0] += mIncidentTuple.depositEnergy[2];
+				totalDepositEnergy[3] += mIncidentTuple.depositEnergy[2];
+				if ( mIncidentTuple.particleID == PARTICLE::alpha ) {
+					alphaDepositEnergy[0] += mIncidentTuple.depositEnergy[2];
+					alphaDepositEnergy[3] += mIncidentTuple.depositEnergy[2];
+				}
+				if ( mIncidentTuple.particleID == PARTICLE::electron ) {
+					electronDepositEnergy[0] += mIncidentTuple.depositEnergy[2];
+					electronDepositEnergy[3] += mIncidentTuple.depositEnergy[2];
+				}
+				if ( mIncidentTuple.particleID == PARTICLE::gamma1 ) {
+					gammaDepositEnergy[0] += mIncidentTuple.depositEnergy[2];
+					gammaDepositEnergy[3] += mIncidentTuple.depositEnergy[2];
+				}
 			}
 			if ( mIncidentTuple.particleID == PARTICLE::alpha ) {
 				position.push_back({mIncidentTuple.position[0], mIncidentTuple.position[1]});
@@ -515,21 +541,51 @@ void TGeantAnalysis::readIncidentTree() {
 		} else if ( isFromALPIDE() ) {
 			if ( mIncidentTuple.depositEnergy[0] > eV ) {
 				totalDepositEnergy[0] += mIncidentTuple.depositEnergy[0];
-				if ( mIncidentTuple.particleID == PARTICLE::alpha ) alphaDepositEnergy[0] += mIncidentTuple.depositEnergy[0];
-				if ( mIncidentTuple.particleID == PARTICLE::electron ) electronDepositEnergy[0] += mIncidentTuple.depositEnergy[0];
-				if ( mIncidentTuple.particleID == PARTICLE::gamma1 ) gammaDepositEnergy[0] += mIncidentTuple.depositEnergy[0];
+				totalDepositEnergy[1] += mIncidentTuple.depositEnergy[0];
+				if ( mIncidentTuple.particleID == PARTICLE::alpha ) {
+					alphaDepositEnergy[0] += mIncidentTuple.depositEnergy[0];
+					alphaDepositEnergy[1] += mIncidentTuple.depositEnergy[0];
+				}
+				if ( mIncidentTuple.particleID == PARTICLE::electron ) {
+					electronDepositEnergy[0] += mIncidentTuple.depositEnergy[0];
+					electronDepositEnergy[1] += mIncidentTuple.depositEnergy[0];
+				}
+				if ( mIncidentTuple.particleID == PARTICLE::gamma1 ) {
+					gammaDepositEnergy[0] += mIncidentTuple.depositEnergy[0];
+					gammaDepositEnergy[1] += mIncidentTuple.depositEnergy[0];
+				}
 			}
 			if ( mIncidentTuple.depositEnergy[1] > eV ) {
-				totalDepositEnergy[1] += mIncidentTuple.depositEnergy[1];
-				if ( mIncidentTuple.particleID == PARTICLE::alpha ) alphaDepositEnergy[1] += mIncidentTuple.depositEnergy[1];
-				if ( mIncidentTuple.particleID == PARTICLE::electron ) electronDepositEnergy[1] += mIncidentTuple.depositEnergy[1];
-				if ( mIncidentTuple.particleID == PARTICLE::gamma1 ) gammaDepositEnergy[1] += mIncidentTuple.depositEnergy[1];
+				totalDepositEnergy[0] += mIncidentTuple.depositEnergy[1];
+				totalDepositEnergy[2] += mIncidentTuple.depositEnergy[1];
+				if ( mIncidentTuple.particleID == PARTICLE::alpha ) {
+					alphaDepositEnergy[0] += mIncidentTuple.depositEnergy[1];
+					alphaDepositEnergy[2] += mIncidentTuple.depositEnergy[1];
+				}
+				if ( mIncidentTuple.particleID == PARTICLE::electron ) {
+					electronDepositEnergy[0] += mIncidentTuple.depositEnergy[1];
+					electronDepositEnergy[2] += mIncidentTuple.depositEnergy[1];
+				}
+				if ( mIncidentTuple.particleID == PARTICLE::gamma1 ) {
+					gammaDepositEnergy[0] += mIncidentTuple.depositEnergy[1];
+					gammaDepositEnergy[2] += mIncidentTuple.depositEnergy[1];
+				}
 			}
 			if ( mIncidentTuple.depositEnergy[2] > eV ) {
-				totalDepositEnergy[2] += mIncidentTuple.depositEnergy[2];
-				if ( mIncidentTuple.particleID == PARTICLE::alpha ) alphaDepositEnergy[2] += mIncidentTuple.depositEnergy[2];
-				if ( mIncidentTuple.particleID == PARTICLE::electron ) electronDepositEnergy[2] += mIncidentTuple.depositEnergy[2];
-				if ( mIncidentTuple.particleID == PARTICLE::gamma1 ) gammaDepositEnergy[2] += mIncidentTuple.depositEnergy[2];
+				totalDepositEnergy[0] += mIncidentTuple.depositEnergy[2];
+				totalDepositEnergy[3] += mIncidentTuple.depositEnergy[2];
+				if ( mIncidentTuple.particleID == PARTICLE::alpha ) {
+					alphaDepositEnergy[0] += mIncidentTuple.depositEnergy[2];
+					alphaDepositEnergy[3] += mIncidentTuple.depositEnergy[2];
+				}
+				if ( mIncidentTuple.particleID == PARTICLE::electron ) {
+					electronDepositEnergy[0] += mIncidentTuple.depositEnergy[2];
+					electronDepositEnergy[3] += mIncidentTuple.depositEnergy[2];
+				}
+				if ( mIncidentTuple.particleID == PARTICLE::gamma1 ) {
+					gammaDepositEnergy[0] += mIncidentTuple.depositEnergy[2];
+					gammaDepositEnergy[3] += mIncidentTuple.depositEnergy[2];
+				}
 			}
 			if ( m1DHistograms.count("SecondaryParticleInALPIDE") ) {
 				m1DHistograms["SecondaryParticleInALPIDE"]->Fill(mIncidentTuple.particleID);
