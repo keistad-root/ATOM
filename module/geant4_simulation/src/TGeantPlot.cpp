@@ -53,6 +53,8 @@ void TGeantPlot::saveHistorams(const std::vector<CppConfigDictionary>& configLis
 				legend->AddEntry(hist, Form("Entries: %.1f", hist->GetEffectiveEntries()), "");
 				legend->AddEntry(hist, Form("Mean: %.3f", hist->GetMean()), "");
 				legend->AddEntry(hist, Form("Std Dev: %.3f", hist->GetStdDev()), "");
+				legend->AddEntry(hist, Form("Underflow: %.1f", hist->GetBinContent(0)), "");
+				legend->AddEntry(hist, Form("Overflow: %.1f", hist->GetBinContent(hist->GetNbinsX() + 1)), "");
 				if ( std::find(particleNamePlot.begin(), particleNamePlot.end(), key) != particleNamePlot.end() ) {
 					for ( int i = 0; i < hist->GetNbinsX(); i++ ) {
 						hist->GetXaxis()->SetBinLabel(i + 1., mParticleName[i]);
