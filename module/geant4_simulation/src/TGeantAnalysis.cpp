@@ -60,7 +60,8 @@ void TGeantAnalysis::readIncidentFile() {
 void TGeantAnalysis::setHistograms() {
 	std::vector<CppConfigDictionary> configList = mConfig.getConfigList();
 	for ( const CppConfigDictionary& config : configList ) {
-		std::string key = config.hasKey("NAME") ? config.find("NAME") : "";
+		std::string key = std::string(config.getConfigName());
+		// config.hasKey("NAME") ? config.find("NAME") : "";
 		if ( config.hasKey("type") && config.find("type") == "1H" ) {
 			TH1D* hist = TPlotter::init1DHist(config);
 			m1DHistograms.insert_or_assign(key, hist);
