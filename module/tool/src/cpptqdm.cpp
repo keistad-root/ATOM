@@ -5,7 +5,7 @@ ProgressBar::ProgressBar(int setSize) : mSetSize(setSize), isRunning(true) {
 	start_time = std::chrono::system_clock::now();
 	printPoint = start_time;
 	std::cout << "\x1b[?25l";
-	std::thread progressThread(&ProgressBar::runProgress, this);
+	progressThread = std::thread(&ProgressBar::runProgress, this);
 }
 
 ProgressBar::ProgressBar() {
@@ -15,7 +15,11 @@ ProgressBar::ProgressBar() {
 }
 
 ProgressBar::~ProgressBar() {
-	std::cout << "\x1b[?25h" << std::endl;
+	// Stop the thread and wait for it to finish
+	if ( progressThread.joinable() ) {
+		progressThread.join(); // Wait for the thread to finish
+	}
+	std::cout << "\x1b[?25h" << std::endl; // Restore cursor visibility
 }
 
 void ProgressBar::getTerminalLength() {
@@ -33,7 +37,6 @@ int ProgressBar::getSecond(int num) {
 }
 
 void ProgressBar::runProgress() {
-	std::cout << "???" << std::endl;
 	while ( isRunning ) {
 		std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
 		double percent = static_cast<double>(called) / mSetSize * 100;
@@ -50,6 +53,17 @@ void ProgressBar::runProgress() {
 			<< std::setw(2) << std::setfill('0') << getMinute(duration * 0.001) << ":" << std::setw(2) << std::setfill('0') << getSecond(duration * 0.001) << "<"
 			<< std::setw(2) << std::setfill('0') << getMinute(left) << ":" << std::setw(2) << std::setfill('0') << getSecond(left) << ", "
 			<< std::setprecision(10 - 1 - (speed == 0 ? 1 : (int) log10(std::abs((int) speed)) + 1)) << speed << "it/s]";
+		std::this_thread::sleep_for(std::chrono::milliseconds(10)); // Update every 100ms
+		if ( called == mSetSize ) {
+			isRunning = false;
+			std::cout << "\r" << std::setw(3) << std::setfill(' ') << std::fixed << 100
+				<< "%[" << std::setw(iBar) << std::setfill('=') << "]"
+				<< std::setw(floor(log10(mSetSize)) + 1) << std::setfill(' ') << called << "/" << mSetSize
+				<< " ["
+				<< std::setw(2) << std::setfill('0') << getMinute(duration * 0.001) << ":" << std::setw(2) << std::setfill('0') << getSecond(duration * 0.001) << "<"
+				<< std::setw(2) << std::setfill('0') << getMinute(left) << ":" << std::setw(2) << std::setfill('0') << getSecond(left) << ", "
+				<< std::setprecision(10 - 1 - (speed == 0 ? 1 : (int) log10(std::abs((int) speed)) + 1)) << speed << "it/s]";
+		}
 	}
 }
 

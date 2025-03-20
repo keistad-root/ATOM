@@ -29,6 +29,7 @@ public:
 
 	void getTerminalLength();
 	void runProgress();
+	void countUp() { called++; }
 	void printProgress();
 	int getSecond(int num);
 	int getMinute(int num);
