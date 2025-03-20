@@ -8,26 +8,31 @@
 #include <vector>
 #include <iomanip>
 #include <math.h>
+#include <thread>
+#include <atomic>
 
 class ProgressBar {
 private:
-    std::chrono::system_clock::time_point start_time;
-    int mTerminalWidth;
-    int mSetSize;
-    std::chrono::system_clock::time_point printPoint;
-    int called = 0;
+	std::chrono::system_clock::time_point start_time;
+	int mTerminalWidth;
+	int mSetSize;
+	std::chrono::system_clock::time_point printPoint;
+	int called = 0;
+	std::thread progressThread;
 
+	std::atomic<bool> isRunning;
 
 public:
-    ProgressBar();
-    ProgressBar(int setSize);
-    ~ProgressBar();
+	ProgressBar();
+	ProgressBar(int setSize);
+	~ProgressBar();
 
-    void getTerminalLength();
-
-    void printProgress();
-    int getSecond(int num);
-    int getMinute(int num);
+	void getTerminalLength();
+	void runProgress();
+	void printProgress();
+	int getSecond(int num);
+	int getMinute(int num);
+	void finishProgress();
 };
 
 
