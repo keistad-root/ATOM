@@ -58,10 +58,10 @@ void ProgressBar::runProgress() {
 			isRunning = false;
 			std::cout << "\r" << std::setw(3) << std::setfill(' ') << std::fixed << 100
 				<< "%[" << std::setw(iBar) << std::setfill('=') << "]"
-				<< std::setw(floor(log10(mSetSize)) + 1) << std::setfill(' ') << called << "/" << mSetSize
+				<< std::setw(floor(log10(mSetSize)) + 1) << std::setfill(' ') << mSetSize << "/" << mSetSize
 				<< " ["
 				<< std::setw(2) << std::setfill('0') << getMinute(duration * 0.001) << ":" << std::setw(2) << std::setfill('0') << getSecond(duration * 0.001) << "<"
-				<< std::setw(2) << std::setfill('0') << getMinute(left) << ":" << std::setw(2) << std::setfill('0') << getSecond(left) << ", "
+				<< "00:00" << ", "
 				<< std::setprecision(10 - 1 - (speed == 0 ? 1 : (int) log10(std::abs((int) speed)) + 1)) << speed << "it/s]";
 		}
 	}

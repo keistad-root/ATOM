@@ -83,9 +83,9 @@ void TGeantAnalysis::readTree() {
 
 void TGeantAnalysis::readPrimaryTree() {
 	Int_t nEntries = mPrimaryTree->GetEntries();
-	ProgressBar progressBar(static_cast<int>(nEntries));
+	ProgressBar* pbar = new ProgressBar(static_cast<int>(nEntries));
 	for ( Int_t i = 0; i < nEntries; i++ ) {
-		progressBar.printProgress();
+		pbar->countUp();
 		mPrimaryTree->GetEntry(i);
 
 		Double_t momentum = TMath::Sqrt(mPrimaryTuple.momentum[0] * mPrimaryTuple.momentum[0] + mPrimaryTuple.momentum[1] * mPrimaryTuple.momentum[1] + mPrimaryTuple.momentum[2] * mPrimaryTuple.momentum[2]);
@@ -98,6 +98,7 @@ void TGeantAnalysis::readPrimaryTree() {
 		m1DHistograms["SourceTheta"]->Fill(180 - theta);
 		m1DHistograms["SourcePhi"]->Fill(phi);
 	}
+	delete pbar;
 }
 
 bool TGeantAnalysis::isFromOutside() {
@@ -125,10 +126,10 @@ void TGeantAnalysis::readIncidentTree() {
 	std::array<Double_t, 4> electronDepositEnergy = {0., 0., 0., 0.};
 	std::array<Double_t, 4> gammaDepositEnergy = {0., 0., 0., 0.};
 
-	ProgressBar progressBar(static_cast<int>(nEntries));
+	ProgressBar* pbar = new ProgressBar(static_cast<int>(nEntries));
 	Int_t nDouble = 0;
 	for ( Int_t i = 0; i < nEntries; i++ ) {
-		progressBar.printProgress();
+		pbar->countUp();
 		mIncidentTree->GetEntry(i);
 		if ( isFromOutside() ) {
 			if ( isRoi && (std::abs(mIncidentTuple.position[0]) > mRoi[0] || std::abs(mIncidentTuple.position[1]) > mRoi[1]) ) continue;
@@ -624,6 +625,7 @@ void TGeantAnalysis::readIncidentTree() {
 			}
 		}
 	}
+	delete pbar;
 	mEntry[0] = m1DHistograms["ElectronDepositEnergyMetal"]->GetEffectiveEntries();
 	mEntry[1] = m1DHistograms["AlphaDepositEnergyMetal"]->GetEffectiveEntries();
 	mEntry[2] = m1DHistograms["AlphaDepositEnergyEpitaxial"]->GetEffectiveEntries();

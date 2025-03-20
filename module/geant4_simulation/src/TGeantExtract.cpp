@@ -110,9 +110,9 @@ void TGeantExtract::extractFromAFile() {
 	Int_t nEntries = mTrackTree->GetEntries();
 	Int_t iIncident = 0;
 	std::clog << "Extracting the informations from the File (" << iFile + 1 << " / " << mNumFile << ")" << std::endl;
-	ProgressBar progressBar(static_cast<int>(nEntries));
+	ProgressBar* pbar = new ProgressBar(static_cast<int>(nEntries));
 	for ( Int_t i = 0; i < nEntries; i++ ) {
-		progressBar.printProgress();
+		pbar->countUp();
 		mTrackTree->GetEntry(i);
 		if ( mTrackTuple.parentID == 0 ) {
 			getPrimaryAnalysisInformation();
@@ -124,6 +124,7 @@ void TGeantExtract::extractFromAFile() {
 		// 	getSecondaryAnalysisInformation();
 		// }
 	}
+	delete pbar;
 	iFile++;
 }
 
