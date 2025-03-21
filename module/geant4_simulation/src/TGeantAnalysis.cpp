@@ -21,9 +21,9 @@ TGeantAnalysis::TGeantAnalysis(const CppConfigFile& config) : mConfig(config) {
 		mIncidentTree = static_cast<TTree*>(mIncidentFile->Get("IncidentAnalysis"));
 		readIncidentFile();
 	}
-	if ( mConfig.getConfig("File").hasKey("ROI") ) {
+	if ( mConfig.getConfig("FILE").hasKey("ROI") ) {
 		isRoi = true;
-		std::vector<double> temp = TPlotter::getDoubleSetFromString(mConfig.getConfig("File").find("ROI"));
+		std::vector<double> temp = TPlotter::getDoubleSetFromString(mConfig.getConfig("FILE").find("ROI"));
 		mRoi = {temp[0], temp[1]};
 	}
 }
@@ -61,12 +61,11 @@ void TGeantAnalysis::setHistograms() {
 	std::vector<CppConfigDictionary> configList = mConfig.getConfigList();
 	for ( const CppConfigDictionary& config : configList ) {
 		std::string key = std::string(config.getConfigName());
-		// config.hasKey("NAME") ? config.find("NAME") : "";
-		if ( config.hasKey("type") && config.find("type") == "1H" ) {
+		if ( config.hasKey("TYPE") && config.find("TYPE") == "1H" ) {
 			TH1D* hist = TPlotter::init1DHist(config);
 			m1DHistograms.insert_or_assign(key, hist);
 		}
-		if ( config.hasKey("type") && config.find("type") == "2H" ) {
+		if ( config.hasKey("TYPE") && config.find("TYPE") == "2H" ) {
 			TH2D* hist = TPlotter::init2DHist(config);
 			m2DHistograms.insert_or_assign(key, hist);
 		}
@@ -135,143 +134,110 @@ void TGeantAnalysis::readIncidentTree() {
 		if ( isFromOutside() ) {
 			if ( isRoi && (std::abs(mIncidentTuple.position[0]) > mRoi[0] || std::abs(mIncidentTuple.position[1]) > mRoi[1]) ) continue;
 			Double_t momentum = TMath::Sqrt(mIncidentTuple.momentum[0] * mIncidentTuple.momentum[0] + mIncidentTuple.momentum[1] * mIncidentTuple.momentum[1] + mIncidentTuple.momentum[2] * mIncidentTuple.momentum[2]);
+			Double_t theta = TMath::ACos(mIncidentTuple.momentum[2] / momentum) * 180. / TMath::Pi();
+			Double_t multiple = 1.;
 			if ( momentum > 0.0000001 ) {
-				Double_t theta = TMath::ACos(mIncidentTuple.momentum[2] / momentum) * 180. / TMath::Pi();
 				// Major Plots
-				if ( m2DHistograms.count("IN_XY") ) {
-					m2DHistograms["IN_XY"]->Fill(mIncidentTuple.position[0], mIncidentTuple.position[1]);
-				}
-				if ( m1DHistograms.count("IN_Z") ) {
-					Double_t multiple = mConfig.getConfig("IN_Z").hasKey("MULTIPLE") ? stod(mConfig.getConfig("IN_Z").find("MULTIPLE")) : 1.;
-					m1DHistograms["IN_Z"]->Fill(mIncidentTuple.position[2] * multiple);
-				}
-				if ( m1DHistograms.count("IN_ANG") ) {
-					if ( 180 - theta > 180 ) std::cout << 180 - theta << std::endl;
-					m1DHistograms["IN_ANG"]->Fill(180 - theta);
-				}
-				if ( m1DHistograms.count("IN_KE") ) {
-					Double_t multiple = mConfig.getConfig("IN_KE").hasKey("MULTIPLE") ? stod(mConfig.getConfig("IN_KE").find("MULTIPLE")) : 1.;
-					m1DHistograms["IN_KE"]->Fill(mIncidentTuple.kineticEnergy * multiple);
-				}
-				if ( m1DHistograms.count("IN_PA") ) {
-					m1DHistograms["IN_PA"]->Fill(mIncidentTuple.particleID);
-				}
-				if ( m1DHistograms.count("IN_VOL") ) {
-					m1DHistograms["IN_VOL"]->Fill(mIncidentTuple.initialVolumeID);
-				}
+				m2DHistograms["IN_XY"]->Fill(mIncidentTuple.position[0], mIncidentTuple.position[1]);
+
+				multiple = mConfig.getConfig("IN_Z").hasKey("MULTIPLE") ? stod(mConfig.getConfig("IN_Z").find("MULTIPLE")) : 1.;
+				m1DHistograms["IN_Z"]->Fill(mIncidentTuple.position[2] * multiple);
+
+				m1DHistograms["IN_ANG"]->Fill(180 - theta);
+
+				multiple = mConfig.getConfig("IN_KE").hasKey("MULTIPLE") ? stod(mConfig.getConfig("IN_KE").find("MULTIPLE")) : 1.;
+				m1DHistograms["IN_KE"]->Fill(mIncidentTuple.kineticEnergy * multiple);
+
+				m1DHistograms["IN_PA"]->Fill(mIncidentTuple.particleID);
+
+				m1DHistograms["IN_VOL"]->Fill(mIncidentTuple.initialVolumeID);
 
 				if ( totalDepositEnergy[1] > eV ) {
-					if ( m1DHistograms.count("IN_DE_MET") ) {
-						Double_t multiple = mConfig.getConfig("IN_DE_MET").hasKey("MULTIPLE") ? stod(mConfig.getConfig("IN_DE_MET").find("MULTIPLE")) : 1.;
-						m1DHistograms["IN_DE_MET"]->Fill(totalDepositEnergy[1] * multiple);
-					}
-					if ( m2DHistograms.count("IN_DE_MET_N_IN_ANG") ) {
-						Double_t multiple = mConfig.getConfig("IN_DE_MET_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("IN_DE_MET_N_IN_ANG").find("MULTIPLE")) : 1.;
-						m2DHistograms["IN_DE_MET_N_IN_ANG"]->Fill(180 - theta, totalDepositEnergy[1] * multiple);
-					}
+					multiple = mConfig.getConfig("IN_DE_MET").hasKey("MULTIPLE") ? stod(mConfig.getConfig("IN_DE_MET").find("MULTIPLE")) : 1.;
+					m1DHistograms["IN_DE_MET"]->Fill(totalDepositEnergy[1] * multiple);
+
+					multiple = mConfig.getConfig("IN_DE_MET_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("IN_DE_MET_N_IN_ANG").find("MULTIPLE")) : 1.;
+					m2DHistograms["IN_DE_MET_N_IN_ANG"]->Fill(180 - theta, totalDepositEnergy[1] * multiple);
+
 				}
 				totalDepositEnergy[1] = 0.;
+
 				if ( totalDepositEnergy[2] > eV ) {
-					if ( m1DHistograms.find("IN_DE_EPI") != m1DHistograms.end() ) {
-						Double_t multiple = mConfig.getConfig("IN_DE_EPI").hasKey("MULTIPLE") ? stod(mConfig.getConfig("IN_DE_EPI").find("MULTIPLE")) : 1.;
-						m1DHistograms["IN_DE_EPI"]->Fill(totalDepositEnergy[2] * multiple);
-					}
-					if ( m2DHistograms.find("IN_DE_EPI_N_IN_ANG") != m2DHistograms.end() ) {
-						Double_t multiple = mConfig.getConfig("IN_DE_EPI_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("IN_DE_EPI_N_IN_ANG").find("MULTIPLE")) : 1.;
-						m2DHistograms["IN_DE_EPI_N_IN_ANG"]->Fill(180 - theta, totalDepositEnergy[2] * multiple);
-					}
+					multiple = mConfig.getConfig("IN_DE_EPI").hasKey("MULTIPLE") ? stod(mConfig.getConfig("IN_DE_EPI").find("MULTIPLE")) : 1.;
+					m1DHistograms["IN_DE_EPI"]->Fill(totalDepositEnergy[2] * multiple);
+
+					multiple = mConfig.getConfig("IN_DE_EPI_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("IN_DE_EPI_N_IN_ANG").find("MULTIPLE")) : 1.;
+					m2DHistograms["IN_DE_EPI_N_IN_ANG"]->Fill(180 - theta, totalDepositEnergy[2] * multiple);
 				}
+
 				totalDepositEnergy[2] = 0.;
+
 				if ( totalDepositEnergy[3] > eV ) {
-					if ( m1DHistograms.count("IN_DE_SUB") ) {
-						Double_t multiple = mConfig.getConfig("IN_DE_SUB").hasKey("MULTIPLE") ? stod(mConfig.getConfig("IN_DE_SUB").find("MULTIPLE")) : 1.;
-						m1DHistograms["IN_DE_SUB"]->Fill(totalDepositEnergy[3] * multiple);
-					}
-					if ( m2DHistograms.count("IN_DE_SUB_N_IN_ANG") ) {
-						Double_t multiple = mConfig.getConfig("IN_DE_SUB_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("IN_DE_SUB_N_IN_ANG").find("MULTIPLE")) : 1.;
-						m2DHistograms["IN_DE_SUB_N_IN_ANG"]->Fill(180 - theta, totalDepositEnergy[3] * multiple);
-					}
+					multiple = mConfig.getConfig("IN_DE_SUB").hasKey("MULTIPLE") ? stod(mConfig.getConfig("IN_DE_SUB").find("MULTIPLE")) : 1.;
+					m1DHistograms["IN_DE_SUB"]->Fill(totalDepositEnergy[3] * multiple);
+
+					multiple = mConfig.getConfig("IN_DE_SUB_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("IN_DE_SUB_N_IN_ANG").find("MULTIPLE")) : 1.;
+					m2DHistograms["IN_DE_SUB_N_IN_ANG"]->Fill(180 - theta, totalDepositEnergy[3] * multiple);
 				}
 				totalDepositEnergy[3] = 0.;
+
 				if ( totalDepositEnergy[0] > eV ) {
-					if ( m1DHistograms.count("IN_DE_TOT") ) {
-						Double_t multiple = mConfig.getConfig("IN_DE_TOT").hasKey("MULTIPLE") ? stod(mConfig.getConfig("IN_DE_TOT").find("MULTIPLE")) : 1.;
-						m1DHistograms["IN_DE_TOT"]->Fill(totalDepositEnergy[0] * multiple);
-					}
-					if ( m2DHistograms.count("IN_DE_TOT_N_IN_ANG") ) {
-						Double_t multiple = mConfig.getConfig("IN_DE_TOT_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("IN_DE_TOT_N_IN_ANG").find("MULTIPLE")) : 1.;
-						m2DHistograms["IN_DE_TOT_N_IN_ANG"]->Fill(180 - theta, totalDepositEnergy[0] * multiple);
-					}
+					multiple = mConfig.getConfig("IN_DE_TOT").hasKey("MULTIPLE") ? stod(mConfig.getConfig("IN_DE_TOT").find("MULTIPLE")) : 1.;
+					m1DHistograms["IN_DE_TOT"]->Fill(totalDepositEnergy[0] * multiple);
+
+					multiple = mConfig.getConfig("IN_DE_TOT_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("IN_DE_TOT_N_IN_ANG").find("MULTIPLE")) : 1.;
+					m2DHistograms["IN_DE_TOT_N_IN_ANG"]->Fill(180 - theta, totalDepositEnergy[0] * multiple);
 				}
 				totalDepositEnergy[0] = 0.;
-				if ( m2DHistograms.count("CorrelationIncidentAngleAndStopPosition") ) {
-					if ( mIncidentTuple.finalVolumeID == VOLUME::ALPIDESubstrate || mIncidentTuple.finalVolumeID == VOLUME::ALPIDEEpitaxial || mIncidentTuple.finalVolumeID == VOLUME::ALPIDEMetal ) {
-						m2DHistograms["CorrelationIncidentAngleAndStopPosition"]->Fill(180 - theta, mIncidentTuple.position[2]);
-					}
+
+				if ( mIncidentTuple.finalVolumeID == VOLUME::ALPIDESubstrate || mIncidentTuple.finalVolumeID == VOLUME::ALPIDEEpitaxial || mIncidentTuple.finalVolumeID == VOLUME::ALPIDEMetal ) {
+					m2DHistograms["IN_ANG_N_FIN_Z"]->Fill(180 - theta, mIncidentTuple.position[2]);
 				}
-				if ( mIncidentTuple.particleID == PARTICLE::alpha && m2DHistograms.count("AP_IN_XY") ) {
-					m2DHistograms["AP_IN_XY"]->Fill(mIncidentTuple.position[0], mIncidentTuple.position[1]);
-				}
-				if ( mIncidentTuple.particleID == PARTICLE::alpha && m1DHistograms.count("AP_IN_Z") ) {
-					Double_t multiple = mConfig.getConfig("AP_IN_Z").hasKey("MULTIPLE") ? stod(mConfig.getConfig("AP_IN_Z").find("MULTIPLE")) : 1.;
-					m1DHistograms["AP_IN_Z"]->Fill(mIncidentTuple.position[2] * multiple);
-				}
-				if ( mIncidentTuple.particleID == PARTICLE::alpha && m1DHistograms.count("AL_IN_ANG") ) {
-					m1DHistograms["AL_IN_ANG"]->Fill(180 - theta);
-				}
-				if ( mIncidentTuple.particleID == PARTICLE::alpha && m1DHistograms.count("AP_IN_KE") ) {
-					Double_t multiple = mConfig.getConfig("AP_IN_KE").hasKey("MULTIPLE") ? stod(mConfig.getConfig("AP_IN_KE").find("MULTIPLE")) : 1.;
-					m1DHistograms["AP_IN_KE"]->Fill(mIncidentTuple.kineticEnergy * multiple);
-				}
-				if ( mIncidentTuple.particleID == PARTICLE::alpha && m1DHistograms.count("AL_IN_VOL") ) {
-					m1DHistograms["AL_IN_VOL"]->Fill(mIncidentTuple.initialVolumeID);
-				}
-				Double_t alphaDepositEnergyTotal = 0.;
-				if ( mIncidentTuple.particleID == PARTICLE::alpha && alphaDepositEnergy[0] > eV ) {
-					if ( m1DHistograms.count("AL_IN_DE_MET") ) {
-						Double_t multiple = mConfig.getConfig("AL_IN_DE_MET").hasKey("MULTIPLE") ? stod(mConfig.getConfig("AL_IN_DE_MET").find("MULTIPLE")) : 1.;
-						m1DHistograms["AL_IN_DE_MET"]->Fill(alphaDepositEnergy[0] * multiple);
-					}
-					if ( m2DHistograms.count("AL_IN_DE_MET_N_IN_ANG") ) {
-						Double_t multiple = mConfig.getConfig("AL_IN_DE_MET_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("AL_IN_DE_MET_N_IN_ANG").find("MULTIPLE")) : 1.;
-						m2DHistograms["AL_IN_DE_MET_N_IN_ANG"]->Fill(180 - theta, alphaDepositEnergy[0] * multiple);
-					}
-					alphaDepositEnergyTotal += alphaDepositEnergy[0];
-				}
-				alphaDepositEnergy[0] = 0.;
+
+				m2DHistograms["AL_IN_XY"]->Fill(mIncidentTuple.position[0], mIncidentTuple.position[1]);
+
+				multiple = mConfig.getConfig("AP_IN_Z").hasKey("MULTIPLE") ? stod(mConfig.getConfig("AP_IN_Z").find("MULTIPLE")) : 1.;
+				m1DHistograms["AP_IN_Z"]->Fill(mIncidentTuple.position[2] * multiple);
+
+				m1DHistograms["AL_IN_ANG"]->Fill(180 - theta);
+
+				multiple = mConfig.getConfig("AP_IN_KE").hasKey("MULTIPLE") ? stod(mConfig.getConfig("AP_IN_KE").find("MULTIPLE")) : 1.;
+				m1DHistograms["AP_IN_KE"]->Fill(mIncidentTuple.kineticEnergy * multiple);
+
+				m1DHistograms["AL_IN_VOL"]->Fill(mIncidentTuple.initialVolumeID);
+
 				if ( mIncidentTuple.particleID == PARTICLE::alpha && alphaDepositEnergy[1] > eV ) {
-					if ( m1DHistograms.count("AL_IN_DE_EPI") ) {
-						Double_t multiple = mConfig.getConfig("AL_IN_DE_EPI").hasKey("MULTIPLE") ? stod(mConfig.getConfig("AL_IN_DE_EPI").find("MULTIPLE")) : 1.;
-						m1DHistograms["AL_IN_DE_EPI"]->Fill(alphaDepositEnergy[1] * multiple);
-					}
-					if ( m2DHistograms.count("AL_IN_DE_EPI_N_IN_ANG") ) {
-						Double_t multiple = mConfig.getConfig("AL_IN_DE_EPI_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("AL_IN_DE_EPI_N_IN_ANG").find("MULTIPLE")) : 1.;
-						m2DHistograms["AL_IN_DE_EPI_N_IN_ANG"]->Fill(180 - theta, alphaDepositEnergy[1] * multiple);
-					}
-					alphaDepositEnergyTotal += alphaDepositEnergy[1];
+					multiple = mConfig.getConfig("AL_IN_DE_MET").hasKey("MULTIPLE") ? stod(mConfig.getConfig("AL_IN_DE_MET").find("MULTIPLE")) : 1.;
+					m1DHistograms["AL_IN_DE_MET"]->Fill(alphaDepositEnergy[1] * multiple);
+
+					multiple = mConfig.getConfig("AL_IN_DE_MET_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("AL_IN_DE_MET_N_IN_ANG").find("MULTIPLE")) : 1.;
+					m2DHistograms["AL_IN_DE_MET_N_IN_ANG"]->Fill(180 - theta, alphaDepositEnergy[1] * multiple);
 				}
 				alphaDepositEnergy[1] = 0.;
+
 				if ( mIncidentTuple.particleID == PARTICLE::alpha && alphaDepositEnergy[2] > eV ) {
-					if ( m1DHistograms.count("AL_IN_DE_SUB") ) {
-						Double_t multiple = mConfig.getConfig("AL_IN_DE_SUB").hasKey("MULTIPLE") ? stod(mConfig.getConfig("AL_IN_DE_SUB").find("MULTIPLE")) : 1.;
-						m1DHistograms["AL_IN_DE_SUB"]->Fill(alphaDepositEnergy[2] * multiple);
-					}
-					if ( m2DHistograms.count("AL_IN_DE_SUB_N_IN_ANG") ) {
-						Double_t multiple = mConfig.getConfig("AL_IN_DE_SUB_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("AL_IN_DE_SUB_N_IN_ANG").find("MULTIPLE")) : 1.;
-						m2DHistograms["AL_IN_DE_SUB_N_IN_ANG"]->Fill(180 - theta, alphaDepositEnergy[2] * multiple);
-					}
-					alphaDepositEnergyTotal += alphaDepositEnergy[2];
+					multiple = stod(mConfig.getConfig("AL_IN_DE_EPI").find("MULTIPLE"));
+					m1DHistograms["AL_IN_DE_EPI"]->Fill(alphaDepositEnergy[2] * multiple);
+
+					multiple = stod(mConfig.getConfig("AL_IN_DE_EPI_N_IN_ANG").find("MULTIPLE"));
+					m2DHistograms["AL_IN_DE_EPI_N_IN_ANG"]->Fill(180 - theta, alphaDepositEnergy[2] * multiple);
 				}
 				alphaDepositEnergy[2] = 0.;
-				if ( mIncidentTuple.particleID == PARTICLE::alpha && alphaDepositEnergyTotal > eV ) {
-					if ( m1DHistograms.count("AL_IN_DE_TOT") ) {
-						Double_t multiple = mConfig.getConfig("AL_IN_DE_TOT").hasKey("MULTIPLE") ? stod(mConfig.getConfig("AL_IN_DE_TOT").find("MULTIPLE")) : 1.;
-						m1DHistograms["AL_IN_DE_TOT"]->Fill(alphaDepositEnergyTotal * multiple);
-					}
-					if ( m2DHistograms.count("AL_IN_DE_TOT_N_IN_ANG") ) {
-						Double_t multiple = mConfig.getConfig("AL_IN_DE_TOT_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("AL_IN_DE_TOT_N_IN_ANG").find("MULTIPLE")) : 1.;
-						m2DHistograms["AL_IN_DE_TOT_N_IN_ANG"]->Fill(180 - theta, alphaDepositEnergyTotal * multiple);
-					}
+
+				if ( mIncidentTuple.particleID == PARTICLE::alpha && alphaDepositEnergy[3] > eV ) {
+					multiple = mConfig.getConfig("AL_IN_DE_SUB").hasKey("MULTIPLE") ? stod(mConfig.getConfig("AL_IN_DE_SUB").find("MULTIPLE")) : 1.;
+					m1DHistograms["AL_IN_DE_SUB"]->Fill(alphaDepositEnergy[3] * multiple);
+
+					multiple = mConfig.getConfig("AL_IN_DE_SUB_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("AL_IN_DE_SUB_N_IN_ANG").find("MULTIPLE")) : 1.;
+					m2DHistograms["AL_IN_DE_SUB_N_IN_ANG"]->Fill(180 - theta, alphaDepositEnergy[3] * multiple);
+				}
+				alphaDepositEnergy[3] = 0.;
+				if ( mIncidentTuple.particleID == PARTICLE::alpha && alphaDepositEnergy[0] > eV ) {
+					multiple = mConfig.getConfig("AL_IN_DE_TOT").hasKey("MULTIPLE") ? stod(mConfig.getConfig("AL_IN_DE_TOT").find("MULTIPLE")) : 1.;
+					m1DHistograms["AL_IN_DE_TOT"]->Fill(alphaDepositEnergy[0] * multiple);
+
+					multiple = mConfig.getConfig("AL_IN_DE_TOT_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("AL_IN_DE_TOT_N_IN_ANG").find("MULTIPLE")) : 1.;
+					m2DHistograms["AL_IN_DE_TOT_N_IN_ANG"]->Fill(180 - theta, alphaDepositEnergy[0] * multiple);
 				}
 				if ( mIncidentTuple.particleID == PARTICLE::electron && m1DHistograms.count("EL_IN_XY") ) {
 					m2DHistograms["EL_IN_XY"]->Fill(mIncidentTuple.position[0], mIncidentTuple.position[1]);
@@ -627,9 +593,9 @@ void TGeantAnalysis::readIncidentTree() {
 		}
 	}
 	delete pbar;
-	mEntry[0] = m1DHistograms["ElectronDepositEnergyMetal"]->GetEffectiveEntries();
-	mEntry[1] = m1DHistograms["AlphaDepositEnergyMetal"]->GetEffectiveEntries();
-	mEntry[2] = m1DHistograms["AlphaDepositEnergyEpitaxial"]->GetEffectiveEntries();
+	// mEntry[0] = m1DHistograms["ElectronDepositEnergyMetal"]->GetEffectiveEntries();
+	// mEntry[1] = m1DHistograms["AlphaDepositEnergyMetal"]->GetEffectiveEntries();
+	// mEntry[2] = m1DHistograms["AlphaDepositEnergyEpitaxial"]->GetEffectiveEntries();
 	mEntry[3] = nDouble;
 }
 

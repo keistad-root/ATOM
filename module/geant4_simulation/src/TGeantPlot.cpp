@@ -110,15 +110,15 @@ void TGeantPlot::saveHistorams(const std::vector<CppConfigDictionary>& configLis
 }
 
 void TGeantPlot::getEntries() {
-	TH1D* hist = m1DHistograms.find("AlphaDepositEnergyEpitaxial")->second;
-	TH1D* metalAlphaHist = m1DHistograms.find("AlphaDepositEnergyMetal")->second;
-	TH1D* metalElectronHist = m1DHistograms.find("ElectronDepositEnergyMetal")->second;
+	// TH1D* hist = m1DHistograms.find("AlphaDepositEnergyEpitaxial")->second;
+	// TH1D* metalAlphaHist = m1DHistograms.find("AlphaDepositEnergyMetal")->second;
+	// TH1D* metalElectronHist = m1DHistograms.find("ElectronDepositEnergyMetal")->second;
 
-	int maxBin = 0;
-	for ( int i = 1; i <= m1DHistograms["AlphaIncidentAngle"]->GetNbinsX(); i++ ) {
-		if ( m1DHistograms["AlphaIncidentAngle"]->GetBinContent(i) > 1 ) {
-			maxBin = i;
-		}
-	}
+	// int maxBin = 0;
+	// for ( int i = 1; i <= m1DHistograms["AlphaIncidentAngle"]->GetNbinsX(); i++ ) {
+	// 	if ( m1DHistograms["AlphaIncidentAngle"]->GetBinContent(i) > 1 ) {
+	// 		maxBin = i;
+	// 	}
+	// }
 	// std::cout << maxBin << std::endl;
 }

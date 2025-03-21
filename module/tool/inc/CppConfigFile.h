@@ -26,10 +26,12 @@ public:
 	CppConfigFile(CppConfigFile&& move);
 	CppConfigFile& operator=(CppConfigFile&& move);
 	~CppConfigFile();
+
 	void addConfig(std::string_view configFile);
 	CppConfigDictionary getConfigFromArray(std::string_view key, const std::vector<std::string>& valueArray);
 	void addConfig(std::string_view configTitle, const std::vector<std::string>& configArray);
 	const std::vector<std::string> getConfigurableNameList() const;
+	void addConfig(CppConfigDictionary& config);
 	CppConfigDictionary& modifyConfig(std::string_view configTitle);
 	const CppConfigDictionary& getConfig(std::string_view configTitle) const;
 	bool hasConfig(std::string_view configTitle) const;

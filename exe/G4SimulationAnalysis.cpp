@@ -36,11 +36,12 @@ CppConfigFile setEnvironment(const ArgumentParser& parser) {
 	plotCSV.read_header(io::ignore_extra_column, "CONFIG_NAME", "TYPE", "BIN", "MULTIPLE");
 	std::string configName, type, bin, multiple;
 	while ( plotCSV.read_row(configName, type, bin, multiple) ) {
-		config.modifyConfig(configName).addDictionary("TYPE", type);
-		config.modifyConfig(configName).addDictionary("BIN", bin);
-		config.modifyConfig(configName).addDictionary("MULTIPLE", multiple);
+		CppConfigDictionary newConfig(configName);
+		newConfig.addDictionary("TYPE", type);
+		newConfig.addDictionary("BIN", bin);
+		newConfig.addDictionary("MULTIPLE", multiple);
+		config.addConfig(newConfig);
 	}
-
 
 	return config;
 }

@@ -23,6 +23,10 @@ CppConfigFile::CppConfigFile(std::string_view configFile) {
 	}
 }
 
+void CppConfigFile::addConfig(CppConfigDictionary& config) {
+	mConfigs.push_back(config);
+}
+
 CppConfigFile::CppConfigFile(const CppConfigFile& copy) {
 	for ( const CppConfigDictionary& dict : copy.mConfigs ) {
 		mConfigs.push_back(dict);
