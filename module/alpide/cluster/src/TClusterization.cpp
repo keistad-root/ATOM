@@ -73,7 +73,7 @@ void TClusterization::clusterize() {
 	ProgressBar* pBar = new ProgressBar(mEvents.size());
 
 	for ( TALPIDEEvent*& event : mEvents ) {
-		pBar->printProgress();
+		pBar->countUp();
 		std::vector<TCluster*> clusterCandidate;
 		bool isFirst = true;
 		for ( const std::pair<int, int>& pixel : event->getData() ) {
@@ -94,7 +94,7 @@ void TClusterization::clusterize() {
 		} // Move remained cluster candidates to cluster
 	}
 	delete pBar;
-	pBar = nullptr;
+
 	std::clog << "Total " << mClusters.size() << " clusters are extracted from " << mEvents.size() << " events." << std::endl << std::endl;
 	for ( TCluster* cluster : mClusters ) {
 		cluster->calMembers();

@@ -5,9 +5,10 @@
 #include "CppConfigFile.h"
 
 #include "TDataAnalyser.h"
+#include "config.h"
 
-const std::string configPath = "/home/ychoi/ATOM/config/experiment/mask.conf";
-const std::string csvPath = "/home/ychoi/ATOM/config/experiment/experiment_information.csv";
+const std::string configPath = CONFIG_DIR"/EXPERIMENT_ANALYSIS.conf";
+const std::string csvPath = CONFIG_DIR"/EXPERIMENT_INFORMATION.csv";
 
 ArgumentParser set_parse(int argc, char** argv) {
 	ArgumentParser parser = ArgumentParser(argc, argv).setDescription("Get pixels to be masked in experiment");

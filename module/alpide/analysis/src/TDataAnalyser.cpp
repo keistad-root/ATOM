@@ -35,9 +35,9 @@ void TDataAnalyser::extractEvent() {
 	mEventSet.push_back(new TALPIDEEvent());
 	mEventSet.back()->setEvent(0);
 	mEventSet.back()->setTime(static_cast<long int>(0));
-	ProgressBar pbar(nHit);
+	ProgressBar* pbar = new ProgressBar(nHit);
 	for ( int iHit = 0; iHit < nHit; iHit++ ) {
-		pbar.printProgress();
+		pbar->countUp();
 		inputTree->GetEntry(iHit);
 		if ( timeStamp == preTime ) {
 			mEventSet.back()->pushData({x, y});
@@ -51,6 +51,7 @@ void TDataAnalyser::extractEvent() {
 			preEvt++;
 		}
 	}
+	delete pbar;
 	mEventSet.back()->removeDuplication();
 	mEventSet.back()->sortPixel();
 
