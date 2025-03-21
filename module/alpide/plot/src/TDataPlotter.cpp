@@ -404,7 +404,7 @@ void TDataPlotter::savePlots() {
 			TF1* fitFunc = TPlotter::initFunction(mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("AMPLITUDE_PLOT"));
 			mClustermapSliceXAmplitude->Fit(fitFunc, "RQ");
 			fitFunc->Draw("SAME");
-			TPaveText* fitText = new TPaveText(.6, .5, .9, .9, "NDC");
+			TPaveText* fitText = new TPaveText(.4, .5, .9, .9, "NDC");
 			fitText->AddText(fitFunc->GetFormula()->GetExpFormula());
 			fitText->AddText(Form("#chi^{2}/NDoF: %.2f", fitFunc->GetChisquare() / fitFunc->GetNDF()));
 			for ( int i = 0; i < fitFunc->GetNpar(); i++ ) {
