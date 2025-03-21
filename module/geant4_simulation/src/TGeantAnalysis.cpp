@@ -302,86 +302,52 @@ void TGeantAnalysis::readIncidentTree() {
 
 					m1DHistograms["GA_IN_GT"]->Fill(mIncidentTuple.globalTime);
 
-					m1DHistograms["GA_INI_LT"]->Fill(mIncidentTuple.localTime);
+					m1DHistograms["GA_IN_LT"]->Fill(mIncidentTuple.localTime);
 
 					m1DHistograms["GA_INI_VOL"]->Fill(mIncidentTuple.initialVolumeID);
 
-					Double_t gammaDepositEnergyTotal = 0.;
-					if ( mIncidentTuple.particleID == PARTICLE::gamma1 && gammaDepositEnergy[0] > eV ) {
-						if ( m1DHistograms.count("GammaDepositEnergyMetal") ) {
-							Double_t multiple = mConfig.getConfig("GammaDepositEnergyMetal").hasKey("MULTIPLE") ? stod(mConfig.getConfig("GammaDepositEnergyMetal").find("MULTIPLE")) : 1.;
-							m1DHistograms["GammaDepositEnergyMetal"]->Fill(gammaDepositEnergy[0] * multiple);
-						}
-						if ( m2DHistograms.count("GammaCorrelationDepositEnergyMetalAndIncidentAngle") ) {
-							Double_t multiple = mConfig.getConfig("GammaCorrelationDepositEnergyMetalAndIncidentAngle").hasKey("MULTIPLE") ? stod(mConfig.getConfig("GammaCorrelationDepositEnergyMetalAndIncidentAngle").find("MULTIPLE")) : 1.;
-							m2DHistograms["GammaCorrelationDepositEnergyMetalAndIncidentAngle"]->Fill(180 - theta, gammaDepositEnergy[0] * multiple);
-						}
-						gammaDepositEnergyTotal += gammaDepositEnergy[0];
-					}
-					gammaDepositEnergy[0] = 0.;
-					if ( mIncidentTuple.particleID == PARTICLE::gamma1 && gammaDepositEnergy[1] > eV ) {
-						if ( m1DHistograms.count("GammaDepositEnergyEpitaxial") ) {
-							Double_t multiple = mConfig.getConfig("GammaDepositEnergyEpitaxial").hasKey("MULTIPLE") ? stod(mConfig.getConfig("GammaDepositEnergyEpitaxial").find("MULTIPLE")) : 1.;
-							m1DHistograms["GammaDepositEnergyEpitaxial"]->Fill(gammaDepositEnergy[1] * multiple);
-						}
-						if ( m2DHistograms.count("GammaCorrelationDepositEnergyEpitaxialAndIncidentAngle") ) {
-							Double_t multiple = mConfig.getConfig("GammaCorrelationDepositEnergyEpitaxialAndIncidentAngle").hasKey("MULTIPLE") ? stod(mConfig.getConfig("GammaCorrelationDepositEnergyEpitaxialAndIncidentAngle").find("MULTIPLE")) : 1.;
-							m2DHistograms["GammaCorrelationDepositEnergyEpitaxialAndIncidentAngle"]->Fill(180 - theta, gammaDepositEnergy[1] * multiple);
-						}
-						gammaDepositEnergyTotal += gammaDepositEnergy[1];
+					if ( gammaDepositEnergy[1] > eV ) {
+						multiple = mConfig.getConfig("GA_IN_DE_MET").hasKey("MULTIPLE") ? stod(mConfig.getConfig("GA_IN_DE_MET").find("MULTIPLE")) : 1.;
+						m1DHistograms["GA_IN_DE_MET"]->Fill(gammaDepositEnergy[1] * multiple);
+
+						multiple = mConfig.getConfig("GA_IN_DE_MET_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("GA_IN_DE_MET_N_IN_ANG").find("MULTIPLE")) : 1.;
+						m2DHistograms["GA_IN_DE_MET_N_IN_ANG"]->Fill(180 - theta, gammaDepositEnergy[1] * multiple);
 					}
 					gammaDepositEnergy[1] = 0.;
-					if ( mIncidentTuple.particleID == PARTICLE::gamma1 && gammaDepositEnergy[2] > eV ) {
-						if ( m1DHistograms.count("GammaDepositEnergySubstrate") ) {
-							Double_t multiple = mConfig.getConfig("GammaDepositEnergySubstrate").hasKey("MULTIPLE") ? stod(mConfig.getConfig("GammaDepositEnergySubstrate").find("MULTIPLE")) : 1.;
-							m1DHistograms["GammaDepositEnergySubstrate"]->Fill(gammaDepositEnergy[2] * multiple);
-						}
-						if ( m2DHistograms.count("GammaCorrelationDepositEnergySubstrateAndIncidentAngle") ) {
-							Double_t multiple = mConfig.getConfig("GammaCorrelationDepositEnergySubstrateAndIncidentAngle").hasKey("MULTIPLE") ? stod(mConfig.getConfig("GammaCorrelationDepositEnergySubstrateAndIncidentAngle").find("MULTIPLE")) : 1.;
-							m2DHistograms["GammaCorrelationDepositEnergySubstrateAndIncidentAngle"]->Fill(180 - theta, gammaDepositEnergy[2] * multiple);
-						}
-						gammaDepositEnergyTotal += gammaDepositEnergy[2];
+
+					if ( gammaDepositEnergy[2] > eV ) {
+						multiple = mConfig.getConfig("GA_IN_DE_EPI").hasKey("MULTIPLE") ? stod(mConfig.getConfig("GA_IN_DE_EPI").find("MULTIPLE")) : 1.;
+						m1DHistograms["GA_IN_DE_EPI"]->Fill(gammaDepositEnergy[2] * multiple);
+
+						multiple = mConfig.getConfig("GA_IN_DE_EPI_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("GA_IN_DE_EPI_N_IN_ANG").find("MULTIPLE")) : 1.;
+						m2DHistograms["GA_IN_DE_EPI_N_IN_ANG"]->Fill(180 - theta, gammaDepositEnergy[2] * multiple);
 					}
 					gammaDepositEnergy[2] = 0.;
-					if ( mIncidentTuple.particleID == PARTICLE::gamma1 && gammaDepositEnergyTotal > eV ) {
-						if ( m1DHistograms.count("GammaDepositEnergyTotal") ) {
-							Double_t multiple = mConfig.getConfig("GammaDepositEnergyTotal").hasKey("MULTIPLE") ? stod(mConfig.getConfig("GammaDepositEnergyTotal").find("MULTIPLE")) : 1.;
-							m1DHistograms["GammaDepositEnergyTotal"]->Fill(gammaDepositEnergyTotal * multiple);
-						}
-						if ( m2DHistograms.count("GammaCorrelationDepositEnergyTotalAndIncidentAngle") ) {
-							Double_t multiple = mConfig.getConfig("GammaCorrelationDepositEnergyTotalAndIncidentAngle").hasKey("MULTIPLE") ? stod(mConfig.getConfig("GammaCorrelationDepositEnergyTotalAndIncidentAngle").find("MULTIPLE")) : 1.;
-							m2DHistograms["GammaCorrelationDepositEnergyTotalAndIncidentAngle"]->Fill(180 - theta, gammaDepositEnergyTotal * multiple);
-						}
+
+					if ( gammaDepositEnergy[3] > eV ) {
+						multiple = mConfig.getConfig("GA_IN_DE_SUB").hasKey("MULTIPLE") ? stod(mConfig.getConfig("GA_IN_DE_SUB").find("MULTIPLE")) : 1.;
+						m1DHistograms["GA_IN_DE_SUB"]->Fill(gammaDepositEnergy[2] * multiple);
+
+						multiple = mConfig.getConfig("GA_IN_DE_SUB_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("GA_IN_DE_SUB_N_IN_ANG").find("MULTIPLE")) : 1.;
+						m2DHistograms["GA_IN_DE_SUB_N_IN_ANG"]->Fill(180 - theta, gammaDepositEnergy[2] * multiple);
+					}
+					gammaDepositEnergy[3] = 0.;
+
+					if ( gammaDepositEnergy[3] > eV ) {
+						multiple = mConfig.getConfig("GA_IN_DE_TOT").hasKey("MULTIPLE") ? stod(mConfig.getConfig("GA_IN_DE_TOT").find("MULTIPLE")) : 1.;
+						m1DHistograms["GA_IN_DE_TOT"]->Fill(gammaDepositEnergy[3] * multiple);
+						multiple = mConfig.getConfig("GA_IN_DE_TOT_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("GA_IN_DE_TOT_N_IN_ANG").find("MULTIPLE")) : 1.;
+						m2DHistograms["GA_IN_DE_TOT_N_IN_ANG"]->Fill(180 - theta, gammaDepositEnergy[3] * multiple);
 					}
 				}
 				// Minor Plots
-				if ( m1DHistograms.count("IncidentResidualX") ) {
-					double n = (mIncidentTuple.position[0] * 1000 - 14.62) / 29.24 + 1;
-					double residual = mIncidentTuple.position[0] * 1000 - (14.62 + (std::round(n) - 1) * 29.24);
-					m1DHistograms["IncidentResidualX"]->Fill(residual);
-				}
+				multiple = mConfig.getConfig("IN_RES_X").hasKey("MULTIPLE") ? stod(mConfig.getConfig("IN_RES_X").find("MULTIPLE")) : 1.;
+				m1DHistograms["IN_RES_X"]->Fill(mIncidentTuple.position[0] - (0.01462 + (std::round((mIncidentTuple.position[0] - 0.01462) / 0.02924 + 1) - 1) * 0.02924) * multiple);
+
 				if ( m1DHistograms.count("IncidentResidualY") ) {
 					double n = (mIncidentTuple.position[1] * 1000 - 13.44) / 26.88 + 1;
 					double residual = mIncidentTuple.position[1] * 1000 - (13.44 + (std::round(n) - 1) * 26.88);
 					m1DHistograms["IncidentResidualY"]->Fill(residual);
-				}
-				if ( m1DHistograms.count("IncidentXLine") ) {
-					if ( TMath::Abs(mIncidentTuple.position[1]) < 0.028 ) {
-						m1DHistograms["IncidentXLine"]->Fill(mIncidentTuple.position[0]);
-					}
-				}
-				if ( m1DHistograms.count("IncidentYLine") ) {
-					if ( TMath::Abs(mIncidentTuple.position[0]) < 0.028 ) {
-						m1DHistograms["IncidentYLine"]->Fill(mIncidentTuple.position[1]);
-					}
-				}
-				if ( m1DHistograms.count("IncidentGlobalTime") ) {
-					Double_t multiple = mConfig.getConfig("IncidentGlobalTime").hasKey("MULTIPLE") ? stod(mConfig.getConfig("IncidentGlobalTime").find("MULTIPLE")) : 1.;
-					m1DHistograms["IncidentGlobalTime"]->Fill(mIncidentTuple.globalTime * multiple);
-				}
-				if ( m1DHistograms.count("IncidentLocalTime") ) {
-					Double_t multiple = mConfig.getConfig("IncidentLocalTime").hasKey("MULTIPLE") ? stod(mConfig.getConfig("IncidentLocalTime").find("MULTIPLE")) : 1.;
-					m1DHistograms["IncidentLocalTime"]->Fill(mIncidentTuple.localTime * multiple);
 				}
 				if ( mIncidentTuple.particleID == PARTICLE::alpha && m1DHistograms.count("AlphaIncidentResidualX") ) {
 					double n = (mIncidentTuple.position[0] * 1000 - 14.62) / 29.24 + 1;
