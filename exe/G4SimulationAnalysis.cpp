@@ -8,13 +8,14 @@
 #include "config.h"
 
 const std::string CONFIG_PATH = CONFIG_DIR"/GEANT4_ANALYSIS.conf";
+const std::string PLOT_CSV_PATH = CONFIG_DIR"/GEANT4_ANALYSIS.csv";
 const std::string INFORMATION_PATH = CONFIG_DIR"/GEANT4_INFORMATION.csv";
 const std::string DATA_PATH = CSV_DATA_DIR"/g4data.csv";
 const double EVENT_10MIN = 2580000;
 
 CppConfigFile setEnvironment(const ArgumentParser& parser) {
-	std::cout << CONFIG_PATH << std::endl;
 	CppConfigFile config(CONFIG_PATH);
+
 	io::CSVReader<5> infoCSV(INFORMATION_PATH);
 	infoCSV.read_header(io::ignore_extra_column, "TAG", "INCIDENT_FILE", "PRIMARY_FILE", "SECONDARY_FILE", "PLOT_FILE");
 	std::string tags, input_incident_file, input_primary_file, input_secondary_file, output_file;
@@ -30,6 +31,16 @@ CppConfigFile setEnvironment(const ArgumentParser& parser) {
 	if ( !std::filesystem::exists(outputPath.parent_path()) ) {
 		std::filesystem::create_directories(outputPath.parent_path());
 	}
+
+	io::CSVReader<4> plotCSV(PLOT_CSV_PATH);
+	plotCSV.read_header(io::ignore_extra_column, "CONFIG_NAME", "TYPE", "BIN", "MULTIPLE");
+	std::string configName, type, bin, multiple;
+	while ( plotCSV.read_row(configName, type, bin, multiple) ) {
+		config.modifyConfig(configName).addDictionary("TYPE", type);
+		config.modifyConfig(configName).addDictionary("BIN", bin);
+		config.modifyConfig(configName).addDictionary("MULTIPLE", multiple);
+	}
+
 
 	return config;
 }
