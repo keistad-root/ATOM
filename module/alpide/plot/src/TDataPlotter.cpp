@@ -430,13 +430,15 @@ void TDataPlotter::savePlots() {
 			mClustermapSliceY[i]->Fit(fitFunc, "RQ");
 			fitFunc->Draw("SAME");
 
-			TPaveText* fitText = new TPaveText(.6, .5, .9, .9, "NDC");
-			fitText->AddText(fitFunc->GetFormula()->GetExpFormula());
-			fitText->AddText(Form("#chi^{2}/NDoF: %.2f", fitFunc->GetChisquare() / fitFunc->GetNDF()));
+
+			TLegend* fitText = TPlotter::initLegend(plotConfig);
+			fitText->SetHeader("Fit parameters", "C");
+			fitText->AddEntry(fitFunc, fitFunc->GetFormula()->GetExpFormula(), "");
+			fitText->AddEntry(fitFunc, Form("#chi^{2}/NDoF: %.2f", fitFunc->GetChisquare() / fitFunc->GetNDF()), "");
 			for ( int i = 0; i < fitFunc->GetNpar(); i++ ) {
-				fitText->AddText(Form("[%d]: %.2f #pm %.2f", i, fitFunc->GetParameter(i), fitFunc->GetParError(i)));
+				fitText->AddEntry(fitFunc, Form("[%d]: %.2f #pm %.2f", i, fitFunc->GetParameter(i)), "");
 			}
-			fitText->SetLabel("Fit parameters");
+			fitText->SetFillStyle(4000);
 			fitText->Draw();
 
 			std::vector<double>range = TPlotter::getDoubleSetFromString(plotConfig.find("COLUMN_RANGE"));
