@@ -229,7 +229,7 @@ void TDataPlotter::savePlots() {
 		TCanvas* canvas = TPlotter::initCanvas(mConfig.getConfig("HITMAP"));
 		TPlotter::drawPlot(canvas, mHitmap, mConfig.getConfig("HITMAP"), "COLZ0");
 		if ( mConfig.getConfig("HITMAP").hasKey("circle") && mConfig.getConfig("HITMAP").find("circle") == "true" ) { drawCircle(canvas); }
-		// TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("HITMAP"));
+		TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("HITMAP"));
 		delete canvas;
 	}
 
@@ -309,14 +309,14 @@ void TDataPlotter::savePlots() {
 		TCanvas* canvas = TPlotter::initCanvas(mConfig.getConfig("CLUSTERMAP"));
 		TPlotter::drawPlot(canvas, mClustermap, mConfig.getConfig("CLUSTERMAP"), "COLZ0");
 		if ( mConfig.getConfig("CLUSTERMAP").hasKey("circle") && mConfig.getConfig("CLUSTERMAP").find("circle") == "true" ) { drawCircle(canvas); }
-		// TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERMAP"));
+		TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERMAP"));
 		delete canvas;
 	}
 
 	if ( isClustersize ) {
 		TCanvas* canvas = TPlotter::initCanvas(mConfig.getConfig("CLUSTERSIZE"));
 		TPlotter::drawPlot(canvas, mClustersize, mConfig.getConfig("CLUSTERSIZE"), "HISTE");
-		// TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERSIZE"));
+		TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("CLUSTERSIZE"));
 		delete canvas;
 	}
 
