@@ -393,6 +393,15 @@ void TPlotter::setGrid(TCanvas* canvas, const CppConfigDictionary& config) {
 	}
 }
 
+void TPlotter::saveFitLegend(TLegend* legend, TF1* fitFunc) {
+	legend->SetMargin(0.05);
+	legend->AddEntry(static_cast<TObject*>(nullptr), fitFunc->GetFormula()->GetExpFormula(), "");
+	legend->AddEntry(static_cast<TObject*>(nullptr), Form("#chi^{2}/NDoF: %.2f", fitFunc->GetChisquare() / fitFunc->GetNDF()), "");
+	for ( int i = 0; i < fitFunc->GetNpar(); i++ ) {
+		legend->AddEntry(static_cast<TObject*>(nullptr), Form("[%d]: %.2f #pm %.2f", i, fitFunc->GetParameter(i), fitFunc->GetParError(i)), "");
+	}
+}
+
 TString TPlotter::getTitle(std::string_view titleStr) {
 	std::string str = std::string(titleStr);
 	int firstSplit = str.find("\" \"");

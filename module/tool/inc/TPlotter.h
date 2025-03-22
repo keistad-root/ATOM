@@ -77,6 +77,7 @@ public:
 	static void setMargin(TCanvas* canvas, const CppConfigDictionary& config);
 	static void setLogScale(TCanvas* canvas, const CppConfigDictionary& config);
 	static void setGrid(TCanvas* canvas, const CppConfigDictionary& config);
+	static void saveFitLegend(TLegend* legend, TF1* fitFunc);
 
 	static void saveLegend(TCanvas* canvas, TLegend* legend);
 	static void saveCanvas(TCanvas* canvas, std::filesystem::path path, const CppConfigDictionary& config);
