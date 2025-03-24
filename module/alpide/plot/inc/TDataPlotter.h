@@ -33,18 +33,24 @@ private:
 	TH1D* mClustersize;
 	std::vector<TH1D*> mClusterSizeOfRegion;
 	std::vector<TH1D*> mClustermapSliceX;
+	std::vector<TH1D*> mHitmapSliceX;
 	std::vector<TH1D*> mClustermapSliceY;
+	std::vector<TH1D*> mHitmapSliceY;
 	TGraphErrors* mClustermapSliceXMean;
 	TGraphErrors* mClustermapSliceXAmplitude;
 	TGraphErrors* mClustermapSliceYMean;
 	TGraphErrors* mClustermapSliceYAmplitude;
+	TGraphErrors* mHitmapSliceXMean;
+	TGraphErrors* mHitmapSliceXAmplitude;
+	TGraphErrors* mHitmapSliceYMean;
+	TGraphErrors* mHitmapSliceYAmplitude;
 
 	std::vector<std::pair<TH2I*, int>> mShapeSet;
 	std::vector<double> mROI = {512, 256};
 	double mROITheta = 0;
 	std::vector<double> mCenter = {512, 256};
 
-	bool isHitmap = false, isClustermap = false, isClustersize = false, isClustersizeRegion = false, isHitmapProjectionX = false, isHitmapProjectionY = false, isClustermapProjectionX = false, isClustermapProjectionY = false, isClustermapSliceX = false, isClustermapSliceY = false;
+	bool isHitmap = false, isClustermap = false, isClustersize = false, isClustersizeRegion = false, isHitmapProjectionX = false, isHitmapProjectionY = false, isClustermapProjectionX = false, isClustermapProjectionY = false, isHitmapSliceX = false, isHitmapSliceY = false, isClustermapSliceX = false, isClustermapSliceY = false;
 public:
 	void openInputFile();
 

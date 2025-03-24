@@ -44,6 +44,8 @@ TDataPlotter::TDataPlotter(const CppConfigFile& config) : mConfig(config) {
 	if ( mConfig.hasConfig("CLUSTERMAP_PROJECTION_Y") ) isClustermapProjectionY = true;
 	if ( mConfig.hasConfig("CLUSTERMAP_SLICE_X") ) isClustermapSliceX = true;
 	if ( mConfig.hasConfig("CLUSTERMAP_SLICE_Y") ) isClustermapSliceY = true;
+	if ( mConfig.hasConfig("HITMAP_SLICE_X") ) isHitmapSliceX = true;
+	if ( mConfig.hasConfig("HITMAP_SLICE_Y") ) isHitmapSliceY = true;
 
 	mCenter = mConfig.getConfig("CONFIG").hasKey("CENTER") ? TPlotter::getDoubleSetFromString(mConfig.getConfig("CONFIG").find("CENTER")) : std::vector<double>{512, 256};
 	mROI = mConfig.getConfig("CONFIG").hasKey("ROI") ? TPlotter::getDoubleSetFromString(mConfig.getConfig("CONFIG").find("ROI")) : std::vector<double>{512, 256};
@@ -88,7 +90,22 @@ void TDataPlotter::InitPlot() {
 		mClusterSizeOfRegion.push_back(new TH1D("R=6mm", "", 100, .5, 100.5));
 		mClusterSizeOfRegion.push_back(new TH1D("R=8mm", "", 100, .5, 100.5));
 	}
-
+	if ( isHitmapSliceX ) {
+		int nPlot = mConfig.getConfig("HITMAP_SLICE_X").getSubConfig("SUB_PLOTS").getSubConfigSet().size();
+		for ( int i = 0; i < nPlot; i++ ) {
+			mHitmapSliceX.push_back(TPlotter::init1DHist(mConfig.getConfig("HITMAP_SLICE_X").getSubConfig("SUB_PLOTS").getSubConfigSet()[i]));
+		}
+		mHitmapSliceXMean = new TGraphErrors();
+		mHitmapSliceXAmplitude = new TGraphErrors();
+	}
+	if ( isHitmapSliceY ) {
+		int nPlot = mConfig.getConfig("HITMAP_SLICE_Y").getSubConfig("SUB_PLOTS").getSubConfigSet().size();
+		for ( int i = 0; i < nPlot; i++ ) {
+			mHitmapSliceY.push_back(TPlotter::init1DHist(mConfig.getConfig("HITMAP_SLICE_Y").getSubConfig("SUB_PLOTS").getSubConfigSet()[i]));
+		}
+		mHitmapSliceYMean = new TGraphErrors();
+		mHitmapSliceYAmplitude = new TGraphErrors();
+	}
 	if ( isClustermapSliceX ) {
 		int nPlot = mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("SUB_PLOTS").getSubConfigSet().size();
 		for ( int i = 0; i < nPlot; i++ ) {
@@ -123,6 +140,24 @@ void TDataPlotter::FillHitInfo() {
 			if ( isHitmap ) { mHitmap->Fill(x, y); }
 			if ( isHitmapProjectionX ) { mHitmapProjectionX->Fill(x); }
 			if ( isHitmapProjectionY ) { mHitmapProjectionY->Fill(y); }
+		}
+		if ( isHitmapSliceX ) {
+			int nPlot = mConfig.getConfig("HITMAP_SLICE_X").getSubConfig("SUB_PLOTS").getSubConfigSet().size();
+			for ( int i = 0; i < nPlot; i++ ) {
+				std::vector<double> range = TPlotter::getDoubleSetFromString(mConfig.getConfig("HITMAP_SLICE_X").getSubConfig("SUB_PLOTS").getSubConfigSet()[i].find("ROW_RANGE"));
+				if ( range[0] < y && y < range[1] ) {
+					mHitmapSliceX[i]->Fill(x);
+				}
+			}
+		}
+		if ( isHitmapSliceY ) {
+			int nPlot = mConfig.getConfig("HITMAP_SLICE_Y").getSubConfig("SUB_PLOTS").getSubConfigSet().size();
+			for ( int i = 0; i < nPlot; i++ ) {
+				std::vector<double> range = TPlotter::getDoubleSetFromString(mConfig.getConfig("HITMAP_SLICE_Y").getSubConfig("SUB_PLOTS").getSubConfigSet()[i].find("COLUMN_RANGE"));
+				if ( range[0] < x && x < range[1] ) {
+					mHitmapSliceY[i]->Fill(y);
+				}
+			}
 		}
 	}
 }
@@ -381,6 +416,110 @@ void TDataPlotter::savePlots() {
 		delete canvas;
 		delete legend;
 	}
+	if ( isHitmapSliceX ) {
+		int nPlot = mConfig.getConfig("HITMAP_SLICE_X").getSubConfig("SUB_PLOTS").getSubConfigSet().size();
+		for ( int i = 0; i < nPlot; i++ ) {
+			CppConfigDictionary plotConfig = mConfig.getConfig("HITMAP_SLICE_X").getSubConfig("SUB_PLOTS").getSubConfigSet()[i];
+
+			TCanvas* canvas = TPlotter::initCanvas(plotConfig);
+			TPlotter::drawPlot(canvas, mHitmapSliceX[i], plotConfig);
+			// mHitmapSliceX[i]->SetBinContent(259, (mHitmapSliceX[i]->GetBinContent(258) + mHitmapSliceX[i]->GetBinContent(260)) / 2);
+			// mHitmapSliceX[i]->SetBinContent(260, (mHitmapSliceX[i]->GetBinContent(259) + mHitmapSliceX[i]->GetBinContent(261)) / 2);
+			TF1* fitFunc = nullptr;
+			TLegend* fitText = nullptr;
+			std::cout << mHitmapSliceX[i]->GetMaximum() << std::endl;
+			if ( plotConfig.hasKey("FIT_FUNC") ) {
+				fitFunc = TPlotter::initFunction(plotConfig);
+				mHitmapSliceX[i]->Fit(fitFunc, "RQ");
+				fitFunc->Draw("SAME");
+
+				fitText = TPlotter::initLegend(plotConfig);
+				TPlotter::saveFitLegend(fitText, fitFunc);
+				fitText->SetBorderSize(0);
+				fitText->SetFillStyle(4000);
+				fitText->Draw();
+				std::vector<double> range = TPlotter::getDoubleSetFromString(plotConfig.find("ROW_RANGE"));
+				mHitmapSliceXMean->SetPoint(i, (range[0] + range[1]) / 2, fitFunc->GetParameter(1));
+				mHitmapSliceXMean->SetPointError(i, (range[0] - range[1]) / 2, fitFunc->GetParError(1));
+				mHitmapSliceXAmplitude->SetPoint(i, (range[0] + range[1]) / 2, fitFunc->GetParameter(0));
+				mHitmapSliceXAmplitude->SetPointError(i, (range[0] - range[1]) / 2, fitFunc->GetParError(0));
+			}
+
+			TPlotter::saveCanvas(canvas, mOutputPath, plotConfig);
+			delete canvas;
+		}
+		if ( mConfig.getConfig("HITMAP_SLICE_X").hasKey("MEAN_PLOT") ) {
+			TCanvas* canvas = TPlotter::initCanvas(mConfig.getConfig("HITMAP_SLICE_X").getSubConfig("MEAN_PLOT"));
+			TPlotter::drawPlot(canvas, mHitmapSliceXMean, mConfig.getConfig("HITMAP_SLICE_X").getSubConfig("MEAN_PLOT"));
+			TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("HITMAP_SLICE_X").getSubConfig("MEAN_PLOT"));
+			delete canvas;
+		}
+		if ( mConfig.getConfig("HITMAP_SLICE_X").hasKey("AMPLITUDE_PLOT") ) {
+			TCanvas* canvas = TPlotter::initCanvas(mConfig.getConfig("HITMAP_SLICE_X").getSubConfig("AMPLITUDE_PLOT"));
+			TPlotter::drawPlot(canvas, mHitmapSliceXAmplitude, mConfig.getConfig("HITMAP_SLICE_X").getSubConfig("AMPLITUDE_PLOT"));
+			TF1* fitFunc = TPlotter::initFunction(mConfig.getConfig("HITMAP_SLICE_X").getSubConfig("AMPLITUDE_PLOT"));
+			mHitmapSliceXAmplitude->Fit(fitFunc, "RQ");
+			fitFunc->Draw("SAME");
+			TLegend* fitText = TPlotter::initLegend(mConfig.getConfig("HITMAP_SLICE_X").getSubConfig("AMPLITUDE_PLOT"));
+			TPlotter::saveFitLegend(fitText, fitFunc);
+			fitText->SetBorderSize(0);
+			fitText->SetFillStyle(4000);
+			fitText->Draw();
+
+			TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("HITMAP_SLICE_X").getSubConfig("AMPLITUDE_PLOT"));
+			delete canvas;
+		}
+	}
+	if ( isHitmapSliceY ) {
+		int nPlot = mConfig.getConfig("HITMAP_SLICE_Y").getSubConfig("SUB_PLOTS").getSubConfigSet().size();
+		for ( int i = 0; i < nPlot; i++ ) {
+			CppConfigDictionary plotConfig = mConfig.getConfig("HITMAP_SLICE_Y").getSubConfig("SUB_PLOTS").getSubConfigSet()[i];
+
+			TCanvas* canvas = TPlotter::initCanvas(plotConfig);
+			TF1* fitFunc = TPlotter::initFunction(plotConfig);
+			TPlotter::drawPlot(canvas, mHitmapSliceY[i], plotConfig);
+			mHitmapSliceY[i]->Fit(fitFunc, "RQ");
+			fitFunc->Draw("SAME");
+
+			TLegend* fitText = TPlotter::initLegend(plotConfig);
+			fitText->SetBorderSize(0);
+			TPlotter::saveFitLegend(fitText, fitFunc);
+			fitText->SetFillStyle(4000);
+			fitText->Draw();
+
+			std::vector<double>range = TPlotter::getDoubleSetFromString(plotConfig.find("COLUMN_RANGE"));
+			mHitmapSliceYMean->SetPoint(i, (range[0] + range[1]) / 2, fitFunc->GetParameter(1));
+			mHitmapSliceYMean->SetPointError(i, (range[0] - range[1]) / 2, fitFunc->GetParError(1));
+			mHitmapSliceYAmplitude->SetPoint(i, (range[0] + range[1]) / 2, fitFunc->GetParameter(0));
+			mHitmapSliceYAmplitude->SetPointError(i, (range[0] - range[1]) / 2, fitFunc->GetParError(0));
+
+			TPlotter::saveCanvas(canvas, mOutputPath, plotConfig);
+			delete canvas;
+			delete fitFunc;
+		}
+		if ( mConfig.getConfig("HITMAP_SLICE_Y").hasKey("MEAN_PLOT") ) {
+			TCanvas* canvas = TPlotter::initCanvas(mConfig.getConfig("HITMAP_SLICE_Y").getSubConfig("MEAN_PLOT"));
+			TPlotter::drawPlot(canvas, mHitmapSliceYMean, mConfig.getConfig("HITMAP_SLICE_Y").getSubConfig("MEAN_PLOT"));
+			TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("HITMAP_SLICE_Y").getSubConfig("MEAN_PLOT"));
+			delete canvas;
+		}
+		if ( mConfig.getConfig("HITMAP_SLICE_Y").hasKey("AMPLITUDE_PLOT") ) {
+			TCanvas* canvas = TPlotter::initCanvas(mConfig.getConfig("HITMAP_SLICE_Y").getSubConfig("AMPLITUDE_PLOT"));
+			TPlotter::drawPlot(canvas, mHitmapSliceYAmplitude, mConfig.getConfig("HITMAP_SLICE_Y").getSubConfig("AMPLITUDE_PLOT"));
+			TF1* fitFunc = TPlotter::initFunction(mConfig.getConfig("HITMAP_SLICE_Y").getSubConfig("AMPLITUDE_PLOT"));
+			mHitmapSliceYAmplitude->Fit(fitFunc, "RQ");
+			fitFunc->Draw("SAME");
+			TLegend* fitText = TPlotter::initLegend(mConfig.getConfig("HITMAP_SLICE_Y").getSubConfig("AMPLITUDE_PLOT"));
+			TPlotter::saveFitLegend(fitText, fitFunc);
+			fitText->SetBorderSize(0);
+			fitText->SetFillStyle(4000);
+			fitText->Draw();
+
+			TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("HITMAP_SLICE_Y").getSubConfig("AMPLITUDE_PLOT"));
+			delete canvas;
+		}
+	}
+
 	if ( isClustermapSliceX ) {
 		int nPlot = mConfig.getConfig("CLUSTERMAP_SLICE_X").getSubConfig("SUB_PLOTS").getSubConfigSet().size();
 		for ( int i = 0; i < nPlot; i++ ) {
