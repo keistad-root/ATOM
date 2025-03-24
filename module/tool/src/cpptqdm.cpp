@@ -38,6 +38,7 @@ int ProgressBar::getSecond(int num) {
 
 void ProgressBar::runProgress() {
 	while ( isRunning ) {
+		getTerminalLength();
 		std::chrono::system_clock::time_point now = std::chrono::system_clock::now();
 		double percent = static_cast<double>(called) / mSetSize * 100;
 		double duration = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now() - start_time).count();

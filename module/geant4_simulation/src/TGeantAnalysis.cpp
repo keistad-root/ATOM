@@ -92,9 +92,12 @@ void TGeantAnalysis::readPrimaryTree() {
 		Double_t theta = TMath::ACos(mPrimaryTuple.momentum[2] / momentum) * 180. / TMath::Pi();
 		Double_t phi = TMath::ATan2(mPrimaryTuple.momentum[1], mPrimaryTuple.momentum[0]) * 180. / TMath::Pi();
 
+		Double_t multiple = 1.;
+
 		m2DHistograms["SRC_XY"]->Fill(mPrimaryTuple.position[0], mPrimaryTuple.position[1]);
 		m1DHistograms["SRC_Z"]->Fill(mPrimaryTuple.position[2]);
-		m1DHistograms["SRC_KE"]->Fill(mPrimaryTuple.kineticEnergy);
+		multiple = mConfig.getConfig("SRC_KE").hasKey("MULTIPLE") ? stod(mConfig.getConfig("SRC_KE").find("MULTIPLE")) : 1.;
+		m1DHistograms["SRC_KE"]->Fill(mPrimaryTuple.kineticEnergy * multiple);
 		m1DHistograms["SRC_THETA"]->Fill(180 - theta);
 		m1DHistograms["SRC_PHI"]->Fill(phi);
 	}

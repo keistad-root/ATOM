@@ -11,8 +11,8 @@
 #include "TString.h"
 #include "TStyle.h"
 
-std::vector<std::string> volumePlot = {"IncidentVolume", "AlphaIncidentVolume", "ElectronIncidentVolume", "ElectronFinalVolume", "SecondaryInALPIDEVolume", "SecondaryInALPIDEDecayVolume", "SecondaryInitVolume", "SecondaryFinalVolume", "GammaIncidentVolume"};
-std::vector<std::string> particleNamePlot = {"IncidentParticle", "SecondaryParticleInALPIDE", "SecondaryParticle", "SecondaryMotherParticleInALPIDE", "MotherDoughterCorrelationInALPIDE"};
+std::vector<std::string> volumePlot = {"IN_VOL", "AlphaIncidentVolume", "ElectronIncidentVolume", "ElectronFinalVolume", "SecondaryInALPIDEVolume", "SecondaryInALPIDEDecayVolume", "SecondaryInitVolume", "SecondaryFinalVolume", "GammaIncidentVolume"};
+std::vector<std::string> particleNamePlot = {"IN_PA", "SE_PA_IN_ALPIDE", "SecondaryParticle", "SecondaryMotherParticleInALPIDE", "MotherDoughterCorrelationInALPIDE"};
 
 void TGeantPlot::readInputFile(std::filesystem::path inputFilePath) {
 	TString inputFileName = std::string(inputFilePath);
