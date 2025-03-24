@@ -63,7 +63,7 @@ int main(int argc, char** argv) {
 	std::filesystem::path savePath = std::filesystem::path(config.getConfig("FILE").find("OUTPUT_DIRECTORY"));
 	TCanvas* canvas = TPlotter::initCanvas(config.getConfig("SINGLE_CLUSTER"));
 	TLegend* legend = TPlotter::initLegend(config.getConfig("SINGLE_CLUSTER"));
-	TPlotter::drawPlot(canvas, expGraphSet[1], config.getConfig("SINGLE_CLUSTER").getSubConfig("EXPERIMENT"), "AP");
+	TPlotter::drawPlot(canvas, expGraphSet[1], config.getConfig("SINGLE_CLUSTER").getSubConfig("EXPERIMENT"));
 	legend->AddEntry(expGraphSet[1], "Experiment", "PLE");
 	TPlotter::saveLegend(canvas, legend);
 	TPlotter::saveCanvas(canvas, savePath, config.getConfig("SINGLE_CLUSTER"));

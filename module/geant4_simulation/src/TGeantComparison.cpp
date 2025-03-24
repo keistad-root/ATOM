@@ -54,7 +54,7 @@ void TGeantComparison::getComparedPlot(const std::string& configName) {
 	slopeText->SetTextSize(1. / 16);
 
 	TCanvas* canvas = new TCanvas();
-	TPlotter::drawPlot(canvas, graph, mConfig.getConfig(configName), " ");
+	TPlotter::drawPlot(canvas, graph, mConfig.getConfig(configName));
 	fitFunc->Draw("same");
 	slopeText->Draw();
 	TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig(configName));
@@ -99,7 +99,7 @@ void TGeantComparison::getPlotNormalized() {
 	}
 
 	TCanvas* canvas = new TCanvas();
-	TPlotter::drawPlot(canvas, graph, mConfig.getConfig("NormalizedPlot"), " ");
+	TPlotter::drawPlot(canvas, graph, mConfig.getConfig("NormalizedPlot"));
 	TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("NormalizedPlot"));
 }
 
@@ -121,6 +121,6 @@ void TGeantComparison::getDividePlot() {
 	}
 
 	TCanvas* canvas = new TCanvas();
-	TPlotter::drawPlot(canvas, resultHist, mConfig.getConfig("EpitaxialRatio"), " ");
+	TPlotter::drawPlot(canvas, resultHist, mConfig.getConfig("EpitaxialRatio"));
 	TPlotter::saveCanvas(canvas, mOutputPath, mConfig.getConfig("EpitaxialRatio"));
 }

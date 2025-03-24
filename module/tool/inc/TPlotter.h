@@ -59,11 +59,11 @@ public:
 	static void setMarkerSize(TGraphErrors* plot, const CppConfigDictionary& config);
 	static void setMarkerColour(TGraphErrors* plot, const CppConfigDictionary& config);
 
-	static void drawPlot(TCanvas* canvas, TH1* plot, const CppConfigDictionary& config, TString drawType);
-	static void drawPlot(TCanvas* canvas, TH2* plot, const CppConfigDictionary& config, TString drawType);
-	static void drawPlot(TCanvas* canvas, TGraph* plot, const CppConfigDictionary& config, TString drawType);
-	static void drawPlot(TCanvas* canvas, TGraphErrors* plot, const CppConfigDictionary& config, TString drawType);
-	static void drawPlot(TCanvas* canvas, TMultiGraph* plot, const CppConfigDictionary& config, TString drawType);
+	static void drawPlot(TCanvas* canvas, TH1* plot, const CppConfigDictionary& config);
+	static void drawPlot(TCanvas* canvas, TH2* plot, const CppConfigDictionary& config);
+	static void drawPlot(TCanvas* canvas, TGraph* plot, const CppConfigDictionary& config);
+	static void drawPlot(TCanvas* canvas, TGraphErrors* plot, const CppConfigDictionary& config);
+	static void drawPlot(TCanvas* canvas, TMultiGraph* plot, const CppConfigDictionary& config);
 
 	static void setCanvasAttribute(TCanvas* canvas, const CppConfigDictionary& config);
 	static void setTitle(TH1* plot, const CppConfigDictionary& config);

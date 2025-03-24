@@ -149,10 +149,10 @@ TCanvas* getRatioGraph(const std::string& eutTag, const std::string& refTag, con
 	TCanvas* canvas = TPlotter::initCanvas(config);
 	TLegend* legend = TPlotter::initLegend(config);
 	legend->AddEntry(expGraph, "Experiment", "PE");
-	TPlotter::drawPlot(canvas, expGraph, config.getSubConfig("EXPERIMENT"), "AP");
+	TPlotter::drawPlot(canvas, expGraph, config.getSubConfig("EXPERIMENT"));
 	if ( sim ) {
 		legend->AddEntry(simGraph, "Simulation", "PE");
-		TPlotter::drawPlot(canvas, simGraph, config.getSubConfig("SIMULATION"), "P SAME");
+		TPlotter::drawPlot(canvas, simGraph, config.getSubConfig("SIMULATION"));
 	}
 	expGraph->GetXaxis()->SetLabelOffset(999);
 	expGraph->GetXaxis()->SetTickLength(0);
@@ -176,10 +176,10 @@ TCanvas* getOriginGraph(const std::string& eutTag, const CppConfigDictionary& co
 	TCanvas* canvas = TPlotter::initCanvas(config);
 	TLegend* legend = TPlotter::initLegend(config);
 	legend->AddEntry(expGraph, "Experiment", "PE");
-	TPlotter::drawPlot(canvas, expGraph, config.getSubConfig("EXPERIMENT"), "AP");
+	TPlotter::drawPlot(canvas, expGraph, config.getSubConfig("EXPERIMENT"));
 	if ( sim ) {
 		legend->AddEntry(simGraph, "Simulation", "PE");
-		TPlotter::drawPlot(canvas, simGraph, config.getSubConfig("SIMULATION"), "P SAME");
+		TPlotter::drawPlot(canvas, simGraph, config.getSubConfig("SIMULATION"));
 	}
 
 	expGraph->GetXaxis()->SetLabelOffset(999);

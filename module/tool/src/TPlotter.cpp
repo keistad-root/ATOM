@@ -232,33 +232,38 @@ void TPlotter::setMarkerColour(TGraphErrors* plot, const CppConfigDictionary& co
 	}
 }
 
-void TPlotter::drawPlot(TCanvas* canvas, TH1* plot, const CppConfigDictionary& config, TString drawType) {
+void TPlotter::drawPlot(TCanvas* canvas, TH1* plot, const CppConfigDictionary& config) {
 	canvas->cd();
 	setAttribute(plot, config);
-	plot->Draw(drawType);
+	TString drawOption = config.hasKey("DRAW_OPTION") ? config.find("DRAW_OPTION") : "HISTE";
+	plot->Draw(drawOption);
 }
 
-void TPlotter::drawPlot(TCanvas* canvas, TH2* plot, const CppConfigDictionary& config, TString drawType) {
+void TPlotter::drawPlot(TCanvas* canvas, TH2* plot, const CppConfigDictionary& config) {
 	canvas->cd();
 	setAttribute(plot, config);
-	plot->Draw(drawType);
+	TString drawOption = config.hasKey("DRAW_OPTION") ? config.find("DRAW_OPTION") : "COLZ0";
+	plot->Draw(drawOption);
 }
 
-void TPlotter::drawPlot(TCanvas* canvas, TGraph* plot, const CppConfigDictionary& config, TString drawType) {
+void TPlotter::drawPlot(TCanvas* canvas, TGraph* plot, const CppConfigDictionary& config) {
 	canvas->cd();
 	setAttribute(plot, config);
-	plot->Draw(drawType);
+	TString drawOption = config.hasKey("DRAW_OPTION") ? config.find("DRAW_OPTION") : "APL";
+	plot->Draw(drawOption);
 }
 
-void TPlotter::drawPlot(TCanvas* canvas, TGraphErrors* plot, const CppConfigDictionary& config, TString drawType) {
+void TPlotter::drawPlot(TCanvas* canvas, TGraphErrors* plot, const CppConfigDictionary& config) {
 	canvas->cd();
 	setAttribute(plot, config);
-	plot->Draw(drawType);
+	TString drawOption = config.hasKey("DRAW_OPTION") ? config.find("DRAW_OPTION") : "APLE";
+	plot->Draw(drawOption);
 }
 
-void TPlotter::drawPlot(TCanvas* canvas, TMultiGraph* plot, const CppConfigDictionary& config, TString drawType) {
+void TPlotter::drawPlot(TCanvas* canvas, TMultiGraph* plot, const CppConfigDictionary& config) {
 	canvas->cd();
-	plot->Draw(drawType);
+	TString drawOption = config.hasKey("DRAW_OPTION") ? config.find("DRAW_OPTION") : "APLE";
+	plot->Draw(drawOption);
 }
 
 void TPlotter::setCanvasAttribute(TCanvas* canvas, const CppConfigDictionary& config) {

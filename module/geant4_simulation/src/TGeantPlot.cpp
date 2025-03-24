@@ -48,7 +48,7 @@ void TGeantPlot::saveHistorams(const std::vector<CppConfigDictionary>& configLis
 			if ( key == config.getConfigName() ) {
 				TCanvas* canvas = TPlotter::initCanvas(config);
 				TLegend* legend = TPlotter::initLegend(config);
-				TPlotter::drawPlot(canvas, hist, config, "HIST");
+				TPlotter::drawPlot(canvas, hist, config);
 				hist->SetEntries(hist->GetEffectiveEntries());
 				legend->AddEntry(hist, Form("Entries: %.1f", hist->GetEffectiveEntries()), "");
 				legend->AddEntry(hist, Form("Mean: %.3f", hist->GetMean()), "");
@@ -75,7 +75,7 @@ void TGeantPlot::saveHistorams(const std::vector<CppConfigDictionary>& configLis
 			if ( key == config.getConfigName() ) {
 				TCanvas* canvas = TPlotter::initCanvas(config);
 				TLegend* legend = TPlotter::initLegend(config);
-				TPlotter::drawPlot(canvas, hist, config, "COLZ");
+				TPlotter::drawPlot(canvas, hist, config);
 				legend->AddEntry(hist, Form("Entries: %.1f", hist->GetEffectiveEntries()), "");
 				legend->AddEntry(hist, Form("Mean x: %.3f", hist->GetMean(1)), "");
 				legend->AddEntry(hist, Form("Mean y: %.3f", hist->GetMean(2)), "");

@@ -87,7 +87,7 @@ void TCompareClustersize::drawClustersize() {
 	TCanvas* canvas = TPlotter::initCanvas(mConfig.getConfig("CLUSTERSIZE"));
 	TLegend* legend = TPlotter::initLegend(mConfig.getConfig("CLUSTERSIZE"));
 	for ( auto& plot : mClusterInfo ) {
-		TPlotter::drawPlot(canvas, plot.getClusterSizeHistogram(), plot.getConfig(), "SAME HISTE");
+		TPlotter::drawPlot(canvas, plot.getClusterSizeHistogram(), plot.getConfig());
 		legend->AddEntry(plot.getClusterSizeHistogram(), static_cast<TString>(plot.getConfig().find("LEGEND")));
 
 		double entry = 0.;
