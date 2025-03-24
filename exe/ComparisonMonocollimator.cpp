@@ -200,8 +200,7 @@ CppConfigFile setEnvironment(const ArgumentParser& parser) {
 	CppConfigFile config = CppConfigFile(configPath);
 
 	std::string eutTag = parser.get_value<std::string>("EUT");
-	std::string collimatorName = eutTag.find("REF") ? eutTag : eutTag.substr(0, eutTag.find("F")) + "\#phi" + eutTag.substr(eutTag.find("F") + 1, eutTag.size() - eutTag.find("F") - 1);
-
+	std::string collimatorName = eutTag.find("REF") != std::string::npos ? eutTag : eutTag.substr(0, eutTag.find("F")) + "\#phi" + eutTag.substr(eutTag.find("F") + 1, eutTag.size() - eutTag.find("F") - 1);
 	config.modifyConfig("RATIO").addDictionary("NAME", config.modifyConfig("RATIO").find("NAME") + "_" + eutTag);
 	config.modifyConfig("RATIO").addDictionary("TITLE", "\"" + collimatorName + " Collimator\" \"\" \"Ratio to Reference\"");
 	config.modifyConfig("ORIGIN").addDictionary("NAME", config.modifyConfig("ORIGIN").find("NAME") + "_" + eutTag);
