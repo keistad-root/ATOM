@@ -41,6 +41,7 @@ private:
 
 	std::vector<std::pair<TH2I*, int>> mShapeSet;
 	std::vector<double> mROI = {512, 256};
+	double mROITheta = 0;
 	std::vector<double> mCenter = {512, 256};
 
 	bool isHitmap = false, isClustermap = false, isClustersize = false, isClustersizeRegion = false, isHitmapProjectionX = false, isHitmapProjectionY = false, isClustermapProjectionX = false, isClustermapProjectionY = false, isClustermapSliceX = false, isClustermapSliceY = false;
@@ -56,6 +57,8 @@ public:
 	void saveTop10Shape();
 	void saveClusterSizeWithTime();
 	void savePlots();
+
+	bool isInsideRegion(const double x, const double y);
 
 	std::array<int, 60> getEntry();
 private:

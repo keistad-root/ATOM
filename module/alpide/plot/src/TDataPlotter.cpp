@@ -23,6 +23,7 @@
 #include "TClusterShape.h"
 
 #include<unistd.h>
+#include<utility>
 
 const int ALPIDECOLUMN = 1024;
 const int ALPIDEROW = 512;
@@ -46,6 +47,7 @@ TDataPlotter::TDataPlotter(const CppConfigFile& config) : mConfig(config) {
 
 	mCenter = mConfig.getConfig("CONFIG").hasKey("CENTER") ? TPlotter::getDoubleSetFromString(mConfig.getConfig("CONFIG").find("CENTER")) : std::vector<double>{512, 256};
 	mROI = mConfig.getConfig("CONFIG").hasKey("ROI") ? TPlotter::getDoubleSetFromString(mConfig.getConfig("CONFIG").find("ROI")) : std::vector<double>{512, 256};
+	mROITheta = mConfig.getConfig("CONFIG").hasKey("ROI_THETA") ? std::tan(stod(mConfig.getConfig("CONFIG").find("ROI_THETA")) * TMath::Pi() / 180) : 0;
 }
 
 TDataPlotter::~TDataPlotter() {
@@ -117,11 +119,42 @@ void TDataPlotter::FillHitInfo() {
 	Int_t nHit = hitTree->GetEntries();
 	for ( int iHit = 0; iHit < nHit; iHit++ ) {
 		hitTree->GetEntry(iHit);
-		if ( std::abs(x - mCenter[0]) < mROI[0] && std::abs(y - mCenter[1]) < mROI[1] ) {
+		if ( isInsideRegion(x - mCenter[0], y - mCenter[1]) ) {
 			if ( isHitmap ) { mHitmap->Fill(x, y); }
 			if ( isHitmapProjectionX ) { mHitmapProjectionX->Fill(x); }
 			if ( isHitmapProjectionY ) { mHitmapProjectionY->Fill(y); }
 		}
+	}
+}
+
+bool TDataPlotter::isInsideRegion(const double x, const double y) {
+	double cosTheta = 1 / std::sqrt(1 + std::pow(mROITheta, 2));
+	double sinTheta = mROITheta / std::sqrt(1 + std::pow(mROITheta, 2));
+
+	std::pair<double, double> p1 = {-mROI[0] * cosTheta - mROI[1] * sinTheta, -mROI[0] * sinTheta + mROI[1] * cosTheta};
+	std::pair<double, double> p2 = {mROI[0] * cosTheta - mROI[1] * sinTheta, mROI[0] * sinTheta + mROI[1] * cosTheta};
+	std::pair<double, double> p3 = {mROI[0] * cosTheta + mROI[1] * sinTheta, mROI[0] * sinTheta - mROI[1] * cosTheta};
+	std::pair<double, double> p4 = {-mROI[0] * cosTheta + mROI[1] * sinTheta, -mROI[0] * sinTheta - mROI[1] * cosTheta};
+
+	std::pair<double, double> v1 = {p2.first - p1.first, p2.second - p1.second};
+	std::pair<double, double> v2 = {p3.first - p2.first, p3.second - p2.second};
+	std::pair<double, double> v3 = {p4.first - p3.first, p4.second - p3.second};
+	std::pair<double, double> v4 = {p1.first - p4.first, p1.second - p4.second};
+
+	std::pair<double, double> vp1 = {x - p1.first, y - p1.second};
+	std::pair<double, double> vp2 = {x - p2.first, y - p2.second};
+	std::pair<double, double> vp3 = {x - p3.first, y - p3.second};
+	std::pair<double, double> vp4 = {x - p4.first, y - p4.second};
+
+	double cross1 = v1.first * vp1.second - v1.second * vp1.first;
+	double cross2 = v2.first * vp2.second - v2.second * vp2.first;
+	double cross3 = v3.first * vp3.second - v3.second * vp3.first;
+	double cross4 = v4.first * vp4.second - v4.second * vp4.first;
+
+	if ( cross1 > 0 && cross2 > 0 && cross3 > 0 && cross4 > 0 ) {
+		return true;
+	} else if ( cross1 < 0 && cross2 < 0 && cross3 < 0 && cross4 < 0 ) { return true; } else {
+		return false;
 	}
 }
 
@@ -139,7 +172,7 @@ void TDataPlotter::FillClusterInfo() {
 	Int_t nCluster = clusterTree->GetEntries();
 	for ( int iCluster = 0; iCluster < nCluster; iCluster++ ) {
 		clusterTree->GetEntry(iCluster);
-		if ( std::abs(x - mCenter[0]) < mROI[0] && std::abs(y - mCenter[1]) < mROI[1] ) {
+		if ( isInsideRegion(x - mCenter[0], y - mCenter[1]) ) {
 			if ( isClustermap ) { mClustermap->Fill(x, y); }
 			if ( isClustersize ) { mClustersize->Fill(size); }
 			if ( isClustermapProjectionX ) mClustermapProjectionX->Fill(x);

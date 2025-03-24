@@ -69,10 +69,10 @@ void addEntry2CSV(const std::string tag, const std::array<int, 60> entry) {
 		file << tag << ", " << infoLength << ", " << infoPhi << ", " << COLLIMATOR_LENGTH << ", " << COLLIMATOR_AREA << ", " << minute << ",";
 		file << entry[0] * 10. / minute << ", ";
 		file << std::sqrt(entry[0]) * 10. / minute << ", ";
-		file << std::accumulate(entry.begin() + 1, entry.begin() + 33, 0) * 10. / minute << ", ";
-		file << std::sqrt(std::accumulate(entry.begin() + 1, entry.begin() + 33, 0)) * 10. / minute << ", ";
-		file << std::accumulate(entry.begin() + 33, entry.end(), 0) * 10. / minute << ", ";
-		file << std::sqrt(std::accumulate(entry.begin() + 33, entry.end(), 0)) * 10. / minute;
+		file << std::accumulate(entry.begin() + 3, entry.begin() + 33, 0) * 10. / minute << ", ";
+		file << std::sqrt(std::accumulate(entry.begin() + 3, entry.begin() + 33, 0)) * 10. / minute << ", ";
+		file << std::accumulate(entry.begin() + 32, entry.end(), 0) * 10. / minute << ", ";
+		file << std::sqrt(std::accumulate(entry.begin() + 32, entry.end(), 0)) * 10. / minute;
 		file << std::endl;
 		file.close();
 	}
