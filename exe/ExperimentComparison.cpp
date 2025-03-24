@@ -2,10 +2,11 @@
 #include "TCompareClustersize.h"
 
 #include "cppargs.h"
+#include "config.h"
 
-const std::string cfgPath = "/home/ychoi/ATOM/build/config/EXPERIMENT_COMPARISON.conf";
-const std::string csvPath = "/home/ychoi/ATOM/build/config/EXPERIMENT_COMPARISON.csv";
-const std::string listCsvPath = "/home/ychoi/ATOM/build/config/PLOT_LIST.csv";
+const std::string cfgPath = CONFIG_DIR"/EXPERIMENT_COMPARISON.conf";
+const std::string csvPath = CONFIG_DIR"/EXPERIMENT_COMPARISON.csv";
+const std::string listCsvPath = CONFIG_DIR"/PLOT_LIST.csv";
 
 CppConfigFile setEnvironment(const ArgumentParser& parser) {
 	const std::string tag = parser.get_value<std::string>("TAG");
