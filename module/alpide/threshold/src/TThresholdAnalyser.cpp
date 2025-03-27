@@ -40,10 +40,10 @@ void TThresholdAnalyser::getThreshold() {
 	}
 	mFile.clear();
 	mFile.seekg(originalPos);
-	ProgressBar bar(numLines + 1);
+	ProgressBar* pbar = new ProgressBar(numLines + 1);
 
 	while ( mFile ) {
-		bar.printProgress();
+		pbar->countUp();
 		getline(mFile, line);
 		std::stringstream values(line);
 		int maskStage, pixelInRegion, iDac, dac;
@@ -56,6 +56,7 @@ void TThresholdAnalyser::getThreshold() {
 			mThresholds.push_back(temp);
 		}
 	}
+	delete pbar;
 }
 
 void TThresholdAnalyser::setConfig() {
@@ -100,6 +101,7 @@ void TThresholdAnalyser::saveThresholdData() {
 			x = thr->getX();
 			y = thr->getY();
 			threshold = thr->getThreshold();
+			std::cout << threshold << std::endl;
 			noise = thr->getError();
 			qualityFactor = thr->getQualityFactor();
 			thresholdTree->Fill();
