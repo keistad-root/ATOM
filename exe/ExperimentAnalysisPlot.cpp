@@ -8,9 +8,9 @@
 
 #include "TDataPlotter.h"
 
-const std::string configPath = std::filesystem::path(SOURCE_DIR) / "build/config/ANALYSIS_PLOT.conf";
-const std::string csvPath = std::filesystem::path(SOURCE_DIR) / "build/config/EXPERIMENT_INFORMATION.csv";
-const std::string dataPath = std::filesystem::path(SOURCE_DIR) / "build/Data/EXPERIMENT.csv";
+const std::string configPath = CONFIG_DIR"/ANALYSIS_PLOT.conf";
+const std::string csvPath = CONFIG_DIR"/EXPERIMENT_INFORMATION.csv";
+const std::string dataPath = SOURCE_DIR"/build/Data/EXPERIMENT.csv";
 
 ArgumentParser set_parse(int argc, char** argv) {
 	ArgumentParser parser = ArgumentParser(argc, argv).setDescription("Drawing experiment plots");
