@@ -9,8 +9,8 @@ output_file.write('Number, RawPath, ConfigPath, DataPath, OutputPath, GraphPath\
 
 raw_path = '/mnt/raw/cluster_size/threshold/'
 config_path = '/mnt/raw/cluster_size/threshold/'
-data_path = '/mnt/homes/ychoi/entry_test/raw/'
-proprecessed_path = '/mnt/homes/ychoi/entry_test/threshold_plot/'
+data_path = '/mnt/homes/ychoi/CLUSTER_SIZE/THRESHOLD/ANALYSIS/'
+proprecessed_path = '/mnt/homes/ychoi/CLUSTER_SIZE/THRESHOLD/PLOT/'
 graph_path = '/mnt/homes/ychoi/entry_test/threshold/'
 
 
