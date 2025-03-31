@@ -65,9 +65,9 @@ TH1D* TClusterInfo::setClusterSizeHistogram(std::string_view name) {
 			Int_t nCluster = tree->GetEntries();
 			for ( int iCluster = 0; iCluster < nCluster; iCluster++ ) {
 				tree->GetEntry(iCluster);
-				if ( center[0] - 10 < x && x < center[0] + 10 && center[1] - 150 < y && y < center[1] + 150 ) {
-					hist->Fill(size);
-				}
+				// if ( center[0] - 10 < x && x < center[0] + 10 && center[1] - 150 < y && y < center[1] + 150 ) {
+				hist->Fill(size);
+				// }
 			}
 			delete tree;
 			delete file;
