@@ -29,12 +29,14 @@ TClusterInfo::TClusterInfo(std::string_view tag, const CppConfigDictionary& conf
 		TH1D* hist2 = setClusterSizeHistogram(histName2);
 		mClusterSizeHistogram->Add(hist2, -1);
 		if ( mConfig.hasKey("RATIO") ) {
+			std::cout << "RATIO: " << mConfig.find("RATIO") << std::endl;
 			mClusterSizeHistogram->Scale(stod(mConfig.find("RATIO")));
 		}
 	} else {
 		std::string histName = histStr;
 		mClusterSizeHistogram = setClusterSizeHistogram(histName);
 		if ( mConfig.hasKey("RATIO") ) {
+			std::cout << "RATIO: " << mConfig.find("RATIO") << std::endl;
 			mClusterSizeHistogram->Scale(stod(mConfig.find("RATIO")));
 		}
 	}
@@ -63,9 +65,9 @@ TH1D* TClusterInfo::setClusterSizeHistogram(std::string_view name) {
 			Int_t nCluster = tree->GetEntries();
 			for ( int iCluster = 0; iCluster < nCluster; iCluster++ ) {
 				tree->GetEntry(iCluster);
-				if ( center[0] - 150 < x && x < center[0] + 150 && center[1] - 10 < y && y < center[1] + 10 ) {
-					hist->Fill(size);
-				}
+				// if ( center[0] - 150 < x && x < center[0] + 150 && center[1] - 10 < y && y < center[1] + 10 ) {
+				hist->Fill(size);
+				// }
 			}
 			delete tree;
 			delete file;

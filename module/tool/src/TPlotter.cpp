@@ -235,7 +235,7 @@ void TPlotter::setMarkerColour(TGraphErrors* plot, const CppConfigDictionary& co
 void TPlotter::drawPlot(TCanvas* canvas, TH1* plot, const CppConfigDictionary& config) {
 	canvas->cd();
 	setAttribute(plot, config);
-	TString drawOption = config.hasKey("DRAW_OPTION") ? config.find("DRAW_OPTION") : "HISTE";
+	TString drawOption = config.hasKey("DRAW_OPTION") ? config.find("DRAW_OPTION") : "HISTE SAME";
 	plot->Draw(drawOption);
 }
 

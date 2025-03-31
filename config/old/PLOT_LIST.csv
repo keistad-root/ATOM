@@ -36,10 +36,12 @@ L7F3A, L7F3X - L7F3O, L7 #phi3 #alpha, 0.16393
 L7F4A, L7F4X - L7F4O, L7 #phi4 #alpha, 0.45455
 L7REFA, L7REFX - L7REFO, L7REF #alpha, 1
 L20F2X, L20F2X, L20 #phi2 #alpha+#gamma, 0.00662
+L20F2X_OLD, L20F2X_OLD, L20 #phi2 #alpha+#gamma Old, 0.00278
 L20F3X, L20F3X, L20 #phi3 #alpha+#gamma, 0.13158
 L20F4X, L20F4X, L20 #phi4 #alpha+#gamma, 0.36842
 L20REFX, L20REFX, L20REF #alpha+#gamma, 1
 L20F2O, L20F2O, L20 #phi2 #gamma, 0.00662
+L20F2O_OLD, L20F2O_OLD, L20 #phi2 #gamma Old, 0.00278
 L20F3O, L20F3O, L20 #phi3 #gamma, 0.13158
 L20F4O, L20F4O, L20 #phi4 #gamma, 0.36842
 L20REFO, L20REFO, L20REF #gamma, 1
