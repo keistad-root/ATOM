@@ -453,9 +453,12 @@ void TPlotter::saveCanvas(TCanvas* canvas, std::filesystem::path path, const Cpp
 	date << std::setw(2) << std::setfill('0') << pnow->tm_sec;
 	name += "_" + date.str();
 
-	std::filesystem::path savePath = (path / name).replace_extension(extension);
-	std::filesystem::create_directories(savePath.parent_path());
-	canvas->SaveAs(static_cast<TString>(savePath));
+	if ( config.hasKey("DRAW_OPTION") && config.find("DRAW_OPTION") == "NO_DRAWING" ) {
+	} else {
+		std::filesystem::path savePath = (path / name).replace_extension(extension);
+		std::filesystem::create_directories(savePath.parent_path());
+		canvas->SaveAs(static_cast<TString>(savePath));
+	}
 }
 
 const std::vector<int> TPlotter::getIntegerSetFromString(const std::string& numStr) {
