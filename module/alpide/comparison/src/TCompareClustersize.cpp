@@ -15,6 +15,7 @@
 #include "CppConfigFile.h"
 #include "config.h"
 #include "TStyle.h"
+#include "TMath.h"
 
 #include<csv.h>
 
@@ -29,14 +30,12 @@ TClusterInfo::TClusterInfo(std::string_view tag, const CppConfigDictionary& conf
 		TH1D* hist2 = setClusterSizeHistogram(histName2);
 		mClusterSizeHistogram->Add(hist2, -1);
 		if ( mConfig.hasKey("RATIO") ) {
-			std::cout << "RATIO: " << mConfig.find("RATIO") << std::endl;
 			mClusterSizeHistogram->Scale(stod(mConfig.find("RATIO")));
 		}
 	} else {
 		std::string histName = histStr;
 		mClusterSizeHistogram = setClusterSizeHistogram(histName);
 		if ( mConfig.hasKey("RATIO") ) {
-			std::cout << "RATIO: " << mConfig.find("RATIO") << std::endl;
 			mClusterSizeHistogram->Scale(stod(mConfig.find("RATIO")));
 		}
 	}
@@ -46,8 +45,9 @@ TClusterInfo::TClusterInfo(std::string_view tag, const CppConfigDictionary& conf
 TClusterInfo::~TClusterInfo() { }
 
 bool TClusterInfo::isInsideRegion(const std::vector<double>& roi, double roiTheta, double x, double y) {
-	double cosTheta = 1 / std::sqrt(1 + std::pow(roiTheta, 2));
-	double sinTheta = roiTheta / std::sqrt(1 + std::pow(roiTheta, 2));
+
+	double cosTheta = std::cos(roiTheta);
+	double sinTheta = std::sin(roiTheta);
 
 	std::pair<double, double> p1 = {-roi[0] * cosTheta - roi[1] * sinTheta, -roi[0] * sinTheta + roi[1] * cosTheta};
 	std::pair<double, double> p2 = {roi[0] * cosTheta - roi[1] * sinTheta, roi[0] * sinTheta + roi[1] * cosTheta};
@@ -87,7 +87,7 @@ TH1D* TClusterInfo::setClusterSizeHistogram(std::string_view name) {
 			std::vector<double> center = TPlotter::getDoubleSetFromString(centerStr);
 
 			std::vector<double> roi = TPlotter::getDoubleSetFromString(roiStr);
-			double roiTheta = stod(roiThetaStr);
+			double roiTheta = stod(roiThetaStr) * TMath::Pi() / 180;
 			TFile* file = new TFile(static_cast<TString>(maskedFile), "READ");
 			TTree* tree = static_cast<TTree*>(file->Get("cluster"));
 			Double_t x, y;
