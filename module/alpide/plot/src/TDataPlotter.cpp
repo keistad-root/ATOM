@@ -32,7 +32,7 @@ TDataPlotter::TDataPlotter(const CppConfigFile& config) : mConfig(config) {
 	mOutputPath = mConfig.getConfig("CONFIG").find("OUTPUT_DIRECTORY");
 	std::filesystem::create_directories(mOutputPath);
 
-	gStyle->SetOptStat(0);
+	// gStyle->SetOptStat(0);
 
 	if ( mConfig.hasConfig("HITMAP") ) isHitmap = true;
 	if ( mConfig.hasConfig("HITMAP_PROJECTION_X") ) isHitmapProjectionX = true;
