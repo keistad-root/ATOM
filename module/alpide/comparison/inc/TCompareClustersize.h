@@ -19,6 +19,8 @@ public:
 	TH1D* setClusterSizeHistogram(std::string_view name);
 	TH1D* getClusterSizeHistogram() { return mClusterSizeHistogram; }
 	const CppConfigDictionary& getConfig() const { return mConfig; }
+
+	bool isInsideRegion(const std::vector<double>& roi, double roiTheta, double x, double y);
 };
 
 class TCompareClustersize {

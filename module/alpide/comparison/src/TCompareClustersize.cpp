@@ -45,15 +45,49 @@ TClusterInfo::TClusterInfo(std::string_view tag, const CppConfigDictionary& conf
 
 TClusterInfo::~TClusterInfo() { }
 
+bool TClusterInfo::isInsideRegion(const std::vector<double>& roi, double roiTheta, double x, double y) {
+	double cosTheta = 1 / std::sqrt(1 + std::pow(roiTheta, 2));
+	double sinTheta = roiTheta / std::sqrt(1 + std::pow(roiTheta, 2));
+
+	std::pair<double, double> p1 = {-roi[0] * cosTheta - roi[1] * sinTheta, -roi[0] * sinTheta + roi[1] * cosTheta};
+	std::pair<double, double> p2 = {roi[0] * cosTheta - roi[1] * sinTheta, roi[0] * sinTheta + roi[1] * cosTheta};
+	std::pair<double, double> p3 = {roi[0] * cosTheta + roi[1] * sinTheta, roi[0] * sinTheta - roi[1] * cosTheta};
+	std::pair<double, double> p4 = {-roi[0] * cosTheta + roi[1] * sinTheta, -roi[0] * sinTheta - roi[1] * cosTheta};
+
+	std::pair<double, double> v1 = {p2.first - p1.first, p2.second - p1.second};
+	std::pair<double, double> v2 = {p3.first - p2.first, p3.second - p2.second};
+	std::pair<double, double> v3 = {p4.first - p3.first, p4.second - p3.second};
+	std::pair<double, double> v4 = {p1.first - p4.first, p1.second - p4.second};
+
+	std::pair<double, double> vp1 = {x - p1.first, y - p1.second};
+	std::pair<double, double> vp2 = {x - p2.first, y - p2.second};
+	std::pair<double, double> vp3 = {x - p3.first, y - p3.second};
+	std::pair<double, double> vp4 = {x - p4.first, y - p4.second};
+
+	double cross1 = v1.first * vp1.second - v1.second * vp1.first;
+	double cross2 = v2.first * vp2.second - v2.second * vp2.first;
+	double cross3 = v3.first * vp3.second - v3.second * vp3.first;
+	double cross4 = v4.first * vp4.second - v4.second * vp4.first;
+
+	if ( cross1 > 0 && cross2 > 0 && cross3 > 0 && cross4 > 0 ) {
+		return true;
+	} else if ( cross1 < 0 && cross2 < 0 && cross3 < 0 && cross4 < 0 ) { return true; } else {
+		return false;
+	}
+}
+
 TH1D* TClusterInfo::setClusterSizeHistogram(std::string_view name) {
 	static int iHist = 0;
-	io::CSVReader<3> in(experimentInfoCSV);
-	in.read_header(io::ignore_extra_column, "TAG", "MASKED_FILE", "CENTER");
-	std::string tag, maskedFile, centerStr;
+	io::CSVReader<5> in(experimentInfoCSV);
+	in.read_header(io::ignore_extra_column, "TAG", "MASKED_FILE", "CENTER", "ROI", "ROI_THETA");
+	std::string tag, maskedFile, centerStr, roiStr, roiThetaStr;
 	TH1D* hist = new TH1D(Form("hist_%d", iHist), "", 120, 0.5, 120.5);
-	while ( in.read_row(tag, maskedFile, centerStr) ) {
+	while ( in.read_row(tag, maskedFile, centerStr, roiStr, roiThetaStr) ) {
 		if ( tag == name ) {
 			std::vector<double> center = TPlotter::getDoubleSetFromString(centerStr);
+
+			std::vector<double> roi = TPlotter::getDoubleSetFromString(roiStr);
+			double roiTheta = stod(roiThetaStr);
 			TFile* file = new TFile(static_cast<TString>(maskedFile), "READ");
 			TTree* tree = static_cast<TTree*>(file->Get("cluster"));
 			Double_t x, y;
@@ -65,9 +99,9 @@ TH1D* TClusterInfo::setClusterSizeHistogram(std::string_view name) {
 			Int_t nCluster = tree->GetEntries();
 			for ( int iCluster = 0; iCluster < nCluster; iCluster++ ) {
 				tree->GetEntry(iCluster);
-				// if ( center[0] - 10 < x && x < center[0] + 10 && center[1] - 150 < y && y < center[1] + 150 ) {
-				hist->Fill(size);
-				// }
+				if ( isInsideRegion(roi, roiTheta, x - center[0], y - center[1]) ) {
+					hist->Fill(size);
+				}
 			}
 			delete tree;
 			delete file;
