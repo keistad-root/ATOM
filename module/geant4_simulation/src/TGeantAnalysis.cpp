@@ -167,7 +167,6 @@ void TGeantAnalysis::readIncidentTree() {
 						m2DHistograms["IN_DE_MET_N_IN_ANG"]->Fill(180 - theta, totalDepositEnergy[1] * multiple);
 
 					}
-					totalDepositEnergy[1] = 0.;
 
 					if ( totalDepositEnergy[2] > eV ) {
 						multiple = mConfig.getConfig("IN_DE_EPI").hasKey("MULTIPLE") ? stod(mConfig.getConfig("IN_DE_EPI").find("MULTIPLE")) : 1.;
@@ -177,7 +176,6 @@ void TGeantAnalysis::readIncidentTree() {
 						m2DHistograms["IN_DE_EPI_N_IN_ANG"]->Fill(180 - theta, totalDepositEnergy[2] * multiple);
 					}
 
-					totalDepositEnergy[2] = 0.;
 
 					if ( totalDepositEnergy[3] > eV ) {
 						multiple = mConfig.getConfig("IN_DE_SUB").hasKey("MULTIPLE") ? stod(mConfig.getConfig("IN_DE_SUB").find("MULTIPLE")) : 1.;
@@ -186,7 +184,6 @@ void TGeantAnalysis::readIncidentTree() {
 						multiple = mConfig.getConfig("IN_DE_SUB_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("IN_DE_SUB_N_IN_ANG").find("MULTIPLE")) : 1.;
 						m2DHistograms["IN_DE_SUB_N_IN_ANG"]->Fill(180 - theta, totalDepositEnergy[3] * multiple);
 					}
-					totalDepositEnergy[3] = 0.;
 
 					if ( totalDepositEnergy[0] > eV ) {
 						multiple = mConfig.getConfig("IN_DE_TOT").hasKey("MULTIPLE") ? stod(mConfig.getConfig("IN_DE_TOT").find("MULTIPLE")) : 1.;
@@ -195,7 +192,6 @@ void TGeantAnalysis::readIncidentTree() {
 						multiple = mConfig.getConfig("IN_DE_TOT_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("IN_DE_TOT_N_IN_ANG").find("MULTIPLE")) : 1.;
 						m2DHistograms["IN_DE_TOT_N_IN_ANG"]->Fill(180 - theta, totalDepositEnergy[0] * multiple);
 					}
-					totalDepositEnergy[0] = 0.;
 
 					if ( mIncidentTuple.finalVolumeID == VOLUME::ALPIDESubstrate || mIncidentTuple.finalVolumeID == VOLUME::ALPIDEEpitaxial || mIncidentTuple.finalVolumeID == VOLUME::ALPIDEMetal ) {
 						m2DHistograms["IN_ANG_N_FIN_Z"]->Fill(180 - theta, mIncidentTuple.position[2]);
@@ -220,7 +216,6 @@ void TGeantAnalysis::readIncidentTree() {
 							multiple = mConfig.getConfig("AL_IN_DE_MET_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("AL_IN_DE_MET_N_IN_ANG").find("MULTIPLE")) : 1.;
 							m2DHistograms["AL_IN_DE_MET_N_IN_ANG"]->Fill(180 - theta, alphaDepositEnergy[1] * multiple);
 						}
-						alphaDepositEnergy[1] = 0.;
 
 						if ( alphaDepositEnergy[2] > eV ) {
 							multiple = stod(mConfig.getConfig("AL_IN_DE_EPI").find("MULTIPLE"));
@@ -229,7 +224,6 @@ void TGeantAnalysis::readIncidentTree() {
 							multiple = stod(mConfig.getConfig("AL_IN_DE_EPI_N_IN_ANG").find("MULTIPLE"));
 							m2DHistograms["AL_IN_DE_EPI_N_IN_ANG"]->Fill(180 - theta, alphaDepositEnergy[2] * multiple);
 						}
-						alphaDepositEnergy[2] = 0.;
 
 						if ( alphaDepositEnergy[3] > eV ) {
 							multiple = mConfig.getConfig("AL_IN_DE_SUB").hasKey("MULTIPLE") ? stod(mConfig.getConfig("AL_IN_DE_SUB").find("MULTIPLE")) : 1.;
@@ -238,7 +232,6 @@ void TGeantAnalysis::readIncidentTree() {
 							multiple = mConfig.getConfig("AL_IN_DE_SUB_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("AL_IN_DE_SUB_N_IN_ANG").find("MULTIPLE")) : 1.;
 							m2DHistograms["AL_IN_DE_SUB_N_IN_ANG"]->Fill(180 - theta, alphaDepositEnergy[3] * multiple);
 						}
-						alphaDepositEnergy[3] = 0.;
 						if ( alphaDepositEnergy[0] > eV ) {
 							multiple = mConfig.getConfig("AL_IN_DE_TOT").hasKey("MULTIPLE") ? stod(mConfig.getConfig("AL_IN_DE_TOT").find("MULTIPLE")) : 1.;
 							m1DHistograms["AL_IN_DE_TOT"]->Fill(alphaDepositEnergy[0] * multiple);
@@ -267,7 +260,6 @@ void TGeantAnalysis::readIncidentTree() {
 							multiple = mConfig.getConfig("EL_IN_DE_MET_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("EL_IN_DE_MET_N_IN_ANG").find("MULTIPLE")) : 1.;
 							m2DHistograms["EL_IN_DE_MET_N_IN_ANG"]->Fill(180 - theta, electronDepositEnergy[1] * multiple);
 						}
-						electronDepositEnergy[1] = 0.;
 
 						if ( electronDepositEnergy[2] > eV ) {
 							multiple = mConfig.getConfig("EL_IN_DE_EPI").hasKey("MULTIPLE") ? stod(mConfig.getConfig("EL_IN_DE_EPI").find("MULTIPLE")) : 1.;
@@ -276,7 +268,6 @@ void TGeantAnalysis::readIncidentTree() {
 							multiple = mConfig.getConfig("EL_IN_DE_EPI_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("EL_IN_DE_EPI_N_IN_ANG").find("MULTIPLE")) : 1.;
 							m2DHistograms["EL_IN_DE_EPI_N_IN_ANG"]->Fill(180 - theta, electronDepositEnergy[2] * multiple);
 						}
-						electronDepositEnergy[2] = 0.;
 
 						if ( electronDepositEnergy[3] > eV ) {
 							multiple = mConfig.getConfig("EL_IN_DE_SUB").hasKey("MULTIPLE") ? stod(mConfig.getConfig("EL_IN_DE_SUB").find("MULTIPLE")) : 1.;
@@ -285,7 +276,6 @@ void TGeantAnalysis::readIncidentTree() {
 							multiple = mConfig.getConfig("EL_IN_DE_SUB_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("EL_IN_DE_SUB_N_IN_ANG").find("MULTIPLE")) : 1.;
 							m2DHistograms["EL_IN_DE_SUB_N_IN_ANG"]->Fill(180 - theta, electronDepositEnergy[3] * multiple);
 						}
-						electronDepositEnergy[3] = 0.;
 
 						if ( electronDepositEnergy[0] > eV ) {
 							multiple = mConfig.getConfig("EL_IN_DE_TOT").hasKey("MULTIPLE") ? stod(mConfig.getConfig("EL_IN_DE_TOT").find("MULTIPLE")) : 1.;
@@ -294,7 +284,6 @@ void TGeantAnalysis::readIncidentTree() {
 							multiple = mConfig.getConfig("EL_IN_DE_TOT_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("EL_IN_DE_TOT_N_IN_ANG").find("MULTIPLE")) : 1.;
 							m2DHistograms["EL_IN_DE_TOT_N_IN_ANG"]->Fill(180 - theta, electronDepositEnergy[0] * multiple);
 						}
-						electronDepositEnergy[0] = 0.;
 					}
 					if ( mIncidentTuple.particleID == PARTICLE::gamma1 ) {
 
@@ -320,7 +309,6 @@ void TGeantAnalysis::readIncidentTree() {
 							multiple = mConfig.getConfig("GA_IN_DE_MET_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("GA_IN_DE_MET_N_IN_ANG").find("MULTIPLE")) : 1.;
 							m2DHistograms["GA_IN_DE_MET_N_IN_ANG"]->Fill(180 - theta, gammaDepositEnergy[1] * multiple);
 						}
-						gammaDepositEnergy[1] = 0.;
 
 						if ( gammaDepositEnergy[2] > eV ) {
 							multiple = mConfig.getConfig("GA_IN_DE_EPI").hasKey("MULTIPLE") ? stod(mConfig.getConfig("GA_IN_DE_EPI").find("MULTIPLE")) : 1.;
@@ -329,22 +317,20 @@ void TGeantAnalysis::readIncidentTree() {
 							multiple = mConfig.getConfig("GA_IN_DE_EPI_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("GA_IN_DE_EPI_N_IN_ANG").find("MULTIPLE")) : 1.;
 							m2DHistograms["GA_IN_DE_EPI_N_IN_ANG"]->Fill(180 - theta, gammaDepositEnergy[2] * multiple);
 						}
-						gammaDepositEnergy[2] = 0.;
 
 						if ( gammaDepositEnergy[3] > eV ) {
 							multiple = mConfig.getConfig("GA_IN_DE_SUB").hasKey("MULTIPLE") ? stod(mConfig.getConfig("GA_IN_DE_SUB").find("MULTIPLE")) : 1.;
-							m1DHistograms["GA_IN_DE_SUB"]->Fill(gammaDepositEnergy[2] * multiple);
+							m1DHistograms["GA_IN_DE_SUB"]->Fill(gammaDepositEnergy[3] * multiple);
 
 							multiple = mConfig.getConfig("GA_IN_DE_SUB_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("GA_IN_DE_SUB_N_IN_ANG").find("MULTIPLE")) : 1.;
-							m2DHistograms["GA_IN_DE_SUB_N_IN_ANG"]->Fill(180 - theta, gammaDepositEnergy[2] * multiple);
+							m2DHistograms["GA_IN_DE_SUB_N_IN_ANG"]->Fill(180 - theta, gammaDepositEnergy[3] * multiple);
 						}
-						gammaDepositEnergy[3] = 0.;
 
-						if ( gammaDepositEnergy[3] > eV ) {
+						if ( gammaDepositEnergy[0] > eV ) {
 							multiple = mConfig.getConfig("GA_IN_DE_TOT").hasKey("MULTIPLE") ? stod(mConfig.getConfig("GA_IN_DE_TOT").find("MULTIPLE")) : 1.;
-							m1DHistograms["GA_IN_DE_TOT"]->Fill(gammaDepositEnergy[3] * multiple);
+							m1DHistograms["GA_IN_DE_TOT"]->Fill(gammaDepositEnergy[0] * multiple);
 							multiple = mConfig.getConfig("GA_IN_DE_TOT_N_IN_ANG").hasKey("MULTIPLE") ? stod(mConfig.getConfig("GA_IN_DE_TOT_N_IN_ANG").find("MULTIPLE")) : 1.;
-							m2DHistograms["GA_IN_DE_TOT_N_IN_ANG"]->Fill(180 - theta, gammaDepositEnergy[3] * multiple);
+							m2DHistograms["GA_IN_DE_TOT_N_IN_ANG"]->Fill(180 - theta, gammaDepositEnergy[0] * multiple);
 						}
 					}
 					// Minor Plots
