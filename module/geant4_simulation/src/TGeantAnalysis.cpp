@@ -138,13 +138,6 @@ void TGeantAnalysis::readIncidentTree() {
 	std::vector<std::pair<Double_t, Double_t>> position;
 	Int_t preTimeStamp = 0;
 
-	std::array<Double_t, 4> totalDepositEnergy = {0., 0., 0., 0.};
-	std::array<Double_t, 4> alphaDepositEnergy = {0., 0., 0., 0.};
-	std::array<Double_t, 4> electronDepositEnergy = {0., 0., 0., 0.};
-	std::array<Double_t, 4> gammaDepositEnergy = {0., 0., 0., 0.};
-
-	std::array<Double_t, 2> incidentPosition = {0., 0.};
-
 	TEventInformation eventInfo;
 
 	ProgressBar* pbar = new ProgressBar(static_cast<int>(nEntries));
@@ -189,22 +182,22 @@ void TGeantAnalysis::readIncidentTree() {
 			eventInfo.incidentMomentum = TMath::Sqrt(mIncidentTuple.momentum[0] * mIncidentTuple.momentum[0] + mIncidentTuple.momentum[1] * mIncidentTuple.momentum[1] + mIncidentTuple.momentum[2] * mIncidentTuple.momentum[2]);
 			eventInfo.incidentKineticEnergy = mIncidentTuple.kineticEnergy;
 			eventInfo.incidentAngle = 180 - TMath::ACos(mIncidentTuple.momentum[2] / eventInfo.incidentMomentum) * 180. / TMath::Pi();
-			eventInfo.totalDepositEnergy[0] = totalDepositEnergy[0];
-			eventInfo.totalDepositEnergy[1] = totalDepositEnergy[1];
-			eventInfo.totalDepositEnergy[2] = totalDepositEnergy[2];
-			eventInfo.totalDepositEnergy[3] = totalDepositEnergy[3];
-			eventInfo.alphaDepositEnergy[0] = alphaDepositEnergy[0];
-			eventInfo.alphaDepositEnergy[1] = alphaDepositEnergy[1];
-			eventInfo.alphaDepositEnergy[2] = alphaDepositEnergy[2];
-			eventInfo.alphaDepositEnergy[3] = alphaDepositEnergy[3];
-			eventInfo.electronDepositEnergy[0] = electronDepositEnergy[0];
-			eventInfo.electronDepositEnergy[1] = electronDepositEnergy[1];
-			eventInfo.electronDepositEnergy[2] = electronDepositEnergy[2];
-			eventInfo.electronDepositEnergy[3] = electronDepositEnergy[3];
-			eventInfo.gammaDepositEnergy[0] = gammaDepositEnergy[0];
-			eventInfo.gammaDepositEnergy[1] = gammaDepositEnergy[1];
-			eventInfo.gammaDepositEnergy[2] = gammaDepositEnergy[2];
-			eventInfo.gammaDepositEnergy[3] = gammaDepositEnergy[3];
+			eventInfo.totalDepositEnergy[0] = mIncidentTuple.depositEnergy[0] + mIncidentTuple.depositEnergy[1] + mIncidentTuple.depositEnergy[2];
+			eventInfo.totalDepositEnergy[1] = mIncidentTuple.depositEnergy[0];
+			eventInfo.totalDepositEnergy[2] = mIncidentTuple.depositEnergy[1];
+			eventInfo.totalDepositEnergy[3] = mIncidentTuple.depositEnergy[2];
+			eventInfo.alphaDepositEnergy[0] = mIncidentTuple.depositEnergy[0] + mIncidentTuple.depositEnergy[1] + mIncidentTuple.depositEnergy[2];
+			eventInfo.alphaDepositEnergy[1] = mIncidentTuple.depositEnergy[0];
+			eventInfo.alphaDepositEnergy[2] = mIncidentTuple.depositEnergy[1];
+			eventInfo.alphaDepositEnergy[3] = mIncidentTuple.depositEnergy[2];
+			eventInfo.electronDepositEnergy[0] = mIncidentTuple.depositEnergy[0] + mIncidentTuple.depositEnergy[1] + mIncidentTuple.depositEnergy[2];
+			eventInfo.electronDepositEnergy[1] = mIncidentTuple.depositEnergy[0];
+			eventInfo.electronDepositEnergy[2] = mIncidentTuple.depositEnergy[1];
+			eventInfo.electronDepositEnergy[3] = mIncidentTuple.depositEnergy[2];
+			eventInfo.gammaDepositEnergy[0] = mIncidentTuple.depositEnergy[0] + mIncidentTuple.depositEnergy[1] + mIncidentTuple.depositEnergy[2];
+			eventInfo.gammaDepositEnergy[1] = mIncidentTuple.depositEnergy[0];
+			eventInfo.gammaDepositEnergy[2] = mIncidentTuple.depositEnergy[1];
+			eventInfo.gammaDepositEnergy[3] = mIncidentTuple.depositEnergy[2];
 		} else if ( isFromALPIDE() ) {
 			eventInfo.nSecondaryParticle++;
 			if ( mIncidentTuple.depositEnergy[0] > eV ) {
