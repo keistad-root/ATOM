@@ -136,7 +136,34 @@ void TGeantAnalysis::fill2DHistograms(std::string_view name, double x, double y)
 bool TGeantAnalysis::isInsideRegion(double x, double y) {
 	double cosTheta = std::cos(mRoiTheta);
 	double sinTheta = std::sin(mRoiTheta);
-	std::cout << cosTheta << " " << sinTheta << std::endl;
+
+	std::pair<double, double> p1 = {-mRoi[0] * cosTheta - mRoi[1] * sinTheta, -mRoi[0] * sinTheta + mRoi[1] * cosTheta};
+	std::pair<double, double> p2 = {mRoi[0] * cosTheta - mRoi[1] * sinTheta, mRoi[0] * sinTheta + mRoi[1] * cosTheta};
+	std::pair<double, double> p3 = {mRoi[0] * cosTheta + mRoi[1] * sinTheta, mRoi[0] * sinTheta - mRoi[1] * cosTheta};
+	std::pair<double, double> p4 = {-mRoi[0] * cosTheta + mRoi[1] * sinTheta, -mRoi[0] * sinTheta - mRoi[1] * cosTheta};
+
+	std::pair<double, double> v1 = {p2.first - p1.first, p2.second - p1.second};
+	std::pair<double, double> v2 = {p3.first - p2.first, p3.second - p2.second};
+	std::pair<double, double> v3 = {p4.first - p3.first, p4.second - p3.second};
+	std::pair<double, double> v4 = {p1.first - p4.first, p1.second - p4.second};
+
+	std::pair<double, double> vp1 = {x - p1.first, y - p1.second};
+	std::pair<double, double> vp2 = {x - p2.first, y - p2.second};
+	std::pair<double, double> vp3 = {x - p3.first, y - p3.second};
+	std::pair<double, double> vp4 = {x - p4.first, y - p4.second};
+
+	double cross1 = v1.first * vp1.second - v1.second * vp1.first;
+	double cross2 = v2.first * vp2.second - v2.second * vp2.first;
+	double cross3 = v3.first * vp3.second - v3.second * vp3.first;
+	double cross4 = v4.first * vp4.second - v4.second * vp4.first;
+
+	if ( cross1 > 0 && cross2 > 0 && cross3 > 0 && cross4 > 0 ) {
+		return true;
+	} else if ( cross1 < 0 && cross2 < 0 && cross3 < 0 && cross4 < 0 ) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 void TGeantAnalysis::readIncidentTree() {
@@ -146,16 +173,13 @@ void TGeantAnalysis::readIncidentTree() {
 	Int_t preTimeStamp = 0;
 
 	TEventInformation eventInfo;
-
-	isInsideRegion(0, 0);
-
 	ProgressBar* pbar = new ProgressBar(static_cast<int>(nEntries));
 	Int_t nDouble = 0;
 	for ( Int_t i = 0; i < nEntries; i++ ) {
 		pbar->countUp();
 		mIncidentTree->GetEntry(i);
 		if ( isFromOutside() ) {
-			if ( !isRoi || (std::abs(eventInfo.incidentPosition[0]) < mRoi[0] && std::abs(eventInfo.incidentPosition[1]) < mRoi[1]) ) {
+			if ( !isRoi || isInsideRegion(eventInfo.incidentPosition[0], eventInfo.incidentPosition[1]) ) {
 				if ( eventInfo.incidentMomentum > eV ) {
 					fill2DHistograms("IN_XY", eventInfo.incidentPosition[0], eventInfo.incidentPosition[1]);
 					fill1DHistograms("IN_Z", eventInfo.incidentPosition[2]);
@@ -229,7 +253,7 @@ void TGeantAnalysis::readIncidentTree() {
 			}
 		}
 	}
-	if ( !isRoi || (std::abs(eventInfo.incidentPosition[0]) < mRoi[0] && std::abs(eventInfo.incidentPosition[1] < mRoi[1])) ) {
+	if ( !isRoi || isInsideRegion(eventInfo.incidentPosition[0], eventInfo.incidentPosition[1]) ) {
 		if ( eventInfo.incidentMomentum > eV ) {
 			fill2DHistograms("IN_XY", eventInfo.incidentPosition[0], eventInfo.incidentPosition[1]);
 			fill1DHistograms("IN_Z", eventInfo.incidentPosition[2]);

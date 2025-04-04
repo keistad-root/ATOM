@@ -122,6 +122,7 @@ int main(int argc, char** argv) {
 	CppConfigFile config = setEnvironment(parser);
 
 	TGeantAnalysis plot(config);
+	plot.isInsideRegion(0, 0);
 	plot.setHistograms();
 	plot.readTree();
 	plot.saveFile();

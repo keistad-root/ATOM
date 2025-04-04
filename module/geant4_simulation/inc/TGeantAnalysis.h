@@ -64,6 +64,7 @@ public:
 	void readTree();
 	void saveFile();
 	const std::array<int, 4>& getEntry() const { return mEntry; };
+	bool isInsideRegion(double x, double y);
 private:
 	void readIncidentFile();
 	void readPrimaryFile();
@@ -76,6 +77,5 @@ private:
 	void fill2DHistograms(std::string_view name, double x, double y);
 	bool isFromOutside();
 	bool isFromALPIDE();
-	bool isInsideRegion(double x, double y);
 };
 #endif
