@@ -26,6 +26,7 @@ TGeantAnalysis::TGeantAnalysis(const CppConfigFile& config) : mConfig(config) {
 		std::vector<double> temp = TPlotter::getDoubleSetFromString(mConfig.getConfig("FILE").find("ROI"));
 		mRoi = {temp[0], temp[1]};
 	}
+	mRoiTheta = mConfig.getConfig("FILE").hasKey("ROI_THETA") ? stod(mConfig.getConfig("FILE").find("ROI_THETA")) * TMath::Pi() / 180 : 0;
 }
 
 TGeantAnalysis::~TGeantAnalysis() { }
@@ -132,6 +133,12 @@ void TGeantAnalysis::fill2DHistograms(std::string_view name, double x, double y)
 	}
 }
 
+bool TGeantAnalysis::isInsideRegion(double x, double y) {
+	double cosTheta = std::cos(mRoiTheta);
+	double sinTheta = std::sin(mRoiTheta);
+	std::cout << cosTheta << " " << sinTheta << std::endl;
+}
+
 void TGeantAnalysis::readIncidentTree() {
 	Int_t nEntries = mIncidentTree->GetEntries();
 
@@ -139,6 +146,8 @@ void TGeantAnalysis::readIncidentTree() {
 	Int_t preTimeStamp = 0;
 
 	TEventInformation eventInfo;
+
+	isInsideRegion(0, 0);
 
 	ProgressBar* pbar = new ProgressBar(static_cast<int>(nEntries));
 	Int_t nDouble = 0;

@@ -54,6 +54,7 @@ private:
 	std::unordered_map<std::string, TH2D*> m2DHistograms;
 	std::array<int, 4> mEntry;
 	std::array<double, 2> mRoi;
+	double mRoiTheta;
 
 	bool isPrimary = false, isIncident = false, isSecondary = false;
 	bool isRoi = false;
@@ -75,5 +76,6 @@ private:
 	void fill2DHistograms(std::string_view name, double x, double y);
 	bool isFromOutside();
 	bool isFromALPIDE();
+	bool isInsideRegion(double x, double y);
 };
 #endif
