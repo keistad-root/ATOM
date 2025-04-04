@@ -18,6 +18,23 @@
 class TH1D;
 class TH2D;
 
+struct TEventInformation {
+	int eventID;
+	int particleID;
+	int initialVolumeID;
+	std::array<double, 3> incidentPosition;
+	double incidentMomentum;
+	double incidentKineticEnergy;
+	double incidentAngle;
+
+	int nSecondaryParticle;
+	std::array<double, 4> totalDepositEnergy;
+	std::array<double, 4> alphaDepositEnergy;
+	std::array<double, 4> electronDepositEnergy;
+	std::array<double, 4> gammaDepositEnergy;
+
+};
+
 class TGeantAnalysis {
 public:
 	TGeantAnalysis(const CppConfigFile& config);
@@ -54,6 +71,8 @@ private:
 	void readIncidentTree();
 	int getNDouble(std::vector<std::pair<Double_t, Double_t>> position);
 
+	void fill1DHistograms(std::string_view name, double value);
+	void fill2DHistograms(std::string_view name, double x, double y);
 	bool isFromOutside();
 	bool isFromALPIDE();
 };
