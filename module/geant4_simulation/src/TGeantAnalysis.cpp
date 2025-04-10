@@ -75,7 +75,7 @@ void TGeantAnalysis::setHistograms() {
 
 void TGeantAnalysis::readTree() {
 	if ( isPrimary ) {
-		readPrimaryTree();
+		// readPrimaryTree();
 	}
 	if ( isIncident ) {
 		readIncidentTree();
