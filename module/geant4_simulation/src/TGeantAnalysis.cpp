@@ -181,6 +181,7 @@ void TGeantAnalysis::readIncidentTree() {
 		if ( isFromOutside() ) {
 			if ( !isRoi || isInsideRegion(eventInfo.incidentPosition[0], eventInfo.incidentPosition[1]) ) {
 				if ( eventInfo.incidentMomentum > eV ) {
+					position.push_back({eventInfo.incidentPosition[0], eventInfo.incidentPosition[1]});
 					fill2DHistograms("IN_XY", eventInfo.incidentPosition[0], eventInfo.incidentPosition[1]);
 					fill1DHistograms("IN_Z", eventInfo.incidentPosition[2]);
 					fill1DHistograms("IN_ANG", eventInfo.incidentAngle);
@@ -203,8 +204,79 @@ void TGeantAnalysis::readIncidentTree() {
 						fill1DHistograms("IN_DE_SUB", eventInfo.totalDepositEnergy[3]);
 						fill2DHistograms("IN_DE_SUB_N_IN_ANG", eventInfo.incidentAngle, eventInfo.totalDepositEnergy[3]);
 					}
+					if ( eventInfo.particleID == PARTICLE::alpha ) {
+						fill2DHistograms("AL_IN_XY", eventInfo.incidentPosition[0], eventInfo.incidentPosition[1]);
+						fill1DHistograms("AL_IN_Z", eventInfo.incidentPosition[2]);
+						fill1DHistograms("AL_IN_ANG", eventInfo.incidentAngle);
+						fill1DHistograms("AL_IN_KE", eventInfo.incidentKineticEnergy);
+						fill1DHistograms("AL_IN_VOL", eventInfo.initialVolumeID);
+						if ( eventInfo.totalDepositEnergy[0] > eV ) {
+							fill1DHistograms("AL_IN_DE_TOT", eventInfo.totalDepositEnergy[0]);
+							fill2DHistograms("AL_IN_DE_TOT_N_IN_ANG", eventInfo.incidentAngle, eventInfo.totalDepositEnergy[0]);
+						}
+						if ( eventInfo.totalDepositEnergy[1] > eV ) {
+							fill1DHistograms("AL_IN_DE_MET", eventInfo.totalDepositEnergy[1]);
+							fill2DHistograms("AL_IN_DE_MET_N_IN_ANG", eventInfo.incidentAngle, eventInfo.totalDepositEnergy[1]);
+						}
+						if ( eventInfo.totalDepositEnergy[2] > eV ) {
+							fill1DHistograms("AL_IN_DE_EPI", eventInfo.totalDepositEnergy[2]);
+							fill2DHistograms("AL_IN_DE_EPI_N_IN_ANG", eventInfo.incidentAngle, eventInfo.totalDepositEnergy[2]);
+						}
+						if ( eventInfo.totalDepositEnergy[3] > eV ) {
+							fill1DHistograms("AL_IN_DE_SUB", eventInfo.totalDepositEnergy[3]);
+							fill2DHistograms("AL_IN_DE_SUB_N_IN_ANG", eventInfo.incidentAngle, eventInfo.totalDepositEnergy[3]);
+						}
+					}
+					if ( eventInfo.particleID == PARTICLE::electron ) {
+						fill2DHistograms("EL_IN_XY", eventInfo.incidentPosition[0], eventInfo.incidentPosition[1]);
+						fill1DHistograms("EL_IN_Z", eventInfo.incidentPosition[2]);
+						fill1DHistograms("EL_IN_ANG", eventInfo.incidentAngle);
+						fill1DHistograms("EL_IN_KE", eventInfo.incidentKineticEnergy);
+						fill1DHistograms("EL_IN_VOL", eventInfo.initialVolumeID);
+						if ( eventInfo.totalDepositEnergy[0] > eV ) {
+							fill1DHistograms("EL_IN_DE_TOT", eventInfo.totalDepositEnergy[0]);
+							fill2DHistograms("EL_IN_DE_TOT_N_IN_ANG", eventInfo.incidentAngle, eventInfo.totalDepositEnergy[0]);
+						}
+						if ( eventInfo.totalDepositEnergy[1] > eV ) {
+							fill1DHistograms("EL_IN_DE_MET", eventInfo.totalDepositEnergy[1]);
+							fill2DHistograms("EL_IN_DE_MET_N_IN_ANG", eventInfo.incidentAngle, eventInfo.totalDepositEnergy[1]);
+						}
+						if ( eventInfo.totalDepositEnergy[2] > eV ) {
+							fill1DHistograms("EL_IN_DE_EPI", eventInfo.totalDepositEnergy[2]);
+							fill2DHistograms("EL_IN_DE_EPI_N_IN_ANG", eventInfo.incidentAngle, eventInfo.totalDepositEnergy[2]);
+						}
+						if ( eventInfo.totalDepositEnergy[3] > eV ) {
+							fill1DHistograms("EL_IN_DE_SUB", eventInfo.totalDepositEnergy[3]);
+							fill2DHistograms("EL_IN_DE_SUB_N_IN_ANG", eventInfo.incidentAngle, eventInfo.totalDepositEnergy[3]);
+						}
+					}
+					if ( eventInfo.particleID == PARTICLE::gamma1 ) {
+						fill2DHistograms("GA_IN_XY", eventInfo.incidentPosition[0], eventInfo.incidentPosition[1]);
+						fill1DHistograms("GA_IN_Z", eventInfo.incidentPosition[2]);
+						fill1DHistograms("GA_IN_ANG", eventInfo.incidentAngle);
+						fill1DHistograms("GA_IN_KE", eventInfo.incidentKineticEnergy);
+						fill1DHistograms("GA_IN_VOL", eventInfo.initialVolumeID);
+						if ( eventInfo.totalDepositEnergy[0] > eV ) {
+							fill1DHistograms("GA_IN_DE_TOT", eventInfo.totalDepositEnergy[0]);
+							fill2DHistograms("GA_IN_DE_TOT_N_IN_ANG", eventInfo.incidentAngle, eventInfo.totalDepositEnergy[0]);
+						}
+						if ( eventInfo.totalDepositEnergy[1] > eV ) {
+							fill1DHistograms("GA_IN_DE_MET", eventInfo.totalDepositEnergy[1]);
+							fill2DHistograms("GA_IN_DE_MET_N_IN_ANG", eventInfo.incidentAngle, eventInfo.totalDepositEnergy[1]);
+						}
+						if ( eventInfo.totalDepositEnergy[2] > eV ) {
+							fill1DHistograms("GA_IN_DE_EPI", eventInfo.totalDepositEnergy[2]);
+							fill2DHistograms("GA_IN_DE_EPI_N_IN_ANG", eventInfo.incidentAngle, eventInfo.totalDepositEnergy[2]);
+						}
+						if ( eventInfo.totalDepositEnergy[3] > eV ) {
+							fill1DHistograms("GA_IN_DE_SUB", eventInfo.totalDepositEnergy[3]);
+							fill2DHistograms("GA_IN_DE_SUB_N_IN_ANG", eventInfo.incidentAngle, eventInfo.totalDepositEnergy[3]);
+						}
+					}
 				}
 			}
+
+
 			eventInfo.eventID = mIncidentTuple.eventID;
 			eventInfo.particleID = mIncidentTuple.particleID;
 			eventInfo.initialVolumeID = mIncidentTuple.initialVolumeID;
@@ -219,18 +291,6 @@ void TGeantAnalysis::readIncidentTree() {
 			eventInfo.totalDepositEnergy[1] = mIncidentTuple.depositEnergy[0];
 			eventInfo.totalDepositEnergy[2] = mIncidentTuple.depositEnergy[1];
 			eventInfo.totalDepositEnergy[3] = mIncidentTuple.depositEnergy[2];
-			eventInfo.alphaDepositEnergy[0] = mIncidentTuple.depositEnergy[0] + mIncidentTuple.depositEnergy[1] + mIncidentTuple.depositEnergy[2];
-			eventInfo.alphaDepositEnergy[1] = mIncidentTuple.depositEnergy[0];
-			eventInfo.alphaDepositEnergy[2] = mIncidentTuple.depositEnergy[1];
-			eventInfo.alphaDepositEnergy[3] = mIncidentTuple.depositEnergy[2];
-			eventInfo.electronDepositEnergy[0] = mIncidentTuple.depositEnergy[0] + mIncidentTuple.depositEnergy[1] + mIncidentTuple.depositEnergy[2];
-			eventInfo.electronDepositEnergy[1] = mIncidentTuple.depositEnergy[0];
-			eventInfo.electronDepositEnergy[2] = mIncidentTuple.depositEnergy[1];
-			eventInfo.electronDepositEnergy[3] = mIncidentTuple.depositEnergy[2];
-			eventInfo.gammaDepositEnergy[0] = mIncidentTuple.depositEnergy[0] + mIncidentTuple.depositEnergy[1] + mIncidentTuple.depositEnergy[2];
-			eventInfo.gammaDepositEnergy[1] = mIncidentTuple.depositEnergy[0];
-			eventInfo.gammaDepositEnergy[2] = mIncidentTuple.depositEnergy[1];
-			eventInfo.gammaDepositEnergy[3] = mIncidentTuple.depositEnergy[2];
 		} else if ( isFromALPIDE() ) {
 			eventInfo.nSecondaryParticle++;
 			if ( mIncidentTuple.depositEnergy[0] > eV ) {
